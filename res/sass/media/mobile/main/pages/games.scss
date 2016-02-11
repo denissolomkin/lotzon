@@ -106,3 +106,795 @@
         }
     }
 }
+
+
+// game started
+// @media!! 
+//colors
+$web_orange: orange;
+$white: white;
+$color_cape_cod_60_approx: rgba(64, 64, 64, 0.6);
+$black_50: rgba(0, 0, 0, 0.5);
+$color_gray_chateau_approx: #a5adb0;
+$white_60: rgba(255, 255, 255, 0.6);
+$color_celeste_approx: #ccc;
+$black_30: rgba(0, 0, 0, 0.3);
+$color_turbo_approx: rgb(255, 228, 0);
+$color_geyser_95_approx: rgba(216, 227, 231, 0.95);
+$mine_shaft_50: rgba(50, 50, 50, .5);
+$red: red;
+$color_rio_grande_approx: rgba(200, 200, 0, 1);
+$color_jungle_mist_95_approx: rgba(178, 208, 212, 0.95);
+$color_opal_approx: #a8c4c8;
+$color_suva_gray_approx: #888;
+$black: black;
+$color_pink_swan_approx: #bababa;
+$white_30: rgba(255, 255, 255, 0.3);
+$white_50: rgba(255, 255, 255, 0.5);
+$color_jungle_mist_approx: #b2d0d4;
+$color_gravel_approx: #4c4c4c;
+$color_tan_hide_approx: #f68e56;
+$color_guardsman_red_approx: rgba(200, 0, 0, 1);
+$gray: gray;
+$black_20: rgba(0, 0, 0, 0.2);
+$color_coral_red_approx: #ff4242;
+$color_lima_approx: #7ed321;
+
+//fonts
+$hbRegular: handbookpro-regular;
+$hbBold: Handbook-bold;
+$font_2: Simple-Line-Icons;
+
+//urls
+$url_0: url(../img/games/card-table-bg.jpg);
+$url_1: url(../img/games/bg-question.png);
+$url_2: url(../img/games/card-deck.png);
+$url_3: url(../img/games/lotzonBg.png);
+
+#games-online-field{
+
+    // center game field
+    &:not(.Durak){
+        height: 100%;
+        > *:last-child{
+            height: 100%;
+        }
+        .mx{
+            height: 100%;
+        }
+        .wrapper{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+
+    }
+
+    .mx{
+        .players{
+            .m{
+                // buttons | statuses
+                .pr-cl{
+
+                }
+                // player
+                .pr-ph-bk{
+
+                }
+                // balance
+                .pr-pt{
+
+                }
+                // bet
+                .pr-pr{
+
+                }
+                //type
+                .pr-md{
+                    // i{
+                    //     display: block;
+                    //     &:first-child{
+                    //         margin-bottom: 5px;
+                    //     }
+                    // }
+                }
+
+            }
+        }
+    }
+}    
+
+#games-online-field.Durak {
+    .content-box-content {
+        min-height: 0;
+    }
+    .mx .players {
+        .m {
+            height: auto;
+            min-height: 220px;
+        }
+        .o .gm-pr .pr-nm {
+            width: 100%;
+            background: $color_cape_cod_60_approx;
+            color: $white;
+            top: 40px;
+            padding: 2px;
+            position: absolute;
+            border-radius: 3px;
+            font: 8px/1 "handbookpro-regular";
+            margin: 0 auto;
+            text-align: center;
+        }
+    }
+    .cards .deck .card {
+        transform: rotate(10deg) scale(0.7, 0.7);
+        left: -60px;
+        &.trump {
+            transform: rotate(100deg) scale(0.7, 0.7);
+        }
+    }
+}
+
+
+@media(max-width: 650px) {
+    #games-online-field{
+        .mx{
+            .players{
+                .m{
+                    //player gray field
+                    .gm-pr{
+                        padding: 0 10px;
+                    }
+                    // buttons | statuses
+                    .pr-cl{
+
+                    }
+                    // player
+                    .pr-ph-bk{
+
+                    }
+                    // balance
+                    .pr-pt{
+
+                    }
+                    // bet
+                    .pr-pr{
+
+                    }
+                    // //type
+                    // .pr-md{
+                    //     i{
+                    //         letter-spacing: -5px;
+                    //     }
+                    // }
+
+                }
+            }
+        }
+    }    
+
+    #games-online-field.Durak {
+        .mx .players .m .gm-pr .pr-ph-bk {
+            // left: 25%;
+        }
+    }
+}
+@media(max-width: 550px) {
+    #games-online-field{
+        &:not(.Durak){
+            .mx .players .m .gm-pr .pr-ph-bk{
+                    top: 5px;
+            }
+        }
+        .mx{
+            .players{
+                .circle-timer,
+                .circle {
+                    width: 64px;
+                    height: 64px;
+                }
+                .timer-l,
+                .timer-r {
+                    width: 64px;
+                    height: 64px;
+                    margin-left: -32px;
+                    margin-top: -32px;
+                }
+                .gm-pr {
+                    .pr-ph {
+                        width: 50px;
+                        height: 50px;
+                        margin: 0;
+                    }
+                    .pr-ph-bk{
+                        width: 50px;
+                        height: 50px;
+                        position: absolute;
+                    }
+                }
+
+                .m{
+                    //player gray field
+                    .gm-pr{
+                        height: 60px;
+                        margin: 0;
+                    }
+                    // buttons | statuses
+                    .pr-cl{
+
+                    }
+                    // player
+                    .pr-ph-bk{
+                        
+                    }
+                    // balance
+                    .pr-pt{
+                        padding-top: 12px;
+                        // line-height: 1;
+                        padding-left: 37px;
+                    }
+                    // bet
+                    .pr-pr{
+                        padding-top: 12px;
+                        .title{
+                            display: block;
+                            text-align: left;
+                        }
+                    }
+                    //type
+                    .pr-md{
+                        margin-left: 10px !important;
+                        i{
+                            display: inline;
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+
+    #games-online-field.Durak {
+        .mx {
+            .players {
+                height: 20%;
+                .m {
+                    height: auto;
+                    min-height: 200px;
+                    .circle-timer,
+                    .circle {
+                        width: 64px;
+                        height: 64px;
+                    }
+                    .timer-l,
+                    .timer-r {
+                        width: 64px;
+                        height: 64px;
+                        margin-left: -32px;
+                        margin-top: -32px;
+                    }
+                    .gm-pr {
+                        .pr-ph-bk {
+                            top: 6px;
+                        }
+                        .pr-ph {
+                            width: 50px;
+                            height: 50px;
+                            margin: 0;
+                        }
+                    }
+                }
+                .o {
+
+                    .circle,
+                    .circle-timer {
+                        width: 54px;
+                        height: 54px;
+                    }
+                    .timer-r ,
+                    .timer-l {
+                        width: 54px;
+                        height: 54px;
+                        margin-left: -27px;
+                        margin-top: -27px;
+                    }
+
+                    .gm-pr {
+                        margin-top: 7px;
+                        width: auto;
+                        height: 30px;
+
+                        .pr-ph {
+                            width: 40px;
+                            height: 40px;
+                            margin: 0;
+                        }
+                    }
+                    
+                }
+                .gm-pr .pr-ph-bk {
+                    width: 50px;
+                    height: 50px;
+                    position: absolute;
+                    .mt {
+                        font-size: 14px;
+                        width: auto;
+                    }
+                }
+            }
+            .o .players .o .gm-pr .pr-ph {
+                margin: 0;
+            }
+        }
+        .cards {
+            .players {
+                .o .card {
+                    margin-left: -28px;
+                    margin-top: -15px;
+                }
+                .m .small-card {
+                    transform: rotate(-1deg) scale(0.4, 0.4)!important;
+                }
+            }
+            .table {
+                .cards {
+                    .card {
+                        transform: rotate(-1deg) scale(0.4, 0.4);
+                    }
+                    div:first-of-type {
+                        transform: rotate(-1deg) scale(0.4, 0.4);
+                    }
+                }
+                > div:nth-of-type(even) {
+                    margin-top: -10px;
+                    padding-top: 0;
+                }
+            }
+            .deck {
+                .card {
+                    transform: rotate(10deg) scale(0.4, 0.4);
+                    left: -40px;
+                    &.trump {
+                        transform: rotate(100deg) scale(0.4, 0.4);
+                        top: 50px;
+                    }
+                }
+                .lear {
+                    top: 60px;
+                }
+            }
+        }
+    }
+}
+
+@media(max-width: 479px) {
+    #games-online-field{
+        &:not(.Durak){
+            .mx{
+                .msg > *{
+                    width: 100%;
+                }
+                .players{
+                    .m{
+                        //player gray field
+                        .gm-pr{
+                        }
+                        // buttons | statuses
+                        .pr-cl{
+
+                        }
+                        // player
+                        .pr-ph-bk{
+                            left: 50% !important;
+                        }
+                        // balance
+                        .pr-pt{
+                            left: 50%;
+                        }
+                        // bet
+                        .pr-pr{
+                        }
+                        //type
+                        .pr-md{
+                        }
+
+                    }
+                }
+            }    
+        }
+        .mx{
+            .players{
+                .m{
+                    //player gray field
+                    .gm-pr{
+                    }
+                    // buttons | statuses
+                    .pr-cl{
+
+                    }
+                    // player
+                    .pr-ph-bk{
+                        left: 32% !important;
+                    }
+                    // balance
+                    .pr-pt{
+                        left: 41%;
+                    }
+                    // bet
+                    .pr-pr{
+                        padding-top: 12px;
+                        .title{
+                            display: block;
+                            text-align: left;
+                        }
+                    }
+                    //type
+                    .pr-md{
+                        margin-left: 10px !important;
+                        i{
+                            display: inline;
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+    #games-online-field.Durak {
+        .cards {
+            .table {
+                width: 60%;
+                .cards {
+                    width: 33%;
+                    .card {
+                        transform: rotate(-1deg) scale(0.5, 0.5);
+                        left: 15px;
+                    }
+                    div:first-of-type {
+                        transform: rotate(-1deg) scale(0.5, 0.5);
+                    }
+                }
+            }
+            .deck {
+                width: 20%;
+                .lear {
+                    top: 85px;
+                }
+                .card {
+                    transform: rotate(10deg) scale(0.6, 0.6);
+                    &.trump {
+                        transform: rotate(100deg) scale(0.6, 0.6);
+                    }
+                }
+            }
+            .players .m .small-card {
+                transform: rotate(-1deg) scale(0.5, 0.5)!important;
+            }
+        }
+        .mx .players {
+            .gm-pr .pr-ph-bk .mt {
+                font-size: 16px;
+                margin-right: -10px;
+            }
+        }
+    }
+}
+@media(max-width: 390px) {
+    #games-online-field{
+        &:not(.Durak){
+            padding-bottom: 40px;
+            .mx{
+                .moves{
+                    &:last-child{
+                        padding-bottom: 7px;
+                    }
+
+                    [class^="mv-"]{
+                        &:after{
+                            content: '';
+                            display: block;
+                            clear: both;
+                        }
+                        div{
+                            span{
+                                font-size:14px;
+                                line-height:0.9;
+                                margin-top: 4px;
+                            }
+                            i{
+                                
+                                font-size:34px;
+                                line-height:1;
+                            }
+                        }
+                    }
+                }
+                .moves,
+                .table{
+                    width: 100% !important;
+                    padding: 0 13px;
+                    min-height: 0;
+                }
+                .players{
+                    padding: 5px 0 0 0;
+                    height: 45px;
+
+                    // move oponent before game start
+                    &.canExit{
+                        .o{
+                            .pr-ph-bk{
+                                left: 30%;
+                            }
+                        }
+                    }
+                    .circle-timer,
+                    .circle {
+                        width: 36px;
+                        height: 36px;
+                        left:-3px;
+                        top:-3px;
+                    }
+                    .timer-l,
+                    .timer-r {
+                        width: 36px;
+                        height: 36px;
+                        margin-left: -18px;
+                        margin-top: -18px;
+                        border-width: 3px;
+                    }
+                    .gm-pr {
+                        // min-width: 100%;
+                        .pr-ph {
+                            width: 30px;
+                            height: 30px;
+                            margin: 0;
+                        }
+                        .pr-ph-bk{
+                            width: 30px;
+                            height: 30px;
+                            position: absolute;
+                            left: 0;
+                        }
+                    }
+
+                    .m{
+                        //player gray field
+                        .gm-pr{
+                            height: 50px;
+                            // player
+                            .pr-ph-bk{
+                                transition: all .4s linear;
+                                left: 0 !important;
+                                margin-left: 20px;
+                                margin-top: 5px;
+                            }
+                        }
+                        // buttons | statuses
+                        .pr-cl{
+                            float: right;
+                        }
+                        // balance
+                        .pr-pt{
+                            left: 20%;
+                            padding-top: 7px;
+
+                        }
+                        // bet
+                        .pr-pr{
+                            padding-top: 7px;
+                        }
+                        //type
+                        .pr-md{
+                        }
+
+                    }
+                    .o{
+                        // float: left;
+                        min-width: 100%;
+                        float: none;
+                        margin: 0;
+                        &:after{
+                            content: '';
+                            display: block;
+                            clear: both;
+                        }
+                        .gm-pr{
+                            height: auto;
+                            min-height: 30px;
+                            width: auto;
+                        }
+                        // player
+                        .pr-ph-bk{
+                            // left: 50% !important;
+                        }
+                        .pr-nm{
+                            padding: 7px 0 0 15px;
+                        }
+                    }
+                }
+            }    
+        }
+    }
+}
+@media(max-width: 320px) {
+    #games-online-field{
+        &:not(.Durak){
+            .mx{
+                .players{
+                    .m{
+                        //player gray field
+                        .gm-pr{
+                        }
+                        // buttons | statuses
+                        .pr-cl{
+
+                        }
+                        // player
+                        .pr-ph-bk{
+                            // left: 50% !important;
+                        }
+                        // balance
+                        .pr-pt{
+                            // left: 50%;
+                        }
+                        // bet
+                        .pr-pr{
+                        }
+                        //type
+                        .pr-md{
+                        }
+
+                    }
+                }
+            }    
+        }
+    }
+}
+
+@media(max-height: 550px) and(max-width: 1010px) and(orientation: landscape) {
+    #games-online-field{
+        .mx{
+            .players{
+                .m{
+                    //player gray field
+                    .gm-pr{
+                    }
+                    // buttons | statuses
+                    .pr-cl{
+
+                    }
+                    // player
+                    .pr-ph-bk{
+                        left: 47% !important;
+                    }
+                    // balance
+                    .pr-pt{
+                        left: 50%;
+                    }
+                    // bet
+                    .pr-pr{
+                        padding-top: 12px;
+                        .title{
+                            display: block;
+                            text-align: left;
+                        }
+                    }
+                    //type
+                    .pr-md{
+                        margin-left: 10px !important;
+                        i{
+                            display: inline;
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+    #games-online-field.Durak {
+        .cards {
+            .players {
+                .o .card {
+                    margin-left: -28px;
+                    margin-top: -15px;
+                }
+                .m .small-card {
+                    transform: rotate(-1deg) scale(0.4, 0.4)!important;
+                }
+            }
+            .deck {
+                width: 18%;
+                .lear {
+                    top: 60px;
+                }
+                .card {
+                    transform: rotate(10deg) scale(0.4, 0.4);
+                    left: -40px;
+                    &.trump {
+                        transform: rotate(100deg) scale(0.4, 0.4);
+                        top: 50px;
+                    }
+                }
+            }
+            .table {
+                width: 75%;
+                .cards {
+                    div {
+                        margin-left: -30px;
+                        &:first-of-type {
+                            transform: rotate(-1deg) scale(0.4, 0.4);
+                        }
+                    }
+                    .card {
+                        transform: rotate(-1deg) scale(0.4, 0.4);
+                    }
+                }
+                > div:nth-of-type(even) {
+                    margin-top: -10px;
+                    padding-top: 0;
+                }
+            }
+        }
+        .mx .players {
+            height: 20%;
+            .m {
+                height: auto;
+                min-height: 200px;
+
+                .circle-timer,
+                .circle {
+                    width: 64px;
+                    height: 64px;
+                }
+                .timer-l,
+                .timer-r {
+                    width: 64px;
+                    height: 64px;
+                    margin-left: -32px;
+                    margin-top: -32px;
+                }
+
+                .gm-pr {
+                    height: 60px;
+                    margin: 0;
+                    .pr-ph-bk {
+                        top: 6px;
+                        left: 35%;
+                    }
+                    .pr-ph {
+                        width: 50px;
+                        height: 50px;
+                        margin: 0;
+                    }
+                }
+            }
+            .o {
+                .circle,
+                .circle-timer {
+                    width: 54px;
+                    height: 54px;
+                }
+                .timer-r ,
+                .timer-l {
+                    width: 54px;
+                    height: 54px;
+                    margin-left: -27px;
+                    margin-top: -27px;
+                }
+                .pr-ph-bk{
+                    position: relative;
+                    top: -20px;
+                }
+                .gm-pr {
+                    width: auto;
+                    height: 30px;
+                    .pr-ph {
+                        width: 40px;
+                        height: 40px;
+                    }
+                }   
+            }
+        }
+    }
+}

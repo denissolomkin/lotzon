@@ -482,6 +482,356 @@ header {
     /*float: none;*/
     /*padding-top: 1px;*/ } }
 
+#games-online-field:not(.Durak) {
+  height: 100%; }
+  #games-online-field:not(.Durak) > *:last-child {
+    height: 100%; }
+  #games-online-field:not(.Durak) .mx {
+    height: 100%; }
+  #games-online-field:not(.Durak) .wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; }
+
+#games-online-field.Durak .content-box-content {
+  min-height: 0; }
+
+#games-online-field.Durak .mx .players .m {
+  height: auto;
+  min-height: 220px; }
+
+#games-online-field.Durak .mx .players .o .gm-pr .pr-nm {
+  width: 100%;
+  background: rgba(64, 64, 64, 0.6);
+  color: white;
+  top: 40px;
+  padding: 2px;
+  position: absolute;
+  border-radius: 3px;
+  font: 8px/1 "handbookpro-regular";
+  margin: 0 auto;
+  text-align: center; }
+
+#games-online-field.Durak .cards .deck .card {
+  transform: rotate(10deg) scale(0.7, 0.7);
+  left: -60px; }
+  #games-online-field.Durak .cards .deck .card.trump {
+    transform: rotate(100deg) scale(0.7, 0.7); }
+
+@media (max-width: 650px) {
+  #games-online-field .mx .players .m .gm-pr {
+    padding: 0 10px; } }
+
+@media (max-width: 550px) {
+  #games-online-field:not(.Durak) .mx .players .m .gm-pr .pr-ph-bk {
+    top: 5px; }
+  #games-online-field .mx .players .circle-timer,
+  #games-online-field .mx .players .circle {
+    width: 64px;
+    height: 64px; }
+  #games-online-field .mx .players .timer-l,
+  #games-online-field .mx .players .timer-r {
+    width: 64px;
+    height: 64px;
+    margin-left: -32px;
+    margin-top: -32px; }
+  #games-online-field .mx .players .gm-pr .pr-ph {
+    width: 50px;
+    height: 50px;
+    margin: 0; }
+  #games-online-field .mx .players .gm-pr .pr-ph-bk {
+    width: 50px;
+    height: 50px;
+    position: absolute; }
+  #games-online-field .mx .players .m .gm-pr {
+    height: 60px;
+    margin: 0; }
+  #games-online-field .mx .players .m .pr-pt {
+    padding-top: 12px;
+    padding-left: 37px; }
+  #games-online-field .mx .players .m .pr-pr {
+    padding-top: 12px; }
+    #games-online-field .mx .players .m .pr-pr .title {
+      display: block;
+      text-align: left; }
+  #games-online-field .mx .players .m .pr-md {
+    margin-left: 10px !important; }
+    #games-online-field .mx .players .m .pr-md i {
+      display: inline; }
+  #games-online-field.Durak .mx .players {
+    height: 20%; }
+    #games-online-field.Durak .mx .players .m {
+      height: auto;
+      min-height: 200px; }
+      #games-online-field.Durak .mx .players .m .circle-timer,
+      #games-online-field.Durak .mx .players .m .circle {
+        width: 64px;
+        height: 64px; }
+      #games-online-field.Durak .mx .players .m .timer-l,
+      #games-online-field.Durak .mx .players .m .timer-r {
+        width: 64px;
+        height: 64px;
+        margin-left: -32px;
+        margin-top: -32px; }
+      #games-online-field.Durak .mx .players .m .gm-pr .pr-ph-bk {
+        top: 6px; }
+      #games-online-field.Durak .mx .players .m .gm-pr .pr-ph {
+        width: 50px;
+        height: 50px;
+        margin: 0; }
+    #games-online-field.Durak .mx .players .o .circle,
+    #games-online-field.Durak .mx .players .o .circle-timer {
+      width: 54px;
+      height: 54px; }
+    #games-online-field.Durak .mx .players .o .timer-r,
+    #games-online-field.Durak .mx .players .o .timer-l {
+      width: 54px;
+      height: 54px;
+      margin-left: -27px;
+      margin-top: -27px; }
+    #games-online-field.Durak .mx .players .o .gm-pr {
+      margin-top: 7px;
+      width: auto;
+      height: 30px; }
+      #games-online-field.Durak .mx .players .o .gm-pr .pr-ph {
+        width: 40px;
+        height: 40px;
+        margin: 0; }
+    #games-online-field.Durak .mx .players .gm-pr .pr-ph-bk {
+      width: 50px;
+      height: 50px;
+      position: absolute; }
+      #games-online-field.Durak .mx .players .gm-pr .pr-ph-bk .mt {
+        font-size: 14px;
+        width: auto; }
+  #games-online-field.Durak .mx .o .players .o .gm-pr .pr-ph {
+    margin: 0; }
+  #games-online-field.Durak .cards .players .o .card {
+    margin-left: -28px;
+    margin-top: -15px; }
+  #games-online-field.Durak .cards .players .m .small-card {
+    transform: rotate(-1deg) scale(0.4, 0.4) !important; }
+  #games-online-field.Durak .cards .table .cards .card {
+    transform: rotate(-1deg) scale(0.4, 0.4); }
+  #games-online-field.Durak .cards .table .cards div:first-of-type {
+    transform: rotate(-1deg) scale(0.4, 0.4); }
+  #games-online-field.Durak .cards .table > div:nth-of-type(even) {
+    margin-top: -10px;
+    padding-top: 0; }
+  #games-online-field.Durak .cards .deck .card {
+    transform: rotate(10deg) scale(0.4, 0.4);
+    left: -40px; }
+    #games-online-field.Durak .cards .deck .card.trump {
+      transform: rotate(100deg) scale(0.4, 0.4);
+      top: 50px; }
+  #games-online-field.Durak .cards .deck .lear {
+    top: 60px; } }
+
+@media (max-width: 479px) {
+  #games-online-field:not(.Durak) .mx .msg > * {
+    width: 100%; }
+  #games-online-field:not(.Durak) .mx .players .m .pr-ph-bk {
+    left: 50% !important; }
+  #games-online-field:not(.Durak) .mx .players .m .pr-pt {
+    left: 50%; }
+  #games-online-field .mx .players .m .pr-ph-bk {
+    left: 32% !important; }
+  #games-online-field .mx .players .m .pr-pt {
+    left: 41%; }
+  #games-online-field .mx .players .m .pr-pr {
+    padding-top: 12px; }
+    #games-online-field .mx .players .m .pr-pr .title {
+      display: block;
+      text-align: left; }
+  #games-online-field .mx .players .m .pr-md {
+    margin-left: 10px !important; }
+    #games-online-field .mx .players .m .pr-md i {
+      display: inline; }
+  #games-online-field.Durak .cards .table {
+    width: 60%; }
+    #games-online-field.Durak .cards .table .cards {
+      width: 33%; }
+      #games-online-field.Durak .cards .table .cards .card {
+        transform: rotate(-1deg) scale(0.5, 0.5);
+        left: 15px; }
+      #games-online-field.Durak .cards .table .cards div:first-of-type {
+        transform: rotate(-1deg) scale(0.5, 0.5); }
+  #games-online-field.Durak .cards .deck {
+    width: 20%; }
+    #games-online-field.Durak .cards .deck .lear {
+      top: 85px; }
+    #games-online-field.Durak .cards .deck .card {
+      transform: rotate(10deg) scale(0.6, 0.6); }
+      #games-online-field.Durak .cards .deck .card.trump {
+        transform: rotate(100deg) scale(0.6, 0.6); }
+  #games-online-field.Durak .cards .players .m .small-card {
+    transform: rotate(-1deg) scale(0.5, 0.5) !important; }
+  #games-online-field.Durak .mx .players .gm-pr .pr-ph-bk .mt {
+    font-size: 16px;
+    margin-right: -10px; } }
+
+@media (max-width: 390px) {
+  #games-online-field:not(.Durak) {
+    padding-bottom: 40px; }
+    #games-online-field:not(.Durak) .mx .moves:last-child {
+      padding-bottom: 7px; }
+    #games-online-field:not(.Durak) .mx .moves [class^="mv-"]:after {
+      content: '';
+      display: block;
+      clear: both; }
+    #games-online-field:not(.Durak) .mx .moves [class^="mv-"] div span {
+      font-size: 14px;
+      line-height: 0.9;
+      margin-top: 4px; }
+    #games-online-field:not(.Durak) .mx .moves [class^="mv-"] div i {
+      font-size: 34px;
+      line-height: 1; }
+    #games-online-field:not(.Durak) .mx .moves,
+    #games-online-field:not(.Durak) .mx .table {
+      width: 100% !important;
+      padding: 0 13px;
+      min-height: 0; }
+    #games-online-field:not(.Durak) .mx .players {
+      padding: 5px 0 0 0;
+      height: 45px; }
+      #games-online-field:not(.Durak) .mx .players.canExit .o .pr-ph-bk {
+        left: 30%; }
+      #games-online-field:not(.Durak) .mx .players .circle-timer,
+      #games-online-field:not(.Durak) .mx .players .circle {
+        width: 36px;
+        height: 36px;
+        left: -3px;
+        top: -3px; }
+      #games-online-field:not(.Durak) .mx .players .timer-l,
+      #games-online-field:not(.Durak) .mx .players .timer-r {
+        width: 36px;
+        height: 36px;
+        margin-left: -18px;
+        margin-top: -18px;
+        border-width: 3px; }
+      #games-online-field:not(.Durak) .mx .players .gm-pr .pr-ph {
+        width: 30px;
+        height: 30px;
+        margin: 0; }
+      #games-online-field:not(.Durak) .mx .players .gm-pr .pr-ph-bk {
+        width: 30px;
+        height: 30px;
+        position: absolute;
+        left: 0; }
+      #games-online-field:not(.Durak) .mx .players .m .gm-pr {
+        height: 50px; }
+        #games-online-field:not(.Durak) .mx .players .m .gm-pr .pr-ph-bk {
+          transition: all .4s linear;
+          left: 0 !important;
+          margin-left: 20px;
+          margin-top: 5px; }
+      #games-online-field:not(.Durak) .mx .players .m .pr-cl {
+        float: right; }
+      #games-online-field:not(.Durak) .mx .players .m .pr-pt {
+        left: 20%;
+        padding-top: 7px; }
+      #games-online-field:not(.Durak) .mx .players .m .pr-pr {
+        padding-top: 7px; }
+      #games-online-field:not(.Durak) .mx .players .o {
+        min-width: 100%;
+        float: none;
+        margin: 0; }
+        #games-online-field:not(.Durak) .mx .players .o:after {
+          content: '';
+          display: block;
+          clear: both; }
+        #games-online-field:not(.Durak) .mx .players .o .gm-pr {
+          height: auto;
+          min-height: 30px;
+          width: auto; }
+        #games-online-field:not(.Durak) .mx .players .o .pr-nm {
+          padding: 7px 0 0 15px; } }
+
+@media (max-height: 550px) and (max-width: 1010px) and (orientation: landscape) {
+  #games-online-field .mx .players .m .pr-ph-bk {
+    left: 47% !important; }
+  #games-online-field .mx .players .m .pr-pt {
+    left: 50%; }
+  #games-online-field .mx .players .m .pr-pr {
+    padding-top: 12px; }
+    #games-online-field .mx .players .m .pr-pr .title {
+      display: block;
+      text-align: left; }
+  #games-online-field .mx .players .m .pr-md {
+    margin-left: 10px !important; }
+    #games-online-field .mx .players .m .pr-md i {
+      display: inline; }
+  #games-online-field.Durak .cards .players .o .card {
+    margin-left: -28px;
+    margin-top: -15px; }
+  #games-online-field.Durak .cards .players .m .small-card {
+    transform: rotate(-1deg) scale(0.4, 0.4) !important; }
+  #games-online-field.Durak .cards .deck {
+    width: 18%; }
+    #games-online-field.Durak .cards .deck .lear {
+      top: 60px; }
+    #games-online-field.Durak .cards .deck .card {
+      transform: rotate(10deg) scale(0.4, 0.4);
+      left: -40px; }
+      #games-online-field.Durak .cards .deck .card.trump {
+        transform: rotate(100deg) scale(0.4, 0.4);
+        top: 50px; }
+  #games-online-field.Durak .cards .table {
+    width: 75%; }
+    #games-online-field.Durak .cards .table .cards div {
+      margin-left: -30px; }
+      #games-online-field.Durak .cards .table .cards div:first-of-type {
+        transform: rotate(-1deg) scale(0.4, 0.4); }
+    #games-online-field.Durak .cards .table .cards .card {
+      transform: rotate(-1deg) scale(0.4, 0.4); }
+    #games-online-field.Durak .cards .table > div:nth-of-type(even) {
+      margin-top: -10px;
+      padding-top: 0; }
+  #games-online-field.Durak .mx .players {
+    height: 20%; }
+    #games-online-field.Durak .mx .players .m {
+      height: auto;
+      min-height: 200px; }
+      #games-online-field.Durak .mx .players .m .circle-timer,
+      #games-online-field.Durak .mx .players .m .circle {
+        width: 64px;
+        height: 64px; }
+      #games-online-field.Durak .mx .players .m .timer-l,
+      #games-online-field.Durak .mx .players .m .timer-r {
+        width: 64px;
+        height: 64px;
+        margin-left: -32px;
+        margin-top: -32px; }
+      #games-online-field.Durak .mx .players .m .gm-pr {
+        height: 60px;
+        margin: 0; }
+        #games-online-field.Durak .mx .players .m .gm-pr .pr-ph-bk {
+          top: 6px;
+          left: 35%; }
+        #games-online-field.Durak .mx .players .m .gm-pr .pr-ph {
+          width: 50px;
+          height: 50px;
+          margin: 0; }
+    #games-online-field.Durak .mx .players .o .circle,
+    #games-online-field.Durak .mx .players .o .circle-timer {
+      width: 54px;
+      height: 54px; }
+    #games-online-field.Durak .mx .players .o .timer-r,
+    #games-online-field.Durak .mx .players .o .timer-l {
+      width: 54px;
+      height: 54px;
+      margin-left: -27px;
+      margin-top: -27px; }
+    #games-online-field.Durak .mx .players .o .pr-ph-bk {
+      position: relative;
+      top: -20px; }
+    #games-online-field.Durak .mx .players .o .gm-pr {
+      width: auto;
+      height: 30px; }
+      #games-online-field.Durak .mx .players .o .gm-pr .pr-ph {
+        width: 40px;
+        height: 40px; } }
+
 .moment-game-box:before {
   display: none; }
 
