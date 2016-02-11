@@ -1360,7 +1360,7 @@ div.comment-reply-btn {
   #users-view-message .message-form hr {
     margin: 5px -20px 5px; }
   #users-view-message .content-box-item {
-    padding: 20px; }
+    padding: 40px 20px 0; }
   /*.games-chance {
   padding: 30px 30px 0;
 }

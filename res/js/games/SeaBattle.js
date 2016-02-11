@@ -4,14 +4,13 @@
 
         ships: [],
         game_ships: [],
-        buttons:{
+        buttons: {
             random: {
-                class: 'btn-primary btn-sb-ready',
-                action: 'random',
+                class: 'btn-primary btn-sb-random',
                 title: 'button-game-random'
             },
             ready: {
-                class: 'btn-secondary btn-sb-random',
+                class: 'btn-secondary btn-sb-ready',
                 action: 'ready',
                 title: 'button-game-ready'
             }
@@ -24,13 +23,13 @@
                 if (Game.hasField()) {
 
                     Game.run() && Apps.SeaBattle.drawField();
-                    Apps.SeaBattle.initStatuses();
-                    Apps.SeaBattle.initTimers();
+                    Game.drawButtons();
 
-                    switch(App.action) {
+                    switch (App.action) {
 
                         case 'field':
-                            Apps.SeaBattle.game_ships = Apps.SeaBattle.ships;
+                            App.current = Player.id;
+                            Apps.SeaBattle.game_ships = App.ships;
                             Apps.SeaBattle.genFieldSeaBattle();
                             Game.drawButtons([
                                 Apps.SeaBattle.buttons.random,
@@ -39,28 +38,44 @@
                             break;
 
                         case 'start':
-                            $('ul.mx.SeaBattle.m div').remove();
-                            $('.mx.place').hide();
-                            $('.mx.SeaBattle.o').show();
+                            $('.SeaBattle ul.table.m div').remove();
+                            $('.SeaBattle .place').hide();
+                            $('.SeaBattle ul.table.o').show();
+                            break;
+
+                        case 'ready':
+                            for (var playerId in App.players)
+                                if (App.players.hasOwnProperty(playerId) && playerId != Player.id && (App.current = playerId))
+                                    break;
+                            Game.drawButtons('title-game-waiting-player');
                             break;
 
                         case 'wait':
-                            Game.drawButtons('game-waiting-for-opponent');
+                            for (var playerId in App.players)
+                                if (App.players.hasOwnProperty(playerId) && playerId != Player.id && (App.current = playerId))
+                                    break;
+                            Game.drawButtons('title-game-waiting-player');
                             break;
 
                         case 'move':
+                            $('ul', $(Game.field)).css('opacity', 1).css('border', '1px solid red');
+                            $('ul.player' + App.current, $(Game.field)).css('opacity', 0.7).css('border', 'none');
+                            Apps.SeaBattle.paintCell();
+                            break;
+
+                        case 'stack':
                             break;
                     }
 
-                    Apps.SeaBattle.drawPlayerFields();
-                    Apps.SeaBattle.paintCell();
+                    Apps.SeaBattle.drawShips();
+                    Game.initTimers();
                     Game.end() && Apps.SeaBattle.end();
                 }
 
             },
 
             error: function () {
-
+                alert(App.error);
             },
         },
 
@@ -85,34 +100,48 @@
 
             var field = Game.field.getElementsByClassName('mx')[0];
 
-            field.innerHTML +=
-                '<ul class="mx SeaBattle m"></ul>' +
-                '<div class="mx place">Расставьте корабли в необходимом порядке.<br><br>Что бы изменить ориентацию корабля, кликните по нему дважды.' +
-                '<ul class="mx SeaBattle o"></ul>';
+            if (App.variation && App.variation.field) {
 
-            if(App.variation && App.variation.field){
-
-                var field = App.variation.field.split('x'),
-                    width = height = Math.min( Math.floor((220 - (field[0]-1)) / field[0]), Math.floor((440 - field[1]) / field[0]))+'px;',
-                    font = (parseInt(width) / 1.6) + 'px/'+ (parseInt(width))+'px Handbook-bold;',
+                var fieldSize = App.variation.field.split('x'),
+                    width = height = Math.min(Math.floor((220 - (fieldSize[0] - 1)) / fieldSize[0]), Math.floor((440 - fieldSize[1]) / fieldSize[0])) + 'px;',
+                    font = (parseInt(width) / 1.6) + 'px/' + (parseInt(width)) + 'px Handbook-bold;',
                     html = '';
 
-                for(i=1;i<=field[1];i++)
-                    for(j=1;j<=field[0];j++)
-                        html+="<li style='width:"+width+"height:"+height+"font:"+font+(j==field[0]?"margin-right: 0px;":"")+"' data-coor='"+j+"x"+i+"'></li>";
+                for (i = 1; i <= fieldSize[1]; i++)
+                    for (j = 1; j <= fieldSize[0]; j++)
+                        html += "<li style='width:" + width + "height:" + height + "font:" + font + (j == fieldSize[0] ? "margin-right: 0px;" : "")
+                            + "' data-coor='" + j + "x" + i + "'></li>";
 
-                $('ul.mx', $(Game.field)).html(html);
+                for (var playerId in App.players) {
+
+                    var playerClass = 'player' + playerId + ' ' + (Player.id == playerId ? 'm' : 'o');
+
+                    field.innerHTML +=
+                        '<ul class="table ' + playerClass + '">' + html + '</ul>';
+
+                    var li = field.querySelectorAll('.player' + playerId + ' li');
+
+                    for (var index = 0; index < li.length; index++) {
+                        var cellAttr = li[index].getAttribute('data-coor') + 'x' + playerId;
+                        li[index].setAttribute('data-cell', cellAttr);
+                        playerId == Player.id && li[index].classList.add('m');
+                    }
+                }
+
+                field.innerHTML += '<div class="place" style="inline-block">' + i18n("text-game-place-ships") + '</div>';
+
             }
         },
 
-        drawPlayerFields: function(){
+        drawShips: function () {
             if (App.fields) {
                 $.each(App.fields, function (index, field) {
-                    class_cell = (index == Player.id ? 'm' : 'o');
                     $.each(field, function (x, cells) {
                         $.each(cells, function (y, cell) {
-                            cell.coord = x+'x'+y+'x'+index;
-                            Apps.SeaBattle.paintCell(cell);
+                            Apps.SeaBattle.paintCell({
+                                coord: x + 'x' + y + 'x' + index,
+                                class: cell
+                            });
                         });
                     });
                 });
@@ -123,43 +152,56 @@
 
             if ((cell = cell || App.cell)) {
 
-                class_cell = (cell.coord.split("x")[2] == Player.id ? 'm' : 'o');
+                var playerId = (cell.coord.split("x")[2]),
+                    classCell = playerId == Player.id ? 'm' : 'o',
+                    $gameField = $(Game.field),
+                    $cell = $('ul li[data-cell="' + cell.coord + '"]', $gameField);
 
                 if (move = cell.class == 'e' ? 1 : cell.class == 'd' ? 2 : cell.class == 'k' ? 3 : null)
-                    Apps.playAudio([App.key, 'Move-' + class_cell + '-' + move]);
+                    Apps.playAudio([App.key, 'Move-' + classCell + '-' + move]);
 
-                $('ul.mx.' + class_cell + ' li.last', $(Game.field)).removeClass('last');
+                $('ul.player' + playerId + ' li.last', $gameField).removeClass('last');
 
-                var $cell = $('ul.mx li[data-cell="' + cell.coord + '"]', $(Game.field));
+                $cell
+                    .addClass((isNumeric(cell.class) ? 's' : cell.class) + ' last')
+                    .addClass(classCell)
+                    .html(cell.class == 'd' ? "<img src='tpl/img/games/damage.png'>" : '');
 
-                if(cell!=App.cell){
+                if (cell != App.cell) {
 
-                    $cell
-                        .addClass((isNumeric(cell) ? 's' : cell) + ' last')
-                        .addClass(class_cell)
-                        .fadeIn(100)
-                        .html(cell == 'd' ? "<img src='tpl/img/games/damage.png'>" : '');
+                    $cell.fadeIn(100);
 
                 } else {
 
+                    var div = '<div class="' + cell.class + '" style="background:'
+                        + $cell.css('background')
+                        + ';width:' + $cell.css('width')
+                        + ';height:' + $cell.css('height') + '"></div>';
+
                     $cell
-                        .addClass(cell.class)
-                        .html(
-                            '<div class="' + cell.class + '" style="background:'
-                            + $('.ngm-bk .ngm-gm .gm-mx ul.mx li[data-cell="' + cell.coord + '"]')
-                                .css('background') + ';width:' + cell.css('width') + ';height:' + cell.css('height') + '"></div>')
+                        .html(div)
                         .find('div')
                         .effect('explode', {pieces: 4}, 500)
-                        .parent().addClass(class_cell + ' last')
-                        .fadeIn(300)
-                        .html(cell.class == 'd' ? "<img src='tpl/img/games/damage.png'>" : '');
+                        .parent()
+                        .fadeIn(300);
                 }
             }
         },
 
+
+        'end': function () {
+
+            $('.SeaBattle .mx ul.o li.s:not(.d,.k)').effect('pulsate', {times: 10});
+            Game.drawWinButtons([
+                Game.buttons.replay,
+                Game.buttons.exit
+            ]);
+
+        },
+
         checkFieldSeaBattle: function (newship, id) {
 
-            var size = $('.mx.SeaBattle:eq(1) li').last().attr('data-coor').split('x');
+            var size = $('.SeaBattle .mx .table:eq(1) li').last().attr('data-coor').split('x');
             var size_x = size[0];
             var size_y = size[1];
 
@@ -232,25 +274,24 @@
 
             Apps.SeaBattle.ships = [];
 
-            var size = $('.mx.SeaBattle:eq(1) li').last().attr('data-coor').split('x');
-            var size_x = size[0];
-            var size_y = size[1];
+            var size = $('.SeaBattle .table:eq(1) li').last().attr('data-coor').split('x'),
+                size_x = size[0],
+                size_y = size[1],
+                matrix = [
+                    [-1, -1], [-1, 0], [-1, 1],
+                    [0, -1], [0, 0], [0, 1],
+                    [1, -1], [1, 0], [1, 1]
+                ],
+                game_ships = Apps.SeaBattle.game_ships,
+                field = [],
+                iterration = 0,
+                count = 0;
 
-            matrix = [
-                [-1, -1], [-1, 0], [-1, 1],
-                [0, -1], [0, 0], [0, 1],
-                [1, -1], [1, 0], [1, 1]
-            ];
-
-            var game_ships = Apps.SeaBattle.game_ships;
-            var field = [];
             for (y = 1; y <= size_y; y++) {
                 field[y] = [];
                 for (x = 1; x <= size_x; x++)
                     field[y][x] = 0;
             }
-            var iterration = 0;
-            var count = 0;
 
             loop: while (Apps.SeaBattle.ships.length != game_ships.length) {
 
@@ -292,9 +333,11 @@
                 iterration++;
 
             }
-            var wid = parseFloat($('.mx.SeaBattle:eq(1) li').last().css('width'));
-            var hei = parseFloat($('.mx.SeaBattle:eq(1) li').last().css('height'));
-            var html = '';
+
+            var wid = parseFloat($('.SeaBattle ul:eq(1) li').last().css('width')),
+                hei = parseFloat($('.SeaBattle ul:eq(1) li').last().css('height')),
+                html = '';
+
             $.each(Apps.SeaBattle.ships, function (index, ship) {
                 html += '<div data-id="' + index + '" ' +
                     'style="' +
@@ -304,8 +347,8 @@
                         : 'height: ' + (ship[2] * (hei + 1)) + 'px;width:' + (wid + 1) + 'px;') + '" class="s ' + (ship[1] ? 'h' : '') + ' drag"></div>';
             });
 
-            $('ul.mx.SeaBattle.m div').remove();
-            $("ul.SeaBattle.m").append(html);
+            $(".SeaBattle ul.m div").remove();
+            $(".SeaBattle ul.m").append(html);
 
             $(".drag").dblclick(function () {
                 var drag = $(this)
@@ -316,7 +359,7 @@
                 var ship = [].concat(Apps.SeaBattle.ships[drag.data('id')]);
                 ship[1] = v;
 
-                if (checkFieldSeaBattle(ship, $(this).data('id'))) {
+                if (Apps.SeaBattle.checkFieldSeaBattle(ship, $(this).data('id'))) {
                     $(this).css('width', w).css('height', h).removeClass('h').addClass(v ? 'h' : '');
                     Apps.SeaBattle.ships[$(this).data('id')][1] = v;
                 } else {
@@ -339,7 +382,7 @@
                         (parseInt($(this).css('top')) + (hei + 1)) / (hei + 1)
                     ];
 
-                    if (checkFieldSeaBattle(ship, $(this).data('id'))) {
+                    if (Apps.SeaBattle.checkFieldSeaBattle(ship, $(this).data('id'))) {
                         Apps.SeaBattle.ships[$(this).data('id')][0] = [
                             (parseInt($(this).css('left')) + (wid + 1)) / (wid + 1),
                             (parseInt($(this).css('top')) + (hei + 1)) / (hei + 1)

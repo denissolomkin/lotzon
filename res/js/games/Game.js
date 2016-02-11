@@ -103,6 +103,25 @@
             }
         },
 
+        'initTimers': function() {
+
+            if (App.players) {
+                for (var index in App.players) {
+                    if (App.players.hasOwnProperty(index)) {
+
+                        Game.playerTimer
+                            .remove(index);
+
+                        if (App.current && index == App.current)
+                            Game.playerTimer
+                                .add();
+                    }
+                }
+            } else
+                alert('Empty players in drawTimer');
+
+        },
+
         playerTimer: {
 
             add: function(index){
@@ -268,12 +287,18 @@
         },
 
         drawButtons: function(buttons) {
+
+            if(typeof buttons == 'string')
+                return Game.drawButtons([buttons]);
+
             var playerButtons = document.querySelector('.mx .players .pr-cl'),
                 html = '';
 
             for(var index in buttons){
-                if(typeof  buttons[index] == 'object') {
-                    html += '<button class="' + buttons[index].class + '" data-action="' + buttons[index].action + '">' + i18n(buttons[index].title) + '</button>';
+                if(typeof buttons[index] == 'object') {
+                    html += '<button class="' + buttons[index].class + '"'
+                        + ( buttons[index].hasOwnProperty('action') ? ' data-action="' + buttons[index].action + '"' : '' )
+                        + '>' + i18n(buttons[index].title) + '</button>';
                 } else if(typeof buttons[index] == 'string') {
                     html += '<div>' + i18n(buttons[index]) + '</div>';
                 }
@@ -413,7 +438,7 @@
         onTimeOut: function () {
 
             console.info('тайм-аут');
-            Games.timer.removeAll();
+            Game.playerTimer.removeAll();
 
             var path = 'app/' + App.id + '/' + App.uid,
                 data = {'action': 'timeout'};
@@ -501,12 +526,14 @@
 
             button: function() {
 
-                var path = 'app/' + App.id + '/' + App.uid,
-                    data = {
-                        'action': this.getAttribute('data-action')
-                    };
+                if(this.getAttribute('data-action')) {
+                    var path = 'app/' + App.id + '/' + App.uid,
+                        data = {
+                            'action': this.getAttribute('data-action')
+                        };
 
-                WebSocketAjaxClient(path, data);
+                    WebSocketAjaxClient(path, data);
+                }
 
             },
 

@@ -1,5 +1,6 @@
 #R2D2{
     display: none;
+    // 
 }
 // GAMES <<CHANCE>> -------------------- //
 
@@ -1822,15 +1823,18 @@ footer.unvisible {
 
                     .circle-timer,
                     .circle {
-                        width: 44px;
-                        height: 44px;
+                        width: 36px;
+                        height: 36px;
+                        left:-3;
+                        top:-3;
                     }
                     .timer-l,
                     .timer-r {
-                        width: 44px;
-                        height: 44px;
+                        width: 36px;
+                        height: 36px;
                         margin-left: -22px;
                         margin-top: -22px;
+                        border-width: 3px;
                     }
                     .gm-pr {
                         .pr-ph {
@@ -1849,11 +1853,12 @@ footer.unvisible {
                     .m{
                         //player gray field
                         .gm-pr{
-                            height: 40px;
+                            height: 50px;
                             // player
                             .pr-ph-bk{
                                 left: 0 !important;
                                 margin-left: 20px;
+                                margin-top: 5px;
                             }
                         }
                         // buttons | statuses
@@ -1863,12 +1868,12 @@ footer.unvisible {
                         // balance
                         .pr-pt{
                             left: 20%;
-                            padding-top: 2px;
+                            padding-top: 7px;
 
                         }
                         // bet
                         .pr-pr{
-                            padding-top: 2px;
+                            padding-top: 7px;
                         }
                         //type
                         .pr-md{

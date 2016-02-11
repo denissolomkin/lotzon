@@ -35,15 +35,15 @@ $(function () {
             }
         },
         onincomplete: function () {
-            $(this).val() && $(this).addClass('incomplete error').removeClass('complete').parent().addClass('error');
+            $(this).val() && $(this).addClass('incomplete error').removeClass('complete').parent().parent().addClass('error');
             Form.do.validate.call(this);
         },
         oncomplete: function () {
-            $(this).removeClass('incomplete error').addClass('complete').parent().removeClass('error');
+            $(this).removeClass('incomplete error').addClass('complete').parent().parent().removeClass('error');
             Form.do.validate.call(this);
         },
         oncleared: function () {
-            $(this).removeClass('incomplete error complete').parent().removeClass('error');
+            $(this).removeClass('incomplete error complete').parent().parent().removeClass('error');
             Form.do.validate.call(this);
         },
         autoUnmask: true,

@@ -10,7 +10,7 @@
                 if (Game.hasField()) {
                     Game.run() && Apps.WhoMore.drawField();
                     Apps.WhoMore.initStatuses();
-                    Apps.WhoMore.initTimers();
+                    Game.initTimers();
                     Apps.WhoMore.paintCell();
                     Game.end() && Apps.WhoMore.end();
                 }
@@ -58,25 +58,6 @@
             } else
                 alert('Empty players in initStatuses');
 
-
-        },
-
-        'initTimers': function() {
-
-            if (App.players) {
-                for (var index in App.players) {
-                    if (App.players.hasOwnProperty(index)) {
-
-                        Game.playerTimer
-                            .remove(index);
-
-                        if (App.current && index == App.current)
-                            Game.playerTimer
-                                .add();
-                    }
-                }
-            } else
-                alert('Empty players in drawTimer');
 
         },
 
@@ -165,11 +146,9 @@
         'end': function(){
 
             Game.drawWinButtons([
-                // Game.buttons.start,
                 Game.buttons.replay,
                 Game.buttons.exit
             ]);
-            
 
         }
 

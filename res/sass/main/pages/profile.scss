@@ -949,7 +949,7 @@ div.rules-text {
 .ci-personal-form-names li {
   height: 45px;
   line-height: 45px;
-  margin: 0 -20px;
+  margin: 0 0 0 -20px;
   padding: 0 20px;
   border-bottom: 1px solid #eaeaea;
   box-sizing: border-box;
@@ -961,15 +961,29 @@ div.rules-text {
 .ci-personal-form-values li {
   position: relative;
 }
-
-.ci-personal-form-values {
+.ci-personal-form-names li.error {
+  border-top: 1px solid #FF2619;
+  border-bottom: 1px solid #FF2619;
   input.error {
+  color: #FF2619;
+    &:focus {
+      color: #000;
+    }
+  }
+}
+.ci-personal-form-values.error {
+  width: 100%;
   border-top: 1px solid #FF2619;
   border-bottom: 1px solid #FF2619;
   color: #FF2619;
+  position: absolute;
+  margin-left: -20px;
+  z-index: 0;
+  background: transparent;
+  height: 45px;
+  input.error {
+  color: #FF2619;
     &:focus {
-      border-bottom: 1px solid #eaeaea;
-      border-top: none;
       color: #000;
     }
   }
@@ -990,6 +1004,7 @@ div.rules-text {
   height: 45px;
   line-height: 45px;
   margin-left: 18px;
+  min-width: 160px;
   &.input-prefix {
     padding-left: 165px;
   }

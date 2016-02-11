@@ -7913,7 +7913,7 @@ div.rules-text {
 .ci-personal-form-names li {
   height: 45px;
   line-height: 45px;
-  margin: 0 -20px;
+  margin: 0 0 0 -20px;
   padding: 0 20px;
   border-bottom: 1px solid #eaeaea;
   box-sizing: border-box;
@@ -7923,14 +7923,28 @@ div.rules-text {
 .ci-personal-form-values li {
   position: relative; }
 
-.ci-personal-form-values input.error {
+.ci-personal-form-names li.error {
+  border-top: 1px solid #FF2619;
+  border-bottom: 1px solid #FF2619; }
+  .ci-personal-form-names li.error input.error {
+    color: #FF2619; }
+    .ci-personal-form-names li.error input.error:focus {
+      color: #000; }
+
+.ci-personal-form-values.error {
+  width: 100%;
   border-top: 1px solid #FF2619;
   border-bottom: 1px solid #FF2619;
-  color: #FF2619; }
-  .ci-personal-form-values input.error:focus {
-    border-bottom: 1px solid #eaeaea;
-    border-top: none;
-    color: #000; }
+  color: #FF2619;
+  position: absolute;
+  margin-left: -20px;
+  z-index: 0;
+  background: transparent;
+  height: 45px; }
+  .ci-personal-form-values.error input.error {
+    color: #FF2619; }
+    .ci-personal-form-values.error input.error:focus {
+      color: #000; }
 
 .ci-personal-form-values input {
   display: block;
@@ -7947,7 +7961,8 @@ div.rules-text {
   font-family: "handbookpro-regular";
   height: 45px;
   line-height: 45px;
-  margin-left: 18px; }
+  margin-left: 18px;
+  min-width: 160px; }
   .ci-personal-form-values input.input-prefix {
     padding-left: 165px; }
 
@@ -10289,14 +10304,17 @@ footer.unvisible {
       height: 50px; }
       #games-online-field:not(.Durak) .mx .players .circle-timer,
       #games-online-field:not(.Durak) .mx .players .circle {
-        width: 44px;
-        height: 44px; }
+        width: 36px;
+        height: 36px;
+        left: -3;
+        top: -3; }
       #games-online-field:not(.Durak) .mx .players .timer-l,
       #games-online-field:not(.Durak) .mx .players .timer-r {
-        width: 44px;
-        height: 44px;
+        width: 36px;
+        height: 36px;
         margin-left: -22px;
-        margin-top: -22px; }
+        margin-top: -22px;
+        border-width: 3px; }
       #games-online-field:not(.Durak) .mx .players .gm-pr .pr-ph {
         width: 30px;
         height: 30px;
@@ -10307,17 +10325,18 @@ footer.unvisible {
         position: absolute;
         left: 0; }
       #games-online-field:not(.Durak) .mx .players .m .gm-pr {
-        height: 40px; }
+        height: 50px; }
         #games-online-field:not(.Durak) .mx .players .m .gm-pr .pr-ph-bk {
           left: 0 !important;
-          margin-left: 20px; }
+          margin-left: 20px;
+          margin-top: 5px; }
       #games-online-field:not(.Durak) .mx .players .m .pr-cl {
         float: right; }
       #games-online-field:not(.Durak) .mx .players .m .pr-pt {
         left: 20%;
-        padding-top: 2px; }
+        padding-top: 7px; }
       #games-online-field:not(.Durak) .mx .players .m .pr-pr {
-        padding-top: 2px; }
+        padding-top: 7px; }
       #games-online-field:not(.Durak) .mx .players .o {
         float: left;
         margin: 0; }
