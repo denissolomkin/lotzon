@@ -70,11 +70,52 @@ var Games = {
 
     disableNow: true,
     timer: null,
+    validate: function(e){
+        alert('validate!!');
+    //     // записаться в игровой стек
+        $(document).on('submit', '#games-online-view-create form', function(event){
+        
+        console.debug(event, this, Player.balance);
+        event.stopPropagation();
+        event.preventDefault();
+        return false;
 
+
+
+            // if(appMode = $('.ngm-bk .rls-r .new-bl .prc-sel').find('.active').attr('data-price')) {
+            //     price = appMode.split('-');
+            //     appMode+='-'+($('.ngm-bk .rls-r .new-bl .plr-sel').find('.active').attr('data-players') ? $('.ngm-bk .rls-r .new-bl .plr-sel').find('.active').attr('data-players') : 2);
+
+            //     if ((price[0] == 'POINT' && playerPoints < parseInt(price[1])) || (price[0] == 'MONEY' && playerMoney < getCurrency(price[1],1))) {
+
+            //         $("#report-popup").show().find(".txt").text(getText('INSUFFICIENT_FUNDS')).fadeIn(200);
+
+            //     } else {
+
+            //         var variation = {};
+            //         $('.ngm-bk .rls-r .new-bl .var-sel .var-vl.active').each(function() {
+            //             variation[$(this).parent().attr('data-variation')]=$(this).attr('data-value');
+            //         });
+
+            //         var path = 'app/' + appName + '/0'; // + appId;
+            //         var data = {'action': 'start', 'mode': appMode, 'variation': variation};
+
+            //         WebSocketAjaxClient(path, data);
+
+            //     }
+
+            // } else {
+
+            //     $("#report-popup").show().find(".txt").text(getText('CHOICE_BET')).fadeIn(200);
+
+            // }
+        });
+    },
     online: {
 
         init: function () {
             Games.online.tabs();
+            // Games.validate();
         },
 
         //online view

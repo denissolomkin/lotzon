@@ -25,11 +25,11 @@
         messages: {
             win:{
                 class: 'msg-win',
-                title: 'ПОБЕДА!'
+                title: 'title-games-win'
             },
             lose:{
                 class: 'msg-win',
-                title: 'ПРОИГРЫШ :('
+                title: 'title-games-lose'
             }
         },
 
@@ -212,8 +212,14 @@
                     '<div class="pr-nm">' + value.name + '</div></div></div></div>');
 
                 if (index == Player.id) {
+                    var icones = '';
 
-                    bet = price = App.mode.split('-');
+                    // get icones
+                    for(var i in App.variation){
+                        icones += '<i class="i-games-'+i+'-'+App.variation[i]+'"></i>';
+                    }
+                    
+                    var bet = price = App.mode.split('-');
                     $('.mx .players .player' + index + ' .gm-pr')
                         .prepend(
                             '<div class="pr-cl">' +
@@ -221,9 +227,11 @@
                             '<div class="msg-move">ваш ход</div>' +
                             '</div>')
                         .append(
-                            '<div class="pr-md"><span class="cards-number"></span><i class="icon-reload"></i></div>' +
-                            '<div class="pr-pr"><b>' + (bet[0] == 'MONEY' ? Player.formatCurrency(bet[1], 1) : bet[1]) + '</b><span>' + (bet[0] == 'MONEY' ? Player.formatCurrency(bet[1], 2) : 'баллов') + '</span></div>' +
-                            '<div class="pr-pt"><div class="icon-wallet wallet"></div><div><span class="plMoneyHolder">' + Player.balance.money + '</span> ' + Player.formatCurrency() + '</div><div><span class="plPointHolder">' + Player.balance.points + '</span> баллов</div></div>');
+                            '<div class="pr-md"><div>' + icones + '</div></div>' +
+                            '<div class="pr-pr"><div class="title">' + i18n('title-games-bet') + '</div><div><b>' + (bet[0] == 'MONEY' ? Player.formatCurrency(bet[1], 1) : bet[1]) + '</b><span>' + (bet[0] == 'MONEY' ? Player.formatCurrency(bet[1], 2) : 'баллов') + '</span></div></div>' +
+                            '<div class="pr-pt"><div class="title">'+ i18n('title-games-balance') +'</div>'+
+                                (App.currency === "MONEY" ? '<div><span class="plMoneyHolder">' + Player.balance.money + '</span> ' + Player.formatCurrency() + '</div>' : '<div><span class="plPointHolder">' + Player.balance.points + '</span> '+ i18n('title-of-points')+'</div></div>' )
+                                );
                 }
             });
         },
@@ -301,7 +309,7 @@
 
             for ( index in messages ) {
                 playerMessage = document.querySelector('.mx .players .player' + index + ' .wt');
-                playerMessage.style.display = '';
+                playerMessage.style.display = 'block';
                 playerMessage.innerHTML = messages[index];
                 console.error(playerMessage, messages[index]);
             }
@@ -322,8 +330,8 @@
                 el.setAttribute('class', 'msg');
 
                 html += '<div class="'+msg.class+'">';
-                    html += '<div class="title">'+ msg.title +'</div>';
-                    html += '<div><span>' + (pl.result > 0 ? 'ваш выигрыш' : 'вы проиграли') + ' </span>'+
+                    html += '<div class="title">'+ i18n(msg.title) +'</div>';
+                    html += '<div><span>' + (pl.result > 0 ? i18n('title-games-main-win') : i18n('title-games-main-lose')) + ' </span>'+
                     (App.currency == 'MONEY' ? Player.formatCurrency(Math.abs(pl.win), 1) : Math.abs( parseInt(pl.win) )) + ' ' +
                     (App.currency == 'MONEY' ? Player.getCurrency() : 'баллов') + '</div>';
                 html += '</div>'

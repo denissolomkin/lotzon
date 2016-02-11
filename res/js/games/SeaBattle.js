@@ -4,11 +4,17 @@
 
         ships: [],
         game_ships: [],
-
-        run: function () {
-
-            Apps.SeaBattle.drawField();
-
+        buttons:{
+            random: {
+                class: 'btn-primary btn-sb-ready',
+                action: 'random',
+                title: 'button-game-random'
+            },
+            ready: {
+                class: 'btn-secondary btn-sb-random',
+                action: 'ready',
+                title: 'button-game-ready'
+            }
         },
 
         action: {
@@ -16,25 +22,37 @@
             default: function () {
 
                 if (Game.hasField()) {
-                    Game.run() && Apps.SeaBattle.run();
+
+                    Game.run() && Apps.SeaBattle.drawField();
                     Apps.SeaBattle.initStatuses();
                     Apps.SeaBattle.initTimers();
 
                     switch(App.action) {
 
                         case 'field':
+                            Apps.SeaBattle.game_ships = Apps.SeaBattle.ships;
+                            Apps.SeaBattle.genFieldSeaBattle();
+                            Game.drawButtons([
+                                Apps.SeaBattle.buttons.random,
+                                Apps.SeaBattle.buttons.ready
+                            ]);
                             break;
 
                         case 'start':
+                            $('ul.mx.SeaBattle.m div').remove();
+                            $('.mx.place').hide();
+                            $('.mx.SeaBattle.o').show();
                             break;
 
                         case 'wait':
+                            Game.drawButtons('game-waiting-for-opponent');
                             break;
 
                         case 'move':
                             break;
                     }
 
+                    Apps.SeaBattle.drawPlayerFields();
                     Apps.SeaBattle.paintCell();
                     Game.end() && Apps.SeaBattle.end();
                 }
@@ -44,61 +62,6 @@
             error: function () {
 
             },
-
-            'wait': function () {
-
-                if (
-                    (!($('ul.mx.SeaBattle.m').find('div')) || !($('ul.mx.SeaBattle.m').find('div').length))
-                    &&
-                    (!($('ul.mx.SeaBattle.m').find('li.s')) || !($('ul.mx.SeaBattle.m').find('li.s').length))
-                ) {
-                    runGame();
-                    $('.ngm-bk .gm-fld .place').show();
-                    $('.gm-pr .pr-cl').show().html("<span>корабли</span><b></b>");
-                    $('.gm-pr.r .pr-cl').hide();
-                }
-
-                $('.sb-wait').show();
-                $('.sb-ready.but, .sb-random.but').hide();
-
-            },
-
-            field: function () {
-
-                if (
-                    (
-                        (!$('ul.mx.SeaBattle.m').find('div') || !($('ul.mx.SeaBattle.m').find('div').length))
-                        && (!($('ul.mx.SeaBattle.m').find('li.s'))
-                        || !($('ul.mx.SeaBattle.m').find('li.s').length))
-                    )
-                    || $('ul.SeaBattle.o').is(':visible')
-                ) {
-                    runGame();
-                    Apps.SeaBattle.game_ships = Apps.SeaBattle.ships;
-                    Apps.SeaBattle.genFieldSeaBattle();
-                    $('.ngm-bk .gm-fld .place').show();
-                    $('.ngm-bk .gm-fld .mx.SeaBattle.o').hide();
-                    $('.sb-wait').hide();
-                    $('.sb-ready.but, .sb-random.but').show();
-                }
-
-                $('.gm-pr .pr-cl').show().html("<span>корабли</span><b></b>");
-                $('.gm-pr.r .pr-cl').hide();
-
-                $('.ngm-bk .ngm-gm .tm').css('text-align', 'center');
-                $('.gm-pr.l').addClass('move');
-                $('.gm-pr.r').removeClass('move');
-
-                $('ul.mx.SeaBattle.m').css('opacity', 1);
-            },
-
-            start: function () {
-
-                $('.ngm-bk .gm-fld .place').hide();
-                $('.ngm-bk .gm-fld .mx.SeaBattle.o').show();
-                $('.gm-pr .pr-cl').show().css('opacity', 1).html("<span>корабли</span><b></b>");
-                $('ul.mx.SeaBattle.m div').remove();
-            }
         },
 
         do: {
@@ -120,6 +83,13 @@
 
         drawField: function () {
 
+            var field = Game.field.getElementsByClassName('mx')[0];
+
+            field.innerHTML +=
+                '<ul class="mx SeaBattle m"></ul>' +
+                '<div class="mx place">Расставьте корабли в необходимом порядке.<br><br>Что бы изменить ориентацию корабля, кликните по нему дважды.' +
+                '<ul class="mx SeaBattle o"></ul>';
+
             if(App.variation && App.variation.field){
 
                 var field = App.variation.field.split('x'),
@@ -131,21 +101,18 @@
                     for(j=1;j<=field[0];j++)
                         html+="<li style='width:"+width+"height:"+height+"font:"+font+(j==field[0]?"margin-right: 0px;":"")+"' data-coor='"+j+"x"+i+"'></li>";
 
-                $('.ngm-bk ul.mx.SeaBattle').html(html);
+                $('ul.mx', $(Game.field)).html(html);
             }
+        },
 
+        drawPlayerFields: function(){
             if (App.fields) {
                 $.each(App.fields, function (index, field) {
                     class_cell = (index == Player.id ? 'm' : 'o');
                     $.each(field, function (x, cells) {
                         $.each(cells, function (y, cell) {
-                            $('.ngm-bk .ngm-gm .gm-mx ul.mx.SeaBattle.' + class_cell + ' li.last').removeClass('last');
-
-                            $('.ngm-bk .ngm-gm .gm-mx ul.mx.SeaBattle.' + class_cell + ' li[data-cell="' + x + 'x' + y + 'x' + index + '"]')
-                                .addClass((isNumeric(cell) ? 's' : cell) + ' last')
-                                .addClass(class_cell)
-                                .fadeIn(100)
-                                .html(cell == 'd' ? "<img src='tpl/img/games/damage.png'>" : '');
+                            cell.coord = x+'x'+y+'x'+index;
+                            Apps.SeaBattle.paintCell(cell);
                         });
                     });
                 });
@@ -155,26 +122,38 @@
         paintCell: function (cell) {
 
             if ((cell = cell || App.cell)) {
+
                 class_cell = (cell.coord.split("x")[2] == Player.id ? 'm' : 'o');
 
                 if (move = cell.class == 'e' ? 1 : cell.class == 'd' ? 2 : cell.class == 'k' ? 3 : null)
                     Apps.playAudio([App.key, 'Move-' + class_cell + '-' + move]);
 
-                $('.ngm-bk .ngm-gm .gm-mx ul.mx li.' + class_cell + '.last')
-                    .removeClass('last');
+                $('ul.mx.' + class_cell + ' li.last', $(Game.field)).removeClass('last');
 
-                var cell = $('.ngm-bk .ngm-gm .gm-mx ul.mx li[data-cell="' + cell.coord + '"]');
-                cell
-                    .addClass(cell.class)
-                    .html(
-                        '<div class="' + cell.class + '" style="background:'
-                        + $('.ngm-bk .ngm-gm .gm-mx ul.mx li[data-cell="' + cell.coord + '"]')
-                            .css('background') + ';width:' + cell.css('width') + ';height:' + cell.css('height') + '"></div>')
-                    .find('div')
-                    .effect('explode', {pieces: 4}, 500)
-                    .parent().addClass(class_cell + ' last')
-                    .fadeIn(300).html(cell.class == 'd' ? "<img src='tpl/img/games/damage.png'>" : '');
-                delete cell;
+                var $cell = $('ul.mx li[data-cell="' + cell.coord + '"]', $(Game.field));
+
+                if(cell!=App.cell){
+
+                    $cell
+                        .addClass((isNumeric(cell) ? 's' : cell) + ' last')
+                        .addClass(class_cell)
+                        .fadeIn(100)
+                        .html(cell == 'd' ? "<img src='tpl/img/games/damage.png'>" : '');
+
+                } else {
+
+                    $cell
+                        .addClass(cell.class)
+                        .html(
+                            '<div class="' + cell.class + '" style="background:'
+                            + $('.ngm-bk .ngm-gm .gm-mx ul.mx li[data-cell="' + cell.coord + '"]')
+                                .css('background') + ';width:' + cell.css('width') + ';height:' + cell.css('height') + '"></div>')
+                        .find('div')
+                        .effect('explode', {pieces: 4}, 500)
+                        .parent().addClass(class_cell + ' last')
+                        .fadeIn(300)
+                        .html(cell.class == 'd' ? "<img src='tpl/img/games/damage.png'>" : '');
+                }
             }
         },
 

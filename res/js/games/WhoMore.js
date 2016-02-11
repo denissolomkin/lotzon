@@ -85,9 +85,12 @@
             var field = Game.field.getElementsByClassName('mx')[0];
 
             field.innerHTML +=
-                '<div class="moves"></div>' +
-                '<div class="table"></div>' +
-                '<div class="moves"></div>';
+
+                '<div class="wrapper">' +
+                    '<div class="moves"></div>' +
+                    '<div class="table"></div>' +
+                    '<div class="moves"></div>' +
+                '</div>';
 
             if (App.variation && App.variation.field) {
 
@@ -162,9 +165,9 @@
         'end': function(){
 
             Game.drawWinButtons([
-                Game.buttons.start,
-                Game.buttons.exit,
-                // Game.buttons.replay
+                // Game.buttons.start,
+                Game.buttons.replay,
+                Game.buttons.exit
             ]);
             
 

@@ -1,3 +1,6 @@
+#R2D2{
+    display: none;
+}
 // GAMES <<CHANCE>> -------------------- //
 
 /*title of games view*/
@@ -195,6 +198,7 @@ $url_3: url(../img/games/lotzonBg.png);
     right: 0;
     left: 0;
     width: 100%;
+    min-height: 100%;
     z-index: 1000;
     margin: 0;
 }
@@ -333,6 +337,11 @@ footer.unvisible {
                 height: 80px;
                 padding: 0 20px;
                 box-sizing: border-box;
+                z-index: 12;
+                background: #4a4a4a;
+                position: absolute;
+                bottom: 0;
+                margin: 0;
                 
                 &:after{
                     content: "";
@@ -411,8 +420,16 @@ footer.unvisible {
 
                 // bet
                 .pr-pr{
+                    color: #fff;
                     float: right;
                     padding-top: 30px;
+                    > *{
+                        display: inline-block;
+                    }
+                    .title{
+                        padding-right: 5px;
+                        text-transform: uppercase;
+                    }
                     b{
                         padding-right: 5px;
                     }
@@ -420,11 +437,16 @@ footer.unvisible {
 
                 // ballance
                 .pr-pt{
+
+                    color: #fff;
                     padding-left: 45px;
-                    padding-top: 20px;
+                    padding-top: 22px;
                     text-align: left;
                     position: absolute;
                     left: 50%;
+                    .title{
+                        text-transform: uppercase;
+                    }
                 }
             }
         }
@@ -439,17 +461,19 @@ footer.unvisible {
         background-size: cover;
         box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         .mx {
-            height: auto;
+            height: 100%;
             .players {
                 position: static;
-                height: 100px;
-                padding: 20px 50px;
+                height: 80px;
+                padding: 10px 50px;
                 text-align: center;
                 .o {
                     .gm-pr {
                         width: 100px;
-                        height: 100px;
+                        min-height: 60px;
                         position: relative;
+                        top: 5px;
+                        left: 20px;
                     }
                     .wt{
                         display: none;
@@ -457,10 +481,18 @@ footer.unvisible {
                 }
                 .m{
                     .wt{
-                        position: absolute;
-                        top: 0;
-                        border: 1px solid red;
-
+                        // position: absolute;
+                        // top: 0;
+                        // border: 1px solid red;
+                    }
+                    .gm-pr{
+                        .pr-ph-bk{
+                            width: auto;
+                            height: auto;
+                            left: 50%;
+                            top: 10px;
+                            margin-left: -30px;
+                        }
                     }
                 }
                 // player name
@@ -473,6 +505,8 @@ footer.unvisible {
                     font-family:$hbRegular;
                     font-size:15px;
                     line-height:18px;
+                    word-wrap: normal;
+                    white-space: nowrap;
                 }
             }
             .o {
@@ -486,39 +520,48 @@ footer.unvisible {
                 position: absolute;
                 bottom: 0;
                 left: 0;
-                overflow: hidden;
-                background: #4a4a4a;
+                // overflow: hidden;
+                // background: #4a4a4a;
                 text-align: center;
             }
             // timer
-            .circle ,
-            .circle-timer {
-                width: 100%;
-                height: 100%;
-                left: 0;
-                top: 0;   
-            }
+            // .circle ,
+            // .circle-timer {
+            //     width: 100%;
+            //     height: 100%;
+            //     left: 0;
+            //     top: 0;   
+            // }
             // avatar
             .pr-ph-bk{
-                width: 100%;
-                height: 100%;
-                padding: 20px;
-                box-sizing: border-box;
-                position: absolute;
-                top: -10px;
-                left: 0;
+                width: auto;
+                height: auto;
+                opacity: 1;
+                z-index: 2;
+                position: relative;
+                margin: auto;
+                overflow: visible;
             }
-            .pr-ph{
-                width: 100%;
-                height: 100%;
-                background-size: 100%;
-                border-radius: 50em;
-            }
+            // .pr-ph{
+            //     width: 100%;
+            //     height: 100%;
+            //     background-size: 100%;
+            //     border-radius: 50em;
+            // }
+            .pr-ph {
+                        width: 60px;
+                        height: 60px;
+                        background-repeat: no-repeat;
+                        background-size: contain;
+                        position: absolute;
+                        border-radius: 70px;
+                        margin: 0;
+                    }
             .table {
                 width: 319px;
                 min-height: 319px;
                 margin: 0px auto;
-                padding: 20px 0;
+                padding: 7px 0;
                 .inner {
                     padding: 1px 1px 0 0;
                     .cell {
@@ -595,13 +638,13 @@ footer.unvisible {
                         > *{
                             display: inline-block;
                             position: static;
-                            vertical-align: top;
+                            vertical-align: middle;
                             text-transform: uppercase;
                             margin-top: 30px;
                             font-size:14px;
                             color:#000000;
                             letter-spacing:0.32px;
-                            line-height:16px;
+                            line-height:1;
                             background: transparent;
 
                             border:1px solid #000000;
@@ -644,7 +687,7 @@ footer.unvisible {
                 width: 380px;
                 margin: 0px auto;
                 &:last-child{
-                    padding-bottom: 20px;
+                    padding-bottom: 7px;
                 }
 
                 [class^="mv-"]{
@@ -758,13 +801,13 @@ footer.unvisible {
                 margin-left: -30%;
                 z-index: 1;
                 .gm-pr {
-                    z-index: 12;
-                    background: #4a4a4a;
-                    position: absolute;
-                    bottom: 0;
-                    width: 100%;
-                    height: 80px;
-                    margin: 0;
+                    // z-index: 12;
+                    // background: #4a4a4a;
+                    // position: absolute;
+                    // bottom: 0;
+                    // width: 100%;
+                    // height: 80px;
+                    // margin: 0;
                     > *{
                         display: initial;
                     }
@@ -793,43 +836,54 @@ footer.unvisible {
                         margin: 0;
                     }
                     .pr-pr {
-                        background: $color_opal_approx;
-                        position: relative;
-                        height: 65px;
-                        width: 65px;
-                        margin: 8px;
-                        float: right;
-                        border-radius: 80px;
-                        padding: 7px 10px;
-                        box-sizing: border-box;
-                        bottom: 0;
-                        b {
-                            font: 36px/1 Handbook-bold;
-                            letter-spacing: -3px;
-                            margin-left: -3px;
-                            display: block;
-                            text-transform: uppercase;
-                        }
-                        span {
-                            font: 13px/5px $hbBold;
-                            text-transform: uppercase;
-                            color: $black_50;
-                            display: block;
-                        }
+                        // background: $color_opal_approx;
+                        // position: relative;
+                        // height: 65px;
+                        // width: 65px;
+                        // margin: 8px;
+                        // float: right;
+                        // border-radius: 80px;
+                        // padding: 7px 10px;
+                        // box-sizing: border-box;
+                        // bottom: 0;
+                        // b {
+                        //     font: 36px/1 Handbook-bold;
+                        //     letter-spacing: -3px;
+                        //     margin-left: -3px;
+                        //     display: block;
+                        //     text-transform: uppercase;
+                        // }
+                        // span {
+                        //     font: 13px/5px $hbBold;
+                        //     text-transform: uppercase;
+                        //     color: $black_50;
+                        //     display: block;
+                        // }
                     }
                     .pr-md {
-                        margin: 10px 25px;
-                        float: right;
-                        width: 35px;
-                        height: 60px;
-                        border: 2px solid $color_suva_gray_approx;
-                        border-radius: 5px;
-                        color: $color_suva_gray_approx;
-                        font: 18px/1 Handbook-bold;
+                        margin-left: 20px;
+                        vertical-align: middle;
                         position: relative;
-                        span {
-                            font: 18px/1 Handbook-bold;
-                            line-height: 60px;
+                        height: 100%;
+                        float: right;
+                        color: #fff;
+                        font-size: 30px;
+                        position: relative;
+                        line-height: 0;
+                        &:before{
+                            content: '';
+                            display: inline-block;
+                            width: 0;
+                            height: 100%;
+                            vertical-align: middle;
+                        }
+                        > *{
+                            display: inline-block;
+                            vertical-align: middle;
+                        }
+                        i{
+                            // display: block;
+                            vertical-align: middle;
                         }
                     }
                     .pr-nm {
@@ -842,21 +896,21 @@ footer.unvisible {
                     }
                 }
                 .pr-pt {
-                    position: relative;
-                    float: right;
-                    height: 100%;
-                    width: 20%;
-                    padding: 23px 0;
-                    box-sizing: border-box;
-                    color: $black;
-                    text-align: left;
-                    margin: 0 0 0 40px;
-                    .wallet {
-                        font-size: 36px;
-                        color: $black;
-                        float: left;
-                        margin-right: 20px;
-                    }
+                    // position: relative;
+                    // float: right;
+                    // height: 100%;
+                    // width: 20%;
+                    // padding: 23px 0;
+                    // box-sizing: border-box;
+                    // color: $black;
+                    // text-align: left;
+                    // margin: 0 0 0 40px;
+                    // .wallet {
+                    //     font-size: 36px;
+                    //     color: $black;
+                    //     float: left;
+                    //     margin-right: 20px;
+                    // }
                 }
                 &.current:not(.starter) .gm-pr .pr-cl {
                     .btn-pass ,
@@ -875,6 +929,12 @@ footer.unvisible {
                 .gm-pr {
                     height: auto;
                     margin: 0 0 0 5px;
+                    width: 172px;
+                    float: left;
+                    text-align: center;
+                    // height: 480px;
+                    // margin: 0 19px;
+                    position: relative;
                     .pr-ph {
                         width: 60px;
                         height: 60px;
@@ -952,10 +1012,11 @@ footer.unvisible {
                     font-size: 22px;
                     font: 22px/1 "handbookpro-regular";
                     width: 140%;
-                    margin: -20%;
+                    margin-left: -20%;
                     box-sizing: border-box;
                     top: 0;
                     box-shadow: 3px 3px 3px 0 $black_30;
+                    white-space: nowrap;
                 }
                 .tm {
                     font: 32px/1 "handbookpro-regular";
@@ -973,26 +1034,29 @@ footer.unvisible {
                     top: 0;
                     width: 130px;
                     background: $color_geyser_95_approx;
-                    height: 50px;
+                    min-height: 50px;
+                    line-height: 1;
                     margin-left: -40px;
                     border-radius: 5px;
                     padding: 5px;
                     box-shadow: 0 0 5px 1px $mine_shaft_50;
                     font-size: 24px;
+                    position: relative;
+                    z-index: 1;
                     &.loser {
                         color: $red;
                     }
                 }
             }
         }
-        .gm-pr {
-            width: 172px;
-            float: left;
-            text-align: center;
-            height: 480px;
-            margin: 0 19px;
-            position: relative;
-        }
+        // .gm-pr {
+        //     width: 172px;
+        //     float: left;
+        //     text-align: center;
+        //     height: 480px;
+        //     margin: 0 19px;
+        //     position: relative;
+        // }
         .msg.winner {
             width: 100%;
             height: 100%;
@@ -1284,8 +1348,63 @@ footer.unvisible {
 }
 
 // END Durak ....... styles
+
 // @media!! 
 @media all and(max-width: 768px) {
+    #games-online-field{
+
+        // center game field
+        &:not(.Durak){
+            height: 100%;
+            > *:last-child{
+                height: 100%;
+            }
+            .mx{
+                height: 100%;
+            }
+            .wrapper{
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+
+
+        }
+
+        .mx{
+            .players{
+                .m{
+                    // buttons | statuses
+                    .pr-cl{
+
+                    }
+                    // player
+                    .pr-ph-bk{
+
+                    }
+                    // balance
+                    .pr-pt{
+
+                    }
+                    // bet
+                    .pr-pr{
+
+                    }
+                    //type
+                    .pr-md{
+                        // i{
+                        //     display: block;
+                        //     &:first-child{
+                        //         margin-bottom: 5px;
+                        //     }
+                        // }
+                    }
+
+                }
+            }
+        }
+    }    
+
     #games-online-field.Durak {
         .content-box-content {
             min-height: 0;
@@ -1294,31 +1413,6 @@ footer.unvisible {
             .m {
                 height: auto;
                 min-height: 220px;
-                .gm-pr {
-                    .pr-cl {
-                        margin: 20px 15px;
-                        width: 15%;
-                        .btn-pass {
-                            font: 18px $hbRegular;
-                            height: 40px;
-                            line-height: 40px;
-                        }
-                        .btn-ready {
-                            font: 18px $hbRegular;
-                            height: 40px;
-                            line-height: 40px;
-                        }
-                        .msg-move {
-                            font-size: 14px;
-                        }
-                    }
-                    .pr-pr {
-                        margin: 7px 0;
-                    }
-                    .pr-ph-bk {
-                        left: 30%;
-                    }
-                }
             }
             .o .gm-pr .pr-nm {
                 width: 100%;
@@ -1344,14 +1438,123 @@ footer.unvisible {
 }
 
 @media(max-width: 650px) {
+    #games-online-field{
+        .mx{
+            .players{
+                .m{
+                    //player gray field
+                    .gm-pr{
+                        padding: 0 10px;
+                    }
+                    // buttons | statuses
+                    .pr-cl{
+
+                    }
+                    // player
+                    .pr-ph-bk{
+
+                    }
+                    // balance
+                    .pr-pt{
+
+                    }
+                    // bet
+                    .pr-pr{
+
+                    }
+                    // //type
+                    // .pr-md{
+                    //     i{
+                    //         letter-spacing: -5px;
+                    //     }
+                    // }
+
+                }
+            }
+        }
+    }    
+
     #games-online-field.Durak {
         .mx .players .m .gm-pr .pr-ph-bk {
-            left: 25%;
+            // left: 25%;
         }
     }
 }
-
 @media(max-width: 550px) {
+    #games-online-field{
+        &:not(.Durak){
+            .mx .players .m .gm-pr .pr-ph-bk{
+                    top: 5px;
+            }
+        }
+        .mx{
+            .players{
+                .circle-timer,
+                .circle {
+                    width: 64px;
+                    height: 64px;
+                }
+                .timer-l,
+                .timer-r {
+                    width: 64px;
+                    height: 64px;
+                    margin-left: -32px;
+                    margin-top: -32px;
+                }
+                .gm-pr {
+                    .pr-ph {
+                        width: 50px;
+                        height: 50px;
+                        margin: 0;
+                    }
+                    .pr-ph-bk{
+                        width: 50px;
+                        height: 50px;
+                        position: absolute;
+                    }
+                }
+
+                .m{
+                    //player gray field
+                    .gm-pr{
+                        height: 60px;
+                        margin: 0;
+                    }
+                    // buttons | statuses
+                    .pr-cl{
+
+                    }
+                    // player
+                    .pr-ph-bk{
+                        
+                    }
+                    // balance
+                    .pr-pt{
+                        padding-top: 12px;
+                        // line-height: 1;
+                        padding-left: 37px;
+                    }
+                    // bet
+                    .pr-pr{
+                        padding-top: 12px;
+                        .title{
+                            display: block;
+                            text-align: left;
+                        }
+                    }
+                    //type
+                    .pr-md{
+                        margin-left: 10px !important;
+                        i{
+                            display: inline;
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+
     #games-online-field.Durak {
         .mx {
             .players {
@@ -1359,65 +1562,56 @@ footer.unvisible {
                 .m {
                     height: auto;
                     min-height: 200px;
+                    .circle-timer,
+                    .circle {
+                        width: 64px;
+                        height: 64px;
+                    }
+                    .timer-l,
+                    .timer-r {
+                        width: 64px;
+                        height: 64px;
+                        margin-left: -32px;
+                        margin-top: -32px;
+                    }
                     .gm-pr {
-                        height: 60px;
-                        margin: 0;
                         .pr-ph-bk {
                             top: 6px;
-                        }
-                        .pr-pr {
-                            width: 50px;
-                            height: 50px;
-                            margin: 0;
-                            margin: 5px 0;
-                            padding: 8px 0;
-                            b {
-                                font: 26px/1 Handbook-bold;
-                                letter-spacing: -3px;
-                                margin-left: -3px;
-                                display: block;
-                                text-transform: uppercase;
-                                margin-top: 0;
-                            }
-                            span {
-                                font: 9px/5px $hbBold;
-                                text-transform: uppercase;
-                                color: $black_50;
-                                display: block;
-                            }
                         }
                         .pr-ph {
                             width: 50px;
                             height: 50px;
                             margin: 0;
                         }
-                        .pr-cl {
-                            margin: 12px 15px;
-                            .msg-move {
-                                font-size: 14px;
-                                line-height: 1.5;
-                            }
-                        }
-                        .pr-md {
-                            height: 45px;
-                            span {
-                                line-height: 45px;
-                            }
-                        }
-                    }
-                    .pr-pt {
-                        margin: 5px 0;
-                        padding: 0 10px;
                     }
                 }
-                .o .gm-pr {
-                    width: auto;
-                    height: 30px;
-                    .pr-ph {
-                        width: 40px;
-                        height: 40px;
-                        margin: 0;
+                .o {
+
+                    .circle,
+                    .circle-timer {
+                        width: 54px;
+                        height: 54px;
                     }
+                    .timer-r ,
+                    .timer-l {
+                        width: 54px;
+                        height: 54px;
+                        margin-left: -27px;
+                        margin-top: -27px;
+                    }
+
+                    .gm-pr {
+                        margin-top: 7px;
+                        width: auto;
+                        height: 30px;
+
+                        .pr-ph {
+                            width: 40px;
+                            height: 40px;
+                            margin: 0;
+                        }
+                    }
+                    
                 }
                 .gm-pr .pr-ph-bk {
                     width: 50px;
@@ -1471,48 +1665,82 @@ footer.unvisible {
                 }
             }
         }
-        .circle-timer {
-            width: 64px;
-            height: 64px;
-        }
-        .circle {
-            width: 64px;
-            height: 64px;
-            width: 54px;
-            height: 54px;
-        }
-        .timer-l {
-            width: 64px;
-            height: 64px;
-            margin-left: -32px;
-            margin-top: -32px;
-        }
-        .timer-r {
-            width: 64px;
-            height: 64px;
-            margin-left: -32px;
-            margin-top: -32px;
-            width: 54px;
-            height: 54px;
-            margin-left: -27px;
-            margin-top: -27px;
-        }
-        .o {
-            .circle-timer {
-                width: 54px;
-                height: 54px;
-            }
-            .timer-l {
-                width: 54px;
-                height: 54px;
-                margin-left: -27px;
-                margin-top: -27px;
-            }
-        }
     }
 }
 
 @media(max-width: 479px) {
+    #games-online-field{
+        &:not(.Durak){
+            .mx{
+                .msg > *{
+                    width: 100%;
+                }
+                .players{
+                    .m{
+                        //player gray field
+                        .gm-pr{
+                        }
+                        // buttons | statuses
+                        .pr-cl{
+
+                        }
+                        // player
+                        .pr-ph-bk{
+                            left: 50% !important;
+                        }
+                        // balance
+                        .pr-pt{
+                            left: 50%;
+                        }
+                        // bet
+                        .pr-pr{
+                        }
+                        //type
+                        .pr-md{
+                        }
+
+                    }
+                }
+            }    
+        }
+        .mx{
+            .players{
+                .m{
+                    //player gray field
+                    .gm-pr{
+                    }
+                    // buttons | statuses
+                    .pr-cl{
+
+                    }
+                    // player
+                    .pr-ph-bk{
+                        left: 32% !important;
+                    }
+                    // balance
+                    .pr-pt{
+                        left: 41%;
+                    }
+                    // bet
+                    .pr-pr{
+                        padding-top: 12px;
+                        .title{
+                            display: block;
+                            text-align: left;
+                        }
+                    }
+                    //type
+                    .pr-md{
+                        margin-left: 10px !important;
+                        i{
+                            display: inline;
+                        }
+                    }
+
+                }
+            }
+        }
+    }
     #games-online-field.Durak {
         .cards {
             .table {
@@ -1545,36 +1773,204 @@ footer.unvisible {
             }
         }
         .mx .players {
-            .m {
-                .pr-pt {
-                    font-size: 9px;
-                    line-height: 1;
-                    margin: 17px 0;
-                    padding: 5px;
-                }
-                .gm-pr .pr-cl {
-                    .msg-move {
-                        font-size: 14px;
-                        line-height: 1.5;
-                    }
-                    .btn-pass {
-                        font: 14px $hbRegular;
-                        line-height: 40px;
-                    }
-                    .btn-ready {
-                        font: 14px $hbRegular;
-                        line-height: 40px;
-                    }
-                }
-            }
             .gm-pr .pr-ph-bk .mt {
                 font-size: 16px;
+                margin-right: -10px;
             }
+        }
+    }
+}
+@media(max-width: 390px) {
+    #games-online-field{
+        &:not(.Durak){
+            padding-bottom: 40px;
+            .mx{
+                .moves{
+                    &:last-child{
+                        padding-bottom: 7px;
+                    }
+
+                    [class^="mv-"]{
+                        &:after{
+                            content: '';
+                            display: block;
+                            clear: both;
+                        }
+                        div{
+                            span{
+                                font-size:14px;
+                                line-height:0.9;
+                                margin-top: 4px;
+                            }
+                            i{
+                                
+                                font-size:34px;
+                                line-height:1;
+                            }
+                        }
+                    }
+                }
+                .moves,
+                .table{
+                    width: 100% !important;
+                    padding: 0 13px;
+                    min-height: 0;
+                }
+                .players{
+                    padding: 5px 0 0 0;
+                    height: 50px;
+
+                    .circle-timer,
+                    .circle {
+                        width: 44px;
+                        height: 44px;
+                    }
+                    .timer-l,
+                    .timer-r {
+                        width: 44px;
+                        height: 44px;
+                        margin-left: -22px;
+                        margin-top: -22px;
+                    }
+                    .gm-pr {
+                        .pr-ph {
+                            width: 30px;
+                            height: 30px;
+                            margin: 0;
+                        }
+                        .pr-ph-bk{
+                            width: 30px;
+                            height: 30px;
+                            position: absolute;
+                            left: 0;
+                        }
+                    }
+
+                    .m{
+                        //player gray field
+                        .gm-pr{
+                            height: 40px;
+                            // player
+                            .pr-ph-bk{
+                                left: 0 !important;
+                                margin-left: 20px;
+                            }
+                        }
+                        // buttons | statuses
+                        .pr-cl{
+                            float: right;
+                        }
+                        // balance
+                        .pr-pt{
+                            left: 20%;
+                            padding-top: 2px;
+
+                        }
+                        // bet
+                        .pr-pr{
+                            padding-top: 2px;
+                        }
+                        //type
+                        .pr-md{
+                        }
+
+                    }
+                    .o{
+                        float: left;
+                        margin: 0;
+                        .gm-pr{
+                            height: auto;
+                            min-height: 0;
+                            width: auto;
+                        }
+                        // player
+                        .pr-ph-bk{
+                            // left: 50% !important;
+                        }
+                        .pr-nm{
+                            padding: 7px 0 0 15px;
+                        }
+                    }
+                }
+            }    
+        }
+    }
+}
+@media(max-width: 320px) {
+    #games-online-field{
+        &:not(.Durak){
+            .mx{
+                .players{
+                    .m{
+                        //player gray field
+                        .gm-pr{
+                        }
+                        // buttons | statuses
+                        .pr-cl{
+
+                        }
+                        // player
+                        .pr-ph-bk{
+                            // left: 50% !important;
+                        }
+                        // balance
+                        .pr-pt{
+                            // left: 50%;
+                        }
+                        // bet
+                        .pr-pr{
+                        }
+                        //type
+                        .pr-md{
+                        }
+
+                    }
+                }
+            }    
         }
     }
 }
 
 @media(max-height: 550px) and(max-width: 1010px) and(orientation: landscape) {
+    #games-online-field{
+        .mx{
+            .players{
+                .m{
+                    //player gray field
+                    .gm-pr{
+                    }
+                    // buttons | statuses
+                    .pr-cl{
+
+                    }
+                    // player
+                    .pr-ph-bk{
+                        left: 47% !important;
+                    }
+                    // balance
+                    .pr-pt{
+                        left: 50%;
+                    }
+                    // bet
+                    .pr-pr{
+                        padding-top: 12px;
+                        .title{
+                            display: block;
+                            text-align: left;
+                        }
+                    }
+                    //type
+                    .pr-md{
+                        margin-left: 10px !important;
+                        i{
+                            display: inline;
+                        }
+                    }
+
+                }
+            }
+        }
+    }
     #games-online-field.Durak {
         .cards {
             .players {
@@ -1624,6 +2020,20 @@ footer.unvisible {
             .m {
                 height: auto;
                 min-height: 200px;
+
+                .circle-timer,
+                .circle {
+                    width: 64px;
+                    height: 64px;
+                }
+                .timer-l,
+                .timer-r {
+                    width: 64px;
+                    height: 64px;
+                    margin-left: -32px;
+                    margin-top: -32px;
+                }
+
                 .gm-pr {
                     height: 60px;
                     margin: 0;
@@ -1631,70 +2041,38 @@ footer.unvisible {
                         top: 6px;
                         left: 35%;
                     }
-                    .pr-pr {
-                        width: 50px;
-                        height: 50px;
-                        margin: 0;
-                        margin: 5px 0;
-                        padding: 8px 0;
-                        b {
-                            font: 26px/1 Handbook-bold;
-                            letter-spacing: -3px;
-                            margin-left: -3px;
-                            display: block;
-                            text-transform: uppercase;
-                            margin-top: 0;
-                        }
-                        span {
-                            font: 9px/5px $hbBold;
-                            text-transform: uppercase;
-                            color: $black_50;
-                            display: block;
-                        }
-                    }
                     .pr-ph {
                         width: 50px;
                         height: 50px;
                         margin: 0;
                     }
-                    .pr-cl {
-                        margin: 12px 15px;
-                        .btn-pass {
-                            line-height: 40px;
-                        }
-                        .btn-ready {
-                            line-height: 40px;
-                        }
-                    }
-                    .pr-md {
-                        height: 45px;
-                        span {
-                            line-height: 45px;
-                        }
-                    }
-                }
-                .pr-pt {
-                    padding: 0 10px;
-                    font-size: 12px;
-                    margin: 20px 0;
                 }
             }
-            .o .gm-pr {
-                width: auto;
-                height: 30px;
-                .pr-ph {
-                    width: 40px;
-                    height: 40px;
+            .o {
+                .circle,
+                .circle-timer {
+                    width: 54px;
+                    height: 54px;
                 }
-            }
-            .gm-pr .pr-ph-bk {
-                width: 50px;
-                height: 50px;
-                position: absolute;
-                .mt {
-                    font-size: 14px;
+                .timer-r ,
+                .timer-l {
+                    width: 54px;
+                    height: 54px;
+                    margin-left: -27px;
+                    margin-top: -27px;
+                }
+                .pr-ph-bk{
+                    position: relative;
+                    top: -20px;
+                }
+                .gm-pr {
                     width: auto;
-                }
+                    height: 30px;
+                    .pr-ph {
+                        width: 40px;
+                        height: 40px;
+                    }
+                }   
             }
         }
     }

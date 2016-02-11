@@ -238,7 +238,8 @@
 
         "submit": {
             "communication-comments":  Comments.smilePost,
-            "communication-messages":  Comments.smilePost
+            "communication-messages":  Comments.smilePost,
+            "blog-post-view-comments": Comments.smilePost
         }
 
     };

@@ -115,6 +115,7 @@
                 "title-games-lastWin": "выигрыш",
                 "title-games-credits": "баланс",
                 "title-games-bet": "ставка",
+                "title-games-balance": "на счету",
                 "title-games-settings": "настройки",
                 "title-games-prize-fund": "Призовой фонд",
                 "title-games-rules": "Правила игры",
@@ -122,6 +123,10 @@
                 "title-games-prize": "приз",
                 "title-games-ticketprice": "Cтоимость",
                 "title-games-winners": "победителей",
+                "title-games-win": "ПОБЕДА!",
+                "title-games-lose": "ПРОИГРЫШ :(",
+                "title-games-main-win": "ваш выигрыш",
+                "title-games-main-lose": "вы проиграли",
 
                 "title-game-ready": "Готов",
                 "title-game-waiting-player": "Ожидаем соперника",
