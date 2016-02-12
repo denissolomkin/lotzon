@@ -30,7 +30,12 @@
             lose:{
                 class: 'msg-win',
                 title: 'title-games-lose'
+            },
+            equal:{
+                class: 'msg-equal',
+                title: 'title-games-equal'
             }
+
         },
 
         field: null,
@@ -345,30 +350,55 @@
          * @return {}        
          */
         drawWinMessage: function(pl){
+                // if !Durak replace msg to other block
+                if( notDurak = document.querySelector('#games-online-field:not(.Durak) .mx') ){
+                    var html = '', 
+                    msg = pl.result > 0 ? Game.messages.win : Game.messages.lose,
+                    el = document.querySelector('.mx > .msg ') || document.createElement('div');
 
-            // if !Durak replace msg to other block
+                    el.setAttribute('class', 'msg');
+                    el.style.display = 'none';
+
+
+                    html += '<div class="'+msg.class+'">';
+                        html += '<div class="title">'+ i18n(msg.title) +'</div>';
+                            html += '<div><span>' + (pl.result > 0 ? i18n('title-games-main-win') : i18n('title-games-main-lose')) + ' </span>'+
+                            (App.currency == 'MONEY' ? Player.formatCurrency(Math.abs(pl.win), 1) : Math.abs( parseInt(pl.win) )) + ' ' +
+                            (App.currency == 'MONEY' ? Player.getCurrency() : 'баллов') + '</div>';
+                    html += '</div>'
+
+
+                    el.innerHTML = html;
+
+                    notDurak.appendChild(el);
+
+                    return;
+                }
+
+        },
+        drawEqualMessage: function(callback){
             if( notDurak = document.querySelector('#games-online-field:not(.Durak) .mx') ){
-                var html = '', msg = pl.result > 0 ? Game.messages.win : Game.messages.lose ,
+                var msg = Game.messages.equal,
+                html = '';
                 el = document.querySelector('.mx > .msg ') || document.createElement('div');
 
                 el.setAttribute('class', 'msg');
+                el.style.display = 'none';
 
                 html += '<div class="'+msg.class+'">';
-                    html += '<div class="title">'+ i18n(msg.title) +'</div>';
-                    html += '<div><span>' + (pl.result > 0 ? i18n('title-games-main-win') : i18n('title-games-main-lose')) + ' </span>'+
-                    (App.currency == 'MONEY' ? Player.formatCurrency(Math.abs(pl.win), 1) : Math.abs( parseInt(pl.win) )) + ' ' +
-                    (App.currency == 'MONEY' ? Player.getCurrency() : 'баллов') + '</div>';
+                        html += '<div class="title">'+ i18n(msg.title) +'</div>';
                 html += '</div>'
 
-
                 el.innerHTML = html;
-
                 notDurak.appendChild(el);
 
-                return;
+                $(el).fadeIn(200);
+                window.setTimeout(function() {
+                    $(el).fadeOut(200);
+                }, 2000);
             }
+            return false;
         },
-
         drawWinButtons: function(buttons){
             var playerButtons = document.querySelector('.mx > .msg .msg-win'),
                 html = '',

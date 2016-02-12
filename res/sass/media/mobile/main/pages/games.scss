@@ -171,7 +171,24 @@ $url_3: url(../img/games/lotzonBg.png);
             justify-content: center;
         }
 
+        &.WhoMore{
+            .mx{
+                .table {   
+                    .inner {
+                        .cell {
+                            i[class^="i-"] {
+                                font-size: 1.2em;
+                            }
 
+                            span {
+                                font-family: $hbBold;
+                                font-size: 1.4em;
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     .mx{
@@ -595,7 +612,6 @@ $url_3: url(../img/games/lotzonBg.png);
                 .moves,
                 .table{
                     width: 100% !important;
-                    padding: 0 13px;
                     min-height: 0;
                 }
                 .players{
@@ -696,6 +712,23 @@ $url_3: url(../img/games/lotzonBg.png);
                     }
                 }
             }    
+            &.WhoMore{
+                .mx{
+                    .table {   
+                        .inner {
+                            .cell {
+                                i[class^="i-"] {
+                                    font-size: 0.9em;
+                                }
+                                span {
+                                    font-family: $hbBold;
+                                    font-size: 1.1em;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

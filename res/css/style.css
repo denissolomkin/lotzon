@@ -9098,9 +9098,6 @@ span.input-prefix {
       margin-bottom: 0;
       margin-right: 50px; } }
 
-#R2D2 {
-  display: none; }
-
 /*title of games view*/
 .title-wrap {
   position: relative;
@@ -9616,6 +9613,25 @@ footer.unvisible {
         background: #f8e71c; }
       #games-online-field:not(.Durak) .mx .msg .msg-lose {
         background: #f0e98f; }
+      #games-online-field:not(.Durak) .mx .msg .msg-equal {
+        background: #fff;
+        padding: 40px;
+        vertical-align: middle;
+        position: relative; }
+        #games-online-field:not(.Durak) .mx .msg .msg-equal:before {
+          content: '';
+          height: 100%;
+          width: 0;
+          vertical-align: middle;
+          display: inline-block; }
+        #games-online-field:not(.Durak) .mx .msg .msg-equal .title {
+          font-size: 15px;
+          color: #4a4a4a;
+          line-height: 18px;
+          text-align: center;
+          text-transform: uppercase;
+          vertical-align: middle;
+          display: inline-block; }
   #games-online-field:not(.Durak).WhoMore .moves {
     margin: 0px auto; }
     #games-online-field:not(.Durak).WhoMore .moves:last-child {
@@ -10857,7 +10873,6 @@ and open the template in the editor.
     font-size: 18px; }
   .moment-game-box .message {
     font-family: Handbook-bold;
-    transition: all .4s ease-out;
     text-transform: uppercase;
     text-align: center;
     padding: 0; }

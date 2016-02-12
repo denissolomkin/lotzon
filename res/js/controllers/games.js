@@ -382,7 +382,8 @@ var Games = {
             
             msg += "</p>";
 
-            $(".moment-game-box .message").html(msg);
+            $(".moment-game-box .message").css({"display":"none"}).html(msg).delay( 2000 ).fadeIn( 200 );
+
         },
 //        remove block by timeout
         destroy: function (timer) {

@@ -13,6 +13,9 @@
                     Game.initTimers();
                     Apps.WhoMore.paintCell();
                     Game.end() && Apps.WhoMore.end();
+
+                    //>>>>>> dont forget remove this!!!!
+                    Game.destroyTimeOut();
                 }
             }
         },
@@ -20,11 +23,7 @@
         'initStatuses': function() {
 
             if (App.extra) {
-                var equal = $('.ngm-bk .msg.equal');
-                equal.fadeIn(200);
-                window.setTimeout(function() {
-                    equal.fadeOut(200);
-                }, 2000);
+                Game.drawEqualMessage();
             }
 
             Game.drawStatuses();
@@ -77,15 +76,12 @@
 
                 $('.mx .table').html('<div></div>');
 
-                // App.variation.field = "10x10"
-                // App.variation.field = "10x3"
-
-                var size = parseInt(App.variation.field),
+                var size = App.variation.field.split('x'),
                     html = '';
 
-                for (i = 1; i <= size; i++) {
+                for (i = 1; i <= parseInt(size[1]); i++) {
                     html += '<div class="vw vh vf clearfix">';
-                    for (j = 1; j <= size; j++) {
+                    for (j = 1; j <= parseInt(size[0]); j++) {
                         html += '<div>' +
                             '<div class = "inner" >' +
                             '<div class="cell" data-cell="' + j + "x" + i + '"><i class="i-question"></i></div>' +
@@ -143,12 +139,15 @@
         },
 
         'end': function(){
-
             Game.drawWinButtons([
                 Game.buttons.replay,
                 Game.buttons.exit
             ]);
-
+            
+            setTimeout( function(){
+            // alert("end");
+                $('.mx > .msg').fadeIn('fast')
+            }, 2000 );
         }
 
     }
