@@ -77,6 +77,9 @@
 
                 $('.mx .table').html('<div></div>');
 
+                // App.variation.field = "10x10"
+                // App.variation.field = "10x3"
+
                 var size = parseInt(App.variation.field),
                     html = '';
 

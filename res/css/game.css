@@ -15,37 +15,95 @@
     border: 1px solid red;
 }
 
-#games-online-field.SeaBattle .mx{
+#games-online-field.SeaBattle .mx {
     min-height: 500px;
 }
 
-#games-online-field.SeaBattle .mx ul{
+#games-online-field.SeaBattle .mx ul {
     padding: 0 !important;
 }
 
-#games-online-field.SeaBattle .mx ul li{
+#games-online-field.SeaBattle .mx ul li {
     margin: 0 1px 1px 0 !important;
 }
 
-#games-online-field.SeaBattle .mx li.s{
+#games-online-field.SeaBattle .mx li.s {
     background: lightskyblue;
 }
 
 #games-online-field.SeaBattle .mx ul.o li:not(.e,.d,.k) {
-    cursor:crosshair;
+    cursor: crosshair;
     cursor: url('/tpl/img/games/Crosshair.cur') 12 12, crosshair;
 }
 
-#games-online-field.SeaBattle .mx li.d, #games-online-field.SeaBattle .mx li.k{
+#games-online-field.SeaBattle .mx li.d, #games-online-field.SeaBattle .mx li.k {
     background: url(/tpl/img/games/damage.png) no-repeat 50% 50% yellow;
 }
 
-#games-online-field.SeaBattle .mx li.e{
+#games-online-field.SeaBattle .mx li.e {
     background: gray;
 }
 
-#games-online-field.SeaBattle .mx .table div{
+#games-online-field.SeaBattle .mx .table div {
     position: absolute;
     background: lightskyblue;
     cursor: pointer;
+}
+
+.FiveLine ul > li div {
+    border-radius: 50%;
+    margin: 10%;
+    width: 80%;
+    height: 80%;
+}
+
+
+
+#games-online-field.FiveLine .table {
+    width: 480px !important;
+}
+
+#games-online-field.FiveLine .mx .wrapper{
+    width: 100%;
+}
+
+#games-online-field.FiveLine ul li {
+    float: left;
+    position: relative !important;
+    background: aliceblue;
+}
+
+.FiveLine ul > li {
+    background-color: #d8e7e9;
+    margin: 0 1px 1px 0 !important;
+    float: left;
+    cursor: pointer;
+    text-align: center;
+    color: #4c4c4c;
+    letter-spacing: -2px;
+}
+
+.FiveLine ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.FiveLine ul > li.m div {
+    background: #000;
+    opacity: 0.6;
+}
+
+.FiveLine ul > li.o div {
+    background: #ff0000;
+    opacity: 0.6;
+}
+
+.FiveLine ul > li.m.last div {
+    opacity: 1;
+}
+
+.FiveLine ul > li.o.last div {
+    opacity: 1;
 }

@@ -567,7 +567,8 @@
             quit: function () {
 
                 D.log('Game.action.quit', 'game');
-                Game.field.classList.remove('on-top');
+                if(Game.field)
+                    Game.field.classList.remove('on-top');
                 R.push('/games/online/' + App.id);
                 App.uid = 0;
                 Game.destroyTimeOut();

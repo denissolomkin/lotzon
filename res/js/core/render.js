@@ -398,7 +398,7 @@
             var render = options.rendered = DOM.create(options.rendered),
                 node = options.node,
                 template = false,
-                onTop = DOM.visible('.on-top').length;
+                onTop = DOM.visible('.on-top').length && !render.classList.contains('pop-box');
 
             D.log(['Render.inputHTML into:', node.id], 'render');
 
