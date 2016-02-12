@@ -456,7 +456,7 @@ class PlayersDBProcessor implements IProcessor
 
         $sql = "TRUNCATE TABLE `GamesTmpBots`;
         INSERT INTO `GamesTmpBots` (id, name, avatar, country, lang, utc)
-              SELECT Id, Nicname, Avatar, Country, Lang, IFNULL(UTC,1)
+              SELECT Id, Nicname, Avatar, Country, IFNULL(NULLIF(Lang,''),'RU'), IFNULL(UTC,1)
               FROM `Players`
               WHERE Bot = 1;";
 
