@@ -1205,8 +1205,8 @@ header {
       display: block; }
   #profile-convert .cc-out input, #profile-convert .cc-income span.cc-sum {
     width: 111px; }
-  #profile-convert .cc-income span.cc-sum {
-    width: 105px; }
+  #profile-convert .cc-income input, #profile-convert .cc-income span.cc-sum {
+    width: 111px; }
   #profile-convert .cc-form-top {
     margin: 0 -10px 25px;
     padding: 0 20px;
@@ -1238,12 +1238,10 @@ header {
   #profile-settings .ae-social {
     height: auto;
     margin-left: 20px; }
-  #profile-settings .settings .title {
-    min-width: 80px; }
   #profile-settings .s-lang span {
     margin-left: 5px; }
   #profile-settings .s-lang label:first-of-type span {
-    margin-left: 20px; }
+    margin-left: 15px; }
   #profile-settings .i-pencil {
     font-size: 18px; }
   #profile-settings .danger {
@@ -1289,6 +1287,46 @@ header {
   margin-left: 10px; }
   #profile-cachout .cco-edit span {
     display: inline-block; }
+
+.settings .strip .delete-reg span {
+  margin-left: 0; }
+
+.settings .strip .choice span {
+  margin-left: 20px; }
+
+#profile-settings .settings .title {
+  min-width: 85px; }
+
+#profile-settings input {
+  margin-left: 15px; }
+
+#profile-settings .ae-social {
+  margin-left: 15px; }
+
+.settings input, .settings input + span, .settings .ae-social, .settings span {
+  margin-left: 15px; }
+
+.ae-current-combination {
+  margin-left: 15px; }
+
+.settings .ae-current-combination > * {
+  float: left;
+  width: 30px;
+  height: 35px;
+  border-radius: 50%;
+  line-height: 34px;
+  text-align: center;
+  margin-left: 0 !important;
+  cursor: pointer;
+  margin-right: 0;
+  min-width: 0;
+  text-align: center; }
+
+.ae-personal-form-values li .hidden {
+  display: none; }
+
+.ae-personal-inf .uk-float-right.add-friends {
+  float: right; }
 
 @media (max-width: 500px) {
   .content-box-item.cabinet-referrals {
@@ -1462,6 +1500,9 @@ header {
     min-width: 40px; }
   .calendar-range input.daterange {
     padding-left: 0; } }
+
+#reports-transactions .content-box-item-top {
+  left: 10px; }
 
 .c-friends .content-box-item-top {
   left: 10px; }
@@ -2650,8 +2691,6 @@ header {
     margin-left: 13px; }
   .c-play-inf td:first-child {
     padding-left: 15px; }
-  .ae-top {
-    margin-bottom: 40px; }
   .ae-inf {
     display: block;
     width: 458px;
@@ -2680,7 +2719,7 @@ header {
   .ae-current-combination {
     display: inline-block;
     vertical-align: middle;
-    margin-left: 20px; }
+    margin-left: 15px; }
     .ae-current-combination > * {
       float: left;
       width: 25px;
@@ -2759,6 +2798,25 @@ header {
     min-width: 150px; }
   .ae-social i {
     min-width: 154px; }
+  div.rules-text {
+    clear: both; }
+  #profile-settings .settings .title {
+    min-width: 140px; }
+  .cco-enter-sum input {
+    margin-right: 10px; }
+  .cco-enter-sum > div:first-of-type > * {
+    -webkit-transform: translate(0, 0);
+    -khtml-transform: translate(0, 0);
+    -moz-transform: translate(0, 0);
+    -ms-transform: translate(0, 0);
+    -o-transform: translate(0, 0);
+    transform: translate(0, 0);
+    top: 0;
+    line-height: 45px; }
+  #reports-transactions .content-box-item-top {
+    left: 0; }
+  .ae-social i {
+    margin-right: 2px; }
   .ph-header {
     margin: 0 -20px 20px;
     padding: 0 20px; }
@@ -2808,6 +2866,8 @@ header {
   .th-item {
     margin: 0 -20px;
     padding: 13px 20px 0; }
+  #reports-transactions .content-box-item-top {
+    left: 0; }
   .c-friend-detail .c-user-inf-wrapper {
     position: static; }
   .c-friend-detail .c-user-inf {

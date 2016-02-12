@@ -143,8 +143,8 @@
 		& .cc-out input, .cc-income span.cc-sum {
 			width: 111px;
 		}
-		.cc-income span.cc-sum {
-			width: 105px;
+		& .cc-income input, .cc-income span.cc-sum {
+			width: 111px;
 		}
 		.cc-form-top {
 		    margin: 0 -10px 25px;
@@ -192,12 +192,6 @@
 		height: auto;
 		margin-left: 20px;
 	}
-	& .settings {
-
-		& .title {
-		 	min-width: 80px;
-		}
-	}
 	& .s-lang {
 		& span {
 			margin-left: 5px;
@@ -205,7 +199,7 @@
 		& label {
 			&:first-of-type {
 				& span {
-					margin-left: 20px;
+					margin-left: 15px;
 				}
 			}
 		}
@@ -272,4 +266,50 @@
 		& span {
 		display: inline-block;
 	}
+}
+
+
+.settings .strip .delete-reg span {
+	margin-left: 0;
+}
+.settings .strip .choice span{
+	margin-left: 20px;
+}
+#profile-settings .settings .title {
+	min-width: 85px;
+}
+#profile-settings input{
+	margin-left: 15px;
+}
+#profile-settings .ae-social {
+	margin-left: 15px;
+}
+
+.settings input, .settings input + span, .settings .ae-social, .settings span {
+	margin-left: 15px;
+}
+
+.ae-current-combination {
+	margin-left: 15px;
+}
+.settings .ae-current-combination > * {
+	float: left;
+    width: 30px;
+    height: 35px;
+    border-radius: 50%;
+    line-height: 34px;
+    text-align: center;
+    margin-left: 0 !important;
+    cursor: pointer;
+    margin-right: 0;
+    min-width: 0;
+    text-align: center;
+}
+
+.ae-personal-form-values li .hidden {
+	display: none;
+}
+
+.ae-personal-inf .uk-float-right.add-friends {
+	float: right;
 }

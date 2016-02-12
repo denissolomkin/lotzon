@@ -86,10 +86,6 @@
   padding-left: 15px;
 }
 
-.ae-top {
-  margin-bottom: 40px;
-}
-
 
 .ae-inf {
   display: block;
@@ -136,7 +132,7 @@
 .ae-current-combination {
   display: inline-block;
   vertical-align: middle;
-  margin-left: 20px;
+  margin-left: 15px;
   & > * {
     float: left;
     width: 25px;
@@ -275,4 +271,33 @@ span.input-prefix {
 }
  .ae-social i {
   min-width: 154px;
+}
+
+
+
+div.rules-text  {
+  clear: both;
+}
+
+#profile-settings .settings .title {
+    min-width: 140px;
+}
+
+.cco-enter-sum input {
+  // bottom: 18px;
+  margin-right: 10px;
+      // line-height: 15px;
+}
+
+.cco-enter-sum > div:first-of-type > * {
+  @include translate(0, 0);
+  top: 0;
+  line-height: 45px;
+}
+#reports-transactions .content-box-item-top {
+  left: 0;
+}
+
+.ae-social i {
+  margin-right: 2px;
 }

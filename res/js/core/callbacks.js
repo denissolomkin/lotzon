@@ -110,7 +110,7 @@
             // $(document).on('click', '.pi-ph.true', Profile.do.removeAvatar);
             $(document).on('click', '.pi-ph.true', Profile.do.updateAvatar);
             $(document).on('change', 'form input.repeat-pass', Profile.validate.passwordRepeat);
-            $(document).on('change', 'cc-sum', Profile.validate.convert);
+            $(document).on('change', '.cc-out .cc-sum', Profile.validate.convert);
 
 
 
@@ -221,6 +221,7 @@
 
             "communication-notifications": Comments.renderNotifications,
             "users-view-messages": Messages.after.markRead,
+            "users-requests-view": Profile.after.request
 
         },
 

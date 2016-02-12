@@ -7581,7 +7581,7 @@ form.loading > * {
 .ae-current-combination {
   margin-left: 20px; }
 
-.ae-current-combination > * {
+.settings .ae-current-combination > * {
   float: left;
   width: 15px;
   height: 35px;
@@ -7590,8 +7590,9 @@ form.loading > * {
   text-align: center;
   margin-left: 0 !important;
   cursor: pointer;
-  margin-right: 15px; }
-  .ae-current-combination > *:last-child {
+  margin-right: 15px;
+  min-width: 0; }
+  .settings .ae-current-combination > *:last-child {
     margin-right: 0; }
 
 .ae-socials {
@@ -7680,6 +7681,19 @@ form.loading > * {
   text-decoration: none; }
   .cabinet-cashout a:hover {
     text-decoration: underline; }
+
+.cabinet-cashout .rules {
+  position: relative;
+  display: inline-block;
+  margin-right: 20px; }
+  .cabinet-cashout .rules .btn-arrows {
+    width: 155px;
+    position: absolute; }
+    .cabinet-cashout .rules .btn-arrows .change {
+      position: absolute;
+      right: 0;
+      width: 160px;
+      text-align: right; }
 
 .cco-title div:first-of-type {
   color: #4a4a4a; }
@@ -7799,7 +7813,7 @@ div.rules-text {
 .cco-enter-sum .title {
   display: block;
   float: left;
-  margin-right: 20px; }
+  margin-right: 10px; }
 
 .cco-enter-sum input {
   display: block;
@@ -7809,7 +7823,12 @@ div.rules-text {
   border-style: solid;
   border-color: #cbc7c6;
   background: transparent;
-  border-radius: 0; }
+  border-radius: 0;
+  position: relative;
+  bottom: 3px;
+  text-align: center;
+  font-family: "handbookpro-regular";
+  font-size: 18px; }
 
 .cco-currency {
   display: block;
@@ -7996,7 +8015,20 @@ span.input-prefix {
   position: relative;
   bottom: 3px; }
 
-.cc-out .title {
+.cc-income > * {
+  position: relative;
+  -webkit-transform: translate(0, 50%);
+  -khtml-transform: translate(0, 50%);
+  -moz-transform: translate(0, 50%);
+  -ms-transform: translate(0, 50%);
+  -o-transform: translate(0, 50%);
+  transform: translate(0, 50%);
+  top: -50%;
+  display: inline-block;
+  position: relative;
+  bottom: 3px; }
+
+.cc-out .title, .cc-income .title {
   display: inline-block;
   color: #000000;
   font-size: 15.5px;
@@ -8015,41 +8047,23 @@ span.input-prefix {
   .cc-out input span {
     line-height: 25px; }
 
-.cc-income > * {
-  position: relative;
-  -webkit-transform: translate(0, 50%);
-  -khtml-transform: translate(0, 50%);
-  -moz-transform: translate(0, 50%);
-  -ms-transform: translate(0, 50%);
-  -o-transform: translate(0, 50%);
-  transform: translate(0, 50%);
-  top: -50%;
+.cc-income input {
   display: inline-block;
-  line-height: 25px;
-  position: relative;
-  bottom: 3px; }
+  width: 170px;
+  border-width: 0 0 1px;
+  border-style: solid;
+  border-color: #cbc7c4;
+  margin-top: 5px;
+  background: none;
+  position: static;
+  border-radius: 0; }
+  .cc-income input span {
+    line-height: 25px; }
 
-.cc-income span {
-  display: inline-block;
-  line-height: 18px;
-  font-size: 15.5px; }
-  .cc-income span.cc-sum {
-    border: 1px solid;
-    display: inline-block;
-    width: 170px;
-    border-width: 0 0 1px;
-    border-style: solid;
-    border-color: #cbc7c4;
-    margin-top: 5px;
-    background: none;
-    min-height: 18px;
-    position: static; }
+.cc-income .cc-currency, .cc-out .cc-currency {
+  text-transform: lowercase; }
 
-.cc-income .cc-currency {
-  text-transform: lowercase;
-  line-height: 25px; }
-
-.cc-out .cc-currency {
+.cc-out .cc-currency, .cc-income .cc-currency {
   text-transform: lowercase;
   line-height: 25px; }
 
@@ -8185,7 +8199,8 @@ span.input-prefix {
 
 .settings input {
   border: none;
-  background: transparent; }
+  background: transparent;
+  min-width: 160px; }
 
 .settings .btn-flat {
   margin-top: 30px; }
@@ -8243,7 +8258,8 @@ span.input-prefix {
     left: 2px; }
 
 #profile-edit .wrapper-calendar {
-  z-index: 10; }
+  z-index: 10;
+  margin-left: 1px; }
   #profile-edit .wrapper-calendar:before {
     right: 5px; }
   #profile-edit .wrapper-calendar .calendar-range {
@@ -8331,6 +8347,9 @@ span.input-prefix {
 
 #user-view .content-box-item {
   min-height: 550px; }
+
+.user-actions button.danger {
+  color: #ff4c4b; }
 
 #profile-edit .content-box-item, #user-view .content-box-item {
   padding: 0 20px 20px; }
@@ -8428,6 +8447,13 @@ span.input-prefix {
 
 #profile-edit .daterangepicker.opensright:after {
   display: none; }
+
+.current-ballance {
+  opacity: 0.5;
+  font-family: "handbookpro-regular";
+  font-size: 15.5px;
+  color: #000000;
+  line-height: 18px; }
 
 .ph-notice {
   text-align: center;

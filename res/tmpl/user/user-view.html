@@ -27,8 +27,11 @@
                                         <a href="/users/{{id}}/message" class="send-msg uk-float-left">
                                             {{i18n "button-users-write-message"}}
                                         </a>
-                                        <form action="/users/requests/{{id}}" method="post" class="uk-float-left">
-                                            <button type="submit add-friends">{{i18n "button-user-friendship"}}</button>
+                                        <form action="/users/requests/{{id}}" method="post" class="uk-float-left add-friends">
+                                            <button type="submit">{{i18n "button-user-friendship"}}</button>
+                                        </form>
+                                        <form action="/users/requests/{{id}}" method="delete" class=" add-friends uk-float-right danger hidden">
+                                            <button type="submit" class="danger">{{i18n "button-user-remove-request"}}</button>
                                         </form>
                                     </li>
                                     <li><i>Имя</i>

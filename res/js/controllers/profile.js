@@ -2,7 +2,7 @@
 
     Profile = {
         arrFavorite: [],
-        moneyConvert: 'input.cc-sum',
+        moneyConvert: '.cc-out .cc-sum',
         pointsConvert: '.cc-income .cc-sum',
         moneyCashout: 'input.cco-sum',
 
@@ -56,7 +56,7 @@
                     calc_points = Player.calcPoints(input_money);
 
                 $input_money.val(input_money);
-                $calc_points.text(calc_points);
+                $calc_points.val(calc_points);
 
                 return true;
 
@@ -241,8 +241,9 @@
         after: {
 
             request: function(data) {
-                this.innerHTML = i18n("button-user-remove-request");
-                this.className = 'uk-float-right danger';
+                $('.add-friends').toggleClass('hidden')
+                // this.innerHTML = i18n("button-user-remove-request");
+                // this.className = 'uk-float-right danger';
             },
 
             cashout: function() {

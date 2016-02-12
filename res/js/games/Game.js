@@ -399,6 +399,18 @@
             }
         },
 
+        unsetFullScreenHeigth: function () {
+
+            D.log('Game.setFullScreenHeigth', 'game');
+            var singleGame = $('#games-online-field');
+            if (singleGame.length > 0) {
+                if (Device.isMobile()) {
+                    $('main, .content-top').removeClass('active_small_devices');
+                    $('footer').removeClass('unvisible');
+                }
+            }
+        },
+
         destroyTimeOut: function () {
             $("#gameTimer").countdown('destroy');
         },
@@ -560,7 +572,7 @@
                 App.uid = 0;
                 Game.destroyTimeOut();
                 Games.online.now();
-
+                Game.unsetFullScreenHeigth();
             },
 
             update: function (data) {
