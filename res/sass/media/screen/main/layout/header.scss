@@ -248,9 +248,21 @@
     box-shadow: none !important;
     padding: 0;
     margin: 0 auto;
-    top: 50%;
-    @include translate(0, -50%);
+    height: 100%;
+    // top: 50%;
+    transform: none;
     font-family: 'handbookpro-regular';
+    &:before{
+        content: '';
+        display: inline-block;
+        vertical-align: middle;
+        height: 100%;
+        width: 0;
+    }
+    & > *{
+        display: inline-block;
+        vertical-align: middle;
+    }
     &.active,
     &:hover {
         background: transparent;

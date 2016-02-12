@@ -237,6 +237,8 @@ body #menu-navigation-mobile .menu-balance-inf > div {
   top: 0;
   right: 0;
   height: 40px; }
+  .menu-btns .i-menu {
+    top: 12px; }
 
 #menu-navigation-mobile {
   font: 15.5px / 45px 'handbookpro-regular'; }
@@ -857,7 +859,6 @@ header {
 
 .moment-game-box:not(.game-started) .message {
   top: 50%;
-  transform: translateY(-50.1%);
   margin: 0;
   background: transparent; }
 

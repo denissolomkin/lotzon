@@ -283,14 +283,18 @@ html {
   box-shadow: none !important;
   padding: 0;
   margin: 0 auto;
-  top: 50%;
-  -webkit-transform: translate(0, -50%);
-  -khtml-transform: translate(0, -50%);
-  -moz-transform: translate(0, -50%);
-  -ms-transform: translate(0, -50%);
-  -o-transform: translate(0, -50%);
-  transform: translate(0, -50%);
+  height: 100%;
+  transform: none;
   font-family: 'handbookpro-regular'; }
+  .balance-btn:before {
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    height: 100%;
+    width: 0; }
+  .balance-btn > * {
+    display: inline-block;
+    vertical-align: middle; }
   .balance-btn.active, .balance-btn:hover {
     background: transparent; }
 

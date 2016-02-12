@@ -1439,7 +1439,7 @@ div {
   font: 15px / 50px Handbook-bold; }
 
 .content-box-tab {
-  font: 15px / 55px Handbook-bold; }
+  font: 15px / 50px Handbook-bold; }
 
 .content-box-tab > div {
   position: relative; }
@@ -4798,8 +4798,6 @@ input.comment-reply-btn {
   top: 5px;
   right: -9px;
   z-index: 100; }
-  .content-box-tab .count:hover {
-    opacity: 0.5; }
   .content-box-tab .count:empty {
     display: none; }
 
@@ -9102,7 +9100,8 @@ span.input-prefix {
 .title-wrap {
   position: relative;
   width: 100%;
-  padding: 20px; }
+  padding: 5px 0;
+  margin-bottom: 20px; }
 
 .back-button {
   position: absolute;
@@ -10233,7 +10232,7 @@ footer.unvisible {
           word-spacing: normal;
           font-size: 32px; }
       .games-view .description-block .game-fund .title {
-        border-right: 1px solid #fff;
+        border-right: 1px solid rgba(255, 255, 255, 0.3);
         font-size: 15.5px;
         padding-top: 15px;
         width: calc(25% - 1px); }
@@ -10251,7 +10250,8 @@ footer.unvisible {
       .games-view .description-block .game-description > div {
         overflow: hidden;
         transition: 1s max-height ease-in-out;
-        height: auto; }
+        height: auto;
+        margin-bottom: 20px; }
       .games-view .description-block .game-description > *:not(div) {
         position: absolute;
         bottom: 20px;
@@ -10261,7 +10261,7 @@ footer.unvisible {
         position: absolute;
         left: -9999px; }
         .games-view .description-block .game-description #read-more-description:checked ~ div {
-          max-height: 2000px; }
+          max-height: 2000px !important; }
         .games-view .description-block .game-description #read-more-description + label {
           display: none;
           color: #5a90b7;
@@ -10344,7 +10344,9 @@ footer.unvisible {
 
 .game-settings .filter {
   display: block;
-  margin: 20px 10px; }
+  margin: 20px 15px;
+  font-family: handbookpro-regular;
+  font-weight: normal; }
   .game-settings .filter li {
     float: left;
     font-size: 13px;
@@ -10411,6 +10413,8 @@ footer.unvisible {
   .game-settings .players-list .render-list {
     margin-bottom: 30px; }
   .game-settings .players-list .player {
+    font-family: handbookpro-regular;
+    font-weight: normal;
     counter-increment: my-awesome-counter;
     border-bottom: 1px solid #e5e5e5;
     padding: 5px;
@@ -10426,7 +10430,13 @@ footer.unvisible {
       .game-settings .players-list .player .name:before {
         content: counter(my-awesome-counter);
         display: block;
-        font-size: 13px; }
+        font-size: 13px;
+        font-family: handbookpro-regular;
+        font-weight: normal; }
+    .game-settings .players-list .player .rating {
+      font-size: 13px;
+      font-family: handbookpro-regular;
+      font-weight: normal; }
     .game-settings .players-list .player:hover {
       background: #f4f4f4; }
     .game-settings .players-list .player:first-child {
@@ -10475,7 +10485,7 @@ footer.unvisible {
   color: #474747;
   font-size: 14px; }
   .create-game .title {
-    font-size: 16px;
+    font-size: 15px;
     text-transform: uppercase;
     padding: 15px 0 11px; }
   .create-game .buttons-group {
@@ -10490,7 +10500,8 @@ footer.unvisible {
         display: table-cell;
         vertical-align: middle;
         height: 40px;
-        width: 100%; }
+        width: 100%;
+        line-height: 1; }
     .create-game .buttons-group .title {
       padding: 10px 15px !important;
       display: block;
@@ -10527,7 +10538,8 @@ footer.unvisible {
     width: 100%;
     background: #fff;
     transition: all .2s ease-in;
-    line-height: 31px; }
+    line-height: 31px;
+    font-size: 14px; }
     .create-game .start-game:hover {
       opacity: 0.5; }
 
@@ -10541,9 +10553,10 @@ footer.unvisible {
     width: 100%;
     padding: 0; }
     .games-view .description-block .game-description > div {
-      max-height: 0; }
+      max-height: 0 !important;
+      margin: 0; }
     .games-view .description-block .game-description #read-more-description:checked ~ div {
-      max-height: 2000px; }
+      max-height: 2000px !important; }
     .games-view .description-block .game-description #read-more-description + label {
       display: initial;
       bottom: 20px; }
@@ -10557,7 +10570,7 @@ footer.unvisible {
 #games-chance-view {
   color: #4a4a4a;
   font-size: 16px;
-  padding: 0 20px 20px; }
+  padding: 20px 20px 20px 20px; }
   #games-chance-view .prizes {
     display: inline-block;
     vertical-align: top;
@@ -10881,7 +10894,6 @@ and open the template in the editor.
       padding: 0 5px; }
   .moment-game-box .minefield {
     position: relative;
-    transform: scale(1.01);
     margin: 20px auto; }
     .moment-game-box .minefield .inner {
       padding: 4%; }
@@ -10908,7 +10920,7 @@ and open the template in the editor.
             font-weight: bold; }
         .moment-game-box .minefield button.win .flipFix :first-child:nth-last-child(1) {
           display: block;
-          font-size: .4em;
+          font-size: .3em;
           text-transform: none; }
         .moment-game-box .minefield button.win:not(.played) {
           transform: rotateY(180deg);
@@ -10952,17 +10964,24 @@ and open the template in the editor.
     width: 100%;
     height: 100%;
     display: inline-block;
+    text-align: center;
     z-index: 1;
     margin: 0; }
+    .moment-game-box:not(.game-started) .message:after {
+      content: '';
+      display: inline-block;
+      vertical-align: middle;
+      height: 100%;
+      width: 0; }
     .moment-game-box:not(.game-started) .message > * {
       border: 1px solid rgba(0, 0, 0, 0.1);
-      position: absolute;
       top: 50%;
       left: 50%;
-      transform: translate(-50.1%, -50.1%);
       padding: 20px;
       background: #fff;
-      white-space: nowrap; }
+      white-space: nowrap;
+      display: inline-block;
+      vertical-align: middle; }
   .moment-game-box .ad {
     border: 1px solid #d6d6d6;
     background: #f1f1f1;

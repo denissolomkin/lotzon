@@ -138,7 +138,7 @@ $hb_regular: handbookpro-regular;
                 }
             }
             .title {
-                border-right: 1px solid $white;
+                border-right: 1px solid rgba(255, 255, 255, 0.3);
                 font-size: 15.5px;
                 padding-top: 15px;
                 width: calc(25% - 1px);
@@ -162,6 +162,8 @@ $hb_regular: handbookpro-regular;
                 overflow: hidden;
                 transition: 1s max-height ease-in-out;
                 height: auto;
+                // max-height: 390px;
+                margin-bottom: 20px;
             }
             & > *:not(div){
                 position: absolute;
@@ -172,8 +174,9 @@ $hb_regular: handbookpro-regular;
             #read-more-description{
                 position: absolute;
                 left: -9999px;
+                
                 &:checked ~ div{
-                    max-height: 2000px;
+                    max-height: 2000px !important;
                 }
                 + label{
                     display: none;
@@ -293,7 +296,10 @@ $hb_regular: handbookpro-regular;
     }
     .filter {
         display: block;
-        margin: 20px 10px;
+        margin: 20px 15px;
+        font-family: $hb_regular;
+        font-weight: normal;
+
         li {
             float: left;
             font-size: 13px;
@@ -388,6 +394,8 @@ $hb_regular: handbookpro-regular;
             margin-bottom: 30px;
         }
         .player {
+            font-family: $hb_regular;
+            font-weight: normal;
             counter-increment: my-awesome-counter;
             border-bottom: 1px solid $mercury;
             padding: 5px;
@@ -405,7 +413,14 @@ $hb_regular: handbookpro-regular;
                     content: counter(my-awesome-counter);
                     display: block;
                     font-size: 13px;
+                    font-family: $hb_regular;
+                    font-weight: normal;
                 }
+            }
+            .rating{
+                font-size: 13px;
+                font-family: $hb_regular;
+                font-weight: normal;
             }
             &:hover {
                 background: $wild_sand;
@@ -472,7 +487,7 @@ $hb_regular: handbookpro-regular;
     color: $color_gravel_approx;
     font-size: 14px;
     .title {
-        font-size: 16px;
+        font-size: 15px;
         text-transform: uppercase;
         padding: 15px 0 11px;
     }
@@ -489,7 +504,7 @@ $hb_regular: handbookpro-regular;
                 vertical-align: middle;
                 height: 40px;
                 width: 100%;
-
+                line-height: 1;
             }
         }
         .title {
@@ -537,7 +552,7 @@ $hb_regular: handbookpro-regular;
         background: #fff;
         transition: all .2s ease-in;
         line-height: 31px;
-        
+        font-size: 14px;
         &:hover{
             
             opacity: 0.5;
@@ -559,7 +574,8 @@ $hb_regular: handbookpro-regular;
 
             .game-description {
                 & > div{
-                    max-height: 0;
+                    max-height: 0 !important;
+                    margin: 0;
                 }
                 & > *:not(div){
 
@@ -567,7 +583,7 @@ $hb_regular: handbookpro-regular;
 
                 #read-more-description{
                     &:checked ~ div{
-                        max-height: 2000px;
+                        max-height: 2000px !important;
                     }
                     + label{
                         display: initial;

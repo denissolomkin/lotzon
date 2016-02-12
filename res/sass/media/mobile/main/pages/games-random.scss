@@ -20,7 +20,7 @@ $gray: #808080;
         &:not(.game-started) .message {
             top: 50%;
             //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
-            transform: translateY(-50.1%);
+            // transform: translateY(-50.1%);
             margin: 0;
             background: transparent;
             > *{

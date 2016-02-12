@@ -104,34 +104,48 @@
             var field = Game.field.getElementsByClassName('mx')[0];
 
             if (App.variation && App.variation.field) {
-                alert('drawField:');
+                
                 var fieldSize = App.variation.field.split('x'),
                     width = height = Math.min(Math.floor((220 - (fieldSize[0] - 1)) / fieldSize[0]), Math.floor((440 - fieldSize[1]) / fieldSize[0])) + 'px;',
                     font = (parseInt(width) / 1.6) + 'px/' + (parseInt(width)) + 'px Handbook-bold;',
                     html = '';
 
-                for (i = 1; i <= fieldSize[1]; i++)
-                    for (j = 1; j <= fieldSize[0]; j++)
-                        html += "<li style='width:" + width + "height:" + height + "font:" + font + (j == fieldSize[0] ? "margin-right: 0px;" : "")
-                            + "' data-coor='" + j + "x" + i + "'></li>";
+                field.innerHTML += '<div class="place" style="inline-block">' + i18n("text-game-place-ships") + '</div>';
+                for (var i = 1; i <= fieldSize[1]; i++) {
+
+                    html += '<div class="vw vh vf clearfix">';
+                    
+                    for (var j = 1; j <= fieldSize[0]; j++) {
+                        html += '<div>' +
+                                    '<div class = "inner" >' +
+                                        '<div class="cell" data-cell="' + j + "x" + i + '"><i class="i-question"></i></div>' +
+                                    '</div>' +
+                                '</div>';
+                    }
+
+                    html += '</div>';
+                }
+                alert(html);
 
                 for (var playerId in App.players) {
 
-                    var playerClass = 'player' + playerId + ' ' + (Player.id == playerId ? 'm' : 'o');
+                    var playerClass = 'player' + playerId + ' ' + (Player.id == playerId ? 'mt' : 'ot');
 
                     field.innerHTML +=
-                        '<ul class="table ' + playerClass + '">' + html + '</ul>';
+                        '<div class="table ' + playerClass + '">' + html + '</div>';
 
-                    var li = field.querySelectorAll('.player' + playerId + ' li');
+                    var cell = field.querySelectorAll('.player' + playerId + ' .cell');
 
-                    for (var index = 0; index < li.length; index++) {
-                        var cellAttr = li[index].getAttribute('data-coor') + 'x' + playerId;
-                        li[index].setAttribute('data-cell', cellAttr);
-                        playerId == Player.id && li[index].classList.add('m');
+                    for (var index = 0; index < cell.length; index++) {
+                        var cellAttr = cell[index].getAttribute('data-coor') + 'x' + playerId;
+                        cell[index].setAttribute('data-cell', cellAttr);
+                        playerId == Player.id && cell[index].classList.add('m');
                     }
                 }
-
-                field.innerHTML += '<div class="place" style="inline-block">' + i18n("text-game-place-ships") + '</div>';
+                // alert(html);
+                // alert(1);
+                // console.error(Game.field.getElementsByClassName('mx')[0]);
+                // return;
 
             }
         },
@@ -202,7 +216,6 @@
         },
 
         checkFieldSeaBattle: function (newship, id) {
-            alert('checkFieldSeaBattle:');
             var size = $('.SeaBattle .mx .table:eq(1) li').last().attr('data-coor').split('x');
             var size_x = size[0];
             var size_y = size[1];
@@ -275,9 +288,8 @@
         genFieldSeaBattle: function () {
 
             Apps.SeaBattle.ships = [];
-            alert('genFieldSeaBattle:');
 
-            var size = $('.SeaBattle .table:eq(1) li').last().attr('data-coor').split('x'),
+            var size = $('.SeaBattle .table:eq(1) .cell').last().attr('data-coor').split('x'),
                 size_x = size[0],
                 size_y = size[1],
                 matrix = [
@@ -380,7 +392,6 @@
 
                 containment: "parent", grid: [wid + 1, hei + 1],
                 revert: function () {
-                alert('drag');
 
                     var ship = [].concat(Apps.SeaBattle.ships[$(this).data('id')]);
                     ship[0] = [
@@ -518,7 +529,6 @@
 //             var field = Game.field.getElementsByClassName('mx')[0];
 
 //             if (App.variation && App.variation.field) {
-//                 alert('drawField:');
 //                 var fieldSize = App.variation.field.split('x'),
 //                     width = height = Math.min(Math.floor((220 - (fieldSize[0] - 1)) / fieldSize[0]), Math.floor((440 - fieldSize[1]) / fieldSize[0])) + 'px;',
 //                     font = (parseInt(width) / 1.6) + 'px/' + (parseInt(width)) + 'px Handbook-bold;',
@@ -616,7 +626,6 @@
 //         },
 
 //         checkFieldSeaBattle: function (newship, id) {
-//             alert('checkFieldSeaBattle:');
 //             var size = $('.SeaBattle .mx .table:eq(1) li').last().attr('data-coor').split('x');
 //             var size_x = size[0];
 //             var size_y = size[1];
@@ -689,7 +698,6 @@
 //         genFieldSeaBattle: function () {
 
 //             Apps.SeaBattle.ships = [];
-//             alert('genFieldSeaBattle:');
 
 //             var size = $('.SeaBattle .table:eq(1) li').last().attr('data-coor').split('x'),
 //                 size_x = size[0],
@@ -794,7 +802,6 @@
 
 //                 containment: "parent", grid: [wid + 1, hei + 1],
 //                 revert: function () {
-//                 alert('drag');
 
 //                     var ship = [].concat(Apps.SeaBattle.ships[$(this).data('id')]);
 //                     ship[0] = [
