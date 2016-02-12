@@ -19,14 +19,6 @@
 
         'initStatuses': function() {
 
-            if (App.extra) {
-                var equal = $('.ngm-bk .msg.equal');
-                equal.fadeIn(200);
-                window.setTimeout(function() {
-                    equal.fadeOut(200);
-                }, 2000);
-            }
-
             Game.drawStatuses();
             Game.drawButtons();
             

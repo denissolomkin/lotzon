@@ -216,6 +216,20 @@ footer.unvisible {
     #gameTimer{
         display: none;
     }
+    .mx{
+        .wrapper{
+            width: 330px;
+            min-height: 330px;
+            margin: 0px auto;
+            padding: 0;
+            &:after{
+                display: none;
+            }
+            > *{
+                width: 100%;
+            }
+        }
+    }
     // back-button
     .back-button{
         transform: none;
@@ -565,8 +579,6 @@ footer.unvisible {
                         margin: 0;
                     }
             .table {
-                width: 319px;
-                min-height: 319px;
                 margin: 0px auto;
                 padding: 7px 0;
                 .inner {
@@ -691,7 +703,6 @@ footer.unvisible {
         // for specific games
         &.WhoMore {
             .moves{
-                width: 380px;
                 margin: 0px auto;
                 &:last-child{
                     padding-bottom: 7px;
@@ -747,7 +758,8 @@ footer.unvisible {
                     }
                 }
                 .table {
-                    width: 380px;
+
+                    
                     .inner {
                         padding: 2px;
                         .cell {

@@ -9236,6 +9236,16 @@ footer.unvisible {
 #games-online-field #gameTimer {
   display: none; }
 
+#games-online-field .mx .wrapper {
+  width: 330px;
+  min-height: 330px;
+  margin: 0px auto;
+  padding: 0; }
+  #games-online-field .mx .wrapper:after {
+    display: none; }
+  #games-online-field .mx .wrapper > * {
+    width: 100%; }
+
 #games-online-field .back-button {
   transform: none;
   top: 20px;
@@ -9514,8 +9524,6 @@ footer.unvisible {
       border-radius: 70px;
       margin: 0; }
     #games-online-field:not(.Durak) .mx .table {
-      width: 319px;
-      min-height: 319px;
       margin: 0px auto;
       padding: 7px 0; }
       #games-online-field:not(.Durak) .mx .table .inner {
@@ -9609,7 +9617,6 @@ footer.unvisible {
       #games-online-field:not(.Durak) .mx .msg .msg-lose {
         background: #f0e98f; }
   #games-online-field:not(.Durak).WhoMore .moves {
-    width: 380px;
     margin: 0px auto; }
     #games-online-field:not(.Durak).WhoMore .moves:last-child {
       padding-bottom: 7px; }
@@ -9642,19 +9649,17 @@ footer.unvisible {
     color: #fff; }
     #games-online-field:not(.Durak).WhoMore .mx .m .pr-nm {
       display: none; }
-  #games-online-field:not(.Durak).WhoMore .mx .table {
-    width: 380px; }
-    #games-online-field:not(.Durak).WhoMore .mx .table .inner {
-      padding: 2px; }
-      #games-online-field:not(.Durak).WhoMore .mx .table .inner .cell {
-        color: #4a4a4a;
-        padding: 0;
-        margin: 0; }
-        #games-online-field:not(.Durak).WhoMore .mx .table .inner .cell i[class^="i-"] {
-          font-size: 0.9em; }
-        #games-online-field:not(.Durak).WhoMore .mx .table .inner .cell span {
-          font-family: Handbook-bold;
-          font-size: 1.1em; }
+  #games-online-field:not(.Durak).WhoMore .mx .table .inner {
+    padding: 2px; }
+    #games-online-field:not(.Durak).WhoMore .mx .table .inner .cell {
+      color: #4a4a4a;
+      padding: 0;
+      margin: 0; }
+      #games-online-field:not(.Durak).WhoMore .mx .table .inner .cell i[class^="i-"] {
+        font-size: 0.9em; }
+      #games-online-field:not(.Durak).WhoMore .mx .table .inner .cell span {
+        font-family: Handbook-bold;
+        font-size: 1.1em; }
 
 #games-online-field.Durak {
   width: 100%;
