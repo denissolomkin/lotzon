@@ -35,6 +35,22 @@ class GameAppsDBProcessor implements IProcessor
 
     }
 
+    public function deleteApps()
+    {
+        $sql = "DELETE FROM `GamesTmpApps`";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute();
+
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query: " . $e->getMessage(), 500);
+        }
+
+        return true;
+
+    }
+
     public function getApp($uid)
     {
         $sql = "SELECT * FROM `GamesTmpApps`
@@ -107,6 +123,7 @@ class GameAppsDBProcessor implements IProcessor
 
         $apps = array();
         foreach ($res->fetchAll() as $appData) {
+            var_dump($appData['AppData']);
             $app = unserialize($appData['AppData']);
             if (!isset($apps[$app->getKey()])) {
                 $apps[$app->getKey()] = array();
@@ -137,7 +154,7 @@ class GameAppsDBProcessor implements IProcessor
                 ':id'       => $app->getId(),
                 ':key'      => $app->getKey(),
                 ':mode'     => $app->getMode(),
-                ':data'     => @serialize($app),
+                ':data'     => @serialize(array()/*$app*/),
                 ':run'      => $app->isRun(),
                 ':over'     => $app->isOver(),
                 ':saved'    => $app->isSaved(),
