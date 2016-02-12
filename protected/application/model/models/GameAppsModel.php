@@ -20,6 +20,11 @@ class GameAppsModel extends Model
 
     /* GamesTmpApps Table */
 
+    public function deleteApps()
+    {
+        return $this->getProcessor()->deleteApps();
+    }
+
     public function getApp($uid = null)
     {
         return $this->getProcessor()->getApp($uid)?:false;
