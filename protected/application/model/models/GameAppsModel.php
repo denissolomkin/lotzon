@@ -2,6 +2,7 @@
 
 Application::import(PATH_APPLICATION . 'model/Model.php');
 Application::import(PATH_APPLICATION . 'model/Game.php');
+Application::import(PATH_APPLICATION . 'model/entities/GameApp.php');
 Application::import(PATH_APPLICATION . 'model/processors/GameAppsCacheProcessor.php');
 Application::import(PATH_APPLICATION . 'model/processors/GameAppsDBProcessor.php');
 

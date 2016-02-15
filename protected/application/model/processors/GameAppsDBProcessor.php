@@ -123,8 +123,8 @@ class GameAppsDBProcessor implements IProcessor
 
         $apps = array();
         foreach ($res->fetchAll() as $appData) {
-            var_dump($appData['AppData']);
-            $app = unserialize($appData['AppData']);
+            $app = new \GameApp;
+            $app->formatFrom('DB', $appData);
             if (!isset($apps[$app->getKey()])) {
                 $apps[$app->getKey()] = array();
                 $apps[$app->getId()]  = array();
@@ -137,6 +137,12 @@ class GameAppsDBProcessor implements IProcessor
             return isset($apps[$key]) ? $apps[$key] : array();
         } else
             return $apps;
+    }
+
+    public function create(Entity $app)
+    {
+        return $this->update($app);
+
     }
 
     public function update(Entity $app)
@@ -167,12 +173,6 @@ class GameAppsDBProcessor implements IProcessor
         }
 
         return $app;
-
-    }
-
-
-    public function create(Entity $app)
-    {
 
     }
 

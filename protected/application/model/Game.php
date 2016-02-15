@@ -78,6 +78,21 @@ class Game extends Entity
         return $this;
     }
 
+    public function create()
+    {
+
+        $this->setPing(time());
+
+        try {
+            $model = $this->getModelClass();
+            $model::instance()->create($this);
+        } catch (ModelException $e) {
+            echo $e->getMessage(). $e->getCode();
+        }
+
+        return $this;
+    }
+
     public function update()
     {
 

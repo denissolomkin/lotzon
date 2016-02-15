@@ -350,7 +350,6 @@ class WebSocketController implements MessageComponentInterface
                         $gameBot->getId() => $gameBot->export()
                     ));
 
-                    /* todo $app->update() */
                     $app->update();
 
                     $this->runGame($app->getKey(), $app->getUid(), 'startAction', $bot->id);
@@ -417,9 +416,8 @@ class WebSocketController implements MessageComponentInterface
             ->setCurrency($appMode['currency'])
             ->setPrice((float)$appMode['price']);
 
-        /* todo $app->create() */
+        $app->create();
         $this->apps($app->getUid(), $app);
-        $app->update();
 
         $this->runGame($app->getKey(), $app->getUid(), 'startAction', $clientId);
     }
@@ -518,6 +516,7 @@ class WebSocketController implements MessageComponentInterface
         }
 
         echo "Приложение сохранено??? {$app->isSaved()} Приложение завершено??? {$app->isOver()} Приложение запущено??? {$app->isRun()}  \n";
+
         if ($app->isOver() && count($app->getClients()) && !$app->isSaved()) {
 
             echo $this->time(1) . " {$app->getKey()} {$app->getUid()} приложение завершилось, записываем данные\n";
@@ -549,14 +548,14 @@ class WebSocketController implements MessageComponentInterface
             }
 
             echo $this->time(1) . " {$app->getKey()} {$app->getUid()} удаляем приложение \n\n";
-            /* todo $app->delete() */
+
             $app->delete();
             $this->apps($app->getUid(), 'unset');
 
         } else {
 
             echo $this->time(1) . " {$app->getKey()} {$app->getUid()} сохраняем приложение \n\n";
-            /* todo $app->update() */
+
             $app->update();
 
         }
@@ -767,33 +766,6 @@ class WebSocketController implements MessageComponentInterface
 
                 $this->_class = $class = '\\' . $appName;
 
-                if (!class_exists($class)) {
-                    $from->send(json_encode(array('error' => 'WRONG_APPLICATION_TYPE')));
-                    return false;
-                }
-
-                if ($action = (isset($data->action) ? $data->action . 'Action' : null)) {
-
-                    // $appMode = (isset($data->mode) && $game->checkMode($data->mode) ? $data->mode : self::DEFAULT_MODE);
-                    $appMode = array('currency' => null, 'price' => null, 'number' => null, 'variation' => null);
-                    list($appMode['currency'], $appMode['price'], $appMode['number'], $appMode['variation'])
-                        = array_pad(explode("-", (
-                        isset($data->mode) && $game->checkMode($data->mode) ? $data->mode : self::DEFAULT_MODE)
-                    ), 4, null);
-
-                    if (!$appMode['number'])
-                        $appMode['number'] = 2;
-
-                    if ($appMode['variation'])
-                        parse_str($appMode['variation'], $appMode['variation']);
-
-                    $appVariation = $game->initVariation(
-                        isset($data->variation) ? (array)$data->variation : ($appMode['variation'] ?: array())
-                    );
-
-                    $appMode['variation'] = ($appVariation ? http_build_query($appVariation) : null);
-                    $appMode['mode']      = implode('-', $appMode);
-                }
 
                 if (!($client = $this->clients($player->getId())) || !($client instanceof ConnectionInterface)) {
                     echo $this->time(0, 'WARNING') . "  соединение #{$player->getId()} {$from->Session->getId()} не найдено в коллекции клиентов \n";
@@ -803,6 +775,34 @@ class WebSocketController implements MessageComponentInterface
                 switch ($type) {
                     case 'app':
                         try {
+
+                            if (!class_exists($class)) {
+                                $from->send(json_encode(array('error' => 'WRONG_APPLICATION_TYPE')));
+                                return false;
+                            }
+
+                            if ($action = (isset($data->action) ? $data->action . 'Action' : null)) {
+
+                                // $appMode = (isset($data->mode) && $game->checkMode($data->mode) ? $data->mode : self::DEFAULT_MODE);
+                                $appMode = array('currency' => null, 'price' => null, 'number' => null, 'variation' => null);
+                                list($appMode['currency'], $appMode['price'], $appMode['number'], $appMode['variation'])
+                                    = array_pad(explode("-", (
+                                isset($data->mode) && $game->checkMode($data->mode) ? $data->mode : self::DEFAULT_MODE)
+                                ), 4, null);
+
+                                if (!$appMode['number'])
+                                    $appMode['number'] = 2;
+
+                                if ($appMode['variation'])
+                                    parse_str($appMode['variation'], $appMode['variation']);
+
+                                $appVariation = $game->initVariation(
+                                    isset($data->variation) ? (array)$data->variation : ($appMode['variation'] ?: array())
+                                );
+
+                                $appMode['variation'] = ($appVariation ? http_build_query($appVariation) : null);
+                                $appMode['mode']      = implode('-', $appMode);
+                            }
 
                             if ($action) {
 
@@ -1034,7 +1034,6 @@ class WebSocketController implements MessageComponentInterface
                                             $gamePlayer->getId() => $gamePlayer->export('player')
                                         ));
 
-                                        /* todo $app->update() */
                                         $app->update();
                                     }
 
@@ -1110,23 +1109,21 @@ class WebSocketController implements MessageComponentInterface
 
                             $games = array();
 
-                            /* todo */
-                            foreach (GameAppsModel::instance()->getList($appName) as $id => $game) {
+                            foreach (GameAppsModel::instance()->getList($game->getId()) as $uid => $game) {
 
                                 $players = array();
 
-                                foreach ($game->getPlayers() as $player) {
+                                foreach ($game->getClients() as $player) {
                                     $players[] = $player->name;
                                 }
 
                                 $games[] = array(
-                                    'id'        => $id,
-                                    'mode'      => $game->getCurrency() . '-' . $game->getPrice() . '-' . $game->getNumberPlayers(),
+                                    'id'        => $uid,
+                                    'mode'      => $game->Mode(),
                                     'variation' => $game->getVariation(),
                                     'players'   => $players
                                 );
                             }
-
 
                             foreach (GamePlayersModel::instance()->getStack($appName) as $mode => $clients) {
                                 foreach ($clients as $id => $client) {
@@ -1184,6 +1181,7 @@ class WebSocketController implements MessageComponentInterface
 
                                 foreach ($this->clients() as $client)
                                     $names[] = $client->Session->get(Player::IDENTITY)->getNicName();
+
                                 $from->send(json_encode(
                                     array(
                                         'path' => 'appchat',
@@ -1193,18 +1191,13 @@ class WebSocketController implements MessageComponentInterface
                                     )
                                 ));
                             } elseif ($data->message == 'stats') {
-                                $count = 0;
-
-                                /* todo */
-                                foreach (GameAppsModel::instance()->getList() as $apps_class)
-                                    $count += count($apps_class);
 
                                 $from->send(json_encode(
                                     array(
                                         'path' => 'appchat',
                                         'res'  => array(
                                             'user'    => 'system',
-                                            'message' => array('games' => $count, 'players' => count($this->clients()))
+                                            'message' => array('games' => count($this->apps()), 'players' => count($this->clients()))
                                         )
                                     )
                                 ));
@@ -1215,16 +1208,17 @@ class WebSocketController implements MessageComponentInterface
                                 $games = '';
                                 $count = 0;
 
-                                /* todo */
                                 foreach (GameAppsModel::instance()->getList() as $app_title => $apps_class) {
+                                    if(is_numeric($app_title))
+                                        continue;
                                     $games .= $app_title . ' (' . count($apps_class) . '):<br>';
+                                    $count += count($apps_class);
                                     foreach ($apps_class as $app) {
-                                        $count++;
-                                        $games .= $app->getUid() . ' [' . $app->getCurrency() . '-' . $app->getPrice() . '] ' . (time() - $app->getTime()) . 's ';
+                                        $games .= $app->getUid() . ' [' . $app->getMode() . '] ' . (time() - $app->getPing()) . 's ';
                                         $names   = array();
-                                        $players = $app->getPlayers();
+                                        $players = $app->getClients();
                                         foreach ($players as $player)
-                                            $names[] = $player['pid'];
+                                            $names[] = $player->name;
                                         $games .= (!empty($names) ? implode(':', $names) . '<br>' : '');
                                     }
                                 }
