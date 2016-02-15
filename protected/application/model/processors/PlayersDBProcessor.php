@@ -359,11 +359,13 @@ class PlayersDBProcessor implements IProcessor
                   ON s.`PlayerId`=p.`Id`
                 LEFT JOIN `PlayerDates` d
                   ON d.`PlayerId`=p.`Id`
-                WHERE (s.`SocialId` = :socialid AND s.`SocialName` = :socialname AND s.`Enabled` = 1)
+                WHERE p.`Email` = :email
+                  OR (s.`SocialId` = :socialid AND s.`SocialName` = :socialname AND s.`Enabled` = 1)
                   OR (s.`SocialEmail` = :socialemail AND s.`SocialName` = :socialname AND s.`SocialEmail` !='' AND s.`SocialEmail` IS NOT NULL AND s.`Enabled` = 1)
                 GROUP BY p.Id";
 
             $sql_params = array(
+                ':email'       => $player->getEmail(),
                 ':socialid'    => $player->getSocialId(),
                 ':socialname'  => $player->getSocialName(),
                 ':socialemail' => $player->getSocialEmail(),

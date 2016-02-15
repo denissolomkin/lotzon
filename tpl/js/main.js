@@ -87,32 +87,37 @@ $(function(){
 
     activateTicket();
     $('.tb-tabs_li').on('click', function(){
-        var tn = $(this).attr('data-ticket');
-        var st = $('#tb-slide'+tn);
+        if(!$(this).data('disabled')) {
+            var tn = $(this).attr('data-ticket');
+            var st = $('#tb-slide' + tn);
 
-        if(!$(this).hasClass('now') && !$('.tb-slides').find('#ticket_video').length){
-            activateTicket();
-            $('.tb-tabs_li').removeClass('now').find('span').hide();
-            $(this).addClass('now').find('span').show();
-            $('.tb-slides .tb-slide').fadeOut(300);
+            if (!$(this).hasClass('now') && !$('.tb-slides').find('#ticket_video').length) {
+                activateTicket();
+                $('.tb-tabs_li').removeClass('now').find('span').hide();
+                $(this).addClass('now').find('span').show();
+                $('.tb-slides .tb-slide').fadeOut(300);
 
-            setTimeout(function(){
-                st.fadeIn(300);
-            }, 300);
+                if(!$('.tb-tabs_li[data-ticket="'+st.attr('data-ticket')+'"]').hasClass('done'))
+                    st.find('li.select').removeClass('select');
 
-           if((filledTicketsCount==bannerTicketLastNum && !$(this).hasClass('done'))){
-               $.ajax({
-                   url: "/content/banner/TicketLast",
-                   method: 'POST',
-                   async: true,
-                   dataType: 'json',
-                   success: function(data) {
-                       st.parent().prepend(data.res.block);
-                   },
-                   error: function(xhr, status, error) {
-                       console.log(xhr.responseText);
-                   }
-               });
+                setTimeout(function () {
+                    st.fadeIn(300);
+                }, 300);
+
+                if ((filledTicketsCount == bannerTicketLastNum && !$(this).hasClass('done'))) {
+                    $.ajax({
+                        url: "/content/banner/TicketLast",
+                        method: 'POST',
+                        async: true,
+                        dataType: 'json',
+                        success: function (data) {
+                            st.parent().prepend(data.res.block);
+                        },
+                        error: function (xhr, status, error) {
+                            console.log(xhr.responseText);
+                        }
+                    });
+                }
             }
         }
     });
@@ -123,6 +128,7 @@ $(function(){
     $('.add-ticket').on('click', function(){
         if($(this).hasClass('on') && !$(this).data('disabled')){
             $(this).data('disabled',true);
+            $('.tb-tabs_li').data('disabled',true);
             var combination = [];
             $(this).parents('.tb-slide').find('li.select').each(function(id, li) {
                 if (!$(li).hasClass('ticket-favorite') && !$(li).hasClass('ticket-random')) {
@@ -131,6 +137,11 @@ $(function(){
             });
             var button = $(this);
             var tickNum = $(this).parents('.tb-slide').data('ticket');
+            ticketTimeout = window.setTimeout(function(){
+                alert(getText('CHECK_INTERNET_CONNECTION'));
+                ticketAdded();
+            }, 10*1000);
+
             addTicket(tickNum,combination, function() {
                 button.closest('.bm-pl').find('.tb-fs-tl').remove();
                 $('.tb-tabs_li[data-ticket="'+tickNum+'"]').addClass('done');
@@ -140,6 +151,8 @@ $(function(){
                 $('.tb-slide.done').find('.ticket-random').off('click');
                 $('.tb-slide.done').find('.ticket-favorite').off('click');
 
+                ticketAdded();
+
                 filledTicketsCount++;
                 if ($('.tb-tabs .done').length == 5) {
                     $('.tb-slide').each(function(id, slide) {
@@ -148,7 +161,7 @@ $(function(){
                             comb.push($(num).text());
                         });
                         filledTickets.push(comb);
-                    })
+                    });
                     $('.tb-tabs, .tb-slides').remove();
                     var html = '<ul class="yr-tb">';
                     $(filledTickets).each(function(id, ticket) {
@@ -164,21 +177,30 @@ $(function(){
                 } else {
                     $('.tb-tabs_li:not(.done)').first().click();
                 }
-                $(this).data('disabled',false);
             }, function(data){
                 if (data.message == 'ALREADY_FILLED') {
                     button.closest('.bm-pl').find('.tb-fs-tl').remove();
                     button.closest('section.tickets').find('li.now').addClass('done');
                     button.closest('.tb-slide').addClass('done');
                     button.closest('.tb-st-bk').html('<div class="tb-st-done" style="color:red">Этот билет уже был заполнен</div>');
+                } else if (data.message == 'NOT_AUTHORIZED') {
+                    location.reload();
                 }
-                $(this).data('disabled',false);
+
+                ticketAdded();
 
             }, function(){
-                $(this).data('disabled',false);
+
+                ticketAdded();
             });
         }
     });
+
+    function ticketAdded(){
+        $('.add-ticket').data('disabled',false);
+        $('.tb-tabs_li').data('disabled',false);
+        window.clearTimeout(ticketTimeout);
+    };
 
     $(".send-invite").on('click', function() {
         var email = $(this).parent().find('input[name="email"]').val();
@@ -1690,6 +1712,8 @@ function proccessResult()
         var tickets=[];
         if($('.tb-slide').length>0)
             $('.tb-slide').each(function( index, el ) {
+                if(!$('.tb-tabs_li [data-ticket="'+$(el).attr('data-ticket')+'"]').hasClass('done'))
+                    return true;
                 var ticket=[];
                 $(el).find('.loto-tl_li.select').each(function( i, val ) {
                     ticket.push($(val).text());
