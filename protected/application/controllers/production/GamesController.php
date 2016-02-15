@@ -243,9 +243,9 @@ class GamesController extends \AjaxController
             }
 
             $games[] = array(
-                'id'        => $uid,
+                'id'        => $game->getUid(),
                 'key'       => $game->getKey(),
-                'mode'      => $game->getCurrency() . '-' . $game->getPrice() . '-' . $game->getNumberPlayers(),
+                'mode'      => $game->getMode(), // $game->getCurrency() . '-' . $game->getPrice() . '-' . $game->getNumberPlayers(),
                 'variation' => $game->getVariation(),
                 'players'   => $players
             );
