@@ -143,11 +143,6 @@
                 Game.buttons.replay,
                 Game.buttons.exit
             ]);
-            
-            setTimeout( function(){
-            // alert("end");
-                $('.mx > .msg').fadeIn('fast')
-            }, 2000 );
         }
 
     }

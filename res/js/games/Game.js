@@ -372,6 +372,10 @@
 
                     notDurak.appendChild(el);
 
+                    setTimeout( function(){
+                        $('.mx > .msg').fadeIn('fast')
+                    }, 2000 );
+
                     return;
                 }
 

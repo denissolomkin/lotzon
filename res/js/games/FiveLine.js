@@ -68,12 +68,12 @@
                     .removeClass('last');
 
                 $cell
+                    .addClass(class_cell+' last')
                     .html('<div style="display:none;"></div>')
                     .find('div').fadeIn(200);
 
                 if (!arguments.length) {
                     Apps.playAudio([App.key, 'Move-' + class_cell + '-1']);
-                    $cell.addClass(class_cell+' last').fadeIn(300);
                 }
 
                 return true;
