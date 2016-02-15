@@ -24,10 +24,10 @@
 
     <aside class="sidebar">
         <div id="banner-desktop-right" class="banner-4" >
-            <div style="height: 100%; background: #ccc;"></div>
+            <div style="height: 100%;"></div>
         </div>
         <div id="banner-desktop-fixed" class="banner-5">
-            <div style="height: 100%; background: #ccc;"></div>
+            <div style="height: 100%;"></div>
         </div>
     </aside>
 </div><!-- .container -->
