@@ -42,7 +42,7 @@ class FiveLine extends Game
             $line=array($x=>array($y=>'w'));
             foreach ($mx as $dir) {
                 $x1=$x; $y1=$y;
-                while($x1+$dir[0]>0 && $x1+$dir[0]<=$this->getOption('x') && $y1+$dir[1]>0 && $y1+$dir[1]<=$this->getOption('y') && isset($field[$x1+$dir[0]][$y1+$dir[1]]) && $field[$x1+$dir[0]][$y1+$dir[1]]['player']==$playerId){
+                while($x1+$dir[0]>0 && $x1+$dir[0]<=$this->getOptions('x') && $y1+$dir[1]>0 && $y1+$dir[1]<=$this->getOptions('y') && isset($field[$x1+$dir[0]][$y1+$dir[1]]) && $field[$x1+$dir[0]][$y1+$dir[1]]['player']==$playerId){
                     $x1+=$dir[0];
                     $y1+=$dir[1];
                     $line[$x1][$y1]='w';
@@ -50,7 +50,7 @@ class FiveLine extends Game
                 }
             }
             $max=max($max,$count);
-            if($max>=$this->getOption('w')){
+            if($max>=$this->getOptions('w')){
                 $this->setCallback(array(
                     'line' => $line,
                 ));
@@ -67,7 +67,7 @@ class FiveLine extends Game
         echo $this->time().' '. "Проверка победителя \n";
         $current = $this->getPlayers()[$this->getClient()->id];
 
-        if ($current['points'] >= $this->getOption('w') OR $current['moves'] <= 0) {
+        if ($current['points'] >= $this->getOptions('w') OR $current['moves'] <= 0) {
             if ($current['moves'] <= 0)
                 $this->updatePlayer(array('points', 'points' => -1), $current['pid']);
 
@@ -113,8 +113,8 @@ class FiveLine extends Game
     public function generateField()
     {
         $gameField=array();
-        for ($i = 1; $i <= $this->getOption('x'); ++$i) {
-            for ($j = 1; $j <= $this->getOption('y'); ++$j) {
+        for ($i = 1; $i <= $this->getOptions('x'); ++$i) {
+            for ($j = 1; $j <= $this->getOptions('y'); ++$j) {
                 $gameField[$i][$j]['player'] = null;
                 $gameField[$i][$j]['coord'] = $i.'x'.$j;
             }
@@ -126,8 +126,8 @@ class FiveLine extends Game
     {
         #echo $this->time().' '. "Генерация поля для бота\n";
         do {
-            $x = rand(1, $this->getOption('x'));
-            $y = rand(1, $this->getOption('y'));
+            $x = rand(1, $this->getOptions('x'));
+            $y = rand(1, $this->getOptions('y'));
         } while($this->_field[$x][$y]['player']);
         return array($x, $y);
     }

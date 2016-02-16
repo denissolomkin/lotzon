@@ -4,7 +4,6 @@ class GameConstructorChance extends GameConstructor
 {
 
     protected $_time         = '';
-    protected $_bet          = '';
     protected $_timeout      = '';
     protected $_combinations = array();
     protected $_matrix = array(
@@ -33,10 +32,6 @@ class GameConstructorChance extends GameConstructor
             $this->_field[$key] += $value;
 
         return $this->_field[$key];
-    }
-
-    public function saveGame()
-    {
     }
 
     public function doMove($cell)
@@ -302,7 +297,7 @@ class GameConstructorChance extends GameConstructor
     function genCombinationLine($cell, $size)
     {
         $changes = range(1, $size);
-        $matrix  = $this->_matrix['line'];
+        $matrix  = $this->getMatrix('line');
 
         #4
         foreach ($matrix as $direction) {
@@ -357,7 +352,7 @@ class GameConstructorChance extends GameConstructor
             return false;
         }
 
-        $matrix = $this->_matrix['snake'];
+        $matrix = $this->getMatrix('snake');
 
         foreach ($matrix as $path) {
 

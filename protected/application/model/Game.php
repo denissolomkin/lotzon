@@ -10,7 +10,7 @@ class Game extends Entity
     protected $_gameVariation = array();
     protected $_gameModes     = array();
 
-    protected $_identifier    = ''; /* todo change to $_uid */
+    protected $_uid           = '';
     protected $_currency      = '';
     protected $_price         = null;
     protected $_numberPlayers = null;
@@ -46,7 +46,7 @@ class Game extends Entity
             ->setTitle($game->getTitle())
             ->setModes($game->getModes())
             ->setVariation($variation)
-            ->setIdentifier(uniqid())
+            ->setUid(uniqid())
             ->setTime(time())
             ->init();
 
@@ -185,7 +185,7 @@ class Game extends Entity
 
     public function readyAction($data = null)
     {
-        #echo $this->time().' '. "Повтор игры {$this->getIdentifier()} ".(isset($this->getClient()->bot) ?'бот':'игрок')." №{$this->getClient()->id} \n";
+        #echo $this->time().' '. "Повтор игры {$this->getUid()} ".(isset($this->getClient()->bot) ?'бот':'игрок')." №{$this->getClient()->id} \n";
         #echo " REPLAY  \n";
 
         if ($this->isRun()) {
@@ -231,7 +231,7 @@ class Game extends Entity
 
     public function replayAction($data = null)
     {
-        #echo $this->time().' '. "Повтор игры {$this->getIdentifier()} ".(isset($this->getClient()->bot) ?'бот':'игрок')." №{$this->getClient()->id} \n";
+        #echo $this->time().' '. "Повтор игры {$this->getUid()} ".(isset($this->getClient()->bot) ?'бот':'игрок')." №{$this->getClient()->id} \n";
         #echo " REPLAY  \n";
 
         $clientId = $this->getClient()->id;
@@ -304,11 +304,11 @@ class Game extends Entity
             'timeout'   => $this->currentPlayer()['timeout'] - time(),
             'app'       => array(
                 'id'   => $this->getId(),
-                'uid'  => $this->getIdentifier(),
+                'uid'  => $this->getUid(),
                 'key'  => $this->getKey(),
                 'mode' => $this->getCurrency() . '-' . $this->getPrice()
             ),
-            'appId'     => $this->getIdentifier(),
+            'appId'     => $this->getUid(),
             'appMode'   => $this->getCurrency() . '-' . $this->getPrice(),
             'appName'   => $this->getKey(),
             'players'   => $this->getPlayers(),
@@ -634,18 +634,6 @@ class Game extends Entity
         return $this;
     }
 
-    public function getPlayers($id = false)
-    {
-        if ($id) {
-            if (isset($this->_players))
-                return $this->_players[$id];
-            else
-                return false;
-        } else
-            return $this->_players;
-
-    }
-
     public function unsetPlayers()
     {
         $this->_players = array();
@@ -697,19 +685,6 @@ class Game extends Entity
         return $this;
     }
 
-    public function getClient()
-    {
-        return $this->_client;
-    }
-
-    public function getClients($id = null)
-    {
-        if ($id)
-            return isset($this->_clients[$id]) ? $this->_clients[$id] : false;
-        else
-            return $this->_clients;
-    }
-
     public function unsetClients($id = null)
     {
         if ($id)
@@ -718,27 +693,6 @@ class Game extends Entity
             unset($this->_clients);
 
         return $this;
-    }
-
-    public function addClient($clients)
-    {
-        foreach ($clients as $id => $client)
-            $this->_clients[$id] = $client;
-
-        return $this;
-    }
-
-    public function setClients($clients)
-    {
-        if ($clients)
-            $this->_clients = $clients;
-
-        return $this;
-    }
-
-    public function getUid()
-    {
-        return $this->getIdentifier();
     }
 
     public function setModes($array)
@@ -762,18 +716,6 @@ class Game extends Entity
     {
         return isset($this->_gameModes[$this->getCurrency()]) && isset($this->_gameModes[$this->getCurrency()][$this->getPrice()])
             ? $this->_gameModes[$this->getCurrency()][$this->getPrice()] : false;
-    }
-
-    public function setOptions($array)
-    {
-        $this->_options = $array;
-
-        return $this;
-    }
-
-    public function getOption($key = null)
-    {
-        return isset($key) ? (isset($this->_options[$key]) ? $this->_options[$key] : false) : $this->_options;
     }
 
     public function setVariation($variation)
@@ -855,14 +797,6 @@ class Game extends Entity
         return $coef;
     }
 
-
-    public function addWinner($key)
-    {
-        $this->_winner[] = $key;
-
-        return $this;
-    }
-
     public function unsetCallback()
     {
         unset($this->_callback);
@@ -881,21 +815,11 @@ class Game extends Entity
         return $this;
     }
 
-    public function getCallback()
-    {
-        return isset($this->_callback) ? $this->_callback : null;
-    }
-
     public function setResponse($clients)
     {
         $this->_response = is_array($clients) ? $clients : array($clients);
 
         return $this;
-    }
-
-    public function getFieldPlayed()
-    {
-        return $this->_fieldPlayed;
     }
 
     public function unsetFieldPlayed()
@@ -905,30 +829,9 @@ class Game extends Entity
         return $this;
     }
 
-    public function setField($field, $key = null)
-    {
-        if ($key)
-            $this->_field[$key] = $field;
-        else
-            $this->_field = $field;
-
-        return $this;
-    }
-
-    public function getField($key = false)
-    {
-        if ($key) {
-            if (isset($this->_field[$key]))
-                return $this->_field[$key];
-            else
-                return null;
-        } else
-            return $this->_field;
-    }
-
     public function generateField()
     {
-
+        $gameField = array();
         $numbers = range(1, $this->getOption('x') * $this->getOption('y'));
         shuffle($numbers);
 

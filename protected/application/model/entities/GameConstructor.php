@@ -34,6 +34,10 @@ class GameConstructor extends Entity
         return true;
     }
 
+    public function saveGame()
+    {
+    }
+
     function exportField()
     {
         $field = $this->getField();
