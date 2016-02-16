@@ -21,17 +21,17 @@ class Game extends Entity
     public $_botTimer  = array();
     public $_botReplay = array();
 
-    public $_over  = 0;
-    public $_run   = 0;
-    public $_saved = 0;
+    protected $_over  = 0;
+    protected $_run   = 0;
+    protected $_saved = 0;
 
     protected $_players  = array();
-    private   $_clients  = array();
-    private   $_client   = '';
-    private   $_callback = array();
-    protected   $_response = '';
-    protected   $_winner   = null;
-    protected   $_loser    = null;
+    protected $_clients  = array();
+    protected $_client   = '';
+    protected $_callback = array();
+    protected $_response = '';
+    protected $_winner   = null;
+    protected $_loser    = null;
     private   $_current  = array();
 
     protected $_field       = array();
@@ -421,7 +421,7 @@ class Game extends Entity
     {
         list($x, $y) = $cell;
 
-        return ($x > 0 && $y > 0 && $x <= $this->getOption('x') && $y <= $this->getOption('y'));
+        return ($x > 0 && $y > 0 && $x <= $this->getOptions('x') && $y <= $this->getOptions('y'));
     }
 
     public function isClicked($cell)
@@ -482,7 +482,7 @@ class Game extends Entity
         //$minimum=0;
 
         if ($this->isSuccessMove() > 0)
-            $minimum = (!rand(0, $this->isSuccessMove() - 1) ? ($this->getOption('x') * $this->getOption('y')) - ($this->getOption('m') * ($this->getOption('p') + 1)) : 0);
+            $minimum = (!rand(0, $this->isSuccessMove() - 1) ? ($this->getOptions('x') * $this->getOptions('y')) - ($this->getOptions('m') * ($this->getOptions('p') + 1)) : 0);
         else
             $minimum = 0;
 
@@ -490,8 +490,8 @@ class Game extends Entity
         do {
             do {
                 #echo "Ход бота\n";
-                $x = rand(1, $this->getOption('x'));
-                $y = rand(1, $this->getOption('y'));
+                $x = rand(1, $this->getOptions('x'));
+                $y = rand(1, $this->getOptions('y'));
             } while ($this->_field[$x][$y]['player']);
         } while ($this->_field[$x][$y]['points'] < $minimum);
 
@@ -526,7 +526,7 @@ class Game extends Entity
         $this->_botTimer = array();
 
         foreach ($this->currentPlayers() as $playerId) {
-            $this->_players[$playerId]['timeout'] = time() + $this->getOption('t');
+            $this->_players[$playerId]['timeout'] = time() + $this->getOptions('t');
             if (isset($this->_clients[$playerId]->bot))
                 $this->_botTimer[$playerId] = rand(8, 30) / 10; // 0.1;
         }
@@ -661,13 +661,13 @@ class Game extends Entity
 
                 $this->_players[$id] = array(
                     'pid'     => $id,
-                    'moves'   => $this->getOption('m'),
+                    'moves'   => $this->getOptions('m'),
                     'points'  => 0,
                     'avatar'  => $client->avatar,
                     'lang'    => isset($client->lang) ? $client->lang : 'RU',
                     'country' => isset($client->country) ? $client->country : 'RU',
                     'name'    => $client->name,
-                    'timeout' => time() + $this->getOption('t')
+                    'timeout' => time() + $this->getOptions('t')
                 );
 
                 if ($order)
@@ -725,7 +725,7 @@ class Game extends Entity
 
         if (isset($this->_gameVariation['field'])) {
             $field = explode('x', $this->_gameVariation['field']);
-            $this->setOptions(array('x' => $field[0], 'y' => $field[1]) + $this->getOption());
+            $this->setOptions(array('x' => $field[0], 'y' => $field[1]) + $this->getOptions());
         }
 
         return $this;
@@ -789,7 +789,7 @@ class Game extends Entity
         }
 
 
-        $coef *= ($this->getOption('h') ? (100 - $this->getOption('h')) / 100 : 1) * $this->getPrice();
+        $coef *= ($this->getOptions('h') ? (100 - $this->getOptions('h')) / 100 : 1) * $this->getPrice();
 
         if ($coef > 0)
             $coef = floor($coef * 100) / 100;
@@ -832,12 +832,12 @@ class Game extends Entity
     public function generateField()
     {
         $gameField = array();
-        $numbers = range(1, $this->getOption('x') * $this->getOption('y'));
+        $numbers = range(1, $this->getOptions('x') * $this->getOptions('y'));
         shuffle($numbers);
 
-        for ($i = 1; $i <= $this->getOption('x'); ++$i) {
-            for ($j = 1; $j <= $this->getOption('y'); ++$j) {
-                $gameField[$i][$j]['points'] = $numbers[(($i - 1) * $this->getOption('y') + $j) - 1];
+        for ($i = 1; $i <= $this->getOptions('x'); ++$i) {
+            for ($j = 1; $j <= $this->getOptions('y'); ++$j) {
+                $gameField[$i][$j]['points'] = $numbers[(($i - 1) * $this->getOptions('y') + $j) - 1];
                 $gameField[$i][$j]['player'] = null;
                 $gameField[$i][$j]['coord']  = $i . 'x' . $j;
             }
