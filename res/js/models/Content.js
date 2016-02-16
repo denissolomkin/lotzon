@@ -214,10 +214,7 @@
                     // R.push('/banner/desktop/fixed');
                     R.push({
                         href: '/banner/desktop/top',
-                        after: function(options){
-                            $(options.rendered).html(options.json);
-                            console.error(options);
-                        }
+                        after: function(options){ $(options.rendered).html(options.json); }
                     });
                     R.push('/banner/desktop/right');
                 }

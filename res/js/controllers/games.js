@@ -67,7 +67,7 @@ var fakeRandomData = [{
 
 var Games = {
 
-    disableNow: true,
+    disableNow: false,
     timer: null,
     validate: function(e) {
         alert('validate!!');
