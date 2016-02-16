@@ -42,18 +42,69 @@ abstract class Entity
         $property     = '_' . $key;
 
         if (property_exists($this, $property)) {
-            if (($methodPrefix == 'set') && (count($params) == 1)) {
-                $value           = $params[0];
-                $this->$property = $value;
+
+            if ($methodPrefix == 'set') {
+
+                $value = $params[0];
+
+                if(count($params) == 1) {
+                    $this->$property = $value;
+
+                } elseif(count($params) == 2){
+                    if(is_array($this->$property)) {
+                        $this->$property[$params[1]] = $value;
+                    } else {
+                        throw new Exception("Property $property is not array while $method in " . get_class($this) . "!");
+                    }
+                }
 
                 return $this;
+
+            } elseif ($methodPrefix == 'add') {
+
+                $value           = $params[0];
+
+                if(!$this->$property)
+                    $this->$property = array();
+
+                if(is_array($this->$property)) {
+
+                    /* example: addWinners($playerId)*/
+                    if(count($params) == 1) {
+                        if (is_array($value)) {
+                            foreach ($value as $id => $array)
+                                $this->$property[$id] = $array;
+                        } else {
+                            $this->{$property}[] = $value;
+                        }
+
+                    /* example: addFields($field, $playerId)*/
+                    } elseif(count($params) == 2) {
+                        if (is_array($value)) {
+                            foreach ($value as $id => $array)
+                                $this->$property[$params[0]][$id] = $array;
+                        } else {
+                            $this->{$property}[$params[0]][] = $value;
+                        }
+                    }
+                } else {
+                    throw new Exception("Property $property is not array while $method in " . get_class($this) . "!");
+                }
+
+                return $this;
+
             } elseif ($methodPrefix == 'get') {
+
                 if (isset($this->$property)) {
 
-                    if ((count($params) == 1 && ($value = $params[0]) && is_array($this->$property))) {
-                        $property = $this->$property;
+                    if (count($params) == 1) {
 
-                        return isset($property[$value]) ? $property[$value] : null;
+                        if(is_array($this->$property)) {
+                            $property = $this->$property;
+                            return isset($property[$params[0]]) ? $property[$params[0]] : null;
+                        } else {
+                            throw new Exception("Property $property is not array while $method in " . get_class($this) . "!");
+                        }
                     }
 
                     return $this->$property;
