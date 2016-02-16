@@ -170,11 +170,17 @@ class ChanceController extends \AjaxController
 
         } elseif ($gameConstructor = $publishedGames->getLoadedGames()[array_search($id, $publishedGames->getGames())]) {
 
-            $game = new GameConstructorChance();
-            $game
-                ->setType($gameConstructor->getType())
-                ->setId($gameConstructor->getId())
-                ->fetch();
+            $gameKey = 'GameConstructor' . ($gameConstructor->getKey() ?: 'Chance');
+
+            if(class_exists($gameKey)){
+                $game = new $gameKey();
+                $game
+                    ->setType($gameConstructor->getType())
+                    ->setId($gameConstructor->getId())
+                    ->fetch();
+            } else {
+                $this->ajaxResponseBadRequest('BAD_GAME_KEY');
+            }
 
             $balance = $player->getBalance();
 
@@ -191,7 +197,14 @@ class ChanceController extends \AjaxController
                 if ($balance['Points'] < $game->getOptions('p'))
                     $this->ajaxResponseBadRequest('INSUFFICIENT_FUNDS');
                 else
-                    $player->addPoints($game->getOptions('p') * -1, $game->getTitle($player->getLang()));
+                    $player->addPoints(
+                        $game->getOptions('p') * -1,
+                        array(
+                            'id' => $game->getUid(),
+                            'object' => $key,
+                            'title' => $game->getTitle($player->getLang())
+                        )
+                    );
 
 
             }
@@ -201,8 +214,11 @@ class ChanceController extends \AjaxController
                 $currency = $this->request()->get('currency', null);
                 $bet = $this->request()->get('bet', null);
 
-                if(!$currency || !$bet || $bet <= 0 || !isset($balance[$currency])){
-                    $this->ajaxResponseBadRequest('BAD_CURRENCY_OR_BET');
+                if(!$currency || !isset($balance[$currency])){
+                    $this->ajaxResponseBadRequest('BAD_CURRENCY');
+
+                } elseif(!$bet || $bet <= 0){
+                    $this->ajaxResponseBadRequest('BAD_BET');
 
                 } elseif($balance[$currency] < $bet){
                     $this->ajaxResponseBadRequest('INSUFFICIENT_FUNDS');
@@ -210,12 +226,25 @@ class ChanceController extends \AjaxController
                 } else {
 
                     switch($currency) {
+
                         case LotterySettings::CURRENCY_MONEY:
-                            $player->addMoney($bet * -1, $game->getTitle($player->getLang()));
+                            $player->addMoney(
+                                $bet * -1,
+                                array(
+                                    'id' => $game->getUid(),
+                                    'object' => $key,
+                                    'title' => $game->getTitle($player->getLang())
+                                ));
                             break;
 
                         case LotterySettings::CURRENCY_POINT:
-                            $player->addPoints($bet * -1, $game->getTitle($player->getLang()));
+                            $player->addPoints(
+                                $bet * -1,
+                                array(
+                                    'id' => $game->getUid(),
+                                    'object' => $key,
+                                    'title' => $game->getTitle($player->getLang())
+                                ));
                             break;
 
                         default:
@@ -224,6 +253,7 @@ class ChanceController extends \AjaxController
                     }
 
                     $response['res'] = $game
+                        ->setCurrency($currency)
                         ->setBet($bet)
                         ->doMove();
                 }
@@ -253,9 +283,21 @@ class ChanceController extends \AjaxController
                     if ($sum) {
                         if ($currency == LotterySettings::CURRENCY_MONEY) {
                             $sum *= CountriesModel::instance()->getCountry($player->getCountry())->loadCurrency()->getCoefficient();
-                            $player->addMoney($sum, "Выигрыш " . $game->getTitle($player->getLang()));
+                            $player->addMoney(
+                                $sum,
+                                array(
+                                    'id' => $game->getUid(),
+                                    'object' => $key,
+                                    'title' => "Выигрыш " . $game->getTitle($player->getLang())
+                                ));
                         } elseif ($currency == LotterySettings::CURRENCY_POINT)
-                            $player->addPoints($sum, "Выигрыш " . $game->getTitle($player->getLang()));
+                            $player->addPoints(
+                                $sum,
+                                array(
+                                    'id' => $game->getUid(),
+                                    'object' => $key,
+                                    'title' => "Выигрыш " . $game->getTitle($player->getLang())
+                                ));
                     }
                 }
             }
@@ -327,9 +369,21 @@ class ChanceController extends \AjaxController
                     if ($sum) {
                         if ($currency == LotterySettings::CURRENCY_MONEY) {
                             $sum *= CountriesModel::instance()->getCountry($player->getCountry())->loadCurrency()->getCoefficient();
-                            $player->addMoney($sum, "Выигрыш " . $game->getTitle($player->getLang()));
+                            $player->addMoney(
+                                $sum,
+                                array(
+                                    'id' => $game->getUid(),
+                                    'object' => $key,
+                                    'title' => "Выигрыш " . $game->getTitle($player->getLang())
+                                ));
                         } elseif ($currency == LotterySettings::CURRENCY_POINT)
-                            $player->addPoints($sum, "Выигрыш " . $game->getTitle($player->getLang()));
+                            $player->addPoints(
+                                $sum,
+                                array(
+                                    'id' => $game->getUid(),
+                                    'object' => $key,
+                                    'title' => "Выигрыш " . $game->getTitle($player->getLang())
+                                ));
                     }
                 }
 
@@ -346,10 +400,9 @@ class ChanceController extends \AjaxController
 
         } else {
 
-            // $this->session->set($key, $game);
+            $this->session->set($key, $game);
         }
 
-        $response['test'] = 3;
         $this->ajaxResponseCode($response);
     }
 }
