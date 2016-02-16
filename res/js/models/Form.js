@@ -386,8 +386,12 @@
     WebSocketAjaxResponse = function (data) {
 
         if (data.error) {
-            Form.stop.call(this)
-                .message.call(this, data.error);
+
+            if(!DOM.isNode(this))
+                D.error(data.error);
+            else
+                Form.stop.call(this)
+                    .message.call(this, data.error);
 
         } else {
 
