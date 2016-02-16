@@ -236,18 +236,12 @@ class GamesController extends \AjaxController
             if ($game->isRun() || $game->isOver())
                 continue;
 
-            $players = array();
-
-            foreach ($game->getClients() as $player) {
-                $players[] = $player->name;
-            }
-
             $games[] = array(
                 'id'        => $game->getUid(),
                 'key'       => $game->getKey(),
                 'mode'      => $game->getMode(), // $game->getCurrency() . '-' . $game->getPrice() . '-' . $game->getNumberPlayers(),
                 'variation' => $game->getVariation(),
-                'players'   => $players
+                'players'   => $game->getClients()
             );
         }
 
