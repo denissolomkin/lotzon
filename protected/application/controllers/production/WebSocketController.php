@@ -437,8 +437,8 @@ class WebSocketController implements MessageComponentInterface
                     && (!$player->checkBalance($app->getCurrency(), $app->getPrice())))
             ) {
                 if ($_client) {
-                    $_client->send(json_encode(array('error' => 'INSUFFICIENT_FUNDS')));
                     #echo $this->time() . " " . "Игрок {$from->resourceId} - недостаточно средств для игры\n";
+                    return $_client->send(json_encode(array('error' => 'INSUFFICIENT_FUNDS')));
                 }
             } else {
 
@@ -449,7 +449,12 @@ class WebSocketController implements MessageComponentInterface
 
                 #echo $this->time() . " " . "пробуем вызвать экшн \n";
                 if ($app->getClient() && ($app->isRun() || $action != 'moveAction')) {
-                    call_user_func(array($app, $action), $data);
+
+                    if(method_exists($app, $action) && is_callable(array($app, $action))) {
+                        call_user_func(array($app, $action), $data);
+                    } else if($_client) {
+                        return $_client->send(json_encode(array('error' => 'WRONG_ACTION')));
+                    }
 
                     #echo $this->time() . " " . "рассылаем игрокам результат обработки \n";
                     if(count($app->getResponse()))
@@ -460,8 +465,8 @@ class WebSocketController implements MessageComponentInterface
                 if ($playerId && ($action == 'timeoutAction' || $action == 'quitAction') && !array_key_exists($playerId, $app->getClients())) {
 
                     if ($_client) {
-                        $_client->send(json_encode(array('path' => 'quit')));
                         echo $this->time(1) . " отправляем клиенту quit \n";
+                        $_client->send(json_encode(array('path' => 'quit')));
                     }
 
                     echo $this->time(1) . " " . $appName . ' ' . $appUid . " удаление appId у игрока №{$playerId}\n";
@@ -784,11 +789,12 @@ class WebSocketController implements MessageComponentInterface
                             if ($action = (isset($data->action) ? $data->action . 'Action' : null)) {
 
                                 // $appMode = (isset($data->mode) && $game->checkMode($data->mode) ? $data->mode : self::DEFAULT_MODE);
+                                if(isset($data->players))
+                                    $data->mode .= '-'.$data->players;
+
                                 $appMode = array('currency' => null, 'price' => null, 'number' => null, 'variation' => null);
                                 list($appMode['currency'], $appMode['price'], $appMode['number'], $appMode['variation'])
-                                    = array_pad(explode("-", (
-                                isset($data->mode) && $game->checkMode($data->mode) ? $data->mode : self::DEFAULT_MODE)
-                                ), 4, null);
+                                    = array_pad(explode("-", (isset($data->mode) && $game->checkMode($data->mode) ? $data->mode : self::DEFAULT_MODE)), 4, null);
 
                                 if (!$appMode['number'])
                                     $appMode['number'] = 2;
