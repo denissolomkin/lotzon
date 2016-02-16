@@ -153,7 +153,6 @@ class GameAppsDBProcessor implements IProcessor
                 VALUES
                 (:uid, :id, :key, :mode, :data, :run, :over, :saved, :players, :nplayers, :ping)";
 
-        /* todo */
         try {
             DB::Connect()->prepare($sql)->execute(array(
                 ':uid'      => $app->getUid(),
@@ -164,7 +163,7 @@ class GameAppsDBProcessor implements IProcessor
                 ':run'      => $app->isRun(),
                 ':over'     => $app->isOver(),
                 ':saved'    => $app->isSaved(),
-                ':players'  => @serialize($app->getClients()),
+                ':players'  => @serialize(array_values(array_map(function($a) { return is_object($a) ? $a->name: $a['name']; }, $app->getClients()))),
                 ':nplayers' => $app->getNumberPlayers(),
                 ':ping'     => $app->getPing()
             ));

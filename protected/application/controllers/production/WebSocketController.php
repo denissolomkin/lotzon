@@ -365,7 +365,7 @@ class WebSocketController implements MessageComponentInterface
 
         if ($this->_reload) {
             $seo = \SEOModel::instance()->getSEOSettings();
-            if ($seo['WebSocketReload']) {
+            if (isset($seo['WebSocketReload']) && $seo['WebSocketReload']) {
                 echo $this->time() . " ПЕРЕЗАГРУЗКА \n";
                 $seo['WebSocketReload'] = 0;
                 \SEOModel::instance()->updateSEO($seo);
@@ -1110,18 +1110,11 @@ class WebSocketController implements MessageComponentInterface
                             $games = array();
 
                             foreach (GameAppsModel::instance()->getList($game->getId()) as $uid => $game) {
-
-                                $players = array();
-
-                                foreach ($game->getClients() as $player) {
-                                    $players[] = $player->name;
-                                }
-
                                 $games[] = array(
                                     'id'        => $uid,
-                                    'mode'      => $game->Mode(),
+                                    'mode'      => $game->getMode(),
                                     'variation' => $game->getVariation(),
-                                    'players'   => $players
+                                    'players'   => $game->getClients()
                                 );
                             }
 
@@ -1215,11 +1208,7 @@ class WebSocketController implements MessageComponentInterface
                                     $count += count($apps_class);
                                     foreach ($apps_class as $app) {
                                         $games .= $app->getUid() . ' [' . $app->getMode() . '] ' . (time() - $app->getPing()) . 's ';
-                                        $names   = array();
-                                        $players = $app->getClients();
-                                        foreach ($players as $player)
-                                            $names[] = $player->name;
-                                        $games .= (!empty($names) ? implode(':', $names) . '<br>' : '');
+                                        $games .= implode(':', $app->getClients()) . '<br>';
                                     }
                                 }
 
