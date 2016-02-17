@@ -346,7 +346,7 @@ class WebSocketController implements MessageComponentInterface
                         ->update();
 
                     // $bot->time = time();
-                    $app->addClient(array(
+                    $app->addClients(array(
                         $gameBot->getId() => $gameBot->export()
                     ));
 
@@ -1036,7 +1036,7 @@ class WebSocketController implements MessageComponentInterface
                                             ->setAppUid($app->getUid())
                                             ->update();
 
-                                        $app->addClient(array(
+                                        $app->addClients(array(
                                             $gamePlayer->getId() => $gamePlayer->export('player')
                                         ));
 

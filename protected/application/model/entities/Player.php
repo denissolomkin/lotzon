@@ -1402,8 +1402,17 @@ class Player extends Entity
         $transaction->setPlayerId($this->getId())
                     ->setSum($quantity)
                     ->setBalance($this->getMoney())
-                    ->setCurrency(LotterySettings::CURRENCY_MONEY)
-                    ->setDescription($description);
+                    ->setCurrency(LotterySettings::CURRENCY_MONEY);
+
+        if(is_array($description)) {
+            $transaction
+                ->setObjectType($description['type'])
+                ->setObjectId($description['id'])
+                ->setDescription($description['title']);
+        } else {
+            $transaction->setDescription($description);
+        }
+
         $transaction->create();
 
         return $this;
@@ -1422,8 +1431,17 @@ class Player extends Entity
         $transaction->setPlayerId($this->getId())
                     ->setBalance($this->getPoints())
                     ->setSum($quantity)
-                    ->setCurrency(LotterySettings::CURRENCY_POINT)
-                    ->setDescription($description);
+                    ->setCurrency(LotterySettings::CURRENCY_POINT);
+
+        if(is_array($description)) {
+            $transaction
+                ->setObjectType($description['type'])
+                ->setObjectId($description['id'])
+                ->setDescription($description['title']);
+        } else {
+            $transaction->setDescription($description);
+        }
+
         $transaction->create();
 
         return $this;

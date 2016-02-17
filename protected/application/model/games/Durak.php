@@ -46,7 +46,7 @@ class Durak extends Game
 /*
     public function replayAction($data=null)
     {
-        #echo $this->time().' '. "Повтор игры {$this->getIdentifier()} ".(isset($this->getClient()->bot) ?'бот':'игрок')." №{$this->getClient()->id} \n";
+        #echo $this->time().' '. "Повтор игры {$this->getUid()} ".(isset($this->getClient()->bot) ?'бот':'игрок')." №{$this->getClient()->id} \n";
         #echo " REPLAY  \n";
 
         $clientId = $this->getClient()->id;
@@ -133,11 +133,11 @@ class Durak extends Game
                 'currency' => $this->getCurrency(),
                 'app'       => array(
                     'id'   => $this->getId(),
-                    'uid'  => $this->getIdentifier(),
+                    'uid'  => $this->getUid(),
                     'key'  => $this->getKey(),
                     'mode' => $this->getCurrency() . '-' . $this->getPrice()
                 ),
-                'appId' => $this->getIdentifier(),
+                'appId' => $this->getUid(),
                 'appMode' => $this->getCurrency() . '-' . $this->getPrice(),
                 'appName' => $this->getKey(),
                 'players' => $this->getPlayers(),
@@ -162,11 +162,11 @@ class Durak extends Game
             $callback = array(
                 'app'       => array(
                     'id'   => $this->getId(),
-                    'uid'  => $this->getIdentifier(),
+                    'uid'  => $this->getUid(),
                     'key'  => $this->getKey(),
                     'mode' => $this->getCurrency() . '-' . $this->getPrice()
                 ),
-                'appId' => $this->getIdentifier(),
+                'appId' => $this->getUid(),
                 'appMode' => $this->getCurrency() . '-' . $this->getPrice(),
                 'appName' => $this->getKey(),
                 'price' => $this->getPrice(),
@@ -228,11 +228,11 @@ class Durak extends Game
                     'currency' => $this->getCurrency(),
                     'app'       => array(
                         'id'   => $this->getId(),
-                        'uid'  => $this->getIdentifier(),
+                        'uid'  => $this->getUid(),
                         'key'  => $this->getKey(),
                         'mode' => $this->getCurrency() . '-' . $this->getPrice()
                     ),
-                    'appId' => $this->getIdentifier(),
+                    'appId' => $this->getUid(),
                     'appMode' => $this->getCurrency() . '-' . $this->getPrice(),
                     'appName' => $this->getKey(),
                     'beater' => $this->getBeater(),
@@ -267,11 +267,11 @@ class Durak extends Game
                         $this->setCallback(array(
                             'app'       => array(
                                 'id'   => $this->getId(),
-                                'uid'  => $this->getIdentifier(),
+                                'uid'  => $this->getUid(),
                                 'key'  => $this->getKey(),
                                 'mode' => $this->getCurrency() . '-' . $this->getPrice()
                             ),
-                            'appId' => $this->getIdentifier(),
+                            'appId' => $this->getUid(),
                             'appMode' => $this->getCurrency() . '-' . $this->getPrice(),
                             'appName' => $this->getKey(),
                             'action' => (is_array($data) && isset($data['action']))? $data['action'] : 'start',
@@ -963,7 +963,7 @@ class Durak extends Game
                         ->setTrump(null);
 
                     $this->updatePlayer(array('result' => -1, 'win' => $this->getPrice() * -1), $loser)
-                        ->updatePlayer(array('timeout','status','timeout'=> time() + $this->getOption('t')))
+                        ->updatePlayer(array('timeout','status','timeout'=> time() + $this->getOptions('t')))
                         ->currentPlayers(array());
 
                     #print_r($this->getPlayers($loser));

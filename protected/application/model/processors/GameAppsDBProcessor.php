@@ -208,7 +208,7 @@ class GameAppsDBProcessor implements IProcessor
             array_push($sql_results,
                 $player['pid'],
                 $app->getId(),
-                $app->getIdentifier(),
+                $app->getUid(),
                 $app->getTime(),
                 $month,
                 ($player['result'] == 1 ? 1 : 0),  // win
@@ -231,7 +231,7 @@ class GameAppsDBProcessor implements IProcessor
                 if ($win == 0)
                     continue;
 
-                $sql_transactions_players[] = '(?,?,?,?,?,?)';
+                $sql_transactions_players[] = '(?,?,?,?,?,?,?,?)';
 
                 /* select balance for transaction */
                 $sql = "SELECT Points, Money FROM `Players` WHERE `Id`=:id LIMIT 1";
@@ -264,6 +264,8 @@ class GameAppsDBProcessor implements IProcessor
                     $app->getCurrency(),
                     $win,
                     (isset($balance) ? $balance[$currency] : null),
+                    'OnlineGame',
+                    $app->getUid(),
                     $app->getTitle($player['lang']),
                     $app->getTime()
                 );
@@ -282,7 +284,7 @@ class GameAppsDBProcessor implements IProcessor
 
         if ($app->getPrice() && count($sql_transactions_players)) {
             try {
-                $sql = "INSERT INTO `Transactions` (`PlayerId`, `Currency`, `Sum`, `Balance`, `Description`, `Date`) VALUES " . implode(",", $sql_transactions_players);
+                $sql = "INSERT INTO `Transactions` (`PlayerId`, `Currency`, `Sum`, `Balance`, `ObjectType`, `ObjectId`, `Description`, `Date`) VALUES " . implode(",", $sql_transactions_players);
                 DB::Connect()
                     ->prepare($sql)
                     ->execute($sql_transactions);
