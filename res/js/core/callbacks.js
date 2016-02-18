@@ -166,7 +166,6 @@
             "games-random": Games.random.init,
             "games-moment": Games.random.init,
             "games-game": WebSocketAjaxClient,
-            "games-spin": slotMachine.init,
 
             "profile-edit": Profile.init.edit,
             "profile-billing": Profile.init.billing,
@@ -197,7 +196,8 @@
             "blog-post-view-comments": Comments.after.reply,
             "communication-comments": Comments.after.reply,
             "communication-notifications": Comments.renderNotifications,
-            "users-requests-view": Profile.after.request
+            "users-requests-view": Profile.after.request,
+            "games-chance-view": Games.chance.after.start
 
         },
 

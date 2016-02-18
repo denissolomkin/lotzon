@@ -157,21 +157,56 @@ var Games = {
 
     },
     chance: {
+
+        key: null,
+
         conf: {
             data: {},
             play: !1
         },
+
         init: function(data) {
+
             if (!data.json)
                 return false;
-            // make config
-            Games.chance.conf.data = {};
-            Games.chance.conf.data = data.json;
-            Games.chance.get("#games-chance-view-cells button:not(.played)", data.json.id);
-            // in multiple prizes set first prize as @current@
-            $("#games-chance-view-chance *:first-child[data-current] ").addClass('currennt');
+
+            Games.chance.key = data.json.key;
+
+            switch(data.json.key){
+                case 'Slots':
+                    Carousel.initOwl();
+                    slotMachine.init();
+                    break;
+
+                default:
+                    // make config
+                    Games.chance.conf.data = {};
+                    Games.chance.conf.data = data.json;
+                    Games.chance.get("#games-chance-view-cells button:not(.played)", data.json.id);
+                    // in multiple prizes set first prize as @current@
+                    $("#games-chance-view-chance *:first-child[data-current] ").addClass('currennt');
+                    break;
+
+            }
+
             return;
         },
+
+        after: {
+
+            start: function (data) {
+
+                switch (Games.chance.key) {
+                    case 'Slots':
+                        slotMachine.spin(data);
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+        },
+
         //chances view
         get: function(elements, id) {
 

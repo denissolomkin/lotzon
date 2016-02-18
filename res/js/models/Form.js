@@ -344,7 +344,7 @@
                 return Form;
 
             // clear form after adding new entities
-            if (form.tagName === 'FORM' && form.getAttribute('method').toLowerCase() === 'post') {
+            if (form.tagName === 'FORM' && form.getAttribute('method').toLowerCase() === 'post' && !form.classList.contains('reset-disabled')) {
                 formContenteditable = form.querySelectorAll("div[contenteditable='true']");
                 form.reset();
                 for (var i = 0; i < formContenteditable.length; i++) {

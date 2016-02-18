@@ -590,7 +590,8 @@
             template.replace(
                 /(?:partial\b\s.)([\w]+[\-\w*]*)/igm,
                 function (m, p) {
-                    matches.push(p);
+                    if(matches.indexOf(p) < 0)
+                        matches.push(p);
                 }
             );
             return matches;
