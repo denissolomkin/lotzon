@@ -134,6 +134,7 @@ class Index extends \SlimController\SlimController
                     ),
                     "messages"      => \MessagesModel::instance()->getStatusCount($playerObj->getId(), 0)
                 ),
+                "friends" => \FriendsModel::instance()->getStatusCount($playerObj->getId(), 1),
             ),
             "favorite" => $playerObj->getFavoriteCombination(),
             "location" => array(

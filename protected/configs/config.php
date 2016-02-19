@@ -666,6 +666,23 @@ Config::instance()->publicResources = array(
         'put' => 'controllers\production\Players:billing'
     ),
     /**
+     * Friends
+     */
+    '/users/friends/' => array(
+        'get' => 'controllers\production\FriendsController:list',
+    ),
+    '/users/requests/' => array(
+        'get' => 'controllers\production\FriendsController:requests',
+    ),
+    '/users/requests/:userId' => array(
+        'put'    => 'controllers\production\FriendsController:updateRequest',
+        'delete' => 'controllers\production\FriendsController:deleteRequest',
+        'post'   => 'controllers\production\FriendsController:addRequest',
+    ),
+    '/users/chronicle/' => array(
+        'get' => 'controllers\production\FriendsController:chronicle',
+    ),
+    /**
      * Users
      */
     '/users/search/' => array(
