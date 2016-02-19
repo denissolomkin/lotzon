@@ -1,9 +1,12 @@
 <div id="games-spin" class="content-main single-game">
+
+    <form action="/games/chance/{{id}}" method="post" class="reset-disabled">
     <section id="slot_machines_container">
         <div id="slotsSelectorWrapper" class="slotMachine1 reelSet1" data-machine="1" data-reel="1">
             <div id="SlotsContainer" class="changeable_background"> <!-- Just to be able to set the "won!" extra background -->
                 <div class="matches-inf-wrapper carousel-spin clearfix ">
                     <div id="prizes_list_outer" class="custom-block machine-bg machine-roll">
+
                         <!--READY buttons-->
                         <div class="buttons-wrapper clearfix">
                             <div id="ExitBlock" class="slot-block-outer">
@@ -13,16 +16,17 @@
                             </div>
                             <div id="Credits" class="slot-block-outer">
                                 <div class="slot-block-inner">
-                                    <div id="Gold" class="button">{{i18n "button-games-money"}}</div><div id="Scores" class="button active">{{i18n "button-games-points"}}</div>
+                                    <select name="currency">
+                                        <option value="MONEY" selected>Money</option>
+                                        <option value="POINT">Points</option>
+                                    </select>
+                                    <div id="Gold" class="button">{{i18n "button-games-money"}}</div>
+                                    <div id="Scores" class="button active">{{i18n "button-games-points"}}</div>
                                 </div>
                             </div>
                         </div>
-                        <form action="/games/chance/{{id}}" method="post" class="reset-disabled">
-                            <select name="currency"><option value="MONEY" selected>Money</option><option value="POINT">Points</option></select>
-                            <input name="bet">
-                            <button>Play</button>
-                        </form>
                         <!--END READY buttons-->
+
                         <!-- READY Spin machine-->
                         <div id="slotMachineContainer" class="slot-block-outer">
                             <i class="i-play"></i>
@@ -41,14 +45,11 @@
                                         <div id="reelOverlay"></div>
                                     </div>
                                 </div>
-                                <!--                            <div id="failedRequestMessage" style="display: none;"><span class="large">Sorry, we're unable to display your spin because your connection to our server was lost. </span><br>
-                                                                Rest assured that your spin was not wasted.
-                                                                Please check your connection and <a href="/#" onclick="window.location.reload();">refresh</a> to try again.
-                                                            </div>-->
-                                <div id="soundOffButton"></div>
                             </div>
                         </div>
                         <!--END READY Spin machine-->
+
+
                         <!--READY bet container-->
                         <div id="betContainer" class="slot-block-outer">
                             <div class="slot-block-inner">
@@ -58,109 +59,103 @@
                                 </div>
                                 <div class="info_box">
                                     <p class="score_desc">{{i18n "title-games-credits"}}</p>
-                                    <span id="credits" class="holder-points">12227</span>
+                                    <span id="playerBalance" class="holder-points"></span>
                                 </div>
                                 <div class="info_box">
                                     <p class="score_desc">{{i18n "title-games-bet"}}</p>
-                                    <span id="bet">7</span>
+                                    <input id="bet" name="bet" readonly style="border:none;background: none;    color: #e64e13;font-weight: bold;font-size: 20px;">
                                 </div>
-                                <!--                <div class="info_box">
-                                                    <p class="score_desc">dayWinnings</p>
-                                                    <span id="dayWinnings">99</span>
-                                                </div>
-                                                <div class="info_box">
-                                                    <p class="score_desc">lifetimeWinnings</p>
-                                                    <span id="lifetimeWinnings">99</span>
-                                                </div>-->
                                 <div class="spin_change_container">
                                     <div id="betSpinUp"></div>
                                     <div id="betSpinDown"></div>
                                 </div>
-                                <div id="spinButton" class="">
+                                <button id="spinButton" >
                                     <span>{{i18n "button-games-spin"}}</span>
-                                </div>
+                                </button>
                             </div>
                         </div>
                         <!--END READY bet container-->
+
                         <div id="soundOffButton"></div>
                     </div>
+
                     <!--READY Spin Statistic-->
                     <div id="slotMachineContainerOuter" class="custom-block machine-bg machine-stat">
                         <div id="machine_stat" class="slot-block-outer">
                             <div  class="slot-block-inner">
                                 <div id="prizes_list">
                                     <div id="prizes_list_slotMachine1" class="prizes_list_slot_machine">
-                                        <div id="trPrize_*200" class="trPrize">
+                                        <div id="trPrize_200" class="trPrize">
                                             <div class="tdReels">
                                                 <div class="reel1 reelIcon prize_6"></div>
                                                 <div class="reel2 reelIcon prize_6"></div>
                                                 <div class="reel3 reelIcon prize_6"></div>
                                             </div>
-                                            <span class="tdPayout" data-basepayout="200.00">1400</span>
+                                            <span class="tdPayout" data-basepayout="200.00"></span>
                                         </div>
-                                        <div id="trPrize_*50" class="trPrize">
+                                        <div id="trPrize_50" class="trPrize">
                                             <div class="tdReels">
                                                 <div class="reel1 reelIcon prize_4"></div>
                                                 <div class="reel2 reelIcon prize_4"></div>
                                                 <div class="reel3 reelIcon prize_4"></div>
                                             </div>
-                                            <span class="tdPayout" data-basepayout="50.00">350</span>
+                                            <span class="tdPayout" data-basepayout="50.00"></span>
                                         </div>
-                                        <div id="trPrize_*20" class="trPrize">
+                                        <div id="trPrize_20" class="trPrize">
                                             <div class="tdReels">
                                                 <div class="reel1 reelIcon prize_2"></div>
                                                 <div class="reel2 reelIcon prize_2"></div>
                                                 <div class="reel3 reelIcon prize_2"></div>
                                             </div>
-                                            <span class="tdPayout" data-basepayout="20.00">140</span>
+                                            <span class="tdPayout" data-basepayout="20.00"></span>
                                         </div>
-                                        <div id="trPrize_*16" class="trPrize">
+                                        <div id="trPrize_16" class="trPrize">
                                             <div class="tdReels">
                                                 <div class="reel1 reelIcon prize_1slash3"></div>
                                                 <div class="reel2 reelIcon prize_5slash2"></div>
                                                 <div class="reel3 reelIcon prize_4slash6"></div>
                                             </div>
-                                            <span class="tdPayout" data-basepayout="16.00">112</span>
+                                            <span class="tdPayout" data-basepayout="16.00"></span>
                                         </div>
-                                        <div id="trPrize_*15" class="trPrize">
+                                        <div id="trPrize_15" class="trPrize">
                                             <div class="tdReels">
                                                 <div class="reel1 reelIcon prize_5"></div>
                                                 <div class="reel2 reelIcon prize_5"></div>
                                                 <div class="reel3 reelIcon prize_5"></div>
                                             </div>
-                                            <span class="tdPayout" data-basepayout="15.00">105</span>
+                                            <span class="tdPayout" data-basepayout="15.00"></span>
                                         </div>
-                                        <div id="trPrize_*14" class="trPrize">
+                                        <div id="trPrize_14" class="trPrize">
                                             <div class="tdReels">
                                                 <div class="reel1 reelIcon prize_1"></div>
                                                 <div class="reel2 reelIcon prize_1"></div>
                                                 <div class="reel3 reelIcon prize_1"></div>
                                             </div>
-                                            <span class="tdPayout" data-basepayout="14.00">98</span>
+                                            <span class="tdPayout" data-basepayout="14.00"></span>
                                         </div>
-                                        <div id="trPrize_*12" class="trPrize">
+                                        <div id="trPrize_12" class="trPrize">
                                             <div class="tdReels">
                                                 <div class="reel1 reelIcon prize_3"></div>
                                                 <div class="reel2 reelIcon prize_3"></div>
                                                 <div class="reel3 reelIcon prize_3"></div>
                                             </div>
-                                            <span class="tdPayout" data-basepayout="12.00">84</span>
+                                            <span class="tdPayout" data-basepayout="12.00"></span>
                                         </div>
-                                        <div id="trPrize_*7" class="trPrize">
+                                        <div id="trPrize_7" class="trPrize">
                                             <div class="tdReels">
                                                 <div class="reel1 reelIcon prize_1slash3slash5"></div>
                                                 <div class="reel2 reelIcon prize_1slash3slash5"></div>
                                                 <div class="reel3 reelIcon prize_1slash3slash5"></div>
                                             </div>
-                                            <span class="tdPayout" data-basepayout="7.00">49</span>
+                                            <span class="tdPayout" data-basepayout="7.00"></span>
                                         </div>
-                                        <div id="trPrize_*4 class="trPrize">
+                                        <div id="trPrize_4" class="trPrize">
                                             <div class="tdReels">
                                                 <div class="reel1 reelIcon prize_stardot5"></div>
                                                 <div class="reel2 reelIcon prize_stardot5"></div>
                                                 <div class="reel3 reelIcon prize_stardot5"></div>
                                             </div>
-                                            <span class="tdPayout" data-basepayout="4.00">28</span>
+                                            <span class="tdPayout" data-basepayout="4.00"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -172,4 +167,5 @@
             </div>
         </div>
     </section>
+    </form>
 </div>

@@ -9559,7 +9559,8 @@ footer.unvisible {
       height: 100%;
       top: 0;
       left: 0;
-      text-align: center; }
+      text-align: center;
+      z-index: 9999; }
       #games-online-field:not(.Durak) .mx .msg:before {
         content: '';
         height: 100%;
@@ -9678,9 +9679,7 @@ footer.unvisible {
         font-family: Handbook-bold;
         font-size: 1.1em; }
   #games-online-field:not(.Durak).SeaBattle .mx {
-    min-height: 500px;
-    overflow-x: hidden;
-    overflow-y: auto; }
+    min-height: 500px; }
     #games-online-field:not(.Durak).SeaBattle .mx .place {
       padding-top: 20px;
       text-align: center;

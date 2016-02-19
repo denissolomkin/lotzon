@@ -190,13 +190,23 @@ $url_3: url(../img/games/lotzonBg.png);
             }
         }
         &.SeaBattle{
+            display: block;
+            min-height: 500px;
+            overflow-x: hidden;
+            overflow-y: auto;
+            position: relative;
             .mx{
-
                 .shipsSheme.o{
                     top: 480px;
                 }
                 .place{
                     padding-top: 200px;
+                }
+                .players{
+                    .m{
+                        z-index: 33333;
+                        position: fixed;
+                    }
                 }
                 .table {   
                     &.m{
@@ -219,6 +229,9 @@ $url_3: url(../img/games/lotzonBg.png);
                         top: 150px !important;
                         width: 170px !important;
                         margin-left: -85px !important;
+                    }
+                    .table.o{
+                        padding-bottom: 140px;
                     }
                 }
             }

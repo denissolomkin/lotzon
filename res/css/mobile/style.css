@@ -502,25 +502,36 @@ header {
   #games-online-field:not(.Durak).WhoMore .mx .table .inner .cell span {
     font-family: Handbook-bold;
     font-size: 1.4em; }
-  #games-online-field:not(.Durak).SeaBattle .mx .shipsSheme.o {
-    top: 480px; }
-  #games-online-field:not(.Durak).SeaBattle .mx .place {
-    padding-top: 200px; }
-  #games-online-field:not(.Durak).SeaBattle .mx .table.m {
-    position: absolute;
-    left: 50% !important;
-    top: 350px !important;
-    width: 320px !important;
-    margin-left: -160px !important; }
-  #games-online-field:not(.Durak).SeaBattle .mx .table.o {
-    width: 320px;
-    padding-top: 300px; }
-  #games-online-field:not(.Durak).SeaBattle .mx.started .players {
-    padding: 20px; }
-  #games-online-field:not(.Durak).SeaBattle .mx.started .table.m {
-    top: 150px !important;
-    width: 170px !important;
-    margin-left: -85px !important; }
+  #games-online-field:not(.Durak).SeaBattle {
+    display: block;
+    min-height: 500px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: relative; }
+    #games-online-field:not(.Durak).SeaBattle .mx .shipsSheme.o {
+      top: 480px; }
+    #games-online-field:not(.Durak).SeaBattle .mx .place {
+      padding-top: 200px; }
+    #games-online-field:not(.Durak).SeaBattle .mx .players .m {
+      z-index: 33333;
+      position: fixed; }
+    #games-online-field:not(.Durak).SeaBattle .mx .table.m {
+      position: absolute;
+      left: 50% !important;
+      top: 350px !important;
+      width: 320px !important;
+      margin-left: -160px !important; }
+    #games-online-field:not(.Durak).SeaBattle .mx .table.o {
+      width: 320px;
+      padding-top: 300px; }
+    #games-online-field:not(.Durak).SeaBattle .mx.started .players {
+      padding: 20px; }
+    #games-online-field:not(.Durak).SeaBattle .mx.started .table.m {
+      top: 150px !important;
+      width: 170px !important;
+      margin-left: -85px !important; }
+    #games-online-field:not(.Durak).SeaBattle .mx.started .table.o {
+      padding-bottom: 140px; }
 
 #games-online-field.Durak .content-box-content {
   min-height: 0; }

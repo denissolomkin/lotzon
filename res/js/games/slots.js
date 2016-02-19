@@ -1,11 +1,8 @@
-//путь к урлу
-soundManager.url = "/res/js/plugins/";
-
 /* global soundManager */
 var minBet = 1;
 var maxBet = 10;
 var numIconsPerReel = 6;
-
+soundManager.url = "/res/js/plugins/";
 var slotMachine = {
     stripHeight: 720,
     alignmentOffset: 86,
@@ -22,35 +19,45 @@ var slotMachine = {
     bounceTime: 1e3,
     winningsFormatPrefix: "",
     curBet: 1,
+    currency: 'points',
     isActive: !1,
     useMoney: !1,
     soundEnabled: !0,
+    step: {
+        money: 0.1,
+        points: 1
+    },
     xFactor: 0.1,
     sounds: {},
     init: function () {
 
         $("#betSpinUp").click(function () {
             slotMachine.change_bet(1);
-        }), $("#betSpinDown").click(function () {
-            slotMachine.change_bet(-1);
-        }), $("#spinButton").click(function () {
-            slotMachine.spin();
-        }), $("#soundOffButton").click(function () {
-            slotMachine.toggle_sound();
-        }), $("#Gold, #Scores").click(function () {
-            slotMachine.change_currency(this);
-        }), slotMachine.soundEnabled && (soundManager.url = "/res/js/plugins/", soundManager.onload = function () {
+        }),
+            $("#betSpinDown").click(function () {
+                slotMachine.change_bet(-1);
+            }),
+            $("#soundOffButton").click(function () {
+                slotMachine.toggle_sound();
+            }),
+            $("#Gold, #Scores").click(function () {
+                slotMachine.change_currency(this);
+            }),
+        slotMachine.soundEnabled && (
             slotMachine.sounds.payout = soundManager.createSound({
                 id: "payout",
                 url: "/res/audio/games/payout.mp3"
-            }), slotMachine.sounds.fastpayout = soundManager.createSound({
+            }),
+            slotMachine.sounds.fastpayout = soundManager.createSound({
                 id: "fastpayout",
                 url: "/res/audio/games/fastpayout.mp3"
-            }), slotMachine.sounds.spinning = soundManager.createSound({
+            }),
+            slotMachine.sounds.spinning = soundManager.createSound({
                 id: "spinning",
                 url: "/res/audio/games/spinning.mp3"
-            });
-        });
+            })
+        ),
+            $("#Scores").click();
     },
     /**
      * @param {object} that
@@ -61,13 +68,13 @@ var slotMachine = {
             switch (that.id) {
                 case "Gold" :
                     $("#slotsSelectorWrapper").addClass('gold');
-                    $('#credits').attr('class', 'holder-money');
-                    slotMachine.useMoney = !0;
+                    $('#playerBalance').attr('class', 'holder-money');
+                    slotMachine.useMoney = !0, slotMachine.currency = 'money';
                     break;
                 case "Scores" :
                     $("#slotsSelectorWrapper").removeClass('gold');
-                    $('#credits').attr('class', 'holder-points');
-                    slotMachine.useMoney = !1;
+                    $('#playerBalance').attr('class', 'holder-points');
+                    slotMachine.useMoney = !1, slotMachine.currency = 'points';
                     break;
             }
             $("#Scores, #Gold").removeClass('active');
@@ -100,7 +107,8 @@ var slotMachine = {
             slotMachine.curBet = Math.min(Math.max(1, parseInt(slotMachine.curBet)), maxBet); // fix max bet
         }
         slotMachine.show_won_state(!1);
-        $("#bet").html(slotMachine.add_val(slotMachine.curBet));
+        // $("#bet").html(slotMachine.add_val(slotMachine.curBet));
+        $("#bet").val(slotMachine.add_val(slotMachine.curBet));
         $("#prizes_list .tdPayout").each(function () {
             var n = $(this);
             n.html((n.attr("data-payoutPrefix") || "") + slotMachine.add_val(parseInt(n.attr("data-basePayout"), 10) * slotMachine.curBet) + (n.attr("data-payoutSuffix") || ""));
@@ -117,11 +125,9 @@ var slotMachine = {
         if (slotMachine.isActive)
             return !1;
 
-        console.error(data);
-
         slotMachine.isActive = !0;
         slotMachine.show_won_state(!1),
-            $("#spinButton").addClass("disabled"),
+            $("#spinButton").attr("disabled", "disabled").addClass("disabled"),
             slotMachine._start_reel_spin(1, 0),
             slotMachine._start_reel_spin(2, slotMachine.secondReelStopTime),
             slotMachine._start_reel_spin(3, slotMachine.secondReelStopTime + slotMachine.thirdReelStopTime);
@@ -168,57 +174,60 @@ var slotMachine = {
             ? ($("#SlotsContainer").addClass("won"), $("#trPrize_" + e).addClass("won"))
             : ($(".trPrize.won").removeClass("won"), $("#PageContainer, #SlotsContainer").removeClass(), $("#lastWin").html(""))
     },
+
     end_spin: function (n) {
-        n.win ? (slotMachine.show_won_state(!0, n.prizes.math.v), slotMachine._increment_payout_counter(n)) : slotMachine._end_spin_after_payout(n)
+        n.win ? (slotMachine.show_won_state(!0, n.prizes.multi), slotMachine._increment_payout_counter(n)) : slotMachine._end_spin_after_payout(n)
     },
+
     _format_winnings_number: function (n) {
         return n == Math.floor(n) ? n : n.toFixed(2)
     },
+
     _end_spin_after_payout: function (n) {
 
-        "undefined" != typeof n.credits && $("#credits").html(Player.fineNumbers(n.credits)),
-        "undefined" != typeof n.dayWinnings && $("#dayWinnings").html(slotMachine.winningsFormatPrefix + slotMachine._format_winnings_number(n.dayWinnings)),
-        "undefined" != typeof n.lifetimeWinnings && $("#lifetimeWinnings").html(slotMachine.winningsFormatPrefix + slotMachine._format_winnings_number(n.lifetimeWinnings)),
-        n.prizes && $("#lastWin").html(slotMachine.add_val(n.prizes));
-
-        var e = parseFloat($("#credits").html().replace(',', '.').replace(' ', ''), 10);
-        e > 0 && $("#spinButton").removeClass("disabled");
+        //"undefined" != typeof n.credits && $("#playerBalance").html(Player.fineNumbers(n.credits)),
+        //"undefined" != typeof n.dayWinnings && $("#dayWinnings").html(slotMachine.winningsFormatPrefix + slotMachine._format_winnings_number(n.dayWinnings)),
+        //"undefined" != typeof n.lifetimeWinnings && $("#lifetimeWinnings").html(slotMachine.winningsFormatPrefix + slotMachine._format_winnings_number(n.lifetimeWinnings)),
+        n.win && $("#lastWin").html(slotMachine.add_val(n.win));
+        Player.balance[slotMachine.currency] > 0 && $("#spinButton").attr("disabled", false).removeClass("disabled");
         slotMachine.isActive = !1;
     },
+
     _increment_payout_counter: function (n) {
-        var e = {
-                credits: n.credits - n.prize.payoutCredits,
-                dayWinnings: n.dayWinnings - n.prize.payoutWinnings,
-                lifetimeWinnings: n.lifetimeWinnings - n.prize.payoutWinnings
-            },
-            t = Math.max(n.credits - e.credits, n.dayWinnings - e.dayWinnings),
-            i = t > 80 ? "fastpayout" : "payout",
-            s = t > 80 ? 50 : 200;
+
+        n.win =  parseFloat(n.win);
+        var e = 0,
+            step = slotMachine.step[slotMachine.currency],
+            i = (n.win / step) > 80 ? "fastpayout" : "payout",
+            s = (n.win / step) > 80 ? 50 : 200;
+
         try {
             slotMachine.sounds[i].play({
                 onfinish: function () {
                     this.play()
                 }
             })
-        } catch (o) {
-        }
+        } catch (o) {console.log(o);}
+
         var a = window.setInterval(function () {
             var t = !1;
-            if ($.each(["credits", "dayWinnings", "lifetimeWinnings"], function (i, s) {
-                    e[s] < n[s] && (e[s] += 1,
-                        e[s] = Math.min(e[s], n[s]),
-                        $("#" + s).html("credits" != s ? slotMachine.winningsFormatPrefix + slotMachine._format_winnings_number(e[s]) : Player.fineNumbers(e[s])),
-                        t = !0)
-                }), !t) {
+            if ((e < n.win && (e += step, $("#playerBalance").html(Player.fineNumbers(Player.balance[slotMachine.currency]+e)), t = !0)), !t) {
                 window.clearInterval(a);
+                var init = {
+                    balance:{}
+                };
+                init.balance[slotMachine.currency] = Player.balance[slotMachine.currency] + n.win;
+                Player.init(init);
                 try {
                     slotMachine.sounds[i].stop()
                 } catch (s) {
+                    console.log(s);
                 }
                 slotMachine._end_spin_after_payout(n)
             }
         }, s)
     },
+
     abort_spin_abruptly: function () {
         slotMachine._stop_reel_spin(1, null), slotMachine._stop_reel_spin(2, null), slotMachine._stop_reel_spin(3, null);
         try {
@@ -226,6 +235,7 @@ var slotMachine = {
         } catch (n) {
         }
     },
+
     _start_reel_spin: function (n, e) {
         var t = Date.now(), i = $("#reel" + n);
         i.css({top: -(Math.random() * slotMachine.stripHeight * 2)});
@@ -234,6 +244,7 @@ var slotMachine = {
         }, a = window.setInterval(o, 20);
         i.data("spinTimer", a)
     },
+
     _stop_reel_spin: function (n, e) {
         var t = $("#reel" + n), i = t.data("spinTimer");
         if (window.clearInterval(i), t.data("spinTimer", null), null != e) {

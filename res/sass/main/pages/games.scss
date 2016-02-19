@@ -625,7 +625,7 @@ footer.unvisible {
                 top: 0;
                 left: 0;
                 text-align: center;
-
+                z-index: 9999;
                 &:before{
                     content: '';
                     height: 100%;
@@ -804,9 +804,8 @@ footer.unvisible {
             // background: $url_0;
             .mx{
                 min-height: 500px;
-                overflow-x: hidden;
-                overflow-y: auto;
-
+                // overflow-x: hidden;
+                // overflow-y: auto;
                 .place{
                     padding-top: 20px;
                     text-align: center;

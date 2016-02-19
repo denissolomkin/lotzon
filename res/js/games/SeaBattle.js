@@ -1,4 +1,4 @@
-(function () {
+(function() {
 
     Apps.SeaBattle = {
 
@@ -18,14 +18,20 @@
 
         action: {
 
-            default: function () {
+            default: function() {
                 // console.error('default:');
 
+
                 if (Game.hasField()) {
+                    
+                    // for sheme
+                    if (!$('.SeaBattle .mx .shipsSheme')) {
+                        $('.SeaBattle .mx').append('<div class="shipsSheme o"></div><div class="shipsSheme m"></div>');
+                    }
 
                     Game.run() && Apps.SeaBattle.drawField();
                     Game.drawButtons();
-                    
+
                     switch (App.action) {
 
                         case 'field':
@@ -39,40 +45,13 @@
                             break;
 
                         case 'start':
-                            // console.error('start');
                             
-                            // for sheme
-                            $('.SeaBattle .mx').addClass('started').append('<div class="shipsSheme o"></div><div class="shipsSheme m"></div>');
+                            $('.SeaBattle .mx').addClass('started');
+
                             $('.SeaBattle .table.m .drag-wrapper').remove();
                             $('.SeaBattle .place').hide('fast');
-                            // $('.SeaBattle .table.o').show('slow');
 
-                            var tableM = $('.SeaBattle .table.m'),
-                                tableO = $('.SeaBattle .table.o');
-                                
-                                tableM.css({
-                                    "position":"absolute",
-                                    'width':tableM.width(),
-                                    'height':tableM.width(),
-                                    'left':tableM.offset().left - tableM.parent().offset().left,
-                                    'top':tableM.position().top
-                                });
-
-                                $(tableM).animate({
-                                    width: 139,
-                                    height: 139,
-                                    top: 0,
-                                    left: 20
-                                }, {
-                                    duration: 1000,
-                                    // specialEasing: {
-                                    //   width: "linear",
-                                    //   height: "linear"
-                                    // },
-                                    complete: function() {
-                                        tableO.fadeIn('slow');
-                                    }
-                                });
+                            Apps.SeaBattle.animateFields();
 
                             break;
 
@@ -113,18 +92,18 @@
 
             },
 
-            error: function () {
+            error: function() {
                 alert(App.error);
             },
         },
 
         do: {
 
-            ready: function (e) {
-                
+            ready: function(e) {
+
                 e.preventDefault();
                 e.stopPropagation();
-                
+
                 var path = 'app/' + App.id + '/' + App.uid,
                     data = {
                         'action': 'field',
@@ -137,80 +116,71 @@
                 // });
             }
         },
-        beforeStart: function(callback){
-            setTimeout(function(){
+        animateFields: function() {
+            var tableM = $('.SeaBattle .table.m'),
+                tableO = $('.SeaBattle .table.o');
 
+            tableM.css({
+                "position": "absolute",
+                'width': tableM.width(),
+                'height': tableM.width(),
+                'left': tableM.offset().left - tableM.parent().offset().left,
+                'top': tableM.position().top
+            });
 
-                var tableM = $('.SeaBattle .table.m'),
-                    tableO = $('.SeaBattle .table.o');
-                    
-                    tableM.css({
-                        "position":"absolute",
-                        'width':tableM.width(),
-                        'height':tableM.width(),
-                        'left':tableM.offset().left - tableM.parent().offset().left,
-                        'top':tableM.position().top
-                    });
-
-                    $(tableM).animate({
-                        width: 139,
-                        height: 139,
-                        top: 0,
-                        left: 20
-                    }, {
-                        duration: 1000,
-                        // specialEasing: {
-                        //   width: "linear",
-                        //   height: "linear"
-                        // },
-                        complete: function() {
-                            tableO.fadeIn('slow');
-                        }
-                    });
-
-
-
-                // alert(1.6);
-                
-                if(typeof(callback) === 'function')
-                    callback();
-
-            }, 500);
-        },
-        drawShipsSheme: function(){
-            $.each(App.players, function( index, value ) {
-                    var current = (index == Player.id ? 'm' : 'o');
-                        el = document.querySelector('.SeaBattle .mx > .shipsSheme.'+current);
-
-                    var rev = [];
-
-                    $.each(value.ships, function( shp, cnt ) {
-                        var html='';
-                        html+='<div class="s '+(cnt?'':'e ')+current+'" >';
-                            for(var i = 0; i < shp ; i++){
-                                html+='<div></div>';
-                            }
-                            html+='<div class="cnt"><i>'+cnt+'</i></div>';
-
-                        html+='</div>';
-
-                        rev.push(html);
-                    });
-
-
-                    var html = '';
-                    for(var i = rev.length -1; i >= 0 ; i--) {html += rev[i];}
-                            
-
-                    el.innerHTML = html;
+            $(tableM).animate({
+                width: 139,
+                height: 139,
+                top: 0,
+                left: 20
+            }, {
+                duration: 1000,
+                // specialEasing: {
+                //   width: "linear",
+                //   height: "linear"
+                // },
+                complete: function() {
+                    tableO.fadeIn('slow');
+                }
             });
         },
-        drawField: function () {
+        drawShipsSheme: function() {
+            $.each(App.players, function(index, value) {
+                var current = (index == Player.id ? 'm' : 'o');
+                el = document.querySelector('.SeaBattle .mx > .shipsSheme.' + current);
+                if (!el) {
+                    // alert("смотри в оба - .shipsSheme не найден");
+                    return;
+                }
+                var rev = [];
+
+                $.each(value.ships, function(shp, cnt) {
+                    var html = '';
+                    html += '<div class="s ' + (cnt ? '' : 'e ') + current + '" >';
+                    for (var i = 0; i < shp; i++) {
+                        html += '<div></div>';
+                    }
+                    html += '<div class="cnt"><i>' + cnt + '</i></div>';
+
+                    html += '</div>';
+
+                    rev.push(html);
+                });
+
+
+                var html = '';
+                for (var i = rev.length - 1; i >= 0; i--) { html += rev[i]; }
+
+
+                el.innerHTML = html;
+            });
+        },
+        drawField: function() {
 
             var field = Game.field.getElementsByClassName('mx')[0];
 
             if (App.variation && App.variation.field) {
-                
+
                 var fieldSize = App.variation.field.split('x'),
                     // width = height = Math.min(Math.floor((220 - (fieldSize[0] - 1)) / fieldSize[0]), Math.floor((440 - fieldSize[1]) / fieldSize[0])) + 'px;',
                     // font = (parseInt(width) / 1.6) + 'px/' + (parseInt(width)) + 'px Handbook-bold;',
@@ -220,13 +190,13 @@
                 for (var i = 1; i <= fieldSize[1]; i++) {
 
                     html += '<div class="vw vh vf clearfix">';
-                    
+
                     for (var j = 1; j <= fieldSize[0]; j++) {
                         html += '<div>' +
-                                    '<div class = "inner" >' +
-                                        '<div class="cell" data-coor="' + j + "x" + i + '"></div>' +
-                                    '</div>' +
-                                '</div>';
+                            '<div class = "inner" >' +
+                            '<div class="cell" data-coor="' + j + "x" + i + '"></div>' +
+                            '</div>' +
+                            '</div>';
                     }
 
                     html += '</div>';
@@ -239,7 +209,7 @@
 
                     field.innerHTML +=
                         '<div class="table ' + playerClass + '">' + html + '</div>';
-                    
+
                     var cell = field.querySelectorAll('.player' + playerId + ' .cell');
 
                     for (var index = 0; index < cell.length; index++) {
@@ -257,11 +227,11 @@
             }
         },
 
-        drawShips: function () {
+        drawShips: function() {
             if (App.fields) {
-                $.each(App.fields, function (index, field) {
-                    $.each(field, function (x, cells) {
-                        $.each(cells, function (y, cell) {
+                $.each(App.fields, function(index, field) {
+                    $.each(field, function(x, cells) {
+                        $.each(cells, function(y, cell) {
                             Apps.SeaBattle.paintCell({
                                 coord: x + 'x' + y + 'x' + index,
                                 class: cell
@@ -272,9 +242,9 @@
             }
         },
 
-        paintCell: function (cell) {
+        paintCell: function(cell) {
             // on game start
-            
+
             if ((cell = cell || App.cell)) {
                 var playerId = (cell.coord.split("x")[2]),
                     classCell = playerId == Player.id ? 'm' : 'o',
@@ -297,15 +267,12 @@
 
                 } else {
 
-                    var div = '<div class="' + cell.class + '" style="background:'
-                        + $cell.css('background')
-                        + ';width:' + $cell.css('width')
-                        + ';height:' + $cell.css('height') + '"></div>';
+                    var div = '<div class="' + cell.class + '" style="background:' + $cell.css('background') + ';width:' + $cell.css('width') + ';height:' + $cell.css('height') + '"></div>';
 
                     $cell
                         .html(div)
                         .find('div')
-                        .effect('explode', {pieces: 4}, 500)
+                        .effect('explode', { pieces: 4 }, 500)
                         .parent()
                         .fadeIn(300);
                 }
@@ -313,9 +280,9 @@
         },
 
 
-        'end': function () {
+        'end': function() {
 
-            $('.SeaBattle .mx ul.o li.s:not(.d,.k)').effect('pulsate', {times: 10});
+            $('.SeaBattle .mx ul.o li.s:not(.d,.k)').effect('pulsate', { times: 10 });
             Game.drawWinButtons([
                 Game.buttons.replay,
                 Game.buttons.exit
@@ -323,15 +290,21 @@
 
         },
 
-        checkFieldSeaBattle: function (newship, id) {
+        checkFieldSeaBattle: function(newship, id) {
             var size = $('.SeaBattle .mx .table:eq(1) .cell').last().attr('data-coor').split('x');
             var size_x = size[0];
             var size_y = size[1];
 
             matrix = [
-                [-1, -1], [-1, 0], [-1, 1],
-                [ 0, -1], [ 0, 0], [ 0, 1],
-                [ 1, -1], [ 1, 0], [ 1, 1]
+                [-1, -1],
+                [-1, 0],
+                [-1, 1],
+                [0, -1],
+                [0, 0],
+                [0, 1],
+                [1, -1],
+                [1, 0],
+                [1, 1]
             ];
 
             var game_ships = Apps.SeaBattle.game_ships;
@@ -372,16 +345,16 @@
                     }
 
 
-                    $.each(matrix, function (i, v) {
+                    $.each(matrix, function(i, v) {
                         // console.error(">>>>> i v >>>>", i, v);
                         // console.error(">>>>> x y >>>>", i, v);
 
                         if (y + v[0] > 0 && y + v[0] <= size_y && x + v[1] > 0 && x + v[1] <= size_x)
-                            // console.error('field[y + v[0]][x + v[1]] >>>>field['+ y + "" + v[0] + "][" + x + "" + v[1] + "]");
-                            // console.error('ship', ship);
+                        // console.error('field[y + v[0]][x + v[1]] >>>>field['+ y + "" + v[0] + "][" + x + "" + v[1] + "]");
+                        // console.error('ship', ship);
                             if (field[y + v[0]][x + v[1]]) {
-                                ret = true;
-                            }
+                            ret = true;
+                        }
                     });
 
                     if (ret)
@@ -390,7 +363,7 @@
                     h ? x++ : y++;
                 }
 
-                $.each(ship, function (i, cell) {
+                $.each(ship, function(i, cell) {
                     field[cell[1]][cell[0]] = 1;
                 });
 
@@ -400,7 +373,7 @@
             return true;
         },
 
-        genFieldSeaBattle: function () {
+        genFieldSeaBattle: function() {
 
             Apps.SeaBattle.ships = [];
 
@@ -408,9 +381,15 @@
                 size_x = size[0],
                 size_y = size[1],
                 matrix = [
-                    [-1, -1], [-1, 0], [-1, 1],
-                    [0, -1], [0, 0], [0, 1],
-                    [1, -1], [1, 0], [1, 1]
+                    [-1, -1],
+                    [-1, 0],
+                    [-1, 1],
+                    [0, -1],
+                    [0, 0],
+                    [0, 1],
+                    [1, -1],
+                    [1, 0],
+                    [1, 1]
                 ],
                 game_ships = Apps.SeaBattle.game_ships,
                 field = [],
@@ -444,7 +423,7 @@
                         continue loop;
                     }
 
-                    $.each(matrix, function (i, v) {
+                    $.each(matrix, function(i, v) {
                         if (y + v[0] > 0 && y + v[0] <= size_y && x + v[1] > 0 && x + v[1] <= size_x)
                             if (field[y + v[0]][x + v[1]])
                                 con = true;
@@ -455,7 +434,7 @@
                     h ? x++ : y++;
                 }
 
-                $.each(ship, function (i, cell) {
+                $.each(ship, function(i, cell) {
                     field[cell[1]][cell[0]] = 1;
                 });
 
@@ -464,29 +443,27 @@
 
             }
 
-            
-            
+
+
             // var wid = parseFloat($('.SeaBattle .table.m .inner').last().css('width')),
             //     hei = parseFloat($('.SeaBattle .table.m .inner').last().css('height')),
             var wid = parseFloat($('.SeaBattle .table.m .inner').last().css('width')),
                 hei = parseFloat($('.SeaBattle .table.m .inner').last().css('height')),
                 html = '';
 
-            $.each(Apps.SeaBattle.ships, function (index, ship) {
+            $.each(Apps.SeaBattle.ships, function(index, ship) {
                 html += '<div data-id="' + index + '" ' +
                     'style="' +
                     'top:' + (ship[0][1] * hei - hei) + 'px;' +
-                    'left:' + (ship[0][0] * wid - wid) + 'px;' + (ship[1]
-                        ? 'width: ' + (ship[2] * wid) + 'px;height:' + hei + 'px;'
-                        : 'height: ' + (ship[2] * hei) + 'px;width:' + wid + 'px;') + '" class="s ' + (ship[1] ? 'h' : '') + ' drag"></div>';
+                    'left:' + (ship[0][0] * wid - wid) + 'px;' + (ship[1] ? 'width: ' + (ship[2] * wid) + 'px;height:' + hei + 'px;' : 'height: ' + (ship[2] * hei) + 'px;width:' + wid + 'px;') + '" class="s ' + (ship[1] ? 'h' : '') + ' drag"></div>';
             });
 
             // $(".SeaBattle ul.m div").remove();
             // $(".SeaBattle ul.m").append(html);
             $(".SeaBattle .table.m .drag-wrapper").remove();
-            $(".SeaBattle .table.m").append('<div class="drag-wrapper">'+html+'</div>');
+            $(".SeaBattle .table.m").append('<div class="drag-wrapper">' + html + '</div>');
 
-            $(".drag").dblclick(function () {
+            $(".drag").dblclick(function() {
                 var drag = $(this)
                 var h = drag.css('width');
                 var w = drag.css('height');
@@ -500,8 +477,8 @@
                     Apps.SeaBattle.ships[$(this).data('id')][1] = v;
                 } else {
                     $(this).removeClass('drag ui-draggable ui-draggable-handle');
-                    $(this).effect("shake", {distance: 5, times: 1, duration: 2});
-                    window.setTimeout(function () {
+                    $(this).effect("shake", { distance: 5, times: 1, duration: 2 });
+                    window.setTimeout(function() {
                         drag.addClass('drag ui-draggable ui-draggable-handle');
                     }, 1000);
                 }
@@ -509,9 +486,10 @@
             });
 
             $(".drag").draggable({
-                
-                containment: "parent", grid: [wid, hei],
-                revert: function () {
+
+                containment: "parent",
+                grid: [wid, hei],
+                revert: function() {
 
                     var ship = [].concat(Apps.SeaBattle.ships[$(this).data('id')]);
                     ship[0] = [
@@ -528,9 +506,8 @@
                     } else return true;
                 },
 
-                start: function () {
-                },
-                stop: function () {
+                start: function() {},
+                stop: function() {
 
 
                 }
@@ -918,7 +895,7 @@
 //             });
 
 //             $(".drag").draggable({
-                
+
 
 //                 containment: "parent", grid: [wid + 1, hei + 1],
 //                 revert: function () {

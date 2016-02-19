@@ -253,7 +253,7 @@
                             '<div class="pr-md"><div>' + icones + '</div></div>' +
                             '<div class="pr-pr"><div class="title">' + i18n('title-games-bet') + '</div><div><b>' + (bet[0] == 'MONEY' ? Player.formatCurrency(bet[1], 1) : bet[1]) + '</b><span>' + (bet[0] == 'MONEY' ? Player.formatCurrency(bet[1], 2) : 'баллов') + '</span></div></div>' +
                             '<div class="pr-pt"><div class="title">'+ i18n('title-games-balance') +'</div>'+
-                                (App.currency === "MONEY" ? '<div><span class="plMoneyHolder">' + Player.balance.money + '</span> ' + Player.formatCurrency() + '</div>' : '<div><span class="plPointHolder">' + Player.balance.points + '</span> '+ i18n('title-of-points')+'</div></div>' )
+                                (App.mode.indexOf('MONEY') != -1 ? '<div><span class="plMoneyHolder">' + Player.balance.money + '</span> ' + Player.formatCurrency() + '</div>' : '<div><span class="plPointHolder">' + Player.balance.points + '</span> '+ i18n('title-of-points')+'</div></div>' )
                                 );
                 }
             });
