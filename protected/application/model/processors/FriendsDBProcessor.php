@@ -22,7 +22,7 @@ class FriendsDBProcessor implements IProcessor
 
     }
 
-    public function getList($playerId, $count = NULL, $offset = NULL, $status = NULL)
+    public function getList($playerId, $count = NULL, $offset = NULL, $status = NULL, $search = NULL)
     {
         $sql = "SELECT
                     pl.`Id` PlayerId,
@@ -50,6 +50,7 @@ class FriendsDBProcessor implements IProcessor
                     OR
                     fr.`UserId` = :playerid)"
                 . (($status === NULL) ? "" : " AND (`fr`.`Status` = ".(int)$status.")")
+                . (($search === NULL) ? "" : " AND (LOWER(`pl`.`Nicname`) LIKE LOWER('%".$search."%'))")
                 . "ORDER BY PlayerName"
             . (($count === NULL)  ? "" : " LIMIT " . (int)$count);
         if ($offset) {
@@ -118,5 +119,34 @@ class FriendsDBProcessor implements IProcessor
         }
 
         return true;
+    }
+
+    public function getStatusCount($playerId, $status = 0)
+    {
+        $sql = "SELECT
+                    count(*) as c
+                FROM
+                  `Friends`
+                WHERE
+                (
+                    `UserId` = :playerid
+                OR
+                    `FriendId` = :playerid
+                )
+                AND
+                    `Status` = :status";
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':playerid' => $playerId,
+                ':status'   => $status,
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query " . $e, 1);
+        }
+
+        $count = $sth->fetch()['c'];
+
+        return $count;
     }
 }
