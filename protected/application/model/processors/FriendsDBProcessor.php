@@ -33,7 +33,8 @@ class FriendsDBProcessor implements IProcessor
                     pl.`GamesPlayed` PlayerGamesPlayed,
                     dat.`Ping` PlayerPing,
                     fr.`Status` Status,
-                    fr.`ModifyDate` ModifyDate
+                    fr.`ModifyDate` ModifyDate,
+                    fr.UserId UserId
                 FROM
                   `Friends` AS fr
                 JOIN
@@ -68,7 +69,7 @@ class FriendsDBProcessor implements IProcessor
 
     public function updateRequest($playerId, $toPlayerId, $status)
     {
-        $sql = "UPDATE `Friends` SET `Status` = :status, `ModifyDate` = :date WHERE (`UserId` = :playerid AND `FriendId` = :toplayerid) OR (`FriendId` = :playerid AND `UserId` = :toplayerid)";
+        $sql = "UPDATE `Friends` SET `Status` = :status, `ModifyDate` = :date WHERE `FriendId` = :playerid AND `UserId` = :toplayerid";
 
         try {
             $sth = DB::Connect()->prepare($sql)->execute(array(
@@ -102,7 +103,7 @@ class FriendsDBProcessor implements IProcessor
 
     public function addRequest($playerId, $toPlayerId)
     {
-        $sql = "INSERT INTO `Friends` (`UserId`, `FriendId`, `Status`, `ModifyDate`) VALUES (:playerid, :toplayerid, 1, :date)";
+        $sql = "INSERT INTO `Friends` (`UserId`, `FriendId`, `Status`, `ModifyDate`) VALUES (:playerid, :toplayerid, 0, :date)";
 
         try {
             $dbh = DB::Connect();

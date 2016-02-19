@@ -100,6 +100,8 @@ class FriendsController extends \AjaxController
 
         if (!is_null($list)) {
             foreach ($list as $friend) {
+                if ($friend['UserId']==$playerId)
+                    continue;
                 $response['res'][$friend['PlayerId']] = array(
                     'id'     => $friend['PlayerId'],
                     'user'   => array(
