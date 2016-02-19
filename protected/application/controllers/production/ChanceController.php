@@ -380,6 +380,8 @@ class ChanceController extends \AjaxController
                 switch ($currency) {
 
                     case LotterySettings::CURRENCY_MONEY:
+                        /* todo coefficient for games */
+                        $sum *= CountriesModel::instance()->getCountry($player->getCountry())->loadCurrency()->getCoefficient();
                         $player->addMoney(
                             $sum,
                             array(
@@ -399,28 +401,6 @@ class ChanceController extends \AjaxController
                             ));
                         break;
                 }
-            }
-        }
-
-        foreach ($game->getGamePrizes() as $currency => $sum) {
-            if ($sum) {
-                if ($currency == LotterySettings::CURRENCY_MONEY) {
-                    $sum *= CountriesModel::instance()->getCountry($player->getCountry())->loadCurrency()->getCoefficient();
-                    $player->addMoney(
-                        $sum,
-                        array(
-                            'id' => $game->getUid(),
-                            'object' => $key,
-                            'title' => "Выигрыш " . $game->getTitle($player->getLang())
-                        ));
-                } elseif ($currency == LotterySettings::CURRENCY_POINT)
-                    $player->addPoints(
-                        $sum,
-                        array(
-                            'id' => $game->getUid(),
-                            'object' => $key,
-                            'title' => "Выигрыш " . $game->getTitle($player->getLang())
-                        ));
             }
         }
     }
