@@ -58,17 +58,18 @@ class GameConstructorSlots extends GameConstructor
                 if ($this->getCombinations($prize['v']) && (isset($prizes[$prizeId]) ? ($prizes[$prizeId]['p'] ? !rand(0, $prizes[$prizeId]['p'] - 1) : false) : false)) {
 
                     unset($prize['p']);
+                    $multiply = substr($prize['v'], 1);
 
                     switch ($prize['v'][0]) {
                         case '*':
-                            $win = ($this->getBet() * substr($prize['v'], 1));
+                            $win = ($this->getBet() * $multiply);
                             break;
                         case '/':
-                            $win = ($this->getBet() / substr($prize['v'], 1));
+                            $win = ($this->getBet() / $multiply);
                             break;
                     }
 
-                    $gamePrizes[$prize['t']] = $prize;
+                    $gamePrizes['multi'] = $multiply;
                     $gamePrizes[$this->getCurrency()] = $win;
 
                     $this->setGamePrizes($gamePrizes);
