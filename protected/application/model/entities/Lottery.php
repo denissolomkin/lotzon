@@ -187,8 +187,6 @@ class Lottery extends Entity
                     'id'           => $this->getId(),
                     'date'         => $this->getDate(),
                     'combination'  => $this->getCombination(),
-                    'playerTotal'  => $this->getWinnersCount(),
-                    'playerWins'   => $this->getWinnersCount(),
                 );
                 break;
         }
