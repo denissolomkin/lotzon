@@ -3,6 +3,9 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0 minimum-scale=1, maximum-scale=1"> 
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="theme-color" content="#ffe700" />
+        
         <link rel="icon" href="/res/img/favicon.png?v=1" type="image/png"/>
 
         <title>Lotzon</title>

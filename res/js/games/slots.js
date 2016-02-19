@@ -6,9 +6,6 @@ var minBet = 1;
 var maxBet = 10;
 var numIconsPerReel = 6;
 
-//var scripts = document.getElementsByTagName("script");
-//alert('slotMachine - loaded!! '+ toString(scripts[scripts.length-1]) + " +++ " +scripts.length);
-
 var slotMachine = {
     stripHeight: 720,
     alignmentOffset: 86,
@@ -119,11 +116,8 @@ var slotMachine = {
      * @returns {Boolean}
      */
     spin: function (data) {
-
         if (slotMachine.isActive)
             return !1;
-
-        console.log(data);
 
         slotMachine.isActive = !0;
         slotMachine.show_won_state(!1),
@@ -252,4 +246,3 @@ var slotMachine = {
         }
     }
 };
-//slotMachine.init();
