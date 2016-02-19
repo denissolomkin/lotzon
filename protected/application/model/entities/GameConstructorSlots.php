@@ -1,6 +1,6 @@
 <?php
 
-class GameConstructorChance extends GameConstructor
+class GameConstructorSlots extends GameConstructor
 {
 
     protected $_time = null;
@@ -58,23 +58,27 @@ class GameConstructorChance extends GameConstructor
                 if ($this->getCombinations($prize['v']) && (isset($prizes[$prizeId]) ? ($prizes[$prizeId]['p'] ? !rand(0, $prizes[$prizeId]['p'] - 1) : false) : false)) {
 
                     unset($prize['p']);
-                    $gamePrizes[$prize['t']][] = $prize;
 
                     switch ($prize['v'][0]) {
                         case '*':
-                            $gamePrizes[$this->getCurrency()][] = $this->getBet() * substr($prize['v'], 1);
+                            $win = ($this->getBet() * substr($prize['v'], 1));
+                            break;
                         case '/':
-                            $gamePrizes[$this->getCurrency()][] = $this->getBet() / substr($prize['v'], 1);
+                            $win = ($this->getBet() / substr($prize['v'], 1));
+                            break;
                     }
+
+                    $gamePrizes[$prize['t']] = $prize;
+                    $gamePrizes[$this->getCurrency()] = $win;
 
                     $this->setGamePrizes($gamePrizes);
 
-                    $matrix = $this->getCombinations($prize['v']);
-                    $matrix = is_array(reset($matrix))
-                        ? (shuffle($matrix) ? array_shift($matrix) : false)
-                        : $matrix;
-                    shuffle($matrix);
-                    $this->setGameField($matrix);
+                    $combination = $this->getCombinations($prize['v']);
+                    $combination = is_array(reset($combination))
+                        ? (shuffle($combination) ? array_shift($combination) : false)
+                        : $combination;
+                    shuffle($combination);
+                    $this->setGameField($combination);
 
                     break;
                 }
@@ -91,6 +95,7 @@ class GameConstructorChance extends GameConstructor
             'Uid' => $this->getUid(),
             'GameField' => $this->getGameField(),
             'GamePrizes' => $this->getGamePrizes(),
+            'Win' => $win
         );
 
         $this->setOver(1);
