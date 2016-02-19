@@ -255,8 +255,9 @@ class ChanceController extends \AjaxController
 
                     if ($balance[$currencyBD] < $bet)
                         $this->ajaxResponseBadRequest('INSUFFICIENT_FUNDS');
+
                     $player->{'add' . $currencyBD}(
-                        $game->getBet() * -1,
+                        $bet * -1,
                         array(
                             'id' => $game->getUid(),
                             'object' => $key,
