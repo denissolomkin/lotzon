@@ -21,8 +21,6 @@ var slotMachine = {
     bounceHeight: 200,
     bounceTime: 1e3,
     winningsFormatPrefix: "",
-    machine_name: "slotmachine1",
-    spinURL: "/res/GET/games/spin",
     curBet: 1,
     isActive: !1,
     useMoney: !1,
@@ -119,6 +117,8 @@ var slotMachine = {
         if (slotMachine.isActive)
             return !1;
 
+        console.error(data);
+
         slotMachine.isActive = !0;
         slotMachine.show_won_state(!1),
             $("#spinButton").addClass("disabled"),
@@ -131,7 +131,12 @@ var slotMachine = {
         } catch (e) {
         }
 
-        var t = function () {
+        var s = {
+                reels: data.json.res.GameField,
+                prizes: data.json.res.GamePrizes,
+                win: data.json.res.Win
+            },
+            t = function () {
                 var n = 0;
                 window.setTimeout(function () {
                     slotMachine._stop_reel_spin(1, s.reels[0])
@@ -143,14 +148,7 @@ var slotMachine = {
                     slotMachine.end_spin(s)
                 }, n)
             },
-            i = !1,
-            s = null;
-
-        s = {
-            reels: data.json.res.GameField,
-            prizes: data.json.res.GamePrizes,
-            win: data.json.res.Win
-        };
+            i = !1;
 
         window.setTimeout(function () {
             i = !0,
@@ -168,10 +166,10 @@ var slotMachine = {
     show_won_state: function (n, e) {
         n
             ? ($("#SlotsContainer").addClass("won"), $("#trPrize_" + e).addClass("won"))
-            : ($(".trPrize").removeClass("won"), $("#PageContainer, #SlotsContainer").removeClass(), $("#lastWin").html(""))
+            : ($(".trPrize.won").removeClass("won"), $("#PageContainer, #SlotsContainer").removeClass(), $("#lastWin").html(""))
     },
     end_spin: function (n) {
-        n.win ? (slotMachine.show_won_state(!0, n.prizes.math), slotMachine._increment_payout_counter(n)) : slotMachine._end_spin_after_payout(n)
+        n.win ? (slotMachine.show_won_state(!0, n.prizes.math.v), slotMachine._increment_payout_counter(n)) : slotMachine._end_spin_after_payout(n)
     },
     _format_winnings_number: function (n) {
         return n == Math.floor(n) ? n : n.toFixed(2)
