@@ -189,6 +189,40 @@ $url_3: url(../img/games/lotzonBg.png);
                 }
             }
         }
+        &.SeaBattle{
+            .mx{
+
+                .shipsSheme.o{
+                    top: 480px;
+                }
+                .place{
+                    padding-top: 200px;
+                }
+                .table {   
+                    &.m{
+                        position: absolute;
+                        left: 50% !important;
+                        top: 350px !important;
+                        width: 320px !important;
+                        margin-left: -160px !important;
+                    }
+                    &.o{
+                        width: 320px;
+                        padding-top: 300px;
+                    }
+                }
+                &.started{
+                    .players{
+                        padding: 20px;
+                    }
+                    .table.m{
+                        top: 150px !important;
+                        width: 170px !important;
+                        margin-left: -85px !important;
+                    }
+                }
+            }
+        }
     }
 
     .mx{
@@ -234,6 +268,12 @@ $url_3: url(../img/games/lotzonBg.png);
             height: auto;
             min-height: 220px;
         }
+        .pr-ph{
+            top: 0;
+            left: 0;
+            margin: 0;
+            padding: 0;
+        }
         .o .gm-pr .pr-nm {
             width: 100%;
             background: $color_cape_cod_60_approx;
@@ -269,6 +309,7 @@ $url_3: url(../img/games/lotzonBg.png);
                 }
             }
         }
+
     }    
 }
 @media(max-width: 550px) {
@@ -280,6 +321,61 @@ $url_3: url(../img/games/lotzonBg.png);
             .wrapper{
                 width: 460px;
                 padding-bottom: 60px;
+            }
+            &.SeaBattle{
+                .mx{
+
+                    .shipsSheme.o{
+                        top: 90px;
+                    }
+                    .place{
+                        padding-top: 20px;
+                    }
+                    .table {   
+                        &.m{
+                            position: absolute;
+                            left: 50% !important;
+                            top: 170px !important;
+                            width: 320px !important;
+                            margin-left: -160px !important;
+                        }
+                        &.o{
+                            width: 320px;
+                            padding-top: 100px;
+                        }
+                    }
+                    .players{
+                        .m{
+                            transition: all .2s linear;
+                            width: 180%;
+                            .pr-pr, 
+                            .pr-pt{
+                                opacity:  0;
+                                // border: 1px solid red;
+                            }
+                        }
+                    }
+                    &.started{
+                        .players{
+                            padding: 20px;
+                            .m{
+                                transition: all .2s linear;
+                                width: 100%;
+                                .pr-pr, 
+                                .pr-pt{
+                                    opacity:  1;
+                                    // border: 1px solid red;
+                                }
+                            }
+                        }
+                        .table.m{
+                            top: 70px !important;
+                            width: 170px !important;
+                            margin-left: 0px !important;
+                            left: 20px !important;
+                        }
+                    }
+                }
             }
         }
         .mx{
@@ -348,6 +444,8 @@ $url_3: url(../img/games/lotzonBg.png);
                 }
             }
         }
+
+
     }
 
     #games-online-field.Durak {
@@ -582,7 +680,7 @@ $url_3: url(../img/games/lotzonBg.png);
 @media(max-width: 390px) {
     #games-online-field{
         &:not(.Durak){
-            padding-bottom: 40px;
+            padding-bottom: 50px;
             .mx{
                 .moves{
                     &:last-child{
@@ -729,6 +827,71 @@ $url_3: url(../img/games/lotzonBg.png);
                     }
                 }
             }
+            &.SeaBattle{
+                .mx{
+
+                    .shipsSheme.o{
+                        top: 80px;
+                        right: 0px;
+                        margin: 0;
+                    }
+                    .place{
+                        padding-top: 20px;
+                        padding-left: 20px;
+                        padding-right: 20px;
+                    }
+                    .table {   
+                        &.m{
+                            position: absolute;
+                            left: 50% !important;
+                            top: 170px !important;
+                            width: 320px !important;
+                            margin-left: -160px !important;
+                        }
+                        &.o{
+                            width: 100% !important;
+                            padding-top: 0px;
+                            margin: 0;
+                            position: relative;
+                            z-index: 10000;
+                        }
+                    }
+                    .players{
+                        .m{
+                            transition: all .2s linear;
+                            width: 100%;
+                            .pr-pr, 
+                            .pr-pt{
+                                opacity:  0;
+                                // border: 1px solid red;
+                            }
+                        }
+                    }
+                    &.started{
+                        .players{
+                            padding: 10px;
+                            .m{
+                                width: 100%;
+                                .pr-pr, 
+                                .pr-pt{
+                                    opacity:  1;
+                                    // border: 1px solid red;
+                                }
+                            }
+                            .o{
+                                margin-left: 140px;
+                            }
+                        }
+                        .table.m{
+                            top: 10px !important;
+                            width: 140px !important;
+                            left: 0px !important;
+                            margin: 0 !important;
+                        }
+                        
+                    }
+                }
+            }
         }
     }
 }
@@ -763,6 +926,109 @@ $url_3: url(../img/games/lotzonBg.png);
                     }
                 }
             }    
+            &.SeaBattle{
+                .mx{
+
+                    .shipsSheme.o{
+                        top: 80px;
+                        right: 0px;
+                        margin: 0;
+                    }
+                    .place{
+                        padding-top: 0px;
+                        padding-left: 10px;
+                        padding-right: 10px;
+                        line-height: 1.0;
+                        br{
+                            &:first-child{   
+                                display: none;
+                            }
+                            line-height: 1.3;
+                        }
+                    }
+                    .table {   
+                        &.m{
+                            position: absolute;
+                            left: 50% !important;
+                            top: 82px !important;
+                            width: 100% !important;
+                            padding: 0px 15px;
+                            .drag-wrapper{
+                                margin: 0px 15px;
+                            }
+                        }
+                        &.o{
+                            width: 100% !important;
+                            padding-top: 0px;
+                            margin: 0;
+                        }
+                    }
+                    .players{
+                        .m{
+                            transition: all .2s linear;
+                            width: 100%;
+                            .pr-pr, 
+                            .pr-pt{
+                                opacity:  0;
+                                // border: 1px solid red;
+                            }
+                        }
+                        .o{
+                            margin-top: -5px;
+                        }
+                    }
+                    &.started{
+                        
+                        .place{
+                            display: none;
+                        }
+                        .players{
+                            padding: 10px;
+                            height: 110px;
+                            .m{
+                                width: 100%;
+                                .pr-pr, 
+                                .pr-pt{
+                                    opacity:  1;
+                                    // border: 1px solid red;
+                                }
+                            }
+                            .o{
+                                margin-left: 100px;
+                            }
+                        }
+
+                        .table.m{
+                            top: 0px !important;
+                            width: 110px !important;
+                            left: 0px !important;
+                            margin: 0 !important;
+                            padding: 0 !important;
+                        }
+                        .table.o{
+                            width: 100% !important;
+                            // padding: 0 10px;
+                            margin: 0;
+                        }
+                        .shipsSheme{
+                            top: 55px;
+                            right: -10px !important;
+                            margin: 0;
+                            padding: 0;
+                            > div{
+                                margin-bottom: 1px;
+                                > div{
+                                    min-width: 12px;
+                                    min-height: 12px;
+                                    font-size: 13px;
+                                    line-height: 1;
+                                }
+                            }
+                        }
+                        
+                    }
+                }
+            }
         }
     }
 }

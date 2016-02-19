@@ -1,7 +1,6 @@
 // GAMES <<CHANCE>> -------------------- //
 
 /*title of games view*/
-
 .title-wrap {
     position: relative;
     width: 100%;
@@ -413,16 +412,20 @@ footer.unvisible {
                         transition: all .2s ease;
                         
                         &:hover{
-                            box-shadow: 0 0 10px 1px $color_rio_grande_approx;
+                            background: rgba(255,255,255,0.12);   
                         }
 
                         &:first-child{
                             margin-left: 0;
                         }
                         &.btn-primary{
-                            color:#000000;
-                            background:#f8e71c;
+                            color:#f8e71c;
+                            background: transparent;
                             border: 1px solid #f8e71c;
+                            &:hover{
+                                background: rgba(248,231,28,0.12);
+                                
+                            }
                         }
                     }
 
@@ -792,6 +795,184 @@ footer.unvisible {
                                 font-size: 1.1em;
                             }
                         }
+                    }
+                }
+            }
+        }
+
+        &.SeaBattle{
+            // background: $url_0;
+            .mx{
+                min-height: 500px;
+                overflow-x: hidden;
+                overflow-y: auto;
+
+                .place{
+                    padding-top: 20px;
+                    text-align: center;
+                    font-family:$hbRegular;
+                    font-size:15px;
+                    color:#4a4a4a;
+                    line-height:18px;
+                    text-align:center;
+                }
+                .table{
+                    display: block;
+                    height: auto;
+                    width: 320px;
+                    margin: 20px auto;
+                    position: relative;
+                    padding:0;
+                    border-bottom: 1px solid #fff !important;
+                    border-right: 1px solid #fff !important;
+
+                    .inner{
+                        padding: 0;
+                        border-top: 1px solid #fafafa;
+                        border-left: 1px solid #fafafa;
+
+                        > .cell{
+                            background: #d3eaec;
+                            padding: 0;
+                            margin: 0;
+                            &:before{
+                                display: none;
+                            }
+                            //ship
+                            &.s{
+                                background: #94c5ca;
+                            }
+                            //oponent
+                            &.o{
+                                
+                            }
+
+                            //miss
+                            &.e{
+                                // background: #d3eaec;
+                                background: #6d6d6d;
+                                // &:after{
+                                //     content: '';
+                                //     display: block;
+                                //     background: #4a4a4a;
+                                //     border-radius: 50px;
+                                //     width: 44%;
+                                //     height: 44%;
+                                //     margin: 26% 0 0 26%;
+                                // }
+                                // 
+
+
+
+                            }
+
+                            &:not(.e,.d,.k) {
+                                cursor: crosshair;
+                                cursor: url('/tpl/img/games/Crosshair.cur') 12 12, crosshair;
+                            }
+                            // damage
+                            &.d {
+                                background: url('../img/games/battleStar.svg') no-repeat #f84e41;
+                                // background: url('http://stag.lotzon.com/tpl/img/games/damage.png') no-repeat #d3eaec;
+                                background-size: cover;
+                            }
+                            // kick
+                            &.k {
+                                background: url('../img/games/battleStar.svg') no-repeat #f84e41;
+                                // background: url('http://stag.lotzon.com/tpl/img/games/damage.png') no-repeat red;
+                                background-size: cover;
+                                
+
+                                //test
+                                // background: #d3eaec;
+                                // border: 2px solid red;
+                                // &:after{
+                                //     content: 'X';
+                                //     color: #f84e41;
+                                //     font-size: 20px;
+                                // }
+                            }
+                        }
+                    }
+                    // drag&drop overlay
+                    .drag-wrapper{
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+
+                        > div{
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            background: #a7d1d5;
+                            cursor: pointer;
+                        }
+                    }
+                    &.m{
+
+                    }
+
+                    &.o{
+                        display: none;
+
+                    }
+
+                }
+                .shipsSheme{
+                    &.o{
+                        position: absolute;
+                        top: 40px;
+                        right: 20px;
+                    }
+                    &.m{
+                        display: none;
+                    }
+                    > *{
+                        display: block;
+                        &:after{
+                            content: '';
+                            display: block;
+                            margin: 0;
+                            padding: 0;
+                            clear: both;
+                        }
+                        // cill all
+                        &.e{
+                            opacity: 0.4;
+                        }
+                        div{
+                            
+                            background: #a7d1d5;
+                            min-width: 15px;
+                            min-height: 15px;
+                            display: inline-block;
+                            float: right;
+                            margin-left: 1px;
+                        }
+                        .cnt{
+                            background: transparent;
+                        }
+                    }
+                }
+                &.started{
+                    .players{
+                        height: 160px;
+                        padding: 30px;
+                    }   
+                }
+                .players{
+                    transition: all .2s linear;
+                    .m{
+
+                        .pr-nm{
+                            display: none;
+                        }
+                    }
+
+                    .o{
+
                     }
                 }
             }

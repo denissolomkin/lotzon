@@ -449,6 +449,7 @@ Slot-buttons styles
 #SlotsContainer #ExitBlock{
     position: relative;
     float: left;
+
 }
 #SlotsContainer #ExitButton{
     background: rgb(250,71,66);
@@ -456,6 +457,12 @@ Slot-buttons styles
     background: -webkit-linear-gradient(top, rgba(250,71,66,1) 0%,rgba(249,41,37,1) 100%);
     background: linear-gradient(to bottom, rgba(250,71,66,1) 0%,rgba(249,41,37,1) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fa4742', endColorstr='#f92925',GradientType=0 );
+    
+    position: relative;
+    top: 0;
+    left: 0;
+    width: auto;
+    height: auto;
 }
 #SlotsContainer #Credits{
     display: block;

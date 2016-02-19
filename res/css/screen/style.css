@@ -295,6 +295,9 @@ html {
   .balance-btn > * {
     display: inline-block;
     vertical-align: middle; }
+    .balance-btn > * > span {
+      display: inline-block;
+      vertical-align: super; }
   .balance-btn.active, .balance-btn:hover {
     background: transparent; }
 

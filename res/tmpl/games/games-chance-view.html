@@ -1,7 +1,15 @@
 <div id="games-chance-view" class="content-box">
-    {{partial "games-view-title" title}}
-    
-    {{#if (eq key "ChanceGame")}}
+
+    {{#if key}}
+        {{#if (eq key "Chance")}}
+            {{partial "games-view-title" title}}
+            {{partial "games-chance-view-chance" this}}
+        {{/if}}
+        {{#if (eq key "Slots")}}
+            {{partial "games-chance-view-slots" this}}
+        {{/if}}
+    {{else}}
+        {{partial "games-view-title" title}}
         {{partial "games-chance-view-chance" this}}
     {{/if}}
 </div>

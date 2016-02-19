@@ -123,10 +123,23 @@ endforeach;
 
 <style>
     #R2D2{
-        position: relative; 
-        z-index: 999999999; 
+        position: relative;
+        z-index: 999999999;
         font-size: 16px;
-        position: fixed;bottom:0;
+        position: fixed;
+        bottom: 0;
+        /* padding-right: 30px; */
+        border-right: 20px solid #666;
+        border-radius: 0em 50em 50em 0em;
+        left: -180px;
+        
+        box-shadow: 1px 1px 7px #000;
+        transition: all 1.5s ease-in-out;
+        min-width: 200px;
+        background: #000;
+    }
+    #R2D2:hover{
+        left: 0;
     }
     #R2D2 button{
         padding: 2px 5px;
@@ -136,7 +149,9 @@ endforeach;
         background: #094984;
         color: #fff;
         transition: all .4s ease;
-        margin-right: 10px;
+        display: block;
+        margin: 2px 25px 2px 2px;
+
     }
     #R2D2 button:hover{
         border-left: 2px dashed #00b7ec;
