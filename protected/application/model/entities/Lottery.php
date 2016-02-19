@@ -179,6 +179,23 @@ class Lottery extends Entity
         return $this;
     }
 
+    public function exportTo($to)
+    {
+        switch ($to) {
+            case 'list':
+                $ret = array(
+                    'id'           => $this->getId(),
+                    'date'         => $this->getDate(),
+                    'combination'  => $this->getCombination(),
+                    'playerTotal'  => $this->getWinnersCount(),
+                    'playerWins'   => $this->getWinnersCount(),
+                );
+                break;
+        }
+
+        return $ret;
+    }
+
     public function publish()
     {
         $this->setReady(true);

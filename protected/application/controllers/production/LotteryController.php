@@ -12,8 +12,11 @@ class LotteryController extends \AjaxController
 {
     private $session;
 
+    static $lotteriesPerPage;
+
     public function init()
     {
+        self::$lotteriesPerPage = (int)SettingsModel::instance()->getSettings('counters')->getValue('LOTTERIES_PER_PAGE') ? : 10;
         $this->session = new Session();
         parent::init();
         if ($this->validRequest()) {
@@ -23,6 +26,16 @@ class LotteryController extends \AjaxController
             }
             $this->session->get(Player::IDENTITY)->markOnline();
         }
+    }
+
+    private function authorizedOnly()
+    {
+        if (!$this->session->get(Player::IDENTITY) instanceof Player) {
+            $this->ajaxResponseUnauthorized();
+            return false;
+        }
+        $this->session->get(Player::IDENTITY)->markOnline();
+        return true;
     }
 
     public function createTicketAction()
@@ -155,6 +168,131 @@ class LotteryController extends \AjaxController
         );
 
         $this->ajaxResponseCode($res);
+    }
+
+    public function historyAction()
+    {
+        if (!$this->request()->isAjax()) {
+            return false;
+        }
+
+        $this->authorizedOnly();
+
+        $playerId = $this->session->get(Player::IDENTITY)->getId();
+
+        $offset = $this->request()->get('offset');
+        $count  = $this->request()->get('count', self::$lotteriesPerPage);
+
+        $type = $this->request()->get('type');
+
+        try {
+            if ($type!="mine") {
+                $list              = \LotteriesModel::instance()->getPublishedLotteriesList($count + 1, $offset);
+            } else {
+                $list = \LotteriesModel::instance()->getPlayerPlayedLotteries($playerId, $count + 1, $offset);
+            }
+        } catch (\PDOException $e) {
+            $this->ajaxResponseInternalError();
+            return false;
+        }
+
+        $response = array(
+            'res' => array(
+                'lottery' => array(
+                    'history' => array(
+                    ),
+                ),
+            ),
+        );
+
+        if (count($list)<=$count) {
+            $response['lastItem'] = true;
+        } else {
+            array_pop($list);
+        }
+
+        foreach ($list as $id=>$lottery) {
+            $response['res']['lottery']['history'][$id] = $lottery->exportTo('list');
+        }
+
+        $this->ajaxResponseCode($response);
+        return true;
+    }
+
+    public function lotteryInfoAction($lotteryId)
+    {
+        if (!$this->request()->isAjax()) {
+            return false;
+        }
+
+        $this->authorizedOnly();
+
+        $player = new \Player;
+        $player_countries = $player->setId($this->session->get(Player::IDENTITY)->getId())->fetch()->getCountry();
+
+        try {
+            $lottery = \LotteriesModel::instance()->getLotteryDetails($lotteryId);
+            $prizes  = \LotterySettingsModel::instance()->loadSettings()->getPrizes($player_countries);
+        } catch (\PDOException $e) {
+            $this->ajaxResponseInternalError();
+            return false;
+        }
+
+        $balls = $lottery->getBallsTotal();
+
+        $response['res'] = $lottery->exportTo('list');
+        $response['res']['statistics'] = array();
+
+        foreach ($balls as $count=>$matches) {
+            $response['res']['statistics'][$count] = array(
+                'balls'    => $count,
+                'currency' => ($prizes[$count]['currency']=='MONEY'?'money':'points'),
+                'prize'    => $prizes[$count]['sum'],
+                'matches'  => $matches,
+            );
+        }
+
+        $this->ajaxResponseCode($response);
+        return true;
+    }
+
+    public function lotteryTicketsAction($lotteryId)
+    {
+        if (!$this->request()->isAjax()) {
+            return false;
+        }
+
+        $this->authorizedOnly();
+
+        $player = new Player;
+        $player->setId($this->session->get(Player::IDENTITY)->getId())->fetch();
+
+        try {
+            $list = \TicketsModel::instance()->getPlayerTickets($player, $lotteryId);
+        } catch (\PDOException $e) {
+            $this->ajaxResponseInternalError();
+            return false;
+        }
+
+        $response = array(
+            'res' => array(
+                'lottery' => array(
+                    'tickets' => array(
+                        $lotteryId => array(
+                        ),
+                    ),
+                ),
+            ),
+        );
+
+        if (!is_null($list)) {
+            foreach ($list as $id => $ticket) {
+                $response['res']['lottery']['tickets'][$lotteryId][$ticket->getTicketNum()] = $ticket->getCombination();
+            }
+        }
+
+        $this->ajaxResponseCode($response);
+        return true;
     }
 
 }

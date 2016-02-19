@@ -613,11 +613,20 @@ Config::instance()->publicResources = array(
     /**
      * Lottery
      */
-    '/lottery/ticket' => array(
-        'post'   => 'controllers\production\LotteryController:createTicket'
+    '/lottery/ticket'                     => array(
+        'post' => 'controllers\production\LotteryController:createTicket',
     ),
-    '/lottery/gold' => array(
-        'post'   => 'controllers\production\LotteryController:buyGoldTicket'
+    '/lottery/gold'                       => array(
+        'post' => 'controllers\production\LotteryController:buyGoldTicket',
+    ),
+    '/lottery/history'                    => array(
+        'get' => 'controllers\production\LotteryController:history',
+    ),
+    '/lottery/history/:lotteryId'         => array(
+        'get' => 'controllers\production\LotteryController:lotteryInfo',
+    ),
+    '/lottery/history/:lotteryId/tickets' => array(
+        'get' => 'controllers\production\LotteryController:lotteryTickets',
     ),
     /**
      * Reports
