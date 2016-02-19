@@ -31,7 +31,9 @@ class FriendsDBProcessor implements IProcessor
                     pl.`Points` PlayerPoints,
                     pl.`Money` PlayerMoney,
                     pl.`GamesPlayed` PlayerGamesPlayed,
-                    dat.`Ping` PlayerPing
+                    dat.`Ping` PlayerPing,
+                    fr.`Status` Status,
+                    fr.`ModifyDate` ModifyDate
                 FROM
                   `Friends` AS fr
                 JOIN
@@ -46,7 +48,7 @@ class FriendsDBProcessor implements IProcessor
                     (fr.`FriendId` = :playerid
                     OR
                     fr.`UserId` = :playerid)"
-                . (($status === NULL) ? "" : " AND (`fr`.`Status` = (int)$status)")
+                . (($status === NULL) ? "" : " AND (`fr`.`Status` = ".(int)$status.")")
                 . "ORDER BY PlayerName"
             . (($count === NULL)  ? "" : " LIMIT " . (int)$count);
         if ($offset) {
@@ -64,4 +66,56 @@ class FriendsDBProcessor implements IProcessor
         return $sth->fetchAll();
     }
 
+    public function updateRequest($playerId, $toPlayerId, $status)
+    {
+        $sql = "UPDATE `Friends` SET `Status` = :status, `ModifyDate` = :date WHERE (`UserId` = :playerid AND `FriendId` = :toplayerid) OR (`FriendId` = :playerid AND `UserId` = :toplayerid)";
+
+        try {
+            $sth = DB::Connect()->prepare($sql)->execute(array(
+                ':playerid'   => $playerId,
+                ':toplayerid' => $toPlayerId,
+                ':date'       => time(),
+                ':status'     => $status,
+            ));
+        } catch (PDOexception $e) {
+            throw new ModelException("Unable to proccess storage query", 500);
+        }
+
+        return true;
+    }
+
+    public function deleteRequest($playerId, $toPlayerId)
+    {
+        $sql = "DELETE FROM `Friends` WHERE `UserId` = :playerid AND `FriendId` = :toplayerid";
+
+        try {
+            $sth = DB::Connect()->prepare($sql)->execute(array(
+                ':playerid'   => $playerId,
+                ':toplayerid' => $toPlayerId,
+            ));
+        } catch (PDOexception $e) {
+            throw new ModelException("Unable to proccess storage query", 500);
+        }
+
+        return true;
+    }
+
+    public function addRequest($playerId, $toPlayerId)
+    {
+        $sql = "INSERT INTO `Friends` (`UserId`, `FriendId`, `Status`, `ModifyDate`) VALUES (:playerid, :toplayerid, 1, :date)";
+
+        try {
+            $dbh = DB::Connect();
+            $sth = $dbh->prepare($sql);
+            $sth->execute(array(
+                ':playerid'   => $playerId,
+                ':toplayerid' => $toPlayerId,
+                ':date'       => time(),
+            ));
+        } catch (PDOExeption $e) {
+            throw new ModelException("Unable to proccess storage query", 500);
+        }
+
+        return true;
+    }
 }
