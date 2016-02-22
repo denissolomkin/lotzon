@@ -173,7 +173,7 @@
             "users-view-messages": Messages.after.markRead,
 
             "lottery": Lottery.init,
-            "lottery-history-view": Lottery.view,
+            "lottery-view": Lottery.view,
             "lottery-ticket-item": Ticket.activate,
             "lottery-ticket-tabs": Ticket.switch,
 

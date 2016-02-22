@@ -29,7 +29,7 @@
             Lottery.animateSummary();
 
             R.push({
-                href: 'lottery-history-' + lotteryId + '-tickets',
+                href: 'lottery-' + lotteryId + '-tickets',
                 format: Lottery.extendTickets,
                 arguments: [Lottery.summary, Lottery.data.combination]
             })
