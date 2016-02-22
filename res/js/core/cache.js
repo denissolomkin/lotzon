@@ -324,7 +324,7 @@
                         do {
                             needle = keys.shift();
                             cache = needle && cache && cache.hasOwnProperty(needle)
-                            && (isNumeric(needle)
+                            && (isNumeric(needle) && !keys.length
                                 ? (cache[needle].hasOwnProperty('id') && cache[needle]['id'] == needle && cache[needle])
                                 : cache[needle]);
                             list = cache || list;
@@ -342,18 +342,36 @@
 
                         } else if (cache && !isNumeric(needle)) {
 
+                            /* todo search by filters */
                             if (Object.size(list) > offset) {
 
                                 cache = {};
                                 var i = 0,
-                                    limit = 10;
+                                    limit = 10,
+                                    filters = {};
+
+                                if(path.query)
+                                    for(var filter in path.query){
+                                        if(['offset', 'before_id', 'after_id'].indexOf(filter) == -1)
+                                            filters[filter] = path.query[filter];
+                                    }
 
                                 for (var index in list) {
                                     if (list.hasOwnProperty(index)) {
-                                        if (i >= offset) {
-                                            cache[index] = list[index];
-                                        }
-                                        i++;
+                                        var match = true;
+
+                                        if(Object.size(filters))
+                                            for(var filter in filters)
+                                                if(!list[index].hasOwnProperty(filter) || list[index][filter] != filters[filter]) {
+                                                    match = false;
+                                                    break;
+                                                }
+
+                                        if (i >= offset)
+                                            match && (cache[index] = list[index]);
+
+                                        match && i++;
+
                                         if (Object.size(cache) >= limit)
                                             break;
                                     }
@@ -569,7 +587,6 @@
         },
 
         "validate": function (key, forUpdateOrStorage, forUpdate) {
-            console.error('validate', key, forUpdateOrStorage, forUpdate);
 
             if (key) {
                 if (typeof forUpdateOrStorage === 'boolean') {
