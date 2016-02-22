@@ -21,7 +21,23 @@
 
         },
 
+        view: function(data) {
+
+            var lotteryId = data.json.id; //parseInt(document.getElementById('lottery-history-view').getAttribute('data-lottery-id'));
+            Lottery.data = data.json; //Cache.get('lottery-history-' + lotteryId);
+            Lottery.summary = Lottery.getSummary();
+            Lottery.animateSummary();
+
+            R.push({
+                href: 'lottery-history-' + lotteryId + '-tickets',
+                format: Lottery.extendTickets,
+                arguments: [Lottery.summary, Lottery.data.combination]
+            })
+
+        },
+
         extendTickets: function(ticketsArray, arguments) {
+            console.error(ticketsArray, arguments);
 
             var prizesData = arguments[0],
                 lotteryCombination = arguments[1];
@@ -125,19 +141,18 @@
             var lotterySummary = this.summary,
                 $won = $('.ghd-game-inf .ghd-all-won'),
                 $table = $('.ghd-game-inf table');
-            setTimeout(function() {    
-            if ((document.querySelector('.ghd-game-inf .ghd-all-won') != undefined) && Device.onScreen.call(document.querySelector('.ghd-game-inf .ghd-all-won'), 100)) { 
-                summaryVisible();
-            }
-            else {
 
+            setTimeout(function() {
+                if ((document.querySelector('.ghd-game-inf') != undefined)
+                    && Device.onScreen.call(document.querySelector('.ghd-game-inf'), 100)) {
+                    summaryVisible();
+                } else {
                     $(window).on('scroll', summaryVisible);
                 }
+            }, 600);
 
+            $won.hide();
 
-            }, 600); 
-
-       
             function summaryVisible() {
 
                 for (var i in lotterySummary) {
@@ -147,35 +162,22 @@
 
                     $('tr.balls-matches-' + i + ' td:eq(0)')
                         .delay(1000)
-                        .next().html(lotterySummary[i].matches).spincrement()
-                        .next().html('<span>' + lotterySummary[i].sum + '</span> <span>' + lotterySummary[i].currency + '</span>')
-                        .find('span').first().spincrement();
+                        .next().html(lotterySummary[i].matches || 0).spincrement({'thousandSeparator': ' '})
+                        .next().html('<span>' + Player.getCurrency(lotterySummary[i].currency, lotterySummary[i].sum) + '</span> ' +
+                            '<span>' + Player.getCurrency(lotterySummary[i].currency) + '</span>')
+                        .find('span').first().spincrement({'thousandSeparator': ' '});
                 }
 
-                $won.hide().delay(2000).fadeIn(1000);
+                $won.delay(2000).fadeIn(1000);
                 setTimeout(function() {
                     for (var currency in lotterySummary.totalSum)
-                        $('span.' + currency, $won).html(lotterySummary.totalSum[currency]).spincrement()
+                        $('span.' + currency, $won)
+                            .html(Player.getCurrency(currency, lotterySummary.totalSum[currency]))
+                            .spincrement({'thousandSeparator': ' '})
                 }, 3000);
                $(window).off('scroll', summaryVisible); 
             
             }
-        },
-
-        view: function() {
-
-            var lotteryId = parseInt(document.getElementById('lottery-history-view').getAttribute('data-lottery-id')); 
-
-            Lottery.data = Cache.get('lottery-history-' + lotteryId);
-            Lottery.summary = Lottery.getSummary();
-            Lottery.animateSummary();
-
-            R.push({
-                href: 'lottery-history-' + lotteryId + '-tickets',
-                format: Lottery.extendTickets,
-                arguments: [Lottery.summary, Lottery.data.combination]
-            })
-
         },
 
         prepareData: function(id) {

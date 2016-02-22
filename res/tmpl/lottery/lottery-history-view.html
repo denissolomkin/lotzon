@@ -1,4 +1,4 @@
-<div id="lottery-history-view" class="content-box" data-lottery-id="{{id}}">
+<div id="lottery-history-view" class="content-box">
 
     <div class="content-box-header"><span class="back i-arrow-left"></span>{{day date}}</div>
 
@@ -7,19 +7,15 @@
 			<div class="container clearfix">
 				<ul class="balls-end-game clearfix">
                 {{#combination}}
-                <li class="g-oc_li unfilled">
-
+                <li class="g-oc_li">
                     <div class="goc_li-nb">
                         <span class="g-oc_span">{{.}}</span>
                     </div>
                 </li>
                 {{/combination}}
             	</ul>
-
 				<div id="lottery-history-view-tickets" class="ghd-tickets" style="min-height: 100px;">
 				</div>
-
-				
 			</div>
 			<div class="ghd-game-inf clearfix">
 				<div class="title">{{i18n "title-lottery-info"}}</div>
@@ -27,17 +23,20 @@
 					<tr>
 						<th> {{i18n "title-lottery-guessed-numbers"}}</th>
 						<th> {{i18n "title-lottery-quantity-winnings"}}</th>
-						<th>{{i18n "title-lottery-general-winning"}}</th>
+						<th> {{i18n "title-lottery-general-winning"}}</th>
 					</tr>
-                    {{#statistics}}
+                    {{#each statistics}}
 					<tr class="balls-matches-{{balls}}">
-                        <td>{{balls}} x 6</td>
+                        <td>{{balls}} x {{lottery "requiredBalls"}}</td>
                         <td></td>
                         <td></td>
                     </tr>
-                    {{/statistics}}
+                    {{/each}}
 				</table>
-				<div class="ghd-all-won container">{{i18n "title-lottery-all-won"}}: <span class="money">0</span> {{player "currency.iso"}} <span class="points">0</span> {{i18n "title-of-points"}}</div>
+				<div class="ghd-all-won container">{{i18n "title-lottery-all-won"}}:
+					<span class="money">0</span> {{player "formatCurrency" "iso"}}
+					<span class="points">0</span> {{i18n "title-of-points"}}
+				</div>
 			</div>
 
 		</div>
