@@ -185,17 +185,6 @@ class LotteryController extends \AjaxController
 
         $type = $this->request()->get('type');
 
-        try {
-            if ($type!="mine") {
-                $list              = \LotteriesModel::instance()->getPublishedLotteriesList($count + 1, $offset);
-            } else {
-                $list = \LotteriesModel::instance()->getPlayerPlayedLotteries($playerId, $count + 1, $offset);
-            }
-        } catch (\PDOException $e) {
-            $this->ajaxResponseInternalError();
-            return false;
-        }
-
         $response = array(
             'res' => array(
                 'lottery' => array(
@@ -205,6 +194,21 @@ class LotteryController extends \AjaxController
             ),
         );
 
+        try {
+            if ($type != "mine") {
+                $response['cache'] = 'local';
+                $list              = \LotteriesModel::instance()->getPublishedLotteriesList($count + 1, $offset);
+                $lotteryType       = "all";
+            } else {
+                $response['cache'] = 'session';
+                $list              = \LotteriesModel::instance()->getPlayerPlayedLotteries($playerId, $count + 1, $offset);
+                $lotteryType       = "mine";
+            }
+        } catch (\PDOException $e) {
+            $this->ajaxResponseInternalError();
+            return false;
+        }
+
         if (count($list)<=$count) {
             $response['lastItem'] = true;
         } else {
@@ -212,7 +216,8 @@ class LotteryController extends \AjaxController
         }
 
         foreach ($list as $id=>$lottery) {
-            $response['res']['lottery']['history'][$id] = $lottery->exportTo('list');
+            $response['res']['lottery']['history'][$id]         = $lottery->exportTo('list');
+            $response['res']['lottery']['history'][$id]['type'] = $lotteryType;
         }
 
         $this->ajaxResponseCode($response);
