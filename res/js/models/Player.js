@@ -153,15 +153,17 @@
         },
 
         getCurrency: function (currency, number) {
+
+            console.error(currency, number);
             switch (currency) {
                 case 'money':
                 default:
                     currency = isNumeric(currency)
-                        ? currency * Player.currency.coefficient
-                        : (number ? number * Player.currency.coefficient : Player.currency.iso);
+                        ? (currency * Player.currency.coefficient).toFixed(2)
+                        : (typeof number !== 'undefined' ? (number * Player.currency.coefficient).toFixed(2) : Player.currency.iso);
                     break;
                 case 'points':
-                    currency = number
+                    currency = typeof number !== 'undefined'
                         ? number
                         : Cache.i18n('title-points');
                     break;

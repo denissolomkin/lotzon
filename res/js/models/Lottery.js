@@ -37,6 +37,7 @@
         },
 
         extendTickets: function(ticketsArray, arguments) {
+            console.error(ticketsArray, arguments);
 
             var prizesData = arguments[0],
                 lotteryCombination = arguments[1];
@@ -154,18 +155,17 @@
 
             function summaryVisible() {
 
-                console.error(lotterySummary);
                 for (var i in lotterySummary) {
 
                     if (!isNumeric(i))
                         continue;
 
                     $('tr.balls-matches-' + i + ' td:eq(0)')
-                        .delay(i*1000)
-                        .next().html(lotterySummary[i].matches || 0).spincrement()
+                        .delay(1000)
+                        .next().html(lotterySummary[i].matches || 0).spincrement({'thousandSeparator': ' '})
                         .next().html('<span>' + Player.getCurrency(lotterySummary[i].currency, lotterySummary[i].sum) + '</span> ' +
                             '<span>' + Player.getCurrency(lotterySummary[i].currency) + '</span>')
-                        .find('span').first().spincrement();
+                        .find('span').first().spincrement({'thousandSeparator': ' '});
                 }
 
                 $won.delay(2000).fadeIn(1000);
@@ -173,7 +173,7 @@
                     for (var currency in lotterySummary.totalSum)
                         $('span.' + currency, $won)
                             .html(Player.getCurrency(currency, lotterySummary.totalSum[currency]))
-                            .spincrement()
+                            .spincrement({'thousandSeparator': ' '})
                 }, 3000);
                $(window).off('scroll', summaryVisible); 
             
