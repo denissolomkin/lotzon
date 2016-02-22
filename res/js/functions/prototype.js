@@ -15,7 +15,7 @@
             this[j] = temp;
         }
         return this;
-    }
+    };
 
     Array.prototype.contains = function (element) {
         return this.indexOf(element) > -1;
@@ -26,13 +26,14 @@
             return Object.prototype.toString.call(obj) === '[object Array]';
         }
     }
-    ;
+
     Event.prototype.stopPropagation = function () {
         this.cancelBubble = true;
-    }
+    };
+
     Event.prototype.isPropagationStopped = function () {
         return this.cancelBubble;
-    }
+    };
 
     String.prototype.replaceArray = function (find, replace) {
         var replaceString = this;

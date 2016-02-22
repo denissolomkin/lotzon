@@ -50,8 +50,7 @@
                 },
                 extendedTicket,
                 matchesBalls;
-
-            console.error(ticketsArray);
+                matchesBalls;
 
             /* extend playerTickets */
             if (Object.size(ticketsArray))

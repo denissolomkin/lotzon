@@ -316,7 +316,8 @@
 
                         if (typeof path === 'object') {
                             var keys = this.splitPath(path.href),
-                                offset = path.query && path.query.offset || 0;
+                                offset = path.query && path.query.offset || 0,
+                                order = path.query && path.query.order || "ASC";
                         } else
                             var keys = this.splitPath(path);
 
@@ -328,7 +329,7 @@
                                 ? (cache[needle].hasOwnProperty('id') && cache[needle]['id'] == needle && cache[needle])
                                 : cache[needle]);
                             list = cache || list;
-                        } while (keys.length && cache)
+                        } while (keys.length && cache);
 
                         if (!cache && isNumeric(needle) && list) {
 
@@ -340,41 +341,55 @@
                                 }
                             }
 
-                        } else if (cache && !isNumeric(needle)) {
+                        } else if (cache && !isNumeric(needle) && cache[Object.keys(cache)[0]].hasOwnProperty('id')) {
 
                             /* todo search by filters */
                             if (Object.size(list) > offset) {
 
                                 cache = {};
-                                var i = 0,
+                                var keys = Object.keys(list),
                                     limit = 10,
-                                    filters = {};
+                                    filters = {},
+                                    count = 0;
 
                                 if(path.query)
-                                    for(var filter in path.query){
-                                        if(['offset', 'before_id', 'after_id'].indexOf(filter) == -1)
+                                    for(var filter in path.query)
+                                        if(['order', 'offset', 'before_id', 'after_id'].indexOf(filter) == -1)
                                             filters[filter] = path.query[filter];
-                                    }
 
-                                for (var index in list) {
-                                    if (list.hasOwnProperty(index)) {
-                                        var match = true;
+                                switch (order) {
+                                    
+                                    case 'ASC':
 
-                                        if(Object.size(filters))
-                                            for(var filter in filters)
-                                                if(!list[index].hasOwnProperty(filter) || list[index][filter] != filters[filter]) {
-                                                    match = false;
-                                                    break;
-                                                }
+                                        var index = 0;
 
-                                        if (i >= offset)
-                                            match && (cache[index] = list[index]);
+                                        do {
 
-                                        match && i++;
+                                            if (this.match(list[keys[index]], filters) && ++count)
+                                                if (count > offset)
+                                                    cache[keys[index]] = list[keys[index]];
 
-                                        if (Object.size(cache) >= limit)
-                                            break;
-                                    }
+                                            index++;
+
+                                        } while (Object.size(cache) < limit && index < keys.length);
+
+                                        break;
+
+                                    case 'DESC':
+
+                                        var index = keys.length;
+
+                                        do {
+
+                                            index--;
+
+                                            if (this.match(list[keys[index]], filters) && ++count)
+                                                if (count > offset)
+                                                    cache[keys[index]] = list[keys[index]];
+
+                                        } while (Object.size(cache) < limit && index > 0);
+
+                                        break;
                                 }
 
                             } else
@@ -402,6 +417,16 @@
                     break;
             }
 
+        },
+
+        "match": function(object, filters){
+
+            if(Object.size(filters))
+                for(var filter in filters)
+                    if(!object.hasOwnProperty(filter) || object[filter] != filters[filter]) {
+                        return false;
+                    }
+            return true;
         },
 
         /* try to remove objects by path from storages and DOM */
