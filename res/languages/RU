@@ -127,7 +127,9 @@
                 "title-games-lose": "ПРОИГРЫШ :(",
                 "title-games-main-win": "ваш выигрыш",
                 "title-games-main-lose": "вы проиграли",
-                "title-games-equal": "Одинаковое колличество баллов дополнительный ход",
+                "title-games-equal": "Одинаковое колличество баллов, дополнительный ход",
+                "title-games-insufficient_funds": "Не хватает средств!",
+                "title-games-select_rate": "Выберите ставку.",
 
                 "text-game-place-ships": "Расставьте корабли в необходимом порядке.<br><br>Что бы изменить ориентацию корабля, кликните по нему дважды.",
                 "title-game-ready": "Готов",

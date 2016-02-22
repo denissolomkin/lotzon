@@ -1,4 +1,4 @@
-(function () {
+(function() {
 
     Game = {
 
@@ -23,48 +23,80 @@
         },
 
         messages: {
-            win:{
+            win: {
                 class: 'msg-win',
                 title: 'title-games-win'
             },
-            lose:{
+            lose: {
                 class: 'msg-win',
                 title: 'title-games-lose'
             },
-            equal:{
+            equal: {
                 class: 'msg-equal',
                 title: 'title-games-equal'
-            }
-
+            },
+            insufficient_funds: 'title-games-insufficient_funds',
+            select_rate: 'title-games-select_rate'
         },
 
         field: null,
         gameClass: "",
 
-        init: function (init) {
-        },
+        validate: function() {
+            // return if this != form
+            if (this.tagName !== "FORM") return false;
 
-        isRun: function () {
+            var valid = false,
+                msg = Game.messages.insufficient_funds,
+                mode = this.mode.value.split('-');
+            
+            switch (mode[0]) {
+                case 'POINT':
+                    valid = Player.balance.points >= mode[1];
+                    // console.debug('Player.balance.points >= mode[1]', Player.balance.points + '>=' + mode[1]);
+                    break;
+                case 'MONEY':
+                    valid = Player.balance.money >= mode[1];
+                    // console.debug('Player.balance.money >= mode[1]', Player.balance.money + '>=' + mode[1]);
+                    break;
+                case 'LOTZON':
+                    valid = Player.balance.lotzon >= mode[1];
+                    // console.debug('Player.balance.lotzon >= mode[1]', Player.balance.lotzon + '>=' + mode[1]);
+                    break;
+                case '':
+                    msg = Game.messages.select_rate;
+                    break;
+            }
+
+            // show popup message
+            if (!valid) {
+                popup({ 'msg': i18n(msg), 'timer': 3000 });
+            }
+            return valid;
+
+        },
+        init: function(init) {},
+
+        isRun: function() {
             return App.uid;
         },
 
-        run: function () {
+        run: function() {
 
             // отрисовка игроков
 
             if ((['move', 'timeout', 'pass'].indexOf(App.action) == -1 &&
-                (App.action != 'ready' || Object.size(App.players) == App.current.length))
-                || !document.querySelectorAll('.mx .players div').length) {
+                    (App.action != 'ready' || Object.size(App.players) == App.current.length)) || !document.querySelectorAll('.mx .players div').length) {
 
                 D.log('Game.run', 'game');
 
                 Game.field = document.getElementById('games-online-field');
-                
+
                 // запоминает классы при ините
-                if(!Game.gameClass){
+                if (!Game.gameClass) {
                     Game.gameClass = Game.field.className;
                 }
-                Game.field.className = (Game.gameClass+" "+App.key);
+                Game.field.className = (Game.gameClass + " " + App.key);
                 Game.field.classList.add('on-top');
 
                 DOM.hide(Game.field.parentNode.children);
@@ -84,7 +116,7 @@
 
         },
 
-        hasField: function () {
+        hasField: function() {
 
             if (!document.getElementById('games-online-field')) {
                 R.push({
@@ -99,11 +131,11 @@
                 return true;
         },
 
-        drawExit: function () {
+        drawExit: function() {
             if (App.action == 'ready' || App.action == 'wait' || App.action == 'stack') {
-                
-                $('.mx .players').addClass('canExit').append('<div class="back-button exit"><i class="i-arrow-slim-left"></i> <span>'+Cache.i18n('button-games-exit')+'</span> </div>');
-                
+
+                $('.mx .players').addClass('canExit').append('<div class="back-button exit"><i class="i-arrow-slim-left"></i> <span>' + Cache.i18n('button-games-exit') + '</span> </div>');
+
             }
         },
 
@@ -118,7 +150,7 @@
 
                         if (App.current && index == App.current)
                             Game.playerTimer
-                                .add();
+                            .add();
                     }
                 }
             } else
@@ -128,7 +160,7 @@
 
         playerTimer: {
 
-            add: function(index){
+            add: function(index) {
                 this.index = (index = index || this.index);
                 if (App.timestamp && timestamp != App.timestamp // Math.abs($($('#tm').countdown('getTimes')).get(-1)-App.timeout) > 2
                     || !$('.mx .players .player' + index + ' .gm-pr .pr-ph-bk .circle-timer').length) {
@@ -143,27 +175,27 @@
                 return this;
             },
 
-            remove: function(index){
+            remove: function(index) {
                 this.index = (index = index || this.index);
                 $('.mx .players .player' + index + ' .gm-pr .pr-ph-bk .circle, .mx .players .player' + index + ' .gm-pr .pr-ph-bk .circle-timer')
                     .remove();
                 return this;
             },
 
-            circle: function(index){
+            circle: function(index) {
                 this.index = (index = index || this.index);
                 $('.mx .players .player' + index + ' .gm-pr .pr-ph-bk')
                     .prepend('<div class="circle"></div>');
                 return this;
             },
 
-            removeAll: function(){
+            removeAll: function() {
                 $('.mx .players .gm-pr .pr-ph-bk .circle-timer')
                     .remove();
             }
         },
 
-        seatPlayers: function () {
+        seatPlayers: function() {
 
             var players = App.players;
 
@@ -176,7 +208,7 @@
 
                     var player = {
                         "avatar": "",
-                        "name"  : i18n('waiting...')
+                        "name": i18n('waiting...')
                     };
 
                     for (i = Object.size(players); i < App.playerNumbers; i++) {
@@ -192,7 +224,7 @@
                     orders = Object.keys(players);
                     var order = players[Player.id].order;
 
-                    orders.sort(function (a, b) {
+                    orders.sort(function(a, b) {
                         a = players[a].order;
                         b = players[b].order;
                         check = a == order ? 1 : (
@@ -203,28 +235,24 @@
 
                 }
 
-                $.each(orders, function (index, value) {
+                $.each(orders, function(index, value) {
                     value = typeof value == 'object' ? index : value;
                     div = '<div class="player' + value + (value == Player.id ? ' m' : ' o col' + (Object.size(players) - 1)) + '"></div>';
                     $('.mx .players').append(div);
                 })
 
             }
-            
+
             return players;
 
         },
 
-        setPlayersDetailes: function (players) {
+        setPlayersDetailes: function(players) {
 
             D.log('Game.setPlayersDetailes', 'game');
-            $.each(players, function (index, value) {
+            $.each(players, function(index, value) {
 
-                value.avatar = index < 0
-                    ? "url(/res/css/img/preloader.gif)"
-                    : (value.avatar
-                        ? "url('/filestorage/avatars/" + Math.ceil(parseInt(value.pid) / 100) + "/" + value.avatar + "')"
-                        : "url('/res/img/default.jpg')");
+                value.avatar = index < 0 ? "url(/res/css/img/preloader.gif)" : (value.avatar ? "url('/filestorage/avatars/" + Math.ceil(parseInt(value.pid) / 100) + "/" + value.avatar + "')" : "url('/res/img/default.jpg')");
 
                 $('.mx .players .player' + index).append(
                     '<div class="gm-pr">' +
@@ -238,10 +266,10 @@
                     var icones = '';
 
                     // get icones
-                    for(var i in App.variation){
-                        icones += '<i class="i-games-'+i+'-'+App.variation[i]+'"></i>';
+                    for (var i in App.variation) {
+                        icones += '<i class="i-games-' + i + '-' + App.variation[i] + '"></i>';
                     }
-                    
+
                     var bet = price = App.mode.split('-');
                     $('.mx .players .player' + index + ' .gm-pr')
                         .prepend(
@@ -252,14 +280,14 @@
                         .append(
                             '<div class="pr-md"><div>' + icones + '</div></div>' +
                             '<div class="pr-pr"><div class="title">' + i18n('title-games-bet') + '</div><div><b>' + (bet[0] == 'MONEY' ? Player.formatCurrency(bet[1], 1) : bet[1]) + '</b><span>' + (bet[0] == 'MONEY' ? Player.formatCurrency(bet[1], 2) : 'баллов') + '</span></div></div>' +
-                            '<div class="pr-pt"><div class="title">'+ i18n('title-games-balance') +'</div>'+
-                                (App.mode.indexOf('MONEY') != -1 ? '<div><span class="plMoneyHolder">' + Player.balance.money + '</span> ' + Player.formatCurrency() + '</div>' : '<div><span class="plPointHolder">' + Player.balance.points + '</span> '+ i18n('title-of-points')+'</div></div>' )
-                                );
+                            '<div class="pr-pt"><div class="title">' + i18n('title-games-balance') + '</div>' +
+                            (App.mode.indexOf('MONEY') != -1 ? '<div><span class="plMoneyHolder">' + Player.balance.money + '</span> ' + Player.formatCurrency() + '</div>' : '<div><span class="plPointHolder">' + Player.balance.points + '</span> ' + i18n('title-of-points') + '</div></div>')
+                        );
                 }
             });
         },
 
-        end: function () {
+        end: function() {
 
             D.log('Game.end', 'game');
             if (!App.winner) {
@@ -271,15 +299,15 @@
                 Apps.playAudio([App.key, Apps.sample]);
                 Game.playerTimer.removeAll();
                 Game.destroyTimeOut();
-                
+
                 //проверка на игры кроме дурака, вывод нового сообщения о выиграше
-                if( document.querySelector('#games-online-field:not(.Durak) .mx') ){
+                if (document.querySelector('#games-online-field:not(.Durak) .mx')) {
                     Game.drawWinMessage(App.players[Player.id]);
-                    return true;   
+                    return true;
                 }
 
                 var messages = {};
-                for(var index in App.players) {
+                for (var index in App.players) {
                     messages[index] =
                         (App.players[index].result > 0 ? 'Выигрыш' : 'Проигрыш') + '<br>' +
                         (App.currency == 'MONEY' ? Player.formatCurrency(App.players[index].win, 1) : parseInt(App.players[index].win)) + ' ' +
@@ -292,18 +320,16 @@
 
         drawButtons: function(buttons) {
 
-            if(typeof buttons == 'string')
+            if (typeof buttons == 'string')
                 return Game.drawButtons([buttons]);
 
             var playerButtons = document.querySelector('.mx .players .pr-cl'),
                 html = '';
 
-            for(var index in buttons){
-                if(typeof buttons[index] == 'object') {
-                    html += '<button class="' + buttons[index].class + '"'
-                        + ( buttons[index].hasOwnProperty('action') ? ' data-action="' + buttons[index].action + '"' : '' )
-                        + '>' + i18n(buttons[index].title) + '</button>';
-                } else if(typeof buttons[index] == 'string') {
+            for (var index in buttons) {
+                if (typeof buttons[index] == 'object') {
+                    html += '<button class="' + buttons[index].class + '"' + (buttons[index].hasOwnProperty('action') ? ' data-action="' + buttons[index].action + '"' : '') + '>' + i18n(buttons[index].title) + '</button>';
+                } else if (typeof buttons[index] == 'string') {
                     html += '<div>' + i18n(buttons[index]) + '</div>';
                 }
             }
@@ -320,7 +346,7 @@
                 playerStatuses[index].style.display = 'none';
             }
 
-            for ( index in statuses ) {
+            for (index in statuses) {
                 playerStatus = document.querySelector('.mx .players .player' + index + ' .mt');
                 playerStatus.style.display = '';
                 playerStatus.innerHTML = i18n(statuses[index]);
@@ -336,7 +362,7 @@
                 playerMessages[index].style.display = 'none';
             }
 
-            for ( index in messages ) {
+            for (index in messages) {
                 playerMessage = document.querySelector('.mx .players .player' + index + ' .wt');
                 playerMessage.style.display = 'block';
                 playerMessage.innerHTML = messages[index];
@@ -349,48 +375,48 @@
          * @param  {number} message
          * @return {}        
          */
-        drawWinMessage: function(pl){
-                // if !Durak replace msg to other block
-                if( notDurak = document.querySelector('#games-online-field:not(.Durak) .mx') ){
-                    var html = '', 
+        drawWinMessage: function(pl) {
+            // if !Durak replace msg to other block
+            if (notDurak = document.querySelector('#games-online-field:not(.Durak) .mx')) {
+                var html = '',
                     msg = pl.result > 0 ? Game.messages.win : Game.messages.lose,
                     el = document.querySelector('.mx > .msg ') || document.createElement('div');
 
-                    el.setAttribute('class', 'msg');
-                    el.style.display = 'none';
+                el.setAttribute('class', 'msg');
+                el.style.display = 'none';
 
 
-                    html += '<div class="'+msg.class+'">';
-                        html += '<div class="title">'+ i18n(msg.title) +'</div>';
-                            html += '<div><span>' + (pl.result > 0 ? i18n('title-games-main-win') : i18n('title-games-main-lose')) + ' </span>'+
-                            (App.currency == 'MONEY' ? Player.formatCurrency(Math.abs(pl.win), 1) : Math.abs( parseInt(pl.win) )) + ' ' +
-                            (App.currency == 'MONEY' ? Player.getCurrency() : 'баллов') + '</div>';
-                    html += '</div>'
+                html += '<div class="' + msg.class + '">';
+                html += '<div class="title">' + i18n(msg.title) + '</div>';
+                html += '<div><span>' + (pl.result > 0 ? i18n('title-games-main-win') : i18n('title-games-main-lose')) + ' </span>' +
+                    (App.currency == 'MONEY' ? Player.formatCurrency(Math.abs(pl.win), 1) : Math.abs(parseInt(pl.win))) + ' ' +
+                    (App.currency == 'MONEY' ? Player.getCurrency() : 'баллов') + '</div>';
+                html += '</div>'
 
 
-                    el.innerHTML = html;
+                el.innerHTML = html;
 
-                    notDurak.appendChild(el);
+                notDurak.appendChild(el);
 
-                    setTimeout( function(){
-                        $('.mx > .msg').fadeIn('fast')
-                    }, 2000 );
+                setTimeout(function() {
+                    $('.mx > .msg').fadeIn('fast')
+                }, 2000);
 
-                    return;
-                }
+                return;
+            }
 
         },
-        drawEqualMessage: function(callback){
-            if( notDurak = document.querySelector('#games-online-field:not(.Durak) .mx') ){
+        drawEqualMessage: function(callback) {
+            if (notDurak = document.querySelector('#games-online-field:not(.Durak) .mx')) {
                 var msg = Game.messages.equal,
-                html = '';
+                    html = '';
                 el = document.querySelector('.mx > .msg ') || document.createElement('div');
 
                 el.setAttribute('class', 'msg');
                 el.style.display = 'none';
 
-                html += '<div class="'+msg.class+'">';
-                        html += '<div class="title">'+ i18n(msg.title) +'</div>';
+                html += '<div class="' + msg.class + '">';
+                html += '<div class="title">' + i18n(msg.title) + '</div>';
                 html += '</div>'
 
                 el.innerHTML = html;
@@ -403,16 +429,16 @@
             }
             return false;
         },
-        drawWinButtons: function(buttons){
+        drawWinButtons: function(buttons) {
             var playerButtons = document.querySelector('.mx > .msg .msg-win'),
                 html = '',
                 el = document.createElement('div');
-                el.className = 'msg-buttons';
+            el.className = 'msg-buttons';
 
-            for(var index in buttons){
-                if(typeof  buttons[index] == 'object') {
+            for (var index in buttons) {
+                if (typeof buttons[index] == 'object') {
                     html += '<button class="' + buttons[index].class + '" data-action="' + buttons[index].action + '">' + i18n(buttons[index].title) + '</button>';
-                } else if(typeof buttons[index] == 'string') {
+                } else if (typeof buttons[index] == 'string') {
                     html += '<div>' + i18n(buttons[index]) + '</div>';
                 }
             }
@@ -420,7 +446,7 @@
             playerButtons.appendChild(el);
         },
 
-        setFullScreenHeigth: function () {
+        setFullScreenHeigth: function() {
 
             D.log('Game.setFullScreenHeigth', 'game');
             var singleGame = $('#games-online-field');
@@ -433,7 +459,7 @@
             }
         },
 
-        unsetFullScreenHeigth: function () {
+        unsetFullScreenHeigth: function() {
 
             D.log('Game.setFullScreenHeigth', 'game');
             var singleGame = $('#games-online-field');
@@ -445,11 +471,11 @@
             }
         },
 
-        destroyTimeOut: function () {
+        destroyTimeOut: function() {
             $("#gameTimer").countdown('destroy');
         },
 
-        updateTimeOut: function (time, format) {
+        updateTimeOut: function(time, format) {
 
             if (time) {
                 console.log('обновление таймаута');
@@ -459,38 +485,38 @@
                 } else {
                     var timer = $("#gameTimer");
 
-                    if (timer.countdown('getTimes') && timer.countdown('getTimes').reduce(function (a, b) {
+                    if (timer.countdown('getTimes') && timer.countdown('getTimes').reduce(function(a, b) {
                             return a + b;
                         }) == 0) {
                         timer.countdown('destroy');
                     }
 
                     if (!timer.countdown('getTimes')) {
-                        timer.countdown({until: time, layout: format, onExpiry: Game.onTimeOut});
+                        timer.countdown({ until: time, layout: format, onExpiry: Game.onTimeOut });
 
                     } else if (!timer.countdown('option', 'layout') || timer.countdown('option', 'layout') != format)
-                        timer.countdown('option', {layout: format});
+                        timer.countdown('option', { layout: format });
 
-                    timer.countdown({until: time}).countdown('resume').countdown('option', {until: time});
+                    timer.countdown({ until: time }).countdown('resume').countdown('option', { until: time });
 
 
                 }
             }
         },
 
-        onTimeOut: function () {
+        onTimeOut: function() {
 
             console.info('тайм-аут');
             Game.playerTimer.removeAll();
 
             var path = 'app/' + App.id + '/' + App.uid,
-                data = {'action': 'timeout'};
+                data = { 'action': 'timeout' };
             WebSocketAjaxClient(path, data);
         },
 
         do: {
 
-            ready: function (e) {
+            ready: function(e) {
 
                 D.log('Game.action.ready', 'game');
 
@@ -502,12 +528,12 @@
                 } else {
 
                     var path = 'app/' + App.id + '/' + App.uid;
-                    var data = {'action': 'ready'}
+                    var data = { 'action': 'ready' }
                     WebSocketAjaxClient(path, data);
                 }
             },
 
-            exit: function (e) {
+            exit: function(e) {
 
                 if (this.classList.contains('button-disabled'))
                     return false;
@@ -520,14 +546,14 @@
                         'action': 'quit'
                     };
 
-                window.setTimeout(function () {
+                window.setTimeout(function() {
                     that.classList.remove('button-disabled');
                 }, 1000);
 
                 WebSocketAjaxClient(path, data);
             },
 
-            pass: function (e) {
+            pass: function(e) {
 
                 D.log('Game.action.pass', 'game');
                 var path = 'app/' + App.id + '/' + App.uid;
@@ -537,7 +563,7 @@
                 WebSocketAjaxClient(path, data);
             },
 
-            move: function (e) {
+            move: function(e) {
 
                 var cell = this;
 
@@ -553,14 +579,14 @@
                 } else {
 
                     cell.classList.add('b');
-                    window.setTimeout(function () {
+                    window.setTimeout(function() {
                         cell.classList.remove('b');
                     }, 1000);
 
                     var path = 'app/' + App.id + '/' + App.uid,
                         data = {
                             'action': 'move',
-                            'cell'  : cell.getAttribute('data-cell')
+                            'cell': cell.getAttribute('data-cell')
                         };
 
                     WebSocketAjaxClient(path, data);
@@ -569,7 +595,7 @@
 
             button: function() {
 
-                if(this.getAttribute('data-action')) {
+                if (this.getAttribute('data-action')) {
                     var path = 'app/' + App.id + '/' + App.uid,
                         data = {
                             'action': this.getAttribute('data-action')
@@ -586,9 +612,9 @@
 
                 var path = 'app/' + App.id + '/' + App.uid,
                     data = {
-                    'action': 'start',
-                    'mode': App.mode
-                };
+                        'action': 'start',
+                        'mode': App.mode
+                    };
 
                 WebSocketAjaxClient(path, data);
             },
@@ -598,10 +624,10 @@
         /* common callbacks without Apps */
         callback: {
 
-            quit: function () {
+            quit: function() {
 
                 D.log('Game.action.quit', 'game');
-                if(Game.field)
+                if (Game.field)
                     Game.field.classList.remove('on-top');
                 R.push('/games/online/' + App.id);
                 App.uid = 0;
@@ -610,7 +636,7 @@
                 Game.unsetFullScreenHeigth();
             },
 
-            update: function (data) {
+            update: function(data) {
 
                 D.log('Game.callback.update', 'game');
                 if (data.res.points)
@@ -646,14 +672,14 @@
                 }
             },
 
-            stack: function () {
+            stack: function() {
 
                 /* записались в стек - запустили игру */
                 return Apps[App.key].action();
 
             },
 
-            cancel: function () {
+            cancel: function() {
 
                 /* отказ от ожидания в стеке */
                 return Game.callback.quit();
@@ -661,14 +687,14 @@
             },
 
 
-            back: function () {
+            back: function() {
                 /* назад к играм */
                 D.log('Game.callback.back', 'game');
                 if (!$('.rls-r-t').is(':visible')) {
                     Game.cancel();
                 }
                 $('.ngm-bk').fadeOut(200);
-                window.setTimeout(function () {
+                window.setTimeout(function() {
                     $('.ch-bk').fadeIn(200);
                 }, 200);
             }
@@ -676,7 +702,7 @@
 
         action: {
 
-            reply: function () {
+            reply: function() {
 
                 /* повтор игры */
                 var statuses = {};
@@ -693,7 +719,7 @@
             },
 
 
-            error: function () {
+            error: function() {
 
                 /* ошибка */
 
@@ -704,7 +730,7 @@
                 }
             },
 
-            quit: function () {
+            quit: function() {
 
                 /* выход из игры */
 

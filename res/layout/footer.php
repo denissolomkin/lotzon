@@ -17,6 +17,16 @@
             <a href="#" class="tw"></a>
         </div>
     </div>
+    <!-- Popup msgs '.show - show  .timer - hide close button'-->
+    <div id="popup-message" class="">
+        <div class="inner">
+            <i class="i-x-slim" onclick="document.getElementById('popup-message').removeAttribute('class')"></i>
+            <div class="body">
+                <!-- msg -->
+            </div>
+        </div>
+    </div>
+    <!-- END Popup msgs -->
     <!-- .container -->
 </footer>
 <!-- end of FOOTER -->

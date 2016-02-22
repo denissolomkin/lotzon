@@ -283,5 +283,37 @@
         document.body.appendChild(s);
     };
 
+    /**
+     * popup - messages 
+     * @param  {object}   conf     {msg, timer(ms) }
+     * @param  {Function} callback callback func
+     * @return {bool}               true | false
+     */
+    popup = function (conf, callback) {
+        
+        if (!conf.msg) {
+            console.log('msg - empty');
+            return false;
+        }
+        
+        var el = document.getElementById('popup-message');
+        if (el) {
 
+            el.querySelector('.body').innerHTML = conf.msg;
+            el.setAttribute('class', 'show' + (conf.timer ? '' : ' no-timer') );
+            
+            // close by timer
+            if(conf.timer){
+                setTimeout(function() {
+                    el.removeAttribute('class');
+                }, conf.timer+0);
+            }
+
+            if (typeof callback === "function") callback();
+            return true;
+        }
+
+        console.log('#popup-message out of space');
+        return false;
+    };
 })();
