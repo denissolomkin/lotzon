@@ -358,7 +358,7 @@
                                             filters[filter] = path.query[filter];
 
                                 switch (order) {
-                                    
+
                                     case 'ASC':
 
                                         var index = 0;
