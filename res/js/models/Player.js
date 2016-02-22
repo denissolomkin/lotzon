@@ -153,8 +153,6 @@
         },
 
         getCurrency: function (currency, number) {
-
-            console.error(currency, number);
             switch (currency) {
                 case 'money':
                 default:

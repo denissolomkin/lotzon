@@ -37,7 +37,6 @@
         },
 
         extendTickets: function(ticketsArray, arguments) {
-            console.error(ticketsArray, arguments);
 
             var prizesData = arguments[0],
                 lotteryCombination = arguments[1];
@@ -51,6 +50,8 @@
                 },
                 extendedTicket,
                 matchesBalls;
+
+            console.error(ticketsArray);
 
             /* extend playerTickets */
             if (Object.size(ticketsArray))
@@ -100,7 +101,6 @@
                     extendedTickets.tickets.push(extendedTicket)
                 }
 
-            console.log(extendedTickets);
             return extendedTickets;
         },
 
@@ -144,7 +144,7 @@
 
             setTimeout(function() {
                 if ((document.querySelector('.ghd-game-inf') != undefined)
-                    && Device.onScreen.call(document.querySelector('.ghd-game-inf'), 100)) {
+                    && Device.onScreen.call(document.querySelector('.ghd-game-inf'), 300)) {
                     summaryVisible();
                 } else {
                     $(window).on('scroll', summaryVisible);
@@ -160,7 +160,7 @@
                     if (!isNumeric(i))
                         continue;
 
-                    $('tr.balls-matches-' + i + ' td:eq(0)')
+                    $('tr.balls-matches-' + i + ' td:eq(0)', $table)
                         .delay(1000)
                         .next().html(lotterySummary[i].matches || 0).spincrement({'thousandSeparator': ' '})
                         .next().html('<span>' + Player.getCurrency(lotterySummary[i].currency, lotterySummary[i].sum) + '</span> ' +
@@ -230,13 +230,11 @@
                 json: json,
                 format: format
             });
-        console.log(Tickets.filledTickets);
-
         },
 
         renderAnimation: function() {
 
-            var json = this.data,
+            var json = Object.deepExtend({},this.data),
                 arrRandom = [],
                 renderBalls = {
                     'combination': []
@@ -258,7 +256,7 @@
                 renderBalls.combination.push([ball].concat(arrRandom));
             }
 
-            console.log(renderBalls.combination,'renderBalls.combination')
+            console.log(renderBalls.combination,'renderBalls.combination');
 
             Object.deepExtend(json, renderBalls);
 
@@ -273,18 +271,16 @@
 
         runAnimation: function() {
             var randomInterval,
-                readyBalls = [];
+                readyBalls = [],
+                counter = 400,
+                count = counter / 2;
                 
             if (readyBalls.length === Tickets.requiredBalls) {
                 $("#lottery-process").addClass('lottery-won');
                 D.log('Lottery.runAnimation: clearInterval', 'func');
                 window.clearInterval(intervalAnimation);
-
-                
             }
 
-            var counter = 400;
-            var count = counter / 2;
             animation = function() {
                 count = counter / 2;
                 clearInterval(intervalAnimation);
@@ -304,15 +300,16 @@
                     'transition': 'all ' + counter + 'ms cubic-bezier(0.3, 0.2, 0.1, 0.1)'
                 });
 
-                $.each($('.g-oc_li.unfilled'), function(index, li) {
+                $.each($('.g-oc_li.unfilled'), function (index, li) {
                     readyBalls.push(index);
-                 
+
                     var ball = $('.goc_li-nb', li).not('.random-ball');
-                    if (ball.length) {} else {
+                    if (ball.length) {
+                    } else {
                         $(this).removeClass('unfilled')
                         counter = 400;
                         ball = parseInt($('.goc_li-nb', li).first().text());
-                        window.setTimeout(function() {
+                        window.setTimeout(function () {
                             $("#lottery-process").find('li [data-num="' + ball + '"]').addClass('won_ball')
                         }, 1000);
                     }
@@ -320,32 +317,29 @@
                 });
 
                 if (!$('.g-oc_li.unfilled').length) {
-  
+
                     if ($("#lottery-process li.won_ball").length) {
 
-                       
-                    setTimeout(function(){
-                        
-                        $("#lottery-process").addClass('lottery-won');
-                        
-                        $('#lottery-process .ghd-won, #lottery-process .won').css({
-                            'display': 'block'
-                        });
+                        setTimeout(function () {
 
-                        $(".goc_li-sh, .goc_li-sh2").css({'display': 'none'});
+                            $("#lottery-process").addClass('lottery-won');
 
-                    }, 2000)
+                            $('#lottery-process .ghd-won, #lottery-process .won').css({
+                                'display': 'block'
+                            });
 
-                       
-                    } 
-            
+                            $(".goc_li-sh, .goc_li-sh2").css({'display': 'none'});
+
+                        }, 2000)
+
+                    }
+
                     clearInterval(intervalAnimation);
                 }
                 else {
-                  intervalAnimation = setInterval(animation, count);  
+                    intervalAnimation = setInterval(animation, count);
                 }
-                
-       
+
             }
     
 
