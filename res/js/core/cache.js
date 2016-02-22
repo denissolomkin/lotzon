@@ -5,6 +5,10 @@
 
         "storage"        : {},
         "compiledStorage": {},
+        "path2":{
+            "languages": '/res/languages/',
+            "momentLocale": '/res/js/libs/moment-locale/'
+        },
 
         "storages": {
             "templates": 'templatesStorage',
@@ -21,6 +25,21 @@
         "isEnabled"       : null,
         "selectedLanguage": null,
 
+        /*
+         * Common Cache engine
+         * */
+
+        /* check is localStorage enable */
+        "detect": function () {
+
+            if (this.isEnabled === null)
+                this.isEnabled = typeof localStorage !== 'undefined';
+            D.log(['Cache.detect:', this.isEnabled], 'cache');
+
+            return this;
+        },
+
+        /* point for enter to cache */
         "init": function (init, key) {
 
             if (init) {
@@ -59,6 +78,7 @@
 
                 if (key) {
                     return this.set(key, init);
+
                 } else if (init.res) {
                     this.push(init.res);
                 }
@@ -72,71 +92,12 @@
             }
         },
 
-        "drop": function (session) {
-
-            this.detect();
-
-            D.log(['Cache.drop'], 'cache');
-
-            if (this.isEnabled) {
-
-                if (!session) {
-                    localStorage.clear();
-                } else {
-                    localStorage.setItem(this.storages.session, null);
-                }
-            }
-
-            for (var key in this.storages)
-                if (typeof this[key] !== 'function' && this.storage[this[key]] && (!session || key === this.storages.session)) {
-                    this.storage[this[key]] = {};
-                }
-
-            return this.init();
-        },
-
-        "detect": function () {
-
-            if (this.isEnabled === null)
-                this.isEnabled = typeof localStorage !== 'undefined';
-            D.log(['Cache.detect:', this.isEnabled], 'cache');
-
-            return this;
-        },
-
-        "localize": function () {
-
-            this.selectedLanguage = Player.language.current;
-            D.log(['Cache.localize:', this.selectedLanguage, this.storage[this.storages.languages].hasOwnProperty(this.selectedLanguage)], 'cache');
-
-            include('/res/js/libs/moment-locale/' + this.selectedLanguage.toLowerCase() + '.js');
-
-            if (!this.language(this.selectedLanguage)) {
-
-                $.ajax({
-                    url     : '/res/languages/' + this.selectedLanguage,
-                    method  : 'get',
-                    dataType: 'json',
-                    success : function (data) {
-                        D.log(['Cache.localize DONE:', Cache.selectedLanguage, data], 'cache');
-                        Cache.language(Cache.selectedLanguage, data);
-                        Cache.ready();
-                    },
-                    error   : function (data) {
-                        D.error('LANGUAGE ERROR: ' + data.message);
-                    }
-                });
-
-            } else
-                this.ready();
-
-            return this;
-        },
-
+        /* desc: callback after localize ready */
         "ready": function () {
             Navigation.load();
         },
 
+        /* desc: load storages from localStorage to Memory */
         "load": function () {
 
             D.log(['Cache.load'], 'cache');
@@ -173,6 +134,53 @@
 
         },
 
+        /* desc: clear only session data or all localStorage and Memory*/
+        "drop": function (session) {
+
+            this.detect();
+
+            D.log(['Cache.drop'], 'cache');
+
+            if (this.isEnabled) {
+
+                if (!session) {
+                    localStorage.clear();
+                } else {
+                    localStorage.setItem(this.storages.session, null);
+                }
+            }
+
+            for (var key in this.storages)
+                if (typeof this[key] !== 'function' && this.storage[this[key]] && (!session || key === this.storages.session)) {
+                    this.storage[this[key]] = {};
+                }
+
+            return this.init();
+        },
+
+        "stat": function () {
+
+            var total = 0,
+                cache = {},
+                storages = ['localStorage', 'sessionStorage'];
+
+            for (var s in storages) {
+                for (var x in window[storages[s]]) {
+
+                    (!this.storage.hasOwnProperty(x))
+                    continue;
+
+                    var amount = (localStorage[x].length * 2) / 1024 / 1024;
+                    total += amount;
+                    cache[storages[s]][x] = amount.toFixed(2) + " MB";
+                }
+            }
+
+            cache['total'] = total.toFixed(2) + " MB";
+            return cache;
+        },
+
+        /* save storages from Memory to localStorage */
         "save": function (cache) {
 
             D.log(['Cache.save:', cache], 'cache');
@@ -228,10 +236,69 @@
             return this;
         },
 
+
+        /*
+         * Work with JSON
+         * */
+
+        "set": function (key, data) {
+
+            var path = data.key ? this.splitPath(data.key) : this.splitPath(key),
+                needle = path.last(),
+                storage = data.cache || false,
+                source = (data.hasOwnProperty('res') ? data.res : data);
+
+            if (data.player)
+                Player.init(data.player);
+
+            this.validate(path.join('-'), true);
+
+            if (!data.key && data.res)
+                while (path.length && source) {
+                    needle = path.shift();
+                    source = source && source.hasOwnProperty(needle) && source[needle];
+                }
+
+            /* if receive data for extend cache */
+            if (source && storage) {
+
+                switch (true) {
+
+                    case storage === 'session':
+                        storage = this.storages['session'];
+                        break;
+
+                    case storage === 'local':
+                    case storage === 'true':
+                    case storage === true:
+                    case isNumeric(storage):
+                        storage = this.storages['local'];
+                        break;
+
+                    default:
+                        storage = false;
+                        break;
+
+                }
+
+                if (storage) {
+                    this.extend(data, storage)
+                        .save(storage);
+                }
+            }
+
+            return source || (data.hasOwnProperty('res') ? data.res : data);
+
+        },
+
+        /* try find JSON from storages
+         * return: id, storage, needle  */
         "find": function (path) {
             return this.get(path, null, true);
         },
 
+        /* try get JSON from storages
+         * return: json*/
         "get": function (path, storage, isFind) {
 
             var cache,
@@ -248,10 +315,10 @@
                     } else {
 
                         if (typeof path === 'object') {
-                            var keys = this.split(path.href),
+                            var keys = this.splitPath(path.href),
                                 offset = path.query && path.query.offset || 0;
                         } else
-                            var keys = this.split(path);
+                            var keys = this.splitPath(path);
 
                         var list = null;
                         do {
@@ -319,78 +386,7 @@
 
         },
 
-        "set": function (key, data) {
-
-            var path = data.key ? this.split(data.key) : this.split(key),
-                needle = path.last(),
-                storage = data.cache || false,
-                source = (data.hasOwnProperty('res') ? data.res : data);
-
-            this.validate(path.join('-'), true);
-
-            if (data.player)
-                Player.init(data.player);
-
-
-            if (!data.key && data.res)
-                while (path.length && source) {
-                    needle = path.shift();
-                    source = source && source.hasOwnProperty(needle) && source[needle];
-                }
-
-            /* if receive data for extend cache */
-            if (source && storage) {
-
-                switch (true) {
-
-                    case storage === 'session':
-                        storage = this.storages['session'];
-                        break;
-
-                    case storage === 'local':
-                    case storage === 'true':
-                    case storage === true:
-                    case isNumeric(storage):
-                        storage = this.storages['local'];
-                        break;
-
-                    default:
-                        storage = false;
-                        break;
-
-                }
-
-                if (storage)
-                    this.extend(data, storage)
-                        .save(storage);
-            }
-
-            return source || (data.hasOwnProperty('res') ? data.res : data);
-
-        },
-
-        "stat": function () {
-
-            var total = 0,
-                cache = {},
-                storages = ['localStorage', 'sessionStorage'];
-
-            for (var s in storages) {
-                for (var x in window[storages[s]]) {
-
-                    (!this.storage.hasOwnProperty(x))
-                    continue;
-
-                    var amount = (localStorage[x].length * 2) / 1024 / 1024;
-                    total += amount;
-                    cache[storages[s]][x] = amount.toFixed(2) + " MB";
-                }
-            }
-
-            cache['total'] = total.toFixed(2) + " MB";
-            return cache;
-        },
-
+        /* try to remove objects by path from storages and DOM */
         "remove": function (object, key) {
 
             if (object && (Object.size(object) || typeof object !== 'object')) {
@@ -441,6 +437,7 @@
             }
         },
 
+        /* try to delete object from storage */
         "delete": function (obj, path) {
 
             if (isString(obj))
@@ -459,7 +456,7 @@
             }
 
             if (isString(path)) {
-                return this.delete(obj, this.split(path));
+                return this.delete(obj, this.splitPath(path));
             }
 
             var currentPath = getKey(path[0]);
@@ -483,7 +480,7 @@
             return obj;
         },
 
-        split: function (path) {
+        splitPath: function (path) {
             if (!path)
                 return [];
             else if (!isArray(path)) {
@@ -494,10 +491,12 @@
             return path.filter(Boolean);
         },
 
+        /* update part of object*/
         "update": function (object) {
             return this.push(object, null, true)
         },
 
+        /* push new object to storage */
         "push": function (object, key, forUpdate) {
 
             if (object && typeof object === 'object') {
@@ -544,12 +543,13 @@
             }
         },
 
+        /* extend storage by object */
         "extend": function (data, storage) {
 
             var source = data.res || data;
 
             if (data.key) {
-                var path = this.split(data.key);
+                var path = this.splitPath(data.key);
                 while (path.length) {
 
                     var temp = {},
@@ -569,6 +569,7 @@
         },
 
         "validate": function (key, forUpdateOrStorage, forUpdate) {
+            console.error('validate', key, forUpdateOrStorage, forUpdate);
 
             if (key) {
                 if (typeof forUpdateOrStorage === 'boolean') {
@@ -583,6 +584,10 @@
             }
 
         },
+
+        /*
+        * Work with Templates
+        * */
 
         "partials": function (template) {
 
@@ -645,6 +650,40 @@
 
             return this;
 
+        },
+
+        /*
+         * Work with language
+         * */
+
+        /* desc: load language dictionary */
+        "localize": function () {
+
+            this.selectedLanguage = Player.language.current;
+            D.log(['Cache.localize:', this.selectedLanguage, this.storage[this.storages.languages].hasOwnProperty(this.selectedLanguage)], 'cache');
+
+            include(this.path2.momentLocale + this.selectedLanguage.toLowerCase() + '.js');
+
+            if (!this.language(this.selectedLanguage)) {
+
+                $.ajax({
+                    url     : this.path2.languages + this.selectedLanguage,
+                    method  : 'get',
+                    dataType: 'json',
+                    success : function (data) {
+                        D.log(['Cache.localize DONE:', Cache.selectedLanguage, data], 'cache');
+                        Cache.language(Cache.selectedLanguage, data);
+                        Cache.ready();
+                    },
+                    error   : function (data) {
+                        D.error('LANGUAGE ERROR: ' + data.message);
+                    }
+                });
+
+            } else
+                this.ready();
+
+            return this;
         },
 
         "language": function (key, language) {

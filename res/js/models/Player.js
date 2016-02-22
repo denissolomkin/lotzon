@@ -152,15 +152,18 @@
             return count;
         },
 
-        getCurrency: function (currency) {
-
+        getCurrency: function (currency, number) {
             switch (currency) {
                 case 'money':
                 default:
-                    currency = isNumeric(currency) ? currency * Player.currency.coefficient : Player.currency.iso;
+                    currency = isNumeric(currency)
+                        ? currency * Player.currency.coefficient
+                        : (number ? number * Player.currency.coefficient : Player.currency.iso);
                     break;
                 case 'points':
-                    currency = Cache.i18n('title-points');
+                    currency = number
+                        ? number
+                        : Cache.i18n('title-points');
                     break;
                 case 'lotzon':
                     currency = Cache.i18n('title-lotzon');

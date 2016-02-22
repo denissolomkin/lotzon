@@ -279,7 +279,7 @@
 
         },
 
-        "renderTMPL": function f(options, partial) {
+        "renderTMPL": function (options, partial) {
 
             if (D.isEnable('stat')) {
                 if (!options.stat.templates.timer) {
