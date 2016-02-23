@@ -13,10 +13,14 @@ class LotteryController extends \AjaxController
     private $session;
 
     static $lotteriesPerPage;
+    static $ticketsCount;
+    static $defaultCountry;
 
     public function init()
     {
         self::$lotteriesPerPage = (int)SettingsModel::instance()->getSettings('counters')->getValue('LOTTERIES_PER_PAGE') ? : 10;
+        self::$ticketsCount     = \LotterySettings::TOTAL_TICKETS;
+        self::$defaultCountry   = CountriesModel::instance()->defaultCountry();
         $this->session = new Session();
         parent::init();
         if ($this->validRequest()) {
@@ -233,17 +237,23 @@ class LotteryController extends \AjaxController
         $this->authorizedOnly();
 
         $player = new \Player;
-        $player_countries = $player->setId($this->session->get(Player::IDENTITY)->getId())->fetch()->getCountry();
+        $player_country = $player->setId($this->session->get(Player::IDENTITY)->getId())->fetch()->getCountry();
 
         try {
             $lottery = \LotteriesModel::instance()->getLotteryDetails($lotteryId);
-            $prizes  = \LotterySettingsModel::instance()->loadSettings()->getPrizes($player_countries);
+            $prizes  = $lottery->getPrizes();
+            if (!isset($prizes[$player_country])) {
+                $prizes = $prizes[self::$defaultCountry];
+            } else {
+                $prizes = $prizes[$player_country];
+            }
         } catch (\PDOException $e) {
             $this->ajaxResponseInternalError();
             return false;
         }
 
         $balls = $lottery->getBallsTotal();
+        $balls_incr = $lottery->getBallsTotalIncr();
 
         $response['res'] = $lottery->exportTo('list');
         $response['res']['statistics'] = array();
@@ -253,7 +263,7 @@ class LotteryController extends \AjaxController
                 'balls'    => $count,
                 'currency' => ($prizes[$count]['currency']=='MONEY'?'money':'points'),
                 'prize'    => $prizes[$count]['sum'],
-                'matches'  => $matches,
+                'matches'  => $matches + $balls_incr[$count],
             );
         }
 
@@ -283,6 +293,10 @@ class LotteryController extends \AjaxController
             'res' => array(
             ),
         );
+
+        for ($i=1; $i<=self::$ticketsCount; $i++) {
+            $response['res'][$i] = false;
+        }
 
         if (!is_null($list)) {
             foreach ($list as $id => $ticket) {
