@@ -1,68 +1,69 @@
-﻿<div id="lottery-history-view-tickets" class="ghd-tickets">
+﻿<div id="lottery-view-tickets" class="ghd-tickets">
 
     {{#if tickets}}
 
-    <ul>
-        {{#tickets}}
-        <li class="clearfix">
-            
-            {{#if (eq num (lottery 'totalTickets'))}}
-             <span class="gold">GOLD</span> 
-            {{else}}
-             <span>{{i18n "title-lottery-ticket-num"}} N°{{num}} </span>
-            {{/if}}
-            
-            <ul>
-                {{#combination}}
-                <li class="filled-ball{{#win}} won_ball{{/win}}" data-num='{{ball}}'>
-                    {{ball}}
-                </li>
-                {{/combination}}
-                {{^combination}}
-                <li class="unfilled">
-                    не активен
-                    {{i18n "title-lottery-ticket-unactive"}}
-                </li>
-                {{/combination}}
-            </ul>
-        </li>
-        {{/tickets}}
-    </ul>
+        <ul>
+            {{#tickets}}
+            <li class="clearfix">
 
-    {{#if win}}
-    <div class="ghd-text ghd-won">
-        <div class="grid-container">
-        
-            <div class="width-50">
+                {{#if (eq num (lottery 'totalTickets'))}}
+                 <span class="gold">GOLD</span>
+                {{else}}
+                 <span>{{i18n "title-lottery-ticket-num"}} N°{{num}} </span>
+                {{/if}}
 
-              <span>БАЛЛОВ ВЫИГРАНО:</span>
-               <strong>
-                {{#each win}}
-                {{#if (eq currency 'points') }}  
-                        {{prize}}
-                {{else}}0{{/if}}
-                {{/each}}
+                <ul>
+                    {{#combination}}
+                    <li class="filled-ball{{#win}} won_ball{{/win}}" data-num='{{ball}}'>
+                        {{ball}}
+                    </li>
+                    {{/combination}}
+                    {{^combination}}
+                    <li class="unfilled">
+                        {{i18n "title-lottery-ticket-unactive"}}
+                    </li>
+                    {{/combination}}
+                </ul>
+            </li>
+            {{/tickets}}
+        </ul>
 
-              </strong>
-            </div>
-            <div class="width-50">
-              <span>ДЕНЕГ ВЫИГРАНО:</span> 
+        {{#if win}}
+        <div class="ghd-text ghd-won">
+            <div class="grid-container">
 
-             <strong>
-                {{#each win}}
-                    {{#if (eq currency 'money') }}
-                        {{prize}}
+                <div class="width-50">
+
+                  <span>БАЛЛОВ ВЫИГРАНО:</span>
+                   <strong>
+                    {{#each win}}
+                    {{#if (eq currency 'points') }}
+                            {{prize}}
                     {{else}}0{{/if}}
-                {{/each}}
-              </strong>
-        </div>                        
+                    {{/each}}
+
+                  </strong>
+                </div>
+                <div class="width-50">
+                  <span>ДЕНЕГ ВЫИГРАНО:</span>
+
+                 <strong>
+                    {{#each win}}
+                        {{#if (eq currency 'money') }}
+                            {{prize}}
+                        {{else}}0{{/if}}
+                    {{/each}}
+                  </strong>
+            </div>
+        </div>
+
+        {{else}}
+            <div class="ghd-text ghd-fale">{{i18n "title-lottery-not-won"}}</div>
+        {{/if}}
+
+    {{else}}
+        <div class="ghd-won">{{i18n "title-lottery-not-play"}}</div>
+    {{/if}}
     </div>
 
-    {{else}}
-        <div class="ghd-text ghd-fale">{{i18n "title-lottery-not-won"}}</div>
-    {{/if}}
-
-    {{else}}
-    <div class="ghd-won">{{i18n "title-lottery-not-play"}}</div>
-    {{/if}}
 </div>
