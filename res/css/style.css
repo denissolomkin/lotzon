@@ -4027,20 +4027,24 @@ span[class^="i-smile"].i-smile-wink:before {
   .post-item:last-child {
     border-bottom: none; }
 
-#blog .content-box-item {
-  padding: 20px 20px 30px; }
+#blog {
+  color: #4a4a4a; }
+  #blog .content-box-item {
+    padding: 20px 20px 30px; }
 
 #blog-post-view {
   font-family: handbookpro-regular;
   font-size: 15.5px; }
   #blog-post-view .social-likes {
     margin: 0 0 10px -6px; }
-  #blog-post-view .post .title {
-    font-family: Handbook-bold;
-    font-size: 20px;
-    line-height: 23px;
-    margin-bottom: 18px;
-    font-weight: normal; }
+  #blog-post-view .post {
+    color: #4a4a4a; }
+    #blog-post-view .post .title {
+      font-family: Handbook-bold;
+      font-size: 20px;
+      line-height: 23px;
+      margin-bottom: 18px;
+      font-weight: normal; }
   #blog-post-view .post-item-date {
     display: inline-block !important;
     margin-right: 40px; }
@@ -9637,7 +9641,7 @@ footer.unvisible {
           font-size: 14px;
           color: #000000;
           letter-spacing: 0.32px;
-          line-height: 1;
+          line-height: 26px;
           background: transparent;
           border: 1px solid #000000;
           min-width: 108px;
@@ -9645,21 +9649,17 @@ footer.unvisible {
           cursor: pointer;
           padding: 0 10px;
           transition: all .2s ease-in; }
-          #games-online-field:not(.Durak) .mx .msg > * .msg-buttons > *:before {
-            content: '';
-            height: 100%;
-            width: 0;
-            display: inline-block;
-            vertical-align: middle; }
           #games-online-field:not(.Durak) .mx .msg > * .msg-buttons > *:first-child {
             margin-right: 20px; }
           #games-online-field:not(.Durak) .mx .msg > * .msg-buttons > *:hover {
-            color: #fff;
+            color: #f8e71c;
             background: #000; }
       #games-online-field:not(.Durak) .mx .msg .msg-win {
         background: #f8e71c; }
       #games-online-field:not(.Durak) .mx .msg .msg-lose {
         background: #f0e98f; }
+        #games-online-field:not(.Durak) .mx .msg .msg-lose .msg-buttons > *:hover {
+          color: #f0e98f; }
       #games-online-field:not(.Durak) .mx .msg .msg-equal {
         background: #fff;
         padding: 40px;
@@ -9833,16 +9833,16 @@ footer.unvisible {
   #games-online-field.Durak .mx {
     height: 100%; }
     #games-online-field.Durak .mx .players {
-      width: 40%;
+      width: 100%;
+      margin: 0px auto;
       height: 25%;
-      margin: 0 30%;
       text-align: center; }
       #games-online-field.Durak .mx .players .m {
         position: absolute;
         bottom: 0;
-        width: 100%;
         height: 40%;
-        margin-left: -30%;
+        width: 100%;
+        margin: 0px auto;
         z-index: 1; }
         #games-online-field.Durak .mx .players .m .gm-pr > * {
           display: initial; }
@@ -9930,11 +9930,14 @@ footer.unvisible {
             background: rgba(0, 0, 0, 0.5);
             margin: 5px; }
       #games-online-field.Durak .mx .players .col1 {
-        padding-left: 42%; }
+        width: 100%;
+        padding-left: 45%; }
       #games-online-field.Durak .mx .players .col2 {
-        padding-left: 25%; }
+        width: 50%;
+        padding-left: 20%; }
       #games-online-field.Durak .mx .players .col3 {
-        padding-left: 10%; }
+        width: 33.3333%;
+        padding-left: 13%; }
       #games-online-field.Durak .mx .players .exit {
         position: absolute;
         top: 0;
@@ -10804,12 +10807,17 @@ footer.unvisible {
         padding: 55px 0;
         display: block; }
     #games-chance-view .prizes > .win {
-      background: #d24c41;
-      color: #fff; }
+      background: #ffe634;
+      color: #4a4a4a; }
       #games-chance-view .prizes > .win button {
         background: transparent;
-        border: 1px solid #fff;
-        color: #fff; }
+        border: 1px solid #4a4a4a;
+        color: #4a4a4a;
+        transition: all .2s linear; }
+        #games-chance-view .prizes > .win button:hover {
+          background: #fff;
+          border: 1px solid #fff;
+          color: #4a4a4a; }
   #games-chance-view .minefield {
     display: inline-block;
     vertical-align: top;

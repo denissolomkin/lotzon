@@ -560,7 +560,8 @@ header {
 
 #games-online-field.Durak .cards .deck .card {
   transform: rotate(10deg) scale(0.7, 0.7);
-  left: -60px; }
+  left: -60px;
+  top: 12%; }
   #games-online-field.Durak .cards .deck .card.trump {
     transform: rotate(100deg) scale(0.7, 0.7); }
 
@@ -967,7 +968,8 @@ header {
       top: 60px; }
     #games-online-field.Durak .cards .deck .card {
       transform: rotate(10deg) scale(0.4, 0.4);
-      left: -40px; }
+      left: -40px;
+      top: 20%; }
       #games-online-field.Durak .cards .deck .card.trump {
         transform: rotate(100deg) scale(0.4, 0.4);
         top: 50px; }

@@ -52,15 +52,15 @@
             
             switch (mode[0]) {
                 case 'POINT':
-                    valid = Player.balance.points >= mode[1];
+                    valid = Player.balance.points*1 >= mode[1]*1;
                     // console.debug('Player.balance.points >= mode[1]', Player.balance.points + '>=' + mode[1]);
                     break;
                 case 'MONEY':
-                    valid = Player.balance.money >= mode[1];
+                    valid = Player.balance.money*1 >= mode[1]*1;
                     // console.debug('Player.balance.money >= mode[1]', Player.balance.money + '>=' + mode[1]);
                     break;
                 case 'LOTZON':
-                    valid = Player.balance.lotzon >= mode[1];
+                    valid = Player.balance.lotzon*1 >= mode[1]*1;
                     // console.debug('Player.balance.lotzon >= mode[1]', Player.balance.lotzon + '>=' + mode[1]);
                     break;
                 case '':

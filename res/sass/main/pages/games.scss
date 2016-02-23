@@ -662,7 +662,7 @@ footer.unvisible {
                             font-size:14px;
                             color:#000000;
                             letter-spacing:0.32px;
-                            line-height:1;
+                            line-height:26px;
                             background: transparent;
 
                             border:1px solid #000000;
@@ -671,19 +671,19 @@ footer.unvisible {
                             cursor: pointer;
                             padding: 0 10px;
                             transition: all .2s ease-in;
-                            &:before{
-                                content: '';
-                                height: 100%;
-                                width: 0;
-                                display: inline-block;
-                                vertical-align: middle;
-                            }
+                            // &:before{
+                            //     content: '';
+                            //     height: 100%;
+                            //     width: 0;
+                            //     display: inline-block;
+                            //     vertical-align: middle;
+                            // }
                             &:first-child{
                                 margin-right: 20px;
                             }
 
                             &:hover{
-                                color: #fff;
+                                color: #f8e71c;
                                 background: #000;
                             }
                         }
@@ -695,6 +695,11 @@ footer.unvisible {
                 }
                 .msg-lose{
                     background:#f0e98f;
+                    .msg-buttons > *{
+                        &:hover{
+                            color: #f0e98f;
+                        }
+                    }
                 }
                 .msg-equal{
                     background:#fff;
@@ -1006,16 +1011,16 @@ footer.unvisible {
     .mx {
         height: 100%;
         .players {
-            width: 40%;
+            width: 100%;
+            margin: 0px auto;
             height: 25%;
-            margin: 0 30%;
             text-align: center;
             .m {
                 position: absolute;
                 bottom: 0;
-                width: 100%;
                 height: 40%;
-                margin-left: -30%;
+                width: 100%;
+                margin: 0px auto;
                 z-index: 1;
                 .gm-pr {
                     // z-index: 12;
@@ -1181,13 +1186,16 @@ footer.unvisible {
                 }
             }
             .col1 {
-                padding-left: 42%;
+                width: 100%;
+                padding-left: 45%;
             }
             .col2 {
-                padding-left: 25%;
+                width: 50%;
+                padding-left: 20%;
             }
             .col3 {
-                padding-left: 10%;
+                width: 33.3333%;
+                padding-left: 13%;
             }
             .exit {
                 position: absolute;

@@ -69,47 +69,6 @@ var Games = {
 
     disableNow: false,
     timer: null,
-    validate: function(e) {
-        alert('validate!!');
-        //     // записаться в игровой стек
-        $(document).on('submit', '#games-online-view-create form', function(event) {
-
-            console.debug(event, this, Player.balance);
-            event.stopPropagation();
-            event.preventDefault();
-            return false;
-
-
-
-            // if(appMode = $('.ngm-bk .rls-r .new-bl .prc-sel').find('.active').attr('data-price')) {
-            //     price = appMode.split('-');
-            //     appMode+='-'+($('.ngm-bk .rls-r .new-bl .plr-sel').find('.active').attr('data-players') ? $('.ngm-bk .rls-r .new-bl .plr-sel').find('.active').attr('data-players') : 2);
-
-            //     if ((price[0] == 'POINT' && playerPoints < parseInt(price[1])) || (price[0] == 'MONEY' && playerMoney < getCurrency(price[1],1))) {
-
-            //         $("#report-popup").show().find(".txt").text(getText('INSUFFICIENT_FUNDS')).fadeIn(200);
-
-            //     } else {
-
-            //         var variation = {};
-            //         $('.ngm-bk .rls-r .new-bl .var-sel .var-vl.active').each(function() {
-            //             variation[$(this).parent().attr('data-variation')]=$(this).attr('data-value');
-            //         });
-
-            //         var path = 'app/' + appName + '/0'; // + appId;
-            //         var data = {'action': 'start', 'mode': appMode, 'variation': variation};
-
-            //         WebSocketAjaxClient(path, data);
-
-            //     }
-
-            // } else {
-
-            //     $("#report-popup").show().find(".txt").text(getText('CHOICE_BET')).fadeIn(200);
-
-            // }
-        });
-    },
     online: {
 
         init: function() {
@@ -170,6 +129,9 @@ var Games = {
             if (!data.json)
                 return false;
 
+            // check if game not finished
+            Games.chance.checkGame(data.json.id);
+            
             Games.chance.key = data.json.key;
 
             switch(data.json.key){
@@ -207,6 +169,48 @@ var Games = {
             }
         },
 
+        checkGame: function(id){
+            Form.post.call(this, {
+                href: '/games/chance/' + id,
+                after: function(data) {
+                    
+                    // check game IDs    
+                    if(id != data.json.res.Id){
+                        // reload tmpl
+                        R.push({ href: 'games/chance/'+data.json.res.Id });
+                        console.debug('---- reload tmpl -----');
+
+                        return;
+                    }
+
+
+                    var fields = data.json.res.GameField;
+                    
+                    if(Object.keys(fields).length > 0){
+
+                        // update all cells to default state
+                        Games.chance.resset();
+
+                        // draw played cells
+                        for(var i in fields){
+                            if(fields[i]){
+                                $('.minefield [data-cell="'+i+'"]').addClass('win played');
+                            }else{
+                                $('.minefield [data-cell="'+i+'"]').addClass('lose played');
+                            }
+                        }
+
+                        // update trigger 'game ready'
+                        Games.chance.conf.play = !0;
+
+                        // add class for css styles
+                        $("#games-chance-view-chance").attr('class', 'game-started');
+
+                    }
+
+                }
+            });
+        },
         //chances view
         get: function(elements, id) {
 
@@ -221,21 +225,24 @@ var Games = {
                     href: '/games/chance/' + id + '/play',
                     data: { 'cell': cell },
                     after: function(data) {
-                        console.log(data.json);
+                        
                         if (data.json.error)
                             return;
                         // code after 
-                        console.info(JSON.stringify(data.json, null, 2));
+                        // console.debug('GET >>> JSON.stringify(data.json, null, 2) ', JSON.stringify(data.json, null, 2));
+                
                         // prize
                         if (data.json.Prize) {
                             $(that).addClass('win');
                         } else {
                             $(that).addClass('lose');
                         }
+                
                         // steps
                         if (data.json.Moves) {
                             Games.chance.prizesMoves(data.json.Moves);
                         }
+                
                         // Game winner Fields
                         if (data.json.GameField) {
                             if (data.json.Prize) {
@@ -293,9 +300,6 @@ var Games = {
             if (!data.json) {
                 return false;
             }
-
-            //deb
-            //            console.error(">>>>",data);
 
             //check if error
             if (data.response.message && data.response.status == 0) {

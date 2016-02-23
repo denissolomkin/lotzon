@@ -303,6 +303,7 @@ $url_3: url(../img/games/lotzonBg.png);
     .cards .deck .card {
         transform: rotate(10deg) scale(0.7, 0.7);
         left: -60px;
+        top: 12%;
         &.trump {
             transform: rotate(100deg) scale(0.7, 0.7);
         }
@@ -1105,6 +1106,7 @@ $url_3: url(../img/games/lotzonBg.png);
                 .card {
                     transform: rotate(10deg) scale(0.4, 0.4);
                     left: -40px;
+                    top: 20%;
                     &.trump {
                         transform: rotate(100deg) scale(0.4, 0.4);
                         top: 50px;
