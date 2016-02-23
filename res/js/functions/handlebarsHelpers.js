@@ -148,6 +148,9 @@ $(function () {
         'mobile': Device.isMobile,
         'day': Livedate.fn.day,
         'emotions': Comments.getEmotionsHTML,
+        'limit': function (key) {
+            return Config.hasOwnProperty('limits') && Config.limits.hasOwnProperty(key) ? Config.limits[key] : 5;
+        },
         'i18n': function () {
             return Cache.i18n(arguments);
         },

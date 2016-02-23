@@ -199,7 +199,13 @@ class Index extends \SlimController\SlimController
             "filestorage"        => '/filestorage',
             "websocketUrl"       => 'ws' . (\Config::instance()->SSLEnabled ? 's' : '') . '://' . $_SERVER['SERVER_NAME'] . ':' . \Config::instance()->wsPort,
             "websocketEmulation" => false,
-            "page"               => $session->get('page')
+            "page"               => $session->get('page'),
+            "limits"             => array(
+                "lottery-history" => 5,
+                "communication-comments" => 5,
+                "users-friends" => 5,
+                "blog-posts" => 5,
+            )
         );
 
         $debug = array(
