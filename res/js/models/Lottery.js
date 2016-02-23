@@ -86,15 +86,15 @@
                     }
 
                     if (matchesBalls) {
-                        extendedTicket.prize = prizesData[matchesBalls].prize;
+                        extendedTicket.prize = parseFloat(prizesData[matchesBalls].prize);
                         extendedTicket.currency = prizesData[matchesBalls].currency;
                         if (!extendedTickets.win[prizesData[matchesBalls].currency]) {
                             extendedTickets.win[prizesData[matchesBalls].currency] = {
                                 currency: extendedTicket.currency,
-                                prize: parseFloat(extendedTicket.prize)
+                                prize: extendedTicket.prize
                             };
                         } else
-                            extendedTickets.win[extendedTicket.currency].prize += parseFloat(extendedTicket.prize);
+                            extendedTickets.win[extendedTicket.currency].prize += extendedTicket.prize;
                     }
 
                     extendedTickets.tickets.push(extendedTicket)
