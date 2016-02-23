@@ -625,7 +625,7 @@ Config::instance()->publicResources = array(
     '/lottery/:lotteryId'         => array(
         'get' => 'controllers\production\LotteryController:lotteryInfo',
     ),
-    '/lottery/history/:lotteryId/tickets' => array(
+    '/lottery/:lotteryId/tickets' => array(
         'get' => 'controllers\production\LotteryController:lotteryTickets',
     ),
     /**
