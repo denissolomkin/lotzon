@@ -255,6 +255,9 @@ class LotteryController extends \AjaxController
         $balls = $lottery->getBallsTotal();
         $balls_incr = $lottery->getBallsTotalIncr();
 
+        $response = array(
+            'cache' =>  'session',
+        );
         $response['res'] = $lottery->exportTo('list');
         $response['res']['statistics'] = array();
 
