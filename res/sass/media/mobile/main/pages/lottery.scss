@@ -1,4 +1,4 @@
-#lottery-history-view {
+#lottery-view {
 	background: url(../img/bg-win.png);
 	& .content-box {
 		background: none;
@@ -132,10 +132,10 @@
 	}
 }
 
-#lottery-history-view .content-box-header span {
+#lottery-view .content-box-header span {
 	display: none;
 }
-#lottery-history-view .content-box-header span.back {
+#lottery-view .content-box-header span.back {
 	display: inline-block;
 }
 .cabinet-game-history .content-box-item-content {

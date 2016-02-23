@@ -554,55 +554,9 @@ $hb_regular: handbookpro-regular;
         line-height: 31px;
         font-size: 14px;
         &:hover{
+            background: #4a4a4a;
+            color: #fff;
             
-            opacity: 0.5;
-        }
-    }
-}
-@media all and(max-width: 768px) {
-    .games-view {
-        .game-settings {
-            width: 100%;
-            padding: 0;
-            .settings-tabs {
-                height: 55px;
-            }
-        }
-        .description-block {
-            width: 100%;
-            padding: 0;
-
-            .game-description {
-                & > div{
-                    max-height: 0 !important;
-                    margin: 0;
-                }
-                & > *:not(div){
-
-                }
-
-                #read-more-description{
-                    &:checked ~ div{
-                        max-height: 2000px !important;
-                    }
-                    + label{
-                        display: initial;
-                        bottom: 20px;
-                        i {
-
-                        }
-                        span{
-                            display: initial;
-                            &:first-child{
-                                display: none;
-                            }
-                        }
-                    }
-                    &:checked + label{
-                        /*     button styles on checked */
-                    }
-                }
-            }
         }
     }
 }

@@ -364,24 +364,24 @@ html {
 .is-countdown {
   width: 200px; }
 
-#lottery-history-view .ghd-game-inf tr th:nth-child(2) {
+#lottery-view .ghd-game-inf tr th:nth-child(2) {
   padding-left: 90px; }
 
-#lottery-history-view .ghd-game-inf tr th:nth-child(3) {
+#lottery-view .ghd-game-inf tr th:nth-child(3) {
   padding-left: 90px;
   text-align: left; }
 
-#lottery-history-view .ghd-game-inf tr td:nth-child(3) {
+#lottery-view .ghd-game-inf tr td:nth-child(3) {
   text-align: left;
   padding-left: 90px; }
 
-#lottery-history-view .ghd-game-inf tr td:nth-child(2) {
+#lottery-view .ghd-game-inf tr td:nth-child(2) {
   padding-left: 140px;
   text-align: left; }
 
-#lottery-history-view .ghd-game-inf .ghd-all-won {
+#lottery-view .ghd-game-inf .ghd-all-won {
   padding: 10px 30px 10px 0; }
-  #lottery-history-view .ghd-game-inf .ghd-all-won .points {
+  #lottery-view .ghd-game-inf .ghd-all-won .points {
     margin-left: 15px; }
 
 .menu-main li {
@@ -1499,7 +1499,7 @@ div.comment-reply-btn {
       background-position: -430 -292px; } }
   .lottery-amimation-box {
     margin-top: 34px; }
-  #lottery-history-view .ghd-game-inf .title {
+  #lottery-view .ghd-game-inf .title {
     margin: 0 -30px 15px; }
   #lottery-process {
     position: absolute;

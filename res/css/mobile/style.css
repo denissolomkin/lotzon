@@ -1107,6 +1107,41 @@ header {
     transform: translateY(-50.1%);
     margin: 0; } }
 
+.games-view {
+  padding: 20px 0; }
+  .games-view .title-wrap .back {
+    left: 10px; }
+  .games-view .create-game {
+    padding: 0px 10px; }
+  .games-view .game-settings {
+    width: 100%;
+    padding: 0; }
+    .games-view .game-settings .players-list .player {
+      padding: 5px 10px; }
+    .games-view .game-settings .settings-tabs {
+      height: 55px; }
+  .games-view .description-block {
+    width: 100%;
+    padding: 0; }
+    .games-view .description-block .game-description > div {
+      max-height: 0 !important;
+      margin: 0;
+      padding: 0px 10px; }
+    .games-view .description-block .game-description > *:not(div) {
+      padding: 0px 10px; }
+    .games-view .description-block .game-description #read-more-description:checked ~ div {
+      max-height: 2000px !important;
+      padding-bottom: 20px; }
+    .games-view .description-block .game-description #read-more-description + label {
+      display: initial;
+      bottom: 20px; }
+      .games-view .description-block .game-description #read-more-description + label span {
+        display: initial; }
+        .games-view .description-block .game-description #read-more-description + label span:first-child {
+          display: none; }
+    .games-view .description-block .game-description #read-more-description:checked + label {
+      /*     button styles on checked */ }
+
 .badges-container {
   width: 0;
   height: 0;
@@ -1124,63 +1159,63 @@ header {
     height: auto;
     bottom: initial; }
 
-#lottery-history-view {
+#lottery-view {
   background: url(../img/bg-win.png); }
-  #lottery-history-view .content-box {
+  #lottery-view .content-box {
     background: none; }
-  #lottery-history-view .content-box-header {
+  #lottery-view .content-box-header {
     background: none;
     padding-left: 0;
     font-size: 20px;
     font-weight: bold; }
-    #lottery-history-view .content-box-header span {
+    #lottery-view .content-box-header span {
       float: left;
       position: relative;
       left: 50px;
       top: 2px;
       font-size: 15.5px;
       font-weight: normal; }
-  #lottery-history-view .content-box-item {
+  #lottery-view .content-box-item {
     padding-top: 10px; }
-  #lottery-history-view .container {
+  #lottery-view .container {
     max-width: 298px;
     margin: 0 auto;
     min-width: 0; }
-    #lottery-history-view .container .balls-end-game {
+    #lottery-view .container .balls-end-game {
       font-size: 30px;
       margin-top: 5px; }
-      #lottery-history-view .container .balls-end-game .g-oc_li {
+      #lottery-view .container .balls-end-game .g-oc_li {
         width: 41px;
         height: 41px;
         font-size: 30px;
         line-height: 40px;
         margin-right: 10px;
         font: 15.5px Handbook-bold; }
-        #lottery-history-view .container .balls-end-game .g-oc_li:last-child {
+        #lottery-view .container .balls-end-game .g-oc_li:last-child {
           margin-right: 0; }
-        #lottery-history-view .container .balls-end-game .g-oc_li .goc_li-nb {
+        #lottery-view .container .balls-end-game .g-oc_li .goc_li-nb {
           width: 41px;
           height: 41px;
           top: 0;
           line-height: 40px;
           left: 0; }
-  #lottery-history-view .ghd-tickets li {
+  #lottery-view .ghd-tickets li {
     font-size: 15.5px;
     margin-bottom: 0; }
-    #lottery-history-view .ghd-tickets li ul li.filled-ball {
+    #lottery-view .ghd-tickets li ul li.filled-ball {
       margin-right: 6px; }
-  #lottery-history-view .ghd-tickets li span {
+  #lottery-view .ghd-tickets li span {
     margin-right: 15px; }
-    #lottery-history-view .ghd-tickets li span.gold {
+    #lottery-view .ghd-tickets li span.gold {
       margin-right: 0; }
-  #lottery-history-view .ghd-won {
+  #lottery-view .ghd-won {
     font: 15.5px / 1 handbookpro-regular; }
-    #lottery-history-view .ghd-won .grid-container {
+    #lottery-view .ghd-won .grid-container {
       max-width: 290px; }
-  #lottery-history-view .ghd-game-inf {
+  #lottery-view .ghd-game-inf {
     margin-top: 30px;
     padding: 0; }
-    #lottery-history-view .ghd-game-inf .title {
+    #lottery-view .ghd-game-inf .title {
       background: #87c1cd;
       margin: 0 -20px;
       border-bottom: 0;
@@ -1188,39 +1223,39 @@ header {
       line-height: 40px;
       text-transform: uppercase;
       margin-bottom: 15px; }
-    #lottery-history-view .ghd-game-inf .ghd-all-won {
+    #lottery-view .ghd-game-inf .ghd-all-won {
       border: 0;
       text-transform: uppercase;
       float: none;
       padding-top: 5px; }
-      #lottery-history-view .ghd-game-inf .ghd-all-won span {
+      #lottery-view .ghd-game-inf .ghd-all-won span {
         margin-left: 5px; }
-        #lottery-history-view .ghd-game-inf .ghd-all-won span:nth-of-type(2) {
+        #lottery-view .ghd-game-inf .ghd-all-won span:nth-of-type(2) {
           margin-left: 20px; }
-    #lottery-history-view .ghd-game-inf table {
+    #lottery-view .ghd-game-inf table {
       width: 298px;
       margin: 0 auto 10px; }
-    #lottery-history-view .ghd-game-inf tr th {
+    #lottery-view .ghd-game-inf tr th {
       text-align: left;
       vertical-align: top;
       padding: 0 0 15px; }
-      #lottery-history-view .ghd-game-inf tr th:nth-child(2) {
+      #lottery-view .ghd-game-inf tr th:nth-child(2) {
         padding: 0 15px 15px 0; }
-      #lottery-history-view .ghd-game-inf tr th:nth-child(3) {
+      #lottery-view .ghd-game-inf tr th:nth-child(3) {
         padding: 0  15px 15px; }
-    #lottery-history-view .ghd-game-inf tr td {
+    #lottery-view .ghd-game-inf tr td {
       text-align: left;
       padding-bottom: 6px; }
-      #lottery-history-view .ghd-game-inf tr td:nth-child(3) {
+      #lottery-view .ghd-game-inf tr td:nth-child(3) {
         text-align: left;
         padding-left: 15px; }
-      #lottery-history-view .ghd-game-inf tr td:nth-child(2) {
+      #lottery-view .ghd-game-inf tr td:nth-child(2) {
         padding: 0 15px 6px 0; }
 
-#lottery-history-view .content-box-header span {
+#lottery-view .content-box-header span {
   display: none; }
 
-#lottery-history-view .content-box-header span.back {
+#lottery-view .content-box-header span.back {
   display: inline-block; }
 
 .cabinet-game-history .content-box-item-content {
@@ -1853,43 +1888,43 @@ header {
     margin-top: 24px; }
     .ghd-won .grid-container {
       max-width: 320px; }
-  #lottery-history-view .container {
+  #lottery-view .container {
     max-width: 410px;
     margin: 0 auto;
     min-width: 0; }
-    #lottery-history-view .container .balls-end-game {
+    #lottery-view .container .balls-end-game {
       margin-top: 5px; }
-      #lottery-history-view .container .balls-end-game .g-oc_li {
+      #lottery-view .container .balls-end-game .g-oc_li {
         width: 62px;
         height: 62px;
         font: 25px Handbook-bold;
         line-height: 62px;
         margin-right: 7px; }
-        #lottery-history-view .container .balls-end-game .g-oc_li:last-child {
+        #lottery-view .container .balls-end-game .g-oc_li:last-child {
           margin-right: 0; }
-        #lottery-history-view .container .balls-end-game .g-oc_li .goc_li-nb {
+        #lottery-view .container .balls-end-game .g-oc_li .goc_li-nb {
           width: 62px;
           height: 62px;
           top: 0;
           line-height: 60px;
           left: 0; }
-  #lottery-history-view .ghd-won {
+  #lottery-view .ghd-won {
     font: 15.5px / 1 handbookpro-regular; }
-    #lottery-history-view .ghd-won .grid-container {
+    #lottery-view .ghd-won .grid-container {
       max-width: 320px; }
-  #lottery-history-view .ghd-game-inf .ghd-all-won {
+  #lottery-view .ghd-game-inf .ghd-all-won {
     border: 0;
     text-transform: uppercase;
     float: none;
     padding: 5px 0 0; }
-    #lottery-history-view .ghd-game-inf .ghd-all-won span {
+    #lottery-view .ghd-game-inf .ghd-all-won span {
       margin-left: 5px; }
-      #lottery-history-view .ghd-game-inf .ghd-all-won span:nth-of-type(2) {
+      #lottery-view .ghd-game-inf .ghd-all-won span:nth-of-type(2) {
         margin-left: 20px; }
-  #lottery-history-view .ghd-game-inf table {
+  #lottery-view .ghd-game-inf table {
     width: 410px;
     margin: 0 auto 10px; }
-  #lottery-history-view .content-box-header span {
+  #lottery-view .content-box-header span {
     display: none; } }
 
 @media (min-width: 480px) and (min-width: 600px) {
@@ -1975,54 +2010,54 @@ header {
     margin-bottom: 3px; }
   .ghd-tickets li span {
     min-width: 74px; }
-  #lottery-history-view .container {
+  #lottery-view .container {
     max-width: 498px;
     margin: 0 auto;
     min-width: 0; }
-    #lottery-history-view .container .balls-end-game {
+    #lottery-view .container .balls-end-game {
       margin-top: 5px; }
-      #lottery-history-view .container .balls-end-game .g-oc_li {
+      #lottery-view .container .balls-end-game .g-oc_li {
         width: 72px;
         height: 72px;
         font: 25px Handbook-bold;
         line-height: 72px;
         margin-right: 13px; }
-        #lottery-history-view .container .balls-end-game .g-oc_li:last-child {
+        #lottery-view .container .balls-end-game .g-oc_li:last-child {
           margin-right: 0; }
-        #lottery-history-view .container .balls-end-game .g-oc_li .goc_li-nb {
+        #lottery-view .container .balls-end-game .g-oc_li .goc_li-nb {
           width: 72px;
           height: 72px;
           top: 0;
           line-height: 72px;
           left: 0; }
-  #lottery-history-view .ghd-won {
+  #lottery-view .ghd-won {
     font: 15.5px / 1 handbookpro-regular; }
-    #lottery-history-view .ghd-won .grid-container {
+    #lottery-view .ghd-won .grid-container {
       max-width: 320px; }
-  #lottery-history-view .ghd-game-inf .ghd-all-won {
+  #lottery-view .ghd-game-inf .ghd-all-won {
     border: 0;
     text-transform: uppercase;
     float: none;
     padding: 5px 0 0; }
-    #lottery-history-view .ghd-game-inf .ghd-all-won span {
+    #lottery-view .ghd-game-inf .ghd-all-won span {
       margin-left: 5px; }
-      #lottery-history-view .ghd-game-inf .ghd-all-won span:nth-of-type(2) {
+      #lottery-view .ghd-game-inf .ghd-all-won span:nth-of-type(2) {
         margin-left: 20px; }
-  #lottery-history-view .ghd-game-inf table {
+  #lottery-view .ghd-game-inf table {
     width: 498px;
     margin: 0 auto 10px; }
-  #lottery-history-view .ghd-tickets li {
+  #lottery-view .ghd-tickets li {
     font-size: 19px;
     margin-bottom: 3px; }
-    #lottery-history-view .ghd-tickets li span {
+    #lottery-view .ghd-tickets li span {
       min-width: 74px; }
-    #lottery-history-view .ghd-tickets li ul li.filled-ball {
+    #lottery-view .ghd-tickets li ul li.filled-ball {
       margin-right: 26px;
       width: 40px;
       height: 40px;
       line-height: 40px;
       margin-top: 0; }
-      #lottery-history-view .ghd-tickets li ul li.filled-ball .won_ball {
+      #lottery-view .ghd-tickets li ul li.filled-ball .won_ball {
         width: 40px;
         height: 40px;
         line-height: 40px; } }

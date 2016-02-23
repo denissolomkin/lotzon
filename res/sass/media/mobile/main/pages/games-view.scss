@@ -1,0 +1,98 @@
+
+//colors
+$color_gravel_approx: #474747;
+$color_turbo_approx: #ffe700;
+$white: #fff;
+$color_hippie_blue_approx: #5a90b7;
+$color_sinbad_approx: #a7d1d5;
+$mercury: #e5e5e5;
+$wild_sand: #f4f4f4;
+$color_fuscous_gray_approx: #4a4a4a;
+$color_bright_sun_approx: #ffe634;
+$color_silver_chalice_approx: #aaa;
+
+//fonts
+$hb_bold: handbook-bold;
+$hb_regular: handbookpro-regular;
+
+//@extend-elements
+//original selectors
+//.games-view .game-settings .settings-tabs div.active, .games-view .game-settings .settings-tabs div:hover
+%extend_1 {
+    background: $color_gravel_approx;
+    color: $white;
+    text-align: center;
+    //Instead of the line below you could use @include box-sizing($bs)
+    box-sizing: border-box;
+}
+
+//original selectors
+//.game-settings [type="radio"]:not(:checked) +label, .game-settings [type="radio"]:checked +label
+%extend_2 {
+    position: relative;
+    cursor: pointer;
+}
+
+.games-view {
+    padding: 20px 0;
+    .title-wrap{
+        .back{
+            left: 10px;
+        }
+    }
+    .create-game{
+        padding: 0px 10px;
+    }
+    .game-settings {
+        width: 100%;
+        padding: 0;
+        .players-list{
+            .player{
+                padding: 5px 10px;
+            }
+        }
+        .settings-tabs {
+            height: 55px;
+        }
+    }
+    .description-block {
+        width: 100%;
+        padding: 0;
+
+        .game-description {
+
+            & > div{
+                max-height: 0 !important;
+                margin: 0;
+                padding: 0px 10px;
+            }
+            & > *:not(div){
+                padding: 0px 10px;
+
+            }
+
+            #read-more-description{
+                &:checked ~ div{
+                    max-height: 2000px !important;
+                    padding-bottom: 20px;
+                }
+                + label{
+                    display: initial;
+                    bottom: 20px;
+                    i {
+
+                    }
+                    span{
+                        display: initial;
+                        &:first-child{
+                            display: none;
+                        }
+                    }
+                }
+                &:checked + label{
+                    /*     button styles on checked */
+                }
+            }
+        }
+    }
+}

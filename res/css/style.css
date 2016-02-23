@@ -6791,58 +6791,58 @@ form.loading > * {
     left: 5px;
     top: 10px; }
 
-#lottery-history-view {
+#lottery-view {
   background: url(img/bg-win.png); }
-  #lottery-history-view .content-box {
+  #lottery-view .content-box {
     background: none; }
-  #lottery-history-view .content-box-header {
+  #lottery-view .content-box-header {
     background: none;
     padding-left: 0;
     font-size: 20px; }
-    #lottery-history-view .content-box-header span {
+    #lottery-view .content-box-header span {
       float: left;
       position: relative;
       left: 15px;
       top: 2px;
       font-size: 15.5px;
       font-weight: normal; }
-      #lottery-history-view .content-box-header span.back {
+      #lottery-view .content-box-header span.back {
         left: 10px; }
-  #lottery-history-view .container {
+  #lottery-view .container {
     max-width: 500px;
     margin: 0 auto; }
-    #lottery-history-view .container .balls-end-game {
+    #lottery-view .container .balls-end-game {
       font-size: 30px;
       margin-top: 5px; }
-      #lottery-history-view .container .balls-end-game .g-oc_li {
+      #lottery-view .container .balls-end-game .g-oc_li {
         width: 70px;
         height: 70px;
         font-size: 30px;
         line-height: 70px;
         margin-right: 16px; }
-        #lottery-history-view .container .balls-end-game .g-oc_li:last-child {
+        #lottery-view .container .balls-end-game .g-oc_li:last-child {
           margin-right: 0; }
-        #lottery-history-view .container .balls-end-game .g-oc_li .goc_li-nb {
+        #lottery-view .container .balls-end-game .g-oc_li .goc_li-nb {
           width: 70px;
           height: 70px;
           top: 0;
           line-height: 70px;
           left: 0; }
-  #lottery-history-view .ghd-tickets li {
+  #lottery-view .ghd-tickets li {
     font-size: 15.5px;
     margin-bottom: 0; }
-    #lottery-history-view .ghd-tickets li ul li.filled-ball {
+    #lottery-view .ghd-tickets li ul li.filled-ball {
       margin-right: 17px; }
-  #lottery-history-view .ghd-tickets li span {
+  #lottery-view .ghd-tickets li span {
     margin-right: 25px; }
-  #lottery-history-view .ghd-won {
+  #lottery-view .ghd-won {
     font: 15.5px / 1 'handbookpro-regular'; }
-  #lottery-history-view .ghd-game-inf {
+  #lottery-view .ghd-game-inf {
     font-family: 'handbookpro-regular';
     margin-top: 30px;
     padding: 0;
     font-size: 15px; }
-    #lottery-history-view .ghd-game-inf .title {
+    #lottery-view .ghd-game-inf .title {
       background: #8ac7cc;
       margin: 0 -20px;
       border-bottom: 0;
@@ -6851,30 +6851,30 @@ form.loading > * {
       text-transform: uppercase;
       margin-bottom: 15.5px;
       text-shadow: 0.2px 0.5px 0 rgba(255, 255, 255, 0.4); }
-    #lottery-history-view .ghd-game-inf .ghd-all-won {
+    #lottery-view .ghd-game-inf .ghd-all-won {
       border: 0;
       text-transform: uppercase;
       text-align: right;
       padding: 10px 15px 0 0; }
-    #lottery-history-view .ghd-game-inf tr th {
+    #lottery-view .ghd-game-inf tr th {
       text-align: center;
       font-size: 15px;
       padding: 0 0 20px; }
-      #lottery-history-view .ghd-game-inf tr th:nth-child(2) {
+      #lottery-view .ghd-game-inf tr th:nth-child(2) {
         padding-left: 40px; }
-      #lottery-history-view .ghd-game-inf tr th:nth-child(3) {
+      #lottery-view .ghd-game-inf tr th:nth-child(3) {
         padding-left: 40px;
         text-align: left; }
-    #lottery-history-view .ghd-game-inf tr td {
+    #lottery-view .ghd-game-inf tr td {
       text-align: center;
       padding: 0 0 10px; }
-      #lottery-history-view .ghd-game-inf tr td:nth-child(3) {
+      #lottery-view .ghd-game-inf tr td:nth-child(3) {
         text-align: left;
         padding-left: 40px; }
-      #lottery-history-view .ghd-game-inf tr td:nth-child(2) {
+      #lottery-view .ghd-game-inf tr td:nth-child(2) {
         padding-left: 40px; }
 
-#lottery-history-view-tickets {
+#lottery-view-tickets {
   padding: 0;
   margin-top: 32px; }
 
@@ -10680,31 +10680,8 @@ footer.unvisible {
     line-height: 31px;
     font-size: 14px; }
     .create-game .start-game:hover {
-      opacity: 0.5; }
-
-@media all and (max-width: 768px) {
-  .games-view .game-settings {
-    width: 100%;
-    padding: 0; }
-    .games-view .game-settings .settings-tabs {
-      height: 55px; }
-  .games-view .description-block {
-    width: 100%;
-    padding: 0; }
-    .games-view .description-block .game-description > div {
-      max-height: 0 !important;
-      margin: 0; }
-    .games-view .description-block .game-description #read-more-description:checked ~ div {
-      max-height: 2000px !important; }
-    .games-view .description-block .game-description #read-more-description + label {
-      display: initial;
-      bottom: 20px; }
-      .games-view .description-block .game-description #read-more-description + label span {
-        display: initial; }
-        .games-view .description-block .game-description #read-more-description + label span:first-child {
-          display: none; }
-    .games-view .description-block .game-description #read-more-description:checked + label {
-      /*     button styles on checked */ } }
+      background: #4a4a4a;
+      color: #fff; }
 
 #games-chance-view {
   color: #4a4a4a;

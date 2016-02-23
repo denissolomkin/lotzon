@@ -352,7 +352,7 @@
     width: 200px;
 }
 
-#lottery-history-view {
+#lottery-view {
     & .ghd-game-inf {
         & tr {
             & th {
@@ -378,7 +378,7 @@
         }
     }
 }
-#lottery-history-view .ghd-game-inf .ghd-all-won {
+#lottery-view .ghd-game-inf .ghd-all-won {
     padding: 10px 30px 10px 0;
     & .points {
         margin-left: 15px;
