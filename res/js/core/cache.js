@@ -259,6 +259,11 @@
                     source = source && source.hasOwnProperty(needle) && source[needle];
                 }
 
+
+            /* todo
+            * extend without nesting */
+
+
             /* if receive data for extend cache */
             if (source && Object.size(source) && storage) {
 

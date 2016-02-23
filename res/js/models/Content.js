@@ -196,8 +196,8 @@
                 'query'   : Object.filter($(this).serializeObject()),
                 'offset'  : renderList && renderList.childElementCount || null,
                 'timing'  : Cache.validate(key),
-                'first_id': renderList && renderList.firstElementChild && renderList.firstElementChild.getAttribute('data-id') || null,
-                'last_id' : renderList && renderList.lastElementChild && renderList.lastElementChild.getAttribute('data-id') || null
+                'first_id': renderList && renderList.firstElementChild && parseInt(renderList.firstElementChild.getAttribute('data-id')) || null,
+                'last_id' : renderList && renderList.lastElementChild && parseInt(renderList.lastElementChild.getAttribute('data-id')) || null
             });
 
             return res;

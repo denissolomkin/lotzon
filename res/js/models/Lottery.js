@@ -86,15 +86,20 @@
                     }
 
                     if (matchesBalls) {
+
                         extendedTicket.prize = parseFloat(prizesData[matchesBalls].prize);
                         extendedTicket.currency = prizesData[matchesBalls].currency;
+
                         if (!extendedTickets.win[prizesData[matchesBalls].currency]) {
                             extendedTickets.win[prizesData[matchesBalls].currency] = {
                                 currency: extendedTicket.currency,
                                 prize: extendedTicket.prize
                             };
+
                         } else
                             extendedTickets.win[extendedTicket.currency].prize += extendedTicket.prize;
+
+                        console.error(extendedTickets);
                     }
 
                     extendedTickets.tickets.push(extendedTicket)
@@ -181,7 +186,7 @@
 
         prepareData: function(id) {
 
-            var href = id ? '/lottery/history/' + id : '/lastResult',
+            var href = id ? '/lottery/' + id : '/lastResult',
                 lastLotteryId = parseInt(Tickets.lastLotteryId),
                 format = function(json) {
 
@@ -194,11 +199,14 @@
                                 Lottery.prepareData(id)
                             }, 3000);
                             break;
+
                         case Lottery.data.id > lastLotteryId + 1:
                             Lottery.update();
                             break;
+
                         case Lottery.data.id == lastLotteryId + 1:
                             console.log('prepareData: ', Lottery.data);
+                            /* todo adding to lottery-history all & mine */
                             Lottery.prepareTickets(Lottery.data.id);
                             break;
                     }
@@ -212,7 +220,7 @@
 
         prepareTickets: function(id) {
 
-            var href = 'lottery-history-' + id + '-tickets',
+            var href = 'lottery-' + id + '-tickets',
                 json = ((id == parseInt(Tickets.lastLotteryId) + 1) ? {
                     key: href,
                     cache: "session",
