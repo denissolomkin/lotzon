@@ -293,6 +293,7 @@ class LotteryController extends \AjaxController
         }
 
         $response = array(
+            'cache' =>  'session',
             'res' => array(
             ),
         );
