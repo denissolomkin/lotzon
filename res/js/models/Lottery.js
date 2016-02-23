@@ -91,10 +91,10 @@
                         if (!extendedTickets.win[prizesData[matchesBalls].currency]) {
                             extendedTickets.win[prizesData[matchesBalls].currency] = {
                                 currency: extendedTicket.currency,
-                                prize: extendedTicket.prize
+                                prize: parseFloat(extendedTicket.prize)
                             };
                         } else
-                            extendedTickets.win[extendedTicket.currency].prize += extendedTicket.prize;
+                            extendedTickets.win[extendedTicket.currency].prize += parseFloat(extendedTicket.prize);
                     }
 
                     extendedTickets.tickets.push(extendedTicket)

@@ -260,7 +260,7 @@
                 }
 
             /* if receive data for extend cache */
-            if (source && storage) {
+            if (source && Object.size(source) && storage) {
 
                 switch (true) {
 
@@ -280,6 +280,8 @@
                         break;
 
                 }
+
+                console.error(data, source, storage);
 
                 if (storage) {
                     this.extend(data, storage)
@@ -330,6 +332,8 @@
                                 : cache[needle]);
                             list = cache || list;
                         } while (keys.length && cache);
+
+                        console.error(cache);
 
                         if (!cache && isNumeric(needle) && list) {
 
@@ -589,7 +593,7 @@
         /* extend storage by object */
         "extend": function (data, storage) {
 
-            var source = data.res || data;
+            var source = data.hasOwnProperty('res') ? data.res : data;
 
             if (data.key) {
                 var path = this.splitPath(data.key);
@@ -604,9 +608,11 @@
                 }
             }
 
-            D.log(['Cache.extend', storage, path, source], 'cache');
+            D.log(['Cache.extend', storage, path, data], 'cache');
 
-            Object.deepExtend(this.storage[storage], source);
+            if(source)
+                Object.deepExtend(this.storage[storage], source);
+
             return this;
 
         },
