@@ -86,7 +86,7 @@
                     }
 
                     if (matchesBalls) {
-                        extendedTicket.prize = prizesData[matchesBalls].prize;
+                        extendedTicket.prize = parseFloat(prizesData[matchesBalls].prize);
                         extendedTicket.currency = prizesData[matchesBalls].currency;
                         if (!extendedTickets.win[prizesData[matchesBalls].currency]) {
                             extendedTickets.win[prizesData[matchesBalls].currency] = {

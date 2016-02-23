@@ -260,7 +260,7 @@
                 }
 
             /* if receive data for extend cache */
-            if (source && storage) {
+            if (source && Object.size(source) && storage) {
 
                 switch (true) {
 
@@ -315,9 +315,7 @@
                     } else {
 
                         if (typeof path === 'object') {
-                            var keys = this.splitPath(path.href),
-                                offset = path.query && path.query.offset || 0,
-                                order = path.query && path.query.order || "ASC";
+                            var keys = this.splitPath(path.href);
                         } else
                             var keys = this.splitPath(path);
 
@@ -325,9 +323,9 @@
                         do {
                             needle = keys.shift();
                             cache = needle && cache && cache.hasOwnProperty(needle)
-                            && (isNumeric(needle) && !keys.length
-                                ? (cache[needle].hasOwnProperty('id') && cache[needle]['id'] == needle && cache[needle])
-                                : cache[needle]);
+                                && (isNumeric(needle) && !keys.length
+                                    ? (cache[needle].hasOwnProperty('id') && cache[needle]['id'] == needle && cache[needle])
+                                    : cache[needle]);
                             list = cache || list;
                         } while (keys.length && cache);
 
@@ -343,18 +341,22 @@
 
                         } else if (cache && !isNumeric(needle) && cache[Object.keys(cache)[0]].hasOwnProperty('id')) {
 
+                            var offset = path.query && path.query.offset || 0;
+
                             /* todo search by filters */
                             if (Object.size(list) > offset) {
 
-                                cache = {};
-                                var keys = Object.keys(list),
-                                    limit = 10,
+                                var count = 0,
                                     filters = {},
-                                    count = 0;
+                                    keys = Object.keys(list),
+                                    order = path.query && path.query.order || "ASC",
+                                    limit = path.query && path.query.limit || 10;
 
-                                if(path.query)
-                                    for(var filter in path.query)
-                                        if(['order', 'offset', 'before_id', 'after_id'].indexOf(filter) == -1)
+                                cache = {};
+
+                                if (path.query)
+                                    for (var filter in path.query)
+                                        if (['limit', 'order', 'offset', 'before_id', 'after_id'].indexOf(filter) == -1)
                                             filters[filter] = path.query[filter];
 
                                 switch (order) {
@@ -589,7 +591,7 @@
         /* extend storage by object */
         "extend": function (data, storage) {
 
-            var source = data.res || data;
+            var source = data.hasOwnProperty('res') ? data.res : data;
 
             if (data.key) {
                 var path = this.splitPath(data.key);
@@ -604,9 +606,11 @@
                 }
             }
 
-            D.log(['Cache.extend', storage, path, source], 'cache');
+            D.log(['Cache.extend', storage, path, data], 'cache');
 
-            Object.deepExtend(this.storage[storage], source);
+            if(source)
+                Object.deepExtend(this.storage[storage], source);
+
             return this;
 
         },
