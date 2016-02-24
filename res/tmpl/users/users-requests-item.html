@@ -1,7 +1,10 @@
 <div id="users-requests-{{id}}" data-id="{{id}}" class="c-friend clearfix">
     <a href="/user/{{user.id}}">
         <div class="c-friend-img">
-            <img src="{{avatar user.img user.id 100}}" alt="">
+            <img src="{{avatar user.img user.id 100}}"
+                 class="loading"
+                 onload="this.style.background = 'none'"
+                 onerror="Player.getAvatar.call(this)">
         </div>
     </a>
 
