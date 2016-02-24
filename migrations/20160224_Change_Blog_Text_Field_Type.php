@@ -1,0 +1,1 @@
+ALTER TABLE `Blog` CHANGE `Text` `Text` LONGTEXT NOT NULL;
