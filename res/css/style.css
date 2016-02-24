@@ -8486,6 +8486,9 @@ span.input-prefix {
     position: static;
     margin-left: 30px; }
 
+.billing-title {
+  min-width: 150px; }
+
 .placeholder {
   position: absolute;
   background: #fff;
