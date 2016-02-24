@@ -241,11 +241,11 @@
          * Work with JSON
          * */
 
-        "set": function (key, data) {
+        "set": function (key, data, storage) {
 
             var path = data.key ? this.splitPath(data.key) : this.splitPath(key),
                 needle = path.last(),
-                storage = data.cache || false,
+                storage = data.cache || storage || false,
                 source = (data.hasOwnProperty('res') ? data.res : data);
 
             if (data.player)

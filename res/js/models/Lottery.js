@@ -110,6 +110,8 @@
 
         getSummary: function() {
 
+            this.data.statistics = this.data.statistics || Tickets.prizes.default;
+
             var lotterySummary = {
                     totalSum: []
                 },
@@ -186,7 +188,7 @@
 
         prepareData: function(id) {
 
-            var href = id ? '/lottery/' + id : '/lastResult',
+            var href = id ? '/lottery/history/' + id : '/lastResult',
                 lastLotteryId = parseInt(Tickets.lastLotteryId),
                 format = function(json) {
 
@@ -205,8 +207,12 @@
                             break;
 
                         case Lottery.data.id == lastLotteryId + 1:
-                            console.log('prepareData: ', Lottery.data);
+                            console.error('prepareData: ', Lottery.data);
+
                             /* todo adding to lottery-history all & mine */
+                            json.type = 'mine';
+                            Cache.set(href, json, 'session');
+
                             Lottery.prepareTickets(Lottery.data.id);
                             break;
                     }

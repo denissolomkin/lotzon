@@ -77,6 +77,7 @@
                 'json': this.navigation
             });
         },
+
         ready: function () {
 
 
@@ -98,6 +99,7 @@
                 }
 
                 Navigation.menu.switch();
+                Content.ready();
             }
 
         },

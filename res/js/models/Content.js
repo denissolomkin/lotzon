@@ -15,6 +15,10 @@
 
         },
 
+        ready: function () {
+            this.updateBanners();
+        },
+
         banner: {
 
             moment: function (data) {
