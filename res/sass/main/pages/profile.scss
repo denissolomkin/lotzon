@@ -524,7 +524,7 @@
 }
 .settings .ae-current-combination > * {
   float: left;
-  width: 15px;
+  width: 20px;
   height: 35px;
   border-radius: 50%;
   line-height: 34px;
@@ -1204,6 +1204,10 @@ span.input-prefix {
   }
 }
 
+.s-pass-text {
+  margin-top: 2px;
+}
+
 .s-pass-names {
   position: absolute;
   top: 0;
@@ -1590,6 +1594,10 @@ span.input-prefix {
     position: static;
     margin-left: 30px;
   }
+}
+
+.billing-title {
+  min-width: 150px;
 }
 
 .placeholder {

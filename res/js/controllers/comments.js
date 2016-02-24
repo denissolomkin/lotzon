@@ -15,31 +15,26 @@
         },
 
         emotionsToServer: {
-
-
-            '<img src="/res/img/smiles_png/i-smile-angry.png" class="i-smile-angry">': '*ANGRY*',
-            '<img src="/res/img/smiles_png/i-smile-clown.png" class="i-smile-clown">': '*CLOWN*',
-            '<img src="/res/img/smiles_png/i-smile-confused.png" class="i-smile-confused">': '*CONFUSED*',
-            '<img src="/res/img/smiles_png/i-smile-cool.png" class="i-smile-cool">': '*COOL*',
-            '<img src="/res/img/smiles_png/i-smile-crying.png" class="i-smile-crying">': ';(',
-            '<img src="/res/img/smiles_png/i-smile-dislike.png" class="i-smile-dislike">': ':(',
-            '<img src="/res/img/smiles_png/i-smile-gay.png" class="i-smile-gay">': '*GAY*',
-            '<img src="/res/img/smiles_png/i-smile-geek.png" class="i-smile-geek">': '*GEEK*',
+            '<img src="/res/img/smiles_png/i-smile-smile.png" class="i-smile-smile">': ':)',
+            '<img src="/res/img/smiles_png/i-smile-crying.png" class="i-smile-crying">': ':(',
             '<img src="/res/img/smiles_png/i-smile-happy.png" class="i-smile-happy">': '*HAPPY*',
-            '<img src="/res/img/smiles_png/i-smile-kiss.png" class="i-smile-kiss">': '*KISS*',
+            '<img src="/res/img/smiles_png/i-smile-cool.png" class="i-smile-cool">': '8)',
             '<img src="/res/img/smiles_png/i-smile-laughing.png" class="i-smile-laughing">': ':D',
-            '<img src="/res/img/smiles_png/i-smile-like.png" class="i-smile-like">': '*LIKE*',
-            '<img src="/res/img/smiles_png/i-smile-money.png" class="i-smile-money">': '*MONEY*',
-            '<img src="/res/img/smiles_png/i-smile-robot.png" class="i-smile-robot">': '*ROBOT*',
+            '<img src="/res/img/smiles_png/i-smile-surprise.png" class="i-smile-surprise">': ':O',
+            '<img src="/res/img/smiles_png/i-smile-wink.png" class="i-smile-wink">': ';)',
+            '<img src="/res/img/smiles_png/i-smile-tongue.png" class="i-smile-tongue">': ':P',
+            '<img src="/res/img/smiles_png/i-smile-money.png" class="i-smile-money">': '$)',
+            '<img src="/res/img/smiles_png/i-smile-confused.png" class="i-smile-confused">': '*CONFUSED*',
+            '<img src="/res/img/smiles_png/i-smile-angry.png" class="i-smile-angry">': '*ANGRY*',
+            '<img src="/res/img/smiles_png/i-smile-kiss.png" class="i-smile-kiss">': ':*',
             '<img src="/res/img/smiles_png/i-smile-security.png" class="i-smile-security">': '*SECURITY*',
             '<img src="/res/img/smiles_png/i-smile-sleepi.png" class="i-smile-sleepi">': '*SLEEPI*',
-            '<img src="/res/img/smiles_png/i-smile-smile.png" class="i-smile-smile">': ':)',
-            '<img src="/res/img/smiles_png/i-smile-surprise.png" class="i-smile-surprise">': ':O',
-            '<img src="/res/img/smiles_png/i-smile-tongue.png" class="i-smile-tongue">': ':P',
-            '<img src="/res/img/smiles_png/i-smile-wink.png" class="i-smile-wink">': ';)'
-
-
-
+            '<img src="/res/img/smiles_png/i-smile-geek.png" class="i-smile-geek">': '*GEEK*',
+            '<img src="/res/img/smiles_png/i-smile-gay.png" class="i-smile-gay">': '*GAY*',
+            '<img src="/res/img/smiles_png/i-smile-robot.png" class="i-smile-robot">': '*ROBOT*',
+            '<img src="/res/img/smiles_png/i-smile-clown.png" class="i-smile-clown">': '*CLOWN*',
+            '<img src="/res/img/smiles_png/i-smile-like.png" class="i-smile-like">': '*LIKE*',
+            '<img src="/res/img/smiles_png/i-smile-dislike.png" class="i-smile-dislike">': '*DISLIKE*'
         },
 
         getEmotionsHTML: function() {
@@ -334,9 +329,7 @@
 
 
         showSmiles: function() {
-            console.log('works');
             $(this).closest('.message-form').find('.smiles').toggleClass('hidden');
-            console.log($(this).closest('.message-form').find('.smiles'), ' $(this).closest(".message-form").find(".smiles")');
             $(this).toggleClass('active');
         },
 
@@ -345,13 +338,11 @@
         chooseSmiles: function(e) {
             console.log(e);
             div = $(this).closest('.message-form-actions').prev();
-            console.log($(this).clone());
             div.append($(this).clone());
 
             // var result = $('div[contenteditable="true"]')[0];
 
             var result = $(this).closest('.message-form').find('div[contenteditable="true"]')[0];
-            console.log(result, 'result')
             result.focus();
             placeCaretAtEnd(result);
 
@@ -461,14 +452,9 @@
                 console.log('VISIBLE');
                 $('.smiles').addClass('hidden');
             }
-            console.log(form, 'form.data');
-
 
             for (var emotion in Comments.emotionsToServer) {
                 form.data.text = form.data.text.replaceAll(emotion, Comments.emotionsToServer[emotion]);
-                console.log( form.data.text, ' form.data.text');
-
-                
             }
             form.data.text = form.data.text.replace(/(<br\/*>(\s*))+/ig, '\n');
             return form;

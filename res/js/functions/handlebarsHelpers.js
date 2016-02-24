@@ -306,14 +306,12 @@ $(function () {
         'or': function (v1, v2) {
             return v1 || v2;
         },
-       
+
         'getSmile': function (text) {
-
-        for (var val in Comments.emotionsToServer) {
-            text = text.replace(Comments.emotionsToServer[val], val );
-
-        }   
-            text =   text.replace(/\n/ig, '<br>');
+            for (var val in Comments.emotionsToServer) {
+                text = text.split(Comments.emotionsToServer[val]).join(val);
+            }
+            text = text.replace(/\n/ig, '<br>');
             return text;
         }
 

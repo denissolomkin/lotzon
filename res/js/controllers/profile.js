@@ -178,6 +178,10 @@
 
                 });
 
+                if ($('.ae-combination-box li.selected').length == 6) {
+                    $('.ae-combination-box li:not(.selected)').addClass('unavailable');
+                }
+
             },
 
             selectFavorite: function() {
@@ -219,6 +223,7 @@
 
                 }
                 $('.ae-combination-box li').removeClass('selected');
+                $('.ae-combination-box li:not(.selected)').removeClass('unavailable');
             },
 
             checkCalendar : function(e) {
