@@ -535,12 +535,8 @@ class Players extends \AjaxController
 
         $this->authorizedOnly();
 
-        if($playerId === 0){
-            $playerId = (int)\SettingsModel::instance()->getSettings('counters')->getValue('USER_REVIEW_DEFAULT');
-        }
-
         $player = new Player();
-        $player->setId($playerId)->fetch();
+        $player->setId($playerId?:(int)\SettingsModel::instance()->getSettings('counters')->getValue('USER_REVIEW_DEFAULT'))->fetch();
 
         $response = array(
             'res' => array(
