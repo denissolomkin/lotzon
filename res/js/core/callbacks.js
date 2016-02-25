@@ -163,9 +163,9 @@
             "games-online-view-now-list": Games.online.timeout,
             "games-chance": Carousel.initOwl,
             "games-chance-view": Games.chance.init,
+            "games-slots-view": Games.slots.init,
             "games-random": Games.random.init,
             "games-moment": Games.random.init,
-            "games-game": WebSocketAjaxClient,
 
             "profile-edit": Profile.init.edit,
             "profile-billing": Profile.init.billing,
@@ -197,7 +197,7 @@
             "communication-comments": Comments.after.reply,
             "communication-notifications": Comments.renderNotifications,
             "users-requests-view": Profile.after.request,
-            "games-chance-view": Games.chance.after.start
+            "games-slots-view": Games.slots.play
 
         },
 
@@ -237,6 +237,7 @@
         },
 
         "submit": {
+
             "communication-comments":  Comments.smilePost,
             "communication-messages":  Comments.smilePost,
             "blog-post-view-comments": Comments.smilePost

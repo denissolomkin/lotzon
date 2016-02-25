@@ -514,6 +514,31 @@ Config::instance()->publicResources = array(
         ),
     ),
     /**
+     * Slots games
+     */
+    '/games/slots/:id' => array(
+        'get'  => array(
+            'controllers\production\SlotsController:item',
+            function ($route) {
+                $route->setParams(array(
+                        "key"   => "ChanceGame",
+                        "id"    => $route->getParam('id')
+                    )
+                );
+            }
+        ),
+        'post'  => array(
+            'controllers\production\SlotsController:start',
+            function ($route) {
+                $route->setParams(array(
+                        "key"   => "ChanceGame",
+                        "id"    => $route->getParam('id')
+                    )
+                );
+            }
+        )
+    ),
+    /**
      * Flash
      */
     '/games/flash/' => array(
