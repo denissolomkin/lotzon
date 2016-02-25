@@ -677,6 +677,7 @@ class Players extends \AjaxController
                 "settings" => array(
                     "newsSubscribe" => $player->getNewsSubscribe()
                 ),
+                "favorite" => $player->getFavoriteCombination(),
             )
         );
 
