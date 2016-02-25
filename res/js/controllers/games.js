@@ -115,6 +115,24 @@ var Games = {
         }
 
     },
+
+    slots: {
+        init: function (data) {
+            Carousel.initOwl();
+            slotMachine.init();
+        },
+        play: function(data){
+            slotMachine.spin(data);
+        }
+    },
+    
+    wheel: {
+        init: function (data) {
+        },
+        play: function(data){
+        }
+    },
+
     chance: {
 
         key: null,
@@ -131,50 +149,24 @@ var Games = {
 
             // check if game not finished
             Games.chance.checkGame(data.json.id);
-            
             Games.chance.key = data.json.key;
 
-            switch(data.json.key){
-                case 'Slots':
-                    Carousel.initOwl();
-                    slotMachine.init();
-                    break;
-
-                default:
-                    // make config
-                    Games.chance.conf.data = {};
-                    Games.chance.conf.data = data.json;
-                    Games.chance.get("#games-chance-view-cells button:not(.played)", data.json.id);
-                    // in multiple prizes set first prize as @current@
-                    $("#games-chance-view-chance *:first-child[data-current] ").addClass('currennt');
-                    break;
-
-            }
+            // make config
+            Games.chance.conf.data = {};
+            Games.chance.conf.data = data.json;
+            Games.chance.get("#games-chance-view-cells button:not(.played)", data.json.id);
+            // in multiple prizes set first prize as @current@
+            $("#games-chance-view-chance *:first-child[data-current] ").addClass('currennt');
 
             return;
-        },
-
-        after: {
-
-            start: function (data) {
-
-                switch (Games.chance.key) {
-                    case 'Slots':
-                        slotMachine.spin(data);
-                        break;
-
-                    default:
-                        break;
-                }
-            }
         },
 
         checkGame: function(id){
             Form.post.call(this, {
                 href: '/games/chance/' + id,
                 after: function(data) {
-                    
-                    // check game IDs    
+
+                    // check game IDs
                     if(id != data.json.res.Id){
                         // reload tmpl
                         R.push({ href: 'games/chance/'+data.json.res.Id });
@@ -185,7 +177,7 @@ var Games = {
 
 
                     var fields = data.json.res.GameField;
-                    
+
                     if(Object.keys(fields).length > 0){
 
                         // update all cells to default state
@@ -220,29 +212,29 @@ var Games = {
                 var cell = $(this).data('cell'),
                     that = this;
 
-                // send 
+                // send
                 Form.get.call(this, {
                     href: '/games/chance/' + id + '/play',
                     data: { 'cell': cell },
                     after: function(data) {
-                        
+
                         if (data.json.error)
                             return;
-                        // code after 
+                        // code after
                         // console.debug('GET >>> JSON.stringify(data.json, null, 2) ', JSON.stringify(data.json, null, 2));
-                
+
                         // prize
                         if (data.json.Prize) {
                             $(that).addClass('win');
                         } else {
                             $(that).addClass('lose');
                         }
-                
+
                         // steps
                         if (data.json.Moves) {
                             Games.chance.prizesMoves(data.json.Moves);
                         }
-                
+
                         // Game winner Fields
                         if (data.json.GameField) {
                             if (data.json.Prize) {

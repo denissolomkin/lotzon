@@ -1,15 +1,87 @@
 <div id="games-chance-view" class="content-box">
-    {{#if key}}
-        {{#if (eq key "Chance")}}
-            {{partial "games-view-title" title}}
-            {{partial "games-chance-view-chance" this}}
-        {{/if}}
-        {{#if (eq key "Slots")}}
-            {{partial "games-chance-view-slots" this}}
-        {{/if}}
-    {{else}}
-        {{partial "games-view-title" title}}
-        {{partial "games-chance-view-chance" this}}
-    {{/if}}
-</div>
+
+    {{partial "games-view-title" title}}
+
+    <div id="games-chance-view-chance">
+        <div class="description hidden-content">
+
+            <input type="checkbox" name="" id="read-more-description">
+            <label for="read-more-description"><span>{{i18n "button-games-rules"}}</span> <i class="i-arrow-down"></i><i
+                    class="i-arrow-top"></i></label>
+
+            <div>
+                <!-- описание -->
+                {{{description}}}
+            </div>
+            <div class="colls-wrapper">
+                <div class="prizes">
+
+                    <div class="default">
+                        <span class="title">{{i18n "title-games-prize"}}</span>
+                        <div>
+                            {{#reverse prizes}}
+                            <div class="type-{{t}}" data-current="{{reverseNum ../prizes.length-1 @index}}">
+                                {{#if n}}
+                                <span class="item">{{n}}</span>
+                                <span class="instruction">{{../field.c}} {{i18n "title-of-yellow"}} {{reverseNum ../prizes.length-1 @index}} {{i18n "title-of-miss"}} </span>
+                                <!--<img src="{{s}}" alt="">-->
+                                {{else}}
+                                <span class="item">{{v}} </span>
+                                <span class="currency">{{#if (eq t "money")}}{{player "getCurrency"}}{{else}}{{i18n "title-of-points"}}{{/if}} </span>
+                                {{/if}}
+                            </div>
+                            {{/reverse}}
+                        </div>
+                        <button onclick="Games.chance.play({{id}})">{{i18n "button-games-play"}}</button>
+                        <p>{{i18n "title-games-chance-game-is-started"}}</p>
+                        <span class="ticket_price">{{i18n "title-games-ticketprice"}} {{field.p}} {{i18n  "title-of-points"}}</span>
+                    </div>
+                    <div class="win">
+                        <span class="title">{{i18n "title-games-chance-card-win"}}</span>
+                        <div>
+                            {{#reverse prizes}}
+                            <div class="type-{{t}}" data-current="{{reverseNum ../prizes.length-1 @index}}">
+                                {{#if n}}
+                                <span class="item">{{n}}</span>
+                                {{else}}
+                                <span class="item">{{v}} </span>
+                                <span class="currency">{{t}} </span>
+                                {{/if}}
+                            </div>
+                            {{/reverse}}
+                        </div>
+                        <button onclick="Games.chance.play({{id}})">{{i18n "button-games-play-again"}}</button>
+                        <span class="ticket_price">{{i18n "title-games-ticketprice"}} {{field.p}} {{i18n  "title-of-points"}}</span>
+                    </div>
+                    <div class="lose">
+                        <span class="title">{{i18n "title-games-chance-card-lose"}}</span>
+                        <div>
+                            <div>
+                                <i class="i-x"></i>
+                            </div>
+                        </div>
+                        <button onclick="Games.chance.play({{id}})">{{i18n "button-games-play-again"}}</button>
+                        <span class="ticket_price">{{i18n "title-games-ticketprice"}} {{field.p}} {{i18n  "title-of-points"}}</span>
+                    </div>
+                </div>
+
+                <div id="games-chance-view-cells" class="minefield">
+                    {{#each (for 1 "<=" field.y) as |value key| }}
+
+                    <div class='vw vh vf clearfix'>
+                        {{#each (for 1 "<=" ../field.x) }}
+                        <div>
+                            <div class='inner'>
+                                <button type=button data-cell="{{this}}x{{value}}"><i class='i-question'></i><i
+                                        class='i-o'></i><i
+                                        class='i-x'></i></button>
+                            </div>
+                        </div>
+                        {{/each}}
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+    </div>
 
