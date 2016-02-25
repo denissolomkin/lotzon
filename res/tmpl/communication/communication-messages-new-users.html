@@ -10,7 +10,10 @@
                      data-user-img="{{ img }}"
                      data-user-name="{{ name }}">
                     <div class="nm-friend-img">
-                        <img src="{{avatar img id 50}}" alt="">
+                        <img src="{{avatar img id 50}}"
+                             class="loading"
+                             onload="this.style.background = 'none'"
+                             onerror="Player.getAvatar.call(this)">
                     </div>
                     <div class="nm-friend-name">{{ name }}</div>
                 </div>
