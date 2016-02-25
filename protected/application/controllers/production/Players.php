@@ -628,4 +628,60 @@ class Players extends \AjaxController
         $this->ajaxResponseCode($response);
         return true;
     }
+
+    public function settingsAction()
+    {
+        if (!$this->request()->isAjax()) {
+            return false;
+        }
+
+        $this->authorizedOnly();
+
+        $favorite   = $this->request()->post('favorite');
+        $email      = $this->request()->post('email');
+        $oldPass    = $this->request()->post('oldPass', '');
+        $newPass    = $this->request()->post('newPass', '');
+        $repeatPass = $this->request()->post('repeatPass', '');
+
+        $player = new Player;
+        $player->setId($this->session->get(Player::IDENTITY)->getId())->fetch();
+
+        $fav = array();
+        foreach ($favorite as $number) {
+            if ($number!='') {
+                $fav[] = $number;
+            }
+        }
+
+        try {
+            $player->updateNewsSubscribe($email == 1 ? true : false)->setFavoriteCombination($fav)->update();
+            if (($oldPass != '') && ($newPass != '') && ($repeatPass != '')) {
+                if ($player->getPassword() === $player->compilePassword($oldPass)) {
+                    if ($newPass == $repeatPass) {
+                        $player->changePassword($newPass);
+                    } else {
+                        $this->ajaxResponseBadRequest("passwords-do-not-match");
+                    }
+                } else {
+                    $this->ajaxResponseBadRequest("password-incorrect");
+                }
+            }
+        } catch (EntityException $e) {
+            $this->ajaxResponseCode(array("message" => $e->getMessage()), $e->getCode());
+            return false;
+        }
+
+        $res = array(
+            "message" => "OK",
+            "player"  => array(
+                "settings" => array(
+                    "newsSubscribe" => $player->getNewsSubscribe()
+                ),
+            )
+        );
+
+        $this->ajaxResponseCode($res);
+
+        return true;
+    }
 }

@@ -665,6 +665,9 @@ Config::instance()->publicResources = array(
     '/profile/billing' => array(
         'put' => 'controllers\production\Players:billing'
     ),
+    '/profile/settings' => array(
+        'post' => 'controllers\production\Players:settings'
+    ),
     /**
      * Friends
      */
