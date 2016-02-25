@@ -1087,6 +1087,22 @@ class WebSocketController implements MessageComponentInterface {
 
         foreach($players as $player)
         {
+            array_push($results,
+                $player['pid'],
+                $app->getId(),
+                $app->getIdentifier(),
+                $app->getTime(),
+                $month,
+                ($player['result'] == 1?1:0),  // win
+                ($player['result'] == -1?1:0), // lose
+                ($player['result'] == 0?1:0),  // draw
+                $player['result'],
+                isset($player['win']) ? $player['win'] : $player['result']*$app->getPrice(),
+                $app->getPrice() ? 1 : 0,
+                $app->getCurrency(),
+                $app->getPrice()
+            );
+
             if($app->getPrice() AND $player['result']!=0 AND !isset($app->getClients()[$player['pid']]->bot)) {
 
                 $currency = $app->getCurrency()=='MONEY'?'Money':'Points';
@@ -1151,22 +1167,6 @@ class WebSocketController implements MessageComponentInterface {
                     $app->getTime()
                 );
             }
-
-            array_push($results,
-                $player['pid'],
-                $app->getId(),
-                $app->getIdentifier(),
-                $app->getTime(),
-                $month,
-                ($player['result'] == 1?1:0),  // win
-                ($player['result'] == -1?1:0), // lose
-                ($player['result'] == 0?1:0),  // draw
-                $player['result'],
-                isset($player['win']) ? $player['win'] : $player['result']*$app->getPrice(),
-                $app->getPrice() ? 1 : 0,
-                $app->getCurrency(),
-                $app->getPrice()
-            );
         }
 
         // echo $this->time(); print_r($results); echo "\n";
