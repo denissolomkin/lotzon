@@ -234,6 +234,11 @@ class Index extends \SlimController\SlimController
             "lastLotteryId" => $lottery->getId(),
             "timeToLottery" => LotterySettingsModel::instance()->loadSettings()->getNearestGame() + strtotime('00:00:00', time()) - time(),
             "selectedTab"   => null,
+            "ticketConditions"  => array(
+                4 => 10,
+                5 => 20,
+                6 => 30,
+            ),
             "totalBalls"    => \LotterySettings::TOTAL_BALLS,
             "requiredBalls" => \LotterySettings::REQUIRED_BALLS,
             "totalTickets"  => \LotterySettings::TOTAL_TICKETS,
