@@ -1,10 +1,9 @@
 //colors
 $black: #000;
 $white: #fff;
-$color_turbo_approx: rgba(255,230,0,0.97);
+$color_turbo_approx: rgba(255, 230, 0, 0.97);
 $black_5: rgba(0, 0, 0, 0.05);
-$black_85: rgba(0,0,0,0.82);
-
+$black_85: rgba(0, 0, 0, 0.82);
 .badges-container {
     position: fixed;
     bottom: 0;
@@ -35,12 +34,11 @@ $black_85: rgba(0,0,0,0.82);
                         position: absolute;
                         right: 0;
                         top: 50%;
-                        
                         width: 96px;
                         height: 32px;
-                        //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+                        -webkit-transform: translateY(-50%);
                         transform: translateY(-50%);
-                        //Instead of the line below you could use @include transition($transition-1, $transition-2, $transition-3, $transition-4, $transition-5, $transition-6, $transition-7, $transition-8, $transition-9, $transition-10)
+                        -webkit-transition: all .2s ease-out;
                         transition: all .2s ease-out;
                         &:hover {
                             opacity: 0.99;
@@ -96,15 +94,14 @@ $black_85: rgba(0,0,0,0.82);
             line-height: 18px;
         }
         img {
-            //Instead of the line below you could use @include border-radius($radius, $vertical-radius)
             border-radius: 50em;
             max-width: 40px;
             max-height: 40px;
             position: absolute;
             left: 0;
             top: 50%;
-            //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
-            transform: translateY(-50%);
+            -webkit-transform: translateY(-50%);
+                    transform: translateY(-50%);
         }
         i.i-x-slim {
             font-size: 20px;
@@ -114,9 +111,11 @@ $black_85: rgba(0,0,0,0.82);
             top: 50%;
             right: 0;
             cursor: pointer;
-            //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
-            transform: translate(0, -50%);
-            //Instead of the line below you could use @include transition($transition-1, $transition-2, $transition-3, $transition-4, $transition-5, $transition-6, $transition-7, $transition-8, $transition-9, $transition-10)
+
+            -webkit-transform: translate(0, -50%);
+                    transform: translate(0, -50%);
+            -webkit-transition
+: all .15s linear;
             transition: all .15s linear;
             z-index: 2;
             &:hover {

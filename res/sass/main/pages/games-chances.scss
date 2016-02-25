@@ -145,15 +145,6 @@ $black_15: rgba(0,0,0,0.15);
                 display: block;
             }
         }
-        // > .win {
-        //     background: $color_valencia_approx;
-        //     color: $white;
-        //     button {
-        //         background: transparent;
-        //         border: 1px solid $white;
-        //         color: $white;
-        //     }
-        // }
         > .win {
             // display: block;
             background: $color_bright_sun_approx;
@@ -161,12 +152,13 @@ $black_15: rgba(0,0,0,0.15);
             button {
                 background: transparent;
                 border: 1px solid $color_gravel_approx;
-                color: $color_gravel_approx;
+                color: #000;
                 transition: all .2s linear;
                 &:hover{
-                    background: $white;
-                    border: 1px solid $white;
-                    color: $color_gravel_approx;
+                    background: $color_gravel_approx;
+                    background: #000;
+                    border: 1px solid $color_gravel_approx;
+                    color: $color_bright_sun_approx;
                 }
             }
         }

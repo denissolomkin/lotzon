@@ -75,6 +75,7 @@
                             $('.table', $(Game.field)).css('opacity', 1);
                             $('.table.player' + App.current, $(Game.field)).css('opacity', 0.7).css('border', 'none');
                             Apps.SeaBattle.paintCell();
+                            Apps.SeaBattle.drawShipsSheme();
                             break;
 
                         case 'stack':

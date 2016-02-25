@@ -66,16 +66,17 @@ input, button, textarea {
 /*sticky footer*/
 html, body {
   height: 100%; }
-
-.wrapper {
-  height: auto !important;
-  min-height: 100%;
-  /* equal to footer height */
-  margin-bottom: -50px; }
-
-.wrapper:after {
-  content: "";
-  display: block; }
+  html > .wrapper, body > .wrapper {
+    height: auto !important;
+    min-height: 100%;
+    /* equal to footer height */
+    margin-bottom: -50px; }
+    html > .wrapper:after, body > .wrapper:after {
+      content: "";
+      display: block;
+      height: 10px;
+      margin: 0;
+      padding: 0; }
 
 .footer, .wrapper:after {
   height: 50px; }
@@ -282,11 +283,14 @@ button {
 
 .content-top {
   position: relative; }
+  .content-top > div .content-box {
+    min-height: 600px; }
 
 .content-box {
   margin: 0 -10px;
   box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
-  background: white; }
+  background: white;
+  min-width: 100%; }
 
 .content-box-header {
   background: #b7cfd3;
@@ -5515,7 +5519,9 @@ form.loading > * {
         top: 50%;
         width: 96px;
         height: 32px;
+        -webkit-transform: translateY(-50%);
         transform: translateY(-50%);
+        -webkit-transition: all .2s ease-out;
         transition: all .2s ease-out; }
         .badges-container > div section a.start.visible:hover {
           opacity: 0.99;
@@ -5565,6 +5571,7 @@ form.loading > * {
       position: absolute;
       left: 0;
       top: 50%;
+      -webkit-transform: translateY(-50%);
       transform: translateY(-50%); }
     .badges-container > div i.i-x-slim {
       font-size: 20px;
@@ -5574,7 +5581,9 @@ form.loading > * {
       top: 50%;
       right: 0;
       cursor: pointer;
+      -webkit-transform: translate(0, -50%);
       transform: translate(0, -50%);
+      -webkit-transition: all .15s linear;
       transition: all .15s linear;
       z-index: 2; }
       .badges-container > div i.i-x-slim:hover {
@@ -9161,20 +9170,26 @@ span.input-prefix {
 .back-button {
   position: absolute;
   left: 0px;
-  top: 50%;
+  top: -7px;
   font-size: 35px;
-  transform: translate(0, -50%);
   color: #6ba4e7;
   padding: 0;
   height: auto;
   vertical-align: middle; }
+  .back-button:before {
+    content: '';
+    height: 100%;
+    width: 0;
+    display: inline-block;
+    vertical-align: middle; }
   .back-button:hover i {
     color: #343434; }
   .back-button i {
     transition: color .2s ease-in;
-    display: inline;
     position: relative;
-    left: -10px; }
+    left: -10px;
+    display: inline-block;
+    vertical-align: middle; }
 
 .game-title {
   text-align: center;
@@ -9476,7 +9491,7 @@ footer.unvisible {
       border: 1px solid #ffffff;
       cursor: pointer;
       transition: all .2s ease; }
-      #games-online-field .players .m .gm-pr .pr-cl > *:hover {
+      #games-online-field .players .m .gm-pr .pr-cl > *[class^='btn-']:hover {
         background: rgba(255, 255, 255, 0.12); }
       #games-online-field .players .m .gm-pr .pr-cl > *:first-child {
         margin-left: 0; }
@@ -9824,11 +9839,11 @@ footer.unvisible {
   box-sizing: border-box;
   margin: 0;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-  height: 550px; }
+  height: 600px; }
   #games-online-field.Durak > div {
     top: 0;
     width: 100%;
-    height: 550px;
+    height: 600px;
     position: absolute;
     z-index: 10;
     background: url(../img/games/card-table-bg.jpg) #a5adb0 no-repeat center center;
@@ -10069,7 +10084,7 @@ footer.unvisible {
     width: 100px;
     box-sizing: border-box;
     z-index: 10;
-    width: 78%; }
+    width: 67%; }
     #games-online-field.Durak .cards .table .cards {
       float: left;
       width: 16.6%;
@@ -10118,7 +10133,7 @@ footer.unvisible {
     width: 100px;
     box-sizing: border-box;
     z-index: 10;
-    width: 3%;
+    width: 0%;
     float: right; }
     #games-online-field.Durak .cards .off .card {
       transform: rotate(-4deg) scale(0.7, 0.7);
@@ -10287,7 +10302,7 @@ footer.unvisible {
   100% {
     background: white; } }
 
-.games-view .game-settings .settings-tabs div.active {
+.games-view .game-settings .settings-tabs > div.active {
   background: #474747;
   color: #fff;
   text-align: center;
@@ -10303,16 +10318,33 @@ footer.unvisible {
   .games-view .info-top {
     width: 100%; }
     .games-view .info-top .player-info {
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: -webkit-box;
       display: flex;
+      -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+      -webkit-box-orient: horizontal;
+      -webkit-box-direction: normal;
       flex-direction: row;
+      -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
       flex-wrap: wrap;
+      -webkit-justify-content: center;
+      -ms-flex-pack: center;
+      -webkit-box-pack: center;
       justify-content: center;
+      -webkit-align-items: center;
+      -ms-flex-align: center;
+      -webkit-box-align: center;
       align-items: center; }
     .games-view .info-top .balance {
+      -webkit-transition: all 0.2s linear;
       transition: all 0.2s linear;
       text-transform: uppercase;
       height: auto;
       top: initial;
+      -webkit-transform: translate(0, 0);
       transform: translate(0, 0); }
       .games-view .info-top .balance:hover {
         background: white; }
@@ -10345,10 +10377,25 @@ footer.unvisible {
   .games-view .wrapper {
     margin: 10px 0 0;
     padding: 0;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: -webkit-box;
     display: flex;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
     flex-direction: row;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
     flex-wrap: wrap;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    -webkit-box-pack: justify;
     justify-content: space-between;
+    -webkit-align-items: stretch;
+    -ms-flex-align: stretch;
+    -webkit-box-align: stretch;
     align-items: stretch;
     color: #4a4a4a;
     font-size: 15.5px; }
@@ -10357,11 +10404,6 @@ footer.unvisible {
     width: 50%;
     padding-right: 10px; }
     .games-view .description-block .game-fund {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: stretch;
       word-wrap: break-word;
       word-break: break-word;
       text-align: center;
@@ -10370,10 +10412,15 @@ footer.unvisible {
       letter-spacing: -1px;
       font-size: 13px;
       height: 65px; }
-      .games-view .description-block .game-fund div {
-        display: inline-block;
-        padding: 5px 0; }
-        .games-view .description-block .game-fund div span {
+      .games-view .description-block .game-fund:after {
+        content: '';
+        display: block;
+        clear: both; }
+      .games-view .description-block .game-fund > div {
+        display: block;
+        padding: 5px 0;
+        float: left; }
+        .games-view .description-block .game-fund > div span {
           word-spacing: normal;
           font-size: 32px; }
       .games-view .description-block .game-fund .title {
@@ -10394,6 +10441,7 @@ footer.unvisible {
       font-family: handbookpro-regular; }
       .games-view .description-block .game-description > div {
         overflow: hidden;
+        -webkit-transition: 1s max-height ease-in-out;
         transition: 1s max-height ease-in-out;
         height: auto;
         margin-bottom: 20px; }
@@ -10448,40 +10496,38 @@ footer.unvisible {
       text-transform: uppercase;
       text-align: center;
       background: #a7d1d5;
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: stretch;
-      height: 65px; }
-      .games-view .game-settings .settings-tabs div {
+      height: 65px;
+      overflow: hidden; }
+      .games-view .game-settings .settings-tabs:after {
+        content: '';
+        display: block;
+        clear: both; }
+      .games-view .game-settings .settings-tabs > div {
+        -webkit-transition: all .2s linear;
         transition: all .2s linear;
-        min-height: 40px;
-        padding: 10px;
-        display: inline-block;
-        width: calc(100%/3);
+        padding: 0 10px;
+        width: 33.3333%;
+        min-height: 100%;
         box-sizing: border-box;
         position: relative;
-        cursor: pointer; }
-        .games-view .game-settings .settings-tabs div span {
-          position: absolute;
-          top: 50%;
-          transform: translateY(-50%);
-          display: block;
+        cursor: pointer;
+        display: block;
+        float: left; }
+        .games-view .game-settings .settings-tabs > div span {
           left: 0;
           width: 100%;
-          transition: all .2s linear; }
-        .games-view .game-settings .settings-tabs div i {
+          -webkit-transition: all .2s linear;
+          transition: all .2s linear;
+          line-height: 65px; }
+        .games-view .game-settings .settings-tabs > div i {
+          display: inline-block;
           font-size: 20px;
           margin-right: 6px;
           position: relative;
           top: 1px; }
-        .games-view .game-settings .settings-tabs div:hover:not(.active) {
-          /*@extend %extend_1;*/
-          /*background: rgba(0,0,0,0.77);*/ }
-          .games-view .game-settings .settings-tabs div:hover:not(.active) span {
-            opacity: 0.9;
-            color: #111; }
+        .games-view .game-settings .settings-tabs > div:hover:not(.active) span {
+          opacity: 0.9;
+          color: #111; }
 
 .game-settings .games-online {
   font-family: handbookpro-regular;
@@ -10506,6 +10552,7 @@ footer.unvisible {
   .game-settings .render-list-container .render-list {
     margin-bottom: 30px; }
   .game-settings .render-list-container .game.available {
+    -webkit-transition: background .5s linear;
     transition: background .5s linear; }
     .game-settings .render-list-container .game.available * {
       cursor: pointer; }
@@ -10518,9 +10565,21 @@ footer.unvisible {
     border-bottom: 1px solid #e5e5e5;
     padding: 15px 20px 15px 5px;
     position: relative;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: -webkit-box;
     display: flex;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
     flex-direction: row;
+    -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
     flex-wrap: nowrap;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    -webkit-box-align: center;
     align-items: center; }
     .game-settings .render-list-container .game > form > div {
       padding-right: 15px;
@@ -10542,13 +10601,16 @@ footer.unvisible {
       white-space: nowrap;
       overflow: hidden;
       max-height: 20px;
+      -webkit-transition: all 1.9s ease;
       transition: all 1.9s ease; }
     .game-settings .render-list-container .game > form > i {
+      -webkit-transition: all 0.1s ease-in 0.1s;
       transition: all 0.1s ease-in 0.1s;
       position: absolute;
       left: 100%;
       margin-left: -20px;
       top: 50%;
+      -webkit-transform: translateY(-50%);
       transform: translateY(-50%); }
 
 .game-settings .players-list {
@@ -10564,12 +10626,28 @@ footer.unvisible {
     border-bottom: 1px solid #e5e5e5;
     padding: 5px;
     position: relative;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: -webkit-box;
     display: flex;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
     flex-direction: row;
+    -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
     flex-wrap: nowrap;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    -webkit-box-align: center;
     align-items: center;
+    -webkit-transition: background .5s linear;
     transition: background .5s linear; }
     .game-settings .players-list .player .name {
+      -webkit-flex-grow: 1;
+      -ms-flex-positive: 1;
+      -webkit-box-flex: 1;
       flex-grow: 1;
       font-size: 15.5px; }
       .game-settings .players-list .player .name:before {
@@ -10606,12 +10684,14 @@ footer.unvisible {
   .game-settings [type="radio"]:checked + label {
     background: #474747;
     color: #fff;
+    -webkit-transition: all .5s ease;
     transition: all .5s ease; }
 
 .game-settings [type="radio"]:not(:checked) {
   position: absolute;
   left: -9999px; }
   .game-settings [type="radio"]:not(:checked) + label {
+    -webkit-transition: all .5s ease;
     transition: all .5s ease; }
     .game-settings [type="radio"]:not(:checked) + label:hover {
       background: #474747;
@@ -10621,6 +10701,7 @@ footer.unvisible {
 .game-settings [type="radio"]:disabled + label {
   color: #aaa;
   background: transparent;
+  -webkit-transition: all .5s ease;
   transition: all .5s ease; }
   .game-settings [type="radio"]:disabled + label:hover {
     color: #aaa;
@@ -10654,9 +10735,7 @@ footer.unvisible {
       float: left; }
     .create-game .buttons-group .button {
       cursor: pointer;
-      /*min-width: 14%;*/
       text-align: center;
-      /*            height: 100%;*/
       overflow-y: hidden;
       height: 40px;
       /*            &.active {
@@ -10682,6 +10761,7 @@ footer.unvisible {
     font-family: handbookpro-regular;
     width: 100%;
     background: #fff;
+    -webkit-transition: all .2s ease-in;
     transition: all .2s ease-in;
     line-height: 31px;
     font-size: 14px; }
@@ -10795,12 +10875,13 @@ footer.unvisible {
       #games-chance-view .prizes > .win button {
         background: transparent;
         border: 1px solid #4a4a4a;
-        color: #4a4a4a;
+        color: #000;
         transition: all .2s linear; }
         #games-chance-view .prizes > .win button:hover {
-          background: #fff;
-          border: 1px solid #fff;
-          color: #4a4a4a; }
+          background: #4a4a4a;
+          background: #000;
+          border: 1px solid #4a4a4a;
+          color: #ffe634; }
   #games-chance-view .minefield {
     display: inline-block;
     vertical-align: top;

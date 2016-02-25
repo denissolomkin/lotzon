@@ -1,16 +1,20 @@
 /*sticky footer*/
 html, body {
   height: 100%;
-}
-.wrapper {
-  height: auto !important;
-  min-height: 100%;
-  /* equal to footer height */
-  margin-bottom: -50px; 
-}
-.wrapper:after {
-  content: "";
-  display: block;
+  > .wrapper {
+    height: auto !important;
+    min-height: 100%;
+    /* equal to footer height */
+    margin-bottom: -50px; 
+    &:after {
+      content: "";
+      display: block;
+      height: 10px;
+      margin: 0;
+      padding: 0;
+    }
+
+  }
 }
 .footer, .wrapper:after {
   height: 50px; 
@@ -230,12 +234,17 @@ button {
 
 .content-top {
   position: relative;
+  
+  > div .content-box{
+    min-height: 600px;
+  }
 }
 
 .content-box {
   margin: 0 -10px;
   box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
   background: white;
+  min-width: 100%;
 }
 
 .content-box-header {
