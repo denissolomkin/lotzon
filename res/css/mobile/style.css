@@ -1108,18 +1108,26 @@ header {
     margin: 0; } }
 
 .games-view {
-  padding: 20px 0; }
+  padding: 20px 10px; }
   .games-view .title-wrap .back {
     left: 10px; }
+  .games-view .wrapper {
+    display: block; }
   .games-view .create-game {
     padding: 0px 10px; }
   .games-view .game-settings {
     width: 100%;
     padding: 0; }
+    .games-view .game-settings .filter {
+      margin: 20px 10px; }
     .games-view .game-settings .players-list .player {
-      padding: 5px 10px; }
+      padding: 5px 10px 5px 0px; }
     .games-view .game-settings .settings-tabs {
       height: 55px; }
+      .games-view .game-settings .settings-tabs > div span {
+        line-height: 55px; }
+    .games-view .game-settings .render-list-container .game > form {
+      padding-left: 10px; }
   .games-view .description-block {
     width: 100%;
     padding: 0; }

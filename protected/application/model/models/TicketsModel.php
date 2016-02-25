@@ -52,14 +52,26 @@ class TicketsModel extends Model
             case 2:
             case 3:
             case 4:
+                $player = new Player();
+                $player->setId($playerId)->fetch();
+                if ($player->getGamesPlayed() >= 100) {
+                    return true;
+                }
+                break;
             case 5:
+                if (\PlayersModel::instance()->getReferralsCount($playerId) >= 10) {
+                    return true;
+                }
+                break;
             case 6:
-                return true;
+                if (\PlayersModel::instance()->getReferralsCount($playerId) >= 50) {
+                    return true;
+                }
                 break;
             case 7:
                 $player = new Player();
                 $player->setId($playerId)->fetch();
-                if ($player->getGamesPlayed() >= 100) {
+                if ($player->getGoldTicket() > 0) {
                     return true;
                 }
                 break;

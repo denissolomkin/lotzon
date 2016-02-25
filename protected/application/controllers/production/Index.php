@@ -161,7 +161,9 @@ class Index extends \SlimController\SlimController
                 "gl" => null,
                 "tw" => null
             ),
-            "settings" => array(),
+            "settings" => array(
+                "newsSubscribe" => $playerObj->getNewsSubscribe()
+            ),
             "games"    => array(
                 'chance' => $session->has('ChanceGame') ? $session->get('ChanceGame')->getId() : false,
                 'random' => $session->has('QuickGame'),

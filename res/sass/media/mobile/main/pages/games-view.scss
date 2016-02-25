@@ -22,7 +22,6 @@ $hb_regular: handbookpro-regular;
     background: $color_gravel_approx;
     color: $white;
     text-align: center;
-    //Instead of the line below you could use @include box-sizing($bs)
     box-sizing: border-box;
 }
 
@@ -34,11 +33,14 @@ $hb_regular: handbookpro-regular;
 }
 
 .games-view {
-    padding: 20px 0;
+    padding: 20px 10px;
     .title-wrap{
         .back{
             left: 10px;
         }
+    }
+    .wrapper{
+        display: block;
     }
     .create-game{
         padding: 0px 10px;
@@ -46,18 +48,34 @@ $hb_regular: handbookpro-regular;
     .game-settings {
         width: 100%;
         padding: 0;
+
+        .filter{
+            margin: 20px 10px;
+        }
         .players-list{
             .player{
-                padding: 5px 10px;
+                padding: 5px 10px 5px 0px;
             }
         }
         .settings-tabs {
             height: 55px;
+            // padding: 0px 10px;
+            > div{
+                span{
+                    line-height: 55px;
+                }
+            }
+        }
+        .render-list-container .game > form{
+            padding-left: 10px;
         }
     }
     .description-block {
         width: 100%;
         padding: 0;
+        .game-fund{
+            // padding: 0px 10px;
+        }
 
         .game-description {
 

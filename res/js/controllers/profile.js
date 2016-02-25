@@ -194,7 +194,7 @@
                         if (first) {
                             first.addClass('on').val(n);
                         } else {
-                            $('.ae-current-combination >*:first-child').addClass('on').text(n);
+                            $('.ae-current-combination >*:first-child').addClass('on').val(n).text(n);
                         }
 
                         $(this).addClass('selected');

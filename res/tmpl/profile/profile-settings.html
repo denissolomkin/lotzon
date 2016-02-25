@@ -33,6 +33,7 @@
                         <p>{{i18n "text-registration-delete-notice"}}</p>
                     </div>
                 </div>
+                <!--
                 <div class="option-block clearfix">
                     <div class="s-lang clearfix strip">
                         <div class="title">{{i18n "title-profile-site-lenguage"}}</div>
@@ -44,6 +45,7 @@
                         {{/each}}
                     </div>
                 </div>
+                -->
                 <div class="option-block">
                     <div class="s-pass clearfix strip">
                         <div class="title">{{i18n "title-profile-password"}}</div>
@@ -61,7 +63,7 @@
                     </div>
                     <div class="option clearfix strip hidden">
                         <div class="title">{{i18n "title-profile-old-password"}}</div>
-                        <input type="text" name="old-pass" placeholder="{{i18n 'title-enter-old-password'}}" value="">
+                        <input type="text" name="oldPass" placeholder="{{i18n 'title-enter-old-password'}}" value="">
                     </div>
                     <div class="option clearfix strip hidden">
                         <div class="title">{{i18n "title-profile-new-password"}}</div>
@@ -113,7 +115,7 @@
                         <div class="title">{{i18n "title-profile-favorite"}}</div>
                         <div class="ae-current-combination clearfix">
                             {{#each favorite}}
-                            <input value="{{.}}"> {{/each}}
+                            <input name="favorite[]" value="{{.}}"> {{/each}}
                         </div>
                         <div class="uk-float-right show-option ">
                             <span class='change large-visible change-favorite'>{{i18n "title-profile-settings-change"}}</span> <i class="i-pencil change change-favorite small-visible"></i>
