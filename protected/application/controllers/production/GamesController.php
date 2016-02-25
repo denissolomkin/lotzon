@@ -273,7 +273,7 @@ class GamesController extends \AjaxController
             $this->ajaxResponse(array(), 0, 'EMPTY_GAMES_KEY');
         }
 
-        $limit    = (int)SettingsModel::instance()->getSettings('counters')->getValue('RATING_PER_PAGE') ?: 10;
+        $limit    = (int)SettingsModel::instance()->getSettings('counters')->getValue('RATING_PER_PAGE') ?: 5;
         $currency = $this->request()->get('currency', 'MONEY');
         $offset   = $this->request()->get('offset', NULL);
 
