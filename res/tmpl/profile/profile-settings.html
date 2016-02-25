@@ -36,7 +36,7 @@
                 <!--
                 <div class="option-block clearfix">
                     <div class="s-lang clearfix strip">
-                        <div class="title">{{i18n "title-profile-site-lenguage"}}</div>
+                        <div class="title">{{i18n "title-profile-site-language"}}</div>
                         {{#each language.available}}
                         <label class="radio-text">
                             <input type="radio" name="site-lang" value="{{@key}}" {{#if (eq @key ../language.current)}} checked{{/if}}>
@@ -101,12 +101,12 @@
                     <div class="s-email clearfix strip">
                         <div class="title">{{i18n "title-profile-get-email"}}</div>
                         <label class="radio-text">
-                            <input type="radio" name="email" value="1" checked>
-                            <span>Да</span>
+                            <input type="radio" name="email" value="1" {{#if (like 1 (player "settings.newsSubscribe"))}}checked{{/if}}>
+                            <span>{{i18n "title-button-yes"}}</span>
                         </label>
                         <label class="radio-text">
-                            <input type="radio" name="email" value="2">
-                            <span>Нет</span>
+                            <input type="radio" name="email" value="0" {{#if (like 0 (player "settings.newsSubscribe"))}}checked{{/if}}>
+                            <span>{{i18n "title-button-no"}}</span>
                         </label>
                     </div>
                 </div>

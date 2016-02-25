@@ -194,7 +194,7 @@
                 "title-profile-account-delete":"удалить аккаунт",
                 "title-profile-delete-yes":"ДА",
                 "title-profile-delete-no":"НЕТ",
-                "title-profile-site-lenguage" :"Язык сайта",
+                "title-profile-site-language" :"Язык сайта",
                 "title-profile-password" :"Пароль",
                 "title-profile-old-password": "Старый пароль",
                 "title-profile-new-password": "Новый пароль",
@@ -224,6 +224,9 @@
                 "title-profile-message-admin": "напишите нам",
                 "title-profile-payments-history": "истории выплат",
                 "title-profile-cashout-summ": "Введите сумму",
+
+                "title-button-yes": "да",
+                "title-button-no": "нет",
 
                 "title-enter-old-password": "введите старый пароль",
                 "title-enter-new-password": "введите новый пароль",
