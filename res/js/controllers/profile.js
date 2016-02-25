@@ -27,7 +27,10 @@
                 
                 $(document).on('change', '.ae-personal-inf input.datepicker', Profile.do.checkCalendar);
         
-                R.push({template:'profile-edit-countries', href: 'profile-edit-countries-'  + Player.language.current});
+                R.push({
+                    template:'profile-edit-countries',
+                    href: '/res/countries/'  + Player.language.current
+                });
 
             },
 
@@ -113,15 +116,16 @@
 
                 input.off('du.add').on('du.add', function(e) {
                     e.uploadItem.completeCallback = function(succ, data, status) {
-                        var url = Player.getAvatar(data.res.imageName);
+                        Cache.init(data);
+                        var url = Player.getAvatar();
+
                         image.attr('src', url);
-                        
                         $('.avatar-bg').css({'background' : 'url(' + url + ')  no-repeat 50%', 'background-size' : 'cover'});
-                        console.log($('.avatar-bg').css('background'));
+
                         holder.addClass('true');
                         holder.append(image);
 
-                        $('form[name="profile"]').find('.pi-ph.true').off('click').on('click', function(e) {
+                       /* $('form[name="profile"]').find('.pi-ph.true').off('click').on('click', function(e) {
                             e.stopPropagation();
 
                             removePlayerAvatar(function(data) {
@@ -129,6 +133,7 @@
                                 $('form[name="profile"]').find('.pi-ph').removeClass('true');
                             }, function() {}, function() {});
                         });
+                        */
                     };
 
                     e.uploadItem.progressCallback = function(perc) {}
