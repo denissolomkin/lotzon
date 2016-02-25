@@ -112,6 +112,7 @@ class Index extends \SlimController\SlimController
             "id"       => $playerObj->getId(),
             "img"      => $playerObj->getAvatar(),
             "email"    => $playerObj->getEmail(),
+            "gender"   => $playerObj->getGender(),
             "title"    => array(
                 "name"       => $playerObj->getName(),
                 "surname"    => $playerObj->getSurname(),

@@ -1611,6 +1611,7 @@ class Player extends Entity
                  ->setLang($data['Lang'])
                  ->setAvatar($data['Avatar'])
                  ->setAgent($data['Agent'])
+                 ->setGender($data['Gender'])
                  ->setReferer($data['Referer'])
                  ->setVisibility((boolean)$data['Visible'])
                  ->setFavoriteCombination(!empty($data['Favorite']) ? @unserialize($data['Favorite']) : array())

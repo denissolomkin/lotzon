@@ -695,6 +695,7 @@ class Players extends \AjaxController
         $nickname = $this->request()->post('nickname');
         $name     = $this->request()->post('name');
         $surname  = $this->request()->post('surname');
+        $gender   = $this->request()->post('gender', null);
         $birthday = $this->request()->post('datepicker');
         $city     = $this->request()->post('city');
         $zip      = $this->request()->post('zip');
@@ -709,6 +710,7 @@ class Players extends \AjaxController
             $player->setNicname($nickname)
                 ->setName($name)
                 ->setSurName($surname)
+                ->setGender($gender==''?null:$gender)
                 ->setCity($city)
                 ->setZip($zip)
                 ->setAddress($address)
@@ -726,6 +728,7 @@ class Players extends \AjaxController
                     "surname"    => $player->getSurname(),
                     "nickname"   => $player->getNicName(),
                 ),
+                "gender"   => $player->getGender(),
                 "birthday" => $player->getBirthday(),
                 "location" => array(
                     "city"    => $player->getCity(),

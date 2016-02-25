@@ -42,14 +42,14 @@
                                 <li>
                                     <i>Пол</i>
                                     <div class="select-wrapper i-arrow-down">
-                                       <select class="{{#if gender}} {{else}} default {{/if}}" onchange="this.className=this.value"> 
+                                       <select class="{{#if gender}} {{else}} default {{/if}}" name="gender" onchange="this.className=this.value">
                                         {{#if gender}}
-                                            <option value="gender"> {{gender}} </option>
+                                           
                                         {{else}}
-                                            <option value="default">{{i18n "title-profile-choose"}}</option>
+                                            <option value="" {{#if (null (player "gender"))}}selected="selected"{{/if}}>{{i18n "title-profile-choose"}}</option>
                                         {{/if}}
-                                            <option value="female">Женский</option>
-                                            <option value="male">Мужской</option>
+                                            <option value="female" {{#if (like "female" (player "gender"))}}selected="selected"{{/if}}>Женский</option>
+                                            <option value="male" {{#if (like "male" (player "gender"))}}selected="selected"{{/if}}>Мужской</option>
                                         </select>
                                     </div>
                                 </li>
