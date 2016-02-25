@@ -753,7 +753,9 @@ class Players extends \AjaxController
             $this->ajaxResponseInternalError();
         }
         $res = array(
-            'imageName' => $imageName,
+            "player"  => array(
+                "img" => $imageName,
+            )
         );
 
         $this->ajaxResponseCode($res);
