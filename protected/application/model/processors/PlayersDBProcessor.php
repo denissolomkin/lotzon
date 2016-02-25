@@ -195,7 +195,7 @@ class PlayersDBProcessor implements IProcessor
     {
         $sql = "UPDATE `Players` SET
                     `Country` = :cc, `Lang` = :lang, `CookieId` = :ckid,
-                    `Nicname` = :nic, `Name` = :name, `Surname` = :surname, `SecondName` = :secname,
+                    `Nicname` = :nic, `Name` = :name, `Surname` = :surname, `SecondName` = :secname, `Gender` = :gender,
                     `Phone` = :phone, `Qiwi` = :qiwi, `YandexMoney` = :ym, `WebMoney` = :wm,
                     `Birthday` = :bd, `Avatar` = :avatar, `Visible` = :vis, `Favorite` = :fav,
                     `City` = :city, `Zip` = :zip, `Address` = :address,
@@ -213,6 +213,7 @@ class PlayersDBProcessor implements IProcessor
                 ':surname'  => $player->getSurname(),
                 ':secname'  => $player->getSecondName(),
                 ':phone'    => $player->getPhone(),
+                ':gender'   => $player->getGender(),
 
                 ':city'      => $player->getCity(),
                 ':zip'       => $player->getZip(),

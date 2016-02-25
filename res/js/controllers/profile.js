@@ -100,7 +100,7 @@
                 var form = $('<form method="POST" enctype="multipart/form-data"><input type="file" name="image"/></form>');
 
                 var input = form.find('input[type="file"]').damnUploader({
-                    url: '/res/POST/profile/avatar',
+                    url: '/profile/avatar',
                     fieldName: 'image',
                     dataType: 'json',
                 });

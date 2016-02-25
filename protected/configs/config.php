@@ -668,6 +668,12 @@ Config::instance()->publicResources = array(
     '/profile/settings' => array(
         'post' => 'controllers\production\Players:settings'
     ),
+    '/profile/avatar' => array(
+        'post' => 'controllers\production\Players:avatar'
+    ),
+    '/profile/edit' => array(
+        'put' => 'controllers\production\Players:edit'
+    ),
     /**
      * Friends
      */

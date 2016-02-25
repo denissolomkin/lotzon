@@ -578,7 +578,6 @@ class Players extends \AjaxController
         }
 
         $res = array(
-            "message" => "OK",
             "player"  => array(
                 "billing"  => array(
                     "webMoney"    => $player->getWebMoney(),
@@ -672,13 +671,86 @@ class Players extends \AjaxController
         }
 
         $res = array(
-            "message" => "OK",
             "player"  => array(
                 "settings" => array(
                     "newsSubscribe" => $player->getNewsSubscribe()
                 ),
                 "favorite" => $player->getFavoriteCombination(),
             )
+        );
+
+        $this->ajaxResponseCode($res);
+
+        return true;
+    }
+
+    public function editAction()
+    {
+        if (!$this->request()->isAjax()) {
+            return false;
+        }
+
+        $this->authorizedOnly();
+
+        $nickname = $this->request()->post('nickname');
+        $name     = $this->request()->post('name');
+        $surname  = $this->request()->post('surname');
+        $birthday = $this->request()->post('datepicker');
+        $city     = $this->request()->post('city');
+        $zip      = $this->request()->post('zip');
+        $address  = $this->request()->post('address');
+
+        $player = new Player();
+        $player->setId($this->session->get(Player::IDENTITY)->getId())->fetch();
+
+        $birthday = strtotime($birthday);
+
+        try {
+            $player->setNicname($nickname)
+                ->setName($name)
+                ->setSurName($surname)
+                ->setCity($city)
+                ->setZip($zip)
+                ->setAddress($address)
+                ->setBirthDay($birthday)
+                ->update();
+        } catch (EntityException $e) {
+            $this->ajaxResponseCode(array("message" => $e->getMessage()), $e->getCode());
+            return false;
+        }
+
+        $res = array(
+            "player"  => array(
+                "title"    => array(
+                    "name"       => $player->getName(),
+                    "surname"    => $player->getSurname(),
+                    "nickname"   => $player->getNicName(),
+                ),
+                "birthday" => $player->getBirthday(),
+                "location" => array(
+                    "city"    => $player->getCity(),
+                    "zip"     => $player->getZip(),
+                    "address" => $player->getAddress(),
+                ),
+            )
+        );
+
+        $this->ajaxResponseCode($res);
+
+        return true;
+    }
+
+    public function avatarAction()
+    {
+        $this->authorizedOnly();
+
+        try {
+            $imageName = $this->session->get(Player::IDENTITY)->uploadAvatar();
+        } catch (\Exception $e) {
+            $this->ajaxResponseInternalError();
+        }
+        $res = array(
+            'imageName' => $imageName,
         );
 
         $this->ajaxResponseCode($res);

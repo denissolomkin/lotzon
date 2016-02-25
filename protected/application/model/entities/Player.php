@@ -40,6 +40,8 @@ class Player extends Entity
     private $_agent     = '';
     private $_referer     = '';
 
+    protected $_gender  = null;
+
     private $_phone      = null;
     private $_yandexMoney = null;
     private $_qiwi       = null;
@@ -953,40 +955,19 @@ class Player extends Entity
 
     public function uploadAvatar($photoURL=null)
     {
-
         try {
-            if($photoURL)
-                $image = WideImage::load($photoURL);
-            else
-                $image = WideImage::loadFromUpload('image');
-
-            $image = $image->resize(Player::AVATAR_WIDTH, Player::AVATAR_WIDTH);
-            $image = $image->crop("center", "center", Player::AVATAR_WIDTH, Player::AVATAR_WIDTH);
-
-            $imageName = uniqid() . ".jpg";
-            $saveFolder = PATH_FILESTORAGE . 'avatars/' . (ceil($this->getId() / 100)) . '/';
-
-            if (!is_dir($saveFolder)) {
-                mkdir($saveFolder, 0777);
-            }
-
-            $image->saveToFile($saveFolder . $imageName, 100);
-            // remove old one
-            if ($this->getAvatar()) {
-                @unlink($saveFolder . $this->getAvatar());
-            };
-
+            $imageName = uniqid() . ".png";
+            \Common::saveImageMultiResolution('image',PATH_FILESTORAGE.'users/',$imageName,array(array(50),array(100),array(200)));
+            \Common::removeImageMultiResolution(PATH_FILESTORAGE.'users/', $this->getAvatar(), array(array(50),array(100),array(200)));
             $this->setAvatar($imageName)->saveAvatar();
-
         } catch (EntityException $e) {
-            // throw new EntityException($e->getMessage(), $e->getCode());
+            throw new EntityException($e->getMessage(), $e->getCode());
         }
 
         if(!$photoURL)
             return $imageName;
         else
             return $this;
-
     }
 
     public function saveAvatar()

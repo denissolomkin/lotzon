@@ -196,11 +196,7 @@ class FriendsController extends \AjaxController
             return false;
         }
 
-        $response = array(
-            'message' => 'OK'
-        );
-
-        $this->ajaxResponseCode($response);
+        $this->ajaxResponseCode(array());
         return true;
     }
 
@@ -221,11 +217,7 @@ class FriendsController extends \AjaxController
             return false;
         }
 
-        $response = array(
-            'message' => 'OK'
-        );
-
-        $this->ajaxResponseCode($response);
+        $this->ajaxResponseCode(array());
         return true;
     }
 
@@ -246,11 +238,7 @@ class FriendsController extends \AjaxController
             return false;
         }
 
-        $response = array(
-            'message' => 'OK'
-        );
-
-        $this->ajaxResponseCode($response);
+        $this->ajaxResponseCode(array());
         return true;
     }
 

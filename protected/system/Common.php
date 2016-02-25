@@ -3,13 +3,13 @@
 class Common
 {
     /**
-     * Сохранение картинки сразу в нескольких разрешениях
+     * Save image in many resolutions
      *
-     * @param      $imgPostName     string      имя параметра картинки из $_FILES
-     * @param      $path            string      путь сохранения к которому прибавится $width/
-     * @param      $new_name        string      имя файла
-     * @param      $resolutions     array       массив разрешений array(array(width,[height]))
-     * @param null $imgFile         string      прямое имя файла для загрузки картинки (если брать не из $_FILES)
+     * @param      $imgPostName     string
+     * @param      $path            string
+     * @param      $new_name        string
+     * @param      $resolutions     array
+     * @param null $imgFile         string
      */
     public static function saveImageMultiResolution($imgPostName, $path, $new_name, $resolutions, $imgFile = NULL)
     {
@@ -31,6 +31,18 @@ class Common
                 $img = \WideImage::loadFromUpload($imgPostName);
             }
             $img->resize($width, $height)->saveToFile($path . $width . "/" . $new_name);
+        }
+    }
+
+    public static function removeImageMultiResolution($path, $filename, $resolutions)
+    {
+        foreach ($resolutions as $res) {
+            if (is_array($res)) {
+                $width  = $res[0];
+            } else {
+                continue;
+            }
+            @unlink($path . $width . "/" . $filename);
         }
     }
 
