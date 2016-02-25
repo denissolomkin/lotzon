@@ -34,21 +34,26 @@
 <script>
 
     var
-            menu = {
-                navigation: {
-                    'menu-main': ['blog', 'lottery', 'games', 'communication', 'users', 'prizes'],
-                    'menu-profile': ['profile/edit', 'profile/billing', 'profile/settings', 'reports/referrals', 'profile/bonuses'],
-                    'menu-more': [
-                        'support/feedback', 'support/rules', 'support/faq', 'support/help', 'logout']
-                }
-            },
-    device = {mobile: <?php echo json_encode($isMobile); ?>},
-    lottery = <?php echo json_encode($lottery, JSON_PRETTY_PRINT); ?>,
-            player = <?php echo json_encode($player, JSON_PRETTY_PRINT); ?>,
-            slider = <?php echo json_encode($slider, JSON_PRETTY_PRINT); ?>,
-            config = <?php echo json_encode($config, JSON_PRETTY_PRINT); ?>,
-            timestamp = <?php echo time(); ?>,
-            debugConf = <?php echo json_encode($debug, JSON_PRETTY_PRINT); ?>
+        device = {mobile: <?php echo json_encode($isMobile); ?>},
+        lottery = <?php echo json_encode($lottery, JSON_PRETTY_PRINT); ?>,
+        player = <?php echo json_encode($player, JSON_PRETTY_PRINT); ?>,
+        slider = <?php echo json_encode($slider, JSON_PRETTY_PRINT); ?>,
+        config = <?php echo json_encode($config, JSON_PRETTY_PRINT); ?>,
+        timestamp = <?php echo time(); ?>,
+        menu = {
+            navigation: {
+                'menu-main': ['blog', 'lottery', 'games', 'communication', 'users', 'prizes'],
+                'menu-profile': ['profile/edit', 'profile/billing', 'profile/settings', 'reports/referrals', 'profile/bonuses'],
+                'menu-more': [
+                    'users/0/messages',
+                    'support/rules',
+                    'support/faq',
+                    'support/help',
+                    'logout'
+                ]
+            }
+        },
+        debugConf = <?php echo json_encode($debug, JSON_PRETTY_PRINT); ?>
 
 </script>
 
@@ -70,10 +75,10 @@
         });
 
         var n = d.getElementsByTagName("script")[0],
-                s = d.createElement("script"),
-                f = function () {
-                    n.parentNode.insertBefore(s, n);
-                };
+            s = d.createElement("script"),
+            f = function () {
+                n.parentNode.insertBefore(s, n);
+            };
         s.type = "text/javascript";
         s.async = true;
         s.src = "https://mc.yandex.ru/metrika/watch.js";
@@ -86,7 +91,7 @@
     })(document, window, "yandex_metrika_callbacks");
 </script>
 <noscript>
-<div><img src="https://mc.yandex.ru/watch/33719044" style="position:absolute; left:-9999px;" alt=""/></div>
+    <div><img src="https://mc.yandex.ru/watch/33719044" style="position:absolute; left:-9999px;" alt=""/></div>
 </noscript>
 <!-- /Yandex.Metrika counter -->
 
@@ -103,7 +108,7 @@ foreach ($dirs as $dir):
         if ($file != "." && $file != ".." && strstr($file, '.js')):
             ?>
             <script src="/res/js/<?php echo $dir . '/' . $file; ?>"></script>
-        <?php
+            <?php
         endif;
     endforeach;
 endforeach;
@@ -132,7 +137,7 @@ endforeach;
 </script>
 
 <style>
-    #R2D2{
+    #R2D2 {
         position: relative;
         z-index: 999999999;
         font-size: 16px;
@@ -142,16 +147,18 @@ endforeach;
         border-right: 20px solid #666;
         border-radius: 0em 50em 50em 0em;
         left: -180px;
-        
+
         box-shadow: 1px 1px 7px #000;
         transition: all 1.5s ease-in-out;
         min-width: 200px;
         background: #000;
     }
-    #R2D2:hover{
+
+    #R2D2:hover {
         left: 0;
     }
-    #R2D2 button{
+
+    #R2D2 button {
         padding: 2px 5px;
         cursor: pointer;
         border-left: 2px dashed #0088cc;
@@ -163,12 +170,13 @@ endforeach;
         margin: 2px 25px 2px 2px;
 
     }
-    #R2D2 button:hover{
+
+    #R2D2 button:hover {
         border-left: 2px dashed #00b7ec;
         border-right: 2px dashed #00b7ec;
         background: tomato;
         color: #000;
-        
+
     }
 </style>
 <div id="R2D2">

@@ -41,7 +41,6 @@
             <div class="site-top">
                 <div class="container">
                     <div id="banner-desktop-top" class="banner-3">
-                        <div style="height: 100%; background: #ccc;"></div>
                     </div>
                 </div>
             </div>
