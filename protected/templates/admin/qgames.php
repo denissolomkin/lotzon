@@ -414,7 +414,7 @@
             holder.find('.lang').first().click();
             holder.find('.chanceId').html('Chance'+game.Id);
             holder.find('.k').val(typeof game.Key !== "undefined" && game.Key?game.Key:'');
-            holder.find('.p').val(game.p);
+            holder.find('.p').val(game.Field.p);
             holder.find('.m').val(game.Field.m);
             holder.find('.x').val(game.Field.x);
             holder.find('.y').val(game.Field.y);
