@@ -566,10 +566,10 @@ class Players extends \AjaxController
                 $player->setPhone($billing['phone']);
             if (!$player->getQiwi() && $billing['qiwi'])
                 $player->setQiwi($billing['qiwi']);
-            if (!$player->getWebMoney() && $billing['webmoney'])
+            if (!$player->getWebMoney() && $billing['webMoney'])
                 $player->setWebMoney($billing['webmoney']);
-            if (!$player->getYandexMoney() && $billing['yandex'])
-                $player->setYandexMoney($billing['yandex']);
+            if (!$player->getYandexMoney() && $billing['yandexMoney'])
+                $player->setYandexMoney("41001".$billing['yandexMoney']);
             $player->update();
         } catch (EntityException $e) {
             $this->ajaxResponseCode(array("message" => $e->getMessage()), $e->getCode());
