@@ -567,7 +567,7 @@ class Players extends \AjaxController
             if (!$player->getQiwi() && $billing['qiwi'])
                 $player->setQiwi($billing['qiwi']);
             if (!$player->getWebMoney() && $billing['webMoney'])
-                $player->setWebMoney($billing['webmoney']);
+                $player->setWebMoney($billing['webMoney']);
             if (!$player->getYandexMoney() && $billing['yandexMoney'])
                 $player->setYandexMoney("41001".$billing['yandexMoney']);
             $player->update();
