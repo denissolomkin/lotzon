@@ -1196,7 +1196,7 @@ $('.profile-trigger').on('click', function() {
                 '<div class="input-group"><span class="input-group-addon">Qiwi</span><input type="text" class="form-control" name="qiwi" placeholder="Qiwi" value="'+user.Qiwi+'"></div>' +
                 '<div class="input-group"><span class="input-group-addon">WebMoney</span><input type="text" class="form-control" name="webmoney" placeholder="WebMoney" value="'+user.WebMoney+'"></div>' +
                 '<div class="input-group"><span class="input-group-addon">YandexMoney</span><input type="text" class="form-control" name="yandexmoney" placeholder="YandexMoney" value="'+user.YandexMoney+'"></div>' +
-                '<div class="input-group"><span class="input-group-addon">UTC</span><input type="text" class="form-control" name="Utc" placeholder="UTC" value="'+user.Utc+'"></div>' +
+                '<div class="input-group"><span class="input-group-addon">UTC</span><input type="text" class="form-control" name="Utc" placeholder="UTC" value="'+(user.Utc || '')+'"></div>' +
                 '<div class="input-group"><span class="input-group-addon">Страна</span>' +
                 '<select class="form-control" name="Country">';
 
