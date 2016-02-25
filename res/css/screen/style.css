@@ -51,7 +51,13 @@ html {
   display: block; }
 
 .banner-3 {
-  height: 135px; }
+  position: relative;
+  width: 500%;
+  left: -200%;
+  text-align: center;
+  line-height: 0; }
+  .banner-3 > * {
+    display: inline-block; }
 
 .banner-4 {
   height: 600px;

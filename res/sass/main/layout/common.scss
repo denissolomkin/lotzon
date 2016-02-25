@@ -234,9 +234,12 @@ button {
 
 .content-top {
   position: relative;
-  
-  > div .content-box{
+
+  > div {
     min-height: 600px;
+    > .content-box {
+      min-height: 600px;
+    }
   }
 }
 

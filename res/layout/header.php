@@ -39,9 +39,7 @@
 
             <!-- SITE TOP -->
             <div class="site-top">
-                <div class="container">
-                    <div id="banner-desktop-top" class="banner-3">
-                    </div>
+                <div id="banner-desktop-top" class="banner-3">
                 </div>
             </div>
             <!-- end of SITE TOP -->

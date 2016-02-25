@@ -201,7 +201,7 @@
 
                 !this.body && (this.body = document.getElementsByTagName('body')[0]);
 
-                if ((!Device.isMobile() && yScroll > 135) || (Device.isMobile() && yScroll > 0)) {
+                if ((!Device.isMobile() && yScroll >= $('header').offset().top ) || (Device.isMobile() && yScroll > 0)) {
                     if (!this.body.classList.contains('fixed')) {
                         D.log('Navigation.menu.fix.add', 'menu');
                         this.body.classList.add('fixed');

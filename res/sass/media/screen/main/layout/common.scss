@@ -48,7 +48,15 @@ html {
 }
 
 .banner-3 {
-  height: 135px;
+    position: relative;
+    width: 500%;
+    left: -200%;
+    text-align: center;
+    line-height: 0;
+    >*{
+        display: inline-block;
+        // margin: 0px auto;
+    }
 }
 
 .banner-4 {
