@@ -1385,4 +1385,21 @@ class PlayersDBProcessor implements IProcessor
 
         return $sth->fetchAll();
     }
+
+    public function getReferralsCount($playerId)
+    {
+        $sql = "SELECT COUNT(*) FROM `Players` WHERE `ReferalId` = :playerid";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':playerid' => $playerId
+            ));
+
+            return $sth->fetchColumn();
+
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+    }
 }
