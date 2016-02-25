@@ -7384,7 +7384,7 @@ form.loading > * {
       height: 100%;
       z-index: 20; }
 
-.ae-user-img {
+#profile-edit .ae-user-img {
   width: 150px;
   height: 150px;
   border-radius: 50%;
@@ -7393,7 +7393,7 @@ form.loading > * {
   top: -2px;
   margin-left: 15px;
   cursor: pointer; }
-  .ae-user-img:after {
+  #profile-edit .ae-user-img:after {
     top: 0;
     left: 0;
     content: "";
@@ -7404,7 +7404,7 @@ form.loading > * {
     width: 150px;
     background: url(img/photo.png) center; }
 
-.img-avatar-name {
+#profile-edit .img-avatar-name {
   position: absolute;
   left: 185px;
   top: 20px;
@@ -7413,7 +7413,32 @@ form.loading > * {
   font-family: "handbookpro-regular";
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4); }
 
-.ae-user-img img {
+#profile-edit .ae-user-img img {
+  display: block;
+  width: 100%;
+  height: auto;
+  position: relative;
+  z-index: 30; }
+
+#user-view .ae-user-img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  top: -2px;
+  margin-left: 15px; }
+
+#user-view .img-avatar-name {
+  position: absolute;
+  left: 185px;
+  top: 20px;
+  font-size: 25px;
+  color: #fff;
+  font-family: "handbookpro-regular";
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4); }
+
+#user-view .ae-user-img img {
   display: block;
   width: 100%;
   height: auto;
