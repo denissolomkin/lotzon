@@ -168,6 +168,7 @@ var Games = {
             if (!data.json)
                 return false;
 
+            console.debug(">>>",data);
             // check if game not finished
             // Games.chance.checkGame(data.json.id);
             Games.chance.key = data.json.key;
@@ -177,7 +178,7 @@ var Games = {
             Games.chance.conf.data = data.json;
             Games.chance.get("#games-chance-view-cells button:not(.played)", data.json.id);
             // in multiple prizes set first prize as @current@
-            $("#games-chance-view-chance *:first-child[data-current] ").addClass('currennt');
+            $("#games-chance-view-chance *:first-child[data-current] ").addClass('current');
 
             return;
         },
@@ -241,9 +242,7 @@ var Games = {
 
                         if (data.json.error)
                             return;
-                        // code after
-                        // console.debug('GET >>> JSON.stringify(data.json, null, 2) ', JSON.stringify(data.json, null, 2));
-
+                        
                         // prize
                         if (data.json.Prize) {
                             $(that).addClass('win');
@@ -336,8 +335,8 @@ var Games = {
         prizesMoves: function(moves) {
             var missCounter = Games.chance.conf.data.field.m - moves;
             //            data-current
-            $("#games-chance-view-chance [data-current]").removeClass('currennt');
-            $("#games-chance-view-chance [data-current=" + missCounter + "]").addClass('currennt');
+            $("#games-chance-view-chance [data-current]").removeClass('current');
+            $("#games-chance-view-chance [data-current=" + missCounter + "]").addClass('current');
         },
         resset: function() {
             $("#games-chance-view-cells button").removeAttr('class');

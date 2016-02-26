@@ -285,7 +285,7 @@ button {
   position: relative; }
   .content-top > div {
     min-height: 600px; }
-    .content-top > div > .content-box {
+    .content-top > div > .content-box:not(#lottery-history) {
       min-height: 600px; }
 
 .content-box {
@@ -9378,7 +9378,8 @@ footer.unvisible {
   background: #ff4242; }
 
 #games-online-field .beater .circle {
-  background: #7ed321; }
+  background: #7ed321;
+  transform: none; }
 
 #games-online-field .beater .timer-r,
 #games-online-field .beater .timer-l {
