@@ -265,7 +265,7 @@ class LotteryController extends \AjaxController
             $response['res']['statistics'][$count] = array(
                 'balls'    => $count,
                 'currency' => ($prizes[$count]['currency']=='MONEY'?'money':'points'),
-                'prize'    => $prizes[$count]['sum'],
+                'sum'      => $prizes[$count]['sum'],
                 'matches'  => $matches + $balls_incr[$count],
             );
         }
