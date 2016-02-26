@@ -34,8 +34,23 @@ class FriendsModel extends Model
         return $this->getProcessor()->addRequest($playerId, $toPlayerId);
     }
 
+    public function remove($playerId, $toPlayerId)
+    {
+        return $this->getProcessor()->remove($playerId, $toPlayerId);
+    }
+
     public function getStatusCount($playerId, $status)
     {
         return $this->getProcessor()->getStatusCount($playerId, $status);
+    }
+
+    public function getStatus($playerId, $toPlayerId)
+    {
+        return $this->getProcessor()->getStatus($playerId, $toPlayerId);
+    }
+
+    public function isFriend($playerId, $toPlayerId)
+    {
+        return $this->getProcessor()->isFriend($playerId, $toPlayerId);
     }
 }

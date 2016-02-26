@@ -507,7 +507,7 @@ class Players extends \AjaxController
         $this->authorizedOnly();
 
         $player = new Player();
-        $player->setId($playerId)->fetch();
+        $player->setId($playerId)->fetch()->setFriendship($this->session->get(Player::IDENTITY)->getId());
 
         $response = array(
             'res' => array(
@@ -516,6 +516,7 @@ class Players extends \AjaxController
                 )
             )
         );
+
         $this->ajaxResponseCode($response);
         return true;
     }

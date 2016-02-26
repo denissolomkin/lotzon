@@ -250,12 +250,6 @@
 
         after: {
 
-            request: function(data) {
-                $('.add-friends').toggleClass('hidden')
-                // this.innerHTML = i18n("button-user-remove-request");
-                // this.className = 'uk-float-right danger';
-            },
-
             cashout: function() {
                 Player.updateBalance();
                 $('.cco-enter-sum-box').innerHTML = i18n("button-user-remove-request");
