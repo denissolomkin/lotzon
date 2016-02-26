@@ -26,7 +26,14 @@ class ShopCacheProcessor extends BaseCacheProcessor
 
         $this->recacheShop();
         return true;
-    } 
+    }
+
+    public function updateCategory(ShopCategory $category) {
+        $this->getBackendProcessor()->updateCategory($category);
+
+        $this->recacheShop();
+        return true;
+    }
 
     public function createItem(ShopItem $item) {
         $item = $this->getBackendProcessor()->createItem($item);
