@@ -4,7 +4,6 @@
 
         data: null,
         tickets: null,
-        summary: null,
 
         init: function() {
 
@@ -23,22 +22,25 @@
 
         view: function(data) {
 
-            var lotteryId = data.json.id; //parseInt(document.getElementById('lottery-history-view').getAttribute('data-lottery-id'));
-            Lottery.data = data.json; //Cache.get('lottery-history-' + lotteryId);
-            Lottery.summary = Lottery.getSummary();
-            Lottery.animateSummary();
+            Lottery.data = data.json;
+
+            var lotteryId = data.json.id,
+                lotteryCombination = data.json.combination, //Cache.get('lottery-history-' + lotteryId);
+                lotterySummary = Lottery.getSummary(); //parseInt(document.getElementById('lottery-history-view').getAttribute('data-lottery-id'));
+
+            Lottery.animateSummary(lotterySummary);
 
             R.push({
                 href: 'lottery-' + lotteryId + '-tickets',
                 format: Lottery.extendTickets,
-                arguments: [Lottery.summary, Lottery.data.combination]
-            })
+                arguments: [lotterySummary, lotteryCombination]
+            });
+
 
         },
 
         extendTickets: function(ticketsArray, arguments) {
 
-            console.error(ticketsArray, arguments);
             var prizesData = arguments[0],
                 lotteryCombination = arguments[1];
 
@@ -50,15 +52,14 @@
                     tickets: []
                 },
                 extendedTicket,
-                matchesBalls;
-                matchesBalls;
+                matchesBalls,
+                ticketType;
 
             /* extend playerTickets */
             if (Object.size(ticketsArray))
                 for (i = 1; i <= Tickets.totalTickets; i++) {
 
-                    i = parseInt(i);
-
+                    ticketType = Tickets.isGold(i)?'gold':'default';
                     matchesBalls = 0;
                     extendedTicket = {
                         num: i,
@@ -86,21 +87,18 @@
                         extendedTicket.combination.push(extendedBall);
                     }
 
-                    if (matchesBalls) {
+                    if (prizesData[ticketType] && prizesData[ticketType][matchesBalls] && !extendedTickets.win[prizesData[ticketType][matchesBalls].currency])
+                        extendedTickets.win[prizesData[ticketType][matchesBalls].currency] = {
+                            currency: prizesData[ticketType][matchesBalls].currency,
+                            prize: 0
+                        };
 
-                        extendedTicket.prize = parseFloat(prizesData[matchesBalls].prize);
-                        extendedTicket.currency = prizesData[matchesBalls].currency;
+                    if (matchesBalls && prizesData[ticketType] && prizesData[ticketType][matchesBalls].prize) {
 
-                        if (!extendedTickets.win[prizesData[matchesBalls].currency]) {
-                            extendedTickets.win[prizesData[matchesBalls].currency] = {
-                                currency: extendedTicket.currency,
-                                prize: extendedTicket.prize
-                            };
+                        extendedTicket.prize = parseFloat(prizesData[ticketType][matchesBalls].prize);
+                        extendedTicket.currency = prizesData[ticketType][matchesBalls].currency;
+                        extendedTickets.win[extendedTicket.currency].prize += extendedTicket.prize;
 
-                        } else
-                            extendedTickets.win[extendedTicket.currency].prize += extendedTicket.prize;
-
-                        console.error(extendedTickets);
                     }
 
                     extendedTickets.tickets.push(extendedTicket)
@@ -111,47 +109,48 @@
 
         getSummary: function() {
 
-            console.error(this.data.statistics, Tickets.prizes.default);
-
             this.data.statistics =
-                this.data.statistics || Tickets.prizes.default;
-
-            console.error(this.data.statistics, Tickets.prizes.default);
+                this.data.statistics || Tickets.prizes;
 
             var lotterySummary = {
                     totalSum: []
                 },
                 lotteryData = this.data;
 
-            for (var i in lotteryData.statistics) {
-                if (!lotteryData.statistics.hasOwnProperty(i))
-                    continue;
+            for (var type in lotteryData.statistics) {
+                for (var i in lotteryData.statistics[type]) {
+                    if (!lotteryData.statistics[type].hasOwnProperty(i))
+                        continue;
 
-                i = parseInt(i);
+                    i = parseInt(i);
 
-                var ballData = lotteryData.statistics[i],
-                    sum = ballData.prize * ballData.matches;
+                    var ballData = lotteryData.statistics[type][i],
+                        sum = ballData.sum * ballData.matches;
 
-                lotterySummary[ballData.balls] = {
-                    currency: ballData.currency,
-                    prize: ballData.prize,
-                    matches: ballData.matches,
-                    sum: sum
-                };
+                    if (!lotterySummary[type])
+                        lotterySummary[type] = {};
 
-                if (!lotterySummary.totalSum[ballData.currency])
-                    lotterySummary.totalSum[ballData.currency] = 0;
-                lotterySummary.totalSum[ballData.currency] += sum;
+                    lotterySummary[type][(ballData.balls || i)] = {
+                        currency: ballData.currency,
+                        prize: ballData.sum,
+                        matches: ballData.matches,
+                        sum: sum
+                    };
 
+                    if (!lotterySummary.totalSum[ballData.currency])
+                        lotterySummary.totalSum[ballData.currency] = 0;
+                    lotterySummary.totalSum[ballData.currency] += sum;
+
+                }
             }
 
             return lotterySummary;
         },
 
-        animateSummary: function() {
+        animateSummary: function(lotterySummary) {
+            console.error(lotterySummary);
 
-            var lotterySummary = this.summary,
-                $won = $('.ghd-game-inf .ghd-all-won'),
+            var $won = $('.ghd-game-inf .ghd-all-won'),
                 $table = $('.ghd-game-inf table');
 
             setTimeout(function() {
@@ -160,6 +159,7 @@
                     summaryVisible();
                 } else {
                     $(window).on('scroll', summaryVisible);
+                    $table.hide();
                 }
             }, 600);
 
@@ -167,16 +167,19 @@
 
             function summaryVisible() {
 
-                for (var i in lotterySummary) {
+                $table.fadeIn();
+
+                for (var i in lotterySummary.default) {
 
                     if (!isNumeric(i))
                         continue;
 
                     $('tr.balls-matches-' + i + ' td:eq(0)', $table)
                         .delay(1000)
-                        .next().html(lotterySummary[i].matches || 0).spincrement({'thousandSeparator': ' '})
-                        .next().html('<span>' + Player.getCurrency(lotterySummary[i].currency, lotterySummary[i].sum) + '</span> ' +
-                            '<span>' + Player.getCurrency(lotterySummary[i].currency) + '</span>')
+                        .next().html(lotterySummary.default[i].matches || 0).spincrement({'thousandSeparator': ' '})
+                        .next().html(
+                        '<span>' + Player.getCurrency(lotterySummary.default[i].currency, lotterySummary.default[i].sum) + '</span> ' +
+                        '<span>' + Player.getCurrency(lotterySummary.default[i].currency) + '</span>')
                         .find('span').first().spincrement({'thousandSeparator': ' '});
                 }
 
@@ -260,7 +263,7 @@
                 },
                 tickets = Lottery.extendTickets(
                     this.tickets, [
-                        Lottery.getSummary(this.data),
+                        Lottery.getSummary(),
                         this.data.combination
                     ]
                 ),
