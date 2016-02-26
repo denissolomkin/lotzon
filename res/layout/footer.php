@@ -48,7 +48,7 @@
                     'users/0/messages',
                     'support/rules',
                     'support/faq',
-                    'support/help',
+                    /*'support/help',*/
                     'logout'
                 ]
             }
