@@ -102,6 +102,22 @@ class FriendsDBProcessor implements IProcessor
         return true;
     }
 
+    public function remove($playerId, $toPlayerId)
+    {
+        $sql = "DELETE FROM `Friends` WHERE (`UserId` = :playerid AND `FriendId` = :toplayerid) OR (`FriendId` = :playerid AND `UserId` = :toplayerid)";
+
+        try {
+            $sth = DB::Connect()->prepare($sql)->execute(array(
+                ':playerid'   => $playerId,
+                ':toplayerid' => $toPlayerId,
+            ));
+        } catch (PDOexception $e) {
+            throw new ModelException("Unable to proccess storage query", 500);
+        }
+
+        return true;
+    }
+
     public function addRequest($playerId, $toPlayerId)
     {
         $sql = "INSERT INTO `Friends` (`UserId`, `FriendId`, `Status`, `ModifyDate`) VALUES (:playerid, :toplayerid, 0, :date)";
@@ -148,5 +164,41 @@ class FriendsDBProcessor implements IProcessor
         $count = $sth->fetch()['c'];
 
         return $count;
+    }
+
+    public function getStatus($playerId, $toPlayerId)
+    {
+        $sql = "SELECT `Status` FROM `Friends` WHERE `UserId` = :playerid AND `FriendId` = :toplayerid";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':playerid'   => $playerId,
+                ':toplayerid' => $toPlayerId,
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+        if ($sth->rowCount()==0) {
+            return null;
+        }
+        return (int)$sth->fetch()['Status'];
+    }
+
+    public function isFriend($playerId, $toPlayerId)
+    {
+        $sql = "SELECT count(*) as c FROM `Friends` WHERE ((`UserId` = :playerid AND `FriendId` = :toplayerid) OR (`FriendId` = :playerid AND `UserId` = :toplayerid)) AND `Status` = 1";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':playerid'   => $playerId,
+                ':toplayerid' => $toPlayerId,
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+        return $sth->fetch()['c']==1?true:false;
     }
 }

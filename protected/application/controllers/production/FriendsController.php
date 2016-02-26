@@ -202,12 +202,25 @@ class FriendsController extends \AjaxController
             return false;
         }
 
+        $player = new Player();
+        $player->setId($userId)->fetch()->setFriendship($playerId);
+
         $response = array(
+            'res' => array(
+                'user' => array(
+                    "$userId" => $player->export('info')
+                )
+            ),
             "delete" => array(
                 "users" => array(
                     "requests" => array(
                         $userId
                     )
+                )
+            ),
+            "player" => array(
+                "count" => array(
+                    "friends" => \FriendsModel::instance()->getStatusCount($playerId, 1),
                 )
             )
         );
@@ -233,7 +246,23 @@ class FriendsController extends \AjaxController
             return false;
         }
 
-        $this->ajaxResponseCode(array());
+        $player = new Player();
+        $player->setId($userId)->fetch()->setFriendship($playerId);
+
+        $response = array(
+            'res' => array(
+                'user' => array(
+                    "$userId" => $player->export('info')
+                )
+            ),
+            "player" => array(
+                "count" => array(
+                    "friends" => \FriendsModel::instance()->getStatusCount($playerId, 1),
+                )
+            )
+        );
+
+        $this->ajaxResponseCode($response);
         return true;
     }
 
@@ -248,15 +277,82 @@ class FriendsController extends \AjaxController
         $playerId = $this->session->get(Player::IDENTITY)->getId();
 
         try {
-            \FriendsModel::instance()->addRequest($playerId, $userId);
+            $status = \FriendsModel::instance()->getStatus($userId, $playerId);
+            if ($status === null) {
+                \FriendsModel::instance()->addRequest($playerId, $userId);
+            } else {
+                switch ($status) {
+                    case 0:
+                        \FriendsModel::instance()->updateRequest($playerId, $userId, 1);
+                        break;
+                    case 1:
+                        break;
+                    case 2:
+                        \FriendsModel::instance()->deleteRequest($userId, $playerId);
+                        \FriendsModel::instance()->addRequest($playerId, $userId);
+                        break;
+                }
+            }
         } catch (\PDOException $e) {
             $this->ajaxResponseInternalError();
             return false;
         }
 
-        $this->ajaxResponseCode(array());
+        $player = new Player();
+        $player->setId($userId)->fetch()->setFriendship($playerId);
+
+        $response = array(
+            'res' => array(
+                'user' => array(
+                    "$userId" => $player->export('info')
+                )
+            ),
+            "player" => array(
+                "count" => array(
+                    "friends" => \FriendsModel::instance()->getStatusCount($playerId, 1),
+                )
+            )
+        );
+
+        $this->ajaxResponseCode($response);
         return true;
     }
 
+    public function removeAction($userId)
+    {
+        if (!$this->request()->isAjax()) {
+            return false;
+        }
+
+        $this->authorizedOnly();
+
+        $playerId = $this->session->get(Player::IDENTITY)->getId();
+
+        try {
+            \FriendsModel::instance()->remove($playerId, $userId);
+        } catch (\PDOException $e) {
+            $this->ajaxResponseInternalError();
+            return false;
+        }
+
+        $player = new Player();
+        $player->setId($userId)->fetch()->setFriendship($playerId);
+
+        $response = array(
+            'res' => array(
+                'user' => array(
+                    "$userId" => $player->export('info')
+                )
+            ),
+            "player" => array(
+                "count" => array(
+                    "friends" => \FriendsModel::instance()->getStatusCount($playerId, 1),
+                )
+            )
+        );
+
+        $this->ajaxResponseCode($response);
+        return true;
+    }
 
 }

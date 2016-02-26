@@ -1,0 +1,114 @@
+<div id="user-{{id}}">
+    <div class="content-box-header"><span class="back i-arrow-left large-visible"></span><span class="back i-arrow-slim-left small-visible "></span>{{ title.nickname }}</div>
+    <div class="content-box-content clearfix">
+        <div class="content-box-item">
+            <div class="ae-personal-inf">
+                <div class="ae-top">
+                    <div class="overflow-hid">
+                        <div></div>
+                        <div class="avatar-bg" style="background: url('{{avatar img id}}') no-repeat 50%; background-size: cover; filter: url(#Blur);" filter="url(/res/filter.svg#blur)">
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" height="0">
+                            <filter height="116%" width="116%" y="-8%" x="-8%" id="Blur">
+                                <feGaussianBlur stdDeviation="8" in="SourceGraphic" />
+                            </filter>
+                        </svg>
+                        <div class="img-avatar-name">{{title.nickname}}</div>
+                        <div class="ae-user-img pi-ph false">
+                            <img src="{{avatar img id}}"
+                                 class="loading"
+                                 onload="this.style.background = 'none'"
+                                 onerror="Player.getAvatar.call(this)">
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <ul class="ae-personal-form">
+                        <li class="ae-personal-form-values ae-name-block">
+                            <ul>
+                                <li class="user-actions">
+                                    <a href="/users/{{id}}/message" class="send-msg uk-float-left">
+                                        {{i18n "button-users-write-message"}}
+                                    </a>
+                                    <form action="/users/requests/{{id}}" method="post" class="uk-float-left add-friends {{#if (ne false isFriend)}}hidden{{/if}} ">
+                                        <button type="submit">{{i18n "button-user-friendship"}}</button>
+                                    </form>
+                                    <form action="/users/requests/{{id}}" method="delete" class="add-friends uk-float-right danger {{#if (ne 'request' isFriend)}}hidden{{/if}}">
+                                        <button type="submit" class="danger">{{i18n "button-user-remove-request"}}</button>
+                                    </form>
+                                    <form action="/users/friends/{{id}}" method="delete" class="del-friends uk-float-right danger {{#if (ne true isFriend)}}hidden{{/if}}">
+                                        <button type="submit" class="danger">{{i18n "button-user-remove-friend"}}</button>
+                                    </form>
+                                </li>
+
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <ul class="ae-personal-form">
+                    <li class="ae-personal-form-values">
+                        <ul>
+                            <li><i>Имя</i>
+                                <div>{{title.name}}</div>
+                            </li>
+                            <li><i>Фамилия</i>
+                                <div>{{title.surname}}</div>
+                            </li>
+                            <li>
+                                <i>Дата рождения</i>
+                                <div class="wrapper-margin-right">{{day birthday}}
+                                </div>
+                            </li>
+                            <li><i>Страна</i>
+                                <div class="select-wrapper">
+                                    {{location.country}}
+                                </div>
+                            </li>
+                            <li><i>Город/Село</i>
+                                <div>{{location.city}}</div>
+                            </li>
+                            <li class="ae-social">
+                                <i class="uk-float-left">Соц. сети </i>
+                                <div class="ae-social uk-float-left">
+                                    <a href="#" class="ae-social-item i-vk-rectangle" title="">
+                                            <span class="tooltip">
+                                                {{i18n 'text-soc-net-tie'}}
+                                            </span>
+                                    </a>
+                                    <a href="#" class="ae-social-item i-fb-rectangle" title="">
+                                            <span class="tooltip">
+                                                {{i18n 'text-soc-net-tie'}}
+                                            </span>
+                                    </a>
+                                    <a href="#" class="ae-social-item i-tw-rectangle">
+                                            <span class="tooltip">
+                                                {{i18n 'text-soc-net-tie'}}
+                                            </span>
+                                    </a>
+                                    <a href="#" class="ae-social-item i-g_plus-rectangle">
+                                            <span class="tooltip">
+                                                {{i18n 'text-soc-net-tie'}}
+                                            </span>
+                                    </a>
+                                    <a href="#" class="ae-social-item i-inst-rectangle">
+                                            <span class="tooltip">
+                                                {{i18n 'text-soc-net-tie'}}
+                                            </span>
+                                    </a>
+                                    <a href="#" class="ae-social-item i-ok-rectangle">
+                                            <span class="tooltip">
+                                                {{i18n 'text-soc-net-tie'}}
+                                            </span>
+                                    </a>
+                                </div>
+                            </li>
+                            <li class="empty"></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- .content-box-item -->
+    </div>
+    <!-- .content-box-content -->
+</div>

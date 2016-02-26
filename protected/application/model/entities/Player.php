@@ -98,6 +98,8 @@ class Player extends Entity
     private $_isTicketsFilled = array();
     private $_counters = array();
 
+    private $_isFriend = null;
+
     public function init()
     {
         $this->setModelClass('PlayersModel');
@@ -1667,6 +1669,17 @@ class Player extends Entity
         setcookie(self::AUTOLOGIN_HASH_COOKIE, "", -1, '/');
     }
 
+    public function setFriendship($friendId)
+    {
+        if (\FriendsModel::instance()->getStatus($friendId, $this->getId())===0) {
+            $this->_isFriend = 'request';
+        } else {
+            $this->_isFriend = \FriendsModel::instance()->isFriend($friendId, $this->getId());
+        }
+
+        return $this;
+    }
+
     public function export($to)
     {
         switch ($to) {
@@ -1695,6 +1708,9 @@ class Player extends Entity
                     'social'     => array(
                     )
                 );
+                if ($this->_isFriend!==null) {
+                    $ret['isFriend'] = $this->_isFriend;
+                }
                 foreach (\Config::instance()->hybridAuth['providers'] as $socialName => $value) {
                     $ret['social'][$socialName] = $this->getAdditionalData()[$socialName]['identifier'];
                 }

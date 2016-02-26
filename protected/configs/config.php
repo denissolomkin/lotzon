@@ -705,6 +705,9 @@ Config::instance()->publicResources = array(
     '/users/friends/' => array(
         'get' => 'controllers\production\FriendsController:list',
     ),
+    '/users/friends/:userId' => array(
+        'delete' => 'controllers\production\FriendsController:remove',
+    ),
     '/users/requests/' => array(
         'get' => 'controllers\production\FriendsController:requests',
     ),
