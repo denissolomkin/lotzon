@@ -2,7 +2,9 @@
     <div id="lottery-process" class="clearfix">
     <button class="close won" onclick="parentNode.parentNode.remove()"></button>
         <div class="container clearfix">
+
             <div><a href="/lottery" class="header-logo"></a></div>
+
             <ul class="balls-end-game clearfix">
                 {{#combination}}
                 <li class="g-oc_li unfilled">
@@ -16,7 +18,9 @@
                 </li>
                 {{/combination}}
             </ul>
+
             <section class="lottery-amimation-box">
+
                 <div class="ghd-tickets">
                     {{#if tickets}}
                     <ul>
@@ -58,10 +62,12 @@
                     {{else}}
                     <div class="ghd-text">{{i18n 'title-lottery-not-play'}}</div>
                     {{/if}}
-                    </div>
                 </div>
+
             </section>
+
         </div>
+
         <div class="container-center won">
             <a class="btn btn-flat" data-id="{{@key}}" href="/lottery/{{ id }}">{{i18n 'title-lottery-look-results'}}</a>
         </div> 
