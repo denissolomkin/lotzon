@@ -205,10 +205,10 @@ class Index extends \SlimController\SlimController
             "websocketEmulation" => false,
             "page"               => $session->get('page'),
             "limits"             => array(
-                "lottery-history" => 5,
-                "communication-comments" => 5,
-                "users-friends" => 5,
-                "blog-posts" => 5,
+                "lottery-history" => (int)\SettingsModel::instance()->getSettings('counters')->getValue('LOTTERIES_PER_PAGE'),
+                "communication-comments" => (int)\SettingsModel::instance()->getSettings('counters')->getValue('COMMENTS_PER_PAGE'),
+                "users-friends" => (int)\SettingsModel::instance()->getSettings('counters')->getValue('FRIENDS_PER_PAGE'),
+                "blog-posts" => (int)\SettingsModel::instance()->getSettings('counters')->getValue('POSTS_PER_PAGE'),
             )
         );
 
