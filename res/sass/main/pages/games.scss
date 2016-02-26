@@ -94,11 +94,12 @@ div > .games-previews {
             width: 100%;
             position: relative;
             margin: 100px 0 0 0;
-            min-height: 180px;
+            height: 180px;
             padding: 10px 20px;
             box-sizing: border-box;
             text-align: center;
             overflow: hidden;
+            
         }
         .game-name {
             font-family: Handbook-bold;
@@ -106,6 +107,8 @@ div > .games-previews {
             text-transform: uppercase;
             line-height: 1;
             margin: 5px 0;
+            min-height: 32px;
+
         }
         .fund_title {
             font-family: Handbook-bold;
@@ -132,7 +135,7 @@ div > .games-previews {
             text-align: center;
             line-height: 40px;
             height: 40px;
-            font-size: 15px;
+            font-size: 14px;
             border-top: 1px solid rgba(255, 255, 255, 0.3);
             text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.3);
             text-transform: uppercase;
@@ -671,26 +674,18 @@ footer.unvisible {
                             font-size:14px;
                             color:#000000;
                             letter-spacing:0.32px;
-                            line-height:26px;
+                            line-height:28px;
                             background: transparent;
 
                             border:1px solid #000000;
                             min-width: 108px;
-                            height:28px;
+                            height:30px;
                             cursor: pointer;
                             padding: 0 10px;
                             transition: all .2s ease-in;
-                            // &:before{
-                            //     content: '';
-                            //     height: 100%;
-                            //     width: 0;
-                            //     display: inline-block;
-                            //     vertical-align: middle;
-                            // }
                             &:first-child{
                                 margin-right: 20px;
                             }
-
                             &:hover{
                                 color: #f8e71c;
                                 background: #000;

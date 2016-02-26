@@ -28,6 +28,8 @@
                                 {{else}}
                                 <span class="item">{{v}} </span>
                                 <span class="currency">{{#if (eq t "money")}}{{player "getCurrency"}}{{else}}{{i18n "title-of-points"}}{{/if}} </span>
+                                <br>
+                                <span class="instruction">{{../field.c}} {{i18n "title-of-yellow"}} {{reverseNum ../prizes.length-1 @index}} {{i18n "title-of-miss"}} </span>
                                 {{/if}}
                             </div>
                             {{/reverse}}

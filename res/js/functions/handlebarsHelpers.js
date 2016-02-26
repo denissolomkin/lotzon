@@ -35,6 +35,21 @@ $(function () {
             }
             return ret;
         },
+        /**
+         * @description loop for(; min >= max; min++) return current counter
+         *
+         * @param {int} min
+         * @param {int} max
+         * @param {fn} options
+         * @returns {String}
+         */
+        'forMinToMax': function ( min, max, options) {
+            var ret = "";
+            for (; min <= max; min++) {
+                ret = ret + options.fn(min);
+            }
+            return ret;
+        },
 //        ^ delete that sh... 'forMaxToMin'
 
         /**

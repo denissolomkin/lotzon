@@ -310,14 +310,19 @@
     } 
   }
   & .bold {
-    font-family: 'Handbook-bold';
+    // font-family: 'Handbook-bold';
     font-size: 15px;
+    color: #000;
   }
   & .info_block {
     & p {
+      color: #4a4a4a;
+      // margin-left: 30px;
       margin-bottom: 30px;
       &.bold {
+        color: #000;
         margin-bottom: 10px;
+        // margin-left: 0;
       }
     }
   }

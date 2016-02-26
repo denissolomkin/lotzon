@@ -1036,7 +1036,6 @@ header {
   display: none; }
 
 .moment-game-box:not(.game-started) .message {
-  top: 50%;
   margin: 0;
   background: transparent; }
 

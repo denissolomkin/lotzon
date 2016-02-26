@@ -73,19 +73,40 @@ var Games = {
 
         init: function() {
             Games.online.tabs();
-            // Games.validate();
-
-            // show MoreDescription button if desc.height > 390px
+            Games.online.hideSelectedButtons();
+            // show MoreDescription button if desc.height > 360px
             var desc = $(".game-description > div");
-            var vis = desc.height() > 390 ? true : false;
+            var vis = desc.height() > 360 ? true : false;
 
             if (desc && vis) {
             
-                desc.css({ 'max-height': '390px' });
+                desc.css({ 'max-height': '360px' });
                 desc.prev().show();
             }
         },
+        // скрывает одиночные кнопки в вкладке "создать" 
+        hideSelectedButtons: function(){
 
+            var z = document.querySelectorAll(' .create-game > form > [class^="game_"]');
+            
+            if(z.length == 0) return;
+
+            for (var i = 0; i < z.length; i++) {
+                var a = z[i].querySelectorAll(' .buttons-group');
+                var b = z[i].querySelectorAll(' .button');
+
+                if (b.length <= a.length) {
+                    z[i].style.display = 'none';
+                } else {
+                    for (var j = 0; j < a.length; j++) {
+                        if (a[j].querySelectorAll(' .button').length <= 1)
+                            a[j].style.display = 'none';
+                    }
+                }
+
+            }
+
+        },
         //online view
         tabs: function() {
             var tabs = $('#games-online-view-tabs > div'),
@@ -148,7 +169,7 @@ var Games = {
                 return false;
 
             // check if game not finished
-            Games.chance.checkGame(data.json.id);
+            // Games.chance.checkGame(data.json.id);
             Games.chance.key = data.json.key;
 
             // make config
@@ -162,46 +183,46 @@ var Games = {
         },
 
         checkGame: function(id){
-            Form.post.call(this, {
-                href: '/games/chance/' + id,
-                after: function(data) {
+            // Form.post.call(this, {
+            //     href: '/games/chance/' + id,
+            //     after: function(data) {
 
-                    // check game IDs
-                    if(id != data.json.res.Id){
-                        // reload tmpl
-                        R.push({ href: 'games/chance/'+data.json.res.Id });
-                        console.debug('---- reload tmpl -----');
+            //         // check game IDs
+            //         if(id != data.json.res.Id){
+            //             // reload tmpl
+            //             R.push({ href: 'games/chance/'+data.json.res.Id });
+            //             console.debug('---- reload tmpl -----');
 
-                        return;
-                    }
+            //             return;
+            //         }
 
 
-                    var fields = data.json.res.GameField;
+            //         var fields = data.json.res.GameField;
 
-                    if(Object.keys(fields).length > 0){
+            //         if(Object.keys(fields).length > 0){
 
-                        // update all cells to default state
-                        Games.chance.resset();
+            //             // update all cells to default state
+            //             Games.chance.resset();
 
-                        // draw played cells
-                        for(var i in fields){
-                            if(fields[i]){
-                                $('.minefield [data-cell="'+i+'"]').addClass('win played');
-                            }else{
-                                $('.minefield [data-cell="'+i+'"]').addClass('lose played');
-                            }
-                        }
+            //             // draw played cells
+            //             for(var i in fields){
+            //                 if(fields[i]){
+            //                     $('.minefield [data-cell="'+i+'"]').addClass('win played');
+            //                 }else{
+            //                     $('.minefield [data-cell="'+i+'"]').addClass('lose played');
+            //                 }
+            //             }
 
-                        // update trigger 'game ready'
-                        Games.chance.conf.play = !0;
+            //             // update trigger 'game ready'
+            //             Games.chance.conf.play = !0;
 
-                        // add class for css styles
-                        $("#games-chance-view-chance").attr('class', 'game-started');
+            //             // add class for css styles
+            //             $("#games-chance-view-chance").attr('class', 'game-started');
 
-                    }
+            //         }
 
-                }
-            });
+            //     }
+            // });
         },
         //chances view
         get: function(elements, id) {
@@ -253,12 +274,52 @@ var Games = {
             Form.post.call(this, {
                 href: '/games/chance/' + id,
                 after: function(data) {
-                    // update trigger 'game ready'
-                    Games.chance.conf.play = !0;
-                    // update all cells to default state
-                    Games.chance.resset();
-                    // add class for css styles
-                    $("#games-chance-view-chance").attr('class', 'game-started');
+
+
+                    // check game IDs
+                    if(id != data.json.res.Id){
+                        // reload tmpl
+                        R.push({ href: 'games/chance/'+data.json.res.Id });
+                        console.debug('---- reload tmpl -----');
+
+
+                        // NEED CALLBACK ^ rpush
+                        
+                        return;
+                    }
+
+
+                    var fields = data.json.res.GameField;
+
+                    if(Object.keys(fields).length > 0){
+
+                        // update all cells to default state
+                        Games.chance.resset();
+
+                        // draw played cells
+                        for(var i in fields){
+                            if(fields[i]){
+                                $('.minefield [data-cell="'+i+'"]').addClass('win played');
+                            }else{
+                                $('.minefield [data-cell="'+i+'"]').addClass('lose played');
+                            }
+                        }
+
+                        // update trigger 'game ready'
+                        Games.chance.conf.play = !0;
+
+                        // add class for css styles
+                        $("#games-chance-view-chance").attr('class', 'game-started');
+
+                    }else{
+
+                        // update trigger 'game ready'
+                        Games.chance.conf.play = !0;
+                        // update all cells to default state
+                        Games.chance.resset();
+                        // add class for css styles
+                        $("#games-chance-view-chance").attr('class', 'game-started');
+                    }
                 }
             });
         },

@@ -4702,12 +4702,14 @@ input.comment-reply-btn {
   margin-bottom: 15px; }
 
 #profile-bonuses .bold {
-  font-family: 'Handbook-bold';
-  font-size: 15px; }
+  font-size: 15px;
+  color: #000; }
 
 #profile-bonuses .info_block p {
+  color: #4a4a4a;
   margin-bottom: 30px; }
   #profile-bonuses .info_block p.bold {
+    color: #000;
     margin-bottom: 10px; }
 
 .bonus-share-banner .title {
@@ -4846,7 +4848,7 @@ input.comment-reply-btn {
   position: absolute;
   top: 5px;
   right: -9px;
-  z-index: 100; }
+  z-index: 10; }
   .content-box-tab .count:empty {
     display: none; }
 
@@ -5587,6 +5589,9 @@ form.loading > * {
       padding: 0; }
     .badges-container > div div[id^="badges-message"] .contain-img {
       padding-left: 50px; }
+
+#lottery-history-list {
+  padding-bottom: 5px; }
 
 #lottery {
   -webkit-animation-fill-mode: both;
@@ -9258,7 +9263,7 @@ div > .games-previews {
       width: 100%;
       position: relative;
       margin: 100px 0 0 0;
-      min-height: 180px;
+      height: 180px;
       padding: 10px 20px;
       box-sizing: border-box;
       text-align: center;
@@ -9268,7 +9273,8 @@ div > .games-previews {
       font-size: 15.5px;
       text-transform: uppercase;
       line-height: 1;
-      margin: 5px 0; }
+      margin: 5px 0;
+      min-height: 32px; }
     .games-previews .flex-box .fund_title {
       font-family: Handbook-bold;
       color: #605b5c;
@@ -9290,7 +9296,7 @@ div > .games-previews {
       text-align: center;
       line-height: 40px;
       height: 40px;
-      font-size: 15px;
+      font-size: 14px;
       border-top: 1px solid rgba(255, 255, 255, 0.3);
       text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.3);
       text-transform: uppercase; }
@@ -9682,11 +9688,11 @@ footer.unvisible {
           font-size: 14px;
           color: #000000;
           letter-spacing: 0.32px;
-          line-height: 26px;
+          line-height: 28px;
           background: transparent;
           border: 1px solid #000000;
           min-width: 108px;
-          height: 28px;
+          height: 30px;
           cursor: pointer;
           padding: 0 10px;
           transition: all .2s ease-in; }
@@ -10740,7 +10746,7 @@ footer.unvisible {
     position: relative; }
     .create-game .buttons-group > * {
       float: right; }
-      .create-game .buttons-group > * > label {
+      .create-game .buttons-group > * label {
         padding: 0px 15px;
         cursor: pointer;
         display: table-cell;
@@ -10758,6 +10764,7 @@ footer.unvisible {
       text-align: center;
       overflow-y: hidden;
       height: 40px;
+      display: table-cell;
       /*            &.active {
                             background: $color_gravel_approx;
                             color: $white;
@@ -11195,7 +11202,7 @@ and open the template in the editor.
     text-align: center;
     z-index: 1;
     margin: 0; }
-    .moment-game-box:not(.game-started) .message:after {
+    .moment-game-box:not(.game-started) .message:before {
       content: '';
       display: inline-block;
       vertical-align: middle;
@@ -11203,11 +11210,10 @@ and open the template in the editor.
       width: 0; }
     .moment-game-box:not(.game-started) .message > * {
       border: 1px solid rgba(0, 0, 0, 0.1);
-      top: 50%;
       left: 50%;
+      max-width: 95%;
       padding: 20px;
       background: #fff;
-      white-space: nowrap;
       display: inline-block;
       vertical-align: middle; }
   .moment-game-box .ad {
