@@ -285,7 +285,7 @@ button {
   position: relative; }
   .content-top > div {
     min-height: 600px; }
-    .content-top > div > .content-box {
+    .content-top > div > .content-box:not(#lottery-history) {
       min-height: 600px; }
 
 .content-box {
@@ -4466,8 +4466,7 @@ input.comment-reply-btn {
 
 .cabinet-bonuses .title {
   font-size: 17px;
-  margin-bottom: 20px;
-  font-family: 'Handbook-bold'; }
+  margin-bottom: 20px; }
 
 .bonus-form {
   margin-bottom: 30px; }
@@ -8487,9 +8486,9 @@ span.input-prefix {
   padding-top: 0;
   min-height: 550px; }
 
-#profile-settings span {
+#profile-settings span:not(.back) {
   color: #959595; }
-  #profile-settings span.tooltip {
+  #profile-settings span:not(.back).tooltip {
     color: #fff; }
 
 #profile-settings .radio-text {
@@ -9305,7 +9304,7 @@ div > .games-previews {
   background: transparent; }
 
 #games-chance .game-fund > div {
-  font-size: 15.5px;
+  font-size: 14px;
   margin: 10px 0; }
   #games-chance .game-fund > div:first-child:nth-last-child(1) {
     font-size: 24px;
@@ -9375,10 +9374,12 @@ footer.unvisible {
   transform: scaleX(-1); }
 
 #games-online-field .circle {
-  background: #ff4242; }
+  background: #ff4242;
+  transform: none; }
 
 #games-online-field .beater .circle {
-  background: #7ed321; }
+  background: #7ed321;
+  transform: none; }
 
 #games-online-field .beater .timer-r,
 #games-online-field .beater .timer-l {
@@ -9882,7 +9883,7 @@ footer.unvisible {
     #games-online-field.Durak .mx .players {
       width: 100%;
       margin: 0px auto;
-      height: 25%;
+      height: 28%;
       text-align: center; }
       #games-online-field.Durak .mx .players .m {
         position: absolute;
@@ -10106,8 +10107,8 @@ footer.unvisible {
         background-position: -1491px -480px; }
   #games-online-field.Durak .cards .table {
     float: left;
-    height: 35%;
-    width: 100px;
+    height: 33%;
+    padding-top: 2%;
     box-sizing: border-box;
     z-index: 10;
     width: 67%; }

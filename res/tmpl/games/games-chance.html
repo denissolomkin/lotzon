@@ -13,13 +13,13 @@
                             {{#if prizes}}
                             <span class="fund_title">{{i18n "title-games-prize-fund"}}</span>
                             <div class="game-fund">
-                                {{#each prizes as |prize pkey|}}
-                                {{#if (eq prize.t "item")}}
-                                <div class="">{{ prize.n }}</div>
+                                {{#reverse prizes }}
+                                {{#if (eq this.t "item")}}
+                                <div class="">{{ this.n }}</div>
                                 {{else}}
-                                <div class="">{{ prize.v }} <span>{{#if (eq prize.t "money")}}{{player "getCurrency"}}{{else}}{{i18n "title-of-points"}}{{/if}}</span></div>
+                                <div class="">{{ this.v }} <span>{{#if (eq this.t "money")}}{{player "getCurrency"}}{{else}}{{i18n "title-of-points"}}{{/if}}</span></div>
                                 {{/if}}
-                                {{/each}}
+                                {{/reverse}}
                             </div>
                             {{/if}}
                             {{#if winners}}

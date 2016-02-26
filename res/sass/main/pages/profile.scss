@@ -1582,7 +1582,7 @@ span.input-prefix {
     padding-top: 0;
     min-height: 550px;
   }
-  & span {
+  & span:not(.back) {
     color: #959595;
     &.tooltip {
       color: #fff;

@@ -241,7 +241,7 @@
         },
 
         fineNumbers: function (sum) {
-            return parseFloat(sum).toFixed(2).replace('.00', '').replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ').replace('.', ',');
+            return isNumeric(sum) ? parseFloat(sum).toFixed(2).replace('.00', '').replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ').replace('.', ',') : 0;
         },
 
         updateBalance: function () {

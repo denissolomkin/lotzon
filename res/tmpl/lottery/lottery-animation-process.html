@@ -2,7 +2,9 @@
     <div id="lottery-process" class="clearfix">
     <button class="close won" onclick="parentNode.parentNode.remove()"></button>
         <div class="container clearfix">
+
             <div><a href="/lottery" class="header-logo"></a></div>
+
             <ul class="balls-end-game clearfix">
                 {{#combination}}
                 <li class="g-oc_li unfilled">
@@ -16,7 +18,9 @@
                 </li>
                 {{/combination}}
             </ul>
+
             <section class="lottery-amimation-box">
+
                 <div class="ghd-tickets">
                     {{#if tickets}}
                     <ul>
@@ -42,30 +46,13 @@
                     {{#if win}}
                     <div class="ghd-text ghd-won">
                         <div class="grid-container">
-                        
+                            {{#each win}}
                             <div class="width-50">
-
-                              <span>{{i18n 'title-lottery-won-points'}}:</span>
-                               <strong>
-                                {{#each win}}
-                                {{#if (eq currency 'points') }}  
-                                        {{prize}}
-                                {{else}}0{{/if}}
-                                {{/each}}
-
-                              </strong>
+                                <span>{{i18n 'title-lottery-won' currency}}:</span>
+                                <strong>{{prize}}</strong>
                             </div>
-                            <div class="width-50">
-                              <span>{{i18n 'title-lottery-won-money'}}:</span> 
-
-                             <strong>
-                                {{#each win}}
-                                    {{#if (eq currency 'money') }}
-                                        {{prize}}
-                                    {{else}}0{{/if}}
-                                {{/each}}
-                              </strong>
-                        </div>                        
+                            {{/each}}
+                        </div>
                     </div>
 
                     {{else}}
@@ -75,10 +62,12 @@
                     {{else}}
                     <div class="ghd-text">{{i18n 'title-lottery-not-play'}}</div>
                     {{/if}}
-                    </div>
                 </div>
+
             </section>
+
         </div>
+
         <div class="container-center won">
             <a class="btn btn-flat" data-id="{{@key}}" href="/lottery/{{ id }}">{{i18n 'title-lottery-look-results'}}</a>
         </div> 

@@ -237,8 +237,9 @@ button {
 
   > div {
     min-height: 600px;
-    > .content-box {
+    > .content-box:not(#lottery-history) {
       min-height: 600px;
+      
     }
   }
 }

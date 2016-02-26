@@ -31,35 +31,14 @@
         {{#if win}}
         <div class="ghd-text ghd-won">
             <div class="grid-container">
+                {{#each win}}
                 <div class="width-50">
-                    <span>БАЛЛОВ ВЫИГРАНО:</span>
-                    <strong>
-                        {{#each win}}
-                            {{#if (eq currency 'points') }}
-                                {{prize}}
-                            {{else}}
-                                0
-                            {{/if}}
-                        {{/each}}
-
-                    </strong>
+                    <span>{{i18n 'title-lottery-won' currency}}:</span>
+                    <strong>{{prize}}</strong>
                 </div>
-                <div class="width-50">
-                    <span>ДЕНЕГ ВЫИГРАНО:</span>
-
-                    <strong>
-                        {{#each win}}
-                            {{#if (eq currency 'money') }}
-                                {{prize}}
-                            {{else}}
-                                0
-                            {{/if}}
-                        {{/each}}
-                    </strong>
-                </div>
+                {{/each}}
             </div>
         </div>
-
         {{else}}
             <div class="ghd-text ghd-fale">{{i18n "title-lottery-not-won"}}</div>
         {{/if}}

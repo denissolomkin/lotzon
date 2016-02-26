@@ -25,7 +25,7 @@
 						<th> {{i18n "title-lottery-quantity-winnings"}}</th>
 						<th> {{i18n "title-lottery-general-winning"}}</th>
 					</tr>
-                    {{#each statistics}}
+                    {{#each statistics.default}}
 					<tr class="balls-matches-{{balls}}">
                         <td>{{balls}} x {{lottery "requiredBalls"}}</td>
                         <td></td>

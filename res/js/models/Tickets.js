@@ -30,8 +30,8 @@
             return this.filledTickets[ticketId] !== false;
         },
 
-        "isGold": function () {
-            return this.selectedTab == this.totalTickets;
+        "isGold": function (numTicket) {
+            return numTicket ? numTicket == this.totalTickets : this.selectedTab == this.totalTickets;
         },
 
         "countFilled": function () {
