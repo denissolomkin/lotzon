@@ -145,3 +145,5 @@ foreach ($lotteries as $lottery) {
     ));
 
 }
+
+\LotteriesModel::instance()->recache();
