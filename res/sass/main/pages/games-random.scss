@@ -165,7 +165,7 @@ $gray: #808080;
         text-align: center;
         z-index: 1;
         margin: 0;
-        &:after{
+        &:before{
             content: '';
             display: inline-block;
             vertical-align: middle;
@@ -174,13 +174,10 @@ $gray: #808080;
         }
         > *{
             border: 1px solid rgba(0, 0, 0, 0.1);
-            // position: absolute;
-            top: 50%;
             left: 50%;
-            // transform: translate(-50.1%, -50.1%);
+            max-width: 95%;
             padding: 20px;
             background: $white_90;
-            white-space: nowrap;
             display: inline-block;
             vertical-align: middle;
         }

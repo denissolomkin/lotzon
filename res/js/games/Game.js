@@ -28,7 +28,7 @@
                 title: 'title-games-win'
             },
             lose: {
-                class: 'msg-win',
+                class: 'msg-lose',
                 title: 'title-games-lose'
             },
             equal: {
@@ -430,7 +430,7 @@
             return false;
         },
         drawWinButtons: function(buttons) {
-            var playerButtons = document.querySelector('.mx > .msg .msg-win'),
+            var playerButtons = document.querySelector('.mx > .msg > div'),
                 html = '',
                 el = document.createElement('div');
             el.className = 'msg-buttons';

@@ -1,63 +1,56 @@
 <div id="games-online-view-create" class="create-game" style="display: none;">
     <form action="/app/{{id}}" method="ws" class="">
-        <div class="title">
-            {{i18n "title-games-bet"}}
+        <div class="game_bet">
+            <div class="title">
+                {{i18n "title-games-bet"}}
+            </div>
+            <input type="hidden" name="action" value="start" /> {{#each modes as |mod key|}}
+            <div class="buttons-group clearfix" data-currency="{{key}}" style="display: block;">
+                <div class="title">{{#if (eq key "MONEY")}}{{player "getCurrency"}} {{else}} {{i18n "title-of-points"}}{{/if}}</div>
+                <div>
+                {{#each mod}}
+                <div class="button">
+                    <input type="radio" name="mode" id="{{key}}-{{this}}" class="required" value="{{key}}-{{this}}" />
+                    <label for="{{key}}-{{this}}">{{this}}</label>
+                </div>
+                {{/each}}
+                </div>
+            </div>
+            {{/each}}
         </div>
         
-        <input type="hidden" name="action" value="start" />
-
-        {{#each modes as |mod key|}}
-        <div class="buttons-group clearfix" data-currency="{{key}}" style="display: block;">
-            <div class="title">{{#if (eq key "MONEY")}}{{player "getCurrency"}} {{else}} {{i18n "title-of-points"}}{{/if}}</div>
-            {{#each mod}}
-            <div class="button">
-                <input type="radio" name="mode" id="{{key}}-{{this}}" class="required" value="{{key}}-{{this}}" />
-                <label for="{{key}}-{{this}}">{{this}}</label>
+        <div class="game_conf">
+            <div class="title">
+                {{i18n "title-games-settings"}}
             </div>
-            {{/each}}
-        </div>
-        {{/each}}
-
-        <div class="title">
-            {{i18n "title-games-settings"}}
-        </div>
-
-        <div class="buttons-group clearfix" data-variation="players">
-            <div class="title">Игроков</div>
-            {{#forMaxToMin maxPlayers 2}}
-            <div class="button">
-                <input {{#if (or (eq this "2") (eq this 2) ) }} checked {{/if}} type="radio" name="players" id="players-{{this}}" value="{{this}}" />
-                <label for="players-{{this}}">{{this}}</label>
+            <div class="buttons-group clearfix" data-variation="players">
+                <div class="title">Игроков</div>
+                <div>
+                {{#forMinToMax 2 maxPlayers}}
+                <div class="button">
+                    <input {{#if (or (eq this "2") (eq this 2) ) }} checked {{/if}} type="radio" name="players" id="players-{{this}}" value="{{this}}" />
+                    <label for="players-{{this}}">{{this}}</label>
+                </div>
+                {{/forMinToMax}}
+                </div>
             </div>
-            {{/forMaxToMin}}
-        </div>
-
-        {{#if variations}}
-        {{#each variations as | variation v_key|}}
-        <div class="buttons-group clearfix" data-variation="{{@key}}">
-            <div class="title">{{variation.t}}</div>
-            {{#each variation.v}}
-            <div class="button">
-                <input 
-                    {{#if variation.d}} 
-                        {{#if (eq variation.d @key)}} checked {{/if}}
-                    {{else}}
-                        {{#if @first}} checked {{/if}}
-                    {{/if}} 
-                    type="radio" 
-                    name="variation[{{v_key}}]" id="{{@key}}-{{this}}" 
-                    value="{{@key}}" 
-                />
-                <label for="{{@key}}-{{this}}">
-                    <i class="i-games-{{v_key}}-{{@key}}"></i>
-                    <span>{{this}}</span>
-                </label>
+            {{#if variations}} {{#each variations as | variation v_key|}}
+            <div class="buttons-group clearfix" data-variation="{{@key}}">
+                <div class="title">{{variation.t}}</div>
+                <div>
+                {{#each variation.v}}
+                <div class="button">
+                    <input {{#if variation.d}} {{#if (eq variation.d @key)}} checked {{/if}} {{else}} {{#if @first}} checked {{/if}} {{/if}} type="radio" name="variation[{{v_key}}]" id="{{@key}}-{{this}}" value="{{@key}}" />
+                    <label for="{{@key}}-{{this}}">
+                        <i class="i-games-{{v_key}}-{{@key}}"></i>
+                        <span>{{this}}</span>
+                    </label>
+                </div>
+                {{/each}}
+                </div>
             </div>
-            {{/each}}
+            {{/each}} {{/if}}
         </div>
-        {{/each}}
-        {{/if}}
-
-        <input class="start-game" name="submit" type="submit" value="{{i18n "button-games-create"}}" />
+        <input class="start-game" name="submit" type="submit" value="{{i18n " button-games-create "}}" />
     </form>
 </div>

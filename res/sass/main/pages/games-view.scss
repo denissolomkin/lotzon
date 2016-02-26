@@ -149,26 +149,6 @@ $hb_regular: handbookpro-regular;
                 display: block;
                 clear: both;
             }
-            // display: -ms-flexbox;
-            // display: -webkit-flex;
-            // display: -webkit-box;
-            // display: flex;
-            // -webkit-flex-direction: row;
-            // -ms-flex-direction: row;
-            // -webkit-box-orient: horizontal;
-            // -webkit-box-direction: normal;
-            // flex-direction: row;
-            // -webkit-flex-wrap: wrap;
-            // -ms-flex-wrap: wrap;
-            // flex-wrap: wrap;
-            // -webkit-justify-content: space-between;
-            // -ms-flex-pack: justify;
-            // -webkit-box-pack: justify;
-            // justify-content: space-between;
-            // -webkit-align-items: stretch;
-            // -ms-flex-align: stretch;
-            // -webkit-box-align: stretch;
-            // align-items: stretch;
             > div {
                 display: block;
                 padding: 5px 0;
@@ -557,7 +537,8 @@ $hb_regular: handbookpro-regular;
         position: relative;
         > * {
             float: right;
-            > label {
+            label {
+
                 padding: 0px 15px;
                 cursor: pointer;
                 display: table-cell;
@@ -578,6 +559,7 @@ $hb_regular: handbookpro-regular;
             text-align: center;
             overflow-y: hidden;
             height: 40px;
+            display: table-cell;
             /*            &.active {
                             background: $color_gravel_approx;
                             color: $white;
