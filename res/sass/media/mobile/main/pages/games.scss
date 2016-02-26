@@ -277,6 +277,8 @@ $url_3: url(../img/games/lotzonBg.png);
         min-height: 0;
     }
     .mx .players {
+        height: 31%;
+
         .m {
             height: auto;
             min-height: 220px;
@@ -300,14 +302,20 @@ $url_3: url(../img/games/lotzonBg.png);
             text-align: center;
         }
     }
-    .cards .deck .card {
-        transform: rotate(10deg) scale(0.7, 0.7);
-        left: -60px;
-        top: 12%;
-        &.trump {
-            transform: rotate(100deg) scale(0.7, 0.7);
+    .cards {
+        .table{
+            padding-top: 5%;
+        }
+        .deck .card {
+            transform: rotate(10deg) scale(0.7, 0.7);
+            left: -60px;
+            top: 12%;
+            &.trump {
+                transform: rotate(100deg) scale(0.7, 0.7);
+            }
         }
     }
+
 }
 
 
@@ -465,7 +473,7 @@ $url_3: url(../img/games/lotzonBg.png);
     #games-online-field.Durak {
         .mx {
             .players {
-                height: 20%;
+                height: 30%;
                 .m {
                     height: auto;
                     min-height: 200px;

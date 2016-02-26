@@ -50,7 +50,6 @@
         },
 
         load: function () {
-
             this.loadedBlocks = 0;
 
             // menu buttons
@@ -79,8 +78,7 @@
         },
 
         ready: function () {
-
-
+            
             if (++Navigation.loadedBlocks === Navigation.requiredBlocks) {
 
                 D.log('Navigation.ready', 'menu');
@@ -115,10 +113,13 @@
 
                 Navigation.menu.hide();
 
-                if (isActive)
+                if (isActive){
                     return false;
-                else
+                }
+                else{
+                    $('header .active[href]').removeClass('active');
                     $(this).addClass('active');
+                }
                 switch (menuClass) {
                     case I.menuBtn:
                         if (isMobile) {
@@ -163,7 +164,6 @@
             },
 
             switch: function () {
-                
                 D.log('Navigation.menu.switch', 'menu');
                 if (Device.isMobile()) {
                     $(I.menuMore).removeClass('menu-item');
@@ -198,7 +198,6 @@
             },
 
             fix: function () {
-
                 !this.body && (this.body = document.getElementsByTagName('body')[0]);
 
                 if ((!Device.isMobile() && yScroll >= $('header').offset().top ) || (Device.isMobile() && yScroll > 0)) {

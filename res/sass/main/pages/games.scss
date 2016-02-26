@@ -148,7 +148,7 @@ div > .games-previews {
         background: transparent;
     }
     .game-fund > div {
-        font-size: 15.5px;
+        font-size: 14px;
         margin: 10px 0;
         &:first-child:nth-last-child(1) {
             font-size: 24px;
@@ -283,6 +283,7 @@ footer.unvisible {
     }
     .circle {
         background: $color_coral_red_approx;
+        transform: none;
     }
     .beater {
         .circle {
@@ -1005,7 +1006,6 @@ footer.unvisible {
         height: 600px;
         position: absolute;
         z-index: 10;
-        // background: $url_3 $color_gray_chateau_approx no-repeat center center;
         background: $url_0 $color_gray_chateau_approx no-repeat center center;
         overflow: hidden;
         background-size: cover;
@@ -1018,7 +1018,7 @@ footer.unvisible {
         .players {
             width: 100%;
             margin: 0px auto;
-            height: 25%;
+            height: 28%;
             text-align: center;
             .m {
                 position: absolute;
@@ -1028,13 +1028,6 @@ footer.unvisible {
                 margin: 0px auto;
                 z-index: 1;
                 .gm-pr {
-                    // z-index: 12;
-                    // background: #4a4a4a;
-                    // position: absolute;
-                    // bottom: 0;
-                    // width: 100%;
-                    // height: 80px;
-                    // margin: 0;
                     > *{
                         display: initial;
                     }
@@ -1063,29 +1056,6 @@ footer.unvisible {
                         margin: 0;
                     }
                     .pr-pr {
-                        // background: $color_opal_approx;
-                        // position: relative;
-                        // height: 65px;
-                        // width: 65px;
-                        // margin: 8px;
-                        // float: right;
-                        // border-radius: 80px;
-                        // padding: 7px 10px;
-                        // box-sizing: border-box;
-                        // bottom: 0;
-                        // b {
-                        //     font: 36px/1 Handbook-bold;
-                        //     letter-spacing: -3px;
-                        //     margin-left: -3px;
-                        //     display: block;
-                        //     text-transform: uppercase;
-                        // }
-                        // span {
-                        //     font: 13px/5px $hbBold;
-                        //     text-transform: uppercase;
-                        //     color: $black_50;
-                        //     display: block;
-                        // }
                     }
                     .pr-md {
                         margin-left: 20px;
@@ -1109,7 +1079,6 @@ footer.unvisible {
                             vertical-align: middle;
                         }
                         i{
-                            // display: block;
                             vertical-align: middle;
                         }
                     }
@@ -1123,21 +1092,6 @@ footer.unvisible {
                     }
                 }
                 .pr-pt {
-                    // position: relative;
-                    // float: right;
-                    // height: 100%;
-                    // width: 20%;
-                    // padding: 23px 0;
-                    // box-sizing: border-box;
-                    // color: $black;
-                    // text-align: left;
-                    // margin: 0 0 0 40px;
-                    // .wallet {
-                    //     font-size: 36px;
-                    //     color: $black;
-                    //     float: left;
-                    //     margin-right: 20px;
-                    // }
                 }
                 &.current:not(.starter) .gm-pr .pr-cl {
                     .btn-pass ,
@@ -1159,8 +1113,6 @@ footer.unvisible {
                     width: 172px;
                     float: left;
                     text-align: center;
-                    // height: 480px;
-                    // margin: 0 19px;
                     position: relative;
                     .pr-ph {
                         width: 60px;
@@ -1207,16 +1159,9 @@ footer.unvisible {
                 top: 0;
                 left: 0;
                 margin: 15px;
-                // border-radius: 50em;
-                // border: 1px solid rgba(0,0,0,0.25);
-                // box-shadow: inset 1px 1px 2px 0px rgba(0,0,0,0.3);
                 padding: 10px;
-                // width: 50px;
-                // height: 30px;
-                // background-color: $white_30;
                 cursor: pointer;
                 &:hover {
-                    // background-color: $white_50;
                 }
                 span {
                     display: none;
@@ -1279,14 +1224,6 @@ footer.unvisible {
                 }
             }
         }
-        // .gm-pr {
-        //     width: 172px;
-        //     float: left;
-        //     text-align: center;
-        //     height: 480px;
-        //     margin: 0 19px;
-        //     position: relative;
-        // }
         .msg.winner {
             width: 100%;
             height: 100%;
@@ -1371,8 +1308,8 @@ footer.unvisible {
         }
         .table {
             float: left;
-            height: 35%;
-            width: 100px;
+            height: 33%;
+            padding-top: 2%;
             box-sizing: border-box;
             z-index: 10;
             width: 67%;
