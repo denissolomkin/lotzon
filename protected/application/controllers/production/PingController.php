@@ -1,9 +1,11 @@
 <?php
 namespace controllers\production;
 
-use \Application, \Player, \SettingsModel;
+use \Application, \Player, \SettingsModel, \QuickGame;
+use Ratchet\Wamp\Exception;
 use Symfony\Component\HttpFoundation\Session\Session;
 
+Application::import(PATH_APPLICATION . 'model/entities/QuickGame.php');
 Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');
 
 class PingController extends \AjaxController
