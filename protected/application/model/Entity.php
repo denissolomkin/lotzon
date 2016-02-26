@@ -52,7 +52,7 @@ abstract class Entity
 
                 } elseif(count($params) == 2){
                     if(is_array($this->{$property})) {
-                        $this->$property[$params[1]] = $value;
+                        $this->{$property}[$params[1]] = $value;
                     } else {
                         throw new Exception("Property $property is not array while $method in " . get_class($this) . "!");
                     }
