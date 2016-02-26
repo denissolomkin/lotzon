@@ -957,7 +957,7 @@ class Player extends Entity
     {
         try {
             $imageName = uniqid() . ".png";
-            \Common::saveImageMultiResolution('image',PATH_FILESTORAGE.'users/',$imageName,array(array(50),array(100),array(200)));
+            \Common::saveImageMultiResolution('image',PATH_FILESTORAGE.'users/',$imageName,array(array(50,'crop'),array(100,'crop'),array(200,'crop')));
             \Common::removeImageMultiResolution(PATH_FILESTORAGE.'users/', $this->getAvatar(), array(array(50),array(100),array(200)));
             $this->setAvatar($imageName)->saveAvatar();
         } catch (EntityException $e) {

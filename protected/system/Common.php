@@ -9,15 +9,24 @@ class Common
      * @param      $path            string
      * @param      $new_name        string
      * @param      $resolutions     array
+     *                              array(array(width,[height]),...)
+     *                              if height not set  - height proportional to width
+     *                              if height=='crop'  - crop image to width x width dimension
      * @param null $imgFile         string
      */
     public static function saveImageMultiResolution($imgPostName, $path, $new_name, $resolutions, $imgFile = NULL)
     {
         foreach ($resolutions as $res) {
+            $crop = false;
             if (is_array($res)) {
                 if (isset($res[0]) && isset($res[1])) {
                     $width  = $res[0];
-                    $height = $res[1];
+                    if ($res[1]=='crop') {
+                        $height = $res[0];
+                        $crop   = true;
+                    } else {
+                        $height = $res[1];
+                    }
                 } else {
                     $width  = $res[0];
                     $height = NULL;
@@ -26,9 +35,13 @@ class Common
                 continue;
             }
             if ($imgFile) {
-                $img = \WideImage::load($imgfile);
+                $img = \WideImage::load($imgFile);
             } else {
                 $img = \WideImage::loadFromUpload($imgPostName);
+            }
+            if ($crop) {
+                $min_dimension = min($img->getWidth(),$img->getHeight());
+                $img = $img->crop("center","center",$min_dimension,$min_dimension);
             }
             $img->resize($width, $height)->saveToFile($path . $width . "/" . $new_name);
         }
@@ -38,11 +51,8 @@ class Common
     {
         foreach ($resolutions as $res) {
             if (is_array($res)) {
-                $width  = $res[0];
-            } else {
-                continue;
+                @unlink($path . $res[0] . "/" . $filename);
             }
-            @unlink($path . $width . "/" . $filename);
         }
     }
 
