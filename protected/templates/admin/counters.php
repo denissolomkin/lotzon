@@ -22,6 +22,8 @@
                     'LOTTERIES_PER_PAGE'=>'Лотерей на странице',
                     'TRANSACTIONS_PER_PAGE'=>'Транзакций на странице',
                     'RATING_PER_PAGE' => 'Игроков в рейтинге на странице',
+                    'POSTS_PER_PAGE' => 'Статей в блоге на странице',
+                    'FRIENDS_PER_PAGE' => 'Друзей на странице',
                     'COMMENTS_PER_PAGE'=>'Комментариев на странице',
                     'REVIEWS_PER_PAGE'=>'Отзывов на странице',
                     'NOTIFICATIONS_PER_PAGE' => 'Уведомлений на странице',

@@ -38,6 +38,7 @@
 
         extendTickets: function(ticketsArray, arguments) {
 
+            console.error(ticketsArray, arguments);
             var prizesData = arguments[0],
                 lotteryCombination = arguments[1];
 
@@ -110,7 +111,12 @@
 
         getSummary: function() {
 
-            this.data.statistics = this.data.statistics || Tickets.prizes.default;
+            console.error(this.data.statistics, Tickets.prizes.default);
+
+            this.data.statistics =
+                this.data.statistics || Tickets.prizes.default;
+
+            console.error(this.data.statistics, Tickets.prizes.default);
 
             var lotterySummary = {
                     totalSum: []
@@ -253,7 +259,10 @@
                     'combination': []
                 },
                 tickets = Lottery.extendTickets(
-                    this.tickets, [Lottery.getSummary(this.data), this.data.combination]
+                    this.tickets, [
+                        Lottery.getSummary(this.data),
+                        this.data.combination
+                    ]
                 ),
                 combination = this.data.combination.slice();
 
