@@ -240,12 +240,15 @@ class LotteryController extends \AjaxController
         $player_country = $player->setId($this->session->get(Player::IDENTITY)->getId())->fetch()->getCountry();
 
         try {
-            $lottery = \LotteriesModel::instance()->getLotteryDetails($lotteryId);
-            $prizes  = $lottery->getPrizes();
+            $lottery     = \LotteriesModel::instance()->getLotteryDetails($lotteryId);
+            $prizes      = $lottery->getPrizes();
+            $prizes_gold = $lottery->getPrizesGold();
             if (!isset($prizes[$player_country])) {
-                $prizes = $prizes[self::$defaultCountry];
+                $prizes      = $prizes[self::$defaultCountry];
+                $prizes_gold = $prizes_gold[self::$defaultCountry];
             } else {
-                $prizes = $prizes[$player_country];
+                $prizes      = $prizes[$player_country];
+                $prizes_gold = $prizes_gold[$player_country];
             }
         } catch (\PDOException $e) {
             $this->ajaxResponseInternalError();
@@ -259,14 +262,23 @@ class LotteryController extends \AjaxController
             'cache' =>  'session',
         );
         $response['res'] = $lottery->exportTo('list');
-        $response['res']['statistics'] = array();
+        $response['res']['statistics'] = array(
+            "default" => array(),
+            "gold"    => array()
+        );
 
         foreach ($balls as $count=>$matches) {
-            $response['res']['statistics'][$count] = array(
+            $response['res']['statistics']["default"][$count] = array(
                 'balls'    => $count,
                 'currency' => ($prizes[$count]['currency']=='MONEY'?'money':'points'),
                 'sum'      => $prizes[$count]['sum'],
                 'matches'  => $matches + $balls_incr[$count],
+            );
+            $response['res']['statistics']["gold"][$count] = array(
+                'balls'    => $count,
+                'currency' => ($prizes_gold[$count]['currency']=='MONEY'?'money':'points'),
+                'sum'      => $prizes_gold[$count]['sum'],
+                'matches'  => 0,
             );
         }
 
