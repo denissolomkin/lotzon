@@ -54,12 +54,11 @@
         },
 
         renderNotifications: function() {
-            // alert(1);
-            return;
+
             var notifications = document.getElementById('communication-notifications');
             if (notifications) {
                 var notificationsList = notifications.getElementsByClassName('c-notifications-list')[0];
-                if (Player.getCount('notifications') || (notificationsList && notificationsList.style.display !== 'block')) {
+                if (Player.getCount('notifications') && (notificationsList && notificationsList.style.display !== 'block')) {
                     R.push({
                         href: 'communication-notifications',
                         json: {}
