@@ -42,11 +42,14 @@ class GameConstructorCacheProcessor extends BaseCacheProcessor implements IProce
     public function fetch(Entity $game)
     {
         $list = $this->getList();
-        if(isset($list[$game->getType()])
-            && isset($list[$game->getType()][$game->getId()?:$game->getKey()])
-            && $fetch = $list[$game->getType()][$game->getId()?:$game->getKey()])
+        if (isset($list[$game->getType()])
+            && isset($list[$game->getType()][$game->getId() ?: $game->getKey()])
+            && $fetch = $list[$game->getType()][$game->getId() ?: $game->getKey()]
+        ) {
             $game->formatFrom('DB', $fetch->export('DB'));
-        return $game;
+            return $game;
+        } else
+            throw new ModelException("Game not found", 404);
     }
 
     function recache()

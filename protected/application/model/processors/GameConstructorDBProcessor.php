@@ -122,6 +122,12 @@ class GameConstructorDBProcessor
             throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
         }
 
+        if (!$sth->rowCount()) {
+            throw new ModelException("Game not found", 404);
+        } elseif ($sth->rowCount() > 1) {
+            throw new ModelException("Found more than one game", 400);
+        }
+
         $data         = $sth->fetch();
         $data['Type'] = $game->getType();
         $game->formatFrom('DB', $data);
