@@ -154,14 +154,14 @@ class MessagesController extends \AjaxController
         $playerId   = $this->session->get(Player::IDENTITY)->getId();
         $text       = $this->request()->post('text');
         $toPlayerId = $this->request()->post('recipient_id', NULL);
-        $image      = $this->request()->post('image', NULL);
+        $image      = $this->request()->post('image', "");
 
         $obj = new Message;
         $obj->setPlayerId($playerId)
             ->setToPlayerId($toPlayerId)
             ->setText($text);
 
-        if (!is_null($image)) {
+        if ($image!="") {
             \Common::saveImageMultiResolution('',PATH_FILESTORAGE.'messages/',$image, array(array(600),1),PATH_FILESTORAGE.'temp/'.$image);
             \Common::removeImageMultiResolution(PATH_FILESTORAGE.'temp/',$image);
         }

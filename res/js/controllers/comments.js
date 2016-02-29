@@ -440,6 +440,12 @@
           
         },
 
+        addImage: function(form) {
+            form.data.image = Comments.currentReview.image;
+
+            return form;
+        },
+
         smilePost: function(form) {
             if ($('.smiles').hasClass('hidden')) {
 
@@ -454,10 +460,14 @@
             form.data.text = form.data.text.replace(/(<br\/*>(\s*))+/ig, '\n');
             return form;
 
+        },
+
+        submit: function(form) {
+            Comments.smilePost(form);
+            Comments.addImage(form);
+
+            return form;
         }
-
-
-
 
     }
 

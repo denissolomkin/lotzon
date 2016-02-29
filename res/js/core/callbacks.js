@@ -237,9 +237,9 @@
 
         "submit": {
 
-            "communication-comments":  Comments.smilePost,
-            "communication-messages":  Comments.smilePost,
-            "blog-post-view-comments": Comments.smilePost
+            "communication-comments":  Comments.submit,
+            "communication-messages":  Comments.submit,
+            "blog-post-view-comments": Comments.submit
         }
 
     };
