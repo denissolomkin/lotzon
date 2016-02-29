@@ -17,12 +17,12 @@ Application::import(PATH_GAMES . '*');
 class WebSocketController implements MessageComponentInterface
 {
 
-    const   MIN_WAIT_TIME    = 1;//15;
-    const   MAX_WAIT_TIME    = 20;//600;
+    const   MIN_WAIT_TIME    = 15;//1;
+    const   MAX_WAIT_TIME    = 600;//20;
     const   PERIODIC_TIMER   = 2;//2
-    const   TIMEOUT_PLAYER   = 10;//60
-    const   TIMEOUT_APP      = 10;//120
-    const   CREATE_TIMER     = 5;//60
+    const   TIMEOUT_PLAYER   = 60;//10
+    const   TIMEOUT_APP      = 120;//10
+    const   CREATE_TIMER     = 60;//5
     const   CONNECTION_TIMER = 1800;
     const   DEFAULT_MODE     = 'POINT-0-2';
     const   EMULATION        = false; //false;
@@ -69,7 +69,7 @@ class WebSocketController implements MessageComponentInterface
     {
 
         echo $this->time()." checkConnections:\n";
-        foreach (GamePlayersModel::instance()->getList(time() - self::CONNECTION_TIMER) as $gamePlayer) {
+        foreach (GamePlayersModel::instance()->getList(array('ping' => time() - self::CONNECTION_TIMER)) as $gamePlayer) {
 
             echo $this->time() . " " . "#{$gamePlayer->getId()} ping timeout\n";
 
