@@ -111,12 +111,19 @@ class GamePlayersDBProcessor implements IProcessor
         return true;
     }
 
-    public function getList($ping)
+    public function getList($args = array())
     {
+        $where = array();
         $sql = "SELECT * FROM `GamesTmpPlayers`";
 
-        if($ping)
-            $sql.='WHERE Ping < ' . $ping;
+        if(isset($args['ping']))
+            $where[]='Ping < ' . $args['ping'];
+
+        if(isset($args['bot']))
+            $where[]='Bot = ' . $args['bot'];
+
+        if(!empty($where))
+            $sql.='WHERE '.implode(' AND ', $where);
 
         try {
             $res = DB::Connect()->prepare($sql);
