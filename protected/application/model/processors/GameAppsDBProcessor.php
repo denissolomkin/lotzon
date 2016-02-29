@@ -199,9 +199,10 @@ class GameAppsDBProcessor implements IProcessor
     public function saveResults(\Game $app)
     {
 
-        $sql_results = $sql_transactions = $sql_transactions_players = array();
-        $players     = $app->getPlayers();
-        $month       = mktime(0, 0, 0, date("n"), 1);
+        $sql_results    = $sql_transactions = $sql_transactions_players = array();
+        $players        = $app->getPlayers();
+        $playersBalance = array();
+        $month          = mktime(0, 0, 0, date("n"), 1);
         foreach ($players as $player) {
 
             /* prepare results */
@@ -233,6 +234,15 @@ class GameAppsDBProcessor implements IProcessor
 
                 $sql_transactions_players[] = '(?,?,?,?,?,?,?,?)';
 
+                /* update balance after game */
+                $sql = "UPDATE Players SET " . $currency . " = " . $currency . ($win < 0 ? '' : '+') . ($win) . " WHERE Id=" . $player['pid'];
+
+                try {
+                    DB::Connect()->query($sql);
+                } catch (\Exception $e) {
+                    echo '[ERROR] ' . $e->getMessage();
+                }
+
                 /* select balance for transaction */
                 $sql = "SELECT Points, Money FROM `Players` WHERE `Id`=:id LIMIT 1";
 
@@ -247,15 +257,8 @@ class GameAppsDBProcessor implements IProcessor
                     echo $this->time(0,'ERROR')." player #{$player['pid']} не найден в таблице Players при получении баланса\n";
                 }
 
-                $balance = $sth->fetch();
-
-                /* update balance after game */
-                $sql = "UPDATE Players SET " . $currency . " = " . $currency . ($win < 0 ? '' : '+') . ($win) . " WHERE Id=" . $player['pid'];
-
-                try {
-                    DB::Connect()->query($sql);
-                } catch (\Exception $e) {
-                    echo '[ERROR] ' . $e->getMessage();
+                if($balance = $sth->fetch()){
+                    $playersBalance[$player['pid']] = $balance;
                 }
 
                 /* prepare transactions */
@@ -293,7 +296,7 @@ class GameAppsDBProcessor implements IProcessor
             }
         }
 
-        return true;
+        return $playersBalance;
     }
 
     public function getFund($gameId = null)
