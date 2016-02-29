@@ -309,13 +309,14 @@ Config::instance()->privateResources =  array(
 Config::instance()->publicResources = array(
     '/' => 'controllers\production\Index:index',
     '/ping' => 'controllers\production\PingController:index',
-    '/:page/' => 'controllers\production\Index:index',
+    /*
     '/vkproxy/' => 'controllers\production\Index:VKProxy',
     '/feedback/' => 'controllers\production\Index:feedback',
     '/trailer/' => array(
         'get'   => 'controllers\production\TrailerController:index',
         'post'  => 'controllers\production\TrailerController:subscribe'
     ),
+    */
     '/stats/promo/' => 'controllers\production\Index:stats',
     '/players/register/' => array(
         'post'  => 'controllers\production\Players:register',
@@ -595,7 +596,11 @@ Config::instance()->publicResources = array(
     '/users/:userid/messages' => array(
         'get'    => 'controllers\production\MessagesController:list',
         'delete' => 'controllers\production\MessagesController:markRead',
-        'post' => 'controllers\production\MessagesController:markRead'
+        'post'   => 'controllers\production\MessagesController:markRead'
+    ),
+    '/image' => array(
+        'post'   => 'controllers\production\MessagesController:image',
+        'delete' => 'controllers\production\MessagesController:imageDelete'
     ),
     /**
      * Blog
@@ -731,6 +736,7 @@ Config::instance()->publicResources = array(
     '/user/:userId' => array(
         'get' => 'controllers\production\Players:userInfo'
     ),
+    '/:page/' => 'controllers\production\Index:index',
     '/(.*)/' => 'controllers\production\Index:index',
 );
 

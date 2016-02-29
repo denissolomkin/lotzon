@@ -225,6 +225,7 @@ class CommentsController extends \AjaxController
         $text       = $this->request()->post('text');
         $parentId   = $this->request()->post('comment_id', NULL);
         $toPlayerId = $this->request()->post('user_id', NULL);
+        $image      = $this->request()->post('image', NULL);
 
         if ($parentId) {
             $parentComment = new Comment;
@@ -240,6 +241,13 @@ class CommentsController extends \AjaxController
             ->setToPlayerId($toPlayerId)
             ->setModule($module)
             ->setObjectId($objectId);
+
+        if (!is_null($image)) {
+            \Common::saveImageMultiResolution('',PATH_FILESTORAGE.'reviews/',$image, array(array(600),1),PATH_FILESTORAGE.'temp/'.$image);
+            \Common::removeImageMultiResolution(PATH_FILESTORAGE.'temp/',$image);
+        }
+
+        $obj->setImage($image);
 
         try {
             $obj->create();

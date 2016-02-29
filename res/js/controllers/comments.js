@@ -265,7 +265,7 @@
                 var form = $('<form method="POST" enctype="multipart/form-data"><input type="file" name="image"/></form>');
 
                 $input = form.find('input[type="file"]').damnUploader({
-                    url: '/res/POST/image',
+                    url: '/image',
                     fieldName: 'image',
                     data: Comments.currentReview,
                     dataType: 'json',
@@ -299,7 +299,7 @@
             } else {
 
                 $.ajax({
-                    url: '/res/DELETE/image',
+                    url: '/image',
                     method: 'DELETE',
                     async: true,
                     data: {

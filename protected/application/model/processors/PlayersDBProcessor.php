@@ -1367,7 +1367,7 @@ class PlayersDBProcessor implements IProcessor
         return $player;
     }
 
-    public function search($search, $count = 10)
+    public function search($search, $count = 6)
     {
         $sql = "SELECT
                     `Players`.`Id` Id,
