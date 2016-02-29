@@ -69,24 +69,21 @@
 
 /*
 /////////////////////////////////////////////////*/
-.FiveLine ul > li div {
-    border-radius: 50%;
-    margin: 10%;
-    width: 80%;
-    height: 80%;
-}
 
 
 
-#games-online-field.FiveLine .table {
+/*#games-online-field.FiveLine .table {
     width: 480px !important;
 }
 
 #games-online-field.FiveLine .mx .wrapper{
     width: 100%;
 }
+#games-online-field.FiveLine .mx .cell{
+    background: #000;
+}*/
 
-#games-online-field.FiveLine ul li {
+/*#games-online-field.FiveLine ul li {
     float: left;
     position: relative !important;
     background: aliceblue;
@@ -107,9 +104,9 @@
     margin: 0;
     padding: 0;
     overflow: hidden;
-}
+}*/
 
-.FiveLine ul > li.m div {
+/*.FiveLine ul > li.m div {
     background: #000;
     opacity: 0.6;
 }
@@ -126,3 +123,9 @@
 .FiveLine ul > li.o.last div {
     opacity: 1;
 }
+.FiveLine ul > li div {
+    border-radius: 50%;
+    margin: 10%;
+    width: 80%;
+    height: 80%;
+}*/

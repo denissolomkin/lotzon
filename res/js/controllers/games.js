@@ -400,7 +400,7 @@ var Games = {
                     return;
                 }
                 ////////////////////////////////////////////////////////////////
-
+                // console.debug("random - url>>>",Games.random.conf.url);
                 Form.get.call(this, {
                     href: Games.random.conf.url,
                     data: { 'cell': cell },

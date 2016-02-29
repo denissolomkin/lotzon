@@ -1,12 +1,7 @@
 (function() {
-
-    if (typeof I === 'undefined') I = {};
-    Object.deepExtend(I, {
-        notificationsList: '.c-notifications-list'
-    });
-
-
     Comments = {
+
+        notificationsList: '.c-notifications-list',
 
         currentReview: {
             image: '',
@@ -53,13 +48,14 @@
 
         hideNotifications: function() {
 
-            if ($(I.notificationsList).is(':visible')) {
-                $(I.notificationsList).slideUp('fast');
+            if ($(Comments.notificationsList).is(':visible')) {
+                $(Comments.notificationsList).slideUp('fast');
             }
         },
 
         renderNotifications: function() {
-
+            alert(1);
+            return;
             var notifications = document.getElementById('communication-notifications');
             if (notifications) {
                 var notificationsList = notifications.getElementsByClassName('c-notifications-list')[0];
@@ -121,7 +117,7 @@
         do: {
 
             showNotifications: function() {
-                $(I.notificationsList).slideDown('fast');
+                $(Comments.notificationsList).slideDown('fast');
                 Content.infiniteScrolling();
             },
 

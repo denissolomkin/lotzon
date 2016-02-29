@@ -119,7 +119,7 @@
 
                     $.ajax({
                         url     : form.url,
-                        method  : form.method === 'ws' || (/192.168.56.101/.test(location.hostname) && (form.method === 'delete' || form.method === 'put'))
+                        method  : form.method === 'ws'
                             ? "post"
                             : form.method,
                         data    : form.data,
