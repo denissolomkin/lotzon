@@ -1,5 +1,4 @@
 <?php
-use \ShopItem;
 
 class QuickGame extends Entity
 {
@@ -510,7 +509,7 @@ class QuickGame extends Entity
         if ($prizes = $this->getPrizes()) {
             foreach ($prizes as &$prize) {
                 if ($prize['t'] == 'item') {
-                    $item = new ShopItem();
+                    $item = new \ShopItem();
                     try {
                         $item->setId($prize['v'])->fetch();
                         $prize['s'] = $item->getImage();
