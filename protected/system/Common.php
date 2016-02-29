@@ -14,10 +14,11 @@ class Common
      *                              if height=='crop'  - crop image to width x width dimension
      * @param null $imgFile         string
      */
-    public static function saveImageMultiResolution($imgPostName, $path, $new_name, $resolutions, $imgFile = NULL)
+    public static function saveImageMultiResolution($imgPostName, $path, $new_name, $resolutions = array(1), $imgFile = NULL)
     {
         foreach ($resolutions as $res) {
-            $crop = false;
+            $crop   = false;
+            $resize = true;
             if (is_array($res)) {
                 if (isset($res[0]) && isset($res[1])) {
                     $width  = $res[0];
@@ -32,7 +33,7 @@ class Common
                     $height = NULL;
                 }
             } else {
-                continue;
+                $resize = false;
             }
             if ($imgFile) {
                 $img = \WideImage::load($imgFile);
@@ -43,15 +44,21 @@ class Common
                 $min_dimension = min($img->getWidth(),$img->getHeight());
                 $img = $img->crop("center","center",$min_dimension,$min_dimension);
             }
-            $img->resize($width, $height)->saveToFile($path . $width . "/" . $new_name);
+            if ($resize) {
+                $img->resize($width, $height)->saveToFile($path . $width . "/" . $new_name);
+            } else {
+                $img->saveToFile($path . $new_name);
+            }
         }
     }
 
-    public static function removeImageMultiResolution($path, $filename, $resolutions)
+    public static function removeImageMultiResolution($path, $filename, $resolutions = array(1))
     {
         foreach ($resolutions as $res) {
             if (is_array($res)) {
                 @unlink($path . $res[0] . "/" . $filename);
+            } else {
+                @unlink($path . $filename);
             }
         }
     }

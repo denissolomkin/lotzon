@@ -154,11 +154,19 @@ class MessagesController extends \AjaxController
         $playerId   = $this->session->get(Player::IDENTITY)->getId();
         $text       = $this->request()->post('text');
         $toPlayerId = $this->request()->post('recipient_id', NULL);
+        $image      = $this->request()->post('image', NULL);
 
         $obj = new Message;
         $obj->setPlayerId($playerId)
             ->setToPlayerId($toPlayerId)
             ->setText($text);
+
+        if (!is_null($image)) {
+            \Common::saveImageMultiResolution('',PATH_FILESTORAGE.'messages/',$image, array(array(600),1),PATH_FILESTORAGE.'temp/'.$image);
+            \Common::removeImageMultiResolution(PATH_FILESTORAGE.'temp/',$image);
+        }
+
+        $obj->setImage($image);
 
         try {
             $obj->create();
@@ -203,6 +211,45 @@ class MessagesController extends \AjaxController
         $response['res']['users'][$toPlayerId]['messages'][$obj->getId()] = $obj->export('list');
 
         $this->ajaxResponseCode($response,201);
+        return true;
+    }
+
+    public function imageAction()
+    {
+        $this->authorizedOnly();
+
+        try {
+            $imageName = uniqid() . ".png";
+            \Common::saveImageMultiResolution('image',PATH_FILESTORAGE.'temp/',$imageName);
+        } catch (\Exception $e) {
+            $this->ajaxResponseInternalError();
+        }
+        $res = array(
+            "imageName" => $imageName,
+        );
+
+        $this->ajaxResponseCode($res);
+
+        return true;
+    }
+
+    public function imageDeleteAction()
+    {
+        $this->authorizedOnly();
+        $image = $this->request()->delete('image', null);
+
+        if (is_null($image)) {
+            $this->ajaxResponseBadRequest();
+        }
+
+        try {
+            \Common::removeImageMultiResolution(PATH_FILESTORAGE.'temp/',$image);
+        } catch (\Exception $e) {
+            $this->ajaxResponseInternalError();
+        }
+
+        $this->ajaxResponseCode(array());
+
         return true;
     }
 
