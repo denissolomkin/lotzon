@@ -110,6 +110,9 @@ class Game extends Entity
 
     public function saveResults()
     {
+
+        $this->setPing(time());
+
         $model = $this->getModelClass();
 
         echo $this->time(1) . " " . $this->getKey() . ' ' . $this->getUid() . " - Сохраняем игру: \n";
