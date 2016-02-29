@@ -750,8 +750,9 @@ class WebSocketController implements MessageComponentInterface
                         $game->setKey($appName);
                     }
 
-                    if ($game->fetch()) {
+                    try {
 
+                        $game->fetch();
                         $gamePlayer
                             ->setAppId($game->getId())
                             ->setAppName($game->getKey())
@@ -759,12 +760,14 @@ class WebSocketController implements MessageComponentInterface
                         $appName = $game->getKey();
                         $appId = $game->getId();
 
-                    } else {
-                        $from->send(json_encode(array('error' => 'WRONG_APPLICATION_TYPE')));
+                    } catch(\EntityException $e){
+                        echo $this->time(0, 'ERROR') . "WRONG_APPLICATION_NAME $appName\n";
+                        $from->send(json_encode(array('error' => 'WRONG_APPLICATION_NAME')));
                         return false;
                     }
 
                 } else if (!isset($data->message)) {
+                    echo $this->time(0, 'ERROR') . "EMPTY_MESSAGE $msg\n";
                     $from->send(json_encode(array('error' => 'EMPTY_MESSAGE')));
                     return false;
                 }
@@ -782,7 +785,7 @@ class WebSocketController implements MessageComponentInterface
                         try {
 
                             if (!class_exists($class)) {
-                                $from->send(json_encode(array('error' => 'WRONG_APPLICATION_TYPE')));
+                                $from->send(json_encode(array('error' => 'CLASS_NOT_EXISTS')));
                                 return false;
                             }
 
