@@ -54,7 +54,7 @@
         },
 
         renderNotifications: function() {
-            alert(1);
+            // alert(1);
             return;
             var notifications = document.getElementById('communication-notifications');
             if (notifications) {
