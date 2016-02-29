@@ -1,0 +1,1 @@
+ALTER TABLE `Players` CHANGE `Points` `Points` FLOAT(9,2) DEFAULT 0.00 NOT NULL;
