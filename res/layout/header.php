@@ -25,9 +25,6 @@
         <link rel="stylesheet" href="/res/css/slots.css" type="text/css">
         <link rel="stylesheet" href="/res/css/social-likes_birman.css">
         <link rel="stylesheet" href="/res/css/denis.css">
-        <link rel="stylesheet" href="/res/css/olya.css">
-        <link rel="stylesheet" href="/res/css/zerg.css">
-        <link rel="stylesheet" href="/res/css/game.css">
     </head>
 
     <body>
