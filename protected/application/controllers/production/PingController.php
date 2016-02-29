@@ -52,22 +52,6 @@ class PingController extends \AjaxController
         $forms           = $this->request()->post('forms', array());
 
         /*
-        * New Messages
-        */
-
-        $badges['messages'][] = array(
-            "id" => rand(1,100), /* messageId */
-            "user" => array(
-                "id" => 1,
-                "name" => "Участник №1",
-                "img" => null
-            ),
-            "text"    => "Привет, как дела?",
-            'timer'   => SettingsModel::instance()->getSettings('counters')->getValue('MESSAGE_BADGE_TIMEOUT')?:5,
-            'timeout' => 'close'
-        );
-
-        /*
         * Unread Notices
         */
 
