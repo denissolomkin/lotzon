@@ -252,12 +252,10 @@
             D.log('Game.setPlayersDetailes', 'game');
             $.each(players, function(index, value) {
 
-                value.avatar = index < 0 ? "url(/res/css/img/preloader.gif)" : (value.avatar ? "url('/filestorage/avatars/" + Math.ceil(parseInt(value.pid) / 100) + "/" + value.avatar + "')" : "url('/res/img/default.jpg')");
-
                 $('.mx .players .player' + index).append(
                     '<div class="gm-pr">' +
                     '<div class="pr-ph-bk">' +
-                    '<div class="pr-ph" style="background-image: ' + value.avatar + '">' +
+                    '<div class="pr-ph" style="background-image: url(' + Player.getAvatar(value.avatar, value.pid, 100) + ')">' +
                     '<div class="mt"></div>' +
                     '<div class="wt"></div>' +
                     '<div class="pr-nm">' + value.name + '</div></div></div></div>');

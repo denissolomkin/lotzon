@@ -554,18 +554,8 @@ footer.unvisible {
                 position: absolute;
                 bottom: 0;
                 left: 0;
-                // overflow: hidden;
-                // background: #4a4a4a;
                 text-align: center;
             }
-            // timer
-            // .circle ,
-            // .circle-timer {
-            //     width: 100%;
-            //     height: 100%;
-            //     left: 0;
-            //     top: 0;   
-            // }
             // avatar
             .pr-ph-bk{
                 width: auto;
@@ -576,21 +566,15 @@ footer.unvisible {
                 margin: auto;
                 overflow: visible;
             }
-            // .pr-ph{
-            //     width: 100%;
-            //     height: 100%;
-            //     background-size: 100%;
-            //     border-radius: 50em;
-            // }
             .pr-ph {
-                        width: 60px;
-                        height: 60px;
-                        background-repeat: no-repeat;
-                        background-size: contain;
-                        position: absolute;
-                        border-radius: 70px;
-                        margin: 0;
-                    }
+                width: 60px;
+                height: 60px;
+                background-repeat: no-repeat;
+                background-size: contain;
+                position: absolute;
+                border-radius: 70px;
+                margin: 0;
+            }
             .table {
                 margin: 0px auto;
                 padding: 7px 0;
@@ -810,13 +794,54 @@ footer.unvisible {
                 }
             }
         }
+        &.FiveLine {
+            .mx{
+                .wt{
+                }   
+                .m{
+                    // player name
+                    .pr-nm{
+                        display: none;
+                    }
+                    .wt{
+                        span{
+                        }
+                    }
+                }
+
+                .table {    
+                    .inner {
+                        // padding: 1px;
+                        .cell {
+                            padding: 0;
+                            margin: 0;
+                            background: #d3eaec;
+                            > div{
+                                border-radius: 50%;
+                                margin: 10%;
+                                width: 80%;
+                                height: 80%;
+                                opacity: 0.6;
+                            }
+                            &.o > div{
+                                background: #ff0000;
+                            }
+                            &.m > div{
+                                background: #000;
+                            }
+                            &.o.last > div,
+                            &.m.last > div{
+                                opacity: 1;
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         &.SeaBattle{
-            // background: $url_0;
             .mx{
                 min-height: 500px;
-                // overflow-x: hidden;
-                // overflow-y: auto;
                 .place{
                     padding-top: 20px;
                     text-align: center;
@@ -856,26 +881,10 @@ footer.unvisible {
                             &.o{
                                 
                             }
-
                             //miss
                             &.e{
-                                // background: #d3eaec;
                                 background: #6d6d6d;
-                                // &:after{
-                                //     content: '';
-                                //     display: block;
-                                //     background: #4a4a4a;
-                                //     border-radius: 50px;
-                                //     width: 44%;
-                                //     height: 44%;
-                                //     margin: 26% 0 0 26%;
-                                // }
-                                // 
-
-
-
                             }
-
                             &:not(.e,.d,.k) {
                                 cursor: crosshair;
                                 cursor: url('/tpl/img/games/Crosshair.cur') 12 12, crosshair;
@@ -883,24 +892,12 @@ footer.unvisible {
                             // damage
                             &.d {
                                 background: url('../img/games/battleStar.svg') no-repeat #f84e41;
-                                // background: url('http://stag.lotzon.com/tpl/img/games/damage.png') no-repeat #d3eaec;
                                 background-size: cover;
                             }
                             // kick
                             &.k {
                                 background: url('../img/games/battleStar.svg') no-repeat #f84e41;
-                                // background: url('http://stag.lotzon.com/tpl/img/games/damage.png') no-repeat red;
                                 background-size: cover;
-                                
-
-                                //test
-                                // background: #d3eaec;
-                                // border: 2px solid red;
-                                // &:after{
-                                //     content: 'X';
-                                //     color: #f84e41;
-                                //     font-size: 20px;
-                                // }
                             }
                         }
                     }
@@ -921,14 +918,10 @@ footer.unvisible {
                         }
                     }
                     &.m{
-
                     }
-
                     &.o{
                         display: none;
-
                     }
-
                 }
                 .shipsSheme{
                     &.o{
@@ -1023,7 +1016,7 @@ footer.unvisible {
             .m {
                 position: absolute;
                 bottom: 0;
-                height: 40%;
+                height: 33%;
                 width: 100%;
                 margin: 0px auto;
                 z-index: 1;
@@ -1035,6 +1028,7 @@ footer.unvisible {
                     .pr-ph-bk {
                         left: 45%;
                         top: 10px;
+                        position: absolute;
                         .wt {
                             margin-top: -100px;
                         }
@@ -1309,7 +1303,7 @@ footer.unvisible {
         .table {
             float: left;
             height: 33%;
-            padding-top: 2%;
+            padding-top: 5%;
             box-sizing: border-box;
             z-index: 10;
             width: 67%;

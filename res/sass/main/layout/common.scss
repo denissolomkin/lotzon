@@ -231,7 +231,7 @@ button {
 .container-center {
   text-align: center
 }
-
+// min height
 .content-top {
   position: relative;
 
@@ -242,6 +242,10 @@ button {
       
     }
   }
+}
+
+#lottery-history{
+  min-height: 498px;
 }
 
 .content-box {
@@ -839,7 +843,7 @@ input.input-radio:checked + label.input-radio:before {
         box-sizing: border-box;
     }
 }
-@for $i from 1 through 20 {
+@for $i from 1 through 40 {
     .vw > *:first-child:nth-last-child(#{$i}) {
         width: (100%/$i);
         @if $i > 1 {

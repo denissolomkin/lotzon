@@ -92,8 +92,6 @@ img.loading {
     background-size: 50px;
     background-position: 50% 50%;
     background-repeat: no-repeat;
-    -webkit-animation: fadein 1s;
-    animation: fadein 1s;
     min-height: 50px;
     min-width: 50px;
 }

@@ -27,19 +27,38 @@
                     '<div class="table"></div>' +
                 '</div>';
 
+            // if (App.variation && App.variation.field) {
+
+            //     var size = parseInt(App.variation.field),
+            //         width = Math.floor((480 - (size - 1)) / size) + 'px;',
+            //         height = Math.floor((480 - size) / size) + 'px;',
+            //         font = ((480 - size) / 1.6 / size ) + 'px/' + ((480 - (size)) / size) + 'px Handbook-bold;',
+            //         html = '';
+
+            //     for (i = 1; i <= size; i++)
+            //         for (j = 1; j <= size; j++)
+            //             html += "<li style='width:" + width + "height:" + height + "font:" + font + (j == size ? "margin-right: 0px;" : "") + "' data-cell='" + j + "x" + i + "'></li>";
+
+            //     $('.mx .table').html('<ul>' + html + '</ul>');
             if (App.variation && App.variation.field) {
 
-                var size = parseInt(App.variation.field),
-                    width = Math.floor((480 - (size - 1)) / size) + 'px;',
-                    height = Math.floor((480 - size) / size) + 'px;',
-                    font = ((480 - size) / 1.6 / size ) + 'px/' + ((480 - (size)) / size) + 'px Handbook-bold;',
+                $('.mx .table').html('<div></div>');
+
+                var size = App.variation.field.split('x'),
                     html = '';
 
-                for (i = 1; i <= size; i++)
-                    for (j = 1; j <= size; j++)
-                        html += "<li style='width:" + width + "height:" + height + "font:" + font + (j == size ? "margin-right: 0px;" : "") + "' data-cell='" + j + "x" + i + "'></li>";
-
-                $('.mx .table').html('<ul>' + html + '</ul>');
+                for (i = 1; i <= parseInt(size[1]); i++) {
+                    html += '<div class="vw vh vf clearfix">';
+                    for (j = 1; j <= parseInt(size[0]); j++) {
+                        html += '<div>' +
+                            '<div class = "inner" >' +
+                            '<div class="cell" data-cell="' + j + "x" + i + '"></div>' +
+                            '</div>' +
+                            '</div>';
+                    }
+                    html += '</div>';
+                }
+                $('.mx .table').html(html);
 
             } else
                 console.error('Empty variation field');

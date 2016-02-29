@@ -25,7 +25,12 @@
 .gh-item {
     margin: 0 -10px 40px;
     padding: 5px 10px;
-    cursor: pointer;
+    // cursor: pointer;
+    >a{
+        display: block;
+        min-width: 100%;
+        min-height: 30px;
+    }
 }
 
 .gh-my-game .gh-date:after {
