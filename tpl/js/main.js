@@ -1987,7 +1987,7 @@ function activateQuickGame(key)
                             if (game.GamePrizes.MONEY || game.GamePrizes.POINT || game.GamePrizes.ITEM) {
                                 holder.find('.qg-msg').addClass('win').find('.txt').html('Поздравляем с выигрышем!' + (game.GamePrizes.MONEY ? '<br>' + getCurrency(game.GamePrizes.MONEY): '') + (game.GamePrizes.POINT ? '<br> ' + game.GamePrizes.POINT+' баллов' : '') + (game.GamePrizes.ITEM ? '<br>Приз: ' + game.GamePrizes.ITEM : ''));
                                 if(game.GamePrizes.MONEY)
-                                    updateMoney(playerMoney+parseFloat(game.GamePrizes.MONEY*coefficient));
+                                    updateMoney(playerMoney+parseFloat(game.GamePrizes.MONEY*currency['coefficient']));
                                 if(game.GamePrizes.POINT)
                                     updatePoints(playerPoints+parseInt(game.GamePrizes.POINT));
                                 playAudio(quickGame.Audio.win);
@@ -2349,12 +2349,27 @@ function updateNotices(notices) {
     }
 }
 
-function updatePoints(points) {
-    playerPoints = parseInt(points) || playerPoints;
-    points=playerPoints.toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
+function addPoints(points) {
+    if(!points)
+        return;
+    playerPoints = parseFloat(playerPoints).toFixed(2) + parseFloat(points).toFixed(2);
+    points=parseFloat(playerPoints).toFixed(2).toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
     $('.plPointHolder').text(points);
 }
 
+function addMoney(money) {
+    if(!money)
+        return;
+    playerMoney = parseFloat(playerMoney).toFixed(2) + parseFloat(money).toFixed(2);
+    money=parseFloat(playerMoney).toFixed(2).toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
+    $('.plMoneyHolder').text(money.replace('.00',''));
+}
+
+function updatePoints(points) {
+    playerPoints = parseFloat(points).toFixed(2) || playerPoints;
+    points=parseFloat(playerPoints).toFixed(2).toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
+    $('.plPointHolder').text(points);
+}
 
 function updateMoney(money) {
     // money = money || playerMoney;

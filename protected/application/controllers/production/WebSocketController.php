@@ -527,7 +527,21 @@ class WebSocketController implements MessageComponentInterface
         if ($app->isOver() && count($app->getClients()) && !$app->isSaved()) {
 
             echo $this->time(1) . " {$app->getKey()} {$app->getUid()} приложение завершилось, записываем данные\n";
-            $app->saveResults();
+
+            $playersBalance = $app->saveResults();
+            if(is_array($playersBalance) && !empty($playersBalance)){
+                foreach($playersBalance as $playerId => $balance){
+                    if($_client = $this->clients($playerId)) {
+                        $_client->send(json_encode(
+                            array('path' => 'update',
+                                'res' => array(
+                                    'money' => $balance['Money'],
+                                    'points' => $balance['Points']
+                                ))));
+                    }
+                }
+            }
+
 
         }
 

@@ -116,14 +116,13 @@ class Game extends Entity
         print_r($this->getPlayers());
 
         try {
-            $model::instance()->saveResults($this);
+            $this->setSaved(1);
+            return $model::instance()->saveResults($this);
         } catch (ModelException $e) {
             echo '[ERROR] ' . $e->getMessage();
+            return false;
         }
 
-        $this->setSaved(1);
-
-        return $this;
     }
 
     public function quitAction($data = null)
