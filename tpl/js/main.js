@@ -2352,7 +2352,7 @@ function updateNotices(notices) {
 function addPoints(points) {
     if(!points)
         return;
-    playerPoints = parseFloat(playerPoints).toFixed(2) + parseFloat(points).toFixed(2);
+    playerPoints = parseFloat(playerPoints) + parseFloat(points);
     points=parseFloat(playerPoints).toFixed(2).toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
     $('.plPointHolder').text(points);
 }
@@ -2360,7 +2360,7 @@ function addPoints(points) {
 function addMoney(money) {
     if(!money)
         return;
-    playerMoney = parseFloat(playerMoney).toFixed(2) + parseFloat(money).toFixed(2);
+    playerMoney = parseFloat(playerMoney) + parseFloat(money);
     money=parseFloat(playerMoney).toFixed(2).toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
     $('.plMoneyHolder').text(money.replace('.00',''));
 }
