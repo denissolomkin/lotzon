@@ -77,11 +77,13 @@ class WebSocketController implements MessageComponentInterface
             $this->quitPlayer($gamePlayer->getId());
             $gamePlayer->delete();
 
-            if (($client = $this->clients($gamePlayer->getId())) && $client instanceof ConnectionInterface) {
-                echo $this->time(0, 'CLOSE') . " #{$gamePlayer->getId()} {$client->Session->getId()} \n";
-                $client->close();
-            } else {
-                echo $this->time(0, 'ERROR') . " client #{$gamePlayer->getId()} не найден в коллекции\n";
+            if(!$gamePlayer->isBot()) {
+                if (($client = $this->clients($gamePlayer->getId())) && $client instanceof ConnectionInterface) {
+                    echo $this->time(0, 'CLOSE') . " #{$gamePlayer->getId()} {$client->Session->getId()} \n";
+                    $client->close();
+                } else {
+                    echo $this->time(0, 'ERROR') . " client #{$gamePlayer->getId()} не найден в коллекции\n";
+                }
             }
         }
     }
@@ -226,7 +228,7 @@ class WebSocketController implements MessageComponentInterface
 
                         if ($gamePlayer->getPing() + self::MAX_WAIT_TIME < time()) {
 
-                           echo $this->time(0) . " $key " . "Игрок {$gamePlayer->getId()} удален из стека {$gamePlayer->getApp('Mode')} по таймауту\n";
+                           echo $this->time(0) . " $key " . " Игрок {$gamePlayer->getId()} удален из стека {$gamePlayer->getApp('Mode')} по таймауту\n";
 
                             $gamePlayer
                                 ->setAppMode(null)
