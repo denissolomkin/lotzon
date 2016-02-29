@@ -44,6 +44,7 @@ class SEO extends PrivateArea
         $seo['pages'] = $this->request()->post('pages');
         $seo['debug'] = $this->request()->post('debug');
         $seo['multilanguage'] = $this->request()->post('multilanguage');
+        $seo['WebSocketReload'] = $this->request()->post('WebSocketReload');
 
         SEOModel::instance()->updateSEO($seo);
 

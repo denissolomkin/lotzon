@@ -46,7 +46,7 @@ class Durak extends Game
 /*
     public function replayAction($data=null)
     {
-        #echo $this->time().' '. "Повтор игры {$this->getIdentifier()} ".(isset($this->getClient()->bot) ?'бот':'игрок')." №{$this->getClient()->id} \n";
+        #echo $this->time().' '. "Повтор игры {$this->getUid()} ".(isset($this->getClient()->bot) ?'бот':'игрок')." №{$this->getClient()->id} \n";
         #echo " REPLAY  \n";
 
         $clientId = $this->getClient()->id;
@@ -106,9 +106,9 @@ class Durak extends Game
             $this->setPlayers($this->getClients(), false)
                 ->currentPlayers(array());
 
-            $this->_isRun = 0;
-            $this->_isOver = 0;
-            $this->_isSaved = 0;
+            $this->setRun(0)
+                ->setOver(0)
+                ->setSaved(0);
             $this->startAction();
         }
 
@@ -122,7 +122,7 @@ class Durak extends Game
 
         if ($this->getNumberPlayers() != count($this->getClients())) {
 
-            $this->_isRun = 0;
+            $this->setRun(0);
             $this->setLoser(null);
             $this->setPlayers($this->getClients(), false)
                 ->currentPlayers(array());
@@ -131,7 +131,13 @@ class Durak extends Game
                 'price' => $this->getPrice(),
                 'playerNumbers' => $this->getNumberPlayers(),
                 'currency' => $this->getCurrency(),
-                'appId' => $this->getIdentifier(),
+                'app'       => array(
+                    'id'   => $this->getId(),
+                    'uid'  => $this->getUid(),
+                    'key'  => $this->getKey(),
+                    'mode' => $this->getCurrency() . '-' . $this->getPrice()
+                ),
+                'appId' => $this->getUid(),
                 'appMode' => $this->getCurrency() . '-' . $this->getPrice(),
                 'appName' => $this->getKey(),
                 'players' => $this->getPlayers(),
@@ -154,7 +160,13 @@ class Durak extends Game
 
 
             $callback = array(
-                'appId' => $this->getIdentifier(),
+                'app'       => array(
+                    'id'   => $this->getId(),
+                    'uid'  => $this->getUid(),
+                    'key'  => $this->getKey(),
+                    'mode' => $this->getCurrency() . '-' . $this->getPrice()
+                ),
+                'appId' => $this->getUid(),
                 'appMode' => $this->getCurrency() . '-' . $this->getPrice(),
                 'appName' => $this->getKey(),
                 'price' => $this->getPrice(),
@@ -197,9 +209,9 @@ class Durak extends Game
                     ->setWinner(array())// обнулили победителя
                     ->setLoser(null)// обнулили победителя
                     ->setTime(time()); // время игры заново
-                $this->_isOver = 0;
-                $this->_isRun = 1;
-                $this->_isSaved = 0;
+                $this->setRun(1)
+                    ->setOver(0)
+                    ->setSaved(0);
             }
 
             $this->setResponse((is_array($data) && isset($data['response'])) ? $data['response'] : $this->getClients());
@@ -214,7 +226,13 @@ class Durak extends Game
                     'fields' => $fields,
                     'price' => $this->getPrice(),
                     'currency' => $this->getCurrency(),
-                    'appId' => $this->getIdentifier(),
+                    'app'       => array(
+                        'id'   => $this->getId(),
+                        'uid'  => $this->getUid(),
+                        'key'  => $this->getKey(),
+                        'mode' => $this->getCurrency() . '-' . $this->getPrice()
+                    ),
+                    'appId' => $this->getUid(),
                     'appMode' => $this->getCurrency() . '-' . $this->getPrice(),
                     'appName' => $this->getKey(),
                     'beater' => $this->getBeater(),
@@ -247,7 +265,13 @@ class Durak extends Game
                     if (!isset($client->bot)) {
 
                         $this->setCallback(array(
-                            'appId' => $this->getIdentifier(),
+                            'app'       => array(
+                                'id'   => $this->getId(),
+                                'uid'  => $this->getUid(),
+                                'key'  => $this->getKey(),
+                                'mode' => $this->getCurrency() . '-' . $this->getPrice()
+                            ),
+                            'appId' => $this->getUid(),
                             'appMode' => $this->getCurrency() . '-' . $this->getPrice(),
                             'appName' => $this->getKey(),
                             'action' => (is_array($data) && isset($data['action']))? $data['action'] : 'start',
@@ -303,7 +327,6 @@ class Durak extends Game
             $this->setCallback(array('action' => 'error','error' => $error))
                 ->setResponse($this->getClient());
         } else {
-
 
             // #print_r($cell);
             // #print_r($table);
@@ -454,6 +477,8 @@ class Durak extends Game
 
             list($x, $y) = $card;
             $playerId = $this->getClient()->id;
+
+            echo "Делаем ход $x x $y $table \n";
 
             if($table && $table=='revert'){
                 $this->revertMove();
@@ -660,12 +685,17 @@ class Durak extends Game
                 ->shuffleCards() // дорасдали карты на руки
                 ->updatePlayer(array('status'));
 
-            while(!count($this->getField(reset($this->currentPlayers())))) {
+            $currentPlayer = $this->currentPlayers();
+            $currentPlayer = reset($currentPlayer);
+
+            while(!count($this->getField($currentPlayer))) {
                 #echo "перебираем, пока на руках не будет карт\n";
                 $this->nextPlayer();
+                $currentPlayer = $this->currentPlayers();
+                $currentPlayer = reset($currentPlayer);
             }
 
-            $this->setStarter(reset($this->currentPlayers())) // установили первую руку
+            $this->setStarter($currentPlayer) // установили первую руку
                 ->setBeater($this->nextBeater()); // установили отбивающимся следующего за первым игроком
 
 
@@ -704,7 +734,7 @@ class Durak extends Game
     public function shuffleCards()
     {
 
-        $players = $this->getStarter() && $this->_isOver == 0 ? $this->sortPlayers($this->getStarter()) : $this->getPlayers();
+        $players = $this->getStarter() && !$this->isOver() ? $this->sortPlayers($this->getStarter()) : $this->getPlayers();
 
         #echo "расдаем карты на руки игрокам:"; #print_r($players);
 
@@ -920,8 +950,9 @@ class Durak extends Game
 
                 if (count($this->getWinner()) == count($this->getPlayers()) - 1) {
                     $this->setTime(time());
-                    $this->_isOver = 1;
-                    $this->_isRun = 0;
+
+                    $this->setRun(0)
+                        ->setOver(1);
                     $this->_botReplay = array();
                     $this->_botTimer = array();
                     $loser = $loser?:current(array_diff(array_keys($this->getPlayers()),$this->getWinner()));
@@ -932,7 +963,7 @@ class Durak extends Game
                         ->setTrump(null);
 
                     $this->updatePlayer(array('result' => -1, 'win' => $this->getPrice() * -1), $loser)
-                        ->updatePlayer(array('timeout','status','timeout'=> time() + $this->getOption('t')))
+                        ->updatePlayer(array('timeout','status','timeout'=> time() + $this->getOptions('t')))
                         ->currentPlayers(array());
 
                     #print_r($this->getPlayers($loser));
@@ -1020,7 +1051,7 @@ class Durak extends Game
             }
         }
 
-        #echo $this->time().' '. "Возможность отбиться: ".(count($check)==count(array_filter($check))?'да':'нет')."\n";
+        echo $this->time().' '. "Возможность отбиться: ".(count($check)==count(array_filter($check))?'да':'нет')."\n";
 
         return (count($check) >= ($card ? 1 : count(array_filter($check)))) ? reset($check) : false;
 

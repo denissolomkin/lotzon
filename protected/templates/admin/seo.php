@@ -38,6 +38,13 @@
                     <option value="1" <?=$seo['debug']?' selected':''?>>Включен</option>
                 </select>
             </div>
+            <div class="form-group">
+                <label for="WebSocketReload">Сброс вебсокета</label>
+                <select name="WebSocketReload" class="form-control">
+                    <option value="0">Нет</option>
+                    <option value="1" <?=$seo['WebSocketReload']?' selected':''?>>Да</option>
+                </select>
+            </div>
           <button type="submit" class="btn btn-success">Сохранить</button>
         </form>
     </div>

@@ -33,12 +33,16 @@ class OnlineGamesModel extends Model
         return __CLASS__;
     }
 
-    public function getRating($gameId = null)
+    public function getRating($gameId = null, $limit = null, $offset = 0)
     {
         $rating = $this->getProcessor()->getRating($gameId);
 
-        if($gameId) {
+        if ($gameId) {
             $rating = isset($rating[$gameId]) ? $rating[$gameId] : array();
+        }
+
+        if ($limit) {
+            $rating = array_slice($rating, $offset, $limit);
         }
 
         return $rating;
@@ -48,7 +52,7 @@ class OnlineGamesModel extends Model
     {
         $fund = $this->getProcessor()->getFund($gameId);
 
-        if($gameId) {
+        if ($gameId) {
             $fund = isset($fund[$gameId]) ? $fund[$gameId] : array();
         }
 

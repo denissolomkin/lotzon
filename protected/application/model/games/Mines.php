@@ -86,7 +86,7 @@ class Mines extends Game
 
         echo ($this->_size * $this->_size) - $this->_cells - $this->_mines.' = '.$this->_size * $this->_size.'-'.$this->_cells .' + '. $this->_mines."\n";
 
-        if (($this->getOption('w') && $current['points'] >= $this->getOption('w')) OR $current['moves'] <= 0 OR (($this->_size * $this->_size) - $this->_mines == $this->_cells)) {
+        if (($this->getOptions('w') && $current['points'] >= $this->getOptions('w')) OR $current['moves'] <= 0 OR (($this->_size * $this->_size) - $this->_mines == $this->_cells)) {
             if ($current['moves'] <= 0)
                 $this->updatePlayer(array('points', 'points' => -1), $current['pid']);
 
@@ -112,8 +112,10 @@ class Mines extends Game
                     'result' => 2,
                     'win' => $this->getPrice()+$this->getWinCoefficient()),current($winner)['player']['pid']);
                 $this->setTime(time());
-                $this->_isOver = 1;
-                $this->_isRun  = 0;
+
+                $this->setRun(0)
+                    ->setOver(1);
+
                 $this->_botReplay   = array();
                 $this->_botTimer    = array();
                 return current($winner)['player'];
@@ -141,7 +143,7 @@ class Mines extends Game
     {
         $gameField=array();
 
-        $this->_mines = $mines = $this->getVariation('mines');//(int)($this->getOption('x') * $this->getOption('y') / 5);
+        $this->_mines = $mines = $this->getVariation('mines');//(int)($this->getOptions('x') * $this->getOptions('y') / 5);
         $this->_size = (int) sqrt($this->_mines*5);
 
         $this->_cells = 0;

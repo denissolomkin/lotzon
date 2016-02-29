@@ -1,7 +1,7 @@
 <?php
 namespace controllers\admin;
 
-use \Application, \PrivateArea, \SettingsModel, \GameSettings, \OnlineGamesModel, \QuickGamesModel, \GameSettingsModel, \EntityException, \Admin, \Session2;
+use \Application, \PrivateArea, \SettingsModel, \GamePublished, \GameConstructorModel, \GamesPublishedModel, \EntityException, \Admin, \Session2;
 
 Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
 
@@ -13,45 +13,45 @@ class Games extends PrivateArea
     {
         parent::init();
 
-        if(!array_key_exists($this->activeMenu, SettingsModel::instance()->getSettings('rights')->getValue(Session2::connect()->get(Admin::SESSION_VAR)->getRole())))
+        if (!array_key_exists($this->activeMenu, SettingsModel::instance()->getSettings('rights')->getValue(Session2::connect()->get(Admin::SESSION_VAR)->getRole())))
             $this->redirect('/private');
 
     }
 
     public function indexAction()
     {
-       $qgames = QuickGamesModel::instance()->getList();
-       $ogames = OnlineGamesModel::instance()->getList();
-       $games  = GameSettingsModel::instance()->getList();
+        $games  = GamesPublishedModel::instance()->getList();
+        $qgames = GameConstructorModel::instance()->getList()['chance'];
+        $ogames = GameConstructorModel::instance()->getList()['online'];
 
         $this->render('admin/games', array(
-            'title'      => 'Настройка игр',
+            'title'      => 'Конструктор игр',
             'layout'     => 'admin/layout.php',
             'activeMenu' => $this->activeMenu,
             'games'      => $games,
-            'qgames'      => $qgames,
-            'ogames'      => $ogames,
-            'frontend'      => 'statictexts',
+            'qgames'     => $qgames,
+            'ogames'     => $ogames,
+            'frontend'   => 'statictexts',
         ));
     }
 
     public function saveAction()
     {
         if ($this->request()->isAjax()) {
-            $response = array(
+            $response      = array(
                 'status'  => 1,
                 'message' => 'OK',
                 'data'    => array(),
             );
-            $game = new GameSettings();
-            $game->setKey($this->request()->post('key'))
+            $gamePublished = new GamePublished();
+            $gamePublished->setKey($this->request()->post('key'))
                 ->setOptions($this->request()->post('options'))
                 ->setGames($this->request()->post('games'));
 
             try {
-                $game->update();
+                $gamePublished->update();
             } catch (EntityException $e) {
-                $response['status'] = 0;
+                $response['status']  = 0;
                 $response['message'] = $e->getMessage();
             }
 
