@@ -62,7 +62,7 @@
 
 
                     <div class="row-fluid tab" id="key">
-                        <div class="chanceId"></div>
+                        <div class="gameId"></div>
                         <input name='game[Key]' class="k" value="">
                     </div>
 
@@ -398,8 +398,20 @@
             editGame(games[$(this).data('id')]);
         });
 
+        games=<?
+        foreach ($games as $game)
+            $list[$game->getId()]=array(
+            'Id'            => $game->getId(),
+            'Key'           => $game->getKey(),
+            'Title'         => $game->getTitle(),
+            'Description'   => $game->getDescription(),
+            'Field'         => $game->getField(),
+            'Prizes'        => $game->getPrizes(),
+            'Audio'         => $game->getAudio(),
+            'Enabled'       => $game->isEnabled()
+            );
+        echo json_encode($list, JSON_PRETTY_PRINT)?>;
 
-        games=<?=json_encode($games, JSON_PRETTY_PRINT)?>;
         $.each(games, function(index, game) {
             buildGame(game);
         });
@@ -412,7 +424,7 @@
 
             holder=$("#editGame").find('form');
             holder.find('.lang').first().click();
-            holder.find('.chanceId').html('Chance'+game.Id);
+            holder.find('.gameId').html('Chance'+game.Id);
             holder.find('.k').val(typeof game.Key !== "undefined" && game.Key?game.Key:'');
             holder.find('.p').val(game.Field.p);
             holder.find('.m').val(game.Field.m);
@@ -560,7 +572,7 @@
             }
             holder=$('.game-build[data-id="'+game.Id+'"]');
 
-        if(game.Enabled==1 || game.Enabled=='on' || 1)
+        if(game.Enabled==1 || game.Enabled=='on')
             holder.removeClass('disabled');
         else
             holder.addClass('disabled');

@@ -1,1 +1,1 @@
-ALTER TABLE `QuickGames` ADD `Key` VARCHAR(32) NULL AFTER `Id`;
+call addCol('QuickGames','Key','VARCHAR(32) NULL AFTER `Id`');

@@ -50,14 +50,15 @@ class SeaBattle extends Game
             #echo $this->time().' '. "Первичная установка игроков\n";
             $this->setPlayers($this->getClients());
             $this->updatePlayer(array(
-                'timeout' => static::START_TIME_OUT - $this->getOption('t'),
+                'timeout' => static::START_TIME_OUT - $this->getOptions('t'),
                 'ships' => array_count_values($this->getShips())
             ));
             $this->nextPlayer('init');
             $this->setWinner(null);
-            $this->_isOver = 0;
-            $this->_isSaved = 0;
-            $this->_isRun = 1;
+
+            $this->setRun(1)
+                ->setOver(0)
+                ->setSaved(0);
         }
 
         if (count($this->getField()) != count($this->getClients())) {
@@ -72,6 +73,7 @@ class SeaBattle extends Game
         }
 
         if (count($this->getField()) == count($this->getClients())) {
+
             #echo $this->time().' '. "Количество полей совпадает с игроками \n";
             $this->setResponse($this->getClients());
             foreach ($this->getClients() as $client) {
@@ -102,7 +104,13 @@ class SeaBattle extends Game
                     $this->setCallback(array(
                         'current' => $this->currentPlayer()['pid'],
                         'timeout' => (isset($this->currentPlayer()['timeout']) ? $this->currentPlayer()['timeout'] - time() : 1),//($this->currentPlayer()['timeout']-time()>0?$this->currentPlayer()['timeout']-time():1),
-                        'appId' => $this->getIdentifier(),
+                        'app'       => array(
+                            'id'   => $this->getId(),
+                            'uid'  => $this->getUid(),
+                            'key'  => $this->getKey(),
+                            'mode' => $this->getCurrency() . '-' . $this->getPrice()
+                        ),
+                        'appId' => $this->getUid(),
                         'appMode' => $this->getCurrency().'-'.$this->getPrice(),
                         'appName' => $this->getKey(),
                         'players' => $this->getPlayers(),
@@ -112,12 +120,22 @@ class SeaBattle extends Game
                     ), $client->id);
                 }
             }
+
             $this->updatePlayer(array('ready', 'result'));
+
         } elseif(isset($this->getField()[$this->getClient()->id]) && !isset($this->getClient()->bot)){
+
+            #echo $this->time().' '. "Ждем заполнения полей остальными игроками \n";
             $this->setResponse($this->getClient());
             $this->setCallback(array(
                 'timeout' => isset($this->currentPlayer()['timeout']) ? $this->currentPlayer()['timeout'] - time() : static::START_TIME_OUT,
-                'appId' => $this->getIdentifier(),
+                'app'       => array(
+                    'id'   => $this->getId(),
+                    'uid'  => $this->getUid(),
+                    'key'  => $this->getKey(),
+                    'mode' => $this->getCurrency() . '-' . $this->getPrice()
+                ),
+                'appId' => $this->getUid(),
                 'appMode' => $this->getCurrency().'-'.$this->getPrice(),
                 'appName' => $this->getKey(),
                 'players' => $this->getPlayers(),
@@ -125,12 +143,20 @@ class SeaBattle extends Game
                 'variation' => $this->getVariation(),
                 'action' => 'wait',
             ));
+
         } else {
+
             #echo $this->time().' '. "Количество полей не совпадает с игроками \n";
             $this->setResponse($this->getClients());
             $this->setCallback(array(
                 'timeout' => isset($this->currentPlayer()['timeout']) ? $this->currentPlayer()['timeout'] - time() : static::START_TIME_OUT,
-                'appId' => $this->getIdentifier(),
+                'app'       => array(
+                    'id'   => $this->getId(),
+                    'uid'  => $this->getUid(),
+                    'key'  => $this->getKey(),
+                    'mode' => $this->getCurrency() . '-' . $this->getPrice()
+                ),
+                'appId' => $this->getUid(),
                 'appMode' => $this->getCurrency().'-'.$this->getPrice(),
                 'appName' => $this->getKey(),
                 'players' => $this->getPlayers(),
@@ -170,12 +196,13 @@ class SeaBattle extends Game
         if (!$this->isOver() AND isset($this->currentPlayer()['timeout']) AND $this->currentPlayer()['timeout'] <= time()) {
 
             if (count($this->getField()) != count($this->getClients())) {
+                #echo $this->time().' '. "Автозаполнение всех полей \n";
                 $players = $this->getPlayers();
                 foreach ($players as $player)
                     if (!isset($this->_field[$player['pid']])) {
                         $this->setField($this->generateField($player['pid']), $player['pid']);
                     }
-                #echo $this->time().' '. "Автозаполнение всех полей \n";
+
                 $this->nextPlayer();
                 $this->startAction();
                 return false;
@@ -218,7 +245,7 @@ class SeaBattle extends Game
     public function moveAction($data = null)
     {
         $this->unsetCallback();
-        if (count($this->getField()) != count($this->getClients()) || $this->_isOver) {
+        if (count($this->getField()) != count($this->getClients()) || $this->isOver()) {
             #echo '' . time() . ' ' . " поля не готовы для хода\n";
             return false;
         }
@@ -268,7 +295,7 @@ class SeaBattle extends Game
 
     public function replayAction($data = null)
     {
-        #echo $this->time() . ' ' . "Повтор игры {$this->getIdentifier()} " . (isset($this->getClient()->bot) ? 'бот' : 'игрок') . " №{$this->getClient()->id} \n";
+        #echo $this->time() . ' ' . "Повтор игры {$this->getUid()} " . (isset($this->getClient()->bot) ? 'бот' : 'игрок') . " №{$this->getClient()->id} \n";
 
         $clientId = $this->getClient()->id;
         $this->updatePlayer(array('ready' => 1), $clientId);
@@ -286,16 +313,18 @@ class SeaBattle extends Game
         }
 
         if ($ready == count($players)) {
-            $this->_isOver = 0;
-            $this->_isSaved = 0;
-            $this->_isRun = 1;
+
+            $this->setRun(1)
+                ->setOver(0)
+                ->setSaved(0);
+
             #echo $this->time().' '. "Переустановка игроков\n";
 
             $this->unsetFieldPlayed()
                 ->setField(array())
                 ->setPlayers($this->getClients())
                 ->updatePlayer(array(
-                    'timeout' => static::START_TIME_OUT - $this->getOption('t'),
+                    'timeout' => static::START_TIME_OUT - $this->getOptions('t'),
                     'ships' => array_count_values($this->getShips())
                     ))
                 ->setWinner(false)
@@ -438,14 +467,14 @@ class SeaBattle extends Game
             list($x, $y, $f) = $this->generateHit($cell,array($cell),time());
         } else {
 
-            $miss = $this->getMode() ? rand(0, $this->getMode()) : true;
+            $miss = $this->isSuccessMove() ? rand(0, $this->isSuccessMove()) : true;
             $i=0;
 
             do {
                 $i++;
 
-                $x = rand(1, $this->getOption('x'));
-                $y = rand(1, $this->getOption('y'));
+                $x = rand(1, $this->getOptions('x'));
+                $y = rand(1, $this->getOptions('y'));
                 if ($i>1000) {
                     echo $this->time() . ' ' . " [ERROR] Цикл превысил 1000 переборов\n";
                     print_r($this->getPlayers());
@@ -490,8 +519,10 @@ class SeaBattle extends Game
                     'result' => 2,
                     'win' => $this->getPrice()+$this->getWinCoefficient()),current($winner)['player']['pid']);
                 $this->setTime(time());
-                $this->_isOver      = 1;
-                $this->_isRun = 0;
+
+                $this->setRun(0)
+                    ->setOver(1);
+
                 $this->_botReplay   = array();
                 $this->_botTimer    = array();
                 return current($winner)['player'];
@@ -599,11 +630,11 @@ class SeaBattle extends Game
 
         echo "\n";
         echo "\n   ";
-        for ($i = 1; $i <= $this->getOption('x'); ++$i)
+        for ($i = 1; $i <= $this->getOptions('x'); ++$i)
             echo sprintf("%02d", $i) . " ";
-        for ($j = 1; $j <= $this->getOption('y'); ++$j) {
+        for ($j = 1; $j <= $this->getOptions('y'); ++$j) {
             echo "\n" . sprintf("%02d", $j) . "";
-            for ($i = 1; $i <= $this->getOption('x'); ++$i)
+            for ($i = 1; $i <= $this->getOptions('x'); ++$i)
                 echo isset($field[$i][$j]) ? "  " . $field[$i][$j] : '   ';
         }
     }
@@ -613,7 +644,7 @@ class SeaBattle extends Game
         list($x, $y) = $cell;
         foreach ($this->_matrix as $mx) {
             list($x1, $y1) = $mx;
-            if ($x + $x1 > 0 && $x + $x1 <= $this->getOption('x') || $y + $y1 > 0 || $y + $y1 <= $this->getOption('y'))
+            if ($x + $x1 > 0 && $x + $x1 <= $this->getOptions('x') || $y + $y1 > 0 || $y + $y1 <= $this->getOptions('y'))
                 if (isset($field[$x + $x1][$y + $y1]))
                     return false;
             }
@@ -652,8 +683,8 @@ class SeaBattle extends Game
 
         while (count($playerShips) != count($ships)) {
 
-            $x = rand(1, $this->getOption('x'));
-            $y = rand(1, $this->getOption('y'));
+            $x = rand(1, $this->getOptions('x'));
+            $y = rand(1, $this->getOptions('y'));
             $v = rand(0,1);
             $ship = array();
 

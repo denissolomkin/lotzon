@@ -1,26 +1,12 @@
 <?php
 
-class QuickGame extends Entity
+class GameConstructorChance extends GameConstructor
 {
-    protected $_id           = '';
-    protected $_uid          = '';
-    protected $_key          = '';
-    protected $_title        = array();
+
     protected $_time         = '';
     protected $_timeout      = '';
-    protected $_over         = false;
-    protected $_userId       = 0;
-    protected $_lang         = '';
-    protected $_description  = array();
     protected $_combinations = array();
-    protected $_enabled      = true;
-    protected $_prizes       = array();
-    protected $_audio        = array();
-    protected $_field        = array();
-    protected $_gameField    = array();
-    protected $_gamePrizes   = array();
-
-    private $_matrix = array(
+    protected $_matrix = array(
         'line'  => array(
             array(array(-1, -1), array(1, 1)), # \
             array(array(0, -1), array(0, 1)), # |
@@ -33,46 +19,19 @@ class QuickGame extends Entity
         ),
     );
 
-    public function init()
-    {
-        $this->setModelClass('QuickGamesModel');
-    }
-
-    public function getOption($key)
+    /* todo replace _field into _options */
+    public function getOptions($key)
     {
         return $this->_field[$key];
     }
 
+    /* todo replace to getOptions & addOptions in Chances */
     public function option($key, $value = null)
     {
         if ($value)
             $this->_field[$key] += $value;
 
         return $this->_field[$key];
-    }
-
-
-    public function setTime($time)
-    {
-        $this->_time = $time ?: time();
-
-        return $this;
-    }
-
-    public function save()
-    {
-        try {
-            $model = $this->getModelClass();
-            $model::instance()->save($this);
-        } catch (ModelException $e) {
-            throw new EntityException($e->getMessage(), $e->getCode());
-        }
-
-        return $this;
-    }
-
-    public function saveGame()
-    {
     }
 
     public function doMove($cell)
@@ -199,7 +158,7 @@ class QuickGame extends Entity
                 if (isset($gamePrizes['hit'])) {
                     // combination
                     if (($format == 'hit' && isset($this->getPrizes()[$gamePrizes['hit']]) && $prize = $this->getPrizes()[$gamePrizes['hit']])
-                        || ($format == 'miss' && $gamePrizes['hit'] == $this->getOption('c') && isset($this->getPrizes()[count($gameField) - $gamePrizes['hit']]) && $prize = $this->getPrizes()[count($gameField) - $gamePrizes['hit']])
+                        || ($format == 'miss' && $gamePrizes['hit'] == $this->getOptions('c') && isset($this->getPrizes()[count($gameField) - $gamePrizes['hit']]) && $prize = $this->getPrizes()[count($gameField) - $gamePrizes['hit']])
                     ) {
                         switch ($prize['t']) {
                             case 'item':
@@ -338,7 +297,7 @@ class QuickGame extends Entity
     function genCombinationLine($cell, $size)
     {
         $changes = range(1, $size);
-        $matrix  = $this->_matrix['line'];
+        $matrix  = $this->getMatrix('line');
 
         #4
         foreach ($matrix as $direction) {
@@ -393,7 +352,7 @@ class QuickGame extends Entity
             return false;
         }
 
-        $matrix = $this->_matrix['snake'];
+        $matrix = $this->getMatrix('snake');
 
         foreach ($matrix as $path) {
 
@@ -504,120 +463,5 @@ class QuickGame extends Entity
         return $gameField;
     }
 
-    public function loadPrizes()
-    {
-        if ($prizes = $this->getPrizes()) {
-            foreach ($prizes as &$prize) {
-                if ($prize['t'] == 'item') {
-                    $item = new \ShopItem();
-                    try {
-                        $item->setId($prize['v'])->fetch();
-                        $prize['s'] = $item->getImage();
-                        $prize['n'] = $item->getTitle();
-                    } catch (EntityException $e) {
-                    }
-                }
-            }
 
-            $this->setPrizes($prizes);
-        }
-
-        return $this;
-    }
-
-    public function formatFrom($from, $data)
-    {
-        if ($from == 'DB') {
-            $this->setId($data['Id'])
-                ->setKey($data['Key'])
-                ->setTitle(@unserialize($data['Title']))
-                ->setDescription(@unserialize($data['Description']))
-                ->setAudio(@unserialize($data['Audio']))
-                ->setPrizes(@unserialize($data['Prizes']))
-                ->setField(@unserialize($data['Field']))
-                ->setEnabled($data['Enabled']);
-        }
-
-        return $this;
-    }
-
-    function exportField()
-    {
-        $field = $this->getField();
-        $field['c'] -= count($this->getGameField());
-        unset($field['combination'], $field['f']);
-
-        return $field;
-    }
-
-    function getStat()
-    {
-        return $this->export('stat');
-    }
-
-    function exportPrizes()
-    {
-        foreach ($this->getPrizes() as $prize) {
-            if ($prize['v']) {
-                unset($prize['p']);
-                $prizes[] = $prize;
-            }
-        }
-
-        if (is_array($this->getGamePrizes()))
-            foreach ($this->getGamePrizes() as $gamePrizes)
-                if (is_array($gamePrizes))
-                    foreach ($gamePrizes as $prize) {
-                        if ($prize['v'])
-                            $prizes[] = $prize;
-                    }
-
-        return $prizes;
-    }
-
-    public function export($to)
-    {
-        switch ($to) {
-
-            case 'list':
-                $ret = array(
-                    'id'     => $this->getId(),
-                    'title'  => $this->getTitle($this->getLang()),
-                    'key'    => $this->getKey(),
-                    'prizes' => $this->exportPrizes()
-                );
-                break;
-
-            case 'item':
-                $ret = array(
-                    'id'          => $this->getId(),
-                    'title'       => $this->getTitle($this->getLang()),
-                    'description' => $this->getDescription(),
-                    'key'         => $this->getKey(),
-                    'prizes'      => $this->exportPrizes(),
-                    'audio'       => $this->getAudio(),
-                    'field'       => $this->exportField()
-
-                );
-                break;
-
-            case 'stat':
-
-                $ret = array(
-                    'Title'       => $this->getTitle($this->getLang()),
-                    'Description' => $this->getDescription($this->getLang()),
-                    'Prizes'      => $this->exportPrizes(),
-                    'Audio'       => $this->getAudio(),
-                    'Uid'         => $this->getUid(),
-                    'Id'          => $this->getId(),
-                    'Key'         => $this->getKey(),
-                    'Timeout'     => $this->getTimeout() ? ($this->getTimeout() * 60 + $this->getTime()) - time() : false,
-                    'Field'       => $this->exportField(),
-                    'GameField'   => $this->getGameField()
-                );
-                break;
-        }
-
-        return $ret;
-    }
 }
