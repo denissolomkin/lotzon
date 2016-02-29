@@ -163,4 +163,51 @@ class ReportsController extends \AjaxController
         return true;
     }
 
+    public function referralsAction()
+    {
+        if (!$this->request()->isAjax()) {
+            return false;
+        }
+
+        $this->authorizedOnly();
+
+
+        $playerId = $this->session->get(Player::IDENTITY)->getId();
+        $offset   = $this->request()->get('offset', NULL);
+
+        if($offset!==NULL) {
+            $limit  = self::$reportsPerPage+1;
+        } else {
+            $limit = self::$reportsPerPage;
+        }
+
+        try {
+            $list = \PlayersModel::instance()->getReferrals($playerId, $limit, $offset);
+        } catch (\PDOException $e) {
+            $this->ajaxResponseInternalError();
+            return false;
+        }
+
+        $response = array(
+            'res' => array(
+                'reports' => array(
+                    "referrals" => array()
+                ),
+            ),
+        );
+
+        if (count($list)<=self::$reportsPerPage) {
+            $response['lastItem'] = true;
+        } else {
+            array_pop($list);
+        }
+
+        foreach ($list as $player) {
+            $response['res']['reports']['referrals'][$player->getId()] = $player->export('referral');
+        }
+
+        $this->ajaxResponseCode($response);
+        return true;
+    }
+
 }

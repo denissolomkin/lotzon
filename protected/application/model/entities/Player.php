@@ -89,6 +89,9 @@ class Player extends Entity
     private $_referalId = 0;
     private $_referalPaid = 0;
 
+    protected $_referralsProfit = 0;
+    protected $_referralPay     = 0;
+
     protected $_goldTicket = 0;
 
     private $_newsSubscribe = 1;
@@ -1630,6 +1633,8 @@ class Player extends Entity
                  ->setInviterId($data['InviterId'])
                  ->setReferalId($data['ReferalId'])
                  ->setReferalPaid($data['ReferalPaid'])
+                 ->setReferralsProfit($data['ReferralsProfit'])
+                 ->setReferralPay($data['ReferralPay'])
                  ->setNewsSubscribe($data['NewsSubscribe'])
                  ->setAdmin(\Session2::connect()->has(\Admin::SESSION_VAR))
                  ->setAdditionalData(!empty($data['AdditionalData']) ? @unserialize($data['AdditionalData']) : null)
@@ -1683,6 +1688,19 @@ class Player extends Entity
     public function export($to)
     {
         switch ($to) {
+            case 'referral':
+                $ret = array(
+                    'id'           => $this->getId(),
+                    'img'          => $this->getAvatar(),
+                    'name'         => $this->getNicName(),
+                    'subreferrals' => array(
+                        'total'  => \PlayersModel::instance()->getReferralsCount($this->getId()),
+                        'active' => \PlayersModel::instance()->getReferralsCount($this->getId(),true),
+                    ),
+                    'lotteries'    => $this->getGamesPlayed(),
+                    'profit'       => $this->getReferralPay(),
+                );
+                break;
             case 'card':
                 $ret = array(
                     'id'   => $this->getId(),

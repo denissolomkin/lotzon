@@ -1387,15 +1387,83 @@ class PlayersDBProcessor implements IProcessor
         return $sth->fetchAll();
     }
 
-    public function getReferralsCount($playerId)
-    {
-        $sql = "SELECT COUNT(*) FROM `Players` WHERE `ReferalId` = :playerid";
 
+    public function getReferrals($playerId, $limit = 10, $offset = NULL)
+    {
+        $sql = "SELECT p.*, d.* FROM `Players` p
+            LEFT JOIN `PlayerDates` d
+              ON d.`PlayerId`=p.`Id`
+            WHERE p.`ReferalId` = :id";
+        if (!is_null($limit)) {
+            $sql .= " LIMIT " . (int)$limit;
+        }
+        if (!is_null($offset)) {
+            $sql .= " OFFSET " . (int)$offset;
+        }
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
-                ':playerid' => $playerId
+                ':id' => $playerId,
             ));
+
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+
+        $players = array();
+        foreach ($sth->fetchAll() as $playerData) {
+            $player = new Player();
+            $player->formatFrom('DB', $playerData);
+
+            $players[] = $player;
+        }
+
+        return $players;
+    }
+
+
+    public function getReferralsCount($playerId, $onlyActive = false)
+    {
+
+        $sql = "SELECT Id FROM Lotteries ORDER BY Id DESC LIMIT 1";
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute();
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+        $lotteryId =  $sth->fetchColumn(0);
+
+        if ($onlyActive == false) {
+            $sql  = "SELECT COUNT(*) FROM `Players` WHERE `ReferalId` = :playerid";
+            $data = array(
+                ':playerid'  => $playerId
+            );
+        } else {
+            $sql = "SELECT
+                      COUNT(DISTINCT p.`Id`)
+                    FROM
+                      `Players` as p
+                    JOIN
+                      `LotteryTicketsArchive` as lta
+                    ON
+                      lta.`PlayerId` = p.`Id`
+                    WHERE
+                      p.`ReferalId` = :playerid
+                    AND
+                      lta.`LotteryId` = :lotteryid
+                   ";
+            $data = array(
+                ':playerid'  => $playerId,
+                ':lotteryid' => $lotteryId
+            );
+        }
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute($data);
 
             return $sth->fetchColumn();
 

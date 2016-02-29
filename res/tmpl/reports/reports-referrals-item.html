@@ -2,17 +2,16 @@
     <a href="/user/{{id}}">
 
         <div class="r-inf-names">
-            <div class="r-inf-name">{{i18n "title-users-referrals-nickname"}}</div>
+            <div class="r-inf-name">{{i18n "title-users-referrals-name"}}</div>
             <div class="r-inf-name">{{i18n "title-users-referrals-subreferrals"}}</div>
             <div class="r-inf-name">{{i18n "title-users-referrals-activity"}}</div>
             <div class="r-inf-name">{{i18n "title-users-referrals-profit"}}</div>
         </div>
 
         <div class="r-inf">
-            <div class="r-inf-item r-nickname">{{user.name}}</div>
-            <div class="r-inf-item r-registered">{{referrals.sub}}</div>
-            <div class="r-inf-item r-active-text">{{referrals.active}}</div>
-
+            <div class="r-inf-item r-nickname">{{name}}</div>
+            <div class="r-inf-item r-registered">{{subreferrals.total}}</div>
+            <div class="r-inf-item r-active-text">{{subreferrals.active}}</div>
             <div class="r-inf-item r-profit">{{profit}}</div>
         </div>
 

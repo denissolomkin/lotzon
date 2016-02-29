@@ -69,9 +69,9 @@ class PlayersModel extends Model
         return $this->getProcessor()->getLogins($playerId);
     }
 
-    public function getReferralsCount($playerId)
+    public function getReferralsCount($playerId, $onlyActive = false)
     {
-        return $this->getProcessor()->getReferralsCount($playerId);
+        return $this->getProcessor()->getReferralsCount($playerId, $onlyActive);
     }
 
     public function updateNewsSubscribe(Entity $player, $newsSubscribe)
@@ -270,6 +270,11 @@ class PlayersModel extends Model
     public function search($search)
     {
         return $this->getProcessor()->search($search);
+    }
+
+    public function getReferrals($playerId, $limit = 10, $offset = NULL)
+    {
+        return $this->getProcessor()->getReferrals($playerId, $limit, $offset);
     }
 
     public function updateGoldTicket(Entity $player, $quantity)
