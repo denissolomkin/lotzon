@@ -9,12 +9,12 @@
                 Tickets.countdown(this.timeToLottery);
             }
 
-            if('filledTickets' in init){
-                Ticket.render();
-            }
-
             D.log('Tickets.init', 'func');
             Object.deepExtend(this, init);
+
+/*            if ('filledTickets' in init) {
+                Ticket.render();
+            }*/
 
         },
 

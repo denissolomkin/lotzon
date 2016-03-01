@@ -66,7 +66,7 @@
                 $(Ticket.tabs).removeClass('active');
                 tab.addClass('active');
 
-                Tickets.selectedTab = Tickets.selectedTab || (1 + tab.index());
+                Tickets.selectedTab = (1 + tab.index());
 
                 R.push({
                     href    : 'lottery-ticket-item',
