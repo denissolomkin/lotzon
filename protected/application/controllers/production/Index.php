@@ -130,13 +130,17 @@ class Index extends \SlimController\SlimController
             "birthday" => $playerObj->getBirthday(),
             "count"    => array(
                 "lotteries"     => $playerObj->getGamesPlayed(),
-                "communication" => array(
-                    "notifications" => array(
-                        "server" => \CommentsModel::instance()->getNotificationsCount($playerObj->getId())
+                "menu" => array(
+                    "users" => array(
+                        "friends" => \FriendsModel::instance()->getStatusCount($playerObj->getId(), 1)
                     ),
-                    "messages"      => \MessagesModel::instance()->getStatusCount($playerObj->getId(), 0)
+                    "communication" => array(
+                        "notifications" => array(
+                            "server" => \CommentsModel::instance()->getNotificationsCount($playerObj->getId()) + 1
+                        ),
+                        "messages"      => \MessagesModel::instance()->getStatusCount($playerObj->getId(), 0)
+                    )
                 ),
-                "friends" => \FriendsModel::instance()->getStatusCount($playerObj->getId(), 1),
             ),
             "favorite" => $playerObj->getFavoriteCombination(),
             "location" => array(
