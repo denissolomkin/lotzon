@@ -21,11 +21,11 @@
     </div>
     <div class="row-fluid">&nbsp;</div>
     <!-- fst column -->
-    <div class="col-md-4 col-md-offset-1">
+    <div class="col-md-6 col-md-offset-1">
         <h6>Настройка призов<span class="pull-right  glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="top" title="Установите флажок, для того чтобы указать что приз денежный" style="color:#428BCA;cursor:help;">&nbsp;</span></h6>
         <? for ($i = 1; $i <= 6; ++$i) { ?>
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <? for ($j = 1; $j <= $i; ++$j) { ?>
                     <span style="color: #428BCA;font-size:21pt;">&bull;</span>
                 <? } ?>
@@ -33,7 +33,7 @@
                     <span style="color: #CCCCCC;font-size:21pt;">&bull;</span>
                 <? } ?>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="input-group pull-right" data-balls="<?=$i?>">
                     <input type="text" class="form-control input-md" value="<?=@$settings->getPrizes('UA')[$i]['sum']?>">
                     <span class="input-group-addon">
@@ -41,7 +41,7 @@
                     </span>
                 </div>
             </div>
-            <div class="col-md-4" style="background-color: #E8CF6B;">
+            <div class="col-md-3" style="background-color: #E8CF6B;">
                 <div class="input-group pull-right" data-balls-gold="<?=$i?>">
                     <input type="text" class="form-control input-md" value="<?=@$settings->getGoldPrizes('UA')[$i]['sum']?>" style="background-color: #E8CF6B;">
                     <span class="input-group-addon"  style="background-color: #E8CF6B;">
@@ -49,7 +49,18 @@
                     </span>
                 </div>
             </div>
-        </div>  
+            <div class="col-md-1">
+                <div class="input-group pull-right" incr-from="<?=$i?>">
+                    <input type="text" class="form-control input-md" value="<?=@$settings->getGameIncrements()[$i]['from']?>">
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="input-group pull-right" incr-to="<?=$i?>">
+                    <input type="text" class="form-control input-md" value="<?=@$settings->getGameIncrements()[$i]['to']?>">
+                </div>
+            </div>
+
+        </div>
         <? } ?>
 
         <div class="row">
@@ -74,7 +85,7 @@
     </div>
     
     <!-- scnd column -->
-    <div class="col-md-6" id="lotteries">
+    <div class="col-md-4" id="lotteries">
         <? $i = 1; ?>
         <? $cnt = count($settings->getLotterySettings()); ?>
         <? foreach ($settings->getLotterySettings() as $time) { ?>
@@ -89,13 +100,19 @@
                         <h4>#<?=$i?></h4>
                     </div>
                     <div class="col-md-11 flex">
-                        <div class="input-group">
+                        <div class="input-group col-md-4">
                             <span class="input-group-addon">@</span>
                             <input type="text" class="form-control col-md-3" name="StartTime" placeholder="Часы:Минуты" value="<?=date('H:i', $time['StartTime'])?>">
                         </div>
-                        <input type="text" class="col-md-1 form-control " name="Tries" placeholder="Переборы" value="<?=$time['Tries'];?>">
-                        <input type="text" class="col-md-1 form-control" name="Balls" placeholder="Шары" value="<?=$time['Balls'];?>">
-                        <button class="btn btn-default simulate-button">Simulate</button>
+                        <div class="input-group col-md-2">
+                            <input type="text" class="col-md-1 form-control " name="Tries" placeholder="Переборы" value="<?=$time['Tries'];?>">
+                        </div>
+                        <div class="input-group col-md-2">
+                            <input type="text" class="col-md-1 form-control" name="Balls" placeholder="Шары" value="<?=$time['Balls'];?>">
+                        </div>
+                        <div class="input-group col-md-2">
+                            <button class="btn btn-default simulate-button">Simulate</button>
+                        </div>
                         <button class="btn btn-success add-button" <?=($i < $cnt ? 'style="display:none"' : '')?>><span class="glyphicon glyphicon-plus"></span></button>
                         <? if ($i > 1) { ?>
                             <button class="btn btn-danger remove-button"><span class="glyphicon glyphicon-remove"></span></button>
@@ -376,6 +393,17 @@ $ajaxedSettings['goldPrizes'] = (object)$ajaxedSettings['goldPrizes'];
             gameSettings.goldPrizes[country][ballsCount] = {
                 'sum' : won,
                 'currency' : currency
+            }
+        });
+
+        gameSettings.increments = {};
+        $([1,2,3,4,5,6]).each(function(id, ballsCount) {
+            var from = $('[incr-from="' + ballsCount + '"]').find('input[type="text"]').val();
+            var to   = $('[incr-to="' + ballsCount + '"]').find('input[type="text"]').val();
+
+            gameSettings.increments[ballsCount] = {
+                'from' : from,
+                'to'   : to
             }
         });
 

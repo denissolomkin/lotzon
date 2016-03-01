@@ -3,6 +3,7 @@
 !/protected/configs/_*.default.php
 /res/.sass-cache
 /lastLottery
+/lastResult
 /filestorage/*/*
 /filestorage/*/**/*
 !/filestorage/*/comments

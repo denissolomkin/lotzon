@@ -9,16 +9,17 @@ class LotterySettingsDBProcessor
             "TRUNCATE TABLE `LotterySettings`",
         );
 
-        $timesSql = "INSERT INTO `LotteryScheduler` (`StartTime`,`Tries`,`Balls`) VALUES %s";
+        $timesSql = "INSERT INTO `LotteryScheduler` (`StartTime`,`Tries`,`Balls`,`Increments`) VALUES %s";
         $parts = array();
         /*foreach ($settings->getGameTimes() as $time) {
             $parts[] = sprintf("(%s,%s,%s)", array(DB::Connect()->quote($time),DB::Connect()->quote($time),DB::Connect()->quote($time)));
         }*/
         foreach ($settings->getLotterySettings() as $time) {
-            $parts[] = vsprintf("(%s,%s,%s)", array(
+            $parts[] = vsprintf("(%s,%s,%s,%s)", array(
                 DB::Connect()->quote($time['StartTime']),
                 DB::Connect()->quote($time['Tries']),
-                DB::Connect()->quote($time['Balls'])));
+                DB::Connect()->quote($time['Balls']),
+                DB::Connect()->quote(serialize($settings->getGameIncrements()))));
         }
         $timesSql = sprintf($timesSql, join(",", $parts));
 
@@ -89,8 +90,8 @@ class LotterySettingsDBProcessor
         foreach ($times as $time) {
               $settings->addGameTime($time['StartTime']);
               $settings->addLotterySettings($time);
+              $settings->setGameIncrements(unserialize($time['Increments']));
         }
-
 
         $lots = $lots->fetchAll();
 

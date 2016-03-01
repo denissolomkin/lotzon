@@ -108,8 +108,11 @@ class Lottery extends \PrivateArea
             $goldPrizes = $this->request()->post('goldPrizes', array());
             $lotteries  = $this->request()->post('lotteries', array());
             $goldPrice  = $this->request()->post('goldPrice', array());
+            $increments = $this->request()->post('increments', array());
 
             SettingsModel::instance()->getSettings('goldPrice')->setValue($goldPrice)->create();
+
+            $settings->setGameIncrements($increments);
 
             foreach ($prizes as $country => $prize) {
                 $settings->setPrizes($country, $prize);
