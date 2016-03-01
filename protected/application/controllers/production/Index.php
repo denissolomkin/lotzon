@@ -174,6 +174,10 @@ class Index extends \SlimController\SlimController
                     'Key' => $gamePlayer->getApp('Key'),
                     'Uid' => $gamePlayer->getApp('Uid')
                 ),
+            ),
+            "referral" => array(
+                'total'  => PlayersModel::instance()->getReferralsCount($playerObj->getId()),
+                'profit' => $playerObj->getReferralsProfit()
             )
         );
 

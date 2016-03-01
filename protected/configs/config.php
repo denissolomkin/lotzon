@@ -667,6 +667,9 @@ Config::instance()->publicResources = array(
     '/reports/payments' => array(
         'get' => 'controllers\production\ReportsController:payments'
     ),
+    '/reports/referrals' => array(
+        'get' => 'controllers\production\ReportsController:referrals'
+    ),
     /**
      * Profile orders
      */
