@@ -91,7 +91,7 @@ $black_15: rgba(0,0,0,0.15);
         [class^="type-"] {
             padding-bottom: 20px;
             opacity: .5;
-            &.currennt {
+            &.current {
                 opacity: 1;
             }
             &:not([class^="type-item"]) span {
@@ -107,10 +107,10 @@ $black_15: rgba(0,0,0,0.15);
                 //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
                 transform: translateY(80px);
             }
-            [class^="type-"]:not(.currennt) {
+            [class^="type-"]:not(.current) {
                 display: none;
             }
-            .currennt:not(.type-item) {
+            .current:not(.type-item) {
                 span {
                     display: block;
                 }

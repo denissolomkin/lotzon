@@ -4722,6 +4722,15 @@ input.comment-reply-btn {
 
 .comment-description {
   position: relative; }
+  .comment-description > a.get-full {
+    padding: 10px 0;
+    display: block;
+    min-width: 100%;
+    max-height: 125px;
+    overflow: hidden;
+    text-align: center; }
+    .comment-description > a.get-full img {
+      max-width: 100%; }
 
 @media (max-width: 479px) {
   #blog-post-view .comment-content {
@@ -5203,7 +5212,7 @@ input.comment-reply-btn {
   padding: 20px 0;
   border-radius: 2px;
   background: white;
-  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.5);
   z-index: 100; }
 
 .nm-friend {
@@ -10859,7 +10868,7 @@ footer.unvisible {
       .games-view .game-settings .settings-tabs > div {
         -webkit-transition: all .2s linear;
         transition: all .2s linear;
-        padding: 0 10px;
+        padding: 0 5px;
         width: 33.3333%;
         min-height: 100%;
         box-sizing: border-box;
@@ -10936,7 +10945,7 @@ footer.unvisible {
     -webkit-box-align: center;
     align-items: center; }
     .game-settings .render-list-container .game > form > div {
-      padding-right: 15px;
+      padding-right: 10px;
       min-width: 60px; }
     .game-settings .render-list-container .game > form .bet {
       min-width: 27%;
@@ -10971,6 +10980,9 @@ footer.unvisible {
   font-size: 13px;
   color: #474747;
   counter-reset: my-awesome-counter; }
+  .game-settings .players-list button {
+    font-family: handbookpro-regular;
+    font-weight: normal; }
   .game-settings .players-list .render-list {
     margin-bottom: 30px; }
   .game-settings .players-list .player {
@@ -11188,7 +11200,7 @@ footer.unvisible {
     #games-chance-view .prizes [class^="type-"] {
       padding-bottom: 20px;
       opacity: .5; }
-      #games-chance-view .prizes [class^="type-"].currennt {
+      #games-chance-view .prizes [class^="type-"].current {
         opacity: 1; }
       #games-chance-view .prizes [class^="type-"]:not([class^="type-item"]) span {
         display: inline; }
@@ -11198,11 +11210,11 @@ footer.unvisible {
       display: block;
       position: relative;
       transform: translateY(80px); }
-    #games-chance-view .prizes .win [class^="type-"]:not(.currennt) {
+    #games-chance-view .prizes .win [class^="type-"]:not(.current) {
       display: none; }
-    #games-chance-view .prizes .win .currennt:not(.type-item) span {
+    #games-chance-view .prizes .win .current:not(.type-item) span {
       display: block; }
-    #games-chance-view .prizes .win .currennt:not(.type-item) .item {
+    #games-chance-view .prizes .win .current:not(.type-item) .item {
       font-size: 105px;
       letter-spacing: -0.11em;
       text-indent: -0.11em;

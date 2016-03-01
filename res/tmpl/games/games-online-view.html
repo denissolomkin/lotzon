@@ -6,7 +6,7 @@
         <div class="description-block">
             <div class="game-fund">
                 <div class="title">{{i18n "title-games-prize-fund"}}</div>
-                <div class="money"><span>{{#if fund.MONEY}} {{fund.MONEY}} {{else}} 0 {{/if}}</span> <br> {{player 'getCurrency'}}</div>
+                <div class="money"><span>{{#if fund.MONEY}} {{ number (convertСurrency fund.MONEY "float") }} {{else}} 0 {{/if}}</span> <br> {{player 'getCurrency'}}</div>
                 <div class="points"><span>{{#if fund.POINT}} {{fund.POINT}} {{else}} 0 {{/if}}</span> <br> {{i18n "title-of-points"}}</div>
             </div>
             <div class="game-description">

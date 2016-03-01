@@ -151,7 +151,20 @@
             //console.log(key, object, count);
             return count;
         },
-
+        convertСurrency: function(number, to){
+            switch (to) {
+                case 'int':
+                    number = parseInt(number * Player.currency.coefficient);
+                    break;
+                case 'float':
+                    number = parseFloat( (number * Player.currency.coefficient).toFixed(2) ) ;
+                    break;
+                default:
+                    number = (number * Player.currency.coefficient).toFixed(2);
+                    break;
+            }
+            return number;
+        },
         getCurrency: function (currency, number) {
             switch (currency) {
                 case 'money':

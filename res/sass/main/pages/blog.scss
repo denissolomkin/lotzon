@@ -534,6 +534,18 @@ input.comment-reply-btn {
 
 .comment-description {
   position: relative;
+  > a.get-full{
+    // border: 1px solid red;
+    padding: 10px 0;
+    display: block;
+    min-width: 100%;
+    max-height: 125px;
+    overflow: hidden;
+    text-align: center;
+    img{
+      max-width: 100%;
+    }
+  }
 }
 // ---------------------------- //
 

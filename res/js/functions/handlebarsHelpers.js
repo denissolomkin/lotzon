@@ -157,6 +157,7 @@ $(function () {
             + '>' + count + '</span>';
         },
         'avatar': Player.getAvatar,
+        'convertСurrency': Player.convertСurrency,
         'number': Player.fineNumbers,
         'count': Player.getCount,
         'from': Livedate.fn.from,

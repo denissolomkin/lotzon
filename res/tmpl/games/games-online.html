@@ -12,7 +12,7 @@
                         <div class="game-fund">
                             <span class="fund_title">{{i18n "title-games-prize-fund"}}</span>
                             <div class="fund_points">{{ number (or fund.POINT 0) }} <span>{{i18n "title-of-points"}}</span></div>
-                            <div class="fund_money">{{ number (or fund.MONEY 0) }} <span>{{player "getCurrency"}}</span></div>
+                            <div class="fund_money">{{ number (or (convertСurrency fund.MONEY "float") 0) }} <span>{{player "getCurrency"}}</span></div>
                         </div>
                         <div class="players">{{ players }} {{i18n "title-games-players"}}</div>
                     </div>

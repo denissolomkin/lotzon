@@ -17,7 +17,7 @@
         {{/if}}
     </div>
 
-    <div class="players-number">{{getSplittedEl mode "-" "2"}} <i class="i-person"></i></div>
+    <div class="players-number">{{players.length}}/{{getSplittedEl mode "-" "2"}} <i class="i-person"></i></div>
 
     {{#if variation}}
     <div class="game-type">
@@ -27,7 +27,7 @@
     </div>
     {{/if}}
 
-    <div class="players">{{#each players}} {{this}} {{/each}}</div>
+    <div class="players">{{#each players}} {{this}}{{#if @last}}{{else}},{{/if}} {{/each}}</div>
 </form>
 
 </div>

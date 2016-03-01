@@ -11,7 +11,7 @@
                 {{#each mod}}
                 <div class="button">
                     <input type="radio" name="mode" id="{{key}}-{{this}}" class="required" value="{{key}}-{{this}}" />
-                    <label for="{{key}}-{{this}}">{{this}}</label>
+                    <label for="{{key}}-{{this}}">{{#if (eq key "MONEY")}}{{ number (convertСurrency this "float")}}{{else}}{{this}}{{/if}}</label>
                 </div>
                 {{/each}}
                 </div>

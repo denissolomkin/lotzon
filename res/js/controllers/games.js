@@ -74,7 +74,7 @@ var Games = {
         init: function() {
             Games.online.tabs();
             Games.online.hideSelectedButtons();
-            // show MoreDescription button if desc.height > 360px
+            // show MoreDescription-button if desc.height > 360px
             var desc = $(".game-description > div");
             var vis = desc.height() > 360 ? true : false;
 

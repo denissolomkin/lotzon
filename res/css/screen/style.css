@@ -434,7 +434,7 @@ html {
 #blog-post-view .message-form-wrapper button[type="submit"] {
   font-family: Handbook-bold; }
 
-.comment-description, .message-form-area {
+.comment-description {
   line-height: 1.5; }
 
 @media (max-width: 1200px) {

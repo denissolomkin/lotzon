@@ -268,7 +268,7 @@ $hb_regular: handbookpro-regular;
             > div {
                 -webkit-transition: all .2s linear;
                 transition: all .2s linear;
-                padding: 0 10px;
+                padding: 0 5px;
                 width: 33.3333%;
                 min-height: 100%;
                 box-sizing: border-box;
@@ -366,7 +366,7 @@ $hb_regular: handbookpro-regular;
                 -webkit-box-align: center;
                 align-items: center;
                 > div {
-                    padding-right: 15px;
+                    padding-right: 10px;
                     min-width: 60px;
                 }
                 .bet {
@@ -413,6 +413,10 @@ $hb_regular: handbookpro-regular;
         font-size: 13px;
         color: $color_gravel_approx;
         counter-reset: my-awesome-counter;
+        button{
+            font-family: $hb_regular;
+            font-weight: normal;
+        }
         .render-list {
             margin-bottom: 30px;
         }

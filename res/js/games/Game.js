@@ -250,12 +250,15 @@
         setPlayersDetailes: function(players) {
 
             D.log('Game.setPlayersDetailes', 'game');
+            // console.debug(">>>", players);
             $.each(players, function(index, value) {
+                
+                value.avatar = index > 0 ? Player.getAvatar(value.avatar, value.pid, 100) : "/res/css/img/preloader.gif" ;
 
                 $('.mx .players .player' + index).append(
                     '<div class="gm-pr">' +
                     '<div class="pr-ph-bk">' +
-                    '<div class="pr-ph" style="background-image: url(' + Player.getAvatar(value.avatar, value.pid, 100) + ')">' +
+                    '<div class="pr-ph" style="background-image: url(' + value.avatar + ')">' +
                     '<div class="mt"></div>' +
                     '<div class="wt"></div>' +
                     '<div class="pr-nm">' + value.name + '</div></div></div></div>');
@@ -308,7 +311,7 @@
                 for (var index in App.players) {
                     messages[index] =
                         (App.players[index].result > 0 ? 'Выигрыш' : 'Проигрыш') + '<br>' +
-                        (App.currency == 'MONEY' ? Player.formatCurrency(App.players[index].win, 1) : parseInt(App.players[index].win)) + ' ' +
+                        (App.currency == 'MONEY' ? Player.formatCurrency(App.players[index].win, 1) : parseFloat((App.players[index].win).toFixed(2))) + ' ' +
                         (App.currency == 'MONEY' ? Player.getCurrency() : 'баллов');
                 }
                 Game.drawMessages(messages);
@@ -361,6 +364,7 @@
             }
 
             for (index in messages) {
+                console.debug(">>",messages[index]);
                 playerMessage = document.querySelector('.mx .players .player' + index + ' .wt');
                 playerMessage.style.display = 'block';
                 playerMessage.innerHTML = messages[index];

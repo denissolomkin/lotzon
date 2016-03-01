@@ -17,8 +17,15 @@
                                 {{#if (eq this.t "item")}}
                                 <div class="">{{ this.n }}</div>
                                 {{else}}
-                                <div class="">{{ this.v }} <span>{{#if (eq this.t "money")}}{{player "getCurrency"}}{{else}}{{i18n "title-of-points"}}{{/if}}</span></div>
+                                <div class="">
+                                    {{#if (eq this.t "money")}}
+                                        {{ number (convertСurrency this.v "float") }} <span>{{player "getCurrency"}}</span>
+                                    {{else}}
+                                        {{ this.v }} <span> {{i18n "title-of-points"}} </span>
+                                    {{/if}}
+                                </div>
                                 {{/if}}
+
                                 {{/reverse}}
                             </div>
                             {{/if}}
