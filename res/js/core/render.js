@@ -393,7 +393,7 @@
 
         "inputHTML": function (options) {
 
-            console.log("Complete:", options);
+            D.log(["Complete:", options], 'render');
 
             var render = options.rendered = DOM.create(options.rendered),
                 node = options.node,
@@ -407,7 +407,7 @@
                 if ('nodeType' in render) {
 
                     if (options.lastItem) {
-                        var infiniteScrolling = render.querySelector('button.infinite-scrolling');
+                        var infiniteScrolling = render.querySelector('button[name="submit"]');
                         if (infiniteScrolling) {
                             infiniteScrolling.parentNode.removeChild(infiniteScrolling);
                         }
