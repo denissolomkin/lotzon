@@ -353,7 +353,9 @@ class LotteryController extends \AjaxController
         $player->setId($this->session->get(Player::IDENTITY)->getId())->fetch();
 
         $response = array(
-            "tickets"    => \TicketsModel::instance()->getUnplayedTickets($player->getId()),
+            "tickets" => array(
+                "filledTickets" => \TicketsModel::instance()->getUnplayedTickets($player->getId()),
+            ),
         );
 
         $this->ajaxResponseCode($response);
