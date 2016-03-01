@@ -130,9 +130,10 @@ class Index extends \SlimController\SlimController
             "birthday" => $playerObj->getBirthday(),
             "count"    => array(
                 "lotteries"     => $playerObj->getGamesPlayed(),
+                "friends" => \FriendsModel::instance()->getStatusCount($playerObj->getId(), 1),
                 "menu" => array(
                     "users" => array(
-                        "friends" => \FriendsModel::instance()->getStatusCount($playerObj->getId(), 1)
+                        "requests" => 1,
                     ),
                     "communication" => array(
                         "notifications" => array(
