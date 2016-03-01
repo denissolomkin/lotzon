@@ -4,15 +4,17 @@
 
         "init": function(init){
 
-            if('timeToLottery' in init && 'timeToLottery' in this){
+            if('timeToLottery' in init && 'timeToLottery' in this) {
                 Slider.countdown(this.timeToLottery);
                 Tickets.countdown(this.timeToLottery);
             }
 
+            if('filledTickets' in init){
+                Ticket.render();
+            }
+
             D.log('Tickets.init', 'func');
             Object.deepExtend(this, init);
-
-
 
         },
 
