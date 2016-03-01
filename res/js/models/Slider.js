@@ -71,7 +71,7 @@
 
                 } else {
 
-                    $.extend(Slider, data.res);
+                    $.extend(Slider, response.res);
                     Slider.init()
                         .load();
                 }
