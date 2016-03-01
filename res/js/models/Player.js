@@ -2,8 +2,8 @@
 
     Player = {
 
-        count   : {},
-        balance : {},
+        count: {},
+        balance: {},
         currency: {},
         language: {},
         favorite: [],
@@ -16,11 +16,17 @@
 
                 /* +/- */
                 if (init.hasOwnProperty('count')) {
-                    for (key in init.count) {
-                        if (init.count.hasOwnProperty(key)) {
-                            init.count[key] = this.prepareCount(key, init.count[key]);
-                        }
+
+                    if (Object.size(this.count)) {
+                        init.count = this.extendCount(init.count);
                     }
+                    /*
+                     for (key in init.count) {
+                     if (init.count.hasOwnProperty(key)) {
+                     init.count[key] = this.prepareCount(key, init.count[key]);
+                     }
+                     } */
+
                 }
 
                 if (init.hasOwnProperty('balance')) {
@@ -42,34 +48,123 @@
                 }
 
                 Object.deepExtend(this, init);
+                Player.renderCount(init.count);
 
-                if (init.hasOwnProperty('count')) {
-                    for (key in init.count) {
-                        if (this.count.hasOwnProperty(key)) {
+            }
 
-                            var holders = document.getElementsByClassName('count-' + key);
+            this.initPing();
 
-                            for (var i = 0; i < holders.length; i++) {
-                                var count = this.getCount(key);
-                                holders[i].innerHTML = count;
-                                if (count)
-                                    DOM.fadeIn(holders[i]);
-                                else
-                                    DOM.fadeOut(holders[i]);
-                            }
+            return this;
+        },
 
-                            if (key === 'notifications') {
-                                Comments.renderNotifications();
+        "extendCount": function (object, extendedCount, currentCount, keys) {
+
+            extendedCount = extendedCount || {};
+            currentCount = currentCount || this.count;
+
+            for (prop in object) {
+                if (object.hasOwnProperty(prop)) {
+                    for (count in currentCount) {
+                        if (currentCount.hasOwnProperty(count)) {
+                            if (count === prop) {
+                                if (typeof currentCount[count] === 'object') {
+
+                                    var key = keys && keys.slice() || [];
+                                    key.push(count);
+
+                                    console.error(object[prop], key);
+
+                                    this.extendCount(
+                                        object[prop],
+                                        extendedCount,
+                                        currentCount[count],
+                                        key
+                                    );
+
+                                } else {
+
+                                    var source = {},
+                                        value = object[count];
+
+                                    switch (value[0]) {
+                                        case '+':
+                                        case '-':
+                                            value = parseInt(currentCount[count]) + parseInt(value);
+                                            break;
+
+                                        default :
+                                            value = parseInt(value);
+                                    }
+
+                                    source[count] = value;
+
+                                    if (keys)
+                                        while (keys.length) {
+                                            var temp = {},
+                                                key = keys.pop();
+                                            temp[key] = source;
+                                            source = temp;
+                                            //console.log(source);
+                                        }
+
+                                    Object.deepExtend(extendedCount, source);
+                                    console.info(extendedCount);
+                                }
+
+                            } else if (typeof currentCount[count] === 'object') {
+
+                                var key = keys && keys.slice() || [],
+                                    temp = {};
+
+                                key.push(count);
+                                temp[prop] = object[prop];
+
+                                console.warn(object, extendedCount, currentCount, keys, temp, key, object);
+
+                                this.extendCount(
+                                    temp,
+                                    extendedCount,
+                                    currentCount[count],
+                                    key
+                                );
                             }
                         }
                     }
                 }
-
             }
-            
-            this.initPing();
 
-            return this;
+            return extendedCount;
+
+        },
+
+        "renderCount": function (counters) {
+
+            if (!counters)
+                return;
+
+            for (key in counters) {
+                if (counters.hasOwnProperty(key)) {
+
+                    var holders = document.getElementsByClassName('count-' + key);
+
+                    for (var i = 0; i < holders.length; i++) {
+                        var count = this.getCount(key);
+                        holders[i].innerHTML = count;
+                        if (count)
+                            DOM.fadeIn(holders[i]);
+                        else
+                            DOM.fadeOut(holders[i]);
+                    }
+
+                    if (key === 'notifications') {
+                        Comments.renderNotifications();
+                    }
+
+                    if (typeof counters[key] === 'object') {
+                        this.renderCount(counters[key]);
+                    }
+                }
+            }
         },
 
         "prepareCount": function (key, value, count) {
@@ -77,7 +172,13 @@
             if (typeof value === 'object') {
                 for (var prop in value) {
                     if (value.hasOwnProperty(prop)) {
-                        value[prop] = this.prepareCount(prop, value[prop], this.count[key] && this.count[key][prop] || 0);
+
+                        value[prop] = this.prepareCount(
+                            prop,
+                            value[prop],
+                            this.count[key] && this.count[key][prop] || 0
+                        );
+
                     }
                 }
             } else {
@@ -115,27 +216,37 @@
             return this;
         },
 
-        getCount: function (key, object) {
+        updateCount: function (key, value) {
+            return this.getCount(key, null, value);
+        },
+
+        getCount: function (key, object, newValue) {
 
             var count = 0;
-            object = object || Player.count;
+            object = object || this.count;
 
             if (!key) {
-                count = this.getCount(object);
+                count = this.getCount(object, null, newValue);
 
             } else if (typeof key === 'string') {
                 for (var prop in object) {
                     if (object.hasOwnProperty(prop)) {
                         if (prop === key) {
+                            /* for {prop:{}} where prop === key */
                             if (typeof object[prop] === 'object') {
-                                count = this.getCount(object[prop]);
+                                count = this.getCount(object[prop], null, newValue);
+                                //console.log(key, count);
                                 break;
                             } else {
+                                if (newValue)
+                                    object[prop] = newValue;
                                 count = parseInt(object[prop]);
+                                //console.log(key, count, newValue);
                                 break;
                             }
                         } else if (typeof object[prop] === 'object') {
-                            count += parseInt(Player.getCount(key, object[prop]));
+                            count += parseInt(this.getCount(key, object[prop], newValue));
+                            //console.log(key, prop, count);
                         }
                     }
                 }
@@ -143,7 +254,14 @@
             } else if (typeof key === 'object') {
                 for (var prop in key) {
                     if (key.hasOwnProperty(prop)) {
-                        count += (typeof key[prop] === 'object') ? Player.getCount(key[prop]) : parseInt(key[prop]);
+                        if (typeof key[prop] === 'object') {
+                            count += this.getCount(key[prop], null, newValue);
+                        } else {
+                            if (newValue)
+                                key[prop] = newValue;
+                            count += parseInt(key[prop]);
+                        }
+                        //console.log(key, count);
                     }
                 }
             }
@@ -151,13 +269,14 @@
             //console.log(key, object, count);
             return count;
         },
-        convertСurrency: function(number, to){
+
+        convertСurrency: function (number, to) {
             switch (to) {
                 case 'int':
                     number = parseInt(number * Player.currency.coefficient);
                     break;
                 case 'float':
-                    number = parseFloat( (number * Player.currency.coefficient).toFixed(2) ) ;
+                    number = parseFloat((number * Player.currency.coefficient).toFixed(2));
                     break;
                 default:
                     number = (number * Player.currency.coefficient).toFixed(2);
@@ -165,13 +284,14 @@
             }
             return number;
         },
+
         getCurrency: function (currency, number) {
             switch (currency) {
                 case 'money':
                 default:
                     currency = isNumeric(currency)
-                        ? (currency * Player.currency.coefficient).toFixed(2)
-                        : (typeof number !== 'undefined' ? (number * Player.currency.coefficient).toFixed(2) : Player.currency.iso);
+                        ? parseFloat((currency * Player.currency.coefficient).toFixed(2))
+                        : (typeof number !== 'undefined' ? parseFloat((number * Player.currency.coefficient).toFixed(2)) : Player.currency.iso);
                     break;
                 case 'points':
                     currency = typeof number !== 'undefined'
@@ -276,7 +396,7 @@
 
             Form.post({
                 action: '/ping',
-                data  : {forms: Content.forms4ping()}
+                data: {forms: Content.forms4ping()}
             })
         },
 
