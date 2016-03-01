@@ -221,8 +221,13 @@ class FriendsController extends \AjaxController
             "player" => array(
                 "count" => array(
                     "friends" => \FriendsModel::instance()->getStatusCount($playerId, 1),
-                )
-            )
+                    "menu" => array(
+                        "users" => array(
+                            "requests" => \FriendsModel::instance()->getStatusCount($playerId, 0, true),
+                        ),
+                    ),
+                ),
+            ),
         );
 
         $this->ajaxResponseCode($response);
@@ -310,8 +315,13 @@ class FriendsController extends \AjaxController
             "player" => array(
                 "count" => array(
                     "friends" => \FriendsModel::instance()->getStatusCount($playerId, 1),
-                )
-            )
+                    "menu" => array(
+                        "users" => array(
+                            "requests" => \FriendsModel::instance()->getStatusCount($playerId, 0, true),
+                        ),
+                    ),
+                ),
+            ),
         );
 
         $this->ajaxResponseCode($response);
