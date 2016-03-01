@@ -39,9 +39,9 @@ class FriendsModel extends Model
         return $this->getProcessor()->remove($playerId, $toPlayerId);
     }
 
-    public function getStatusCount($playerId, $status)
+    public function getStatusCount($playerId, $status, $onlyToPlayer = false)
     {
-        return $this->getProcessor()->getStatusCount($playerId, $status);
+        return $this->getProcessor()->getStatusCount($playerId, $status, $onlyToPlayer);
     }
 
     public function getStatus($playerId, $toPlayerId)
