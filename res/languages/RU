@@ -6,9 +6,12 @@
                 "message-lottery-ticket-yet": "ЕЩЕ",
                 "message-lottery-ticket-numbers": "НОМЕРОВ",
                 "message-lottery-ticket-favorite": "ЛЮБИМАЯ КОМБИНАЦИЯ",
-                "message-lottery-ticket-4": "для доступа к билету №4 вы должны принять участие в 100 розыгрышах",
-                "message-lottery-ticket-5": "для доступа к билету №5 у вас должно быть 10 рефералов",
-                "message-lottery-ticket-6": "для доступа к билету №6 у вас должно быть 50 рефералов",
+                "message-lottery-ticket-4": "для доступа к билету №4 вы должны принять участие еще в ",
+                "message-lottery-ticket-4-last": "розыгрышах",
+                "message-lottery-ticket-5": "для доступа к билету №5 у вас должно быть еще ",
+                "message-lottery-ticket-5-last": "рефералов",
+                "message-lottery-ticket-6": "для доступа к билету №6 у вас должно быть еще ",
+                "message-lottery-ticket-6-last": "рефералов",
                 "message-lottery-ticket-7": "доступа к билету №7 даётся только при наличии билета №8",
                 "message-lottery-ticket-8": "для доступа к золотому билету №8 вы должны его приобрести",
                 "title-lottery-ticket": "Билет",
@@ -28,6 +31,9 @@
                 "title-lottery-not-play": "Вы не принимали участия в розыгрыше",
                 "title-lottery-look-results": "СМОТРЕТЬ ВСЕ РЕЗУЛЬТАТЫ",
                 "title-lottery-ticket-unactive": "не активен",
+
+                "title-day-today": "Сегодня",
+                "title-day-yesterday": "Вчера",
 
                 "menu-blog": "Блог",
                 "menu-lottery": "Лотерея",
@@ -176,8 +182,8 @@
                 "title-reports-payments-status-denied": "Отказано",
                 "title-reports-payments-order-date": "Дата",
                 "title-reports-payments-order-status": "Статус",
-                "title-reports-payments-order-type":"Получения",
-                "title-reports-payments-order-prize":"Вывод",
+                "title-reports-payments-order-type":"Реквизиты",
+                "title-reports-payments-order-prize":"Приз",
 
 
                 "title-profile-name": "Имя",

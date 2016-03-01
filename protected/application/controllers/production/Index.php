@@ -244,7 +244,7 @@ class Index extends \SlimController\SlimController
             "timeToLottery" => LotterySettingsModel::instance()->loadSettings()->getNearestGame() + strtotime('00:00:00', time()) - time(),
             "selectedTab"   => null,
             "ticketConditions"  => array(
-                4 => 10,
+                4 => 100,
                 5 => 20,
                 6 => 30,
             ),

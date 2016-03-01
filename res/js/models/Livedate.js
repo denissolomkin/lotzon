@@ -41,8 +41,11 @@
                 date = Livedate.fn.now(date);
 
                 switch (true) {
-                    case ( moment.unix(date).diff(moment(), 'days') === -1 || moment.unix(date).diff(moment(), 'days') === -0) && format === 'DD.MM.YYYY':
-                        return moment.unix(date).calendar();
+                    case moment.unix(date).diff(moment(), 'days') === -1 && format === 'DD.MM.YYYY':
+                        return i18n('title-day-yesterday');
+                        break;
+                    case moment.unix(date).diff(moment(), 'days') === -0 && format === 'DD.MM.YYYY':
+                        return i18n('title-day-today');
                         break;
                     default:
                         return moment.unix(date).format(format);

@@ -322,6 +322,9 @@ $(function () {
         'or': function (v1, v2) {
             return v1 || v2;
         },
+        'diff': function (v1, v2) {
+            return parseFloat(v1) - parseFloat(v2);
+        },
 
         'getSmile': function (text) {
             for (var val in Comments.emotionsToServer) {
