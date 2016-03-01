@@ -16,12 +16,24 @@ class LotterySettings
     private   $_jackpot           = false;
     private   $_gameTimes         = array();
     private   $_gameSettings      = array();
+    protected $_gameIncrements    = array();
 
     public function __construct()
     {
         $this->_model = LotterySettingsModel::instance();
     }
 
+    public function setGameIncrements($inc)
+    {
+        $this->_gameIncrements = $inc;
+
+        return $this;
+    }
+
+    public function getGameIncrements()
+    {
+        return $this->_gameIncrements;
+    }
 
     public function setTotalWinSum($sum)
     {

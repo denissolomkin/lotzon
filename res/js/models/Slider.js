@@ -72,8 +72,7 @@
                 } else {
 
                     $.extend(Slider, response.res);
-                    Slider.init()
-                        .load();
+                    Slider.init();
                 }
 
             });

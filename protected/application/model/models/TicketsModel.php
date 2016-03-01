@@ -51,6 +51,8 @@ class TicketsModel extends Model
             case 1:
             case 2:
             case 3:
+                return true;
+                break;
             case 4:
                 $player = new Player();
                 $player->setId($playerId)->fetch();

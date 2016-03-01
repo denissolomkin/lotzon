@@ -23,7 +23,9 @@ function timeToRunLottery()
 	{
 		if($currentTime >= $game['StartTime'])
 		{
-            $gameSettings = $game;
+			$increments                 = $gameSettings->getGameIncrements();
+			$gameSettings               = $game;
+			$gameSettings['Increments'] = $increments;
 			$lotteryTime = strtotime(date("Y-m-d"))+$game['StartTime'];
 			$SQL = 'SELECT
 				Id,Ready
@@ -161,7 +163,7 @@ function ApplyLotteryCombination(&$comb)
 	unset($comb['fields']);
 }
 
-function SetLotteryCombination($comb, $simulation, $lastTicketId)
+function SetLotteryCombination($comb, $simulation, $lastTicketId, $increments)
 {
 	global $gameSettings;
 
@@ -206,21 +208,45 @@ function SetLotteryCombination($comb, $simulation, $lastTicketId)
 				AND ('.implode(' OR ', $where).')';
     $comb['WinnersCount'] = current(DB::Connect()->query($SQL)->fetch());
 
+	/**
+	 * Increments
+	 */
+	$increments_array = array();
+	for ($i=1; $i<=6; $i++) {
+		if (isset($increments[$i]['from'])&&isset($increments[$i]['to'])) {
+			$increments_array[$i] = rand($increments[$i]['from'], $increments[$i]['to']);
+		} else {
+			$increments_array[$i] = 0;
+		}
+	}
+	$increments_winners = ceil(array_sum($increments_array)/6);
+	$increments_players = ceil($increments_winners/0.967);
+
+	$Prizes     = LotterySettingsModel::instance()->loadSettings()->getPrizes();
+	$PrizesGold = LotterySettingsModel::instance()->loadSettings()->getGoldPrizes();
+
     if(!$simulation) {
 
         $SQL = "INSERT INTO Lotteries
-				(`Date`, Combination, LastTicketId, WinnersCount, MoneyTotal, PointsTotal, BallsTotal, %s)
+				(`Date`, Combination, LastTicketId, PlayersCount, PlayersCountIncr, WinnersCount, WinnersCountIncr, MoneyTotal, PointsTotal, Prizes, PrizesGold, BallsTotal, BallsTotalIncr, %s)
 			VALUES
-				(%d, '%s', %d, %d, %f, %d, '%s', 1, 1, 1, 1, 1, 1)";
+				(%d, '%s', %d, %d, %d, %d, %d, %f, %d, '%s', '%s', '%s', '%s', 1, 1, 1, 1, 1, 1)";
 
         $SQL = sprintf($SQL,	implode(',', $comb['fields']),
 			$gameSettings['lotteryTime'],
             serialize($Combination),
 			$lastTicketId,
+			$comb['PlayersTotal'],
+			$increments_players,
             $comb['WinnersCount'],
+			$increments_winners,
             $comb['MoneyTotal'],
             $comb['PointsTotal'],
-            serialize($comb['ballsArray']));
+			serialize($Prizes),
+			serialize($PrizesGold),
+            serialize($comb['ballsArray']),
+			serialize($increments_array)
+			);
 
         DB::Connect()->query($SQL);
         $comb['id']           = DB::Connect()->lastInsertId();
@@ -377,7 +403,7 @@ function GetLotteryCombination($ballsStart, $ballsRange, $rounds, $return, $orde
 	return $rountdsStats[$return];
 }
 
-function HoldLottery($ballsStart = 0, $ballsRange = 3, $rounds = 250, $return = 0, $orderBy = 'MoneyTotal', $simulation=false)
+function HoldLottery($ballsStart = 0, $ballsRange = 3, $rounds = 250, $increments, $return = 0, $orderBy = 'MoneyTotal', $simulation=false)
 {
 	$time = microtime(true);
     $lastTicketId = 0;
@@ -399,9 +425,10 @@ function HoldLottery($ballsStart = 0, $ballsRange = 3, $rounds = 250, $return = 
     }
 
 	$comb = GetLotteryCombination($ballsStart, $ballsRange, $rounds, $return, $orderBy, $lastTicketId);
-	$comb = SetLotteryCombination($comb, $simulation, $lastTicketId);
+	$comb = SetLotteryCombination($comb, $simulation, $lastTicketId, $increments);
     if($simulation) {print_r($comb);return;}
-    $filename = __DIR__.'/../lastLottery';
+    $filename     = __DIR__.'/../lastLottery';
+	$new_filename = __DIR__.'/../lastResult';
     try {
         file_put_contents($filename, json_encode(array(
             'i' => isset($comb['id']) ? $comb['id'] : 0,
@@ -413,6 +440,19 @@ function HoldLottery($ballsStart = 0, $ballsRange = 3, $rounds = 250, $return = 
             'b' => $comb['ballsArray']
         )));
         chmod($filename, fileperms($filename) | 128 + 16 + 2);
+
+		file_put_contents($new_filename, json_encode(
+			array(
+				'cache' => true,
+				'key'   => "lottery/history/" . (isset($comb['id']) ? $comb['id'] : 0),
+				'res'   => array(
+					'id'          => isset($comb['id']) ? $comb['id'] : 0,
+					'date'        => time(),
+					'combination' => $comb['Combination'],
+				),
+			)
+		));
+		chmod($new_filename, fileperms($new_filename) | 128 + 16 + 2);
     } catch (ErrorException $e){}
 	ApplyLotteryCombinationAndCheck($comb);
 

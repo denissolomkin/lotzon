@@ -320,4 +320,44 @@ class LotteryController extends \AjaxController
         return true;
     }
 
+    public function sliderAction()
+    {
+        if (!$this->request()->isAjax()) {
+            return false;
+        }
+
+        $this->authorizedOnly();
+
+        $response = array(
+            "res" => array(
+                "timer"   => \LotterySettingsModel::instance()->loadSettings()->getNearestGame() + strtotime('00:00:00', time()) - time(),
+                "lottery" => array(
+                    "id" => \LotteriesModel::instance()->getLastPublishedLottery()->getId(),
+                ),
+            ),
+        );
+
+        $this->ajaxResponseCode($response);
+        return true;
+    }
+
+    public function ticketsAction()
+    {
+        if (!$this->request()->isAjax()) {
+            return false;
+        }
+
+        $this->authorizedOnly();
+
+        $player = new Player;
+        $player->setId($this->session->get(Player::IDENTITY)->getId())->fetch();
+
+        $response = array(
+            "tickets"    => \TicketsModel::instance()->getUnplayedTickets($player->getId()),
+        );
+
+        $this->ajaxResponseCode($response);
+        return true;
+    }
+
 }

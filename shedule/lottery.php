@@ -22,7 +22,7 @@ if(timeToRunLottery()) {
             $comb['id'] = $gameSettings['lotteryId'];
             ApplyLotteryCombinationAndCheck($comb);
         } else {
-            HoldLottery(0, (is_array($gameSettings) ? $gameSettings['Balls'] : 43), (is_array($gameSettings) ? $gameSettings['Tries'] : 150));
+            HoldLottery(0, (is_array($gameSettings) ? $gameSettings['Balls'] : 43), (is_array($gameSettings) ? $gameSettings['Tries'] : 150), $gameSettings['Increments']);
         }
         if (file_exists($tmp = __DIR__ . '/lottery.lock.tmp'))
             unlink($tmp);

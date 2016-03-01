@@ -7,6 +7,9 @@ $sth = DB::Connect()->prepare($sql);
 $sth->execute();
 $lotteries = $sth->fetchAll();
 
+$Prizes     = LotterySettingsModel::instance()->loadSettings()->getPrizes();
+$PrizesGold = LotterySettingsModel::instance()->loadSettings()->getGoldPrizes();
+
 foreach ($lotteries as $lottery) {
     $lotteryId          = $lottery['Id'];
     $lotteryCombination = unserialize($lottery['Combination']);
@@ -86,10 +89,10 @@ foreach ($lotteries as $lottery) {
         $PlayersCountIncr = 1810; // 1750/0.967
         $WinnersCountIncr = 1750;
         $BallsTotalIncr = array(
-            1 => 200,
-            2 => 120,
-            3 => 30,
-            4 => 2,
+            1 => 5100,
+            2 => 3600,
+            3 => 45,
+            4 => 5,
             5 => 0,
             6 => 0,
         );
@@ -97,9 +100,9 @@ foreach ($lotteries as $lottery) {
         $PlayersCountIncr = 1035; // 1750/0.967
         $WinnersCountIncr = 1000;
         $BallsTotalIncr = array(
-            1 => 90,
-            2 => 40,
-            3 => 10,
+            1 => 3800,
+            2 => 1170,
+            3 => 29,
             4 => 1,
             5 => 0,
             6 => 0,
@@ -116,9 +119,6 @@ foreach ($lotteries as $lottery) {
             6 => 0,
         );
     }
-
-    $Prizes     = LotterySettingsModel::instance()->loadSettings()->getPrizes();
-    $PrizesGold = LotterySettingsModel::instance()->loadSettings()->getGoldPrizes();
 
     // Update lottery
     $sql = "UPDATE `Lotteries` SET `LastTicketId` = :LastTicketId,
