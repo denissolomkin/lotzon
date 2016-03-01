@@ -249,7 +249,6 @@
         showPreviewImage: function(e) {
             // e.preventDefault();
 
-
             var span = document.createElement('span');
             span.className = 'thumb';
             span.innerHTML = '<i class="i-x-slim"></i>';
@@ -276,7 +275,8 @@
                     e.uploadItem.completeCallback = function(succ, data, status) {
                         image.css({
                             'background': 'url(' + Config.tempFilestorage + '/' + data.imageName + ') center',
-                            'height': '55px'
+                            'height': '55px',
+                            'background-size': 'cover'
                         });
                         Comments.currentReview.image = data.imageName;
 
@@ -457,7 +457,10 @@
             for (var emotion in Comments.emotionsToServer) {
                 form.data.text = form.data.text.replaceAll(emotion, Comments.emotionsToServer[emotion]);
             }
+            
             form.data.text = form.data.text.replace(/(<br\/*>(\s*))+/ig, '\n');
+            form.data.text = form.data.text.replace(/&nbsp;/g, '');
+            
             return form;
 
         },

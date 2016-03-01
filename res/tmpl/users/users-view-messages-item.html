@@ -1,3 +1,4 @@
+<!-- user messages list -->
 <div id="users-{{#if (like (player 'id') user.id)}}{{recipient_id}}{{else}}{{user.id}}{{/if}}-messages-{{id}}" data-id="{{id}}" class="message">
 	<div class="message-top">
         <div class="message-img">
@@ -6,6 +7,11 @@
         <div class="message-name">{{user.name}}</div>
     </div>   
     <div class="message-text">
-        {{{text}}}
+        {{{getSmile text}}}
+        {{#if img}}
+        <a href="/filestorage/messages/{{this.img}}" class="get-full-picture" target="blank">
+            <img src="/filestorage/messages/600/{{this.img}}" alt="">
+        </a>
+        {{/if}}
     </div>
 </div>

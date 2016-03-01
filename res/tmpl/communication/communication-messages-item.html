@@ -1,18 +1,30 @@
-﻿<div id="communication-messages-{{id}}" data-id="{{id}}" class="message{{#if isUnread}} message-unread{{/if}}">
+﻿<!-- new message -->
+<div id="communication-messages-{{id}}" data-id="{{id}}" class="message{{#if isUnread}} message-unread{{/if}}">
     {{#if isUnread}}
-        <div class="mark-read"><div class="service-pop-up">{{i18n "title-mark-as-read"}}</div></div>
+    <div class="mark-read">
+        <div class="service-pop-up">{{i18n "title-mark-as-read"}}</div>
+    </div>
     {{/if}}
-    <a href="/users/{{user.id}}/messages">
+    <a href="/user/{{user.id}}">
         <div class="message-img">
-        <div class="service-pop-up">{{i18n "title-mark-online"}}</div>
-            <img src="{{avatar user.img user.id 50}}"
-                 class="loading"
-                 onload="this.style.background = 'none'"
-                 onerror="Player.getAvatar.call(this)">
+            <div class="service-pop-up">{{i18n "title-mark-online"}}</div>
+            <img src="{{avatar user.img user.id 50}}" class="loading" onload="this.style.background = 'none'" onerror="Player.getAvatar.call(this)">
         </div>
         <div class="message-name">{{user.name}}</div>
+    </a>
+    <a href="/users/{{user.id}}/messages">
         <div class="message-text">
-            {{{text}}}
+            {{#if img}}
+            <div>
+                <p style="background-image: url('/filestorage/messages/600/{{this.img}}'); background-size: cover; background-position: center;" class="get-full-picture">
+                </p>
+            </div>
+            {{/if}}
+            <div>
+                <p>
+                    {{{getSmile text}}}
+                </p>
+            </div>
         </div>
     </a>
     <hr>

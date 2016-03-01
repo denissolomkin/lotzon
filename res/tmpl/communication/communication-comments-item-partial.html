@@ -1,3 +1,4 @@
+<!-- comments -->
 <div class="comment-content"
      data-user-name="{{this.user.name}}"
      data-user-id="{{this.user.id}}"
@@ -23,14 +24,13 @@
     {{partial "communication-comments-view-like" this}}
     <div class="comment-description">
         <input class="comment-reply-btn" type='text'/>
+        <p>
         {{{getSmile this.text}}}
+        </p>
         {{#if this.img}}
-        <a href="/filestorage/reviews/{{this.img}}" class="get-full" target="blank">
+        <a href="/filestorage/reviews/{{this.img}}" class="get-full-picture" target="blank">
             <img src="/filestorage/reviews/600/{{this.img}}" alt="">
         </a>
         {{/if}}
-        <!-- <a href="/filestorage/reviews/600/{{this.img}}" class="get-full" target="blank">
-            <img src="http://new.lotzon.com/tpl/img/baners/2.png?1456331235079">
-        </a> -->
     </div>
 </div>
