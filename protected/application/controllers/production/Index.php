@@ -133,7 +133,7 @@ class Index extends \SlimController\SlimController
                 "friends" => \FriendsModel::instance()->getStatusCount($playerObj->getId(), 1),
                 "menu" => array(
                     "users" => array(
-                        "requests" => 1,
+                        "requests" => \FriendsModel::instance()->getStatusCount($playerObj->getId(), 0, true),
                     ),
                     "communication" => array(
                         "notifications" => array(

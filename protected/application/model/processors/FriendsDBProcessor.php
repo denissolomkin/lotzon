@@ -137,7 +137,7 @@ class FriendsDBProcessor implements IProcessor
         return true;
     }
 
-    public function getStatusCount($playerId, $status = 0)
+    public function getStatusCount($playerId, $status = 0, $onlyToPlayer = false)
     {
         $sql = "SELECT
                     count(*) as c
@@ -145,10 +145,15 @@ class FriendsDBProcessor implements IProcessor
                   `Friends`
                 WHERE
                 (
-                    `UserId` = :playerid
-                OR
                     `FriendId` = :playerid
-                )
+                ";
+        if (!$onlyToPlayer) {
+        $sql .= "
+                OR
+                    `UserId` = :playerid
+                ";
+        }
+        $sql .= ")
                 AND
                     `Status` = :status";
         try {
