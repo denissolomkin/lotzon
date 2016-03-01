@@ -324,9 +324,12 @@ div {
 }
 
 // MENU BUTTONS ------------------------- //
-
-
-
+// hide count in desctop
+.menu-btn.menu-btn-item{
+    >.count{
+        display: none;
+    }
+}
 .menu-btn-item {
     float: right;
     height: 100%;
