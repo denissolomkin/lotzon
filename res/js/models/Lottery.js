@@ -223,6 +223,7 @@
                             Cache.set(href, json, 'session');
 
                             Lottery.prepareTickets(Lottery.data.id);
+                            Lottery.update();
                             break;
                     }
                 };
@@ -295,6 +296,7 @@
         },
 
         runAnimation: function() {
+
             var randomInterval,
                 readyBalls = [],
                 counter = 400,
@@ -365,7 +367,7 @@
                     intervalAnimation = setInterval(animation, count);
                 }
 
-            }
+            };
     
 
             var intervalAnimation = setInterval(animation, counter);
