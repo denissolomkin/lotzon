@@ -1719,6 +1719,9 @@ div {
   .menu-balance-item:last-child {
     margin-bottom: 0; }
 
+.menu-btn.menu-btn-item > .count {
+  display: none; }
+
 .menu-btn-item {
   float: right;
   height: 100%;
@@ -9583,7 +9586,8 @@ div > .games-previews {
   overflow-y: hidden; }
   .games-previews .flex-box {
     font-family: handbookpro-regular;
-    padding: 0 20px; }
+    padding: 0 20px;
+    padding-bottom: 15px; }
     .games-previews .flex-box .fixr {
       margin-left: -55px;
       position: relative; }

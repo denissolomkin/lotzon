@@ -1,4 +1,9 @@
-
+// show count in mobile
+.menu-btn.menu-btn-item{
+    >.count{
+        display: initial;
+    }
+}
 .header-left {
     height: 40px;
 }
