@@ -187,7 +187,7 @@ class OrdersController extends \AjaxController
                 $number = $player->getYandexMoney();
                 break;
             default:
-                $this->ajaxResponseInternalError();
+                $this->ajaxResponseInternalError("WRONG_GATEWAY");
         }
 
 

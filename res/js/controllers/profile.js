@@ -16,13 +16,12 @@
                         startDate: new Date(Player.birthday * 1000),
                         autoUpdateInput: true
                         });
-                }
-                else {
+                } else {
                     $('input.datepicker').daterangepicker({
                         singleDatePicker: true,
                         autoUpdateInput: true
                     });
-                   $('input.datepicker').val('') ; 
+                    $('input.datepicker').val('');
                 }
                 
                 $(document).on('change', '.ae-personal-inf input.datepicker', Profile.do.checkCalendar);
@@ -38,11 +37,11 @@
 
                 $('input[type="tel"][name="billing[phone]"]').inputmasks(phoneMask);
                 $('input[type="tel"][name="billing[qiwi]"]').inputmasks(phoneMask);
-                $('input[type="text"][name="billing[yandexMoney]"]').inputmask({
+                $('input[type="text"][name="billing[yandex]"]').inputmask({
                     mask: '410019{7,10}',
                     placeholder: ''
                 });
-                $('input[type="text"][name="billing[webMoney]"]').inputmask('a999999999999');
+                $('input[type="text"][name="billing[webmoney]"]').inputmask('a999999999999');
 
             },
 
@@ -53,6 +52,7 @@
 
             convert: function() {
 
+                console.log('asdasdasdsa');
                 var $input_money = $(Profile.moneyConvert),
                     $calc_points = $(Profile.pointsConvert, $input_money.closest('form')),
                     input_money = Player.checkMoney($input_money.val()),
@@ -75,8 +75,8 @@
                 return true;
 
             },
+
             passwordRepeat: function() {
-                console.log("change");
                 if ($('.new-pass').val() != $('.repeat-pass').val()) {
                     $('.hidden-notice').css('display', 'block');
                 } else $('.hidden-notice').css('display', 'none');
@@ -273,42 +273,5 @@
         }
 
     };
-
-    /* ========================================================= */
-    //                        CABINET
-    /* ========================================================= */
-
-    var $balanceTab = $('.cabinet-balance-tab');
-    var $balanceMenu = $('.balance-menu');
-
-    $balanceTab.on('click', function(event) {
-
-        event.stopPropagation();
-
-        if ($balanceMenu.is(':hidden')) {
-            $balanceMenu.slideDown('fast', function() {
-                $balanceTab.addClass('active');
-            });
-        } else {
-            $balanceMenu.slideUp('fast', function() {
-                $balanceTab.removeClass('active');
-                $(this).css('display', '');
-            });
-        }
-
-    });
-
-    // REFERRALS ===================================== //
-    // Active Icon ------------------------ //
-    var $activeIcon = $('.r-active-icon');
-
-    $activeIcon.hover(function() {
-        $(this).parent().find('.r-active-inf').show();
-    }, function() {
-        $(this).parent().find('.r-active-inf').hide();
-    });
-    // ----------------------------------- //
-    // =============================================== //
-
 
 })();

@@ -36,22 +36,22 @@
                         </div>
                         <div class="cco-method clearfix">
                             <label>
-                                <input id="cco-ym" class="input-radio required" name="method" type="radio" value="yandexMoney"
-                                 {{#if (checkAll billing.yandexMoney)}} disabled{{/if}}>
+                                <input id="cco-ym" class="input-radio required" name="method" type="radio" value="yandex"
+                                 {{#if (checkAll billing.yandex)}} disabled{{/if}}>
                                 <label for="cco-ym" class="input-radio"></label>
 
                                 <div class="cco-method-name">{{i18n "title-billing-yandexmoney"}}</div>
-                                <div class="cco-method-value">{{billing.yandexMoney}}</div>
+                                <div class="cco-method-value">{{billing.yandex}}</div>
                             </label>
                         </div>
                         <div class="cco-method clearfix">
                             <label>
-                                <input id="cco-wm" class="input-radio required" name="method" type="radio" value="webMoney"
-                                {{^billing.webMoney}} disabled{{/billing.webMoney}}>
+                                <input id="cco-wm" class="input-radio required" name="method" type="radio" value="webmoney"
+                                {{^billing.webmoney}} disabled{{/billing.webmoney}}>
                                 <label for="cco-wm" class="input-radio"></label>
 
                                 <div class="cco-method-name">{{i18n "title-billing-webmoney"}}</div>
-                                <div class="cco-method-value">{{billing.webMoney}}</div>
+                                <div class="cco-method-value">{{billing.webmoney}}</div>
                             </label>
                         </div>
                         <div class="cco-method clearfix">

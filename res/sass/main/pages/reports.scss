@@ -211,34 +211,6 @@ border: none;
   }
 }
 
-.r-active-icon {
-  display: inline-block;
-  width: 15px;
-  height: 15px;
-  // background-image: url(img/sprite.png);
-  // background-position: -81px -54px;
-  position: relative;
-  top: 3px;
-  cursor: pointer;
-  &:before {
-    content: "NO";
-    display: inline-block;
-    color: #ed502f;
-  }
-}
-
-.r-item.online .r-active-icon {
-  width: 18px;
-  height: 15px;
-  // background-position: -192px -54px;
-  &:before {
-    content: "OK";
-    display: inline-block;
-    color: #407405;
-  }
-}
-
-
  .daterangepicker.dropdown-menu {
   top: 30px;
   right: 5px;

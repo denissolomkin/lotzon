@@ -157,8 +157,8 @@ class Index extends \SlimController\SlimController
             ),
             "currency" => CountriesModel::instance()->getCountry($this->country)->loadCurrency()->getSettings(),
             "billing"  => array(
-                "webMoney"    => $playerObj->getWebMoney(),
-                "yandexMoney" => $playerObj->getYandexMoney(),
+                "webmoney"    => $playerObj->getWebMoney(),
+                "yandex"      => $playerObj->getYandexMoney(),
                 "qiwi"        => $playerObj->getQiwi(),
                 "phone"       => $playerObj->getPhone()
             ),

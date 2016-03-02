@@ -397,6 +397,10 @@
             })
         },
 
+        getMoney: function(){
+            return parseFloat(this.balance.money);
+        },
+
         checkMoney: function (input_money) {
 
 //            input_money = input_money.replaceArray([',','б','Б','ю','Ю'], '.');
@@ -408,8 +412,8 @@
             if (!isNumeric(input_money))
                 input_money = parseFloat(input_money);
 
-            if (input_money > this.balance.money)
-                input_money = this.balance.money;
+            if (input_money > this.getMoney())
+                input_money = this.getMoney();
 
             if (!input_money)
                 input_money = null;

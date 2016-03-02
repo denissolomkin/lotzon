@@ -93,7 +93,7 @@
 
             /* form */
             $(document).on('submit', 'form:not(.render-list-form)', Form.do.submit);
-            $(document).on('change', 'form input[type="text"].required', Form.do.validate);
+            $(document).on('input', 'form input[type="text"].required', Form.do.validate);
             $(document).on('change', 'form input[type="radio"].required', Form.do.validate);
             $(document).on('change', 'form input[type="checkbox"].required', Form.do.validate);
             $(document).on('change', 'form textarea.required', Form.do.validate);
