@@ -178,7 +178,7 @@
                         .delay(1000)
                         .next().html(lotterySummary.default[i].matches || 0).spincrement({'thousandSeparator': ' '})
                         .next().html(
-                        '<span>' + Player.getCurrency(lotterySummary.default[i].currency, lotterySummary.default[i].sum) + '</span> ' +
+                        '<span>' + lotterySummary.default[i].sum + '</span> ' +
                         '<span>' + Player.getCurrency(lotterySummary.default[i].currency) + '</span>')
                         .find('span').first().spincrement({'thousandSeparator': ' '});
                 }
