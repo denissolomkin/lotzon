@@ -16,17 +16,7 @@
 
                 /* +/- */
                 if (init.hasOwnProperty('count')) {
-
-                    if (Object.size(this.count)) {
-                        init.count = this.extendCount(init.count);
-                    }
-                    /*
-                     for (key in init.count) {
-                     if (init.count.hasOwnProperty(key)) {
-                     init.count[key] = this.prepareCount(key, init.count[key]);
-                     }
-                     } */
-
+                    init.count = this.extendCount(init.count);
                 }
 
                 if (init.hasOwnProperty('balance')) {
@@ -48,7 +38,10 @@
                 }
 
                 Object.deepExtend(this, init);
-                Player.renderCount(init.count);
+
+                if (init.hasOwnProperty('count')) {
+                    Player.renderCount(init.count);
+                }
 
             }
 
@@ -58,6 +51,9 @@
         },
 
         "extendCount": function (object, extendedCount, currentCount, keys) {
+
+            if (!object || !Object.size(object))
+                return;
 
             extendedCount = extendedCount || {};
             currentCount = currentCount || this.count;
@@ -72,7 +68,7 @@
                                     var key = keys && keys.slice() || [];
                                     key.push(count);
 
-                                    console.error(object[prop], key);
+                                    //console.error(object[prop], key);
 
                                     this.extendCount(
                                         object[prop],
@@ -108,7 +104,7 @@
                                         }
 
                                     Object.deepExtend(extendedCount, source);
-                                    console.info(extendedCount);
+                                    //console.info(extendedCount);
                                 }
 
                             } else if (typeof currentCount[count] === 'object') {
@@ -119,7 +115,7 @@
                                 key.push(count);
                                 temp[prop] = object[prop];
 
-                                console.warn(object, extendedCount, currentCount, keys, temp, key, object);
+                                //console.warn(object, extendedCount, currentCount, keys, temp, key, object);
 
                                 this.extendCount(
                                     temp,
