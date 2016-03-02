@@ -2,6 +2,7 @@
 
 namespace controllers\production;
 use \Application, \SettingsModel, \Player, \EntityException, \LotteryTicket, \CountriesModel, \TicketsModel;
+use Ratchet\Wamp\Exception;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 Application::import(PATH_APPLICATION . 'model/entities/Player.php');
@@ -240,7 +241,10 @@ class LotteryController extends \AjaxController
         $player_country = $player->setId($this->session->get(Player::IDENTITY)->getId())->fetch()->getCountry();
 
         try {
-            $lottery     = \LotteriesModel::instance()->getLotteryDetails($lotteryId);
+            $lottery = \LotteriesModel::instance()->getLotteryDetails($lotteryId);
+            if ($lottery == array()) {
+                throw new \ModelException("LOTTERY_NOT_FOUND", 404);
+            }
             $prizes      = $lottery->getPrizes();
             $prizes_gold = $lottery->getPrizesGold();
             if (!isset($prizes[$player_country])) {
@@ -250,40 +254,42 @@ class LotteryController extends \AjaxController
                 $prizes      = $prizes[$player_country];
                 $prizes_gold = $prizes_gold[$player_country];
             }
-        } catch (\PDOException $e) {
+
+            $balls      = $lottery->getBallsTotal();
+            $balls_incr = $lottery->getBallsTotalIncr();
+
+            $response                                             = array(
+                'cache' => 'session',
+            );
+            $response['res']                                      = array(
+                "lottery" => array(
+                    $lotteryId => $lottery->exportTo('list'),
+                ),
+            );
+            $response['res']['lottery'][$lotteryId]['statistics'] = array(
+                "default" => array(),
+                "gold"    => array(),
+            );
+
+            foreach ($balls as $count => $matches) {
+                $response['res']['lottery'][$lotteryId]['statistics']["default"][$count] = array(
+                    'balls'    => $count,
+                    'currency' => $prizes[$count]['currency'],
+                    'sum'      => $prizes[$count]['sum'],
+                    'matches'  => $matches + $balls_incr[$count],
+                );
+                $response['res']['lottery'][$lotteryId]['statistics']["gold"][$count]    = array(
+                    'balls'    => $count,
+                    'currency' => $prizes_gold[$count]['currency'],
+                    'sum'      => $prizes_gold[$count]['sum'],
+                    'matches'  => 0,
+                );
+            }
+
+        } catch (\ModelException $e) {
             $this->ajaxResponseInternalError();
+
             return false;
-        }
-
-        $balls = $lottery->getBallsTotal();
-        $balls_incr = $lottery->getBallsTotalIncr();
-
-        $response = array(
-            'cache' =>  'session',
-        );
-        $response['res'] = array(
-            "lottery" => array(
-                $lotteryId => $lottery->exportTo('list'),
-            ),
-        );
-        $response['res']['lottery'][$lotteryId]['statistics'] = array(
-            "default" => array(),
-            "gold"    => array()
-        );
-
-        foreach ($balls as $count=>$matches) {
-            $response['res']['lottery'][$lotteryId]['statistics']["default"][$count] = array(
-                'balls'    => $count,
-                'currency' => $prizes[$count]['currency'],
-                'sum'      => $prizes[$count]['sum'],
-                'matches'  => $matches + $balls_incr[$count],
-            );
-            $response['res']['lottery'][$lotteryId]['statistics']["gold"][$count] = array(
-                'balls'    => $count,
-                'currency' => $prizes_gold[$count]['currency'],
-                'sum'      => $prizes_gold[$count]['sum'],
-                'matches'  => 0,
-            );
         }
 
         $this->ajaxResponseCode($response);
@@ -341,6 +347,12 @@ class LotteryController extends \AjaxController
         $player->setId($this->session->get(Player::IDENTITY)->getId())->fetch();
 
         $response = array(
+            "player" => array(
+                "balance"  => array(
+                    "points" => $player->getPoints(),
+                    "money"  => $player->getMoney(),
+                ),
+            ),
             "tickets" => array(
                 "lastLotteryId" => \LotteriesModel::instance()->getLastPublishedLottery()->getId(),
                 "timeToLottery" => \LotterySettingsModel::instance()->loadSettings()->getNearestGame() + strtotime('00:00:00', time()) - time(),
