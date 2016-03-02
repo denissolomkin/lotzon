@@ -178,17 +178,19 @@
                         .delay(1000)
                         .next().html(lotterySummary.default[i].matches || 0).spincrement({'thousandSeparator': ' '})
                         .next().html(
-                        '<span>' + lotterySummary.default[i].sum + '</span> ' +
+                        '<span>' + parseFloat(lotterySummary.default[i].sum.toFixed(2)) + '</span> ' +
                         '<span>' + Player.getCurrency(lotterySummary.default[i].currency) + '</span>')
                         .find('span').first().spincrement({'thousandSeparator': ' '});
                 }
 
                 $won.delay(2000).fadeIn(1000);
                 setTimeout(function() {
-                    for (var currency in lotterySummary.totalSum)
-                        $('span.' + currency, $won)
-                            .html(Player.getCurrency(currency, lotterySummary.totalSum[currency]))
-                            .spincrement({'thousandSeparator': ' '})
+                    for (var currency in lotterySummary.totalSum) {
+                        if(lotterySummary.totalSum.hasOwnProperty(currency))
+                            $('span.' + currency, $won)
+                                .html(parseFloat(lotterySummary.totalSum[currency].toFixed(2)))
+                                .spincrement({'thousandSeparator': ' '});
+                    }
                 }, 3000);
                $(window).off('scroll', summaryVisible); 
             
