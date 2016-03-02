@@ -54,19 +54,18 @@
             } else {
 
                 var node = document.getElementById('lottery-ticket-item'),
-                    tab = $(this).is('li')
-                        && $(this)
-                        || ($(Ticket.tabs).not('.done').not('.unavailable').length
-                        && $(Ticket.tabs).not('.done').not('.unavailable').first()
+                    tab = $(this).is('li') && (Tickets.selectedTab = 1 + $(this).index()) && $(this)
+                        || ($(Ticket.tabs).not('.done').not('.unavailable').length && $(Ticket.tabs).not('.done').not('.unavailable').first()
                         || ($(Ticket.tabs).not('.done').length ? $(Ticket.tabs).not('.done').first() : $(Ticket.tabs).first()));
 
                 if (!node || ($(this).is('li') && Ticket.isLoading()))
                     return;
 
                 $(Ticket.tabs).removeClass('active');
-                tab.addClass('active');
 
-                Tickets.selectedTab = (1 + tab.index());
+                Tickets.selectedTab = Tickets.selectedTab || (1 + tab.index());
+
+                $(Ticket.tabs).eq(Tickets.selectedTab - 1).addClass('active');
 
                 R.push({
                     href    : 'lottery-ticket-item',
