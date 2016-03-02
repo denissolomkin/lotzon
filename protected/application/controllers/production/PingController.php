@@ -228,6 +228,11 @@ class PingController extends \AjaxController
             }
         }
 
+        /**
+         * Friends
+         */
+        $counters['requests'] = \FriendsModel::instance()->getStatusCount($player->getId(), 0, true);
+
         $response['badges']          = $badges;
         $response['player']['count'] = $counters;
 
