@@ -680,7 +680,8 @@ class WebSocketController implements MessageComponentInterface
                       'res'  => array(
                           'money'  => $balance['Money'],
                           'points' => $balance['Points'],
-                          'audio'  => isset($gameConstructor) ? $gameConstructor->getAudio() : null
+                          'audio'  => isset($gameConstructor) ? $gameConstructor->getAudio() : null,
+                          'key'    => isset($gameConstructor) ? $gameConstructor->getKey() : null
                       ))));
 
             if ($gamePlayer->getApp('Uid')) {
