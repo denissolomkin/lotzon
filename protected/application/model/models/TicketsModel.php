@@ -76,6 +76,10 @@ class TicketsModel extends Model
                 if ($player->getGoldTicket() > 0) {
                     return true;
                 }
+                $tickets = $this->getProcessor()->getUnplayedTickets($playerId);
+                if (isset($tickets[8])) {
+                    return true;
+                }
                 break;
             case 8:
                 $player = new Player();
