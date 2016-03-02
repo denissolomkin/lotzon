@@ -2041,7 +2041,7 @@ header .owl-theme .owl-controls .owl-page span {
   content: '\e811'; }
 
 /* '' */
-.i-tw-rectangle:before {
+.i-Twitter:before {
   content: '\e812'; }
 
 /* '' */
@@ -2069,7 +2069,7 @@ header .owl-theme .owl-controls .owl-page span {
   content: '\e818'; }
 
 /* '' */
-.i-inst-rectangle:before {
+.i-Instagram:before {
   content: '\e819'; }
 
 /* '' */
@@ -2145,19 +2145,19 @@ header .owl-theme .owl-controls .owl-page span {
   content: '\e82b'; }
 
 /* '' */
-.i-fb-rectangle:before {
+.i-Facebook:before {
   content: '\e82c'; }
 
 /* '' */
-.i-ok-rectangle:before {
+.i-Odnoklassniki:before {
   content: '\e82d'; }
 
 /* '' */
-.i-vk-rectangle:before {
+.i-Vkontakte:before {
   content: '\e82e'; }
 
 /* '' */
-.i-g_plus-rectangle:before {
+.i-Google:before {
   content: '\e82f'; }
 
 /* '' */
@@ -2165,6 +2165,10 @@ header .owl-theme .owl-controls .owl-page span {
   content: '\e830'; }
 
 /* '' */
+.i-photo:before {
+  content: '\e831'; }
+
+/* '' */
 .fa {
   display: inline-block;
   font: normal normal normal 14px/1 FontAwesome;
@@ -5648,7 +5652,9 @@ input.comment-reply-btn {
   padding-left: 20px;
   font-size: 14px;
   background: none;
-  font-family: "handbookpro-regular"; }
+  font-family: "handbookpro-regular";
+  width: 18px;
+  height: 15px; }
   .comment-like:hover {
     background: none;
     color: #000; }
@@ -8131,17 +8137,17 @@ form.loading > * {
     left: 0;
     width: 30px;
     height: 34px; }
-  .ae-social-item.i-fb-rectangle:before {
+  .ae-social-item.i-Facebook:before {
     color: #3c5a96; }
-  .ae-social-item.i-tw-rectangle:before {
+  .ae-social-item.i-Twitter:before {
     color: #d8d8d8; }
-  .ae-social-item.i-g_plus-rectangle:before {
+  .ae-social-item.i-Google:before {
     color: #bd4c3a; }
-  .ae-social-item.i-inst-rectangle:before {
+  .ae-social-item.i-Instagram:before {
     color: #417398; }
-  .ae-social-item.i-vk-rectangle:before {
+  .ae-social-item.i-Vkontakte:before {
     color: #537599; }
-  .ae-social-item.i-ok-rectangle:before {
+  .ae-social-item.i-Odnoklassniki:before {
     color: #e0a53f; }
 
 .ae-personal-inf .text-notice {
