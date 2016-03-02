@@ -449,6 +449,7 @@ function HoldLottery($ballsStart = 0, $ballsRange = 3, $rounds = 250, $increment
 					'id'          => isset($comb['id']) ? $comb['id'] : 0,
 					'date'        => time(),
 					'combination' => $comb['Combination'],
+					'type'        => "all",
 				),
 			)
 		));

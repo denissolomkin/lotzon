@@ -35,6 +35,7 @@ class Blogs extends PrivateArea
         $page = $this->request()->get('page', 1);
 
         $list      = BlogsModel::instance()->getList($lang, self::$PER_PAGE, NULL, NULL, NULL, $page == 1 ? 0 : self::$PER_PAGE * $page - self::$PER_PAGE);
+        $allList   = BlogsModel::instance()->getList($lang, NULL, NULL, NULL, NULL);
         $rowsCount = BlogsModel::instance()->getCount($lang);
 
         $pager = array(
@@ -50,6 +51,7 @@ class Blogs extends PrivateArea
             'layout'     => 'admin/layout.php',
             'activeMenu' => $this->activeMenu,
             'list'       => $list,
+            'allList'    => $allList,
             'pageLang'   => $lang,
             'pager'      => $pager,
         ));
@@ -77,11 +79,12 @@ class Blogs extends PrivateArea
                 'data'    => array(),
             );
 
-            $id     = $this->request()->post('id', false);
-            $title  = $this->request()->post('title');
-            $img    = $this->request()->post('img');
-            $text   = $this->request()->post('text');
-            $enable = $this->request()->post('enable', 'false');
+            $id      = $this->request()->post('id', false);
+            $title   = $this->request()->post('title');
+            $img     = $this->request()->post('img');
+            $text    = $this->request()->post('text');
+            $enable  = $this->request()->post('enable', 'false');
+            $similar = $this->request()->post('similar', array());
 
             if ($enable=='true') {
                 $enable = 1;
@@ -106,6 +109,11 @@ class Blogs extends PrivateArea
                     $blogObj->update();
                 } else {
                     $blogObj->create();
+                }
+
+                \BlogsModel::instance()->removeSimilars($blogObj->getId());
+                foreach ($similar as $similarBlogId) {
+                    \BlogsModel::instance()->addSimilar($blogObj->getId(), $similarBlogId);
                 }
 
             } catch (EntityException $e) {

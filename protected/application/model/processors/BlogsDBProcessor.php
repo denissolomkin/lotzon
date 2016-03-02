@@ -49,10 +49,16 @@ class BlogsDBProcessor implements IProcessor
 
     public function delete(Entity $blog)
     {
-        $sql = "DELETE FROM `Blog` WHERE `Id` = :id";
+        $sql  = "DELETE FROM `Blog` WHERE `Id` = :id";
+        $sql2 = "DELETE FROM `BlogSimilar` WHERE `BlogId` = :id OR `SimilarBlogId` = :id";
 
         try {
             $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':id' => $blog->getId()
+            ));
+
+            $sth = DB::Connect()->prepare($sql2);
             $sth->execute(array(
                 ':id' => $blog->getId()
             ));
@@ -125,6 +131,39 @@ class BlogsDBProcessor implements IProcessor
         }
 
         return $blogs;
+    }
+
+    public function addSimilar($blogId, $similarId)
+    {
+        $sql = "INSERT INTO `BlogSimilar` (`BlogId`, `SimilarBlogId`) VALUES (:blogid, :similarid)";
+
+        try {
+            $sth = DB::Connect()->prepare($sql)->execute(array(
+                ':blogid'    => $blogId,
+                ':similarid' => $similarId,
+            ));
+        } catch (PDOExeption $e) {
+            throw new ModelException("Unable to proccess storage query", 500);
+        }
+
+        return true;
+    }
+
+    public function removeSimilars($blogId)
+    {
+        $sql = "DELETE FROM `BlogSimilar` WHERE `BlogId` = :id";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':id' => $blogId
+            ));
+
+        } catch (PDOExeption $e) {
+            throw new ModelException("Unable to process delete query", 500);
+        }
+
+        return true;
     }
 
     public function getSimilarList($blogId, $lang, $count, $beforeId = NULL, $afterId = NULL, $enable = 1)
