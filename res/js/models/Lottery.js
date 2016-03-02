@@ -221,8 +221,17 @@
                             console.error('prepareData: ', Lottery.data);
 
                             /* todo adding to lottery-history all & mine */
-                            json.type = 'mine';
-                            Cache.set(href, json, 'session');
+                            Cache.set(
+                                '/lottery/history/' + Lottery.data.id,
+                                Object.deepExtend({type:'mine'},json),
+                                'session'
+                            );
+
+                            console.error(
+                                '/lottery/history/' + Lottery.data.id,
+                                Object.deepExtend({type:'mine'},json),
+                                'session'
+                            );
 
                             Lottery.prepareTickets(Lottery.data.id);
                             Lottery.update();
@@ -347,21 +356,18 @@
 
                 if (!$('.g-oc_li.unfilled').length) {
 
-                    if ($("#lottery-process li.won_ball").length) {
-
                         setTimeout(function () {
 
-                            $("#lottery-process").addClass('lottery-won');
+                            $(".goc_li-sh, .goc_li-sh2").css('display', 'none');
 
-                            $('#lottery-process .ghd-won, #lottery-process .won').css({
-                                'display': 'block'
-                            });
+                            if ($("#lottery-process li.won_ball").length) {
+                                $("#lottery-process").addClass('lottery-won');
+                                $('#lottery-process .won').css('display', 'block');
+                            } else {
+                                $('#lottery-process .ghd-text, #lottery-process .container-center').css('display', 'block');
+                            }
 
-                            $(".goc_li-sh, .goc_li-sh2").css({'display': 'none'});
-
-                        }, 2000)
-
-                    }
+                        }, 2000);
 
                     clearInterval(intervalAnimation);
                 }
