@@ -1,0 +1,4 @@
+#!/bin/bash
+BASEDIR=`dirname $0`
+DAYS=1
+find $BASEDIR/../filestorage/temp -type f -mtime +$DAYS | grep -v gitignore | xargs rm -f
