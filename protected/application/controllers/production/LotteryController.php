@@ -329,27 +329,6 @@ class LotteryController extends \AjaxController
         return true;
     }
 
-    public function sliderAction()
-    {
-        if (!$this->request()->isAjax()) {
-            return false;
-        }
-
-        $this->authorizedOnly();
-
-        $response = array(
-            "res" => array(
-                "timer"   => \LotterySettingsModel::instance()->loadSettings()->getNearestGame() + strtotime('00:00:00', time()) - time(),
-                "lottery" => array(
-                    "id" => \LotteriesModel::instance()->getLastPublishedLottery()->getId(),
-                ),
-            ),
-        );
-
-        $this->ajaxResponseCode($response);
-        return true;
-    }
-
     public function ticketsAction()
     {
         if (!$this->request()->isAjax()) {
@@ -363,6 +342,8 @@ class LotteryController extends \AjaxController
 
         $response = array(
             "tickets" => array(
+                "lastLotteryId" => \LotteriesModel::instance()->getLastPublishedLottery()->getId(),
+                "timeToLottery" => \LotterySettingsModel::instance()->loadSettings()->getNearestGame() + strtotime('00:00:00', time()) - time(),
                 "filledTickets" => \TicketsModel::instance()->getUnplayedTickets($player->getId()),
             ),
         );

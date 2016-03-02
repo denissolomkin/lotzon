@@ -8,7 +8,6 @@
             Object.deepExtend(this, init);
 
             R.push({
-                'box': '.inf-slider',
                 'template': 'menu-slider',
                 'json': this
             });
@@ -45,7 +44,7 @@
 
         countdown: function (timer) {
 
-            D.log('Slider.countdown', 'func');
+            D.log('Slider.countdown: '+timer, 'func');
             $("#countdownHolder")
                 .countdown('destroy')
                 .countdown({
@@ -54,28 +53,6 @@
                 onExpiry: Slider.timeout
             });
 
-        },
-
-        "update": function () {
-
-            D.log('Slider.update', 'func');
-            var url = '/lottery/slider';
-
-            $.getJSON(url, function (response) {
-
-                if (response.res.id == Slider.lottery.id) {
-
-                    setTimeout(function () {
-                        Slider.update()
-                    }, 3000)
-
-                } else {
-
-                    $.extend(Slider, response.res);
-                    Slider.init();
-                }
-
-            });
         },
 
         timeout: function () {

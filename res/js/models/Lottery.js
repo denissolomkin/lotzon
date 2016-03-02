@@ -10,13 +10,12 @@
             Carousel.initOwl();
             Ticket.render();
             Tickets.countdown();
-            // R.push('/lottery/history');
+
         },
 
         update: function() {
 
             Tickets.update(); // отрисует новые билеты
-            Slider.update(); // отрисует новый слайдер и баланс
 
         },
 

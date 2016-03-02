@@ -5,16 +5,16 @@
         "init": function(init){
 
             if('timeToLottery' in init && 'timeToLottery' in this) {
-                Slider.countdown(this.timeToLottery);
-                Tickets.countdown(this.timeToLottery);
+                Slider.countdown(init.timeToLottery);
+                Tickets.countdown(init.timeToLottery);
+            }
+
+            if('filledTickets' in init && 'filledTickets' in this) {
+                Ticket.render();
             }
 
             D.log('Tickets.init', 'func');
             Object.deepExtend(this, init);
-
-/*            if ('filledTickets' in init) {
-                Ticket.render();
-            }*/
 
         },
 
@@ -66,7 +66,7 @@
         },
 
         "update": function () {
-            Form.send('/lottery/tickets');
+            R.json('/lottery/tickets');
         },
 
         "renderBalls": function () {

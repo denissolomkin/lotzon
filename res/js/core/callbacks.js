@@ -174,6 +174,7 @@
 
             "lottery": Lottery.init,
             "lottery-view": Lottery.view,
+            "lottery-tickets": Ticket.render,
             "lottery-ticket-item": Ticket.activate,
             "lottery-ticket-tabs": Ticket.switch,
 
