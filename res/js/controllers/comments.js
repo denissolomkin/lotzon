@@ -445,7 +445,42 @@
 
             return form;
         },
+        getFullPicture: function(event){
+            event.preventDefault();
 
+            var co = {
+                'url': this.getAttribute('data-href') || '',
+                'element': document.querySelector("#FullPictureWrapper") || '',
+                'html': '<div class="inner">\
+                            <i class="i-x-slim" onclick="this.parentNode.parentNode.removeAttribute(\'class\')" ></i>\
+                            <div class="content"></div>\
+                         </div>'
+            }
+
+            if(!co.url) return;
+
+            if(!co.element) {
+                co.element = document.createElement('div');
+                co.element.id = 'FullPictureWrapper';
+                co.element.innerHTML = co.html;
+                document.body.appendChild(co.element);
+            }else{
+                co.element.removeAttribute("class");
+            }
+
+            co.img = document.createElement('img');
+            co.img.src =  co.url;
+
+            co.element.querySelector('.content').innerHTML = '';
+            co.element.querySelector('.content').appendChild(co.img);
+
+            co.img.onload = function(){
+                co.element.setAttribute("class", "load");
+            }
+
+            console.error(co);
+            return false;
+        },
         smilePost: function(form) {
             if ($('.smiles').hasClass('hidden')) {
 
@@ -464,7 +499,6 @@
             return form;
 
         },
-
         submit: function(form) {
             Comments.smilePost(form);
             Comments.addImage(form);

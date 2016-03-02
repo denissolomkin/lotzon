@@ -592,7 +592,8 @@ div.comment-reply-btn {
 
 @media all and (max-width: 1199px) {
   .games-previews .flex-box {
-    padding: 5px 20px; }
+    padding: 5px 20px;
+    padding-bottom: 15px; }
     .games-previews .flex-box .fixr {
       margin-left: -5px; }
       .games-previews .flex-box .fixr a {
