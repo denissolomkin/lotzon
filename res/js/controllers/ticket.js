@@ -34,10 +34,11 @@
 
             } else {
 
-                R.push({
-                    href: 'lottery-ticket-tabs',
-                    json: Tickets
-                });
+                if(document.getElementById('lottery-ticket-tabs'))
+                    R.push({
+                        href: 'lottery-ticket-tabs',
+                        json: Tickets
+                    });
 
             }
 
