@@ -94,8 +94,8 @@
             if(!node)
                 return;
 
-            if ('nodeType' in node){
-                add && node.classList.add(css) || node.classList.remove(css);
+            if (typeof node === 'object' && 'nodeType' in node){
+                add ? node.classList.add(css) : node.classList.remove(css);
             } else if (Object.size(node))
                 for (var el in node)
                     f(css, node[el], add);
@@ -106,7 +106,7 @@
             this.class(css, node, true);
         },
 
-        removeClass: function f(css, node) {
+        removeClass: function (css, node) {
             this.class(css, node);
         },
 

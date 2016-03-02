@@ -54,18 +54,41 @@
             } else {
 
                 var node = document.getElementById('lottery-ticket-item'),
-                    tab = $(this).is('li') && (Tickets.selectedTab = 1 + $(this).index()) && $(this)
-                        || ($(Ticket.tabs).not('.done').not('.unavailable').length && $(Ticket.tabs).not('.done').not('.unavailable').first()
-                        || ($(Ticket.tabs).not('.done').length ? $(Ticket.tabs).not('.done').first() : $(Ticket.tabs).first()));
+                    isLi = ('nodeType' in this) && this.tagName == 'LI',
+                    isReselect = !isLi
+                        && Tickets.selectedTab
+                        && (document.querySelectorAll(Ticket.tabs + ':not(.done)').length && document.querySelectorAll(Ticket.tabs)[Tickets.selectedTab - 1].classList.contains('done')),
+                    tabs = [];
 
-                if (!node || ($(this).is('li') && Ticket.isLoading()))
+                switch (true){
+
+                    /* фактическое нажатие */
+                    case isLi:
+                        Tickets.selectedTab = 1 + Array.prototype.indexOf.call(this.parentNode.children, this);
+                        break;
+
+                    /* еще не назначено, либо выбранный уже заполнен, но есть еще незаполненные*/
+                    case !Tickets.selectedTab:
+                    case isReselect:
+
+                        switch (true){
+                            case (tabs = document.querySelectorAll(Ticket.tabs + ':not(.done):not(.unavailable)')) && tabs.length  !== 0:
+                                break;
+                            case (tabs = document.querySelectorAll(Ticket.tabs + ':not(.done)')) && tabs.length !== 0:
+                                break;
+                            case (tabs = document.querySelectorAll(Ticket.tabs)) && tabs.length !== 0:
+                                break;
+                        }
+
+                        Tickets.selectedTab = 1 + Array.prototype.indexOf.call(tabs[0].parentNode.children, tabs[0]);
+                        break;
+                }
+
+                if (!node || (isLi && Ticket.isLoading()))
                     return;
 
-                $(Ticket.tabs).removeClass('active');
-
-                Tickets.selectedTab = Tickets.selectedTab || (1 + tab.index());
-
-                $(Ticket.tabs).eq(Tickets.selectedTab - 1).addClass('active');
+                DOM.removeClass('active', document.querySelectorAll(Ticket.tabs));
+                DOM.addClass('active', document.querySelectorAll(Ticket.tabs)[Tickets.selectedTab - 1]);
 
                 R.push({
                     href    : 'lottery-ticket-item',
