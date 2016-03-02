@@ -13,6 +13,10 @@
                 {{i18n "title-of-points"}}
             {{/if}}
         </div>
-        <div>{{balance}}</div>
+        <div>{{balance}}
+            {{#if (eq currency "money") }}
+            {{player "getCurrency"}}
+            {{/if}}
+        </div>
     </div>
 </div>
