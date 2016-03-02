@@ -136,9 +136,11 @@
                         sum: sum
                     };
 
-                    if (!lotterySummary.totalSum[ballData.currency])
-                        lotterySummary.totalSum[ballData.currency] = 0;
-                    lotterySummary.totalSum[ballData.currency] += sum;
+                    if(ballData.currency) {
+                        if (!lotterySummary.totalSum[ballData.currency])
+                            lotterySummary.totalSum[ballData.currency] = 0;
+                        lotterySummary.totalSum[ballData.currency] += sum;
+                    }
 
                 }
             }
@@ -362,9 +364,9 @@
                             if ($("#lottery-process li.won_ball").length) {
                                 $("#lottery-process").addClass('lottery-won');
                                 $('#lottery-process .won').css('display', 'block');
-                            } else {
-                                $('#lottery-process .ghd-text, #lottery-process .container-center').css('display', 'block');
                             }
+
+                            $('#lottery-process .ghd-text, #lottery-process .container-center').css('display', 'block');
 
                         }, 2000);
 
