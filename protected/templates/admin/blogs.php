@@ -53,6 +53,13 @@
                         <td class="fulltext" style="display:none"><?=$blog->getText()?></td>
                         <td class="img" style="display:none"><?=$blog->getImg()?></td>
                         <td class="enable" style="display:none"><input type="checkbox" name="<?=$blog->getId()?>_enable" value="" <?=($blog->getEnable() ? 'checked="true"' : '')?>">></td>
+                        <td class="similar" style="display:none">
+                            <select name="<?=$blog->getId()?>_similar[]" size="7" multiple="multiple" class="form-control-banner input-sm" value="" placeholder="ещё статьи" value="" />
+                            <? foreach (\BlogsModel::instance()->getSimilarList($blog->getId(), $pageLang, NULL) as $blog) {?>
+                                <option selected value="<?=$blog->getId()?>"><?=$blog->getTitle()?></option>
+                            <? } ?>
+                            </select>
+                        </td>
                     </tr>
                 <? } ?>
             </tbody>
@@ -86,6 +93,16 @@
                 <label class="control-label">Img</label>
                 <img src="/theme/admin/img/photo-icon-plus.png" data-image="" class="upload" id="image" alt="click to upload" style="cursor:pointer;">
             </div>
+
+            <div class="form-group">
+                <label class="control-label">Привязанные блоги</label>
+                    <select name="similar[]" size="5" multiple="multiple" class="form-control-banner input-sm" value="" placeholder="ещё статьи" />
+                    <? foreach (array_reverse($allList) as $blog) {?>
+                        <option value="<?=$blog->getId()?>">[<?=date('d.m.Y', $blog->getDateCreated())?>] <?=$blog->getTitle()?></option>
+                    <? } ?>
+                    </select>
+            </div>
+
             <div class="form-group">
                 <label class="control-label">Текст</label>
                 <div id="text"></div>          
@@ -114,6 +131,7 @@
         text : '',
         img : '',
         enable : '',
+        similar: []
     };
 
     $(document).ready(function() {
@@ -128,6 +146,7 @@
 
         currentEdit.text = text;
         currentEdit.enable = $('input[name="enable"]').prop("checked");
+        currentEdit.similar = $('select[name="similar[]"]').val();
 
         $("#errorForm").hide();
         $(this).find('.glyphicon').remove();
@@ -195,11 +214,14 @@
     }
 
     $('.edit-text').on('click', function () {
-        currentEdit.id     = $(this).parents('tr').find('td.id').text();
-        currentEdit.text   = $(this).parents('tr').find('td.fulltext').html();
-        currentEdit.title  = $(this).parents('tr').find('td.title').text();
-        currentEdit.img    = $(this).parents('tr').find('td.img').text();
-        currentEdit.enable = $('input[name="'+currentEdit.id+'_enable"]').prop("checked");
+        currentEdit.id      = $(this).parents('tr').find('td.id').text();
+        currentEdit.text    = $(this).parents('tr').find('td.fulltext').html();
+        currentEdit.title   = $(this).parents('tr').find('td.title').text();
+        currentEdit.img     = $(this).parents('tr').find('td.img').text();
+        currentEdit.enable  = $('input[name="'+currentEdit.id+'_enable"]').prop("checked");
+        currentEdit.similar = $(this).parents('tr').find('td.similar select').val();
+
+        $('#addForm').find('select[name="similar[]"]').val(currentEdit.similar);
 
         $('#addForm').find('input[name="title"]').val(currentEdit.title);
         $('#text').code(currentEdit.text);
