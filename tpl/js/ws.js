@@ -229,27 +229,31 @@ function quitCallback() {
     /*
      *  обновление данных
      */
-function updateCallback(receiveData)
-{
+function updateCallback(receiveData) {
 
     // $(".ngm-bk .ngm-rls-bk .rls-l .rls-bt-bk .r .online span").text(receiveData.res.online);
     // $(".ngm-bk .ngm-rls-bk .rls-l .rls-bt-bk .r .all span").text(receiveData.res.all);
 
 
-    if(receiveData.res.points)
+    if (receiveData.res.points)
         updatePoints(receiveData.res.points);
 
-    if(receiveData.res.money)
+    if (receiveData.res.money)
         updateMoney(receiveData.res.money);
 
-    if(receiveData.res.modes)
+    if (receiveData.res.modes)
         appModes[receiveData.res.key] = receiveData.res.modes;
 
-    if(receiveData.res.variations)
+    if (receiveData.res.variations)
         appVariations[receiveData.res.key] = receiveData.res.variations;
 
-    if(receiveData.res.audio)
-        appAudio[receiveData.res.key ? receiveData.res.key : receiveData.res.appName]=receiveData.res.audio;
+    if (receiveData.res.key)
+        appName = receiveData.res.key;
+
+    if (receiveData.res.audio) {
+
+        appAudio[receiveData.res.key ? receiveData.res.key : receiveData.res.appName] = receiveData.res.audio;
+    }
 
     if(receiveData.res.key) {
 
