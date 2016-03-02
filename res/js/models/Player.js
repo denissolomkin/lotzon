@@ -16,7 +16,9 @@
 
                 /* +/- */
                 if (init.hasOwnProperty('count')) {
-                    init.count = this.extendCount(init.count);
+                    if (Object.size(this.count)) {
+                        init.count = this.extendCount(init.count);
+                    }
                 }
 
                 if (init.hasOwnProperty('balance')) {
@@ -51,9 +53,6 @@
         },
 
         "extendCount": function (object, extendedCount, currentCount, keys) {
-
-            if (!object || !Object.size(object))
-                return;
 
             extendedCount = extendedCount || {};
             currentCount = currentCount || this.count;
@@ -284,12 +283,14 @@
         getCurrency: function (currency, number) {
             switch (currency) {
                 case 'money':
+                case 'MONEY':
                 default:
                     currency = isNumeric(currency)
                         ? parseFloat((currency * Player.currency.coefficient).toFixed(2))
                         : (typeof number !== 'undefined' ? parseFloat((number * Player.currency.coefficient).toFixed(2)) : Player.currency.iso);
                     break;
                 case 'points':
+                case 'POINT':
                     currency = typeof number !== 'undefined'
                         ? number
                         : Cache.i18n('title-points');
