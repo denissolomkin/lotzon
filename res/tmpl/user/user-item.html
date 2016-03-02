@@ -64,42 +64,17 @@
                                     {{location.country}}
                                 </div>
                             </li>
-                            <li><i>Город/Село</i>
+                            <li><i>Город</i>
                                 <div>{{location.city}}</div>
                             </li>
                             <li class="ae-social">
                                 <i class="uk-float-left">Соц. сети </i>
                                 <div class="ae-social uk-float-left">
-                                    <a href="#" class="ae-social-item i-Vkontakte" title="">
-                                            <span class="tooltip">
-                                                {{i18n 'text-soc-net-tie'}}
-                                            </span>
-                                    </a>
-                                    <a href="#" class="ae-social-item i-Facebook" title="">
-                                            <span class="tooltip">
-                                                {{i18n 'text-soc-net-tie'}}
-                                            </span>
-                                    </a>
-                                    <a href="#" class="ae-social-item i-Twitter">
-                                            <span class="tooltip">
-                                                {{i18n 'text-soc-net-tie'}}
-                                            </span>
-                                    </a>
-                                    <a href="#" class="ae-social-item i-Google">
-                                            <span class="tooltip">
-                                                {{i18n 'text-soc-net-tie'}}
-                                            </span>
-                                    </a>
-                                    <a href="#" class="ae-social-item i-Instagram">
-                                            <span class="tooltip">
-                                                {{i18n 'text-soc-net-tie'}}
-                                            </span>
-                                    </a>
-                                    <a href="#" class="ae-social-item i-Odnoklassniki">
-                                            <span class="tooltip">
-                                                {{i18n 'text-soc-net-tie'}}
-                                            </span>
-                                    </a>
+                                    {{#each social as |socialid socialname|}}
+                                        {{#if (ne null socialid)}}
+                                            <a href="{{social socialname socialid}}" class="ae-social-item i-{{socialname}} skip" title="" target="_blank"></a>
+                                        {{/if}}
+                                    {{/each}}
                                 </div>
                             </li>
                             <li class="empty"></li>
