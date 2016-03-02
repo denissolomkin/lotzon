@@ -737,6 +737,7 @@ class Players extends \AjaxController
                     "city"    => $player->getCity(),
                     "zip"     => $player->getZip(),
                     "address" => $player->getAddress(),
+                    "country" => $player->getCountry(),
                 ),
             )
         );

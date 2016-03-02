@@ -86,13 +86,21 @@
                         extendedTicket.combination.push(extendedBall);
                     }
 
-                    if (prizesData[ticketType] && prizesData[ticketType][matchesBalls] && !extendedTickets.win[prizesData[ticketType][matchesBalls].currency])
+                    if (prizesData[ticketType]
+                        && prizesData[ticketType][matchesBalls]
+                        && prizesData[ticketType][matchesBalls].currency
+                        && !extendedTickets.win[prizesData[ticketType][matchesBalls].currency]) {
+
                         extendedTickets.win[prizesData[ticketType][matchesBalls].currency] = {
                             currency: prizesData[ticketType][matchesBalls].currency,
                             prize: 0
                         };
+                    }
 
-                    if (matchesBalls && prizesData[ticketType] && prizesData[ticketType][matchesBalls].prize) {
+                    if (matchesBalls
+                        && prizesData[ticketType]
+                        && prizesData[ticketType][matchesBalls].prize
+                        && prizesData[ticketType][matchesBalls].currency) {
 
                         extendedTicket.prize = parseFloat(prizesData[ticketType][matchesBalls].prize);
                         extendedTicket.currency = prizesData[ticketType][matchesBalls].currency;
@@ -103,6 +111,8 @@
                     extendedTickets.tickets.push(extendedTicket)
                 }
 
+            console.error(extendedTickets);
+
             return extendedTickets;
         },
 
@@ -112,7 +122,7 @@
                 this.data.statistics || Tickets.prizes;
 
             var lotterySummary = {
-                    totalSum: []
+                    totalSum: {}
                 },
                 lotteryData = this.data;
 

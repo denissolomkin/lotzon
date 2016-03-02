@@ -1,12 +1,7 @@
  <div class="select-wrapper i-arrow-down" id="profile-edit-countries">
-	<select name="country" class="{{#if location.country}} {{else}} default {{/if}}" onchange="this.className=this.value">
-   {{#if location.country}}
-        <option value=""> {{location.country}} </option>
-    {{else}}
-       	<option value="default">{{i18n "title-profile-choose"}}</option>
-   {{/if}}
-			{{#each this}}  
-	    <option value="{{@key}}">{{.}}</option>
-	{{/each}}    
+	<select name="country" class="{{#if (player "location.country")}} {{else}} default {{/if}}" onchange="this.className=this.value">
+		{{#each this}}
+	    <option value="{{@key}}" {{#if (eq @key (player "location.country"))}} selected="selected"{{/if}}>{{.}}</option>
+		{{/each}}
 	</select>
 </div>`

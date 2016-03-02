@@ -145,7 +145,7 @@ class Index extends \SlimController\SlimController
             ),
             "favorite" => $playerObj->getFavoriteCombination(),
             "location" => array(
-                "country" => $this->country,
+                "country" => $playerObj->getCountry(),
                 "city"    => $playerObj->getCity(),
                 "zip"     => $playerObj->getZip(),
                 "address" => $playerObj->getAddress(),
@@ -189,6 +189,7 @@ class Index extends \SlimController\SlimController
         $lottery = LotteriesModel::instance()->getPublishedLotteriesList(1);
         $lottery = array_shift($lottery);
 
+        /* todo delete slider */
         $slider = array(
             "sum"     => (LotteriesModel::instance()->getMoneyTotalWin() + SettingsModel::instance()->getSettings('counters')->getValue('MONEY_ADD')) * CountriesModel::instance()->getCountry($this->country)->loadCurrency()->getCoefficient(),
             "winners" => LotteriesModel::instance()->getWinnersCount() + SettingsModel::instance()->getSettings('counters')->getValue('WINNERS_ADD'),
