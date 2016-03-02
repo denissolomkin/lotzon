@@ -135,7 +135,8 @@
             $(document).on('click', '.mx .players .m button.btn-start, .mx .msg-buttons button.btn-start', Game.do.start);
             $(document).on('click', '.mx .players .m .btn-sb-random', Apps.SeaBattle.genFieldSeaBattle);
 
-
+            /* messages */
+            $(document).on('click', '.get-full-picture', Comments.getFullPicture);
 
             /* support */
             $(document).on('click', '.support h1', Support.do.collapse);
