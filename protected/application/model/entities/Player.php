@@ -964,6 +964,25 @@ class Player extends Entity
             $imageName = uniqid() . ".png";
             \Common::saveImageMultiResolution('image',PATH_FILESTORAGE.'users/',$imageName,array(array(50,'crop'),array(100,'crop'),array(200,'crop')));
             \Common::removeImageMultiResolution(PATH_FILESTORAGE.'users/', $this->getAvatar(), array(array(50),array(100),array(200)));
+
+            /**
+             * old saving
+             */
+            $image = WideImage::loadFromUpload('image');
+            $image = $image->resize(Player::AVATAR_WIDTH, Player::AVATAR_WIDTH);
+            $image = $image->crop("center", "center", Player::AVATAR_WIDTH, Player::AVATAR_WIDTH);
+            $saveFolder = PATH_FILESTORAGE . 'avatars/' . (ceil($this->getId() / 100)) . '/';
+            if (!is_dir($saveFolder)) {
+                mkdir($saveFolder, 0777);
+            }
+            $image->saveToFile($saveFolder . $imageName);
+            if ($this->getAvatar()) {
+                @unlink($saveFolder . $this->getAvatar());
+            };
+            /**
+             * /old saving
+             */
+
             $this->setAvatar($imageName)->saveAvatar();
         } catch (EntityException $e) {
             throw new EntityException($e->getMessage(), $e->getCode());

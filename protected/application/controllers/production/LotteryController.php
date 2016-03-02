@@ -311,12 +311,17 @@ class LotteryController extends \AjaxController
         $response = array(
             'cache' =>  'session',
             'res' => array(
+                "lottery" => array(
+                    $lotteryId => array(
+                        "tickets" => array(),
+                    ),
+                ),
             ),
         );
 
         if (!is_null($list)) {
             foreach ($list as $id => $ticket) {
-                $response['res'][$ticket->getTicketNum()] = $ticket->getCombination();
+                $response['res']["lottery"][$lotteryId]["tickets"][$ticket->getTicketNum()] = $ticket->getCombination();
             }
         }
 
