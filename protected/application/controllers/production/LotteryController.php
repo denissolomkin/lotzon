@@ -261,20 +261,24 @@ class LotteryController extends \AjaxController
         $response = array(
             'cache' =>  'session',
         );
-        $response['res'] = $lottery->exportTo('list');
-        $response['res']['statistics'] = array(
+        $response['res'] = array(
+            "lottery" => array(
+                $lotteryId => $lottery->exportTo('list'),
+            ),
+        );
+        $response['res']['lottery'][$lotteryId]['statistics'] = array(
             "default" => array(),
             "gold"    => array()
         );
 
         foreach ($balls as $count=>$matches) {
-            $response['res']['statistics']["default"][$count] = array(
+            $response['res']['lottery'][$lotteryId]['statistics']["default"][$count] = array(
                 'balls'    => $count,
                 'currency' => $prizes[$count]['currency'],
                 'sum'      => $prizes[$count]['sum'],
                 'matches'  => $matches + $balls_incr[$count],
             );
-            $response['res']['statistics']["gold"][$count] = array(
+            $response['res']['lottery'][$lotteryId]['statistics']["gold"][$count] = array(
                 'balls'    => $count,
                 'currency' => $prizes_gold[$count]['currency'],
                 'sum'      => $prizes_gold[$count]['sum'],
