@@ -701,6 +701,7 @@ class Players extends \AjaxController
         $city     = $this->request()->post('city');
         $zip      = $this->request()->post('zip');
         $address  = $this->request()->post('address');
+        $country  = $this->request()->post('country');
 
         $player = new Player();
         $player->setId($this->session->get(Player::IDENTITY)->getId())->fetch();
@@ -716,6 +717,7 @@ class Players extends \AjaxController
                 ->setZip($zip)
                 ->setAddress($address)
                 ->setBirthDay($birthday)
+                ->setCountry($country)
                 ->update();
         } catch (EntityException $e) {
             $this->ajaxResponseCode(array("message" => $e->getMessage()), $e->getCode());
