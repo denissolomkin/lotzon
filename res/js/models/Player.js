@@ -16,17 +16,9 @@
 
                 /* +/- */
                 if (init.hasOwnProperty('count')) {
-
                     if (Object.size(this.count)) {
                         init.count = this.extendCount(init.count);
                     }
-                    /*
-                     for (key in init.count) {
-                     if (init.count.hasOwnProperty(key)) {
-                     init.count[key] = this.prepareCount(key, init.count[key]);
-                     }
-                     } */
-
                 }
 
                 if (init.hasOwnProperty('balance')) {
@@ -48,7 +40,10 @@
                 }
 
                 Object.deepExtend(this, init);
-                Player.renderCount(init.count);
+
+                if (init.hasOwnProperty('count')) {
+                    Player.renderCount(init.count);
+                }
 
             }
 
@@ -72,7 +67,7 @@
                                     var key = keys && keys.slice() || [];
                                     key.push(count);
 
-                                    console.error(object[prop], key);
+                                    //console.error(object[prop], key);
 
                                     this.extendCount(
                                         object[prop],
@@ -108,7 +103,7 @@
                                         }
 
                                     Object.deepExtend(extendedCount, source);
-                                    console.info(extendedCount);
+                                    //console.info(extendedCount);
                                 }
 
                             } else if (typeof currentCount[count] === 'object') {
@@ -119,7 +114,7 @@
                                 key.push(count);
                                 temp[prop] = object[prop];
 
-                                console.warn(object, extendedCount, currentCount, keys, temp, key, object);
+                                //console.warn(object, extendedCount, currentCount, keys, temp, key, object);
 
                                 this.extendCount(
                                     temp,
@@ -288,12 +283,14 @@
         getCurrency: function (currency, number) {
             switch (currency) {
                 case 'money':
+                case 'MONEY':
                 default:
                     currency = isNumeric(currency)
                         ? parseFloat((currency * Player.currency.coefficient).toFixed(2))
                         : (typeof number !== 'undefined' ? parseFloat((number * Player.currency.coefficient).toFixed(2)) : Player.currency.iso);
                     break;
                 case 'points':
+                case 'POINT':
                     currency = typeof number !== 'undefined'
                         ? number
                         : Cache.i18n('title-points');
