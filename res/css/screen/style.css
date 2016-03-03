@@ -1182,7 +1182,7 @@ div.comment-reply-btn {
 
 .ae-personal-form-values {
   margin: 0 -20px; }
-  .ae-personal-form-values li {
+  .ae-personal-form-values > li {
     padding: 0 20px; }
 
 @media (max-width: 1200px) {

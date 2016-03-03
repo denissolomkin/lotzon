@@ -490,7 +490,7 @@
             console.debug('Cards.highlight >>>');
 
             if (App.beater == Player.id && $('.mx .table .cards').length) {
-                if (/*$('.ngm-gm').hasClass('Revert') &&*/ $('.mx .table .cards').length == $('.mx .table .cards .card').length && !$('.mx .table .revert').length)
+                if ($('.mx').hasClass('Revert') && $('.mx .table .cards').length == $('.mx .table .cards .card').length && !$('.mx .table .revert').length)
                     $('.mx .table').append('<div data-table="revert" class="cards revert"><div class="card"></div></div>');
 
                 return true;

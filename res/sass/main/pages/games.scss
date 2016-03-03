@@ -190,7 +190,7 @@ $color_lima_approx: #7ed321;
 //fonts
 $hbRegular: handbookpro-regular;
 $hbBold: Handbook-bold;
-$font_2: Simple-Line-Icons;
+$font_2: FontAwesome;
 
 //urls
 $url_0: url(../img/games/card-table-bg.jpg);
@@ -1343,7 +1343,7 @@ footer.unvisible {
                     .card::before {
                         font-family: $font_2;
                         font-size: 72px;
-                        content: "\e099";
+                        content: "\f01e";
                         position: absolute;
                         left: 16px;
                         top: 46px;

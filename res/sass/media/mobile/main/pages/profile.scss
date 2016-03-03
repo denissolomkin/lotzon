@@ -1,3 +1,13 @@
+.ae-personal-form-values .select-wrapper select {
+    padding-top: 3px;
+}
+.wrapper-margin-right > * {
+    padding-top: 3px;
+}
+.ae-personal-form-values .wrapper-margin-right:before, .ae-personal-form-values .select-wrapper:before {
+    top: 2px;
+}
+
 .ae-top {
 	float: none;
 	// margin-bottom: 20px;
@@ -32,17 +42,21 @@
 .ae-name-block.ae-personal-form-values, .ae-personal-form-values {
 	margin-left: -10px;
 	margin-right: -10px;
-	& li  {
-		padding: 0 10px;
-	}
+	// & li  {
+	// 	padding: 0 10px;
+
+	// }
 }
-.ae-personal-form-values i {
+.ae-personal-form-values > ul > li > i {
 	min-width: 85px;
 	max-width: 85px;
 	padding-right: 10px;
+	left: 10px;
 }
 .ae-personal-form-values li {
 	height: 45px;
+	padding-left: 105px;
+	padding-right: 10px;
 }
 .ae-personal-form-values li > * {
 	position: relative;
@@ -66,6 +80,10 @@
 
 .ae-personal-form-values .wrapper-margin-right:before, .ae-personal-form-values .select-wrapper:before {
 	top: 4px;
+}
+.wrapper-margin-right:before, 
+.select-wrapper:before{
+	padding-top: 5px ;
 }
 .calendar-range {
 	height: auto;

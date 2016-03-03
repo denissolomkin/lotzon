@@ -7940,7 +7940,8 @@ form.loading > * {
   line-height: inherit;
   padding: 0;
   padding-bottom: 1px;
-  font: 15.5px "handbookpro-regular"; }
+  font: 15.5px "handbookpro-regular";
+  margin-left: 3px; }
   .ae-personal-form-values input:focus {
     border-width: 0 0 2px;
     border-color: #bed8d9;
@@ -7981,29 +7982,41 @@ form.loading > * {
     width: auto;
     border: none; }
   .ae-personal-form-values .i-arrow-down:before {
-    color: #4a90e2; }
+    color: #4a90e2;
+    position: relative;
+    margin-left: -17px; }
   .ae-personal-form-values li {
     border-top: 1px solid #eaeaea;
     height: 45px;
     line-height: 45px;
     padding-right: 30px;
-    padding-left: 30px; }
+    position: relative;
+    /* i -150px left */
+    padding-left: 180px; }
+    .ae-personal-form-values li > *:not(i) {
+      width: 100%; }
     .ae-personal-form-values li > * {
       line-height: 45px; }
-  .ae-personal-form-values i {
-    min-width: 150px;
+  .ae-personal-form-values > ul > li > i {
+    width: 150px;
     color: #afa3a3;
+    position: absolute;
+    left: 30px;
     display: inline-block;
     vertical-align: top; }
   .ae-personal-form-values .select-wrapper {
     overflow: hidden;
     display: inline-block;
     position: relative; }
+    .ae-personal-form-values .select-wrapper:after {
+      content: "";
+      display: block;
+      clear: both; }
     .ae-personal-form-values .select-wrapper:before {
-      position: absolute;
-      right: 0;
-      top: 15px;
       z-index: 0; }
+    .ae-personal-form-values .select-wrapper select {
+      padding-top: 10px;
+      float: left; }
   .ae-personal-form-values select {
     border: none;
     -webkit-appearance: none;
@@ -8015,7 +8028,7 @@ form.loading > * {
     background: transparent;
     outline: none;
     font: 15.5px "handbookpro-regular";
-    max-width: 100px;
+    width: 100px;
     color: #000;
     position: relative; }
     .ae-personal-form-values select.default {
@@ -8044,19 +8057,23 @@ form.loading > * {
 .wrapper-margin-right {
   display: inline-block;
   position: relative; }
-  .wrapper-margin-right:before {
-    position: absolute;
-    right: -25px;
+  > .wrapper-margin-right:after {
+    content: "";
+    display: block;
+    clear: both; }
+  > .wrapper-margin-right:before {
     top: 15px;
     z-index: 0; }
+  .wrapper-margin-right > * {
+    padding-top: 13px;
+    float: left;
+    width: 100px; }
 
 .ae-name-block i {
   display: inline-block; }
 
-.ae-name-block li {
-  padding-left: 20px; }
-  .ae-name-block li:last-child {
-    border-bottom: none; }
+.ae-name-block li:last-child {
+  border-bottom: none; }
 
 .ae-personal-inf .title {
   text-align: center;
@@ -8776,7 +8793,8 @@ span.input-prefix {
   z-index: 10;
   margin-left: 1px; }
   #profile-edit .wrapper-calendar:before {
-    right: 5px; }
+    position: relative;
+    left: -3px; }
   #profile-edit .wrapper-calendar .calendar-range {
     border: none; }
 
@@ -10590,9 +10608,9 @@ footer.unvisible {
         border: 3px dashed gray;
         box-shadow: none !important; }
       #games-online-field.Durak .cards .table .cards.revert .card::before {
-        font-family: Simple-Line-Icons;
+        font-family: FontAwesome;
         font-size: 72px;
-        content: "\e099";
+        content: "\f01e";
         position: absolute;
         left: 16px;
         top: 46px;
