@@ -1767,14 +1767,10 @@ class Player extends Entity
                         'country' => $this->getCountry(),
                         'city'    => $this->getCity()
                     ),
-                    'social'     => array(
-                    )
+                    'social'     => $this->getSocial()
                 );
                 if ($this->_isFriend!==null) {
                     $ret['isFriend'] = $this->_isFriend;
-                }
-                foreach (\Config::instance()->hybridAuth['providers'] as $socialName => $value) {
-                    $ret['social'][$socialName] = $this->getAdditionalData()[$socialName]['identifier'];
                 }
                 break;
             default:

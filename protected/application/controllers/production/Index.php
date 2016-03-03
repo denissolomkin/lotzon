@@ -142,7 +142,8 @@ class Index extends \SlimController\SlimController
                     ),
                     "communication" => array(
                         "notifications" => array(
-                            "server" => \CommentsModel::instance()->getNotificationsCount($playerObj->getId())
+                            "server" => \CommentsModel::instance()->getNotificationsCount($playerObj->getId()),
+                            "local" => 0
                         ),
                         "messages"      => \MessagesModel::instance()->getStatusCount($playerObj->getId(), 0)
                     )

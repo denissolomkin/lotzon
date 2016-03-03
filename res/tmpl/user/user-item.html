@@ -67,16 +67,18 @@
                             <li><i>Город</i>
                                 <div>{{location.city}}</div>
                             </li>
+                            {{#if social.enabled}}
                             <li class="ae-social">
                                 <i class="uk-float-left">Соц. сети </i>
                                 <div class="ae-social uk-float-left">
-                                    {{#each social as |socialid socialname|}}
-                                        {{#if (ne null socialid)}}
-                                            <a href="{{social socialname socialid}}" class="ae-social-item i-{{socialname}} skip" title="" target="_blank"></a>
+                                    {{#each social.providers}}
+                                        {{#if .}}
+                                            <a href="{{social @key .}}" class="ae-social-item i-{{@key}} skip" title="" target="_blank"></a>
                                         {{/if}}
                                     {{/each}}
                                 </div>
                             </li>
+                            {{/if}}
                             <li class="empty"></li>
                         </ul>
                     </li>
