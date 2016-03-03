@@ -17,7 +17,7 @@ class LotterySettingsCacheProcessor extends BaseCacheProcessor
     {
         $settings = $this->getBackendProcessor()->saveSettings($settings);
 
-        if (!Cache::init()->set(self::LOTTERY_SETTINGS_KEY, $settings)) {
+        if (!Cache::init()->set(self::LOTTERY_SETTINGS_KEY, $this->getBackendProcessor()->loadSettings())) {
             throw new ModelException("Unable to cache storage data", 500);            
         }
 
