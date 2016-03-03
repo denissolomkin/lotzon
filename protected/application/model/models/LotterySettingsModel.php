@@ -9,7 +9,7 @@ class LotterySettingsModel extends Model
     public function init()
     {
         parent::init();
-        $this->setProcessor(0 && Config::instance()->cacheEnabled ? new LotterySettingsCacheProcessor() : new LotterySettingsDBProcessor());
+        $this->setProcessor(Config::instance()->cacheEnabled ? new LotterySettingsCacheProcessor() : new LotterySettingsDBProcessor());
     }
 
     public static function myClassName()
