@@ -32,7 +32,7 @@
 
                 D.error([message, url, line]);
                 return true;
-            }
+            };
         },
 
         "log": function (log, type) {

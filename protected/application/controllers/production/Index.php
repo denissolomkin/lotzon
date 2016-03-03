@@ -108,6 +108,11 @@ class Index extends \SlimController\SlimController
         $gamePlayer = new \GamePlayer();
         $gamePlayer->setId($playerObj->getId())->fetch();
 
+        if(($error = $session->get('ERROR') ?: ($_SESSION['ERROR'] ?: false))) {
+            $session->remove('ERROR');
+            unset($_SESSION['ERROR']);
+        }
+
         $player = array(
             "id"       => $playerObj->getId(),
             "img"      => $playerObj->getAvatar(),

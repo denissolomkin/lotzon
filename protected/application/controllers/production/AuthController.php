@@ -206,8 +206,7 @@ class AuthController extends \SlimController\SlimController {
 
             }
 
-
-        $this->redirect('/');
+        $this->redirect(strstr($_SERVER['HTTP_REFERER'], 'lotzon.com') ? $_SERVER['HTTP_REFERER'] : '/');
 
     }
 

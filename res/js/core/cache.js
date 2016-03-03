@@ -96,6 +96,7 @@
         /* desc: callback after localize ready */
         "ready": function () {
             Navigation.load();
+            error && D.error(error);
         },
 
         /* desc: load storages from localStorage to Memory */
