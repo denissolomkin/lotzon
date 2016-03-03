@@ -7,6 +7,15 @@
 /filestorage/*/*
 /filestorage/*/**/*
 !/filestorage/*/comments
+!/filestorage/*/50
+!/filestorage/*/100
+!/filestorage/*/200
+!/filestorage/*/600
+!/filestorage/*/320
+!/filestorage/*/360
+!/filestorage/*/480
+!/filestorage/*/640
+!/filestorage/*/768
 !*.gitignore
 /.htaccess
 /res/.gitignore
