@@ -1712,7 +1712,7 @@ function proccessResult()
         var tickets=[];
         if($('.tb-slide').length>0)
             $('.tb-slide').each(function( index, el ) {
-                if(!$('.tb-tabs_li [data-ticket="'+$(el).attr('data-ticket')+'"]').hasClass('done'))
+                if(!$('.tb-tabs_li[data-ticket="'+$(el).attr('data-ticket')+'"]').hasClass('done'))
                     return true;
                 var ticket=[];
                 $(el).find('.loto-tl_li.select').each(function( i, val ) {
