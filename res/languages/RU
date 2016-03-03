@@ -240,9 +240,9 @@
 
 
                 "title-enter-billing-phone": "введите мобильный телефон",
-                "title-enter-billing-yandexMoney": "введите Яндекс Деньги",
-                "title-enter-billing-webMoney": "введите WebMoney",
-                "title-enter-billing-qiwi": "введите QIWI",
+                "title-enter-billing-yandex": "введите Яндекс Деньги",
+                "title-enter-billing-webmoney": "введите кошелек WebMoney",
+                "title-enter-billing-qiwi": "введите кошелек QIWI",
 
 
                 "button-profile-get-points": "Конвертировать",
