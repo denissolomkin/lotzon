@@ -717,7 +717,7 @@ class Players extends \AjaxController
                 ->setZip($zip)
                 ->setAddress($address)
                 ->setBirthDay($birthday)
-                ->setCountry($country)
+                /*->setCountry($country)*/
                 ->update();
         } catch (EntityException $e) {
             $this->ajaxResponseCode(array("message" => $e->getMessage()), $e->getCode());
