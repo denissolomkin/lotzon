@@ -131,11 +131,13 @@ class AuthController extends \SlimController\SlimController {
             } catch (EntityException $e) {
 
                 // fetch more than one player
-                if ($e->getCode() == 500) {
+                if ($e->getCode() == 400) {
                     $this->session->set('ERROR', StaticTextsModel::instance()->setLang($player->getLang())->getText('SOCIAL_USED'));
-                }
 
-                if ($e->getCode() == 404) {
+                } else if($e->getCode() == 500){
+                    $this->session->set('ERROR', $e->getMessage());
+
+                } else if ($e->getCode() == 404) {
 
                     try {
                         $geoReader =  new Reader(PATH_MMDB_FILE);
