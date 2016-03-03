@@ -96,7 +96,7 @@ class Player extends Entity
 
     private $_newsSubscribe = 1;
 
-    private $_additionalData = array();
+    protected $_additionalData = array();
     // filled only when list of players fetched
     private $_isTicketsFilled = array();
     private $_counters = array();
@@ -850,14 +850,13 @@ class Player extends Entity
             'enabled'   => false,
             'providers' => array()
         );
+
         $providers = array_keys(\Config::instance()->hybridAuth['providers']);
 
         if(is_array($providers) && !empty($providers)) {
             foreach ($providers as $provider) {
 
-                $social = isset($this->getAdditionalData()[$provider])
-                    ? $this->getAdditionalData($provider)
-                    : false;
+                $social = $this->getAdditionalData($provider);
 
                 if (!$social || !$social['enabled']) {
                     $socials['disabled'] = true;
@@ -869,12 +868,8 @@ class Player extends Entity
             }
         }
 
-        return $socials;
-    }
 
-    public function getAdditionalData()
-    {
-        return $this->_additionalData;
+        return $socials;
     }
 
     public function isTicketsFilled()
