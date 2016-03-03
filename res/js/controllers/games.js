@@ -133,6 +133,43 @@ var Games = {
         now: function() {
             var element = '#games-online-view-now .render-list-form';
             !Games.disableNow && $(element).is(':visible') && $(element).change();
+        },
+
+        validate: {
+
+            create: function() {
+                // return if this != form
+                if (this.tagName !== "FORM") return false;
+
+                var valid = false,
+                    msg = 'title-games-insufficient_funds',
+                    mode = this.mode.value.split('-');
+
+                switch (mode[0]) {
+                    case 'POINT':
+                        valid = Player.balance.points*1 >= mode[1]*1;
+                        // console.debug('Player.balance.points >= mode[1]', Player.balance.points + '>=' + mode[1]);
+                        break;
+                    case 'MONEY':
+                        valid = Player.balance.money*1 >= mode[1]*1;
+                        // console.debug('Player.balance.money >= mode[1]', Player.balance.money + '>=' + mode[1]);
+                        break;
+                    case 'LOTZON':
+                        valid = Player.balance.lotzon*1 >= mode[1]*1;
+                        // console.debug('Player.balance.lotzon >= mode[1]', Player.balance.lotzon + '>=' + mode[1]);
+                        break;
+                    case '':
+                        msg = 'title-games-select_rate';
+                        break;
+                }
+
+                // show popup message
+                if (!valid) {
+                    popup({ 'msg': i18n(msg), 'timer': 3000 });
+                }
+                return valid;
+
+            },
         }
 
     },

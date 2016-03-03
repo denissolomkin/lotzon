@@ -300,10 +300,13 @@ html {
     width: 0; }
   .balance-btn > * {
     display: inline-block;
-    vertical-align: middle; }
+    vertical-align: middle;
+    min-width: 95%; }
     .balance-btn > * > span {
-      display: inline-block;
-      vertical-align: super; }
+      display: block;
+      float: right; }
+      .balance-btn > * > span:first-child {
+        float: left; }
   .balance-btn.active, .balance-btn:hover {
     background: transparent; }
 
@@ -1141,12 +1144,6 @@ div.comment-reply-btn {
   width: 215px;
   padding: 0 0 0 10px; }
 
-.cabinet-balance-count:first-child {
-  margin-right: 15px; }
-
-.cabinet-balance-count span {
-  margin-left: 2px; }
-
 .c-user-inf {
   margin: 0 20px 0 0; }
 
@@ -1531,10 +1528,6 @@ div.comment-reply-btn {
   .cabinet .content-box-tab.cabinet-balance-tab {
     width: 275px;
     padding: 0 30px 0 30px; }
-  .cabinet-balance-count:first-child {
-    margin-right: 5px; }
-  .cabinet-balance-count span {
-    margin-left: 5px; }
   .c-user-inf {
     margin: 0 30px 0 0; }
   .c-user-personal-inf {

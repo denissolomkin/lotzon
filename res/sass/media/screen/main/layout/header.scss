@@ -249,7 +249,6 @@
     padding: 0;
     margin: 0 auto;
     height: 100%;
-    // top: 50%;
     transform: none;
     font-family: 'handbookpro-regular';
     &:before{
@@ -262,9 +261,18 @@
     & > *{
         display: inline-block;
         vertical-align: middle;
+        min-width: 95%;
         > span{
-            display: inline-block;
-            vertical-align: super;
+            display: block;
+            float: right;
+            &:first-child{
+                float: left;
+            }
+            i{
+                &:before{
+
+                }
+            }
         }
     }
     &.active,

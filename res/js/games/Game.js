@@ -34,47 +34,11 @@
             equal: {
                 class: 'msg-equal',
                 title: 'title-games-equal'
-            },
-            insufficient_funds: 'title-games-insufficient_funds',
-            select_rate: 'title-games-select_rate'
+            }
         },
 
         field: null,
         gameClass: "",
-
-        validate: function() {
-            // return if this != form
-            if (this.tagName !== "FORM") return false;
-
-            var valid = false,
-                msg = Game.messages.insufficient_funds,
-                mode = this.mode.value.split('-');
-            
-            switch (mode[0]) {
-                case 'POINT':
-                    valid = Player.balance.points*1 >= mode[1]*1;
-                    // console.debug('Player.balance.points >= mode[1]', Player.balance.points + '>=' + mode[1]);
-                    break;
-                case 'MONEY':
-                    valid = Player.balance.money*1 >= mode[1]*1;
-                    // console.debug('Player.balance.money >= mode[1]', Player.balance.money + '>=' + mode[1]);
-                    break;
-                case 'LOTZON':
-                    valid = Player.balance.lotzon*1 >= mode[1]*1;
-                    // console.debug('Player.balance.lotzon >= mode[1]', Player.balance.lotzon + '>=' + mode[1]);
-                    break;
-                case '':
-                    msg = Game.messages.select_rate;
-                    break;
-            }
-
-            // show popup message
-            if (!valid) {
-                popup({ 'msg': i18n(msg), 'timer': 3000 });
-            }
-            return valid;
-
-        },
         init: function(init) {},
 
         isRun: function() {
@@ -291,11 +255,15 @@
         end: function() {
 
             D.log('Game.end', 'game');
+
             if (!App.winner) {
+
                 Apps.sample && Apps.playAudio([App.key, Apps.sample]);
                 Game.updateTimeOut(App.timeout);
                 return false;
+
             } else {
+
                 Apps.sample = (isArray(App.winner) ? App.winner.indexOf(Player.id) != -1 : App.winner == Player.id) ? 'Win' : 'Lose';
                 Apps.playAudio([App.key, Apps.sample]);
                 App.cell = null;
@@ -304,6 +272,7 @@
 
                 //проверка на игры кроме дурака, вывод нового сообщения о выиграше
                 if (document.querySelector('#games-online-field:not(.Durak) .mx')) {
+                    console.error(App.players[Player.id]);
                     Game.drawWinMessage(App.players[Player.id]);
                     return true;
                 }
@@ -395,8 +364,8 @@
                 html += '<div><span>' + (pl.result > 0 ? i18n('title-games-main-win') : i18n('title-games-main-lose')) + ' </span>' +
                     (App.currency == 'MONEY' ? Player.formatCurrency(Math.abs(pl.win), 1) : Math.abs(parseInt(pl.win))) + ' ' +
                     (App.currency == 'MONEY' ? Player.getCurrency() : 'баллов') + '</div>';
-                html += '</div>'
                 html += '<div class="msg-buttons"></div>';
+                html += '</div>'
 
 
                 el.innerHTML = html;
@@ -441,7 +410,7 @@
             if (typeof buttons == 'string')
                 return Game.drawWinButtons([buttons]);
 
-            var playerButtons = document.querySelector('.mx > .msg > div.msg-buttons'),
+            var playerButtons = document.querySelector('.mx > .msg .msg-buttons'),
                 html = '';
 
             for (var index in buttons) {

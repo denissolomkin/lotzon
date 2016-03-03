@@ -1671,6 +1671,10 @@ div {
   padding: 20px;
   right: 64px; }
 
+.holder-points,
+.holder-money {
+  margin-right: 7px; }
+
 .menu-balance {
   display: none;
   width: 320px;
@@ -9152,26 +9156,6 @@ span.input-prefix {
   position: relative; }
   .r-active:hover .r-active-inf {
     display: block; }
-
-.r-active-icon {
-  display: inline-block;
-  width: 15px;
-  height: 15px;
-  position: relative;
-  top: 3px;
-  cursor: pointer; }
-  .r-active-icon:before {
-    content: "NO";
-    display: inline-block;
-    color: #ed502f; }
-
-.r-item.online .r-active-icon {
-  width: 18px;
-  height: 15px; }
-  .r-item.online .r-active-icon:before {
-    content: "OK";
-    display: inline-block;
-    color: #407405; }
 
 .daterangepicker.dropdown-menu {
   top: 30px;

@@ -234,7 +234,7 @@
             "profile-cashout": Profile.validate.cashout,
             "prizes-exchange-goods": Prize.validate.exchange,
             "blog-post-view-comments": Comments.validate.reply,
-            "app-view": Game.validate,
+            "app-view": Games.online.validate.create,
 
         },
 

@@ -16,9 +16,9 @@
             </div>
         </div>
 
-        <div id="banner-tablet-bottom" class="banner-2">
+        <!--div id="banner-tablet-bottom" class="banner-2">
             <div style="height: 100%; background: #ccc;"></div>
-        </div>
+        </div-->
 
     </main><!-- .content -->
 
