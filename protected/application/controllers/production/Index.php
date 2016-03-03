@@ -162,12 +162,7 @@ class Index extends \SlimController\SlimController
                 "qiwi"        => $playerObj->getQiwi(),
                 "phone"       => $playerObj->getPhone()
             ),
-            "social"   => array(
-                "vk" => "R333289102947",
-                "ok" => "411141590761950",
-                "gl" => null,
-                "tw" => null
-            ),
+            "social"   => $playerObj->getSocial(),
             "settings" => array(
                 "newsSubscribe" => $playerObj->getNewsSubscribe()
             ),

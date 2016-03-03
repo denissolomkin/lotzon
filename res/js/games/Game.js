@@ -298,6 +298,7 @@
             } else {
                 Apps.sample = (isArray(App.winner) ? App.winner.indexOf(Player.id) != -1 : App.winner == Player.id) ? 'Win' : 'Lose';
                 Apps.playAudio([App.key, Apps.sample]);
+                App.cell = null;
                 Game.playerTimer.removeAll();
                 Game.destroyTimeOut();
 
@@ -334,6 +335,7 @@
                     html += '<div>' + i18n(buttons[index]) + '</div>';
                 }
             }
+
             playerButtons.innerHTML = html;
         },
 
@@ -394,6 +396,7 @@
                     (App.currency == 'MONEY' ? Player.formatCurrency(Math.abs(pl.win), 1) : Math.abs(parseInt(pl.win))) + ' ' +
                     (App.currency == 'MONEY' ? Player.getCurrency() : 'баллов') + '</div>';
                 html += '</div>'
+                html += '<div class="msg-buttons"></div>';
 
 
                 el.innerHTML = html;
@@ -408,6 +411,7 @@
             }
 
         },
+
         drawEqualMessage: function(callback) {
             if (notDurak = document.querySelector('#games-online-field:not(.Durak) .mx')) {
                 var msg = Game.messages.equal,
@@ -431,11 +435,14 @@
             }
             return false;
         },
+
         drawWinButtons: function(buttons) {
-            var playerButtons = document.querySelector('.mx > .msg > div'),
-                html = '',
-                el = document.createElement('div');
-            el.className = 'msg-buttons';
+
+            if (typeof buttons == 'string')
+                return Game.drawWinButtons([buttons]);
+
+            var playerButtons = document.querySelector('.mx > .msg > div.msg-buttons'),
+                html = '';
 
             for (var index in buttons) {
                 if (typeof buttons[index] == 'object') {
@@ -444,8 +451,8 @@
                     html += '<div>' + i18n(buttons[index]) + '</div>';
                 }
             }
-            el.innerHTML = html;
-            playerButtons.appendChild(el);
+
+            playerButtons.innerHTML = html;
         },
 
         setFullScreenHeigth: function() {
@@ -500,7 +507,6 @@
                         timer.countdown('option', { layout: format });
 
                     timer.countdown({ until: time }).countdown('resume').countdown('option', { until: time });
-
 
                 }
             }
@@ -711,9 +717,9 @@
                 statuses[Player.id] = 'title-game-ready';
 
                 Game.drawStatuses(statuses);
-                Game.drawButtons([
-                    Game.buttons.start,
-                    'title-game-waiting-player'
+                Game.drawWinButtons([
+                    'title-game-waiting-player',
+                    Game.buttons.exit
                 ]);
                 Game.drawMessages();
 

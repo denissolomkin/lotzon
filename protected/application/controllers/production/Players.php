@@ -325,16 +325,25 @@ class Players extends \AjaxController
         $this->ajaxResponse(array());
     }
 
-    public function disableSocialAction($provider)
+    public function disableSocialAction($provider = null)
     {
 
         if (!$this->session->get(Player::IDENTITY)) {
             $this->ajaxResponse(array(), 0, 'FRAUD');
         }
 
+        if (!($provider = $provider ?: $this->request()->delete('provider'))) {
+            $this->ajaxResponseBadRequest('EMPTY_PROVIDER');
+        }
+
+        $player = $this->session->get(Player::IDENTITY);
+
         try {
-            $this->session->get(Player::IDENTITY)->setSocialName($provider)->disableSocial();
-            $this->ajaxResponse(array(), 1, $provider);
+            $player->setSocialName($provider)->disableSocial();
+            $this->ajaxResponseCode(array(
+                'player' => array(
+                    'social' => $player->getSocial()
+                )));
         } catch (\Exception $e) {
             $this->ajaxResponse(array(), 0, 'INVALID');
         }

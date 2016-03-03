@@ -17,7 +17,7 @@ Application::import(PATH_GAMES . '*');
 class WebSocketController implements MessageComponentInterface
 {
 
-    const   MIN_WAIT_TIME    = 15;//1;
+    const   MIN_WAIT_TIME    = 1;//15;
     const   MAX_WAIT_TIME    = 600;//20;
     const   PERIODIC_TIMER   = 2;//2
     const   TIMEOUT_PLAYER   = 60;//10

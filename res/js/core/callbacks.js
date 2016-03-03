@@ -222,7 +222,8 @@
         "delete": {
 
             "communication-notifications": Comments.renderNotifications,
-            "users-view-messages": Messages.after.markRead
+            "users-view-messages": Messages.after.markRead,
+            "profile-social": Profile.update.details,
 
         },
 

@@ -676,6 +676,9 @@ Config::instance()->publicResources = array(
     /**
      * Profile orders
      */
+    '/profile/social/' => array(
+        'delete' => 'controllers\production\Players:disableSocial',
+    ),
     '/profile/convert' => array(
         'post' => 'controllers\production\OrdersController:convert'
     ),
@@ -749,13 +752,26 @@ Config::instance()->publicResources = array(
 Config::instance()->hybridAuth = array(
 
     // "base_url" the url that point to HybridAuth Endpoint (where the index.php and config.php are found)
-    "base_url" => "http://".(isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : 'lotzon.com')."/auth/endpoint/",
+    "base_url" => "http:".(Config::instance()->SSLEnabled ? 's' : '')."//".(isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : 'lotzon.com')."/auth/endpoint/",
 
     "providers" => array (
 
-        "Twitter" => array (
+        "Facebook" => array (
             "enabled" => true,
-            "keys" => array ( "key" => "q8MuZoLMf02gd5lcDIcntWgsq", "secret" => "hO5NPBiiiJqrDIk57jJzLZYH65R24phFi0lxISWvKiUqL6Rsx8" )
+            "keys" => array ( "id" => "571381022994041", "secret" => "2a59f655677472049ebf12ef95f489bc" ),
+            'scope' => 'email'
+        ),
+
+        "Vkontakte" => array (
+            "enabled" => true,
+            "keys" => array ( "id" => "4674779", "secret" => "uiFFV2KDYUbH6z9SSyi4" ),
+            'scope' => 'email'
+        ),
+
+        "Odnoklassniki" => array (
+            "enabled" => true,
+            "keys" => array ( "id" => "1117952512", "secret" => "D721378D1D8978B3F0918327", "key"=>"CBALJDKDEBABABABA" ),
+            'scope' => 'email'
         ),
 
         "Google" => array (
@@ -764,22 +780,11 @@ Config::instance()->hybridAuth = array(
             'scope' => 'email'
         ),
 
-        "Odnoklassniki" => array (
+        "Twitter" => array (
             "enabled" => true,
-            "keys" => array ( "id" => "1117952512", "secret" => "D721378D1D8978B3F0918327", "key"=>"CBALJDKDEBABABABA" ),
-            'scope' => 'email'),
-
-        "Vkontakte" => array (
-            "enabled" => true,
-            "keys" => array ( "id" => "4674779", "secret" => "uiFFV2KDYUbH6z9SSyi4" ),
-            'scope' => 'email'
+            "keys" => array ( "key" => "q8MuZoLMf02gd5lcDIcntWgsq", "secret" => "hO5NPBiiiJqrDIk57jJzLZYH65R24phFi0lxISWvKiUqL6Rsx8" )
         ),
 
-        "Facebook" => array (
-            "enabled" => true,
-            "keys" => array ( "id" => "571381022994041", "secret" => "2a59f655677472049ebf12ef95f489bc" ),
-            'scope' => 'email'
-        )
     )
 );
 

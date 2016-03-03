@@ -145,6 +145,7 @@
 
                                 Cache.init(data);
 
+                                console.error(form.method.toLowerCase(),form.callback);
                                 if (Callbacks[form.method.toLowerCase()][form.callback]) {
                                     D.log(['C.' + form.method.toLowerCase() + '.callback']);
                                     Callbacks[form.method.toLowerCase()][form.callback].call(that, form);

@@ -78,45 +78,42 @@
                                 </li>
                                 <li><i>Email</i>
                                     {{#if email}}{{email}}{{/if}}</li>
-                                <li class="ae-social">
-                                    <i class="uk-float-left">Соц. сети <span>+20 баллов
 
-                                    </span>
-                                           
-                                    </i>
+                                {{#if social.disabled}}
+                                <li class="ae-social">
+                                    <i class="uk-float-left">Привязать <span>+20 баллов</span></i>
                                     <div class="uk-float-left">
-                                        <a href="#" class="ae-social-item i-Vkontakte" title="">
+                                        {{#each social.providers}}
+                                        {{#if .}}
+                                        {{else}}
+                                        <a href="/auth/{{@key}}?method=link" class="skip ae-social-item i-{{@key}}" title="">
                                             <span class="tooltip">
-                                                {{i18n 'text-soc-net-tie'}}
+                                                {{i18n 'text-social-bonus-link'}}
                                             </span>
                                         </a>
-                                        <a href="#" class="ae-social-item i-Facebook" title="">
-                                            <span class="tooltip">
-                                                {{i18n 'text-soc-net-tie'}}
-                                            </span>
-                                        </a>
-                                        <a href="#" class="ae-social-item i-Twitter">
-                                            <span class="tooltip">
-                                                {{i18n 'text-soc-net-tie'}}
-                                            </span>
-                                        </a>
-                                        <a href="#" class="ae-social-item i-Google">
-                                            <span class="tooltip">
-                                                {{i18n 'text-soc-net-tie'}}
-                                            </span>
-                                        </a>
-                                        <a href="#" class="ae-social-item i-Instagram">
-                                            <span class="tooltip">
-                                                {{i18n 'text-soc-net-tie'}}
-                                            </span>
-                                        </a>
-                                        <a href="#" class="ae-social-item i-Odnoklassniki">
-                                            <span class="tooltip">
-                                                {{i18n 'text-soc-net-tie'}}
-                                            </span>
-                                        </a>
+                                        {{/if}}
+                                        {{/each}}
                                     </div>
                                 </li>
+                                {{/if}}
+
+                                {{#if social.enabled}}
+                                <li class="ae-social">
+                                    <i class="uk-float-left">Отвязать соц. сети</span></i>
+                                    <div class="uk-float-left">
+                                        {{#each social.providers}}
+                                        {{#if .}}
+                                        <span onclick="Form.delete({href:'/profile/social',data:{provider:'{{@key}}'}})" class="skip ae-social-item i-{{@key}}" title="">
+                                            <span class="tooltip">
+                                                {{i18n 'text-social-delete-link'}}
+                                            </span>
+                                        </span>
+                                        {{/if}}
+                                        {{/each}}
+                                    </div>
+                                </li>
+                                {{/if}}
+
                             </ul>
                         </li>
                     </ul>

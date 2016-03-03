@@ -842,6 +842,36 @@ class Player extends Entity
         return $this;
     }
 
+    public function getSocial()
+    {
+
+        $socials = array(
+            'disabled'  => false,
+            'enabled'   => false,
+            'providers' => array()
+        );
+        $providers = array_keys(\Config::instance()->hybridAuth['providers']);
+
+        if(is_array($providers) && !empty($providers)) {
+            foreach ($providers as $provider) {
+
+                $social = isset($this->getAdditionalData()[$provider])
+                    ? $this->getAdditionalData($provider)
+                    : false;
+
+                if (!$social || !$social['enabled']) {
+                    $socials['disabled'] = true;
+                    $socials['providers'][$provider] = 0;
+                } else {
+                    $socials['enabled'] = true;
+                    $socials['providers'][$provider] = $social['identifier'];
+                }
+            }
+        }
+
+        return $socials;
+    }
+
     public function getAdditionalData()
     {
         return $this->_additionalData;

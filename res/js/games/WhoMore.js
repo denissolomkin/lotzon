@@ -13,9 +13,6 @@
                     Game.initTimers();
                     Apps.WhoMore.paintCell();
                     Game.end() && Apps.WhoMore.end();
-
-                    //>>>>>> dont forget remove this!!!!
-                    Game.destroyTimeOut();
                 }
             }
         },
