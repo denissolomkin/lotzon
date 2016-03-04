@@ -2,6 +2,7 @@
 namespace controllers\admin;
 
 use \Application, \PrivateArea, \SettingsModel, \Session2, \Admin;
+use Ratchet\Wamp\Exception;
 
 Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
 
@@ -34,8 +35,24 @@ class Counters extends PrivateArea
     public function saveAction()
     {
 
-        if($this->request()->post($this->activeMenu))
-            SettingsModel::instance()->getSettings($this->activeMenu)->setValue($this->request()->post($this->activeMenu))->create();
+        if($this->request()->post($this->activeMenu)) {
+
+            try {
+                $counters = $this->request()->post($this->activeMenu);
+                $counters['ACCEPTED_USERS'] = explode(',', $counters['ACCEPTED_USERS']);
+                in_array(1, $counters);
+            } catch(\Exception $e){
+                $response = array(
+                    'status'  => 0,
+                    'message' => 'ERROR',
+                    'res'    => null
+                );
+
+                die(json_encode($response));
+            }
+
+            SettingsModel::instance()->getSettings($this->activeMenu)->setValue($counters)->create();
+        }
 
         $this->redirect('/private/'.$this->activeMenu);
     }

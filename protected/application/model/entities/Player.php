@@ -1498,6 +1498,10 @@ class Player extends Entity
             throw new EntityException("ACCESS_DENIED", 403);
         }
 
+        if (is_array(SettingsModel::instance()->getSettings('counters')->getValue()['ACCEPTED_USERS'])
+            && !in_array($this->getId(), SettingsModel::instance()->getSettings('counters')->getValue()['ACCEPTED_USERS'])) {
+            throw new EntityException("USER_NOT_ACCEPT", 403);
+        }
 
         if ($this->getPassword() !== $this->compilePassword($password)) {
             $this->writeLog(array('action'=>'INVALID_PASSWORD', 'desc'=>$this->hidePassword($password), 'status'=>'danger'));
