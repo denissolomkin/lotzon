@@ -276,13 +276,13 @@ class LotteryController extends \AjaxController
                     'balls'    => $count,
                     'currency' => $prizes[$count]['currency'],
                     'sum'      => $prizes[$count]['sum'],
-                    'matches'  => $matches + $balls_incr[$count],
+                    'matches'  => ($lotteryId>=120?$matches + $balls_incr[$count]:null),
                 );
                 $response['res']['lottery'][$lotteryId]['statistics']["gold"][$count]    = array(
                     'balls'    => $count,
                     'currency' => $prizes_gold[$count]['currency'],
                     'sum'      => $prizes_gold[$count]['sum'],
-                    'matches'  => 0,
+                    'matches'  => null,
                 );
             }
 
