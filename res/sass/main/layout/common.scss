@@ -1004,3 +1004,14 @@ input.input-radio:checked + label.input-radio:before {
 
 }
 // send message yabida!!!
+
+/* Set no select */
+#content{
+   
+   > div[id^='games']{
+      -moz-user-select: none;
+      -khtml-user-select: none;
+      -webkit-user-select: none;
+      -o-user-select: none;
+   }
+}

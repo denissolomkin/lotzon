@@ -87,7 +87,7 @@ $hb_regular: handbookpro-regular;
             display: block;
             span {
                 font-size: 18px;
-                font-weight: 600;
+                // font-weight: 600;
             }
         }
         .money {
@@ -95,7 +95,7 @@ $hb_regular: handbookpro-regular;
             display: block;
             span {
                 font-size: 18px;
-                font-weight: 600;
+                // font-weight: 600;
             }
         }
         .photo img {
@@ -236,13 +236,13 @@ $hb_regular: handbookpro-regular;
     }
     .game-settings {
         box-sizing: border-box;
-        font-weight: 600;
+        // font-weight: 600;
         width: 50%;
         padding-left: 10px;
         line-height: 1.2;
         color: $color_gravel_approx;
         [class^="i-"] {
-            font-weight: normal;
+            // font-weight: normal;
             font-size: 23px;
         }
         // disable cards number - use font-icons in Durak
@@ -307,13 +307,13 @@ $hb_regular: handbookpro-regular;
 .game-settings {
     .games-online {
         font-family: $hb_regular;
-        font-weight: normal;
+        // font-weight: normal;
     }
     .filter {
         display: block;
         margin: 20px 15px;
         font-family: $hb_regular;
-        font-weight: normal;
+        // font-weight: normal;
         li {
             float: left;
             font-size: 13px;
@@ -415,36 +415,40 @@ $hb_regular: handbookpro-regular;
         counter-reset: my-awesome-counter;
         button{
             font-family: $hb_regular;
-            font-weight: normal;
+            // font-weight: normal;
         }
         .render-list {
             margin-bottom: 30px;
         }
         .player {
             font-family: $hb_regular;
-            font-weight: normal;
+            // font-weight: normal;
             counter-increment: my-awesome-counter;
             border-bottom: 1px solid $mercury;
             padding: 5px;
             position: relative;
-            display: -webkit-flex;
-            display: -ms-flexbox;
-            display: -webkit-box;
-            display: flex;
-            -webkit-flex-direction: row;
-            -ms-flex-direction: row;
-            -webkit-box-orient: horizontal;
-            -webkit-box-direction: normal;
-            flex-direction: row;
-            -webkit-flex-wrap: nowrap;
-            -ms-flex-wrap: nowrap;
-            flex-wrap: nowrap;
-            -webkit-align-items: center;
-            -ms-flex-align: center;
-            -webkit-box-align: center;
-            align-items: center;
             -webkit-transition: background .5s linear;
             transition: background .5s linear;
+            
+            & > *{
+                width: 100%;
+                display: -webkit-flex;
+                display: -ms-flexbox;
+                display: -webkit-box;
+                display: flex;
+                -webkit-flex-direction: row;
+                -ms-flex-direction: row;
+                -webkit-box-orient: horizontal;
+                -webkit-box-direction: normal;
+                flex-direction: row;
+                -webkit-flex-wrap: nowrap;
+                -ms-flex-wrap: nowrap;
+                flex-wrap: nowrap;
+                -webkit-align-items: center;
+                -ms-flex-align: center;
+                -webkit-box-align: center;
+                align-items: center;
+            }
             .name {
                 -webkit-flex-grow: 1;
                 -ms-flex-positive: 1;
@@ -456,13 +460,13 @@ $hb_regular: handbookpro-regular;
                     display: block;
                     font-size: 13px;
                     font-family: $hb_regular;
-                    font-weight: normal;
+                    // font-weight: normal;
                 }
             }
             .rating {
                 font-size: 13px;
                 font-family: $hb_regular;
-                font-weight: normal;
+                // font-weight: normal;
             }
             &:hover {
                 background: $wild_sand;
@@ -587,7 +591,7 @@ $hb_regular: handbookpro-regular;
         cursor: pointer;
         /*padding: 7px;*/
         text-transform: uppercase;
-        font-weight: normal;
+        // font-weight: normal;
         font-family: $hb_regular;
         width: 100%;
         background: #fff;

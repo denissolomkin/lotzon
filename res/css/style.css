@@ -560,7 +560,8 @@ input.input-radio:checked + label.input-radio:before {
       margin-top: 10px; }
     .modal-error div span {
       display: block;
-      color: red; }
+      color: red !important;
+      margin: 0; }
 
 .modal-loading {
   background-color: rgba(255, 255, 255, 0.5); }
@@ -1444,6 +1445,13 @@ input.input-radio:checked + label.input-radio:before {
       left: -15px; }
     #zhgi:hover .arrow {
       width: 0; }
+
+/* Set no select */
+#content > div[id^='games'] {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none; }
 
 .footer {
   /*^ common.scss*/
@@ -10931,14 +10939,12 @@ footer.unvisible {
       font-size: 14px;
       display: block; }
       .games-view .info-top .points span {
-        font-size: 18px;
-        font-weight: 600; }
+        font-size: 18px; }
     .games-view .info-top .money {
       font-size: 14px;
       display: block; }
       .games-view .info-top .money span {
-        font-size: 18px;
-        font-weight: 600; }
+        font-size: 18px; }
     .games-view .info-top .photo img {
       overflow: hidden;
       border-radius: 50%;
@@ -11049,14 +11055,12 @@ footer.unvisible {
             display: initial; }
   .games-view .game-settings {
     box-sizing: border-box;
-    font-weight: 600;
     width: 50%;
     padding-left: 10px;
     line-height: 1.2;
     color: #474747;
     /*i[class^="i-games-"]:not([style*="content:"]) + * {*/ }
     .games-view .game-settings [class^="i-"] {
-      font-weight: normal;
       font-size: 23px; }
     .games-view .game-settings label i[class^="i-games-cards"] + span {
       display: none; }
@@ -11100,14 +11104,12 @@ footer.unvisible {
           color: #111; }
 
 .game-settings .games-online {
-  font-family: handbookpro-regular;
-  font-weight: normal; }
+  font-family: handbookpro-regular; }
 
 .game-settings .filter {
   display: block;
   margin: 20px 15px;
-  font-family: handbookpro-regular;
-  font-weight: normal; }
+  font-family: handbookpro-regular; }
   .game-settings .filter li {
     float: left;
     font-size: 13px;
@@ -11188,35 +11190,35 @@ footer.unvisible {
   color: #474747;
   counter-reset: my-awesome-counter; }
   .game-settings .players-list button {
-    font-family: handbookpro-regular;
-    font-weight: normal; }
+    font-family: handbookpro-regular; }
   .game-settings .players-list .render-list {
     margin-bottom: 30px; }
   .game-settings .players-list .player {
     font-family: handbookpro-regular;
-    font-weight: normal;
     counter-increment: my-awesome-counter;
     border-bottom: 1px solid #e5e5e5;
     padding: 5px;
     position: relative;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: -webkit-box;
-    display: flex;
-    -webkit-flex-direction: row;
-    -ms-flex-direction: row;
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-    flex-direction: row;
-    -webkit-flex-wrap: nowrap;
-    -ms-flex-wrap: nowrap;
-    flex-wrap: nowrap;
-    -webkit-align-items: center;
-    -ms-flex-align: center;
-    -webkit-box-align: center;
-    align-items: center;
     -webkit-transition: background .5s linear;
     transition: background .5s linear; }
+    .game-settings .players-list .player > * {
+      width: 100%;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: -webkit-box;
+      display: flex;
+      -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+      -webkit-box-orient: horizontal;
+      -webkit-box-direction: normal;
+      flex-direction: row;
+      -webkit-flex-wrap: nowrap;
+      -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+      -webkit-align-items: center;
+      -ms-flex-align: center;
+      -webkit-box-align: center;
+      align-items: center; }
     .game-settings .players-list .player .name {
       -webkit-flex-grow: 1;
       -ms-flex-positive: 1;
@@ -11227,12 +11229,10 @@ footer.unvisible {
         content: counter(my-awesome-counter);
         display: block;
         font-size: 13px;
-        font-family: handbookpro-regular;
-        font-weight: normal; }
+        font-family: handbookpro-regular; }
     .game-settings .players-list .player .rating {
       font-size: 13px;
-      font-family: handbookpro-regular;
-      font-weight: normal; }
+      font-family: handbookpro-regular; }
     .game-settings .players-list .player:hover {
       background: #f4f4f4; }
     .game-settings .players-list .player:first-child {
@@ -11331,7 +11331,6 @@ footer.unvisible {
     cursor: pointer;
     /*padding: 7px;*/
     text-transform: uppercase;
-    font-weight: normal;
     font-family: handbookpro-regular;
     width: 100%;
     background: #fff;
