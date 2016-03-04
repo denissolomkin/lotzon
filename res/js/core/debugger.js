@@ -51,11 +51,11 @@
                 if (log && typeof log == 'object' && log.length) {
                    $.each(log, function (index, obj) {
                         if (obj)
-                            output += JSON.stringify(obj).replace(/"/g, "").substring(0, type == "error" ? 1000 : 40) + ' ';
+                            output += JSON.stringify(obj).replace(/"/g, "").substring(0, type == "error" ? 1000 : 100) + ' ';
                     });
 
                 } else {
-                    output = log && JSON.stringify(log).replace(/"/g, "").substring(0, type == "error" ? 1000 : 40);
+                    output = log && JSON.stringify(log).replace(/"/g, "").substring(0, type == "error" ? 1000 : 100);
                 }
 
                 console[type](d.toLocaleTimeString('ru-RU') + ' ' + pre + output);

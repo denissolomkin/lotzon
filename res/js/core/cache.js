@@ -322,7 +322,7 @@
                     } else {
 
                         if (typeof path === 'object') {
-                            var keys = this.splitPath(path.href);
+                            var keys = path.hasOwnProperty('href') ? this.splitPath(path.href) : path.slice();
                         } else
                             var keys = this.splitPath(path);
 
@@ -346,7 +346,7 @@
                                 }
                             }
 
-                        } else if (cache && !isNumeric(needle) && cache[Object.keys(cache)[0]].hasOwnProperty('id')) {
+                        } else if (cache && !isNumeric(needle) && Object.size(cache) && cache[Object.keys(cache)[0]].hasOwnProperty('id')) {
 
                             var offset = path.query && path.query.offset || 0;
 
@@ -406,6 +406,8 @@
 
                             if (cache && !Object.size(cache))
                                 cache = false;
+                        } else {
+                            cache = false;
                         }
                     }
 
@@ -482,9 +484,16 @@
 
                 var find = this.find(key);
 
-                if (find)
-                    if (this.delete(this.storages[find.storage], key))
+                console.error(find);
+
+                if (find){
+                    key = key.slice(0, -1);
+                    key.push(find['id']);
+                    if (this.delete(this.storages[find.storage], key)){
                         this.save(this.storages[find.storage]);
+                        return true;
+                    }
+                }
 
             }
         },

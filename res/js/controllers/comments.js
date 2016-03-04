@@ -60,7 +60,7 @@
             var notifications = document.getElementById('communication-notifications');
             if (notifications) {
                 var notificationsList = notifications.getElementsByClassName('c-notifications-list')[0];
-                if (1 || Player.getCount('notifications') && (notificationsList && notificationsList.style.display !== 'block')) {
+                if (!notificationsList || notificationsList.style.display !== 'block') { //1 || Player.getCount('notifications') && (notificationsList && notificationsList.style.display !== 'block')
                     R.push({
                         href: 'communication-notifications',
                         json: {}
@@ -135,7 +135,7 @@
                     };
 
                 obj.communication.notifications[notification.getAttribute('data-id')] = null;
-                Player.decrement('notifications');
+                Player.decrement('local');
                 Cache.remove(obj);
 
             },
