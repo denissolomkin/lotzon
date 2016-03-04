@@ -6,7 +6,7 @@
     {{#if (gt (getSplittedEl mode "-" "2") players.length )}}
     <input type="hidden" name="action" value="start">
     <input type="hidden" name="mode" value="{{mode}}">
-    <button style="position: absolute; opacity: 0; width: 100%;height: 100%;" type="sumbit" name="sumbit">play</button>
+    <button type="submit" name="submit">play</button>
     {{/if}}
 
     <div class="bet">{{getSplittedEl mode "-" "1"}}

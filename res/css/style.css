@@ -11123,18 +11123,18 @@ footer.unvisible {
   width: 100%; }
   .game-settings .render-list-container .render-list {
     margin-bottom: 30px; }
+  .game-settings .render-list-container .game [type="submit"] {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0; }
   .game-settings .render-list-container .game.available {
     -webkit-transition: background .5s linear;
     transition: background .5s linear; }
     .game-settings .render-list-container .game.available * {
       cursor: pointer; }
-    .game-settings .render-list-container .game.available button[type="submit"] {
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      opacity: 0; }
     .game-settings .render-list-container .game.available:hover {
       background: #f4f4f4; }
       .game-settings .render-list-container .game.available:hover > form > i {
