@@ -166,7 +166,7 @@
 
             setTimeout(function() {
                 if ((document.querySelector('.ghd-game-inf') != undefined)
-                    && Device.onScreen.call(document.querySelector('.ghd-game-inf'), 300)) {
+                    && Device.onScreen.call(document.querySelector('.ghd-game-inf'), 200)) {
                     summaryVisible();
                 } else {
                     $(window).on('scroll', summaryVisible);
