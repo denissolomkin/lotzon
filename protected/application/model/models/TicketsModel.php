@@ -54,19 +54,29 @@ class TicketsModel extends Model
                 return true;
                 break;
             case 4:
+                // Old players
+                if ($playerId <= (int)\SettingsModel::instance()->getSettings('ticketConditions')->getValue('LASTID_OLD_USERS')) {
+                    return true;
+                }
+                // Ticket condition
                 $player = new Player();
                 $player->setId($playerId)->fetch();
-                if ($player->getGamesPlayed() >= 100) {
+                if ($player->getGamesPlayed() >= (int)\SettingsModel::instance()->getSettings('ticketConditions')->getValue('CONDITION_4_TICKET')) {
                     return true;
                 }
                 break;
             case 5:
-                if (\PlayersModel::instance()->getReferralsCount($playerId) >= 10) {
+                // Old players
+                if ($playerId <= (int)\SettingsModel::instance()->getSettings('ticketConditions')->getValue('LASTID_OLD_USERS')) {
+                    return true;
+                }
+                // Ticket condition
+                if (\PlayersModel::instance()->getReferralsCount($playerId) >= (int)\SettingsModel::instance()->getSettings('ticketConditions')->getValue('CONDITION_5_TICKET')) {
                     return true;
                 }
                 break;
             case 6:
-                if (\PlayersModel::instance()->getReferralsCount($playerId) >= 50) {
+                if (\PlayersModel::instance()->getReferralsCount($playerId) >= (int)\SettingsModel::instance()->getSettings('ticketConditions')->getValue('CONDITION_6_TICKET')) {
                     return true;
                 }
                 break;

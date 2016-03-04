@@ -110,6 +110,19 @@ class Lottery extends \PrivateArea
             $goldPrice  = $this->request()->post('goldPrice', array());
             $increments = $this->request()->post('increments', array());
 
+            $condition4 = $this->request()->post('condition4', 0);
+            $condition5 = $this->request()->post('condition5', 0);
+            $condition6 = $this->request()->post('condition6', 0);
+            $lastIdOldUsers = $this->request()->post('lastIdOldUsers', 0);
+
+            $ticketConditions = SettingsModel::instance()->getSettings('ticketConditions')->getValue();
+            $ticketConditions['CONDITION_4_TICKET'] = $condition4;
+            $ticketConditions['CONDITION_5_TICKET'] = $condition5;
+            $ticketConditions['CONDITION_6_TICKET'] = $condition6;
+            $ticketConditions['LASTID_OLD_USERS']   = $lastIdOldUsers;
+
+            SettingsModel::instance()->getSettings('ticketConditions')->setValue($ticketConditions)->create();
+
             SettingsModel::instance()->getSettings('goldPrice')->setValue($goldPrice)->create();
 
             $settings->setGameIncrements($increments);

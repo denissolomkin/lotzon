@@ -68,6 +68,31 @@
                 Цена Gold-билета
                 <input type="text" class="form-control input-md" value="<?=@$goldPrice['UA']?>" name="goldPrice">
             </div>
+            <div class="row">
+                <div class="col-md-6 pull-left">
+                    Количество сыграных игр для 4го билета
+                    <input type="text" class="form-control input-md" value="<?=(int)\SettingsModel::instance()->getSettings('ticketConditions')->getValue('CONDITION_4_TICKET')?>" name="condition4">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 pull-left">
+                    Количество рефералов для 5го билета
+                    <input type="text" class="form-control input-md" value="<?=(int)\SettingsModel::instance()->getSettings('ticketConditions')->getValue('CONDITION_5_TICKET')?>" name="condition5">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 pull-left">
+                    Количество рефералов для 6го билета
+                    <input type="text" class="form-control input-md" value="<?=(int)\SettingsModel::instance()->getSettings('ticketConditions')->getValue('CONDITION_6_TICKET')?>" name="condition6">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 pull-right">
+                Последний id "старых" пользователей
+                <input type="text" class="form-control input-md" value="<?=(int)\SettingsModel::instance()->getSettings('ticketConditions')->getValue('LASTID_OLD_USERS')?>" name="lastIdOldUsers">
+            </div>
         </div>
 
         <div class="row">
@@ -373,6 +398,11 @@ $ajaxedSettings['goldPrizes'] = (object)$ajaxedSettings['goldPrizes'];
         gameSettings.countryCoefficients[country] = $('input[name="coof"]').val();
         gameSettings.countryRates[country] = $('input[name="rate"]').val();
         gameSettings.goldPrice[country] = $('input[name="goldPrice"]').val();
+
+        gameSettings.condition4 = $('input[name="condition4"]').val();
+        gameSettings.condition5 = $('input[name="condition5"]').val();
+        gameSettings.condition6 = $('input[name="condition6"]').val();
+        gameSettings.lastIdOldUsers = $('input[name="lastIdOldUsers"]').val();
 
         gameSettings.prizes[country] = {};
         $([1,2,3,4,5,6]).each(function(id, ballsCount) {
