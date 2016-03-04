@@ -940,7 +940,7 @@ class WebSocketController implements MessageComponentInterface
                                                 $stack = GamePlayersModel::instance()->getStack($appName, $appMode['mode']);
 
                                                 // если насобирали минимальную очередь
-                                                if (1 || (count($stack) >= $game->getOptions('s') AND count($stack) >= $appMode['number']) || $game->getOptions('f')) {
+                                                if (true || (count($stack) >= $game->getOptions('s') AND count($stack) >= $appMode['number']) || $game->getOptions('f')) {
 
                                                     // перемешали игроков
                                                     $keys = array_keys($stack);
@@ -989,7 +989,7 @@ class WebSocketController implements MessageComponentInterface
                                         } else {
 
                                             echo $this->time(1) . " {$gamePlayer->getApp('Name')}" . " У игрока {$gamePlayer->getId()} недостаточно денег {$gamePlayer->getApp('Mode')}\n";
-                                            $client->send(json_encode(array('error' => 'INSUFFICIENT_FUNDS')));
+                                            $from->send(json_encode(array('error' => 'INSUFFICIENT_FUNDS')));
 
                                             return false;
                                         }
@@ -1028,7 +1028,7 @@ class WebSocketController implements MessageComponentInterface
                                         if (!$app->getOptions('v') && count($app->getClients()) == $app->getNumberPlayers()) {
 
                                             echo $this->time(1) . " {$gamePlayer->getApp('Name')}" . " Игра {$app->getUid()} переполнена при попытке входа {$gamePlayer->getId()}\n";
-                                            $client->send(json_encode(array('error' => 'GAME_IS_FULL')));
+                                            $from->send(json_encode(array('error' => 'GAME_IS_FULL')));
 
                                             return false;
 
@@ -1043,7 +1043,7 @@ class WebSocketController implements MessageComponentInterface
                                         } else if (!$player->checkBalance($app->getCurrency(), $app->getPrice())) {
 
                                             echo $this->time(1) . " {$gamePlayer->getApp('Name')}" . " У игрока {$gamePlayer->getId()} недостаточно денег {$gamePlayer->getApp('Mode')}\n";
-                                            $client->send(json_encode(array('error' => 'INSUFFICIENT_FUNDS')));
+                                            $from->send(json_encode(array('error' => 'INSUFFICIENT_FUNDS')));
 
                                             return false;
 
