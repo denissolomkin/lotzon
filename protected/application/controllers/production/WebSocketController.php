@@ -940,7 +940,7 @@ class WebSocketController implements MessageComponentInterface
                                                 $stack = GamePlayersModel::instance()->getStack($appName, $appMode['mode']);
 
                                                 // если насобирали минимальную очередь
-                                                if ((count($stack) >= $game->getOptions('s') AND count($stack) >= $appMode['number']) || $game->getOptions('f')) {
+                                                if (true || (count($stack) >= $game->getOptions('s') AND count($stack) >= $appMode['number']) || $game->getOptions('f')) {
 
                                                     // перемешали игроков
                                                     $keys = array_keys($stack);
@@ -1025,7 +1025,7 @@ class WebSocketController implements MessageComponentInterface
 
                                     if (!in_array($player->getId(), array_keys($app->getClients()))) {
 
-                                        if (1 || !$app->getOptions('v') && count($app->getClients()) == $app->getNumberPlayers()) {
+                                        if (!$app->getOptions('v') && count($app->getClients()) == $app->getNumberPlayers()) {
 
                                             echo $this->time(1) . " {$gamePlayer->getApp('Name')}" . " Игра {$app->getUid()} переполнена при попытке входа {$gamePlayer->getId()}\n";
                                             $from->send(json_encode(array('error' => 'GAME_IS_FULL')));
