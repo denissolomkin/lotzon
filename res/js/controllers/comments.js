@@ -55,10 +55,12 @@
 
         renderNotifications: function() {
 
+            console.error('renderNotifications');
+
             var notifications = document.getElementById('communication-notifications');
             if (notifications) {
                 var notificationsList = notifications.getElementsByClassName('c-notifications-list')[0];
-                if (Player.getCount('notifications') && (notificationsList && notificationsList.style.display !== 'block')) {
+                if (1 || Player.getCount('notifications') && (notificationsList && notificationsList.style.display !== 'block')) {
                     R.push({
                         href: 'communication-notifications',
                         json: {}
@@ -150,7 +152,7 @@
                         }
                     };
 
-                Player.decrement('notifications', notifications.length);
+                Player.decrement('local', notifications.length);
 
                 for (var i = 0; i < notifications.length; i++) {
                     obj.communication.notifications[notifications[i].getAttribute('data-id')] = null;
@@ -180,7 +182,7 @@
                         }
                     };
 
-                Player.decrement('notifications', notifications.length);
+                Player.decrement('local', notifications.length);
 
                 for (var i = 0; i < notifications.length; i++) {
                     obj.communication.notifications[notifications[i].parentNode.getAttribute('data-id')] = null;
@@ -193,7 +195,15 @@
                     event.stopPropagation();
                     Comments.hideNotifications();
                     DOM.scroll(loadedComment);
-                    loadedComment.classList.add('highlight');
+                    setTimeout(function(){
+                        setTimeout(function(){
+                            loadedComment.classList.remove('animated');
+                            loadedComment.classList.remove('tada');
+                        },2000);
+                        loadedComment.classList.add('animated');
+                        loadedComment.classList.add('tada');
+                    },500);
+
                 }
 
 
