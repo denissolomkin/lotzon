@@ -112,8 +112,10 @@ class Blogs extends PrivateArea
                 }
 
                 \BlogsModel::instance()->removeSimilars($blogObj->getId());
-                foreach ($similar as $similarBlogId) {
-                    \BlogsModel::instance()->addSimilar($blogObj->getId(), $similarBlogId);
+                if (is_array($similar)) {
+                    foreach ($similar as $similarBlogId) {
+                        \BlogsModel::instance()->addSimilar($blogObj->getId(), $similarBlogId);
+                    }
                 }
 
             } catch (EntityException $e) {
