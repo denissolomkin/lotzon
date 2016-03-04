@@ -1,12 +1,5 @@
 <?php
 
-Config::instance()->cacheConnectionProperties = array(
-    'host'       => 'localhost',
-    'port'       => 11211,
-    'timeout'    => 1,
-    'persistent' => true
-);
-
 // init memcache connection
 try {
     if (Config::instance()->cacheEnabled)
