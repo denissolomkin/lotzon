@@ -163,8 +163,10 @@
             console.error(lotterySummary);
 
             var $won = $('.ghd-game-inf .ghd-all-won'),
-                $table = $('.ghd-game-inf table');
+                $table = $('.ghd-game-inf table'),
+                $inf = $('.ghd-game-inf .title');
 
+            $inf.hide();
             $won.hide();
             $table.hide();
 
@@ -185,6 +187,7 @@
                     return;
                 }
 
+                $inf.show();
                 $table.fadeIn();
 
                 for (var i in lotterySummary.default) {
