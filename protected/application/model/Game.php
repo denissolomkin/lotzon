@@ -72,7 +72,7 @@ class Game extends Entity
             if ($e->getCode() == 404) {
                 return false;
             } else
-                throw new EntityException($e->getMessage(), $e->getCode());
+                echo '[ERROR] Game->fetch(): ' . $e->getCode() . $e->getMessage();
         }
 
         return $this;
@@ -87,7 +87,7 @@ class Game extends Entity
             $model = $this->getModelClass();
             $model::instance()->create($this);
         } catch (ModelException $e) {
-            echo $e->getMessage(). $e->getCode();
+            echo '[ERROR] Game->create(): ' . $e->getCode() . $e->getMessage();
         }
 
         return $this;
@@ -102,7 +102,7 @@ class Game extends Entity
             $model = $this->getModelClass();
             $model::instance()->update($this);
         } catch (ModelException $e) {
-            echo $e->getMessage(). $e->getCode();
+            echo '[ERROR] Game->update(): ' . $e->getMessage(). $e->getCode();
         }
 
         return $this;
@@ -122,7 +122,7 @@ class Game extends Entity
             $this->setSaved(1);
             return $model::instance()->saveResults($this);
         } catch (ModelException $e) {
-            echo '[ERROR] ' . $e->getMessage();
+            echo '[ERROR] Game->saveResults(): ' . $e->getMessage();
             return false;
         }
 
@@ -319,7 +319,6 @@ class Game extends Entity
             'action'    => 'start'
         ));
 
-        $this->updatePlayer(array('reply', 'ready', 'result'));
         $this->setResponse($this->getClients());
     }
 
