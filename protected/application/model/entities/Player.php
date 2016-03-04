@@ -1498,8 +1498,8 @@ class Player extends Entity
             throw new EntityException("ACCESS_DENIED", 403);
         }
 
-        if (is_array(SettingsModel::instance()->getSettings('whitelist')->getValue())
-            && !in_array($this->getId(), SettingsModel::instance()->getSettings('whitelist')->getValue())) {
+        $whitelist = SettingsModel::instance()->getSettings('whitelist')->getValue();
+        if (is_array($whitelist) && !empty($whitelist) && !in_array($this->getId(), $whitelist)) {
             throw new EntityException("USER_NOT_ACCEPT", 403);
         }
 
