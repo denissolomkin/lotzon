@@ -60,7 +60,10 @@
             var notifications = document.getElementById('communication-notifications');
             if (notifications) {
                 var notificationsList = notifications.getElementsByClassName('c-notifications-list')[0];
-                if (!notificationsList || notificationsList.style.display !== 'block') { //1 || Player.getCount('notifications') && (notificationsList && notificationsList.style.display !== 'block')
+                if (!Player.getCount('notifications')
+                    || !notificationsList
+                    || notificationsList.style.display !== 'block'
+                ) { //1 || Player.getCount('notifications') && (notificationsList && notificationsList.style.display !== 'block')
                     R.push({
                         href: 'communication-notifications',
                         json: {}
@@ -154,11 +157,15 @@
 
                 Player.decrement('local', notifications.length);
 
-                for (var i = 0; i < notifications.length; i++) {
-                    obj.communication.notifications[notifications[i].getAttribute('data-id')] = null;
+                if(notifications.length) {
+                    for (var i = 0; i < notifications.length; i++) {
+                        obj.communication.notifications[notifications[i].getAttribute('data-id')] = null;
+                    }
+
+                    Cache.remove(obj);
                 }
 
-                Cache.remove(obj);
+                R.push('communication-notifications');
 
             },
 

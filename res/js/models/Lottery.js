@@ -128,7 +128,8 @@
 
             for (var type in lotteryData.statistics) {
                 for (var i in lotteryData.statistics[type]) {
-                    if (!lotteryData.statistics[type].hasOwnProperty(i))
+
+                    if (!lotteryData.statistics[type].hasOwnProperty(i) || lotteryData.statistics[type][i].matches === null)
                         continue;
 
                     i = parseInt(i);
@@ -164,6 +165,9 @@
             var $won = $('.ghd-game-inf .ghd-all-won'),
                 $table = $('.ghd-game-inf table');
 
+            $won.hide();
+            $table.hide();
+
             setTimeout(function() {
                 if ((document.querySelector('.ghd-game-inf') != undefined)
                     && Device.onScreen.call(document.querySelector('.ghd-game-inf'), 200)) {
@@ -174,9 +178,12 @@
                 }
             }, 600);
 
-            $won.hide();
 
             function summaryVisible() {
+
+                if(!Object.size(lotterySummary.totalSum)){
+                    return;
+                }
 
                 $table.fadeIn();
 
