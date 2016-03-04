@@ -2,37 +2,39 @@
     <div class="content-box-header"><span class="back i-arrow-left large-visible"></span><span class="back i-arrow-slim-left small-visible "></span>{{i18n "title-profile-settings"}}</div>
     <div class="content-box-content clearfix">
         <div class="content-box-item">
-            <form action="/profile/settings" method="post" class="settings clearfix">
+            <form action="/profile/settings" method="put" class="settings clearfix">
                 <div class="option-block clearfix container-center">
                     <div class="setting-title"> {{i18n "title-account-settings"}}</div>
                 </div>
+                <!--
                 <div class="option-block clearfix">
-                    <div class="s-account_delete clearfix strip">
-                        <div class="title">{{i18n "title-profile-setting"}}</div>
-                        <div> {{#if (day registration)}}
-                            <span> {{day registration}} </span> {{else}}
-                            <span class="uk-disabled">день</span> {{/if}}
+                <div class="s-account_delete clearfix strip">
+                    <div class="title">{{i18n "title-profile-setting"}}</div>
+                    <div> {{#if (day registration)}}
+                        <span> {{day registration}} </span> {{else}}
+                        <span class="uk-disabled">день</span> {{/if}}
+                    </div>
+                    <div class="uk-float-right delete-reg show-option">
+                        <span class='change'>{{i18n "title-profile-account-delete"}}</span>
+                    </div>
+                    <div class="uk-float-right delete-reg hidden option">
+                        <div class="choice">
+                            <label class="radio-text">
+                                <input type="radio" name="email" value="1" checked>
+                                <span class="danger">{{i18n "title-profile-delete-yes"}}</span>
+                            </label>
+                            <label class="radio-text">
+                                <input type="radio" name="email" value="2">
+                                <span class="change">{{i18n "title-profile-delete-no"}}</span>
+                            </label>
                         </div>
-                        <div class="uk-float-right delete-reg show-option">
-                            <span class='change'>{{i18n "title-profile-account-delete"}}</span>
-                        </div>
-                        <div class="uk-float-right delete-reg hidden option">
-                            <div class="choice">
-                                <label class="radio-text">
-                                    <input type="radio" name="email" value="1" checked>
-                                    <span class="danger">{{i18n "title-profile-delete-yes"}}</span>
-                                </label>
-                                <label class="radio-text">
-                                    <input type="radio" name="email" value="2">
-                                    <span class="change">{{i18n "title-profile-delete-no"}}</span>
-                                </label>
-                            </div>
-                        </div>
+                    </div>
                     </div>
                     <div class=" s-notice hidden option">
                         <p>{{i18n "text-registration-delete-notice"}}</p>
                     </div>
                 </div>
+                -->
                 <!--
                 <div class="option-block clearfix">
                     <div class="s-lang clearfix strip">
@@ -76,7 +78,7 @@
                     </div>
                     <p class="s-notice option hidden-notice mobile-notice">{{i18n "text-unvalid-pass-repeat"}}</p>
                 </div>
-                <div class="option-block">
+                <!--div class="option-block">
                     <div class="tie-soc clearfix strip">
                         <div class="title">{{i18n "title-profile-socnetworks-link"}} <a class="question" href="#"> (?) <span class="tooltip">
                                     {{i18n 'text-social-bonus-link'}}
@@ -96,7 +98,7 @@
                             </a>
                         </div>
                     </div>
-                </div>
+                </div-->
                 <div class="option-block">
                     <div class="s-email clearfix strip">
                         <div class="title">{{i18n "title-profile-get-email"}}</div>
@@ -115,7 +117,8 @@
                         <div class="title">{{i18n "title-profile-favorite"}}</div>
                         <div class="ae-current-combination clearfix">
                             {{#each favorite}}
-                            <input name="favorite[]" value="{{.}}"> {{/each}}
+                            <input readonly name="favorite[]" value="{{.}}">
+                            {{/each}}
                         </div>
                         <div class="uk-float-right show-option ">
                             <span class='change large-visible change-favorite'>{{i18n "title-profile-settings-change"}}</span> <i class="i-pencil change change-favorite small-visible"></i>
@@ -130,7 +133,7 @@
                     <ul class="ae-combination-box hidden clearfix option">
                         {{#each (player "renderFavorite")}}
                         <li{{#if (true .)}} class="selected" {{/if}}>{{@key}}</li>
-                            {{/each}}
+                        {{/each}}
                     </ul>
                 </div>
                 <div class="container-center">

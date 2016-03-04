@@ -571,7 +571,8 @@ input.input-radio:checked + label.input-radio:before {
     }
     & span {
       display: block;
-      color: red;
+      color: red !important;
+      margin: 0;
     }
   }
 }
