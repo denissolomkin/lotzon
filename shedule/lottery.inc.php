@@ -378,7 +378,9 @@ function GetLotteryCombination($ballsStart, $ballsRange, $rounds, $return, $orde
                 stat  INNER JOIN LotterySettings ls USING(BallsCount)
 
                 WHERE
-                    ls.CountryCode = 'UA'";
+                    ls.CountryCode = 'UA'
+                AND
+                    ls.Gold = 0";
 
 		$SQL = sprintf($SQL, implode(',', $ballsStatSQL), implode('+', $fields), $lastTicketId);
 
