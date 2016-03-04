@@ -15,6 +15,7 @@ $black_85: rgba(0, 0, 0, 0.82);
         height: auto;
         > * {
             margin-bottom: 5px;
+            box-shadow:1px 2px 2px 0px rgba(0,0,0,0.40);
         }
         section {
             min-width: 100%;

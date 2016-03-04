@@ -935,3 +935,72 @@ input.input-radio:checked + label.input-radio:before {
 }
   
 }
+
+// send message yabida!!!
+// <div id="zhgi">
+//   <div class="arrow"><i class="i-arrow-slim-right"></i></div>
+//   <div class="content">
+//       <p>ЗАМЕТИЛИ ОШИБКУ?</p>
+//       <a href="/users/0/messages">напишите нам</a>
+//   </div>
+// </div>
+
+#zhgi{
+  // display: none;
+  position: fixed;
+  right: 0;
+  bottom: 100px;
+  background: #ffe534;
+  width: 150px;
+  right: -150px;
+  box-shadow:1px 2px 2px 0px rgba(0,0,0,0.40);
+  font-size:15px;
+  color:#222222;
+  text-align:center;
+  box-sizing: initial;
+  padding-left: 25px;
+  // transition: padding 1s linear;
+  transition: right .5s linear;
+  
+  .arrow{
+    position: absolute;
+    left: 0;
+    top: 50%;
+    font-size: 30px;
+    margin-top: -15px;
+    width: 25px;
+    overflow: hidden;
+    transition: width .5s linear;
+  }
+  
+  .content{
+      overflow: auto;
+      width: 100%;
+      height: 100%;
+      padding: 20px 0;
+      margin: 0;
+      position: relative;
+      transition: left .5s linear;
+      p{
+        line-height:17px;
+      }
+      a{
+        color:#4a90e2;
+        line-height:17px;
+        text-decoration: underline;
+      }
+  }
+  
+  &:hover{
+    right: -15px;
+    // padding-left: 0;
+    .content{
+      left: -15px;
+    }
+    .arrow{
+      width: 0;
+    }
+  }
+
+}
+// send message yabida!!!
