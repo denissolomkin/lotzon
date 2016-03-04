@@ -8,7 +8,7 @@
         <form role="form" action="/private/counters" method="POST">
             <div class="form-group">
                 <label for="title">Пользователи на NEW (через запятую)</label>
-                <textarea oninput="this.value=this.value.replace(/[a-z -]|[\r\n]|[\.\/\\\+\=\[\]\`\;\:]|[а-я]+/g, '');" type="text" class="form-control" name="counters[ACCEPTED_USERS]" ><?=implode(',',$list['ACCEPTED_USERS'])?></textarea>
+                <textarea oninput="this.value=this.value.replace(/[a-z -]|[\r\n]|[\.\/\\\+\=\[\]\`\;\:]|[а-я]+/g, '');" type="text" class="form-control" name="counters[ACCEPTED_USERS]" ><?=is_array($list['ACCEPTED_USERS'])?implode(',',$list['ACCEPTED_USERS']):''?></textarea>
             </div>
             <? foreach(
                 array(
