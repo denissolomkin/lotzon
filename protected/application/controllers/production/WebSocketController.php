@@ -940,7 +940,7 @@ class WebSocketController implements MessageComponentInterface
                                                 $stack = GamePlayersModel::instance()->getStack($appName, $appMode['mode']);
 
                                                 // если насобирали минимальную очередь
-                                                if (1 || (count($stack) >= $game->getOptions('s') AND count($stack) >= $appMode['number']) || $game->getOptions('f')) {
+                                                if ((count($stack) >= $game->getOptions('s') AND count($stack) >= $appMode['number']) || $game->getOptions('f')) {
 
                                                     // перемешали игроков
                                                     $keys = array_keys($stack);
