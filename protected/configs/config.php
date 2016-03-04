@@ -698,7 +698,7 @@ Config::instance()->publicResources = array(
         'put' => 'controllers\production\Players:billing'
     ),
     '/profile/settings' => array(
-        'post' => 'controllers\production\Players:settings'
+        'put' => 'controllers\production\Players:settings'
     ),
     '/profile/avatar' => array(
         'post' => 'controllers\production\Players:avatar'
