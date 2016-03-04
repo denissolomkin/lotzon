@@ -4,7 +4,10 @@
 	<title>Lotzon</title>
 	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="/res/img/favicon.png?v=1" type="image/png"/>
+    
+    <link rel="icon" href="/res/img/favicones/favicon.png_128x128.png?v=666" type="image/png"/>
+    <meta content="/res/img/favicones/favicon.png_128x128.png?v=666" itemprop="image">
+    <link href="/res/img/favicones/favicon.png.ico?v=666" rel="shortcut icon">
 
     <?php if (isset($isMobile)) { if($isMobile) { ?>
         <link rel="stylesheet" href="/res/css/landing/landing_mobile.css">

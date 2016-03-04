@@ -6,8 +6,10 @@
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="theme-color" content="#ffe700" />
         
-        <link rel="icon" href="/res/img/favicon.png?v=1" type="image/png"/>
-
+        <link rel="icon" href="/res/img/favicones/favicon.png_128x128.png?v=666" type="image/png"/>
+        <meta content="/res/img/favicones/favicon.png_128x128.png?v=666" itemprop="image">
+        <link href="/res/img/favicones/favicon.png.ico?v=666" rel="shortcut icon">
+        
         <title>Lotzon</title>
 
         <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700,400italic,700italic&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
