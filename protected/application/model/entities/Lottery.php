@@ -9,7 +9,15 @@ class Lottery extends Entity
     private $_winnersCount = 0;
     private $_moneyTotal   = 0;
     private $_pointsTotal   = 0;
-    private $_ballsTotal   = '';
+    private $_ballsTotal   = array();
+
+    protected $_playersCount     = 0;
+    protected $_playersCountIncr = 0;
+    protected $_winnersCountIncr = 0;
+    protected $_ballsTotalIncr   = array();
+
+    protected $_prizes           = array();
+    protected $_prizesGold       = array();
 
     private $_ready = false;
 
@@ -170,13 +178,34 @@ class Lottery extends Entity
                  ->setDate($data['Date'])
                  ->setCombination(@unserialize($data['Combination']))
                  ->setReady($data['Ready'])
+                 ->setPlayersCount($data['PlayersCount'])
+                 ->setPlayersCountIncr($data['PlayersCountIncr'])
                  ->setWinnersCount($data['WinnersCount'])
+                 ->setWinnersCountIncr($data['WinnersCountIncr'])
                  ->setMoneyTotal($data['MoneyTotal'])
                  ->setPointsTotal($data['PointsTotal'])
-                 ->setBallsTotal(@unserialize($data['BallsTotal']));
+                 ->setBallsTotal(@unserialize($data['BallsTotal']))
+                 ->setBallsTotalIncr(@unserialize($data['BallsTotalIncr']))
+                 ->setPrizes(@unserialize($data['Prizes']))
+                 ->setPrizesGold(@unserialize($data['PrizesGold']));
         }
 
         return $this;
+    }
+
+    public function exportTo($to)
+    {
+        switch ($to) {
+            case 'list':
+                $ret = array(
+                    'id'           => $this->getId(),
+                    'date'         => $this->getDate(),
+                    'combination'  => $this->getCombination(),
+                );
+                break;
+        }
+
+        return $ret;
     }
 
     public function publish()

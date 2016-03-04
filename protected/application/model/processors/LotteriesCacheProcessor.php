@@ -6,19 +6,13 @@ Application::import(PATH_APPLICATION . 'model/processors/LotteriesDBProcessor.ph
 class LotteriesCacheProcessor extends BaseCacheProcessor
 {
 
-    const LOTTERIES_LIST_KEY   = "lotteries::list";
+    const LOTTERIES_LIST_KEY    = "lotteries::list";
     const LOTTERIES_WINNERS_KEY = "lotteries::winners";
     const LOTTERIES_MONEY_KEY   = "lotteries::money";
 
     public function init()
     {
         $this->setBackendProcessor(new LotteriesDBProcessor());
-    }
-
-
-    public function publish(Entity $lottery)
-    {
-        return $this->getBackendProcessor()->publish($lottery);
     }
 
     public function getLastPublishedLottery()
@@ -35,16 +29,6 @@ class LotteriesCacheProcessor extends BaseCacheProcessor
         }
 
         return array_slice($list,$offset,$limit,true);
-    }
-
-    public function getPlayerPlayedLotteries($playerId, $limit = 0, $offset = 0)
-    {
-        return $this->getBackendProcessor()->getPlayerPlayedLotteries($playerId, $limit, $offset);
-    }
-
-    public function getPlayerHistory($playerId, $limit = 0, $offset = 0)
-    {
-        return $this->getBackendProcessor()->getPlayerHistory($playerId, $limit, $offset);
     }
 
     public function getLotteryDetails($lotteryId)

@@ -2,17 +2,15 @@
 
 class LotteryTicket extends Entity
 {
-    private $_id = 0;
-
-    private $_ticketNum   = 1;
-    private $_playerId    = 0;
-    private $_lotteryId   = 0;
-    private $_combination = array();
-
-    private $_dateCreated = null;
-
-    private $_ticketWin = 0;
-    private $_ticketWinCurrency = LotterySettings::CURRENCY_POINT;
+    private   $_id                = 0;
+    private   $_ticketNum         = 1;
+    private   $_playerId          = 0;
+    private   $_lotteryId         = 0;
+    private   $_combination       = array();
+    protected $_isGold            = 0;
+    private   $_dateCreated       = null;
+    private   $_ticketWin         = 0;
+    private   $_ticketWinCurrency = LotterySettings::CURRENCY_POINT;
 
     public function init()
     {
@@ -94,8 +92,10 @@ class LotteryTicket extends Entity
 
     public function setCombination($combination)
     {
-        $this->_combination = $combination;
-
+        $this->_combination = array();
+        foreach ($combination as $value) {
+            $this->_combination[] = (int)$value;
+        }
         return $this;
     }
 
@@ -138,15 +138,6 @@ class LotteryTicket extends Entity
                         throw new EntityException("INVALID_COMBINATION", 400);       
                     } 
                 }
-                $owner = new Player();
-                $owner->setId($this->getPlayerId());
-                $tiketsAlreadyFilled = TicketsModel::instance()->getPlayerUnplayedTickets($owner);
-                if (count($tiketsAlreadyFilled) >= 5) {
-                    throw new EntityException("LIMIT_EXCEEDED", 400);       
-                }
-                if (!empty($tiketsAlreadyFilled[$this->getTicketNum()])) {
-                    throw new EntityException("ALREADY_FILLED", 400);          
-                }
             break;
             default :
                 throw new EntityException("Object validation failed", 500);
@@ -165,7 +156,8 @@ class LotteryTicket extends Entity
                  ->setPlayerId($data['PlayerId'])
                  ->setLotteryId($data['LotteryId'])
                  ->setDateCreated($data['DateCreated'])
-                 ->setCombination(@unserialize($data['Combination']));
+                 ->setCombination(@unserialize($data['Combination']))
+                 ->setIsGold($data['IsGold']);
         }
 
         return $this;
