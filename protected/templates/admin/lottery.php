@@ -25,7 +25,7 @@
         <h6>Настройка призов<span class="pull-right  glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="top" title="Установите флажок, для того чтобы указать что приз денежный" style="color:#428BCA;cursor:help;">&nbsp;</span></h6>
         <? for ($i = 1; $i <= 6; ++$i) { ?>
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <? for ($j = 1; $j <= $i; ++$j) { ?>
                     <span style="color: #428BCA;font-size:21pt;">&bull;</span>
                 <? } ?>
@@ -49,14 +49,18 @@
                     </span>
                 </div>
             </div>
-            <div class="col-md-1">
-                <div class="input-group pull-right" incr-from="<?=$i?>">
-                    <input type="text" class="form-control input-md" value="<?=@$settings->getGameIncrements()[$i]['from']?>">
+            <div class="col-md-3">
+                <div class="col-md-6">
+                    <div class="input-group pull-right" incr-from="<?= $i ?>">
+                        <input type="text" class="form-control input-md"
+                               value="<?= @$settings->getGameIncrements()[$i]['from'] ?>">
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-1">
-                <div class="input-group pull-right" incr-to="<?=$i?>">
-                    <input type="text" class="form-control input-md" value="<?=@$settings->getGameIncrements()[$i]['to']?>">
+                <div class="col-md-6">
+                    <div class="input-group pull-right" incr-to="<?= $i ?>">
+                        <input type="text" class="form-control input-md"
+                               value="<?= @$settings->getGameIncrements()[$i]['to'] ?>">
+                    </div>
                 </div>
             </div>
 
