@@ -198,6 +198,10 @@ Config::instance()->privateResources =  array(
         'get'  => 'controllers\admin\Counters:index',
         'post' => 'controllers\admin\Counters:save',
     ),
+    '/private/whitelist/'      => array(
+        'get' => 'controllers\admin\Whitelist:index',
+        'post' => 'controllers\admin\Whitelist:save',
+    ),
     '/private/blacklist/'      => array(
         'get' => 'controllers\admin\Blacklist:index',
         'post' => 'controllers\admin\Blacklist:save',
