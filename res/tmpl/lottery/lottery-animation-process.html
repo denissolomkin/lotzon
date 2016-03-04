@@ -3,7 +3,7 @@
     <button class="close won" onclick="parentNode.parentNode.remove()"></button>
         <div class="container clearfix">
 
-            <div><a href="/lottery" class="header-logo"></a></div>
+            <div><!-- <a href="/lottery" class="header-logo"></a> --></div>
 
             <ul class="balls-end-game clearfix">
                 {{#combination}}
@@ -13,8 +13,8 @@
                         <span class="g-oc_span">{{.}}</span>
                     </div>
                     {{/each}}
-                    <div class="goc_li-sh"></div>
-                    <div class="goc_li-sh2"></div>
+                    <!-- <div class="goc_li-sh"></div>
+                    <div class="goc_li-sh2"></div> -->
                 </li>
                 {{/combination}}
             </ul>
@@ -42,6 +42,8 @@
                         </li>
                         {{/tickets}}
                     </ul>
+                    
+                    <div class="logo"><i class="i-lotzon"></i></div>
 
                     {{#if win}}
                     <div class="ghd-text ghd-won">

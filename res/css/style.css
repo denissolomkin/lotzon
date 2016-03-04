@@ -1673,7 +1673,7 @@ div {
 
 .holder-points,
 .holder-money {
-  margin-right: 7px; }
+  letter-spacing: -1px; }
 
 .menu-balance {
   display: none;
@@ -1955,7 +1955,7 @@ header .owl-theme .owl-controls .owl-page span {
 .i-purse:before {
   content: '\e804';
   font-size: 19px;
-  margin-right: 10px;
+  margin-right: 5px;
   margin-bottom: 6px; }
 
 /* '' */
@@ -6022,6 +6022,32 @@ form.loading > * {
     .badges-container > div div[id^="badges-message"] .contain-img {
       padding-left: 50px; }
 
+#lottery-animation-process {
+  text-align: center !important; }
+  #lottery-animation-process:before {
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    padding: 0;
+    margin: 0;
+    margin-left: -5px;
+    line-height: 0;
+    width: 0%;
+    height: 100%; }
+
+#lottery-process {
+  float: none !important;
+  position: relative !important;
+  display: inline-block !important;
+  vertical-align: middle !important;
+  height: auto !important;
+  max-height: 100% !important;
+  overflow: auto !important;
+  padding-bottom: 20px !important;
+  text-align: left !important;
+  max-width: 100% !important; }
+
 #lottery-history-list {
   padding-bottom: 5px; }
 
@@ -6036,6 +6062,22 @@ form.loading > * {
   height: 10px;
   background: #b7cfd3;
   border-radius: 50%; }
+
+.lottery-amimation-box .logo {
+  margin: 30px 0 40px; }
+
+.lottery-amimation-box i.i-lotzon {
+  font-size: 125px;
+  line-height: 30px;
+  height: 30px;
+  display: block;
+  overflow: hidden; }
+
+.lottery-amimation-box i.i-lotzon:before {
+  line-height: 30px; }
+
+.lottery-won .logo {
+  display: none; }
 
 .gh-header {
   display: none; }
@@ -6390,9 +6432,8 @@ form.loading > * {
   position: absolute;
   margin: 0 auto;
   box-sizing: border-box;
-  background-color: #8ECADA;
-  width: 100%;
-  height: 568px; }
+  background-color: #B6CFD3;
+  width: 100%; }
   #lottery-process .won {
     display: none; }
     #lottery-process .won.close {
@@ -6409,9 +6450,10 @@ form.loading > * {
     #lottery-process .container-center .btn {
       display: inline-block;
       font: 14px handbookpro-regular;
-      line-height: 30px; }
+      line-height: 28px; }
   #lottery-process.lottery-won {
-    background: url(img/320.png) center center no-repeat; }
+    background: url(img/320.png) center center no-repeat;
+    background-size: cover; }
   #lottery-process .container {
     max-width: 298px;
     margin: 0 auto;
@@ -6435,6 +6477,9 @@ form.loading > * {
         background: url(../css/img/Lotzon-Logo.svg) no-repeat 0 0;
         background-size: 100%; }
 
+.lottery-won .balls-end-game .g-oc_li:before {
+  display: none; }
+
 .balls-end-game .g-oc_li {
   width: 41px;
   height: 41px;
@@ -6446,27 +6491,25 @@ form.loading > * {
   text-align: center;
   letter-spacing: -2px;
   position: relative;
-  overflow: hidden; }
+  overflow: hidden;
+  border-radius: 100em;
+  box-shadow: 0px 1px 1px 0px #e6f2f4; }
+  .balls-end-game .g-oc_li:before, .balls-end-game .g-oc_li:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 100em; }
+  .balls-end-game .g-oc_li:before {
+    background: #e6f2f4; }
+  .balls-end-game .g-oc_li:after {
+    z-index: 10;
+    box-shadow: 0px 1px 1px 0px #e6f2f4, inset 2px 2px 3px 0px rgba(0, 0, 0, 0.46); }
   .balls-end-game .g-oc_li:last-of-type {
     margin-right: 0; }
-  .balls-end-game .g-oc_li .goc_li-sh {
-    width: 40px;
-    height: 40px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1;
-    background: #fff;
-    background-position: -640px -208px; }
-  .balls-end-game .g-oc_li .goc_li-sh2 {
-    width: 42px;
-    height: 42px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 100;
-    background: url(../css/img/sprite.png);
-    background-position: -683px -208.5px; }
   .balls-end-game .g-oc_li .goc_li-nb {
     background-color: #ffe400;
     width: 41px;
@@ -6772,10 +6815,9 @@ form.loading > * {
   font: 15.5px / 1 handbookpro-regular;
   text-shadow: 0.2px 0.5px 0 rgba(255, 255, 255, 0.4);
   line-height: 38px;
-  margin-bottom: 1px;
-  color: #000; }
+  margin-bottom: 1px; }
   .ghd-tickets li.unfilled {
-    margin-left: 9px; }
+    text-transform: uppercase; }
   .ghd-tickets li span {
     float: left;
     display: inline-block;
@@ -6784,7 +6826,7 @@ form.loading > * {
     min-width: 62px; }
     .ghd-tickets li span.gold {
       font-family: Handbook-bold;
-      color: #f6ee89;
+      color: #FEE212;
       margin-right: 0;
       text-shadow: none; }
   .ghd-tickets li ul {
@@ -6801,19 +6843,21 @@ form.loading > * {
         float: left;
         margin-right: 6px;
         margin-top: 4px;
-        text-align: center; }
+        text-align: center;
+        box-shadow: 0px 0px 0px 1px #4a4a4a; }
         .ghd-tickets li ul li.filled-ball.won_ball {
-          background: #f6ee89;
+          background: #FEE212;
           width: 30px;
           height: 30px;
-          background-color: #f6ee89;
           border: none;
+          box-shadow: none;
           line-height: 30px; }
 
 .lottery-amimation-box {
   margin-top: 30px;
   font: 15.5px / 1 handbookpro-regular;
-  text-shadow: 0.2px 0.5px 0 rgba(255, 255, 255, 0.4); }
+  text-shadow: 0.2px 0.5px 0 rgba(255, 255, 255, 0.4);
+  color: #4a4a4a; }
 
 @media (min-width: 321px) {
   #lottery-process.lottery-won {

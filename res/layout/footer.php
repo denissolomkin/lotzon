@@ -27,6 +27,17 @@
         </div>
     </div>
     <!-- END Popup msgs -->
+    
+    <!-- zhaloba -->
+    <div id="zhgi">
+        <div class="arrow"><i class="i-arrow-slim-right"></i></div>
+        <div class="content">
+            <p>ЗАМЕТИЛИ ОШИБКУ?</p>
+            <a href="/users/0/messages">напишите нам</a>
+        </div>
+    </div>
+    <!-- zhaloba -->
+    
     <!-- .container -->
 </footer>
 <!-- end of FOOTER -->

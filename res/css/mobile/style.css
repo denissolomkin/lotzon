@@ -1172,6 +1172,16 @@ header {
     height: auto;
     bottom: initial; }
 
+.content-top > * {
+  min-height: 0 !important; }
+
+#lottery-process {
+  height: 100% !important;
+  max-height: 100% !important; }
+
+#lottery-process.lottery-won {
+  background-size: cover !important; }
+
 #lottery-view {
   background: url(../img/bg-win.png); }
   #lottery-view .content-box {
@@ -1873,24 +1883,6 @@ header {
     overflow: hidden; }
     .balls-end-game .g-oc_li:last-of-type {
       margin-right: 0; }
-    .balls-end-game .g-oc_li .goc_li-sh {
-      width: 60px;
-      height: 60px;
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: 1;
-      background: #fff;
-      background-position: -65px -383px; }
-    .balls-end-game .g-oc_li .goc_li-sh2 {
-      width: 63px;
-      height: 63px;
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: 100;
-      background: url(../img/sprite.png);
-      background-position: 0 -383px; }
     .balls-end-game .g-oc_li .goc_li-nb {
       background-color: #ffe400;
       width: 60px;
@@ -1988,24 +1980,6 @@ header {
     overflow: hidden; }
     .balls-end-game .g-oc_li:last-of-type {
       margin-right: 0; }
-    .balls-end-game .g-oc_li .goc_li-sh {
-      width: 70px;
-      height: 70px;
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: 1;
-      background: #fff;
-      background-position: -200px -383px; }
-    .balls-end-game .g-oc_li .goc_li-sh2 {
-      width: 73px;
-      height: 73px;
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: 100;
-      background: url(../img/sprite.png);
-      background-position: -126px -383px; }
     .balls-end-game .g-oc_li .goc_li-nb {
       background-color: #ffe400;
       width: 70px;
@@ -2678,24 +2652,6 @@ header {
     overflow: hidden; }
     .balls-end-game .g-oc_li:last-of-type {
       margin-right: 0; }
-    .balls-end-game .g-oc_li .goc_li-sh {
-      width: 70px;
-      height: 70px;
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: 1;
-      background: #fff;
-      background-position: -200px -383px; }
-    .balls-end-game .g-oc_li .goc_li-sh2 {
-      width: 73px;
-      height: 73px;
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: 100;
-      background: url(../img/sprite.png);
-      background-position: -126px -383px; }
     .balls-end-game .g-oc_li .goc_li-nb {
       background-color: #ffe400;
       width: 70px;

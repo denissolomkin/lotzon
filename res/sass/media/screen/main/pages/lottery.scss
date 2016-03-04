@@ -402,27 +402,6 @@
     &:last-of-type {
       margin-right: 0;
     }
-    & .goc_li-sh {
-      width: 100px;
-      height: 100px;
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: 1;
-      background: #fff;
-      // background: url(../css/img/sprite.png);
-      background-position: -625px -0px;
-    }
-    & .goc_li-sh2 {
-      width: 106px;
-      height: 106px;
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: 100;
-      background: url(../img/sprite.png);
-      background-position: -620px -100px;
-    }
     & .goc_li-nb {
       background-color: #ffe400;
       width: 100px;
@@ -445,7 +424,7 @@
 }
 .ghd-tickets li {
   margin-bottom: 13px;
-  font-size: 19px;
+  // font-size: 19px;
 }
 .ghd-tickets li ul li.filled-ball {
   margin-right: 33px;
@@ -540,27 +519,6 @@
       overflow: hidden;
       &:last-of-type {
         margin-right: 0;
-      }
-      & .goc_li-sh {
-        width: 104px;
-        height: 104px;
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: 1;
-        // background: url(../css/img/sprite.png);
-        background: #fff;
-        background-position: -625px -0px;
-      }
-      & .goc_li-sh2 {
-        width: 106px;
-        height: 106px;
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: 100;
-        background: url(../img/sprite.png);
-        background-position: -620px -100px;
       }
       & .goc_li-nb {
         background-color: #ffe400;

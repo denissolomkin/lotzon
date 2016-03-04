@@ -81,27 +81,6 @@
 	    &:last-of-type {
 	      	margin-right: 0;
 	    }
-	    & .goc_li-sh {
-		    width: 60px;
-		    height: 60px;
-		    position: absolute;
-		    top: 0;
-		    left: 0;
-		    z-index: 1;
-		    // background: url(../css/img/sprite.png);
-		    background: #fff;
-		    background-position: -65px -383px;
-	    }
-    	& .goc_li-sh2 {
-    		width: 63px;
-     		height: 63px;
-      		position: absolute;
-      		top: 0;
-      		left: 0;
-      		z-index: 100;
-      		background: url(../img/sprite.png);
-      		background-position: 0 -383px;
-    	}
    		& .goc_li-nb {
 	      	background-color: #ffe400;
 	      	width: 60px;
@@ -246,27 +225,6 @@
 		    overflow: hidden;
 		    &:last-of-type {
 		      	margin-right: 0;
-		    }
-		    & .goc_li-sh {
-		      	width: 70px;
-		      	height: 70px;
-		      	position: absolute;
-		      	top: 0;
-		      	left: 0;
-		      	z-index: 1;
-		      	// background: url(../css/img/sprite.png);
-		      	background: #fff;
-		      	background-position: -200px -383px;
-		    }
-		    & .goc_li-sh2 {
-		      	width: 73px;
-		      	height: 73px;
-		      	position: absolute;
-		      	top: 0;
-		      	left: 0;
-		      	z-index: 100;
-		      	background: url(../img/sprite.png);
-		      	background-position: -126px -383px;
 		    }
 		    & .goc_li-nb {
 		      	background-color: #ffe400;

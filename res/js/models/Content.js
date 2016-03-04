@@ -213,7 +213,7 @@
             if (1 || /new.lotzon.com/.test(location.hostname)) {
                 if (Device.mobile) {
                     R.push('/banner/tablet/top');
-                    R.push('/banner/tablet/bottom');
+                    // R.push('/banner/tablet/bottom');
                 } else {
                     // R.push('/banner/desktop/fixed');
                     R.push({
