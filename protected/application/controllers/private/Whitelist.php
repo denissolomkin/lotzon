@@ -6,9 +6,9 @@ use Ratchet\Wamp\Exception;
 
 Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
 
-class Counters extends PrivateArea
+class Whitelist extends PrivateArea
 {
-    public $activeMenu = 'counters';
+    public $activeMenu = 'whitelist';
 
     public function init()
     {
@@ -24,21 +24,37 @@ class Counters extends PrivateArea
 
         $list = SettingsModel::instance()->getSettings($this->activeMenu)->getValue();
         $this->render('admin/'.$this->activeMenu, array(
-            'title'      => 'Счетчики',
+            'title'      => 'Пользователи на NEW',
             'layout'     => 'admin/layout.php',
             'activeMenu' => $this->activeMenu,
             'list' => $list,
-            'frontend' => 'statictexts',
         ));
     }
 
     public function saveAction()
     {
 
-        if($this->request()->post($this->activeMenu)) {
+            try {
 
-            SettingsModel::instance()->getSettings($this->activeMenu)->setValue($this->request()->post($this->activeMenu))->create();
-        }
+                $counters = $this->request()->post($this->activeMenu);
+                if($counters) {
+                    $counters = explode(',', $counters);
+                    in_array(1, $counters);
+                }
+
+            } catch(\Exception $e){
+                $response = array(
+                    'status'  => 0,
+                    'message' => 'ERROR',
+                    'res'    => null
+                );
+
+                die(json_encode($response));
+            }
+
+
+            SettingsModel::instance()->getSettings($this->activeMenu)->setValue($counters)->create();
+
 
         $this->redirect('/private/'.$this->activeMenu);
     }

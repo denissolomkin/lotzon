@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 3.6.1 (26313) - http://www.bohemiancoding.com/sketch -->
+    <title>монета</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="50%" x2="7.30512058%" y2="24.2369958%" id="linearGradient-1">
+            <stop stop-color="#FFFFFF" stop-opacity="0" offset="0%"></stop>
+            <stop stop-color="#FFFFFF" stop-opacity="0.6" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="50%" x2="89.9851404%" y2="80.6122083%" id="linearGradient-2">
+            <stop stop-color="#000000" stop-opacity="0" offset="0%"></stop>
+            <stop stop-color="#000000" stop-opacity="0.1" offset="100%"></stop>
+        </linearGradient>
+        <ellipse id="path-3" cx="7.83673469" cy="7.80487805" rx="7.83673469" ry="7.80487805"></ellipse>
+        <path d="M8.03265306,14.4441914 C11.6253686,14.3408909 14.505974,11.4078438 14.505974,7.80473023 C14.505974,4.20161665 11.6253686,1.26856954 8.03265306,1.16526906 L8.03265306,1.69105691 L7.64081633,1.69105691 L7.64081633,1.16526053 C4.04796257,1.26840798 1.16719852,4.20151742 1.16719852,7.80473023 C1.16719852,11.407943 4.04796257,14.3410525 7.64081633,14.4441999 L7.64081633,13.9186992 L8.03265306,13.9186992 L8.03265306,14.4441914 Z M7.83673469,14.8292683 C11.7320328,14.8292683 14.8897959,11.6843417 14.8897959,7.80487805 C14.8897959,3.92541444 11.7320328,0.780487805 7.83673469,0.780487805 C3.94143654,0.780487805 0.783673469,3.92541444 0.783673469,7.80487805 C0.783673469,11.6843417 3.94143654,14.8292683 7.83673469,14.8292683 Z" id="path-4"></path>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-5">
+            <feOffset dx="0.400000006" dy="0.5" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="0.200000003" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 1   0 0 0 0 1   0 0 0 0 1  0 0 0 0.35 0" in="shadowBlurOuter1" type="matrix" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="Доп-менюшки" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="монета">
+            <ellipse id="тень" fill="#BFA000" cx="8.16326531" cy="8.19512195" rx="7.83673469" ry="7.80487805"></ellipse>
+            <g id="морда">
+                <use fill="#FFD700" xlink:href="#path-3"></use>
+                <use fill="url(#linearGradient-1)" xlink:href="#path-3"></use>
+                <use fill="url(#linearGradient-2)" xlink:href="#path-3"></use>
+            </g>
+            <g id="Combined-Shape">
+                <use fill="#222222" fill-rule="evenodd" xlink:href="#path-4"></use>
+                <use fill="none" xlink:href="#path-4"></use>
+                <use fill="none" xlink:href="#path-4"></use>
+            </g>
+            <path d="M6.87624249,8.06504065 L7.06784365,7.67479675 L5.8122449,7.67479675 L5.8122449,7.02439024 L7.38717892,7.02439024 L7.94150467,5.89536662 L5.52480765,5.89536662 L5.52480765,4.22764228 L10.4616194,4.22764228 L10.4616194,4.51093079 L9.21986845,7.02439024 L10.0571429,7.02439024 L10.0571429,7.67479675 L8.89854126,7.67479675 L8.70574495,8.06504065 L10.0571429,8.06504065 L10.0571429,8.71544715 L8.38441776,8.71544715 L7.81930274,9.85931077 L10.4897957,9.85931077 L10.4897957,11.5688184 L5.28979592,11.5688184 L5.28979592,11.2962376 L6.55690721,8.71544715 L5.8122449,8.71544715 L5.8122449,8.06504065 L6.87624249,8.06504065 Z" id="logo" fill="#222222" filter="url(#filter-5)"></path>
+        </g>
+    </g>
+</svg>

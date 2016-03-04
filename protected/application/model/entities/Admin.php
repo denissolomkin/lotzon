@@ -27,6 +27,7 @@ class Admin extends Entity
                 'rights'=>array('icon'=>'shield','name'=>'Права доступа'),
                 'bonuses'=>array('icon'=>'diamond','name'=>'Бонусы'),
                 'counters'=>array('icon'=>'dashboard','name'=>'Счетчики'),
+                'whitelist'=>array('icon'=>'users','name'=>'Whitelist'),
             )),
 
         'Контент'=>array('icon'=>'th-list',
