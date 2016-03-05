@@ -205,6 +205,7 @@ class ChanceController extends \AjaxController
             }
 
             $response['res'] = $game->export('stat');
+            $response['res']['Key'] = str_replace('Game','',$key);
 
             /* todo */
             $game->saveGame();
