@@ -280,9 +280,8 @@
                 var messages = {};
                 for (var index in App.players) {
                     messages[index] =
-                        (App.players[index].result > 0 ? 'Выигрыш' : 'Проигрыш') + '<br>' +
-                        (App.currency == 'MONEY' ? Player.formatCurrency(App.players[index].win, 1) : parseFloat((App.players[index].win).toFixed(2))) + ' ' +
-                        (App.currency == 'MONEY' ? Player.getCurrency() : 'баллов');
+                        (App.players[index].result > 0 ? i18n('title-games-win') : i18n('title-games-lose')) + '<br>' +
+                        Player.getCurrency(App.currency) + ' ' + Player.getCurrency(App.currency, App.players[index].win);
                 }
                 Game.drawMessages(messages);
                 return true;
@@ -358,12 +357,10 @@
                 el.setAttribute('class', 'msg');
                 el.style.display = 'none';
 
-
                 html += '<div class="' + msg.class + '">';
                 html += '<div class="title">' + i18n(msg.title) + '</div>';
                 html += '<div><span>' + (pl.result > 0 ? i18n('title-games-main-win') : i18n('title-games-main-lose')) + ' </span>' +
-                    (App.currency == 'MONEY' ? Player.formatCurrency(Math.abs(pl.win), 1) : Math.abs(parseInt(pl.win))) + ' ' +
-                    (App.currency == 'MONEY' ? Player.getCurrency() : 'баллов') + '</div>';
+                    Player.getCurrency(App.currency) + ' ' + Player.getCurrency(App.currency, pl.win) + '</div>';
                 html += '<div class="msg-buttons"></div>';
                 html += '</div>'
 
