@@ -5,7 +5,7 @@
         init: function () {
 
             D.log('Support.init');
-            $('.support p').hide();
+            $('.rules p').hide();
 
         },
 
