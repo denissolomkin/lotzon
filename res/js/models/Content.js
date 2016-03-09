@@ -10,7 +10,11 @@
                     .filter(function () {
                         return !$(this).data('daterangepicker')
                     })
-                    .daterangepicker().length)
+                    .daterangepicker({
+                        autoUpdateInput: false
+                    }).on('apply.daterangepicker', function(ev, picker) {
+                        $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY')).change();
+                    }).length)
                 Content.enableForm();
 
         },
