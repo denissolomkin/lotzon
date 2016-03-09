@@ -58,7 +58,8 @@
             if (Object.size(ticketsArray))
                 for (i = 1; i <= Tickets.totalTickets; i++) {
 
-                    ticketType = Tickets.isGold(i)?'gold':'default';
+                    ticketType = Tickets.isGold(i) ? 'gold' : 'default';
+
                     matchesBalls = 0;
                     extendedTicket = {
                         num: i,
@@ -85,6 +86,8 @@
 
                         extendedTicket.combination.push(extendedBall);
                     }
+
+                    console.error(i, ticketsArray[i], matchesBalls, ticketType );
 
                     if (prizesData[ticketType]
                         && prizesData[ticketType][matchesBalls]
