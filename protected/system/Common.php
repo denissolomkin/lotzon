@@ -2,6 +2,67 @@
 
 class Common
 {
+    /**
+     * Save image in many resolutions
+     *
+     * @param      $imgPostName     string
+     * @param      $path            string
+     * @param      $new_name        string
+     * @param      $resolutions     array
+     *                              array(array(width,[height]),...)
+     *                              if height not set  - height proportional to width
+     *                              if height=='crop'  - crop image to width x width dimension
+     * @param null $imgFile         string
+     */
+    public static function saveImageMultiResolution($imgPostName, $path, $new_name, $resolutions = array(1), $imgFile = NULL)
+    {
+        foreach ($resolutions as $res) {
+            $crop   = false;
+            $resize = true;
+            if (is_array($res)) {
+                if (isset($res[0]) && isset($res[1])) {
+                    $width  = $res[0];
+                    if ($res[1]=='crop') {
+                        $height = $res[0];
+                        $crop   = true;
+                    } else {
+                        $height = $res[1];
+                    }
+                } else {
+                    $width  = $res[0];
+                    $height = NULL;
+                }
+            } else {
+                $resize = false;
+            }
+            if ($imgFile) {
+                $img = \WideImage::load($imgFile);
+            } else {
+                $img = \WideImage::loadFromUpload($imgPostName);
+            }
+            if ($crop) {
+                $min_dimension = min($img->getWidth(),$img->getHeight());
+                $img = $img->crop("center","center",$min_dimension,$min_dimension);
+            }
+            if ($resize) {
+                $img->resize($width, $height)->saveToFile($path . $width . "/" . $new_name);
+            } else {
+                $img->saveToFile($path . $new_name);
+            }
+        }
+    }
+
+    public static function removeImageMultiResolution($path, $filename, $resolutions = array(1))
+    {
+        foreach ($resolutions as $res) {
+            if (is_array($res)) {
+                @unlink($path . $res[0] . "/" . $filename);
+            } else {
+                @unlink($path . $filename);
+            }
+        }
+    }
+
     public static function sendEmail($to, $subject, $template, $data = array(), $headers = array())
     {
         $headers[] = "From: Lotzon.com <" . Config::instance()->defaultSenderEmail .">";

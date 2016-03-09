@@ -100,6 +100,8 @@ class ReviewsController extends \AjaxController
 
             $image->saveToFile($saveFolder . $imageName, 100);
 
+            \Common::saveImageMultiResolution('', PATH_FILESTORAGE . 'reviews/', $imageName, array(array(600)), $saveFolder . $imageName);
+
             $data = array(
                 'imageName' => $imageName,
                 'imageWebPath' => '/filestorage/reviews/' . $imageName,
