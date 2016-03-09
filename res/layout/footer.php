@@ -147,9 +147,11 @@ endforeach;
     });
 
 </script>
-
 <style>
     #R2D2 {
+    <?php if($_SERVER['HTTP_HOST']=='new.lotzon.com'):?>
+        display: none;
+    <?php endif; ?>
         position: relative;
         z-index: 999999999;
         font-size: 16px;
