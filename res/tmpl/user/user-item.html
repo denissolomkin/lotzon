@@ -30,6 +30,7 @@
                                     <a href="/users/{{id}}/message" class="send-msg uk-float-left">
                                         {{i18n "button-users-write-message"}}
                                     </a>
+                                    {{#if (ne null isFriend)}}
                                     <form action="/users/requests/{{id}}" method="post" class="uk-float-left add-friends {{#if (ne false isFriend)}}hidden{{/if}} ">
                                         <button type="submit">{{i18n "button-user-friendship"}}</button>
                                     </form>
@@ -39,6 +40,7 @@
                                     <form action="/users/friends/{{id}}" method="delete" class="del-friends uk-float-right danger {{#if (ne true isFriend)}}hidden{{/if}}">
                                         <button type="submit" class="danger">{{i18n "button-user-remove-friend"}}</button>
                                     </form>
+                                    {{/if}}
                                 </li>
 
                             </ul>
@@ -48,25 +50,35 @@
                 <ul class="ae-personal-form">
                     <li class="ae-personal-form-values">
                         <ul>
+                            {{#if title.name}}
                             <li><i>Имя</i>
                                 <div>{{title.name}}</div>
                             </li>
+                            {{/if}}
+                            {{#if title.surname}}
                             <li><i>Фамилия</i>
                                 <div>{{title.surname}}</div>
                             </li>
+                            {{/if}}
+                            {{#if (ne null birthday)}}
                             <li>
                                 <i>Дата рождения</i>
                                 <div class="wrapper-margin-right">{{day birthday}}
                                 </div>
                             </li>
+                            {{/if}}
+                            {{#if location.country}}
                             <li><i>Страна</i>
                                 <div class="select-wrapper">
                                     {{location.country}}
                                 </div>
                             </li>
+                            {{/if}}
+                            {{#if location.city}}
                             <li><i>Город</i>
                                 <div>{{location.city}}</div>
                             </li>
+                            {{/if}}
                             {{#if social.enabled}}
                             <li class="ae-social">
                                 <i class="uk-float-left">Соц. сети </i>
