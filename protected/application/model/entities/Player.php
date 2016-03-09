@@ -1009,6 +1009,7 @@ class Player extends Entity
              */
 
             $this->setAvatar($imageName)->saveAvatar();
+
         } catch (EntityException $e) {
             throw new EntityException($e->getMessage(), $e->getCode());
         }

@@ -421,7 +421,7 @@
                     <div class="form-group">
                         <label class="control-label">Заголовок</label>
                         <input type="text" name="title" value="" placeholder="Заголовок" class="form-control" />
-                        <label class="control-label">Настройки</label>
+                        <label class="control-label">Фильтры</label>
                         <div class="row-fluid">
                             <div class="col-my-5">
 
@@ -455,6 +455,14 @@
                                 </select>
                             </div>
                         </div>
+
+                        <div class="row-fluid">
+
+                        <label class="control-label">Или перечень ID через запятую</label>
+                        <textarea oninput="this.value=this.value.replace(/[a-z -]|[\r\n]|[\.\/\\\+\=\[\]\`\;\:]|[а-я]+/g, '').replace(/\,\,/g,',');" type="text" name="ids" value="" class="form-control"></textarea>
+
+                        </div>
+
                         <script type="text/javascript">
                             $(".datepick").datepicker({format: 'yyyy-mm-dd',
                                 showTimePicker: false,
@@ -1045,6 +1053,7 @@ $("#add-notice select#notice-type").on('change', function() {
     $('.notices-trigger').on('click', function() {
         var plid = $(this).data('id');
         var type = $(this).data('type');
+
         $.ajax({
             url: "/private/users/notices/" + $(this).data('id')+'?type='+type,
             method: 'GET',
@@ -1121,6 +1130,7 @@ $("#add-notice select#notice-type").on('change', function() {
             $("#add-notice").modal('hide');
         });
         $('#text').code('');
+        $('textarea[name="ids"]').val('');
         $('input[name="title"]').val('');
         $("#add-notice select").val('Message');
 
@@ -1135,6 +1145,7 @@ $("#add-notice select#notice-type").on('change', function() {
             }
             currentEdit.title = $('input[name="title"]').val();
             currentEdit.playerId = plid;
+            currentEdit.ids = $('textarea[name="ids"]').val();
             currentEdit.text = text;
             currentEdit.country = $('select[name="country"]').val();
             currentEdit.minLotteries = $('input[name="minLotteries"]').val();

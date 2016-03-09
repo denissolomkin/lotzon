@@ -51,37 +51,37 @@
                     <li class="ae-personal-form-values">
                         <ul>
                             {{#if title.name}}
-                            <li><i>Имя</i>
+                            <li><i>{{i18n "title-profile-name"}}</i>
                                 <div>{{title.name}}</div>
                             </li>
                             {{/if}}
                             {{#if title.surname}}
-                            <li><i>Фамилия</i>
+                            <li><i>{{i18n "title-profile-surname"}}</i>
                                 <div>{{title.surname}}</div>
                             </li>
                             {{/if}}
                             {{#if (neNotStrict null birthday)}}
                             <li>
-                                <i>Дата рождения</i>
+                                <i>{{i18n "title-profile-birthday"}}</i>
                                 <div class="wrapper-margin-right">{{day birthday}}
                                 </div>
                             </li>
                             {{/if}}
                             {{#if location.country}}
-                            <li><i>Страна</i>
+                            <li><i>{{i18n "title-profile-country"}}</i>
                                 <div class="select-wrapper">
                                     {{location.country}}
                                 </div>
                             </li>
                             {{/if}}
                             {{#if location.city}}
-                            <li><i>Город</i>
+                            <li><i>{{i18n "title-profile-city"}}</i>
                                 <div>{{location.city}}</div>
                             </li>
                             {{/if}}
                             {{#if social.enabled}}
                             <li class="ae-social">
-                                <i class="uk-float-left">Соц. сети </i>
+                                <i class="uk-float-left">{{i18n "title-profile-socials"}}</i>
                                 <div class="ae-social uk-float-left">
                                     {{#each social.providers}}
                                         {{#if .}}
