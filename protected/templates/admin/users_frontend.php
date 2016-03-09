@@ -1,5 +1,5 @@
 <div class="modal fade users" id="social-holder" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true"
-     xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+     xmlns="http://www.w3.org/1999/html">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -459,7 +459,7 @@
                         <div class="row-fluid">
 
                         <label class="control-label">Или перечень ID через запятую</label>
-                        <textarea oninput="this.value=this.value.replace(/[a-z -]|[\r\n]|[\.\/\\\+\=\[\]\`\;\:]|[а-я]+/g, '');" type="text" name="ids" value="" class="form-control"></textarea>
+                        <textarea oninput="this.value=this.value.replace(/[a-z -]|[\r\n]|[\.\/\\\+\=\[\]\`\;\:]|[а-я]+/g, '').replace(/\,\,/g,',');" type="text" name="ids" value="" class="form-control"></textarea>
 
                         </div>
 
