@@ -581,17 +581,27 @@ class Users extends PrivateArea
                 'data'    => array(),
             );
             try {
-                $notice = new Notice();
-                $notice->setPlayerId($playerId)
-                    ->setUserId(Session2::connect()->get(Admin::SESSION_VAR)->getId())
-                    ->setText($this->request()->post('text'))
-                    ->setTitle($this->request()->post('title'))
-                    ->setType($this->request()->post('type'))
-                    ->setCountry($this->request()->post('country')?:null)
-                    ->setMinLotteries($this->request()->post('minLotteries')?:null)
-                    ->setRegisteredFrom($this->request()->post('registeredFrom')?:null)
-                    ->setRegisteredUntil($this->request()->post('registeredUntil')?:null)
-                    ->create();
+
+                if($players = $this->request()->post('ids')){
+                    $players = explode(',', $players);
+                } else {
+                    $players = array($playerId);
+                }
+
+                foreach($players as $playerId) {
+                    $notice = new Notice();
+                    $notice->setPlayerId($playerId)
+                        ->setUserId(Session2::connect()->get(Admin::SESSION_VAR)->getId())
+                        ->setText($this->request()->post('text'))
+                        ->setTitle($this->request()->post('title'))
+                        ->setType($this->request()->post('type'))
+                        ->setCountry($this->request()->post('country') ?: null)
+                        ->setMinLotteries($this->request()->post('minLotteries') ?: null)
+                        ->setRegisteredFrom($this->request()->post('registeredFrom') ?: null)
+                        ->setRegisteredUntil($this->request()->post('registeredUntil') ?: null)
+                        ->create();
+                }
+
             } catch (EntityException $e) {
                 $response['status'] = 0;
                 $response['message'] = $e->getMessage();
