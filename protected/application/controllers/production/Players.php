@@ -521,7 +521,7 @@ class Players extends \AjaxController
         $response = array(
             'res' => array(
                 'user' => array(
-                    "$playerId" => $player->export('info')
+                    "$playerId" => $player->export((int)\SettingsModel::instance()->getSettings('counters')->getValue('USER_REVIEW_DEFAULT') == $playerId?'card':'info')
                 )
             )
         );
