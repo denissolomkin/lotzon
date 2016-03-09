@@ -972,6 +972,9 @@ class Player extends Entity
 
             $this->setAvatar($imageName)->saveAvatar();
 
+            // save new version
+            \Common::saveImageMultiResolution('', PATH_FILESTORAGE . 'users/', $imageName, array(array(50, 'crop'), array(100, 'crop'), array(200, 'crop')), $saveFolder . $imageName);
+
         } catch (EntityException $e) {
             // throw new EntityException($e->getMessage(), $e->getCode());
         }
