@@ -590,6 +590,8 @@ class Users extends PrivateArea
                 }
 
                 foreach($players as $playerId) {
+                    if(!is_numeric($playerId))
+                        continue;
                     $notice = new Notice();
                     $notice->setPlayerId($playerId)
                         ->setUserId(Session2::connect()->get(Admin::SESSION_VAR)->getId())
