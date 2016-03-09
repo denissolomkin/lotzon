@@ -87,7 +87,7 @@
                         extendedTicket.combination.push(extendedBall);
                     }
 
-                    console.error(i, ticketsArray[i], matchesBalls, ticketType );
+                    console.error(i, prizesData[ticketType][matchesBalls], ticketsArray[i], matchesBalls, ticketType );
 
                     if (prizesData[ticketType]
                         && prizesData[ticketType][matchesBalls]
