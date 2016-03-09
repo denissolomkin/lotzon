@@ -1,5 +1,5 @@
 <div id="user-{{id}}">
-    <div class="content-box-header"><span class="back i-arrow-left large-visible"></span><span class="back i-arrow-slim-left small-visible "></span>{{ title.nickname }}</div>
+    <div class="content-box-header"><span class="back i-arrow-left large-visible"></span><span class="back i-arrow-slim-left small-visible "></span>{{or title.nickname name}}</div>
     <div class="content-box-content clearfix">
         <div class="content-box-item">
             <div class="ae-personal-inf">
@@ -13,7 +13,7 @@
                                 <feGaussianBlur stdDeviation="8" in="SourceGraphic" />
                             </filter>
                         </svg>
-                        <div class="img-avatar-name">{{title.nickname}}</div>
+                        <div class="img-avatar-name">{{or title.nickname name}}</div>
                         <div class="ae-user-img pi-ph false">
                             <img src="{{avatar img id}}"
                                  class="loading"
@@ -30,7 +30,7 @@
                                     <a href="/users/{{id}}/message" class="send-msg uk-float-left">
                                         {{i18n "button-users-write-message"}}
                                     </a>
-                                    {{#if (ne null isFriend)}}
+                                    {{#if (neNotStrict null isFriend)}}
                                     <form action="/users/requests/{{id}}" method="post" class="uk-float-left add-friends {{#if (ne false isFriend)}}hidden{{/if}} ">
                                         <button type="submit">{{i18n "button-user-friendship"}}</button>
                                     </form>
@@ -60,7 +60,7 @@
                                 <div>{{title.surname}}</div>
                             </li>
                             {{/if}}
-                            {{#if (ne null birthday)}}
+                            {{#if (neNotStrict null birthday)}}
                             <li>
                                 <i>Дата рождения</i>
                                 <div class="wrapper-margin-right">{{day birthday}}
