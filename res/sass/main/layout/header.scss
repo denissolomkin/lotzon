@@ -20,9 +20,10 @@
     position: relative;
     vertical-align: middle;
     height: 55px;
-    margin-right: 20px;
+    margin-right: 15px;
     overflow: hidden;
     &.i-lotzon:before{
+        margin-left: 2px;
         font-size: 129px;
         line-height: 0.22;
         position: relative;

@@ -421,6 +421,12 @@
       line-height: 45px;
     }
   }
+  & li.user-actions {
+    padding-left: 30px;
+    > *{
+        width: auto;
+    }
+  }
   >ul > li > i {
     width: 150px;
     color: #afa3a3;

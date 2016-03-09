@@ -49,6 +49,7 @@
     font-size: 15.5px;
     width: auto;
     display: block;
+    float: left;
     > .menu-item {
         padding: 10px 0 0 0;
         min-width: 170px;
@@ -82,7 +83,6 @@
 
 .menu-main {
     display: table !important;
-    float: left;
     overflow: hidden;
     position: static;
     background: transparent;

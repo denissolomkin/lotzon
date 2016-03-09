@@ -404,21 +404,20 @@ header {
   top: 5px; }
 
 @media (max-width: 768px) {
-  #communication-messages-list .message {
-    margin-left: 0; }
   .message-img {
     width: 50px;
     height: 50px;
-    position: absolute; }
+    position: absolute;
+    float: none;
+    margin-left: -70px;
+    margin-right: 16px;
+    top: 50%;
+    margin-top: -25px; }
   .message-name {
     line-height: 1.27;
     margin-left: 60px;
     position: relative;
-    top: 18px; }
-  #communication-messages-list .message-text, .message-text {
-    margin-top: 40px; }
-  .message {
-    margin-left: 0; }
+    padding: 15px 0; }
   #communication .render-list .message-form-wrapper {
     padding-left: 0; }
   #communication-comments-view .content-box-item {

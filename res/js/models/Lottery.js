@@ -150,7 +150,7 @@
                         sum: sum
                     };
 
-                    if(ballData.currency && sum) {
+                    if(ballData.currency && ballData.matches !== null) {
                         if (!lotterySummary.totalSum[ballData.currency])
                             lotterySummary.totalSum[ballData.currency] = 0;
                         lotterySummary.totalSum[ballData.currency] += sum;

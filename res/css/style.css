@@ -1534,9 +1534,10 @@ input.input-radio:checked + label.input-radio:before {
   position: relative;
   vertical-align: middle;
   height: 55px;
-  margin-right: 20px;
+  margin-right: 15px;
   overflow: hidden; }
   .header-logo.i-lotzon:before {
+    margin-left: 2px;
     font-size: 129px;
     line-height: 0.22;
     position: relative;
@@ -5172,10 +5173,11 @@ input.comment-reply-btn {
   display: table-cell;
   text-align: left;
   width: 100%;
-  vertical-align: super; }
-  #communication-messages .message > a:first-child {
-    width: 120px;
-    padding: 0 10px; }
+  vertical-align: middle; }
+
+#communication-messages .message > a:first-of-type {
+  width: 120px;
+  padding: 0 10px; }
 
 #communication-messages .message .message-name {
   width: 100px;
@@ -8146,6 +8148,10 @@ form.loading > * {
       width: 100%; }
     .ae-personal-form-values li > * {
       line-height: 45px; }
+  .ae-personal-form-values li.user-actions {
+    padding-left: 30px; }
+    .ae-personal-form-values li.user-actions > * {
+      width: auto; }
   .ae-personal-form-values > ul > li > i {
     width: 150px;
     color: #afa3a3;
@@ -9259,7 +9265,8 @@ span.input-prefix {
     letter-spacing: 0.7px;
     font-family: 'handbookpro-regular';
     font-size: 15.5px;
-    color: #4D4D4D; }
+    color: #4D4D4D;
+    padding: 0 20px; }
     #reports-referrals .content-box-item-top .report-top-wrapper > div {
       position: relative;
       display: inline-block;
@@ -11737,10 +11744,10 @@ and open the template in the editor.
       padding: 4%; }
     .moment-game-box .minefield button {
       background: #b9dadd;
-      color: #000;
+      color: #4a4a4a;
       width: 100%;
       height: 100%;
-      font-size: 17em;
+      font-size: 14em;
       opacity: 1;
       cursor: pointer;
       transform: rotateY(0deg);
@@ -11750,11 +11757,11 @@ and open the template in the editor.
         background: #ffe700; }
         .moment-game-box .minefield button.win .flipFix * {
           display: block;
-          font-size: .3em;
+          font-size: .35em;
           line-height: .9;
           text-transform: uppercase; }
           .moment-game-box .minefield button.win .flipFix *:first-child {
-            font-size: .7em;
+            font-size: .75em;
             font-weight: bold; }
         .moment-game-box .minefield button.win .flipFix :first-child:nth-last-child(1) {
           display: block;

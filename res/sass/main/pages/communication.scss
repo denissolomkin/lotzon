@@ -114,13 +114,13 @@
         display: table-cell;
         text-align: left;
         width: 100%;
-        vertical-align: super;
+        vertical-align: middle;
 
-        &:first-child{
+    }
+       > a:first-of-type{
           width: 120px;
           padding: 0 10px;
         }
-    }
     .message-name{
       width: 100px;
       margin: 0;
