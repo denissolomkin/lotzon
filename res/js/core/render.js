@@ -406,11 +406,13 @@
 
                 if ('nodeType' in render) {
 
-                    if (options.lastItem) {
+                    if (options.lastItem && U.parse(options.init.template) === render.id) {
                         var infiniteScrolling = render.querySelector('button[name="submit"]');
                         if (infiniteScrolling) {
                             infiniteScrolling.parentNode.removeChild(infiniteScrolling);
+                            console.error(render, render.id, options.init, options.template);
                         }
+
                     }
 
                     if (render.id == node.id) {
