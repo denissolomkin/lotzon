@@ -130,10 +130,12 @@
             for (var type in lotteryData.statistics) {
                 for (var i in lotteryData.statistics[type]) {
 
-                    if (!lotteryData.statistics[type].hasOwnProperty(i) || lotteryData.statistics[type][i].matches === null)
+                    if (!lotteryData.statistics[type].hasOwnProperty(i))
                         continue;
 
                     i = parseInt(i);
+
+                    // lotteryData.statistics[type][i].matches === null
 
                     var ballData = lotteryData.statistics[type][i],
                         sum = ballData.sum * ballData.matches;
@@ -148,7 +150,7 @@
                         sum: sum
                     };
 
-                    if(ballData.currency) {
+                    if(ballData.currency && sum) {
                         if (!lotterySummary.totalSum[ballData.currency])
                             lotterySummary.totalSum[ballData.currency] = 0;
                         lotterySummary.totalSum[ballData.currency] += sum;
