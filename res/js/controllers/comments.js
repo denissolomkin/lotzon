@@ -479,7 +479,9 @@
             if(!co.element) {
                 co.element = document.createElement('div');
                 co.element.id = 'FullPictureWrapper';
+                co.element.setAttribute("onclick", "this.removeAttribute('class')");
                 co.element.innerHTML = co.html;
+
                 document.body.appendChild(co.element);
             }else{
                 co.element.removeAttribute("class");

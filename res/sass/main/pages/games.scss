@@ -672,10 +672,13 @@ footer.unvisible {
                             &:first-child{
                                 margin-right: 20px;
                             }
-                            &:hover{
-                                color: #f8e71c;
-                                background: #000;
-                            }
+                        }
+                        & button:hover{
+                            color: #f8e71c;
+                            background: #000;
+                        }
+                        :not(button){
+                           border: none; 
                         }
                     }
                 }

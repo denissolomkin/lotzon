@@ -198,7 +198,7 @@
 }
 .cabinet-balance-count {
     &:first-child {
-        margin-right: 5px;
+        margin-right: 15px;
     }
 
     span {
@@ -264,13 +264,11 @@
         min-width: 95%;
         > span{
             display: block;
-            float: right;
+            float: left;
             &:first-child{
-                float: left;
             }
             i{
                 &:before{
-
                 }
             }
         }

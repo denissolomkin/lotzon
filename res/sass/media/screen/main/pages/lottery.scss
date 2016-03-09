@@ -474,7 +474,8 @@
 .ghd-won {
   margin-top: 24px;
   & .grid-container {
-    max-width: 360px;
+    // max-width: 360px;
+    max-width: 100%;
   }
 }
 #lottery-ticket-item {
