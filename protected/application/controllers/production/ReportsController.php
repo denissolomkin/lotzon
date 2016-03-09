@@ -175,11 +175,7 @@ class ReportsController extends \AjaxController
         $playerId = $this->session->get(Player::IDENTITY)->getId();
         $offset   = $this->request()->get('offset', NULL);
 
-        if($offset!==NULL) {
-            $limit  = self::$reportsPerPage+1;
-        } else {
-            $limit = self::$reportsPerPage;
-        }
+        $limit  = self::$reportsPerPage+1;
 
         try {
             $list = \PlayersModel::instance()->getReferrals($playerId, $limit, $offset);

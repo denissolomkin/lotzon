@@ -48,12 +48,15 @@ class PrizesController extends \AjaxController
         }
 
         $items = array();
-        foreach (array_slice($list_goods,$offset, self::$prizesPerPage+1) as $item) {
+        foreach (array_slice($list_goods,$offset) as $item) {
             $countries = $item->getCountries();
             if (is_array($countries) and !in_array($player_countries,$countries)) {
                 continue;
             }
             $items[$item->getId()] = $item->exportTo('list');
+            if (count($items)==self::$prizesPerPage+1) {
+                break;
+            }
         }
 
         $response = array();
