@@ -243,7 +243,7 @@
                     for (name in options.query) {
                         if (options.query.hasOwnProperty(name) && options.query[name] && name.indexOf('date') === -1) { /* skip unimportant filters */
                             className = [name, options.query[name]];
-                            options.rendered.classList.add(className.join('-'));
+                            options.rendered.classList.add(className.join('-').replace(/ /g,''));
                         }
                     }
 
