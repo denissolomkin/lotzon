@@ -28,7 +28,7 @@
 		</div>
 		<h1 class="lending-title"><strong>Выигрывает каждый</strong><span> совершенно новый формат online игр</span></h1>
 		<button class="landing_button go-play">Играть Бесплатно</button>
-		<p class="landing_large"><?php echo $slider['sum'] ?> <span>руб уже выплачено</span></p>
+		<p class="landing_large"><?php echo $slider['sum'] ?> <span><?php echo $player['currency']['iso'];?> уже выплачено</span></p>
 		<p class="landing_middle"><?php echo $slider['players'] ?> <span>зарегистрированных</span></p>
 	</div>
 
