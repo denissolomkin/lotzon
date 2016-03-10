@@ -89,6 +89,27 @@ $(function () {
             ;
             return ret;
         },
+        'splitMode': function(str) {
+            str = str.split('-');
+            if (str.length >= 3) {
+                var ob = {
+                    'currency': str[0],
+                    'value': str[1],
+                    'players': str[2]
+                }
+                if (str[3]) {
+                    var tmp = str[3].split('&');
+                    // console.debug(tmp);
+                    for (var i = 0; i < tmp.length; i++) {
+                        var tmp2 = tmp[i].split('=');
+                        ob[tmp2[0]] = tmp2[1];
+                    }
+                }
+                // console.debug(ob)
+                return ob;
+            }
+        },
+
         /**
          * @description return one splitted element getSplittedEl("1-2-3","-", 0)
          * @param {str} str
@@ -282,6 +303,18 @@ $(function () {
                     return false;
 
             return true;
+        },
+        /**
+         * проверяет наличие значений в строке
+         * @param  {str} inStr "POINT-25-2-field=10x10"
+         * @param  {pattern} pattern "POINT|field"
+         * @return {bool}     
+         */
+        'matchStr':function(inStr, pattern){
+            console.debug('matchStr', inStr , pattern);
+            pattern = new RegExp(pattern, "i");
+            if(inStr.match( pattern )) return true;
+            return false;
         },
         'false': function (v1) {
             return v1 === false;

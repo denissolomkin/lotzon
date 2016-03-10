@@ -18,14 +18,18 @@
     </div>
 
     <div class="players-number">{{players.length}}/{{getSplittedEl mode "-" "2"}} <i class="i-person"></i></div>
-
-    {{#if variation}}
+    
     <div class="game-type">
-        {{#each variation}}
-        <i class="i-games-{{@key}}-{{this}}"></i>
-        {{/each}}
+    {{#each (splitMode mode) }}
+        {{#if (matchStr @key "currency|value|players") }} {{else}}
+            {{#if (matchStr @key "cards|type") }} 
+                <i class="i-games-{{@key}}-{{this}}"></i>
+            {{else}}
+                <i>{{this}}</i>
+            {{/if}}
+        {{/if}}
+    {{/each}}
     </div>
-    {{/if}}
 
     <div class="players">{{#each players}} {{this}}{{#if @last}}{{else}},{{/if}} {{/each}}</div>
 </form>
