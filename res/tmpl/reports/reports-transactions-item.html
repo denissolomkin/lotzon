@@ -1,8 +1,8 @@
-{{#if isDay}}<div class="th-date-range ">{{day date}}</div>{{/if}}
 <div data-id="{{id}}" class="th-item{{#if (lt this.sum 0)}} th-minus{{/if}} clearfix">
+    {{#if isDay}}<div class="th-date-range ">{{day date}}</div>{{/if}}
     <div class="th-item-left">
         <div>{{{day date "HH:mm"}}}</div>
-        <div>{{description}}</div>
+        <div>{{{description}}}</div>
     </div>
     <div class="th-item-right">
         <div class="th-item-sum">{{this.sum}}
