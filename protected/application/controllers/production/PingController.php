@@ -46,7 +46,12 @@ class PingController extends \AjaxController
         );
         $response        = array();
         $counters        = array();
+        $delete          = array();
         $player          = $this->session->get(Player::IDENTITY);
+
+        /* todo delete after merge LOT-22 */
+        $player->initDates();
+
         $gamesPublished    = \GamesPublishedModel::instance()->getList();
         $AdBlockDetected = $this->request()->post('online', null);
         $forms           = $this->request()->post('forms', array());
@@ -112,20 +117,21 @@ class PingController extends \AjaxController
         if (!$this->session->has($key . 'LastDate'))
             $this->session->set($key . 'LastDate', time());
 
-        $diff = $this->session->get($key . 'LastDate') + $timer * 60 - time();
+        /* todo delete after merge LOT-22 */
+        if ($player->getDates($key) > $this->session->get($key . 'LastDate'))
+            $this->session->set($key . 'LastDate', $player->getDates($key));
 
-        if ($diff < 0 OR ($diff / 60 <= 5 AND !$this->session->get($key . 'Important'))) {
+        $diff = time() - $this->session->get($key . 'LastDate') + $timer * 60;
 
-            if ($diff / 60 < 5 AND !$this->session->get($key . 'Important'))
-                $this->session->set($key . 'Important', true);
-
-            if ($diff < 0)
-                $badges['notifications'][] = array(
-                    'key'    => $key,
-                    'title'  => 'title-games-random',
-                    'button' => 'button-games-play',
-                    'action' => '/games/random'
-                );
+        if ($diff < 0){
+            $badges['notifications'][] = array(
+                'key'    => $key,
+                'title'  => 'title-games-random',
+                'button' => 'button-games-play',
+                'action' => '/games/random'
+            );
+        } else {
+            $delete['notifications'][]=$key;
         }
 
         /* 
@@ -142,6 +148,10 @@ class PingController extends \AjaxController
         ) {
             $this->session->set($key . 'LastDate', time());
         }
+
+        /* todo delete after merge LOT-22 */
+        if ($player->getDates($key) > $this->session->has($key . 'LastDate'))
+            $this->session->set($key . 'LastDate', $player->getDates($key));
 
         if ($this->session->get($key . 'LastDate') && !$this->session->has($key) && isset($gamesPublished[$key])) {
 
@@ -235,6 +245,8 @@ class PingController extends \AjaxController
 
         $response['badges']          = $badges;
         $response['player']['count'] = $counters;
+        if(!empty($delete))
+            $response['delete']['badges'] = $delete;
 
         $this->ajaxResponseCode($response);
     }
