@@ -125,6 +125,9 @@
                 ? message.join(' ')
                 : message;
 
+            if (message==='error')
+                return;
+
             D.log(message, 'error');
             D.isEnable("alert") && alert(message);
 

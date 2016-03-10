@@ -121,7 +121,8 @@ class PingController extends \AjaxController
         if ($player->getDates($key) > $this->session->get($key . 'LastDate'))
             $this->session->set($key . 'LastDate', $player->getDates($key));
 
-        $diff = time() - $this->session->get($key . 'LastDate') + $timer * 60;
+        $diff = ($this->session->get($key . 'LastDate') + $timer * 60) - time();
+        // print_r(array($player->getDates($key)-time(),$this->session->get($key . 'LastDate')-time(),$diff));
 
         if ($diff < 0){
             $badges['notifications'][] = array(

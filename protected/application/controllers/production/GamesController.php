@@ -233,7 +233,7 @@ class GamesController extends \AjaxController
 
         foreach ($gameApps as $uid => $game) {
 
-            if ($game->isRun() || $game->isOver())
+            if (!$game->isRun())
                 continue;
 
             $games[] = array(
