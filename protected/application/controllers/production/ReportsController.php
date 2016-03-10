@@ -81,7 +81,6 @@ class ReportsController extends \AjaxController
 
         if(($offset!==NULL)&&(count($list)>0)) {
             $lastDay = date('d', array_shift($list)->getDate());
-            array_shift($list);
         } else {
             $lastDay = -1;
         }

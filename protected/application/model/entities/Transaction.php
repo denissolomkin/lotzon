@@ -27,6 +27,7 @@ class Transaction extends Entity
         switch ($to) {
             case 'list':
                 $ret = array(
+                    'id'          => $this->getId(),
                     'date'        => $this->getDate(),
                     'description' => $this->getDescription(),
                     'sum'         => $this->getSum(),
