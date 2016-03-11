@@ -35,11 +35,10 @@ $(function () {
         },
 
         end: function(){
-
+            $('.mx.Revert').removeClass('Revert');
             if (!$('.mx .players .wt').is(":visible")) {
 
                 setTimeout(function () {
-
                     if ($('.mx .players .exit').is(":visible")) {
                         $('.mx .card, .mx .deck').fadeOut();
                         $('.mx .players .wt').fadeOut();

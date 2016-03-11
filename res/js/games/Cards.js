@@ -470,7 +470,6 @@
         },
 
         premove: function () {
-            console.debug('Cards.premove >>>');
             Cards.highlight();
             Listeners.clear();
 
@@ -487,7 +486,6 @@
         },
 
         highlight: function () {
-            console.debug('Cards.highlight >>>');
 
             if (App.beater == Player.id && $('.mx .table .cards').length) {
                 if ($('.mx').hasClass('Revert') && $('.mx .table .cards').length == $('.mx .table .cards .card').length && !$('.mx .table .revert').length)

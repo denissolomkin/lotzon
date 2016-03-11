@@ -40,8 +40,8 @@
                 <div>
                 {{#each variation.v}}
                 <div class="button">
-                    <input {{#if variation.d}} {{#if (eq variation.d @key)}} checked {{/if}} {{else}} {{#if @first}} checked {{/if}} {{/if}} type="radio" name="variation[{{v_key}}]" id="{{@key}}-{{this}}" value="{{@key}}" />
-                    <label for="{{@key}}-{{this}}">
+                    <input {{#if variation.d}} {{#if (eq variation.d @key)}} checked {{/if}} {{else}} {{#if @first}} checked {{/if}} {{/if}} type="radio" name="variation[{{v_key}}]" id="{{@key}}" value="{{@key}}" />
+                    <label for="{{@key}}">
                         <i class="i-games-{{v_key}}-{{@key}}"></i>
                         <span>{{this}}</span>
                     </label>

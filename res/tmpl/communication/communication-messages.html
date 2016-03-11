@@ -7,6 +7,9 @@
 
 
     <form action="/communication/messages/list" method="get" class="render-list-form">
+        <input type="hidden" name="order" value="DESC">
+        <input type="hidden" name="limit" value="{{limit 'communication-messages'}}">
+
         <div class="render-list" id="communication-messages-list">
             {{partial 'communication-messages-list' this}}
         </div>
