@@ -203,7 +203,7 @@
 
             if (typeof options.json === 'object') {
 
-                options.json = Cache.set(options.href, options.json);
+                options.json = Cache.set(options);
                 D.log(['Render.json:', options.href, 'JSON from Object:', options.json], 'render');
                 R.sortJSON(options);
 
@@ -229,7 +229,7 @@
                                 options.stat.ajax.size = xhr.responseText.length;
 
                             options.response = data;
-                            options.json = Cache.init(data, options.href);
+                            options.json = Cache.init(data, options);
 
                             if (data.hasOwnProperty('lastItem'))
                                 options.lastItem = data.lastItem;
@@ -410,9 +410,7 @@
                         var infiniteScrolling = render.querySelector('button[name="submit"]');
                         if (infiniteScrolling) {
                             infiniteScrolling.parentNode.removeChild(infiniteScrolling);
-                            console.error(render, render.id, options.init, options.template);
                         }
-
                     }
 
                     if (render.id == node.id) {

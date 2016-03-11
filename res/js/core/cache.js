@@ -3,6 +3,10 @@
     // Cache Engine
     Cache = {
 
+        "default":  {
+            limit: 10,
+            order: "ASC"
+        },
         "storage"        : {},
         "compiledStorage": {},
         "path2":{
@@ -15,6 +19,7 @@
             "languages": 'languagesStorage',
             "local"    : 'localStorage',
             "session"  : 'sessionStorage',
+            "model"    : 'modelStorage',
             "validity" : {
                 "cache"    : 'cacheValidity',
                 "templates": 'templatesValidity',
@@ -40,7 +45,7 @@
         },
 
         /* point for enter to cache */
-        "init": function (init, key) {
+        "init": function (init, options) {
 
             if (init) {
 
@@ -77,8 +82,9 @@
                     }
                 }
 
-                if (key) {
-                    return this.set(key, init);
+                if (options) {
+                    options.json = init;
+                    return this.set(options);
 
                 } else if (init.res) {
                     this.push(init.res);
@@ -113,6 +119,7 @@
                         = storage[this.storages.languages]
                         = storage[this.storages.local]
                         = storage[this.storages.session]
+                        = storage[this.storages.model]
                         = storage[this.storages.validity.cache]
                         = storage[this.storages.validity.templates]
                         = storage[this.storages.validity.languages]
@@ -124,6 +131,7 @@
                     storage[this.storages.languages] = JSON.parse(localStorage.getItem(this.storages.languages)) || {};
                     storage[this.storages.local] = JSON.parse(localStorage.getItem(this.storages.local)) || {};
                     storage[this.storages.session] = JSON.parse(localStorage.getItem(this.storages.session)) || {};
+                    storage[this.storages.model] = JSON.parse(localStorage.getItem(this.storages.model)) || {};
                     storage[this.storages.validity.cache] = JSON.parse(localStorage.getItem(this.storages.validity.cache)) || {};
                     storage[this.storages.validity.templates] = JSON.parse(localStorage.getItem(this.storages.validity.templates)) || {};
                     storage[this.storages.validity.languages] = JSON.parse(localStorage.getItem(this.storages.validity.languages)) || {};
@@ -210,6 +218,10 @@
                         localStorage.setItem(this.storages['languages'], JSON.stringify(this.storage[this.storages['languages']]));
                         break;
 
+                    case cache === this.storages['model']:
+                        localStorage.setItem(this.storages['model'], JSON.stringify(this.storage[this.storages['model']]));
+                        break;
+
                     case cache === this.storages['validity']['cache']:
                         localStorage.setItem(this.storages['validity']['cache'], JSON.stringify(this.storage[this.storages['validity']['cache']]));
                         break;
@@ -243,19 +255,21 @@
          * Work with JSON
          * */
 
-        "set": function (key, data, storage) {
+        "set": function (options) {
 
-            var path = data.key ? this.splitPath(data.key) : this.splitPath(key),
+            // key, data, storage
+
+            var path = options.json.key ? this.splitPath(options.json.key) : this.splitPath(options.href),
                 needle = path.last(),
-                storage = data.cache || storage || false,
-                source = (data.hasOwnProperty('res') ? data.res : data);
+                storage = options.json.cache || options.storage || false,
+                source = (options.json.hasOwnProperty('res') ? options.json.res : options.json);
 
-            if (data.player)
-                Player.init(data.player);
+            if (options.json.player)
+                Player.init(options.json.player);
 
             this.validate(path.join('-'), true);
 
-            if (!data.key && data.res)
+            if (!options.json.key && options.json.res)
                 while (path.length && source) {
                     needle = path.shift();
                     source = source && source.hasOwnProperty(needle) && source[needle];
@@ -289,12 +303,17 @@
                 }
 
                 if (storage) {
-                    this.extend(data, storage)
+                    if(options.hasOwnProperty('query'))
+                        this.model(U.parse(options.href), {
+                            limit: options.query.limit || this.default.limit,
+                            order: options.query.order || this.default.order
+                        });
+                    this.extend(options.json, storage)
                         .save(storage);
                 }
             }
 
-            return source || (data.hasOwnProperty('res') ? data.res : data);
+            return source || (options.json.hasOwnProperty('res') ? options.json.res : options.json);
 
         },
 
@@ -356,8 +375,10 @@
                                 var count = 0,
                                     filters = {},
                                     keys = Object.keys(list),
-                                    order = path.query && path.query.order || "ASC",
-                                    limit = path.query && path.query.limit || 10;
+                                    model = this.model(path.href);
+
+                                model.order = model.order || path.query && path.query.order || this.default.order;
+                                model.limit = model.limit || path.query && path.query.limit || this.default.limit;
 
                                 cache = {};
 
@@ -366,7 +387,7 @@
                                         if (['limit', 'order', 'offset', 'before_id', 'after_id'].indexOf(filter) == -1)
                                             filters[filter] = path.query[filter];
 
-                                switch (order) {
+                                switch (model.order) {
 
                                     case 'ASC':
 
@@ -380,7 +401,7 @@
 
                                             index++;
 
-                                        } while (Object.size(cache) < limit && index < keys.length);
+                                        } while (Object.size(cache) < model.limit && index < keys.length);
 
                                         break;
 
@@ -396,7 +417,7 @@
                                                 if (count > offset)
                                                     cache[keys[index]] = list[keys[index]];
 
-                                        } while (Object.size(cache) < limit && index > 0);
+                                        } while (Object.size(cache) < model.limit && index > 0);
 
                                         break;
                                 }
@@ -428,6 +449,19 @@
                     break;
             }
 
+        },
+
+        /* order, limit options for stored objects */
+        "model": function(path, data) {
+
+            if (path)
+                if (data) {
+                    this.storage[this.storages['model']][path] = data;
+                    return this.save(this.storages['model']);
+                } else
+                    return this.storage[this.storages['model']].hasOwnProperty(path) ? this.storage[this.storages['model'][path]] : {};
+
+            return {};
         },
 
         "match": function(object, filters){
@@ -582,10 +616,10 @@
                         if (cache) {
                             Object.deepExtend(cache.object, object);
                             object = cache.object;
-                            this.set(null, {
-                                key  : key.replace(/-\d+$/g, '-' + cache.id),
-                                res  : object,
-                                cache: cache.storage
+                            this.set({
+                                href: key.replace(/-\d+$/g, '-' + cache.id),
+                                json: {res: object},
+                                storage: cache.storage
                             });
                         } else {
                             return;
