@@ -6,12 +6,12 @@
             </div>
             <input type="hidden" name="action" value="start" /> {{#each modes as |mod key|}}
             <div class="buttons-group clearfix" data-currency="{{key}}" style="display: block;">
-                <div class="title">{{#if (eq key "MONEY")}}{{player "getCurrency"}} {{else}} {{i18n "title-of-points"}}{{/if}}</div>
+                <div class="title">{{currency key}}</div>
                 <div>
                 {{#each mod}}
                 <div class="button">
                     <input type="radio" name="mode" id="{{key}}-{{this}}" class="required" value="{{key}}-{{this}}" />
-                    <label for="{{key}}-{{this}}">{{#if (eq key "MONEY")}}{{ number (convertСurrency this "float")}}{{else}}{{this}}{{/if}}</label>
+                    <label for="{{key}}-{{this}}">{{currency key this}}</label>
                 </div>
                 {{/each}}
                 </div>

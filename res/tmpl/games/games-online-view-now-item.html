@@ -10,7 +10,7 @@
     {{/if}}
 
     <div class="bet">
-        {{player "getCurrency" (getSplittedEl mode "-" "0") (getSplittedEl mode "-" "1")}} {{player "getCurrency" (getSplittedEl mode "-" "0")}}
+        {{currency (getSplittedEl mode "-" "0") (getSplittedEl mode "-" "1")}} {{currency (getSplittedEl mode "-" "0")}}
     </div>
 
     <div class="players-number">{{players.length}}/{{getSplittedEl mode "-" "2"}} <i class="i-person"></i></div>

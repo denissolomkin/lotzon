@@ -14,23 +14,18 @@
                             <span class="fund_title">{{i18n "title-games-prize"}}</span>
                             <div class="game-fund">
                                 {{#reverse prizes }}
-                                {{#if (eq this.t "item")}}
-                                <div class="">{{ this.n }}</div>
-                                {{else}}
-                                <div class="">
-                                    {{#if (eq this.t "money")}}
-                                        {{ number (convertСurrency this.v "float") }} <span>{{player "getCurrency"}}</span>
+                                    {{#if (eq this.t "item")}}
+                                        <div>{{ this.n }}</div>
                                     {{else}}
-                                        {{ this.v }} <span> {{i18n "title-of-points"}} </span>
+                                        <div>
+                                            {{currency this.t this.v}} <span>{{currency t}}</span>
+                                        </div>
                                     {{/if}}
-                                </div>
-                                {{/if}}
-
                                 {{/reverse}}
                             </div>
                             {{/if}}
                             {{#if winners}}
-                            <div class="">{{ number (or winners 0) }} {{i18n "title-games-winners"}}</div>
+                            <div>{{ number (or winners 0) }} {{i18n "title-games-winners"}}</div>
                             {{/if}}
                         {{/if}}
                     </div>

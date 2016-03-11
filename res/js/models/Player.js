@@ -266,22 +266,11 @@
             return count;
         },
 
-        convertСurrency: function (number, to) {
-            switch (to) {
-                case 'int':
-                    number = parseInt(number * Player.currency.coefficient);
-                    break;
-                case 'float':
-                    number = parseFloat((number * Player.currency.coefficient).toFixed(2));
-                    break;
-                default:
-                    number = (number * Player.currency.coefficient).toFixed(2);
-                    break;
-            }
-            return number;
-        },
-
         getCurrency: function (currency, number) {
+
+            if(typeof number === 'object')
+                number = undefined;
+
             switch (currency) {
                 case 'money':
                 case 'MONEY':
@@ -294,7 +283,7 @@
                 case 'POINT':
                     currency = typeof number !== 'undefined'
                         ? number
-                        : Cache.i18n('title-points');
+                        : Cache.i18n('title-of-points');
                     break;
                 case 'lotzon':
                     currency = Cache.i18n('title-lotzon');

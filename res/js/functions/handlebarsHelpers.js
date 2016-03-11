@@ -178,7 +178,7 @@ $(function () {
             + '>' + count + '</span>';
         },
         'avatar': Player.getAvatar,
-        'convertСurrency': Player.convertСurrency,
+        'currency': Player.getCurrency,
         'number': Player.fineNumbers,
         'count': Player.getCount,
         'from': Livedate.fn.from,
