@@ -64,7 +64,9 @@ class MessagesController extends \AjaxController
         }
 
         foreach ($list as $id=>$message) {
-            $response['res']['communication']['messages'][$message->getId()] = $message->export('talk');
+            $export = $message->export('talk');
+            $export['talk_id'] = $id;
+            $response['res']['communication']['messages'][$message->getId()] = $export;
         }
 
         $this->ajaxResponseCode($response);

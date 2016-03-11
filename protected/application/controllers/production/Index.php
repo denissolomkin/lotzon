@@ -218,6 +218,8 @@ class Index extends \SlimController\SlimController
             "limits"             => array(
                 "lottery-history" => (int)\SettingsModel::instance()->getSettings('counters')->getValue('LOTTERIES_PER_PAGE'),
                 "communication-comments" => (int)\SettingsModel::instance()->getSettings('counters')->getValue('COMMENTS_PER_PAGE'),
+                "communication-messages" => (int)\SettingsModel::instance()->getSettings('counters')->getValue('MESSAGES_PER_PAGE'),
+                "communication-notifications" => (int)\SettingsModel::instance()->getSettings('counters')->getValue('NOTIFICATIONS_PER_PAGE'),
                 "users-friends" => (int)\SettingsModel::instance()->getSettings('counters')->getValue('FRIENDS_PER_PAGE'),
                 "blog-posts" => (int)\SettingsModel::instance()->getSettings('counters')->getValue('POSTS_PER_PAGE'),
             )
