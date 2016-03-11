@@ -46,7 +46,7 @@
                     <div class="logo"><i class="i-lotzon"></i></div>
 
                     {{#if win}}
-                    <div class="ghd-text ghd-won">
+                    <div class="ghd-text ghd-won won">
                         <div class="grid-container">
                             {{#each win}}
                             <div class="width-50">
@@ -58,11 +58,11 @@
                     </div>
 
                     {{else}}
-                    <div class="ghd-text ghd-fale">{{i18n 'title-lottery-not-won'}}</div>
+                    <div class="ghd-text ghd-fale won">{{i18n 'title-lottery-not-won'}}</div>
                     {{/if}}
 
                     {{else}}
-                    <div class="ghd-text">{{i18n 'title-lottery-not-play'}}</div>
+                    <div class="ghd-text won">{{i18n 'title-lottery-not-play'}}</div>
                     {{/if}}
                 </div>
 

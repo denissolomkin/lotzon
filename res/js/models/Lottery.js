@@ -386,10 +386,9 @@
 
                             if ($("#lottery-process li.won_ball").length) {
                                 $("#lottery-process").addClass('lottery-won');
-                                $('#lottery-process .won').css('display', 'block');
                             }
 
-                            $('#lottery-process .ghd-text, #lottery-process .container-center').css('display', 'block');
+                            $('#lottery-process .won').css('display', 'block');
 
                         }, 2000);
 

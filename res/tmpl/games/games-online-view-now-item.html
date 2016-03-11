@@ -9,12 +9,8 @@
     <button type="submit" name="submit">play</button>
     {{/if}}
 
-    <div class="bet">{{getSplittedEl mode "-" "1"}}
-        {{#if (eq (getSplittedEl mode "-" "0") "MONEY")}}
-            {{player "getCurrency"}}
-        {{else}}
-            {{i18n "title-of-points"}}
-        {{/if}}
+    <div class="bet">
+        {{player "getCurrency" (getSplittedEl mode "-" "0") (getSplittedEl mode "-" "1")}} {{player "getCurrency" (getSplittedEl mode "-" "0")}}
     </div>
 
     <div class="players-number">{{players.length}}/{{getSplittedEl mode "-" "2"}} <i class="i-person"></i></div>
