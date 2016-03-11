@@ -5,12 +5,12 @@
 
         "init": function () {
 
-            EventListener.on({
+            EventHandler.on({
 
                 'click': [
 
                     /* global */
-                    ['a', R.push],
+                    // ['a', R.push],
 
                     /* messages */
                     {".mark-read": Messages.do.markRead},
@@ -40,6 +40,7 @@
              ])
              */
 
+            $(document).on('click', 'a', R.push);
 
             // handlers
             $(window).on('resize', Device.do.resize);

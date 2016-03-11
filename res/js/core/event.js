@@ -1,6 +1,6 @@
 (function () {
 
-    EventListener = {
+    EventHandler = {
 
         detect: null,
         body: null,
@@ -19,17 +19,19 @@
                 current = target;
 
             loop:
-                for (priority in EventListener.handlers[event.type]) {
-                    for (str in EventListener.handlers[event.type][priority]) {
-                        if (typeof EventListener.handlers[event.type][priority][str] === 'function') {
+                for (priority in EventHandler.handlers[event.type]) {
+                    for (str in EventHandler.handlers[event.type][priority]) {
+                        if (typeof EventHandler.handlers[event.type][priority][str] === 'function') {
 
                             while (current !== null) {
 
-                                if (EventListener.checkNode(str, current, target))
-                                    EventListener.handlers[event.type][priority][str].call(current, event);
+                                if (EventHandler.checkNode(str, current, target))
+                                    EventHandler.handlers[event.type][priority][str].call(current, event);
 
-                                if (event.cancelBubble)
+                                if (event.cancelBubble) {
+                                    console.error(str + 'break');
                                     break loop;
+                                }
 
                                 current = current.parentNode;
                             }
@@ -93,7 +95,7 @@
         on: function (event, el, func, priority) {
 
             if (this.detect === null) {
-                D.error('First init EventListener');
+                D.error('First init EventHandler');
                 return false;
             }
 
