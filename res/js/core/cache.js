@@ -355,8 +355,6 @@
                             list = cache || list;
                         } while (keys.length && cache);
 
-                        console.error(path, cache);
-
                         if (!cache && isNumeric(needle) && list) {
 
                             for (var index in list) {
@@ -371,13 +369,12 @@
 
                             var offset = path.query && path.query.offset || 0;
 
-                            /* todo search by filters */
                             if (Object.size(list) > offset) {
 
                                 var count = 0,
                                     filters = {},
                                     keys = Object.keys(list),
-                                    model = this.model(path.href);
+                                    model = this.model(U.parse(path.href));
 
                                 model.order = model.order || path.query && path.query.order || this.default.order;
                                 model.limit = model.limit || path.query && path.query.limit || this.default.limit;
@@ -461,7 +458,7 @@
                     this.storage[this.storages['model']][path] = data;
                     return this.save(this.storages['model']);
                 } else
-                    return this.storage[this.storages['model']].hasOwnProperty(path) ? this.storage[this.storages['model'][path]] : {};
+                    return this.storage[this.storages['model']].hasOwnProperty(path) ? this.storage[this.storages['model']][path] : {};
 
             return {};
         },
