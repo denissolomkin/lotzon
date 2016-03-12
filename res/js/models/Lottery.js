@@ -245,11 +245,11 @@
                             console.error('prepareData: ', Lottery.data);
 
                             /* todo adding to lottery-history all & mine */
-                            Cache.set(
-                                '/lottery/history/' + Lottery.data.id,
-                                Object.deepExtend({type:'mine'},json),
-                                'session'
-                            );
+                            Cache.set({
+                                href: '/lottery/history/' + Lottery.data.id,
+                                json: Object.deepExtend({type:'mine'},json),
+                                cache: 'session'
+                            });
 
                             console.error(
                                 '/lottery/history/' + Lottery.data.id,
