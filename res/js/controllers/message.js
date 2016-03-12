@@ -18,7 +18,7 @@
                     }},
 
                     id = ('nodeType' in this)
-                        ? DOM.up('.message', this).getAttribute('data-id')
+                        ? this.getAttribute('data-id')
                         : data.json.id;
 
                 message.communication.messages[id] = {
@@ -34,7 +34,7 @@
         do: {
 
             markRead: function (event) {
-                Form.delete.call(this, '/users/' + DOM.up('.message', this).getAttribute('data-id') + '/messages');
+                Form.delete.call(this, '/users/' + this.getAttribute('data-id') + '/messages');
             },
 
             clearUser: function () {
