@@ -355,6 +355,8 @@
                             list = cache || list;
                         } while (keys.length && cache);
 
+                        console.error(path, cache);
+
                         if (!cache && isNumeric(needle) && list) {
 
                             for (var index in list) {
@@ -365,7 +367,7 @@
                                 }
                             }
 
-                        } else if (cache && !isNumeric(needle) && Object.size(cache) && cache[Object.keys(cache)[0]].hasOwnProperty('id')) {
+                        } else if (cache && !isNumeric(needle) && Object.size(cache)) { // ???? && cache[Object.keys(cache)[0]].hasOwnProperty('id')
 
                             var offset = path.query && path.query.offset || 0;
 
