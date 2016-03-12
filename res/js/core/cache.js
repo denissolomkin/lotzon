@@ -275,7 +275,6 @@
                     source = source && source.hasOwnProperty(needle) && source[needle];
                 }
 
-
             /* todo
             * extend without nesting */
 
@@ -517,8 +516,6 @@
 
                 var find = this.find(key);
 
-                console.error(find);
-
                 if (find){
                     key = key.slice(0, -1);
                     key.push(find['id']);
@@ -608,6 +605,8 @@
 
                 } else if (object.hasOwnProperty('id')) {
 
+                    key.pop();
+                    key.push(object.id); /* replace for real id*/
                     key = key.join('-');
 
                     if (forUpdate) {
