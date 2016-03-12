@@ -346,6 +346,15 @@ $black_15: rgba(0,0,0,0.15);
     #games-chance-view-cells button {
         font-size: 10em;
     }
+    #games-chance-view {
+        .prizes {
+            > div {
+                position: relative;
+                margin: 10px auto; 
+                transform: translateY(0);
+            }
+        }
+    }
 }
 @media all and(max-width: 434px) {
     #games-chance-view {

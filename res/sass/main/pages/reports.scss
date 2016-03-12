@@ -12,7 +12,7 @@
 .ph-item {
   margin: 0 -10px;
   padding: 20px 10px;
-  cursor: pointer;
+  // cursor: pointer;
   position: relative;
   border-top: 1px solid #eaeaea;
   &:last-child {
@@ -160,7 +160,7 @@ border: none;
         padding: 0 0 20px 0;
         margin-right: 0;
         text-transform: uppercase;
-        cursor: pointer;
+        // cursor: pointer;
         // &:first-child{
 
         // }
@@ -184,7 +184,7 @@ border: none;
   line-height: 1.7;
   margin: 0 -20px;
   padding: 20px 20px;
-  cursor: pointer;
+  // cursor: pointer;
   position: relative;
   border-bottom: 1px solid #f3efec;
   &:first-child {
@@ -252,7 +252,7 @@ border: none;
 .th-item {
   margin: 0 -10px;
   padding: 13px 10px 0;
-  cursor: pointer;
+  // cursor: pointer;
   position: relative;
   line-height: 1.4;
   &:nth-child(odd) {

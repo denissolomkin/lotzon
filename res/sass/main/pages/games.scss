@@ -456,9 +456,10 @@ footer.unvisible {
                 .pr-pr{
                     color: #fff;
                     float: right;
-                    padding-top: 30px;
+                    padding-top: 22px;
                     > *{
-                        display: inline-block;
+                        display: block;
+                        text-align: left;
                     }
                     .title{
                         padding-right: 5px;

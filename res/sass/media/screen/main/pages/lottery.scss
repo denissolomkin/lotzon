@@ -30,7 +30,7 @@
     float: left;
     border-radius: 5px 5px 0 0;
     font-size: 14px;
-    font-weight: bold;
+    // font-weight: bold;
     line-height: 30px;
     text-align: center;
     cursor: pointer;
@@ -287,7 +287,7 @@
 }
 
 .ticket-items {
-  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
+  box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.4);
   margin: 5px 0 7px;
   padding-left: 10px;
   display: table-header-group;
@@ -479,9 +479,7 @@
   }
 }
 #lottery-ticket-item {
-  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
   height: inherit;
-
 }
 
   #lottery-process.lottery-won {

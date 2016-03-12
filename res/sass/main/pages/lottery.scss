@@ -128,7 +128,7 @@
         margin: 0 -10px 20px;
         padding: 0 10px;
         text-transform: uppercase;
-        font-weight: bold;
+        // font-weight: bold;
         color: #3f3f3f;
     }
     .gh-header div {
@@ -173,7 +173,7 @@
     height: 45px;
     line-height: 45px;
     font-size: 20px;
-    font-weight: bold;
+    // font-weight: bold;
     float: left;
     margin-right: 5px;
     color: #4a4a4a;
@@ -358,7 +358,7 @@
     height: 40px;
     border-radius: 50%;
     font-size: 15px;
-    font-weight: bold;
+    // font-weight: bold;
     line-height: 42px;
     text-align: center;
     color: #6c6c6c;
@@ -389,7 +389,7 @@
         width: 1000px;
         height: 40px;
         font-size: 15.5px;
-        font-weight: bold;
+        // font-weight: bold;
         line-height: 26px;
         color: #4c4c4c;
         text-align: center;
@@ -631,6 +631,7 @@
         letter-spacing: -2px;
         position: relative;
         overflow: hidden;
+        z-index: 2;
         border-radius: 100em;
         box-shadow:  0px 1px 1px 0px #e6f2f4;
         // shadow 
@@ -942,7 +943,7 @@
 
 .tickets-rules {
     & dt {
-        font-weight: bold;
+        // font-weight: bold;
         margin-bottom: 10px;
     }
     & dd {
@@ -991,7 +992,7 @@
     }
     & th {
         font-size: 14px;
-        font-weight: bold;
+        // font-weight: bold;
         text-transform: uppercase;
         color: #191919;
         padding-bottom: 20px;
@@ -1163,7 +1164,7 @@
     & li {
         position: relative;
         float: left;
-        font-weight: bold;
+        // font-weight: bold;
     }
 }
 
@@ -1234,7 +1235,7 @@
 .balls-count b {
     color: #4c4c4c;
     font-size: 15.5px;
-    font-weight: bold;
+    // font-weight: bold;
 }
 
 .after {
@@ -1274,7 +1275,7 @@
     font-size: 15.5px;
     line-height: 45px;
     color: #4c4c4c;
-    font-weight: bold;
+    // font-weight: bold;
     margin: 0 20px 0 0;
     width: 12%;
 }

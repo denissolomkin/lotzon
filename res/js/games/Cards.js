@@ -73,18 +73,14 @@
                                 if (key == Player.id) {
                                     myCount = (field.length ? field.length : Object.size(field));
                                 }
-                                var deg = (cardsCount > 1
-                                    ? (idx * ((key == Player.id
-                                    ? 22
-                                    : 105)
-                                - (cardsCount > 4
-                                    ? 0
-                                    : (4 - cardsCount) * 15)) / cardsCount)
-                                - ((key == Player.id
-                                    ? 11
-                                    : 45))
-                                    : 0);
-
+                                var deg = (cardsCount > 1 ? (idx * ((key == Player.id ? 22 : 105) - (cardsCount > 4 ? 0 : (4 - cardsCount) * 15)) / cardsCount) - ((key == Player.id ? 11 : 45)) : 0);
+                                
+                                if(cardsCount == 2 && key == Player.id){
+                                    console.debug('>>> idx',idx);
+                                    deg = idx == 1? -10 : 10;
+                                    
+                                    console.debug(deg,">>>");
+                                }
 
                                 $('.mx .players .player' + key + (key == Player.id ? ' .game-cards' : '')).append(
                                     '<div style="transform: rotate(' + deg + 'deg)' + ' ' +
@@ -319,7 +315,7 @@
         },
 
         getRotateSize: function (indx) {
-
+            
             var Deg = (
                 myCount > 1 ? ((indx) *
                 (18 -

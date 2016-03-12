@@ -6230,7 +6230,6 @@ form.loading > * {
     margin: 0 -10px 20px;
     padding: 0 10px;
     text-transform: uppercase;
-    font-weight: bold;
     color: #3f3f3f; }
   .gh-header div {
     float: left; }
@@ -6260,7 +6259,6 @@ form.loading > * {
   height: 45px;
   line-height: 45px;
   font-size: 20px;
-  font-weight: bold;
   float: left;
   margin-right: 5px;
   color: #4a4a4a; }
@@ -6399,7 +6397,6 @@ form.loading > * {
   height: 40px;
   border-radius: 50%;
   font-size: 15px;
-  font-weight: bold;
   line-height: 42px;
   text-align: center;
   color: #6c6c6c;
@@ -6427,7 +6424,6 @@ form.loading > * {
     width: 1000px;
     height: 40px;
     font-size: 15.5px;
-    font-weight: bold;
     line-height: 26px;
     color: #4c4c4c;
     text-align: center;
@@ -6596,6 +6592,7 @@ form.loading > * {
   letter-spacing: -2px;
   position: relative;
   overflow: hidden;
+  z-index: 2;
   border-radius: 100em;
   box-shadow: 0px 1px 1px 0px #e6f2f4; }
   .balls-end-game .g-oc_li:before, .balls-end-game .g-oc_li:after {
@@ -6847,7 +6844,6 @@ form.loading > * {
   padding: 0 20px; }
 
 .tickets-rules dt {
-  font-weight: bold;
   margin-bottom: 10px; }
 
 .tickets-rules dd {
@@ -6888,7 +6884,6 @@ form.loading > * {
 
 .matches-inf th {
   font-size: 14px;
-  font-weight: bold;
   text-transform: uppercase;
   color: #191919;
   padding-bottom: 20px; }
@@ -7016,8 +7011,7 @@ form.loading > * {
   margin-bottom: 11px; }
   .ticket-result li {
     position: relative;
-    float: left;
-    font-weight: bold; }
+    float: left; }
 
 .ball-number-result {
   width: 35px;
@@ -7080,8 +7074,7 @@ form.loading > * {
 
 .balls-count b {
   color: #4c4c4c;
-  font-size: 15.5px;
-  font-weight: bold; }
+  font-size: 15.5px; }
 
 .after {
   left: 50px;
@@ -7112,7 +7105,6 @@ form.loading > * {
   font-size: 15.5px;
   line-height: 45px;
   color: #4c4c4c;
-  font-weight: bold;
   margin: 0 20px 0 0;
   width: 12%; }
 
@@ -8431,7 +8423,7 @@ div.rules-text {
   border-top: 1px solid #eaeaea;
   height: 45px; }
   .cco-method > * {
-    position: relative;
+    position: static;
     top: -50%;
     -webkit-transform: translate(0, 50%);
     -khtml-transform: translate(0, 50%);
@@ -9155,7 +9147,6 @@ span.input-prefix {
 .ph-item {
   margin: 0 -10px;
   padding: 20px 10px;
-  cursor: pointer;
   position: relative;
   border-top: 1px solid #eaeaea; }
   .ph-item:last-child {
@@ -9272,8 +9263,7 @@ span.input-prefix {
       display: inline-block;
       padding: 0 0 20px 0;
       margin-right: 0;
-      text-transform: uppercase;
-      cursor: pointer; }
+      text-transform: uppercase; }
 
 #reports-referrals .r-header-item {
   font-size: 15px; }
@@ -9288,7 +9278,6 @@ span.input-prefix {
   line-height: 1.7;
   margin: 0 -20px;
   padding: 20px 20px;
-  cursor: pointer;
   position: relative;
   border-bottom: 1px solid #f3efec; }
   .r-item.r-header {
@@ -9332,7 +9321,6 @@ span.input-prefix {
 .th-item {
   margin: 0 -10px;
   padding: 13px 10px 0;
-  cursor: pointer;
   position: relative;
   line-height: 1.4; }
   .th-item:nth-child(odd) {
@@ -10122,9 +10110,10 @@ footer.unvisible {
   #games-online-field .players .m .gm-pr .pr-pr {
     color: #fff;
     float: right;
-    padding-top: 30px; }
+    padding-top: 22px; }
     #games-online-field .players .m .gm-pr .pr-pr > * {
-      display: inline-block; }
+      display: block;
+      text-align: left; }
     #games-online-field .players .m .gm-pr .pr-pr .title {
       padding-right: 5px;
       text-transform: uppercase; }
@@ -11641,7 +11630,11 @@ footer.unvisible {
 
 @media all and (max-width: 525px) {
   #games-chance-view-cells button {
-    font-size: 10em; } }
+    font-size: 10em; }
+  #games-chance-view .prizes > div {
+    position: relative;
+    margin: 10px auto;
+    transform: translateY(0); } }
 
 @media all and (max-width: 434px) {
   #games-chance-view .prizes > div {

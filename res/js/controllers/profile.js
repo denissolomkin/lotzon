@@ -13,12 +13,14 @@
                 if (Player.birthday) {
                  $('input.datepicker').daterangepicker({
                         singleDatePicker: true,
+                        "showDropdowns": true,
                         startDate: new Date(Player.birthday * 1000),
                         autoUpdateInput: true
                         });
                 } else {
                     $('input.datepicker').daterangepicker({
                         singleDatePicker: true,
+                        "showDropdowns": true,
                         autoUpdateInput: true
                     });
                     $('input.datepicker').val('');

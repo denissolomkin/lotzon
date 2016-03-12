@@ -803,7 +803,7 @@ div.rules-text {
     border-top: 1px solid #eaeaea;
     height: 45px;
   & > * {
-    position: relative;
+    position: static;
     top: -50%;
     @include translate(0, 50%);
   }

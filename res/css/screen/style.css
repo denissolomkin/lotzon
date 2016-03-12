@@ -630,7 +630,6 @@ div.comment-reply-btn {
     float: left;
     border-radius: 5px 5px 0 0;
     font-size: 14px;
-    font-weight: bold;
     line-height: 30px;
     text-align: center;
     cursor: pointer;
@@ -823,7 +822,7 @@ div.comment-reply-btn {
   width: 200px; }
 
 .ticket-items {
-  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
+  box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.4);
   margin: 5px 0 7px;
   padding-left: 10px;
   display: table-header-group; }
@@ -973,7 +972,6 @@ div.comment-reply-btn {
     max-width: 100%; }
 
 #lottery-ticket-item {
-  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
   height: inherit; }
 
 #lottery-process.lottery-won {
@@ -1264,7 +1262,6 @@ div.comment-reply-btn {
 .th-item {
   margin: 0 -20px;
   padding: 13px 20px 0;
-  cursor: pointer;
   position: relative;
   line-height: 1.4; }
 

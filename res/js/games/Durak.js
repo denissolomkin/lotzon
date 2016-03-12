@@ -35,7 +35,7 @@ $(function () {
         },
 
         end: function(){
-            $('.mx.Revert').removeClass('Revert');
+            $('.mx').attr('class', 'mx'); // resset class
             if (!$('.mx .players .wt').is(":visible")) {
 
                 setTimeout(function () {
