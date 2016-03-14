@@ -279,7 +279,9 @@
             }
 
             /* if receive data for extend cache */
-            if (storage = this.checkStorage(storage)) {
+            if ((!source || Object.size(source)) && (storage = this.checkStorage(storage))) {
+
+                console.error(source, options.json);
 
                 if (options.hasOwnProperty('query'))
                     this.model(U.parse(options.href), {
@@ -343,14 +345,8 @@
          * return: json*/
         "get": function (path, storage, isFind) {
 
-            var cache;
 
             switch (true) {
-
-                case typeof storage === 'undefined':
-
-                    return false;
-                    break;
 
                 case storage === 'templates':
 
@@ -359,7 +355,7 @@
 
                 case storage && typeof storage !== 'undefined':
 
-                    cache = this.getFromStorage(path, storage, isFind);
+                    var cache = this.getFromStorage(path, storage, isFind);
                     D.log(['Cache.get:', path, storage, cache && cache.toString()], 'cache');
                     return cache;
                     break;
@@ -377,14 +373,17 @@
          * return: json*/
         "getFromStorage": function (path, storage, isFind) {
 
+
             var cache = this.storage[this.storages[storage]],
                 needle = '',
                 list = {},
                 keys = [];
+
             if (typeof path === 'object') {
                 keys = path.hasOwnProperty('href') ? this.splitPath(path.href) : path.slice();
-            } else
+            } else {
                 keys = this.splitPath(path);
+            }
 
             do {
                 needle = keys.shift();
