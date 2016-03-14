@@ -352,6 +352,10 @@ class LotteryController extends \AjaxController
                     "points" => $player->getPoints(),
                     "money"  => $player->getMoney(),
                 ),
+                "referral" => array(
+                    'total'  => \PlayersModel::instance()->getReferralsCount($player->getId()),
+                    'profit' => $player->getReferralsProfit()
+                ),
             ),
             "tickets" => array(
                 "lastLotteryId" => \LotteriesModel::instance()->getLastPublishedLottery()->getId(),

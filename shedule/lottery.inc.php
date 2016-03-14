@@ -135,6 +135,8 @@ function ApplyLotteryCombinationAndCheck(&$comb)
 
 function ApplyLotteryCombination(&$comb)
 {
+	global $Prizes, $increments_array;
+
 	if (!$comb) {
 		return;
 	}
@@ -148,11 +150,15 @@ function ApplyLotteryCombination(&$comb)
 
 	DB::Connect()->query("UPDATE Lotteries SET Ready = 1 WHERE Id = $lid");
 
-    if(SettingsModel::instance()->getSettings('counters')->getValue('MONEY_ADD_INCREMENT')){
-        $counters=SettingsModel::instance()->getSettings('counters')->getValue();
-        $counters['MONEY_ADD']+=$counters['MONEY_ADD_INCREMENT'];
-        SettingsModel::instance()->getSettings('counters')->setValue($counters)->create();
-    }
+	$sum = 0;
+	foreach ($comb['ballsArray'] as $balls=>$count) {
+		if ($Prizes['UA'][$balls]['currency']=='MONEY') {
+			$sum = $sum + ($count + $increments_array[$balls]) * $Prizes['UA'][$balls]['sum'];
+		}
+	}
+	$counters=SettingsModel::instance()->getSettings('counters')->getValue();
+	$counters['MONEY_ADD']+=$sum;
+	SettingsModel::instance()->getSettings('counters')->setValue($counters)->create();
 
 	echo PHP_EOL.'recache: '.PHP_EOL;
 	$time = microtime(true);
@@ -165,7 +171,7 @@ function ApplyLotteryCombination(&$comb)
 
 function SetLotteryCombination($comb, $simulation, $lastTicketId, $increments)
 {
-	global $gameSettings;
+	global $gameSettings, $Prizes, $increments_array;
 
 	if(!$comb)
 	{

@@ -333,7 +333,7 @@ class Index extends \SlimController\SlimController
         $isMobile = $detect->isMobile();
 
         $slider = array(
-            "sum"     => (LotteriesModel::instance()->getMoneyTotalWin() + SettingsModel::instance()->getSettings('counters')->getValue('MONEY_ADD')) * CountriesModel::instance()->getCountry($this->country)->loadCurrency()->getCoefficient(),
+            "sum"     => round((LotteriesModel::instance()->getMoneyTotalWin() + SettingsModel::instance()->getSettings('counters')->getValue('MONEY_ADD')) * CountriesModel::instance()->getCountry($this->country)->loadCurrency()->getCoefficient()),
             "players" => PlayersModel::instance()->getMaxId()
         );
 
