@@ -212,9 +212,17 @@ class Durak extends Game
                 $this->setRun(1)
                     ->setOver(0)
                     ->setSaved(0);
-            }
 
-            $this->setResponse((is_array($data) && isset($data['response'])) ? $data['response'] : $this->getClients());
+                $this->setResponse($this->getClients());
+
+            } else {
+                $this->setResponse((is_array($data) && isset($data['response']))
+                    ? $data['response']
+                    : (!is_array($data) || !isset($data['action'])
+                        ? $this->getClient()->id
+                        : $this->getClients())
+                );
+            }
 
             $fields = $this->getField();
 
@@ -262,6 +270,7 @@ class Durak extends Game
                 }
 
                 foreach ($this->getClients() as $client) {
+
                     if (!isset($client->bot)) {
 
                         $this->setCallback(array(
