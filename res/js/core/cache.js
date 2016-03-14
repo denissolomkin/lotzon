@@ -87,7 +87,7 @@
                     return this.set(options);
 
                 } else if (init.res) {
-                    this.push(init.res);
+                    this.push(init.res, init.hasOwnProperty('cache') && init.cache);
                 }
 
             } else {
@@ -269,30 +269,26 @@
 
             this.validate(path.join('-'), true);
 
-            if (!options.json.key && options.json.res)
+            if (!options.json.key && options.json.res){
+                options.json.key = path.join('-');
                 while (path.length && source) {
                     needle = path.shift();
                     source = source && source.hasOwnProperty(needle) && source[needle];
                 }
-
-            /* todo
-             * extend without nesting */
-
+                source && delete options.json.key;
+            }
 
             /* if receive data for extend cache */
-            if (source && Object.size(source) && storage) {
+            if (storage = this.checkStorage(storage)) {
 
-                storage = this.checkStorage(storage);
+                if (options.hasOwnProperty('query'))
+                    this.model(U.parse(options.href), {
+                        limit: parseInt(options.query.limit) || this.default.limit,
+                        order: options.query.order || this.default.order
+                    });
 
-                if (storage) {
-                    if (options.hasOwnProperty('query'))
-                        this.model(U.parse(options.href), {
-                            limit: parseInt(options.query.limit) || this.default.limit,
-                            order: options.query.order || this.default.order
-                        });
-                    this.extend(options.json, storage)
-                        .save(storage);
-                }
+                this.extend(options.json, storage)
+                    .save(storage);
             }
 
             return source || (options.json.hasOwnProperty('res') ? options.json.res : options.json);
@@ -301,23 +297,30 @@
 
         /* check if JSON need to be save to storage
          * return: storage */
-        "checkStorage": function(storage) {
+        "checkStorage": function(storage, path) {
 
             switch (true) {
 
                 case storage === 'session':
+                case storage === this.storages['session']:
                     storage = this.storages['session'];
                     break;
 
                 case storage === 'local':
+                case storage === this.storages['local']:
                 case storage === 'true':
                 case storage === true:
                 case isNumeric(storage):
                     storage = this.storages['local'];
                     break;
 
-                case typeof storage === 'object':
-                    console.error(storage);
+                case storage && path && typeof storage === 'object':
+                    path = path.split('-');
+                    while (path.length) {
+                        if (storage.hasOwnProperty(path.join('-')))
+                            return (this.checkStorage(storage[path.join('-')]));
+                        path.pop();
+                    }
                     storage = false;
                     break;
 
@@ -613,11 +616,11 @@
 
         /* update part of object*/
         "update": function (object) {
-            return this.push(object, null, true)
+            return this.push(object, false, true)
         },
 
         /* push new object to storage */
-        "push": function (object, key, forUpdate) {
+        "push": function (object, storage, forUpdate, key) {
 
             if (object && typeof object === 'object') {
 
@@ -628,17 +631,19 @@
                             var keys = key && key.slice() || [];
                             keys.push(prop);
                             this.validate(keys.join('-'), true);
-                            this.push(object[prop], keys, forUpdate);
+                            this.push(object[prop], storage, forUpdate, keys);
                         }
                     }
 
                 } else if (object.hasOwnProperty('id')) {
 
                     /* replace for real id*/
-                    key = key.join('-').replace(/-\d+$/g, '-' + object.id);
+                    key = key.join('-');
+                    var cache = null;
 
+                    /* update Object in Storage */
                     if (forUpdate) {
-                        var cache = this.find(key);
+                        cache = this.find(key.replace(/-\d+$/g, '-' + object.id));
                         if (cache) {
                             Object.deepExtend(cache.object, object);
                             object = cache.object;
@@ -648,16 +653,28 @@
                                 storage: cache.storage
                             });
                         } else {
-                            return;
+                            return false;
                         }
                     }
 
-                    if (node = DOM.byId(key, 1)) {
+                    /* append to DOM */
+                    if (node = DOM.byId(key.replace(/-\d+$/g, '-' + object.id), 1)) {
                         R.push({
                             href: key.replace(/-\d+$/g, '-item'),
                             node: node,
                             json: object
                         });
+                    }
+
+                    /* save Object to Storage*/
+                    if (storage){
+                        if((cache = this.checkStorage(storage, key))){
+                            this.set({
+                                href: key,
+                                json: {res: object},
+                                storage: cache
+                            });
+                        }
                     }
 
                 }

@@ -197,6 +197,7 @@ class PingController extends \AjaxController
             $list = \MessagesModel::instance()->getLastTalks($player->getId(), NULL, NULL, $forms['communication-messages']['timing']);
             if (count($list) > 0) {
                 $response['res']['communication']['messages']    = array();
+                $response['cache']['communication-messages']     = 'session';
                 $response['delete']['communication']['messages'] = array();
                 foreach ($list as $message) {
                     $response['res']['communication']['messages'][$message->getId()]          = $message->export('talk');
