@@ -3,13 +3,13 @@
     // Cache Engine
     Cache = {
 
-        "default":  {
+        "default": {
             limit: 10,
             order: "ASC"
         },
-        "storage"        : {},
+        "storage": {},
         "compiledStorage": {},
-        "path2":{
+        "path2": {
             "languages": '/res/languages/',
             "momentLocale": '/res/js/libs/moment-locale/'
         },
@@ -17,17 +17,17 @@
         "storages": {
             "templates": 'templatesStorage',
             "languages": 'languagesStorage',
-            "local"    : 'localStorage',
-            "session"  : 'sessionStorage',
-            "model"    : 'modelStorage',
-            "validity" : {
-                "cache"    : 'cacheValidity',
+            "local": 'localStorage',
+            "session": 'sessionStorage',
+            "model": 'modelStorage',
+            "validity": {
+                "cache": 'cacheValidity',
                 "templates": 'templatesValidity',
                 "languages": 'languagesValidity'
             }
         },
 
-        "isEnabled"       : null,
+        "isEnabled": null,
         "selectedLanguage": null,
 
         /*
@@ -52,7 +52,7 @@
                 if (init.player)
                     Player.init(init.player);
 
-                if (init.tickets){
+                if (init.tickets) {
                     Tickets.init(init.tickets);
                 }
 
@@ -74,7 +74,7 @@
                         if (init.badges.hasOwnProperty(badges[i]) && Object.size(init.badges[badges[i]])) {
                             R.push({
                                 template: 'badges-' + badges[i] + '-list',
-                                json    : init.badges[badges[i]].filter(function (el) {
+                                json: init.badges[badges[i]].filter(function (el) {
                                     return !document.getElementById('badges-' + badges[i] + '-' + el.key + (el.id ? '-' + el.id : ''));
                                 })
                             });
@@ -276,33 +276,16 @@
                 }
 
             /* todo
-            * extend without nesting */
+             * extend without nesting */
 
 
             /* if receive data for extend cache */
             if (source && Object.size(source) && storage) {
 
-                switch (true) {
-
-                    case storage === 'session':
-                        storage = this.storages['session'];
-                        break;
-
-                    case storage === 'local':
-                    case storage === 'true':
-                    case storage === true:
-                    case isNumeric(storage):
-                        storage = this.storages['local'];
-                        break;
-
-                    default:
-                        storage = false;
-                        break;
-
-                }
+                storage = this.checkStorage(storage);
 
                 if (storage) {
-                    if(options.hasOwnProperty('query'))
+                    if (options.hasOwnProperty('query'))
                         this.model(U.parse(options.href), {
                             limit: parseInt(options.query.limit) || this.default.limit,
                             order: options.query.order || this.default.order
@@ -316,129 +299,66 @@
 
         },
 
+        /* check if JSON need to be save to storage
+         * return: storage */
+        "checkStorage": function(storage) {
+
+            switch (true) {
+
+                case storage === 'session':
+                    storage = this.storages['session'];
+                    break;
+
+                case storage === 'local':
+                case storage === 'true':
+                case storage === true:
+                case isNumeric(storage):
+                    storage = this.storages['local'];
+                    break;
+
+                case typeof storage === 'object':
+                    console.error(storage);
+                    storage = false;
+                    break;
+
+                default:
+                    storage = false;
+                    break;
+
+            }
+
+            return storage;
+        },
+
         /* try find JSON from storages
          * return: id, storage, needle  */
         "find": function (path) {
             return this.get(path, null, true);
         },
 
-        /* try get JSON from storages
+        /* try get JSON
          * return: json*/
         "get": function (path, storage, isFind) {
 
-            var cache,
-                needle;
+            var cache;
 
             switch (true) {
 
+                case typeof storage === 'undefined':
+
+                    return false;
+                    break;
+
+                case storage === 'templates':
+
+                    return this.storage[this.storages[storage]].hasOwnProperty(path) && this.storage[this.storages[storage]][path];
+                    break;
+
                 case storage && typeof storage !== 'undefined':
 
-                    cache = this.storage[this.storages[storage]];
-
-                    if (storage === 'templates') {
-                        cache = cache.hasOwnProperty(path) && cache[path];
-                    } else {
-
-                        if (typeof path === 'object') {
-                            var keys = path.hasOwnProperty('href') ? this.splitPath(path.href) : path.slice();
-                        } else
-                            var keys = this.splitPath(path);
-
-                        var list = null;
-                        do {
-                            needle = keys.shift();
-                            cache = needle && cache && cache.hasOwnProperty(needle)
-                                && (isNumeric(needle) && !keys.length
-                                    ? (cache[needle].hasOwnProperty('id') && cache[needle]['id'] == needle && cache[needle])
-                                    : cache[needle]);
-                            list = cache || list;
-                        } while (keys.length && cache);
-
-                        if (!cache && isNumeric(needle) && list) {
-
-                            for (var index in list) {
-                                if (list.hasOwnProperty(index) && list[index].hasOwnProperty('id') && list[index]['id'] == needle) {
-                                    cache = list[index];
-                                    needle = index;
-                                    break;
-                                }
-                            }
-
-                        } else if (cache && !isNumeric(needle) && Object.size(cache)) { // ???? && cache[Object.keys(cache)[0]].hasOwnProperty('id')
-
-                            var offset = path.query && path.query.offset || 0;
-
-                            if (Object.size(list) > offset) {
-
-                                var count = 0,
-                                    filters = {},
-                                    keys = Object.keys(list),
-                                    model = this.model(U.parse(path.href));
-
-                                model.order = model.order || path.query && path.query.order || this.default.order;
-                                model.limit = model.limit || path.query && path.query.limit || this.default.limit;
-
-                                cache = {};
-
-                                if (path.query)
-                                    for (var filter in path.query)
-                                        if (['limit', 'order', 'offset', 'before_id', 'after_id'].indexOf(filter) == -1)
-                                            filters[filter] = path.query[filter];
-
-                                switch (model.order) {
-
-                                    default:
-                                    case 'ASC':
-
-                                        var index = 0;
-
-                                        do {
-
-                                            if (this.match(list[keys[index]], filters) && ++count)
-                                                if (count > offset)
-                                                    cache[keys[index]] = list[keys[index]];
-
-                                            index++;
-
-                                        } while (Object.size(cache) < model.limit && index < keys.length);
-
-                                        break;
-
-                                    case 'DESC':
-
-                                        var index = keys.length;
-
-                                        do {
-
-                                            index--;
-
-                                            if (this.match(list[keys[index]], filters) && ++count)
-                                                if (count > offset)
-                                                    cache[keys[index]] = list[keys[index]];
-
-                                        } while (Object.size(cache) < model.limit && index > 0);
-
-                                        break;
-                                }
-
-                            } else
-                                cache = false;
-
-                            if (cache && !Object.size(cache))
-                                cache = false;
-                        } else {
-                            cache = false;
-                        }
-                    }
-
+                    cache = this.getFromStorage(path, storage, isFind);
                     D.log(['Cache.get:', path, storage, cache && cache.toString()], 'cache');
-                    return isFind && cache
-                        ? {
-                        id     : needle,
-                        storage: storage,
-                        object : cache
-                    }
-                        : cache;
+                    return cache;
                     break;
 
                 default:
@@ -450,8 +370,116 @@
 
         },
 
+        /* try get JSON from storages
+         * return: json*/
+        "getFromStorage": function (path, storage, isFind) {
+
+            var cache = this.storage[this.storages[storage]],
+                needle = '',
+                list = {},
+                keys = [];
+            if (typeof path === 'object') {
+                keys = path.hasOwnProperty('href') ? this.splitPath(path.href) : path.slice();
+            } else
+                keys = this.splitPath(path);
+
+            do {
+                needle = keys.shift();
+                cache = needle && cache && cache.hasOwnProperty(needle)
+                    && (isNumeric(needle) && !keys.length
+                        ? (cache[needle].hasOwnProperty('id') && cache[needle]['id'] == needle && cache[needle])
+                        : cache[needle]);
+                list = cache || list;
+            } while (keys.length && cache);
+
+            if (!cache && isNumeric(needle) && list) {
+
+                for (var index in list) {
+                    if (list.hasOwnProperty(index) && list[index].hasOwnProperty('id') && list[index]['id'] == needle) {
+                        cache = list[index];
+                        needle = index;
+                        break;
+                    }
+                }
+
+            } else if (cache && !isNumeric(needle) && Object.size(cache)) { // ???? && cache[Object.keys(cache)[0]].hasOwnProperty('id')
+
+                var offset = path.query && path.query.offset || 0;
+
+                if (Object.size(list) > offset) {
+
+                    var count = 0,
+                        filters = {},
+                        keys = Object.keys(list),
+                        model = this.model(U.parse(path.href || path));
+
+                    model.order = model.order || path.query && path.query.order || this.default.order;
+                    model.limit = model.limit || path.query && path.query.limit || this.default.limit;
+
+                    cache = {};
+
+                    if (path.query)
+                        for (var filter in path.query)
+                            if (['limit', 'order', 'offset', 'before_id', 'after_id'].indexOf(filter) == -1)
+                                filters[filter] = path.query[filter];
+
+                    switch (model.order) {
+
+                        default:
+                        case 'ASC':
+
+                            var index = 0;
+
+                            do {
+
+                                if (this.match(list[keys[index]], filters) && ++count)
+                                    if (count > offset)
+                                        cache[keys[index]] = list[keys[index]];
+
+                                index++;
+
+                            } while (Object.size(cache) < model.limit && index < keys.length);
+
+                            break;
+
+                        case 'DESC':
+
+                            var index = keys.length;
+
+                            do {
+
+                                index--;
+
+                                if (this.match(list[keys[index]], filters) && ++count)
+                                    if (count > offset)
+                                        cache[keys[index]] = list[keys[index]];
+
+                            } while (Object.size(cache) < model.limit && index > 0);
+
+                            break;
+                    }
+
+                } else
+                    cache = false;
+
+                if (cache && !Object.size(cache))
+                    cache = false;
+
+            } else {
+                cache = false;
+            }
+
+            return isFind && cache
+                ? {
+                id: needle,
+                storage: storage,
+                object: cache
+            }
+                : cache;
+        },
+
         /* order, limit options for stored objects */
-        "model": function(path, data) {
+        "model": function (path, data) {
 
             if (path)
                 if (data) {
@@ -463,11 +491,11 @@
             return {};
         },
 
-        "match": function(object, filters){
+        "match": function (object, filters) {
 
-            if(Object.size(filters))
-                for(var filter in filters)
-                    if(!object.hasOwnProperty(filter) || object[filter] != filters[filter]) {
+            if (Object.size(filters))
+                for (var filter in filters)
+                    if (!object.hasOwnProperty(filter) || object[filter] != filters[filter]) {
                         return false;
                     }
             return true;
@@ -517,10 +545,10 @@
 
                 var find = this.find(key);
 
-                if (find){
+                if (find) {
                     key = key.slice(0, -1);
                     key.push(find['id']);
-                    if (this.delete(this.storages[find.storage], key)){
+                    if (this.delete(this.storages[find.storage], key)) {
                         this.save(this.storages[find.storage]);
                         return true;
                     }
@@ -577,8 +605,8 @@
                 return [];
             else if (!isArray(path)) {
                 path = path.indexOf('.') !== -1 && path.split('.')
-                || path.indexOf('-') !== -1 && path.split('-')
-                || path.split('/');
+                    || path.indexOf('-') !== -1 && path.split('-')
+                    || path.split('/');
             }
             return path.filter(Boolean);
         },
@@ -656,7 +684,7 @@
 
             D.log(['Cache.extend', storage, path, data], 'cache');
 
-            if(source)
+            if (source)
                 Object.deepExtend(this.storage[storage], source);
 
             return this;
@@ -680,8 +708,8 @@
         },
 
         /*
-        * Work with Templates
-        * */
+         * Work with Templates
+         * */
 
         "partials": function (template) {
 
@@ -689,7 +717,7 @@
             template.replace(
                 /(?:partial\b\s.)([\w]+[\-\w*]*)/igm,
                 function (m, p) {
-                    if(matches.indexOf(p) < 0)
+                    if (matches.indexOf(p) < 0)
                         matches.push(p);
                 }
             );
@@ -761,15 +789,15 @@
             if (!this.language(this.selectedLanguage)) {
 
                 $.ajax({
-                    url     : this.path2.languages + this.selectedLanguage,
-                    method  : 'get',
+                    url: this.path2.languages + this.selectedLanguage,
+                    method: 'get',
                     dataType: 'json',
-                    success : function (data) {
+                    success: function (data) {
                         D.log(['Cache.localize DONE:', Cache.selectedLanguage, data], 'cache');
                         Cache.language(Cache.selectedLanguage, data);
                         Cache.ready();
                     },
-                    error   : function (data) {
+                    error: function (data) {
                         D.error('LANGUAGE ERROR: ' + data.message);
                     }
                 });

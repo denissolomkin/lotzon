@@ -21,18 +21,6 @@
                     }
                 }
 
-                if (init.hasOwnProperty('balance')) {
-                    for (key in init.balance) {
-                        if (this.balance.hasOwnProperty(key)) {
-                            var holders = document.getElementsByClassName('holder-' + key);
-                            for (var i = 0; i < holders.length; i++) {
-                                init.balance[key] = parseFloat(init.balance[key]);
-                                holders[i].innerHTML = this.fineNumbers(init.balance[key]);
-                            }
-                        }
-                    }
-                }
-
                 if (init.hasOwnProperty('games') && init.games.online && init.games.online.Uid) {
                     App.id = init.games.online.Id;
                     WebSocketAjaxClient('app/' + init.games.online.Key + '/' + init.games.online.Uid, {action: 'start'});
@@ -43,6 +31,10 @@
 
                 if (init.hasOwnProperty('count')) {
                     Player.renderCount(init.count);
+                }
+
+                if (init.hasOwnProperty('balance')) {
+                    Player.updateBalance();
                 }
 
             }
@@ -144,11 +136,14 @@
 
                     for (var i = 0; i < holders.length; i++) {
                         var count = this.getCount(key);
-                        holders[i].innerHTML = count;
-                        if (count)
-                            DOM.fadeIn(holders[i]);
-                        else
-                            DOM.fadeOut(holders[i]);
+                        if (count != holders[i].innerHTML) {
+                            holders[i].innerHTML = count;
+                            if (count) {
+                                DOM.fadeIn(holders[i]);
+                            } else {
+                                DOM.fadeOut(holders[i]);
+                            }
+                        }
                     }
 
                     if (key === 'notifications') {
@@ -365,7 +360,16 @@
         },
 
         updateBalance: function () {
-            return Player.updatePoints().updateMoney();
+            if (this.hasOwnProperty('balance')) {
+                for (key in this.balance) {
+                    if (this.balance.hasOwnProperty(key)) {
+                        var holders = document.getElementsByClassName('holder-' + key);
+                        for (var i = 0; i < holders.length; i++) {
+                            holders[i].innerHTML = this.fineNumbers(this.balance[key]);
+                        }
+                    }
+                }
+            }
         },
 
         initPing: function () {

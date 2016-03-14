@@ -183,16 +183,19 @@ class MessagesController extends \AjaxController
         $player->setId($toPlayerId)->fetch();
 
         $response = array(
-            "message" => "message-successfully-sent",
+            'message' => 'message-successfully-sent',
+            'cache' => array(
+                'communication-messages' => 'session'
+            ),
             'res'     => array(
                 'users'         => array(
-                    "$toPlayerId" => array(
-                        "messages" => array()
+                    $toPlayerId => array(
+                        'messages' => array()
                     ),
                 ),
                 'communication' => array(
                     'messages' => array(
-                        array(
+                        $obj->getId() => array(
                             'user' => $player->export('card'),
                             'id'   => $toPlayerId,
                             'date' => $obj->getDate(),
