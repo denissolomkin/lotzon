@@ -27,6 +27,7 @@
                     'COMMENTS_PER_PAGE'=>'Комментариев на странице',
                     'REVIEWS_PER_PAGE'=>'Отзывов на странице',
                     'NOTIFICATIONS_PER_PAGE' => 'Уведомлений на странице',
+                    'MESSAGES_PER_PAGE' => 'Сообщений на странице',
 
                     'TRANSACTIONS_PER_ADMIN'=>'Транзакций в админке',
                     'PLAYERS_PER_ADMIN'=>'Пользователей в админке',
