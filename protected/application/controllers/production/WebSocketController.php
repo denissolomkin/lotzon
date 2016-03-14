@@ -332,6 +332,7 @@ class WebSocketController implements MessageComponentInterface
             } elseif (!$app->isOver() && !$app->isRun() && $app->getOptions('b')
                 && $app->getNumberPlayers() > count($app->getClients())
                 && count($app->getClients()) != count($app->_bot)
+                && $app->getTime() + self::MIN_WAIT_TIME < time()
             ) {
 
                 $availableBots = GamePlayersModel::instance()->getAvailableBots();
