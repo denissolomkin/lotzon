@@ -605,9 +605,8 @@
 
                 } else if (object.hasOwnProperty('id')) {
 
-                    key.pop();
-                    key.push(object.id); /* replace for real id*/
-                    key = key.join('-');
+                    /* replace for real id*/
+                    key = key.join('-').replace(/-\d+$/g, '-' + object.id);
 
                     if (forUpdate) {
                         var cache = this.find(key);
