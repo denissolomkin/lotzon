@@ -305,7 +305,7 @@
                     if(options.hasOwnProperty('query'))
                         this.model(U.parse(options.href), {
                             limit: parseInt(options.query.limit) || this.default.limit,
-                            order: parseInt(options.query.order) || this.default.order
+                            order: options.query.order || this.default.order
                         });
                     this.extend(options.json, storage)
                         .save(storage);
