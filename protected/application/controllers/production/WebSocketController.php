@@ -17,7 +17,7 @@ Application::import(PATH_GAMES . '*');
 class WebSocketController implements MessageComponentInterface
 {
 
-    const   MIN_WAIT_TIME    = 1;//15;
+    const   MIN_WAIT_TIME    = 15;//1;
     const   MAX_WAIT_TIME    = 600;//20;
     const   PERIODIC_TIMER   = 2;//2
     const   TIMEOUT_PLAYER   = 60;//10
@@ -332,6 +332,7 @@ class WebSocketController implements MessageComponentInterface
             } elseif (!$app->isOver() && !$app->isRun() && $app->getOptions('b')
                 && $app->getNumberPlayers() > count($app->getClients())
                 && count($app->getClients()) != count($app->_bot)
+                && $app->getTime() + self::MIN_WAIT_TIME < time()
             ) {
 
                 $availableBots = GamePlayersModel::instance()->getAvailableBots();
