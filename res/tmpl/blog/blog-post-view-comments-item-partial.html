@@ -21,7 +21,7 @@
             </span>
         </div>
     </div>
-    {{#if player "moderator"}}
+    {{#if (player "moderator")}}
     <form id="communication-comments-{{id}}-abuse"
           method="post"
           action="/communication/comments/{{id}}/abuse">
