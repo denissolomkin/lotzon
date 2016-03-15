@@ -4,9 +4,9 @@ Application::import(PATH_APPLICATION . 'model/Entity.php');
 class Admin extends Entity
 {
     const SESSION_VAR  = '540236854b650';
-
     static $ROLES = array('ADMIN','MANAGER','MODERATOR','DEVELOPER');
     static $PAGES = array(
+
         'users'=>array('name'=>'Пользователи','icon'=>'user'),
         'reviews'=>array('name'=>'Отзывы','icon'=>'thumbs-o-up'),
         'monetisation'=>array('name'=>'Запросы','icon'=>'tag'),
@@ -27,6 +27,8 @@ class Admin extends Entity
                 'rights'=>array('icon'=>'shield','name'=>'Права доступа'),
                 'bonuses'=>array('icon'=>'diamond','name'=>'Бонусы'),
                 'counters'=>array('icon'=>'dashboard','name'=>'Счетчики'),
+                'whitelist'=>array('icon'=>'users','name'=>'Whitelist'),
+                'moderators'=>array('icon'=>'gavel','name'=>'Модераторы'),
             )),
 
         'Контент'=>array('icon'=>'th-list',

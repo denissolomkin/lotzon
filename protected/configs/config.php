@@ -198,6 +198,10 @@ Config::instance()->privateResources =  array(
         'get' => 'controllers\admin\Blacklist:index',
         'post' => 'controllers\admin\Blacklist:save',
     ),
+    '/private/moderators/'      => array(
+        'get' => 'controllers\admin\Moderators:index',
+        'post' => 'controllers\admin\Moderators:save',
+    ),
     '/private/rights/'      => array(
         'get' => 'controllers\admin\Rights:index',
         'post' => 'controllers\admin\Rights:save',
