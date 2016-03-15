@@ -61,6 +61,7 @@ class ReportsDBProcessor implements IProcessor
         AND   `DateOrdered` < :to
         AND Type!='points'
         ".(is_numeric($args['Status'])?"AND `Status` = {$args['Status']}":'')."
+        ".(is_numeric($args['AdminID'])?"AND `UserID` = {$args['AdminID']}":'')."
         GROUP BY Date, Type
         ORDER BY DateOrdered";
 
@@ -84,6 +85,7 @@ class ReportsDBProcessor implements IProcessor
         WHERE  `DateOrdered` > :from
         AND    `DateOrdered` < :to
         ".(is_numeric($args['Status'])?"AND `Status` = {$args['Status']}":'')."
+        ".(is_numeric($args['AdminID'])?"AND `UserID` = {$args['AdminID']}":'')."
         GROUP BY Date, ItemId
         ORDER BY DateOrdered";
 
@@ -215,6 +217,7 @@ SELECT CONCAT(YEAR(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date))) `Mo
         WHERE  `Date` > :from
         AND    `Date` < :to
         ".(is_numeric($args['Status'])?"AND `Status` = {$args['Status']}":'')."
+        ".(is_numeric($args['AdminID'])?"AND `AdminID` = {$args['AdminID']}":'')."
         GROUP BY Month
         ORDER BY Date";
 

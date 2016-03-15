@@ -1,9 +1,10 @@
 <?php
 namespace controllers\admin;
 
-use \Application, \PrivateArea, \SettingsModel, \Session2, \Admin, \ReportsModel;
+use \Application, \PrivateArea, \SettingsModel, \Session2, \Admin, \ReportsModel, \AdminModel;
 
 Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
+Application::import(PATH_APPLICATION . 'model/models/AdminModel.php');
 
 class Reports extends PrivateArea
 {
@@ -37,6 +38,7 @@ class Reports extends PrivateArea
             'reports'    => $reports,
             'activeMenu' => $activeMenu,
             'args'       => $args,
+            'admins'     => AdminModel::getList(),
             'dateTo'     =>  date('Y-m-d',$dateTo),
             'dateFrom'   =>  date('Y-m-d',$dateFrom),
         ));
