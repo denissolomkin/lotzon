@@ -1,7 +1,7 @@
 <div id="lottery-ticket-item" class="ticket-item clearfix">
     <div class="condition">
         {{i18n "message-lottery-ticket-6" }}
-        {{lottery 'ticketConditions[6]'}}
+        {{diff (lottery 'ticketConditions[6]') (player "referral.total") }}
         {{i18n "message-lottery-ticket-6-last" }}
     </div>
 </div>
