@@ -227,39 +227,41 @@
                 lastLotteryId = parseInt(Tickets.lastLotteryId),
                 format = function(json) {
 
-                    Lottery.data = json;
+                    Lottery.data = Object.clone(json);
 
                     switch (true) {
+
                         case Lottery.data.id == lastLotteryId:
                         default:
-                            setTimeout(function() {
+                            setTimeout(function () {
                                 Lottery.prepareData(id)
                             }, 3000);
+
+                            return json;
                             break;
 
                         case Lottery.data.id > lastLotteryId + 1:
                             Lottery.update();
+
+                            return json;
                             break;
 
                         case Lottery.data.id == lastLotteryId + 1:
+
                             console.error('prepareData: ', Lottery.data);
 
-                            /* todo adding to lottery-history all & mine */
                             Cache.set({
                                 href: '/lottery/history/' + Lottery.data.id,
-                                json: Object.deepExtend({type:'mine'},json),
-                                cache: 'session'
+                                storage: "session",
+                                json: {res: Object.deepExtend(Object.clone(json), {type: 'mine'})}
                             });
-
-                            console.error(
-                                '/lottery/history/' + Lottery.data.id,
-                                Object.deepExtend({type:'mine'},json),
-                                'session'
-                            );
 
                             Lottery.prepareTickets(Lottery.data.id);
                             Lottery.update();
+
+                            return json;
                             break;
+
                     }
                 };
 
@@ -279,8 +281,9 @@
                 } : null),
                 format = function(json) {
                     Lottery.tickets = json;
-                    console.log('prepareTickets: ', Lottery.tickets);
                     Lottery.renderAnimation();
+                    console.log('prepareTickets: ', Lottery.tickets);
+                    return json;
                 };
 
             R.json({

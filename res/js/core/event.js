@@ -36,7 +36,7 @@
                             }
 
                             current = target;
-                            
+
                         } else {
 
                         }

@@ -3,7 +3,8 @@
     Prize = {
 
         init: function () {
-        R.push("prizes/exchange");
+            if(!DOM.byId('prizes-exchange'))
+                R.push("prizes/exchange");
         },
 
         update: {

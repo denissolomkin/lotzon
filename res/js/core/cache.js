@@ -281,8 +281,6 @@
             /* if receive data for extend cache */
             if ((!source || Object.size(source)) && (storage = this.checkStorage(storage))) {
 
-                console.error(source, options.json);
-
                 if (options.hasOwnProperty('query'))
                     this.model(U.parse(options.href), {
                         limit: parseInt(options.query.limit) || this.default.limit,

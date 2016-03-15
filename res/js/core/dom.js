@@ -183,7 +183,7 @@
                 level = typeof level !== 'undefined' && level || false,
                 l = 0;
 
-            while (!node && id && id.match(/(?:\w+)(?:-\w+)+$/) && (!level || l < level)) {
+            while (!node && id && id.match(/(?:\w+)(?:-\w+)+$/) && (level || l < level)) {
                 id = id.replace(/-(\w+)$/, "");
                 node = document.getElementById(id + '-list') || document.getElementById(id);
                 l++;

@@ -104,10 +104,8 @@
             if (!options.node && node) {
                 if (options.node = document.getElementById(options.template)) { // U.parse(node, 'tmpl')
                 } else if (options.node = document.getElementById(node)) {
-                } else if (options.node = DOM.byId(node)) {
-                } else {
-                    options.node = document.getElementById('content');
-                }
+                } else if (options.node = DOM.byId(node, true)) {
+                } else if (options.node = document.getElementById('content')) { }
             }
 
             options.init = Object.deepExtend({}, {

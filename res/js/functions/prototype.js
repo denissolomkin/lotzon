@@ -81,12 +81,24 @@
     Object.deepExtend = function (destination, source) {
         for (var property in source) {
             if (Object.isObjectLiteral(destination[property]) && Object.isObjectLiteral(source[property])) {
-
                 destination[property] = destination[property] || {};
                 arguments.callee(destination[property], source[property]);
             } else {
                 destination[property] = source[property];
             }
+        }
+        return destination;
+    };
+
+    Object.clone = function(source) {
+        var destination = (source instanceof Array) ? [] : {};
+        for (i in source) {
+            if (!source.hasOwnProperty(i))
+                continue;
+            if (source[i] && typeof source[i] == "object")
+                destination[i] = Object.clone(source[i]);
+            else
+                destination[i] = source[i]
         }
         return destination;
     };

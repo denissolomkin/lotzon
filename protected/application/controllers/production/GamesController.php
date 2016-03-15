@@ -61,8 +61,8 @@ class GamesController extends \AjaxController
 
                 foreach ($publishedGames->getLoadedGames() as $id => $game) {
 
-                    if (!isset($response['games'][$game->getType()]))
-                        $response['games'][$game->getType()] = array();
+                    if (!isset($response['res']['games'][$game->getType()]))
+                        $response['res']['games'][$game->getType()] = array();
 
                     if (!$game->isEnabled())
                         continue;
