@@ -23,6 +23,12 @@
             this.updateBanners();
         },
 
+        badge: {
+            close: function () {
+                DOM.remove(DOM.up('.badge', this));
+            }
+        },
+
         banner: {
 
             moment: function (data) {

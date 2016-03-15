@@ -28,23 +28,22 @@
                                 if (EventHandler.checkNode(str, current, target))
                                     EventHandler.handlers[event.type][priority][str].call(current, event);
 
-                                if (event.cancelBubble) {
-                                    console.error(str + 'break');
+                                if (event.cancelBubble)
                                     break loop;
-                                }
 
                                 current = current.parentNode;
+
                             }
 
                             current = target;
-
+                            
                         } else {
 
                         }
                     }
-
-
                 }
+
+            return true;
         },
 
         checkNode: function (str, current, target) {

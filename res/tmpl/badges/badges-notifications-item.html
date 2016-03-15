@@ -1,7 +1,7 @@
 <div id="badges-notifications-{{key}}" class="badge">
     {{badgesCountdown}}
     <section class="clearfix">
-        <a href="{{action}}" class="start {{#if button}}visible{{else}}invisible{{/if}}" onclick="DOM.remove(DOM.up('.badge',this))">{{i18n button}}</a>
+        <a href="{{action}}" class="badge-close start {{#if button}}visible{{else}}invisible{{/if}}">{{i18n button}}</a>
         <div class="title">{{i18n title}}</div>
     </section>
 </div>

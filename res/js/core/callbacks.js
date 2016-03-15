@@ -10,7 +10,10 @@
                 'click': [
 
                     /* global */
-                    // ['a', R.push],
+                    ['a', R.push],
+
+                    /* badges */
+                    ['.badge-close', Content.badge.close, 1],
 
                     /* messages */
                     {".mark-read": Messages.do.markRead},
@@ -40,7 +43,6 @@
              ])
              */
 
-            $(document).on('click', 'a', R.push);
 
             // handlers
             $(window).on('resize', Device.do.resize);
