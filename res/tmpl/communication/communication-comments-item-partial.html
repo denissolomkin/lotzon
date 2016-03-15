@@ -21,6 +21,13 @@
             </span>
         </div>
     </div>
+    {{#if (player "moderator")}}
+    <form id="communication-comments-{{id}}-abuse"
+          method="post"
+          action="/communication/comments/{{id}}/abuse">
+        <button type="submit"> {{i18n "message-report-abuse"}} </button>
+    </form>
+    {{/if}}
     {{partial "communication-comments-view-like" this}}
     <div class="comment-description">
         <input class="comment-reply-btn" type='text'/>

@@ -319,6 +319,7 @@
                 "message-users-write-message" : "Напишите сообщение",
                 "message-comment-sent-success": "Комментарий отправлен на модерацию",
                 "message-successfully-sent": "Сообщение успешно отправлено",
+                "message-report-abuse": "Пожаловаться",
                 "message-prize-exchange": "Баллы за приз будут автоматически списаны с Вашего счета.",
                 "message-prize-exchange-info": "В течении 7-ми рабочих дней с Вами свяжутся для уточнения информации.",
                 "message-prize-isnt-many": "НЕ ДОСТАТОЧНО БАЛЛОВ",
