@@ -153,7 +153,7 @@ function ApplyLotteryCombination(&$comb)
 	$sum = 0;
 	foreach ($comb['ballsArray'] as $balls=>$count) {
 		if ($Prizes['UA'][$balls]['currency']=='MONEY') {
-			$sum = $sum + ($count + $increments_array[$balls]) * $Prizes['UA'][$balls]['sum'];
+			$sum = $sum + $increments_array[$balls] * $Prizes['UA'][$balls]['sum'];
 		}
 	}
 	$counters=SettingsModel::instance()->getSettings('counters')->getValue();
