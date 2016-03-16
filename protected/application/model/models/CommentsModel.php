@@ -29,6 +29,11 @@ class CommentsModel extends Model
         return $this->getProcessor()->getLikes($commentId);
     }
 
+    public function canPlayerPublish($playerId)
+    {
+        return $this->getProcessor()->canPlayerPublish($playerId);
+    }
+
     public function isLiked($commentId, $playerId)
     {
         return $this->getProcessor()->isLiked($commentId, $playerId);

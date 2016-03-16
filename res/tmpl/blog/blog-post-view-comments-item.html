@@ -1,8 +1,8 @@
-<div class="comment" id="blog-post-{{this.object_id}}-comments-{{this.id}}" data-id="{{this.id}}">
+<div id="blog-post-{{object_id}}-comments-{{id}}" data-id="{{id}}" class="comment">
 
-    {{partial 'blog-post-view-comments-item-partial' . }}
+    {{partial 'communication-comments-item-partial' . }}
 
-    <div id="blog-post-{{this.object_id}}-comments-{{this.id}}-answers" class="answers">
+    <div id="blog-post-{{object_id}}-comments-{{id}}-answers" class="answers">
 
         {{partial 'blog-post-view-comments-view-answers-list' . }}
 

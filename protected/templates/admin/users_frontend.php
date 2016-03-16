@@ -1282,11 +1282,26 @@ $('.reviews-trigger').on('click', function() {
             if (data.status == 1) {
                 var tdata = '';
                 $(data.data.reviews).each(function(id, tr) {
-                    tdata += '<tr class="'+(tr.Status==0?'warning':tr.Status==1?'success':'danger')+'"><td>'+tr.Date+'</td><td>'+tr.Text+'</td><td>'+(tr.Image?'<img src="/filestorage/reviews/'+tr.Image+'">':'')+'</td>'
+                    tdata += '<tr class="'+(
+                            tr.Status == 0
+                                ? 'warning'
+                                : tr.Status == 1
+                                ? 'success'
+                                : tr.Status == 2
+                                ? 'default'
+                                : 'danger'
+                        )
+                        + '"><td>'
+                        + tr.Date
+                        + '</td><td>'
+                        + tr.Text
+                        + '</td><td>'
+                        + (tr.Image?'<img src="/filestorage/reviews/'+tr.Image+'">':'')
+                        + (tr.ModeratorName ? '<span class="right label label-danger">' + tr.ModeratorName + (tr.Complain?': '+tr.Complain:'')+ '</span>' : '')
+                        + '</td>'
                 });
+
                 $("#reviews-holder").find('tbody').html(tdata);
-
-
                 $("#reviews-holder").modal();
                 $("#reviews-holder").find('.cls').on('click', function() {
                     $("#reviews-holder").modal('hide');

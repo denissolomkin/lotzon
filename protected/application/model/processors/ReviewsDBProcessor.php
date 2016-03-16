@@ -6,7 +6,8 @@ class ReviewsDBProcessor implements IProcessor
 {
     public function create(Entity $review)
     {
-        $sql = "REPLACE INTO `PlayerReviews` (`Id`, `ParentId`, `ToPlayerId`, `PlayerId`, `Text`, `Date`, `Image`, `IsPromo`, `Status`, `AdminId`, `ModifyDate`, `Module`, `ObjectId`) VALUES (:id, :parentid, :toplayerid, :playerid, :text, :date, :image, :ispromo, :status, :adminid, :modifydate, :module, :objectid)";
+        $sql = "REPLACE INTO `PlayerReviews` (`Id`, `ParentId`, `ToPlayerId`, `PlayerId`, `Text`, `Date`, `Image`, `IsPromo`, `Status`, `AdminId`, `ModifyDate`, `Module`, `ObjectId`)
+                VALUES (:id, :parentid, :toplayerid, :playerid, :text, :date, :image, :ispromo, :status, :adminid, :modifydate, :module, :objectid)";
 
         try {
             $sth = DB::Connect()->prepare($sql)->execute(array(
@@ -36,7 +37,7 @@ class ReviewsDBProcessor implements IProcessor
         $sql = "UPDATE `PlayerReviews` SET `Status` = :status, `Text` = :text, `AdminId` = :adminid, `ModifyDate` = :modifydate WHERE `Id` = :id";
 
         try {
-            $sth = DB::Connect()->prepare($sql)->execute(array(
+            DB::Connect()->prepare($sql)->execute(array(
                 ':id'         => $review->getId(),
                 ':status'     => $review->getStatus(),
                 ':text'       => $review->getText(),
@@ -117,9 +118,10 @@ class ReviewsDBProcessor implements IProcessor
 
     public function getReview($id)
     {
-            $sql = "SELECT `PlayerReviews`.*, `Players`.`Email` PlayerEmail,`Players`.`Avatar` PlayerAvatar,`Players`.`Nicname` PlayerName,`Admins`.`Login` UserName
+            $sql = "SELECT `PlayerReviews`.*, `Players`.`Email` PlayerEmail, m.`Nicname` ModeratorName, `Players`.`Avatar` PlayerAvatar,`Players`.`Nicname` PlayerName,`Admins`.`Login` UserName
                 FROM `PlayerReviews`
                 LEFT JOIN `Players` ON `Players`.`Id` = `PlayerReviews`.`PlayerId`
+                LEFT JOIN `Players` m ON m.`Id` = `PlayerReviews`.`ModeratorId`
                 LEFT JOIN `Admins` ON `Admins`.`Id` = `PlayerReviews`.`AdminId`
                 WHERE `PlayerReviews`.Id = :id OR `PlayerReviews`.ParentId = :id
                 ORDER BY `Id` ";
@@ -141,24 +143,32 @@ class ReviewsDBProcessor implements IProcessor
         return $reviews;
     }
 
-    public function getList($status=1, $limit = null, $offset = null, $ignore = false)
+    public function getList($limit = null, $offset = null, $args = array())
     {
+
+        $where = array();
+
+        foreach($args as $key => $value)
+            if(isset($value))
+                $where[] = "`$key`" . ($value === 'isnull' ? " IS NULL" : ($value === 'notzero' ? " != 0" : " = " . (is_numeric($value)?$value:"'".$value."'")));
+
         $sql = "SELECT Id
-                FROM `PlayerReviews`
-                WHERE `Status` = :status ".($ignore ? null : 'AND (`ParentId` IS NULL OR `ParentId` = 0)').
-                "ORDER BY `Id` DESC";
-        if (!is_null($limit)) {
+                FROM `PlayerReviews`";
+
+        if(!empty($where))
+            $sql.=' WHERE '.implode(' AND ', $where);
+
+        $sql.=" ORDER BY `Id` DESC";
+
+        if (!is_null($limit))
             $sql .= " LIMIT " . (int)$limit;
-        }
-        if (!is_null($offset)) {
+
+        if (!is_null($offset))
             $sql .= " OFFSET " . (int)$offset;
-        }
 
         try {
             $sth = DB::Connect()->prepare($sql);
-            $sth->execute(array(
-                ':status' => $status,
-            ));
+            $sth->execute();
         } catch (PDOExeption $e) {
             throw new ModelException("Unable to proccess storage query", 500);
         }
@@ -170,16 +180,17 @@ class ReviewsDBProcessor implements IProcessor
                 $ids[] = $id['Id'];
             $ids = implode(',', $ids);
 
-            $sql = "SELECT `PlayerReviews`.*, `Players`.`Email` PlayerEmail,`Players`.`Avatar` PlayerAvatar,`Players`.`Nicname` PlayerName,`Admins`.`Login` UserName
+            $sql = "SELECT `PlayerReviews`.*, m.`Nicname` ModeratorName, `Players`.`Email` PlayerEmail,`Players`.`Avatar` PlayerAvatar,`Players`.`Nicname` PlayerName,`Admins`.`Login` UserName
                 FROM `PlayerReviews`
                 LEFT JOIN `Players` ON `Players`.`Id` = `PlayerReviews`.`PlayerId`
+                LEFT JOIN `Players` m ON m.`Id` = `PlayerReviews`.`ModeratorId`
                 LEFT JOIN `Admins` ON `Admins`.`Id` = `PlayerReviews`.`AdminId`
-                WHERE `Status` = :status AND ( `PlayerReviews`.Id IN ({$ids}) OR `PlayerReviews`.ParentId IN ({$ids}))
-                ORDER BY `Id` ";
+                WHERE `Status` = :status AND ( `PlayerReviews`.Id IN ({$ids}) OR `PlayerReviews`.ParentId IN ({$ids}))" .
+                " ORDER BY `Id` ";
 
             try {
                 $sth = DB::Connect()->prepare($sql);
-                $sth->execute(array(':status' => $status));
+                $sth->execute(array(':status' => $args['Status']));
             } catch (PDOExeption $e) {
                 throw new ModelException("Unable to proccess storage query", 500);
             }
@@ -198,14 +209,21 @@ class ReviewsDBProcessor implements IProcessor
         return $reviews;
     }
 
-    public function getCount($status=1) {
-        $sql = "SELECT COUNT(*) FROM `PlayerReviews` WHERE `Status` = :status";
+    public function getCount($args) {
+
+        $sql = "SELECT COUNT(*) FROM `PlayerReviews`";
+        $where = array();
+
+        foreach($args as $key => $value)
+            if(isset($value))
+                $where[] = "`$key`" . ($value === 'isnull' ? " IS NULL" : ($value === 'notzero' ? " != 0" : " = " . (is_numeric($value)?$value:"'".$value."'")));
+
+        if(!empty($where))
+            $sql.=' WHERE '.implode(' AND ', $where);
 
         try {
             $sth = DB::Connect()->prepare($sql);
-            $sth->execute(array(
-                ':status' => $status,
-            ));
+            $sth->execute();
         } catch (PDOExeption $e) {
             throw new ModelException("Unable to proccess storage query", 500);
         }

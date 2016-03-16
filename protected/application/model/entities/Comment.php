@@ -8,6 +8,9 @@ class Comment extends Entity
     protected $_playerId    = 0;
     protected $_playerImg   = '';
     protected $_playerName  = '';
+    protected $_complain    = '';
+    protected $_moderatorId = 0;
+    protected $_moderatorName = '';
     protected $_text        = '';
     protected $_image       = '';
     protected $_date        = 0;
@@ -44,6 +47,7 @@ class Comment extends Entity
                     'img'  => $this->getPlayerImg(),
                     'name' => $this->getPlayerName(),
                 ),
+                'moderator' => $this->getModeratorId(),
                 'id'    => $this->getId(),
                 'date'  => $this->getDate(),
                 'text'  => $this->getText(),

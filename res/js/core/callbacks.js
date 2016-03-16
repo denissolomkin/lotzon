@@ -29,6 +29,9 @@
                     {".comment-reply-btn": Comments.do.replyForm},
                     {".comment-content": Comments.do.mobileForm},
 
+                    /* complain */
+                    {".comment-complain-btn": Comments.do.complainForm},
+
                     //
                     {".back": Navigation.do.backBlock},
                     {".close-pop-box": Content.destroyPopBox}

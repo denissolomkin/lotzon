@@ -2,43 +2,47 @@
 
 class CommentsDBProcessor implements IProcessor
 {
-    public function create(Entity $comment) 
+    public function create(Entity $comment)
     {
         $sql = "REPLACE INTO `PlayerReviews` (`Id`, `ParentId`, `ToPlayerId`, `PlayerId`, `Text`, `Date`, `Image`, `IsPromo`, `Status`, `AdminId`, `ModifyDate`, `Module`, `ObjectId`) VALUES (:id, :parentid, :toplayerid, :playerid, :text, :date, :image, :ispromo, :status, :adminid, :modifydate, :module, :objectid)";
 
         try {
-            $sth = DB::Connect()->prepare($sql)->execute(array(
-                ':id'         => $comment->getId(),
-                ':playerid'   => $comment->getPlayerId(),
-                ':toplayerid' => $comment->getToPlayerId()?:null,
-                ':parentid'   => $comment->getParentId()?:null,
-                ':text'       => $comment->getText(),
-                ':date'       => $comment->getDate()?:time(),
-                ':image'      => $comment->getImage(),
-                ':ispromo'    => $comment->getIsPromo(),
-                ':status'     => $comment->getStatus(),
-                ':adminid'    => $comment->getAdminId(),
-                ':module'     => $comment->getModule(),
-                ':objectid'   => $comment->getObjectId(),
+            DB::Connect()->prepare($sql)->execute(array(
+                ':id' => $comment->getId(),
+                ':playerid' => $comment->getPlayerId(),
+                ':toplayerid' => $comment->getToPlayerId() ?: null,
+                ':parentid' => $comment->getParentId() ?: null,
+                ':text' => $comment->getText(),
+                ':date' => $comment->getDate() ?: time(),
+                ':image' => $comment->getImage(),
+                ':ispromo' => $comment->getIsPromo(),
+                ':status' => $comment->getStatus(),
+                ':adminid' => $comment->getAdminId(),
+                ':module' => $comment->getModule(),
+                ':objectid' => $comment->getObjectId(),
                 ':modifydate' => time(),
             ));
         } catch (PDOExeption $e) {
             throw new ModelException("Unable to proccess storage query", 500);
         }
 
+        $comment->setId(DB::Connect()->lastInsertId());
+
         return $comment;
     }
 
     public function update(Entity $comment)
     {
-        $sql = "UPDATE `PlayerReviews` SET `Status` = :status, `Text` = :text, `AdminId` = :adminid, `ModifyDate` = :modifydate WHERE `Id` = :id";
+        $sql = "UPDATE `PlayerReviews` SET `Status` = :status, `Complain` = :complain, `Text` = :text, `AdminId` = :adminid, `ModeratorId` = :moderatorid, `ModifyDate` = :modifydate WHERE `Id` = :id";
 
         try {
             $sth = DB::Connect()->prepare($sql)->execute(array(
-                ':id'         => $comment->getId(),
-                ':status'     => $comment->getStatus(),
-                ':text'       => $comment->getText(),
-                ':adminid'    => $comment->getUserId(),
+                ':id' => $comment->getId(),
+                ':status' => $comment->getStatus(),
+                ':complain' => $comment->getComplain(),
+                ':text' => $comment->getText(),
+                ':adminid' => $comment->getAdminId(),
+                ':moderatorid' => $comment->getModeratorId(),
                 ':modifydate' => time(),
             ));
         } catch (PDOexception $e) {
@@ -84,7 +88,7 @@ class CommentsDBProcessor implements IProcessor
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
-                ':id'    => $comment->getId(),
+                ':id' => $comment->getId(),
             ));
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query", 500);
@@ -115,9 +119,9 @@ class CommentsDBProcessor implements IProcessor
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
-                ':module'   => $module,
+                ':module' => $module,
                 ':objectId' => $objectId,
-                ':status'   => $status,
+                ':status' => $status,
             ));
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query " . $e, 1);
@@ -146,10 +150,10 @@ class CommentsDBProcessor implements IProcessor
                     `Status` = :status
                 AND
                     `ObjectId` = :objectId"
-                . (($parentId === NULL) ? " AND (`ParentId` IS NULL)" : " AND (`PlayerReviews`.`ParentId` = $parentId)")
-                . (($beforeId === NULL) ? "" : " AND (`PlayerReviews`.`Id` < $beforeId)")
-                . (($afterId === NULL)  ? "" : " AND (`PlayerReviews`.`Id` > $afterId)")
-                . (($modifyDate === NULL)  ? "" : " AND (`PlayerReviews`.`ModifyDate` > $modifyDate)
+            . (($parentId === NULL) ? " AND (`ParentId` IS NULL)" : " AND (`PlayerReviews`.`ParentId` = $parentId)")
+            . (($beforeId === NULL) ? "" : " AND (`PlayerReviews`.`Id` < $beforeId)")
+            . (($afterId === NULL) ? "" : " AND (`PlayerReviews`.`Id` > $afterId)")
+            . (($modifyDate === NULL) ? "" : " AND (`PlayerReviews`.`ModifyDate` > $modifyDate)
                                                     OR (`PlayerReviews`.Id IN
                                                         (SELECT ParentId FROM PlayerReviews WHERE
                                                                    `Module` = :module
@@ -160,15 +164,15 @@ class CommentsDBProcessor implements IProcessor
                                                                 AND
                                                                     `ModifyDate` > $modifyDate)
                                                         )")
-                . "
+            . "
                 ORDER BY `PlayerReviews`.`Id` DESC"
-                . (($count === NULL)  ? "" : " LIMIT " . (int)$count);
+            . (($count === NULL) ? "" : " LIMIT " . (int)$count);
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
-                ':module'   => $module,
+                ':module' => $module,
                 ':objectId' => $objectId,
-                ':status'   => $status,
+                ':status' => $status,
             ));
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query " . $e, 1);
@@ -177,7 +181,7 @@ class CommentsDBProcessor implements IProcessor
         $comments = array();
         foreach ($sth->fetchAll() as $commentData) {
             $comment = new \Comment;
-            $comments[$commentData['Id']] = $comment->formatFrom('DB',$commentData)->export('JSON');
+            $comments[$commentData['Id']] = $comment->formatFrom('DB', $commentData)->export('JSON');
             if (!$commentData['ParentId']) {
                 $comments[$commentData['Id']]['answers'] = $this->getList($module, $objectId, $count, $beforeId = NULL, $afterId = NULL, $status, $commentData['Id']);
             } else {
@@ -226,7 +230,7 @@ class CommentsDBProcessor implements IProcessor
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
                 ':commentid' => $commentId,
-                ':playerid'  => $playerId,
+                ':playerid' => $playerId,
             ));
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query", 500);
@@ -246,7 +250,7 @@ class CommentsDBProcessor implements IProcessor
         try {
             $sth = DB::Connect()->prepare($sql)->execute(array(
                 ':commentid' => $commentId,
-                ':playerid'  => $playerId,
+                ':playerid' => $playerId,
             ));
         } catch (PDOExeption $e) {
             throw new ModelException("Like already set", 500);
@@ -262,7 +266,7 @@ class CommentsDBProcessor implements IProcessor
         try {
             $sth = DB::Connect()->prepare($sql)->execute(array(
                 ':commentid' => $commentId,
-                ':playerid'  => $playerId,
+                ':playerid' => $playerId,
             ));
         } catch (PDOExeption $e) {
             throw new ModelException("Like not set", 500);
@@ -278,7 +282,7 @@ class CommentsDBProcessor implements IProcessor
         try {
             $sth = DB::Connect()->prepare($sql)->execute(array(
                 ':playerid' => $playerId,
-                ':date'     => ($time ? $time : time()),
+                ':date' => ($time ? $time : time()),
             ));
         } catch (PDOexception $e) {
             throw new ModelException("Unable to proccess storage query", 500);
@@ -322,7 +326,7 @@ class CommentsDBProcessor implements IProcessor
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
-                ':module'   => $module,
+                ':module' => $module,
                 ':objectId' => $objectId,
                 ':playerid' => $playerId,
             ));
@@ -333,6 +337,30 @@ class CommentsDBProcessor implements IProcessor
         $count = $sth->fetch()['c'];
 
         return $count;
+    }
+
+    public function canPlayerPublish($playerId)
+    {
+
+        if(!($limit = (int) SettingsModel::instance()->getSettings('counters')->getValue('APPROVES_TO_AUTOPUBLISH')))
+            return false;
+
+        $sql = "SELECT SUM(Approve) Approve
+                FROM (SELECT IF(`Status`=1,1,0) as Approve
+                      FROM `PlayerReviews`
+                      WHERE `PlayerId` = :playerId AND `Status` != 2
+                      ORDER by Id DESC
+                      LIMIT $limit) t";
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':playerId' => $playerId
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query " . $e, 1);
+        }
+
+        return ($limit == $sth->fetch()['Approve']);
     }
 
     public function getNotificationsList($playerId, $count = 10, $offset = NULL, $module = 'comments', $objectId = 0)

@@ -882,7 +882,10 @@ class PlayersDBProcessor implements IProcessor
 
     public function getReviews($playerId)
     {
-        $sql = "SELECT * FROM `PlayerReviews` WHERE `PlayerId` = :pid ORDER BY `Id` DESC";
+        $sql = "SELECT `PlayerReviews`.*, m.`Nicname` ModeratorName
+                FROM `PlayerReviews`
+                LEFT JOIN `Players` m ON m.`Id` = `PlayerReviews`.`ModeratorId`
+                WHERE `PlayerId` = :pid ORDER BY `Id` DESC";
 
         try {
             $res = DB::Connect()->prepare($sql);

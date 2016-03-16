@@ -118,8 +118,7 @@ class Index extends \SlimController\SlimController
             "img"      => $playerObj->getAvatar(),
             "email"    => $playerObj->getEmail(),
             "gender"   => $playerObj->getGender(),
-            "moderator"=> is_array(SettingsModel::instance()->getSettings('counters')->getValue('moderators'))
-                && in_array($playerObj->getId(),SettingsModel::instance()->getSettings('counters')->getValue('moderators')),
+            "moderator"=> in_array($playerObj->getId(), (array) SettingsModel::instance()->getSettings('counters')->getValue('moderators')),
             "title"    => array(
                 "name"       => $playerObj->getName(),
                 "surname"    => $playerObj->getSurname(),

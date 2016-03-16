@@ -1,11 +1,21 @@
-
+<?php
+$defaults = array(
+    'status' => $status,
+    'module' => $module,
+    'auto'   => $auto
+);
+?>
 <div class="container-fluid">
 
     <div class="row-fluid">
-        <button onclick="document.location.href='/private/reviews?status=2&sortField=<?=$currentSort['field']?>&sortDirection=<?=$currentSort['direction']?>'" class="btn right btn-md btn-danger <?=($status==2 ? 'active' : '' )?>"><i class="glyphicon glyphicon-ban-circle"></i> Отклоненные</button>
-        <button onclick="document.location.href='/private/reviews?status=1&sortField=<?=$currentSort['field']?>&sortDirection=<?=$currentSort['direction']?>'" class="btn right  btn-md btn-success <?=($status==1 ? 'active' : '')?>"><i class="glyphicon glyphicon-ok"></i> Одобренные</button>
-        <button onclick="document.location.href='/private/reviews?status=0&sortField=<?=$currentSort['field']?>&sortDirection=<?=$currentSort['direction']?>'" class="btn right btn-warning btn-md <?=(!$status ? 'active' : '')?>"><i class="glyphicon glyphicon-time"></i> На рассмотрении</button>
-        <h2>Отзывы
+        <button onclick="<?=href(array('status'=>3, 'auto'=>null),$defaults)?>" class="btn right btn-md btn-danger <?=($status==3 ? 'active' : '')?>"><i class="glyphicon glyphicon-exclamation-sign"></i> Бан</button>
+        <button onclick="<?=href(array('status'=>2, 'auto'=>null),$defaults)?>" class="btn right btn-md btn-default <?=($status==2 ? 'active' : '' )?>"><i class="glyphicon glyphicon-trash"></i> Удалены</button>
+        <button onclick="<?=href(array('status'=>1, 'auto'=>'notzero'),$defaults)?>" class="btn right btn-md btn-success <?=($status==1 && $auto  ? 'active' : '')?>"><i class="glyphicon glyphicon-ok"></i> Одобрены</button>
+        <button onclick="<?=href(array('status'=>1, 'auto'=>0),$defaults)?>" class="btn right btn-md btn-primary <?=($status==1 && !$auto ? 'active' : '')?>"><i class="glyphicon glyphicon-pushpin"></i> Авто</button>
+        <button onclick="<?=href(array('status'=>0, 'auto'=>null),$defaults)?>" class="btn right btn-warning btn-md <?=(!$status ? 'active' : '')?>"><i class="glyphicon glyphicon-time"></i> Ожидают</button>
+        <h2>
+            <button type="button" onclick="<?=href(array('module'=>'comments'))?>" class="btn btn-default <?=($module=='comments' ? 'active' : '')?>"">Комменты</button>
+            <button type="button" onclick="<?=href(array('module'=>'blog'))?>" class="btn btn-default <?=($module=='blog' ? 'active' : '')?>"">Блог</button>
             <button type="button" data-sector="<?=$key?>" class="btn btn-success edit-trigger"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button>
         </h2>
         <hr/>
@@ -14,7 +24,7 @@
         <div class="row-fluid">
             <div class="btn-group">
                 <? for ($i=1; $i <= $pager['pages']; ++$i) { ?>
-                    <button onclick="document.location.href='/private/reviews?status=<?=$status?>&page=<?=$i?>&sortField=<?=$currentSort['field']?>&sortDirection=<?=$currentSort['direction']?>'" class="btn btn-default btn-xs <?=($i == $pager['page'] ? 'active' : '')?>"><?=$i?></button>
+                    <button onclick="<?=href(array('page'=>$i),$defaults)?>" class="btn btn-default btn-xs <?=($i == $pager['page'] ? 'active' : '')?>"><?=$i?></button>
                 <? } ?>
             </div>
         </div>
@@ -26,7 +36,7 @@
                 <th style="min-width: 170px;">Игрок </th>
                 <th style="min-width: 200px;">Информация </th>
                 <th>Отзыв</th>
-                <th style="width: 146px;">Options</th>
+                <th style="width: 234px;">Options</th>
             </thead>
             <tbody>
                 <? while ($reviews = array_pop($list))
@@ -182,12 +192,20 @@
                             </div>
 
                         </td>
-                        <td class="text"><?=$review->getReviewId()?'<i data-id="'.$review->getReviewId().'" class="fa fa-reply pointer replies-trigger"></i> ':''?><?=$review->getText()?><?=$review->getImage()?"<br><img src='/filestorage/reviews/".$review->getImage()."'>":''?></td>
+                        <td class="text">
+                            <div data-toggle="tooltip" title="<?=$review->getUserName()?>">
+                                <?=$review->getReviewId()?'<i data-id="'.$review->getReviewId().'" class="fa fa-reply pointer replies-trigger"></i> ':''?><?=$review->getText()?><?=$review->getImage()?"<br><img src='/filestorage/reviews/".$review->getImage()."'>":''?>
+                                <? if ($review->getModeratorName()) :?>
+                                    <span class="right label label-danger"><?=$review->getModeratorName()?><? if($review->getComplain()) echo ': '.$review->getComplain(); ?></span>
+                                <? endif; ?>
+                            </div>
+                        </td>
                         <td>
                             <button class="btn btn-md btn-primary edit-trigger"><i class="glyphicon glyphicon-edit"></i></button>
                             <button class="btn btn-md btn-warning status-trigger<?=($status==0 ? ' hidden' : '' )?>" data-status='0' data-id="<?=$review->getId()?>"><i class="glyphicon glyphicon-time"></i></button>
-                            <button class="btn btn-md btn-success status-trigger<?=($status==1 ? ' hidden' : '' )?>" data-status='1' data-id="<?=$review->getId()?>"><i class="glyphicon glyphicon-ok"></i></button>
-                            <button class="btn btn-md btn-danger status-trigger<?=($status==2 ? ' hidden' : '' )?>" data-status='2' data-id="<?=$review->getId()?>"><i class="glyphicon glyphicon-ban-circle"></i></button>
+                            <button class="btn btn-md btn-success status-trigger<?=($status==1 && $auto ? ' hidden' : '' )?>" data-status='1' data-id="<?=$review->getId()?>"><i class="glyphicon glyphicon-ok"></i></button>
+                            <button class="btn btn-md btn-default status-trigger<?=($status==2 ? ' hidden' : '' )?>" data-status='2' data-id="<?=$review->getId()?>"><i class="glyphicon glyphicon-trash"></i></button>
+                            <button class="btn btn-md btn-danger status-trigger<?=($status==3 ? ' hidden' : '' )?>" data-status='3' data-id="<?=$review->getId()?>"><i class="glyphicon glyphicon-exclamation-sign"></i></button>
                         </td>
                     </tr>
                 <? } ?>
@@ -199,7 +217,7 @@
         <div class="row-fluid">
             <div class="btn-group">
                 <? for ($i=1; $i <= $pager['pages']; ++$i) { ?>
-                    <button onclick="document.location.href='/private/reviews?status=<?=$status?>&page=<?=$i?>&sortField=<?=$currentSort['field']?>&sortDirection=<?=$currentSort['direction']?>'" class="btn btn-default btn-xs <?=($i == $pager['page'] ? 'active' : '')?>"><?=$i?></button>
+                    <button onclick="<?=href(array('page'=>$i),$defaults)?>" class="btn btn-default btn-xs <?=($i == $pager['page'] ? 'active' : '')?>"><?=$i?></button>
                 <? } ?>
             </div>
         </div>
@@ -226,6 +244,7 @@
                     <input type="hidden" name="edit[ParentId]" id="edit-parentid" value="" />
                     <input type="hidden" name="add[ParentId]" id="add-parentid" value="" />
                     <input type="hidden" name="add[Status]" value="1" />
+                    <input type="hidden" name="add[Module]" value="<?=$module;?>" />
 
                     <div class="form-group">
 
@@ -249,8 +268,9 @@
                                 <label>Статус</label>
                                 <select name="edit[Status]" id="edit-status" class="form-control"/>
                                     <option value="1">Одобрен</option>
-                                    <option value="0">На рассмотрении</option>
-                                    <option value="2">Отклонен</option>
+                                    <option value="0">Ожидает</option>
+                                    <option value="2">Удален</option>
+                                    <option value="3">Забанен</option>
                                 </select>
                             </div>
 
@@ -263,8 +283,12 @@
                     </div>
                     </div>
                     <div style="clear: both;"></div>
-                    <hr/>
+
                         </div>
+                    <hr/>
+                        <button class="btn btn-md" type="button" onclick="$(this).hide().next().show().next().show().next().val(1);">Добавить ответ</button>
+                        <button class="btn btn-md" type="button" onclick="$(this).hide().prev().show().next().next().hide().next().val(0);" style="display:none;">Убрать ответ</button>
+                        <div style="display:none;">
 
                     <div class="row-fluid">
                         <div class="col-my-4">
@@ -289,6 +313,8 @@
                         </div>
                     </div>
 
+                    </div>
+                        <input type="hidden" name="answer" value="0">
                     </div>
                 </form>
 
@@ -316,10 +342,21 @@
                 if (data.status == 1) {
                     var tdata = '';
                     $(data.data.reviews).each(function(id, tr) {
-                        tdata += '<tr class="'+(tr.Status==0?'warning':tr.Status==1?'success':'danger')+'">' +
+                        tdata += '<tr class="' + (
+                                tr.Status == 0
+                                    ? 'warning'
+                                    : tr.Status == 1
+                                        ? 'success'
+                                        : tr.Status == 2
+                                            ? 'default'
+                                            : 'danger'
+                            ) + '">' +
                         '<td>'+tr.Date+'</td>' +
                         '<td> <div onclick="window.open(\'/private/users?search[where]=Id&search[query]='+tr.PlayerId+'\')" class="pointer"><i class="fa fa-user"></i> '+tr.PlayerName+'</div>'+tr.Text+'</td>' +
-                        '<td>'+(tr.Image?'<img src="/filestorage/reviews/'+tr.Image+'">':'')+'</td>'
+                        '<td>'
+                            + (tr.Image?'<img src="/filestorage/reviews/'+tr.Image+'">':'')
+                            + (tr.ModeratorName ? '<span class="right label label-danger">' + tr.ModeratorName + (tr.Complain?': '+tr.Complain:'')+ '</span>' : '')
+                            + '</td>'
                     });
                     $("#reviews-holder").find('tbody').html(tdata);
 
@@ -339,7 +376,25 @@
     });
 
     $('.status-trigger').on('click', function() {
-        location.href = '/private/reviews/status/' + $(this).data('id') + '?status=<?=$status?>&setstatus=' + $(this).data('status');
+
+        var that = $(this);
+        $.ajax({
+            url: '/private/reviews/status/' +that.data('id') + '?status=' + that.data('status'),
+            method: 'GET',
+            async: true,
+            dataType: 'json',
+            success: function(data) {
+                if (data.status == 1) {
+                    that.closest('tr').remove();
+                    $('#count-'+data.data.module).text(data.data.count);
+                } else {
+                    alert(data.message);
+                }
+            },
+            error: function() {
+                alert('Unexpected server error');
+            }
+        });
     });
 
     $('.edit-trigger').on('click', function() {
@@ -363,7 +418,7 @@
             $('#add-text').val(name[0].trim()+', ');
             $('#edit-sector').show();
             $('#edit-id').val(tr.data('id'));
-            $('#edit-text').val(tr.find('.text').text());
+            $('#edit-text').val(tr.find('.text').text().trim());
             $('#edit-playerid').val(tr.data('playerid'));
             $('#edit-ispromo').val(tr.data('ispromo') ? tr.data('ispromo') : 0).change();
         }
@@ -415,10 +470,21 @@
         location.href = '/private/reviews/delete/' + $(this).data('id');
     });
 
-    $('.status-trigger').on('click', function() {
-        location.href = '/private/reviews/status/' + $(this).data('id') + '?status=<?=$status?>&setstatus=' + $(this).data('status');
-    });
-
 </script>
 
-<? if($frontend) require_once($frontend.'_frontend.php') ?>
+<?php
+
+function href($args = array(), $defaults = array())
+{
+    $args += $defaults;
+    $where = array();
+
+    foreach ($args as $key => $value)
+        if (isset($value))
+            $where[] = $key . '=' . $value;
+
+    return "document.location.href='/private/reviews" . (!empty($where)?'?':'') . implode('&', $where) . "'";
+}
+?>
+
+<? if($frontend) require_once($frontend.'_frontend.php'); ?>

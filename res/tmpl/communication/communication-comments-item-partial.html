@@ -1,7 +1,7 @@
-<!-- comments -->
 <div class="comment-content"
-     data-user-name="{{this.user.name}}"
-     data-user-id="{{this.user.id}}"
+     data-user-name="{{user.name}}"
+     data-user-id="{{user.id}}"
+     {{#if object_id}} data-post-id="{{object_id}}" {{/if}}
      data-comment-id="{{or comment_id id}}">
     <div class="comment-top">
         <a href="/user/{{user.id}}">
@@ -18,22 +18,18 @@
             <span class="comment-date"><span>{{from this.date}}</span></span>
             <span class="comment-reply">
                 <span class="comment-reply-btn">{{i18n "button-answer"}}</span>
+                {{#if (player "moderator")}}
+                {{#if (like moderator 0)}}
+                <span class="comment-complain-btn">{{i18n "button-complain"}}</span>
+                {{/if}}
+                {{/if}}
             </span>
         </div>
     </div>
-    {{#if (player "moderator")}}
-    <form id="communication-comments-{{id}}-abuse"
-          method="post"
-          action="/communication/comments/{{id}}/abuse">
-        <button type="submit"> {{i18n "message-report-abuse"}} </button>
-    </form>
-    {{/if}}
     {{partial "communication-comments-view-like" this}}
     <div class="comment-description">
-        <input class="comment-reply-btn" type='text'/>
-        <p>
-        {{{getSmile this.text}}}
-        </p>
+        <input class="comment-reply-btn" type="text">
+        <p> {{{getSmile this.text}}} </p>
         {{#if this.img}}
         <div data-href="/filestorage/reviews/{{this.img}}" class="get-full-picture">
             <img src="/filestorage/reviews/600/{{this.img}}" alt="">

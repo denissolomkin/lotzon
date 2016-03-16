@@ -84,6 +84,17 @@ class AjaxController extends \SlimController\SlimController
         $this->ajaxResponseCode($response, 400);
     }
 
+    public function ajaxResponseForbidden($message = NULL)
+    {
+        if ($message) {
+            $response = array(
+                'message' => $message
+            );
+        } else
+            $response = array();
+        $this->ajaxResponseCode($response, 403);
+    }
+
     public function ajaxResponseNotFound($message = NULL)
     {
         if ($message) {

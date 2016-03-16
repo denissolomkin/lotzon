@@ -250,7 +250,10 @@ class CommentsController extends \AjaxController
         $obj->setImage($image);
 
         try {
+            if(CommentsModel::instance()->canPlayerPublish($playerId))
+                $obj->setStatus(1);
             $obj->create();
+
         } catch (\EntityException $e) {
             $this->ajaxResponseInternalError($e->getMessage());
             return false;
@@ -259,12 +262,99 @@ class CommentsController extends \AjaxController
             return false;
         }
 
-        $response = array(
-            "message" => "message-comment-sent-success",
-            "res" => array()
-        );
+        if($obj->getStatus() == 1) {
+
+            $obj->fetch();
+            $comments = array();
+            $response = array();
+
+            if (!$obj->getParentId()) {
+                $comments[$obj->getId()] = $obj->export('JSON');
+                $response['message'] = "message-comment-publish-success";
+            } else {
+                $comments[$obj->getParentId()]['answers'][$obj->getId()] = $obj->export('JSON');
+            }
+
+            $response['res'] = array(
+                'communication' => array(
+                    'comments' => $comments,
+                ),
+            );
+
+        } else {
+
+            $response = array(
+                "message" => "message-comment-sent-success",
+                "res" => array()
+            );
+        }
 
         $this->ajaxResponseCode($response,201);
+        return true;
+    }
+
+    public function complainAction($commentId)
+    {
+        if (!$this->request()->isAjax()) {
+            return false;
+        }
+
+        $this->authorizedOnly();
+
+        $playerId = $this->session->get(Player::IDENTITY)->getId();
+
+        if(!in_array($playerId, (array) SettingsModel::instance()->getSettings('counters')->getValue('moderators'))){
+            $this->ajaxResponseForbidden();
+        }
+
+        if(!($complain = $this->request()->post('complain', false)) || $complain  == ''){
+            $this->ajaxResponseBadRequest('EMPTY_COMPLAIN_REASON');
+        }
+
+        $comment = new Comment;
+
+        try {
+            $comment->setId($commentId)->fetch();
+        } catch (\EntityException $e) {
+            $this->ajaxResponseNotFound($e->getMessage());
+            return false;
+        }
+
+        if($comment->getModeratorId()) {
+            $this->ajaxResponseBadRequest('COMMENT_ALREADY_MODERATED');
+        }
+
+        try {
+            $comment
+                ->setModeratorId($playerId)
+                ->setStatus(0)
+                ->setComplain($complain)
+                ->update();
+        } catch (\PDOException $e) {
+            $this->ajaxResponseInternalError();
+            return false;
+        }
+
+        $delete = array();
+
+        if($comment->getParentId()){
+            $delete[$comment->getParentId()]['answers'] = $commentId;
+        } else {
+            $delete = $commentId;
+        }
+
+        $response = array(
+            "message" => 'comment-successfully-sent-to-moderation',
+            "delete" => array(
+                "communication" => array(
+                    "comments" => array(
+                        $delete
+                    )
+                )
+            )
+        );
+
+        $this->ajaxResponseCode($response);
         return true;
     }
 

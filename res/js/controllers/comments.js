@@ -216,6 +216,20 @@
 
             },
 
+            complainForm: function() {
+
+                var comment = DOM.up('comment-content', this),
+                    id = comment.parentNode.getAttribute("data-id");
+
+                // push new form
+                R.push({
+                    href: 'communication-comments-' + id + '-complain',
+                    json: {id: id},
+                    node: comment
+                });
+
+            },
+
             replyForm: function() {
 
                 var comment = DOM.up('comment-content', this),

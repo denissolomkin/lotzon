@@ -580,6 +580,9 @@ Config::instance()->publicResources = array(
         'post'   => 'controllers\production\CommentsController:like',
         'delete' => 'controllers\production\CommentsController:dislike'
     ),
+    '/communication/comments/:commentId/complain' => array(
+        'post'   => 'controllers\production\CommentsController:complain',
+    ),
     '/communication/comments/:commentId' => array(
         'get' => 'controllers\production\CommentsController:item'
     ),

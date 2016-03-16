@@ -19,28 +19,8 @@ class ReviewsModel extends Model
         return __CLASS__;
     }
 
-    public function getList($status=1, $limit = null, $offset = null, $ignore = false, $json = false) {
-
-        $list = $this->getProcessor()->getList($status, $limit, $offset, $ignore);
-
-        if($json){
-            while ($reviewData = array_pop($list))
-                foreach ($reviewData as $reviewItem) {
-                    $responseData[] = array(
-                        'id' => $reviewItem->getReviewId()?:$reviewItem->getId(),
-                        'date' => date('d.m.Y H:i', $reviewItem->getDate()+\SettingsModel::instance()->getSettings('counters')->getValue('HOURS_ADD')*3600),
-                        'playerId' => $reviewItem->getPlayerId(),
-                        'playerAvatar' => $reviewItem->getPlayerAvatar(),
-                        'playerName' => $reviewItem->getPlayerName(),
-                        'text' => $reviewItem->getText(),
-                        'image' => $reviewItem->getImage(),
-                        'answer' => $reviewItem->getReviewId(),
-                    );
-                }
-
-            $list = $responseData;
-        }
-
+    public function getList($limit = null, $offset = null, $args = array('Status' => 1, 'ParentId' => 'null')) {
+        $list = $this->getProcessor()->getList($limit, $offset, $args);
         return $list;
     }
 
@@ -52,7 +32,7 @@ class ReviewsModel extends Model
         return $this->getProcessor()->imageExists($image);
     }
 
-    public function getCount($status=1) {
-        return $this->getProcessor()->getCount($status);
+    public function getCount($args = array()) {
+        return $this->getProcessor()->getCount($args);
     } 
 }

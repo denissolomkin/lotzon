@@ -25,14 +25,30 @@ class Reviews extends PrivateArea
 
         $page = $this->request()->get('page', 1);
         $status = $this->request()->get('status', 0);
+        $module = $this->request()->get('module', 'comments');
+        $auto = $this->request()->get('auto', null);
 
         $sort = array(
             'field' => $this->request()->get('sortField', 'Id'),
             'direction' => $this->request()->get('sortDirection', 'desc'),
         );
 
-        $list = ReviewsModel::instance()->getList($status, self::$PER_PAGE, $page == 1 ? 0 : self::$PER_PAGE * $page - self::$PER_PAGE, true);//, $sort, $search
-        $count = ReviewsModel::instance()->getCount($status);
+        $list = ReviewsModel::instance()->getList(
+            self::$PER_PAGE,
+            $page == 1 ? 0 : self::$PER_PAGE * $page - self::$PER_PAGE,
+            array(
+                'Status'   => $status,
+                'Module'   => $module,
+                'AdminId'  => $auto
+            )
+        );
+
+        $count = ReviewsModel::instance()->getCount(
+            array(
+                'Status'  => $status,
+                'Module'  => $module,
+                'AdminId' => $auto
+            ));
 
         $pager = array(
             'page' => $page,
@@ -40,20 +56,21 @@ class Reviews extends PrivateArea
             'per_page' => self::$PER_PAGE,
             'pages' => 0,
         );
+
         $pager['pages'] = ceil($pager['rows'] / $pager['per_page']);
 
         $this->render('admin/reviews', array(
-            'title'      => 'Отзывы',
-            'layout'     => 'admin/layout.php',
-            'activeMenu' => $this->activeMenu,
-            'list'       => $list,
-            'status'     => $status,
-            'pager'        => $pager,
-            'currentSort'  => $sort,
-            'frontend'      => 'users',
+            'title'       => 'Отзывы',
+            'layout'      => 'admin/layout.php',
+            'activeMenu'  => $this->activeMenu,
+            'module'      => $module,
+            'auto'        => $auto,
+            'list'        => $list,
+            'status'      => $status,
+            'pager'       => $pager,
+            'currentSort' => $sort,
+            'frontend'    => 'users',
         ));
-
-
     }
 
     public function listAction($id)
@@ -81,39 +98,60 @@ class Reviews extends PrivateArea
 
     public function statusAction($id)
     {
+        if ($this->request()->isAjax()) {
+
             $review = new Review();
-            $review->setUserId(Session2::connect()->get(Admin::SESSION_VAR)->getId())->setId($id)->fetch();
-            $review->setStatus((int)$this->request()->get('setstatus')?:0);
+            $review
+                ->setId($id)
+                ->fetch()
+                ->setUserId(Session2::connect()->get(Admin::SESSION_VAR)->getId())
+                ->setStatus((int)$this->request()->get('status') ?: 0);
 
             try {
                 $review->update();
             } catch (EntityException $e) {
 
+                die(json_encode(array(
+                    'status' => 0,
+                    'message' => $e->getMessage(),
+                    'data' => array(
+                    ),
+                )));
             }
 
-        $this->redirect('/private/reviews?status='.(int)$this->request()->get('status'));
+            $response = array(
+                'status' => 1,
+                'message' => 'OK',
+                'data' => array(
+                    'count' => ReviewsModel::instance()->getProcessor()->getCount(array('status'=>0,'module'=>$review->getModule())),
+                    'module' => $review->getModule()
+                ),
+            );
+
+            die(json_encode($response));
+        }
+
+        $this->redirect('/private');
     }
 
 
     public function saveAction()
     {
         if ($this->request()->isAjax()) {
+
             $response = array(
                 'status' => 1,
                 'message' => 'OK',
                 'data' => array(),
             );
-            $reviews = array();
 
+            $reviews = array();
             $module   = 'comments';
             $objectId = 0;
 
             if ($this->request()->post('edit') && $this->request()->post('edit')['Text']){
 
-                $data=$this->request()->post('edit');
-
-                if(!\PlayersModel::instance()->isExists($data['PlayerId']))
-                    throw new \ModelException("Error processing storage query", 500);
+                $data = $this->request()->post('edit');
 
                 $review = new Review;
                 $review->setId($data['Id'])
@@ -129,11 +167,9 @@ class Reviews extends PrivateArea
                 $objectId = $review->getObjectId();
             }
 
-            if ($this->request()->post('add') && $this->request()->post('add')['Text']){
+            if ($this->request()->post('answer') && $this->request()->post('add') && $this->request()->post('add')['Text']){
 
-                $data=$this->request()->post('add');
-                if(!\PlayersModel::instance()->isExists($data['PlayerId']))
-                    throw new \ModelException("Error processing storage query", 500);
+                $data = $this->request()->post('add');
 
                 $review = new Review;
                 $review->formatFrom('DB',$data)
@@ -145,10 +181,13 @@ class Reviews extends PrivateArea
                 $reviews[] = $review;
             }
 
-
             DB::Connect()->beginTransaction();
             foreach ($reviews as $review) {
                 try {
+
+                    if(!\PlayersModel::instance()->isExists($review->getPlayerId()))
+                        throw new \ModelException("Player not found", 500);
+
                     $review->create();
                 } catch (EntityException $e) {
                     DB::Connect()->rollback();
@@ -157,7 +196,6 @@ class Reviews extends PrivateArea
                     die(json_encode($response));
                 }
             }
-
             DB::Connect()->commit();
             die(json_encode($response));
         }
