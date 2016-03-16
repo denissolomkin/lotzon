@@ -159,6 +159,11 @@
 
                         error: function (data) {
 
+                            if(data.status == 401) {
+                                document.location.href = "/";
+                                return false;
+                            }
+
                             form.json = data.responseJSON || data;
                             Cache.init(form.json);
 

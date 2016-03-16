@@ -52,9 +52,8 @@
                 if (init.player)
                     Player.init(init.player);
 
-                if (init.tickets) {
+                if (init.tickets)
                     Tickets.init(init.tickets);
-                }
 
                 if (init.delete)
                     this.remove(init.delete);
