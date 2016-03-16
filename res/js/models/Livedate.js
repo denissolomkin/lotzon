@@ -37,19 +37,19 @@
 
             day: function (date, format) {
 
-                format = typeof format === 'string' && format || 'DD.MM.YYYY';
+                format = typeof format === 'string' && format || false;
                 date = Livedate.fn.now(date);
 
                 switch (true) {
 
-                    case moment().add('days', -1).isSame(moment.unix(date), 'day') && format === 'DD.MM.YYYY':
+                    case moment().add('days', -1).isSame(moment.unix(date), 'day') && !format:
                         return i18n('title-day-yesterday');
                         break;
-                    case moment().isSame(moment.unix(date), 'day') && format === 'DD.MM.YYYY':
+                    case moment().isSame(moment.unix(date), 'day') && !format:
                         return i18n('title-day-today');
                         break;
                     default:
-                        return moment.unix(date).format(format);
+                        return moment.unix(date).format(format || 'DD.MM.YYYY');
                         break;
                 }
 
