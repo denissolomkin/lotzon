@@ -32,6 +32,11 @@ class Game extends \AjaxController
         $ticket->setCombination($this->request()->post('combination'));
         $ticket->setTicketNum($this->request()->post('tnum'));
 
+        $tickets = TicketsModel::instance()->getPlayerUnplayedTickets($this->session->get(Player::IDENTITY));
+        if (isset($tickets[$ticket->getTicketNum()])) {
+            $this->ajaxResponse(array(), 0, "already filled");
+        }
+
         try {
             $ticket->create();            
         } catch (EntityException $e) {
