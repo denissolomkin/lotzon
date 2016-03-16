@@ -260,7 +260,7 @@ class PlayersDBProcessor implements IProcessor
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
         }
-
+        $player->setNewsSubscribe($newsSubscribe);
         return $player;
     }
 
