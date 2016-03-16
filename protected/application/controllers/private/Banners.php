@@ -55,7 +55,6 @@ class Banners extends PrivateArea
 
         if($this->request()->post('banners'))
             SettingsModel::instance()->getSettings($this->activeMenu)->setValue($this->request()->post('banners'))->create();
-        //Config::instance()->save('banners',$this->request()->post('banners'));
         $this->redirect('/private/banners');/* */
     }
 

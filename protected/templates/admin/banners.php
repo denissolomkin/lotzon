@@ -26,6 +26,7 @@
         <? $requiredBanners = array(
             'DesktopRight',
             'DesktopTop',
+            'DesktopLottery',
             'Header',
             'Video',
             'TicketsLeft',
