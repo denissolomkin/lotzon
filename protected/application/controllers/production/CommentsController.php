@@ -303,7 +303,7 @@ class CommentsController extends \AjaxController
 
         $playerId = $this->session->get(Player::IDENTITY)->getId();
 
-        if(!in_array($playerId, (array) SettingsModel::instance()->getSettings('counters')->getValue('moderators'))){
+        if(!in_array($playerId, (array) SettingsModel::instance()->getSettings('moderators')->getValue())){
             $this->ajaxResponseForbidden();
         }
 
