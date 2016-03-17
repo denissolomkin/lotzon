@@ -40,7 +40,8 @@
                 }        
             });
         },
-        hideBanner: function () {  
+        hideBanner: function () {
+            $('.bonus-banner-view-item').removeClass('active');
             $('.show-banner > div').hide();
             $(this).hide();
         },
