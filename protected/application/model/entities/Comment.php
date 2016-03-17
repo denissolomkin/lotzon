@@ -62,7 +62,10 @@ class Comment extends Entity
     {
         switch ($action) {
             case 'create' :
-                $this->setText(htmlspecialchars(strip_tags($this->getText())));
+                $this->setText(trim(htmlspecialchars(strip_tags($this->getText()))));
+                if (!$this->getText() || $this->getText() == '') {
+                    throw new EntityException("Text can not be empty", 400);
+                }
                 if ($this->getParentId()) {
                     $parent = new Comment;
                     $new_parent_id = $parent->setId($this->getParentId())->fetch()->getParentId();
@@ -72,8 +75,8 @@ class Comment extends Entity
                 }
                 break;
             case 'update' :
-                $this->setText(htmlspecialchars(strip_tags($this->getText())));
-                if (!$this->getText()) {
+                $this->setText(trim(htmlspecialchars(strip_tags($this->getText()))));
+                if (!$this->getText() || $this->getText() == '') {
                     throw new EntityException("Text can not be empty", 400);
                 }
                 break;
