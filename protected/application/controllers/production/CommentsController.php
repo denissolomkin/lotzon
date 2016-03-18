@@ -152,13 +152,15 @@ class CommentsController extends \AjaxController
         try {
             $list = CommentsModel::instance()->getNotificationsList($playerId, $count + 1, $offset);
 
-            $lastItem = true;
+            if (count($list)<=$count) {
+                $lastItem = true;
+            } else {
+                $lastItem = false;
+                array_pop($list);
+            }
+
             $comments = array();
             foreach ($list as $commentData) {
-                if (count($comments) == $count) {
-                    $lastItem = false;
-                    continue;
-                }
                 $comment    = array(
                     "user"       => array(
                         "id"   => $commentData['PlayerId'],
