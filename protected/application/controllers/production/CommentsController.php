@@ -123,11 +123,6 @@ class CommentsController extends \AjaxController
         }
 
         $response = array(
-            'delete' => array(
-                'communication' => array(
-                    'notifications'
-                )
-            ),
             'player' => array(
                 'count' => array(
                     'notifications' => array(
