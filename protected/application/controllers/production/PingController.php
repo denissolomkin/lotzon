@@ -60,7 +60,7 @@ class PingController extends \AjaxController
         * Unread Notices
         */
 
-        if ($notice = \NoticesModel::instance()->getPlayerLastUnreadNotice($player)) {
+        if (0 && $notice = \NoticesModel::instance()->getPlayerLastUnreadNotice($player)) {
 
             $counters['notices']       = \NoticesModel::instance()->getPlayerUnreadNotices($player);
             $badges['notifications'][] = array(
