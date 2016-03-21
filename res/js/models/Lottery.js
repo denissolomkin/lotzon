@@ -278,7 +278,7 @@
                 json = isLastResult ? {
                     key: href,
                     cache: "session",
-                    res: Tickets.filledTickets
+                    res: Object.clone(Tickets.filledTickets)
                 } : null,
                 format = function(json, isLastResult) {
                     isLastResult && Lottery.update();
