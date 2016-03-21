@@ -49,11 +49,20 @@
             extendedCount = extendedCount || {};
             currentCount = currentCount || this.count;
 
+            /* перебираем полученный счетчик*/
             for (prop in object) {
                 if (object.hasOwnProperty(prop)) {
+
+                    // console.warn(currentCount);
+
+                    /* перебираем текущий счетчик*/
                     for (count in currentCount) {
                         if (currentCount.hasOwnProperty(count)) {
+
+                            /* если ключи совпадают */
                             if (count === prop) {
+
+                                /* и текущий счетчик с ключом объект */
                                 if (typeof currentCount[count] === 'object') {
 
                                     var key = keys && keys.slice() || [];
@@ -68,8 +77,10 @@
                                         key
                                     );
 
+                                    /* если же нашли сам счетчик, то получаем конечное значение */
                                 } else {
 
+                                    //console.error(object, count, extendedCount, currentCount, keys);
                                     var source = {},
                                         value = object[count];
 
@@ -85,19 +96,23 @@
 
                                     source[count] = value;
 
-                                    if (keys)
-                                        while (keys.length) {
+                                    if (keys) {
+                                        var keysClone = keys.slice();
+                                        while (keysClone.length) {
                                             var temp = {},
-                                                key = keys.pop();
+                                                key = keysClone.pop();
                                             temp[key] = source;
                                             source = temp;
                                             //console.log(source);
                                         }
+                                    }
 
                                     Object.deepExtend(extendedCount, source);
                                     //console.info(extendedCount);
                                 }
 
+
+                                /* или если в текущем счетчике есть объект с таким ключом */
                             } else if (typeof currentCount[count] === 'object') {
 
                                 var key = keys && keys.slice() || [],

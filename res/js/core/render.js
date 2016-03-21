@@ -201,7 +201,7 @@
 
             if (typeof options.json === 'object') {
 
-                options.json = Cache.set(options);
+                options.json = Cache.init(options);
                 D.log(['Render.json:', options.href, 'JSON from Object:', options.json], 'render');
                 R.sortJSON(options);
 
@@ -227,7 +227,7 @@
                                 options.stat.ajax.size = xhr.responseText.length;
 
                             options.response = data;
-                            options.json = Cache.init(data, options);
+                            options.json = Cache.init(options);
 
                             if (data.hasOwnProperty('lastItem'))
                                 options.lastItem = data.lastItem;

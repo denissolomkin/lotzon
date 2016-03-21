@@ -251,7 +251,7 @@
 
                             console.error('prepareData: ', Lottery.data);
 
-                            Cache.set({
+                            Cache.init({
                                 href: '/lottery/history/' + Lottery.data.id,
                                 storage: "session",
                                 json: {res: Object.deepExtend(Object.clone(json), {type: 'mine'})}
@@ -278,7 +278,7 @@
                 json = isLastResult ? {
                     key: href,
                     cache: "session",
-                    res: Tickets.filledTickets
+                    res: Object.clone(Tickets.filledTickets)
                 } : null,
                 format = function(json, isLastResult) {
                     isLastResult && Lottery.update();

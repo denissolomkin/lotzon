@@ -1,4 +1,5 @@
 (function() {
+
     Comments = {
 
         notificationsList: '.c-notifications-list',
@@ -39,15 +40,7 @@
             return html;
         },
 
-        hide: function(event) {
-
-            if (!DOM.up('c-notifications', event.target))
-                Comments.hideNotifications();
-
-        },
-
         hideNotifications: function() {
-
             if ($(Comments.notificationsList).is(':visible')) {
                 $(Comments.notificationsList).slideUp('fast');
             }
@@ -55,7 +48,6 @@
 
         renderNotifications: function() {
 
-            console.error('renderNotifications');
 
             var notifications = document.getElementById('communication-notifications');
             if (notifications) {
@@ -63,66 +55,28 @@
                 if (!Player.getCount('notifications')
                     || !notificationsList
                     || notificationsList.style.display !== 'block'
+                    // || (Player.getCount('notifications') && !notificationsList)
                 ) { //1 || Player.getCount('notifications') && (notificationsList && notificationsList.style.display !== 'block')
+                    console.error('renderNotifications');
                     R.push({
                         href: 'communication-notifications',
                         json: {}
                     });
                 }
             }
-        },
 
-        after: {
-
-            reply: function() {
-
-                var form = this;
-
-                if (form.elements['comment_id'].value) {
-                    setTimeout(function() {
-                        if (form.parentNode)
-                            form.parentNode.removeChild(form);
-                    }, form.getElementsByClassName('modal-message').length ? Form.getTimeout() : 0);
-                }
-                if ($('.thumb') != undefined) {
-                    $('.thumb').remove();
-                }
-
-
-            },
-
-            replyForm: function(options) {
-
-                if (!DOM.onScreen(options.rendered))
-                    DOM.scroll(options.rendered);
-
-                options.rendered.firstElementChild.classList.add('animated');
-                options.rendered.firstElementChild.classList.add('zoomIn');
-
-                DOM.cursor('.message-form-area', options.rendered);
-            },
-
-            showComment: function(options) {
-                var commentReply = options.rendered.querySelector('.comment-content .comment-reply-btn');
-                if (commentReply)
-                    commentReply.click();
-            },
-
-
-        },
-
-        validate: {
-
-            reply: function(event) {
-                return true;
-            }
         },
 
         do: {
 
+            hideNotifications: function(event) {
+                if (!DOM.up('c-notifications', event.target))
+                    Comments.hideNotifications();
+            },
+
             showNotifications: function() {
                 $(Comments.notificationsList).slideDown('fast');
-                Content.infiniteScrolling();
+                DOM.byId('communication-notifications').querySelector('form button[type="submit"]') ? Content.infiniteScrolling() : R.push('communication-notifications-list');
             },
 
             closeNotification: function(event) {
@@ -173,7 +127,10 @@
 
                 Form.send.call(this, {
                     action: '/communication/notifications',
-                    method: 'DELETE'
+                    method: 'DELETE',
+                    after: function(){
+                        Cache.init({'drop':{'communication':['notifications']}});
+                    }
                 });
 
             },
@@ -275,7 +232,51 @@
             }
         },
 
+        after: {
 
+            reply: function() {
+
+                var form = this;
+
+                if (form.elements['comment_id'].value) {
+                    setTimeout(function() {
+                        if (form.parentNode)
+                            form.parentNode.removeChild(form);
+                    }, form.getElementsByClassName('modal-message').length ? Form.getTimeout() : 0);
+                }
+                if ($('.thumb') != undefined) {
+                    $('.thumb').remove();
+                }
+
+
+            },
+
+            replyForm: function(options) {
+
+                if (!DOM.onScreen(options.rendered))
+                    DOM.scroll(options.rendered);
+
+                options.rendered.firstElementChild.classList.add('animated');
+                options.rendered.firstElementChild.classList.add('zoomIn');
+
+                DOM.cursor('.message-form-area', options.rendered);
+            },
+
+            showComment: function(options) {
+                var commentReply = options.rendered.querySelector('.comment-content .comment-reply-btn');
+                if (commentReply)
+                    commentReply.click();
+            },
+
+
+        },
+
+        validate: {
+
+            reply: function(event) {
+                return true;
+            }
+        },
 
         showPreviewImage: function(e) {
             // e.preventDefault();
@@ -389,6 +390,7 @@
                 }
             }
         },
+
         pasteText: function(e) {
 
 
@@ -417,7 +419,6 @@
                 }, 1);
             }
         },
-
 
         extractTextWithWhitespace :  function ( elems ) {
                 var ret = "", elem;
@@ -476,6 +477,7 @@
 
             return form;
         },
+
         getFullPicture: function(event){
             event.preventDefault();
 
@@ -514,6 +516,7 @@
             console.error(co);
             return false;
         },
+
         smilePost: function(form) {
             if ($('.smiles').hasClass('hidden')) {
 
@@ -532,10 +535,10 @@
             return form;
 
         },
+
         submit: function(form) {
             Comments.smilePost(form);
             Comments.addImage(form);
-
             return form;
         }
 
