@@ -1,5 +1,7 @@
 ﻿{
-   "cache": true,
+   "lastItem": true,
+   "cache": "session",
+   "player": {"count":{"server":10,"local":"+4"}},
    "res":{
    "communication":{
       "notifications":[

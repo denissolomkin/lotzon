@@ -49,14 +49,18 @@
 
             if (init) {
 
-                if (init.player)
+                if (init.player) {
                     Player.init(init.player);
+                }
 
                 if (init.tickets)
                     Tickets.init(init.tickets);
 
                 if (init.delete)
                     this.remove(init.delete);
+
+                if (init.drop)
+                    this.remove(init.drop, null, true);
 
                 if (init.update)
                     this.update(init.update);
@@ -81,10 +85,21 @@
                     }
                 }
 
-                if (options) {
+                /* for response by R.json */
+                if (init.response) {
+                    return this.init(init.response, init);
+
+                /* for R.push() with JSON == object */
+                } else if (init.json) {
+                    return this.set(init);
+
+                /* for 2nd lap after init.response */
+                } else if (options) {
                     options.json = init;
                     return this.set(options);
 
+
+                    /* for ??? */
                 } else if (init.res) {
                     this.push(init.res, init.hasOwnProperty('cache') && init.cache);
                 }
@@ -262,9 +277,6 @@
                 needle = path.last(),
                 storage = options.json.cache || options.storage || false,
                 source = (options.json.hasOwnProperty('res') ? options.json.res : options.json);
-
-            if (options.json.player)
-                Player.init(options.json.player);
 
             this.validate(path.join('-'), true);
 
@@ -501,7 +513,7 @@
         },
 
         /* try to remove objects by path from storages and DOM */
-        "remove": function (object, key) {
+        "remove": function (object, key, onlyDrop) {
 
             if (object && (Object.size(object) || typeof object !== 'object')) {
 
@@ -515,7 +527,7 @@
                             object[i] = null;
                         }
 
-                        this.remove(object[i], keys);
+                        this.remove(object[i], keys, onlyDrop);
                     }
 
                 } else if (typeof object === 'object') {
@@ -525,7 +537,7 @@
 
                             var keys = key && key.slice() || [];
                             keys.push(prop);
-                            this.remove(object[prop], keys);
+                            this.remove(object[prop], keys, onlyDrop);
 
                         }
                     }
@@ -534,13 +546,15 @@
 
                     var keys = key && key.slice() || [];
                     keys.push(object);
-                    this.remove(null, keys);
+                    this.remove(null, keys, onlyDrop);
                 }
 
             } else {
 
                 D.log('Cache.remove:' + key.join('-'));
-                DOM.remove(document.getElementById(key.join('-')));
+
+                if(!onlyDrop)
+                    DOM.remove(document.getElementById(key.join('-')));
 
                 var find = this.find(key);
 
@@ -549,9 +563,11 @@
                     key.push(find['id']);
                     if (this.delete(this.storages[find.storage], key)) {
                         this.save(this.storages[find.storage]);
-                        return true;
-                    }
-                }
+                        console.error("delete " + find['id']);
+                    } else
+                        console.log('can\'t delete');
+                } else
+                    console.log('not found');
 
             }
         },

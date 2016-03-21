@@ -49,13 +49,10 @@
 
             hide: function (event) {
                 Navigation.menu.hide(event);
-                Comments.hide(event);
- // Profile.do.hideFavorite(event);
+                Comments.do.hideNotifications(event);
             },
 
             resize: function (event) {
-                // Navigation.menu.switch();
-                // Ticket.setBallsMargins();
                 Carousel.initOwl();
                 Cards.setupForDevices();
 
@@ -63,7 +60,7 @@
 
             scroll: function (event) {
                 Device.getScroll();
-                /* Device.switchGoTop(); */
+                Device.switchGoTop();
                 Navigation.menu.fix();
                 Content.infiniteScrolling();
             },
@@ -120,7 +117,7 @@
         },
 
         switchGoTop: function () {
-            yScroll >= 150
+            yScroll >= 600
                 ? (!this.gototop.style.opacity || this.gototop.style.opacity === 0 || !this.gototop.style.display || this.gototop.style.display === 'none') && fadeIn(this.gototop)
                 : this.gototop.style.opacity === "1" && fadeOut(this.gototop);
         },
@@ -132,7 +129,6 @@
             return bounds.top + y < window.innerHeight && bounds.bottom - y > 0;
 
         },
-
 
         toggleFullScreen: function () {
 

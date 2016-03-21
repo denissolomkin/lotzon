@@ -251,7 +251,7 @@
 
                             console.error('prepareData: ', Lottery.data);
 
-                            Cache.set({
+                            Cache.init({
                                 href: '/lottery/history/' + Lottery.data.id,
                                 storage: "session",
                                 json: {res: Object.deepExtend(Object.clone(json), {type: 'mine'})}
