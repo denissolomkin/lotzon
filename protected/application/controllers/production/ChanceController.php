@@ -69,7 +69,7 @@ class ChanceController extends \AjaxController
             $response['res']['games'][$game->getType()][] = $game->export('list');
         }
 
-        $this->ajaxResponseCode($response);
+        $this->ajaxResponseNoCache($response);
     }
 
     public function itemAction($key = 'QuickGame', $id = null)
@@ -114,7 +114,7 @@ class ChanceController extends \AjaxController
             );
 
             $response['res']['games']['chance'][$game->getId()] = $game->export('item');
-            $this->ajaxResponseCode($response);
+            $this->ajaxResponseNoCache($response);
 
         }
 
@@ -237,7 +237,7 @@ class ChanceController extends \AjaxController
             ->random()
             ->render();
 
-        $this->ajaxResponseCode($response);
+        $this->ajaxResponseNoCache($response);
     }
 
     public function playAction($key = 'QuickGame')
@@ -303,7 +303,7 @@ class ChanceController extends \AjaxController
             $this->session->set($key, $game);
         }
 
-        $this->ajaxResponseCode($response);
+        $this->ajaxResponseNoCache($response);
     }
 
     private function playerAward($player, $game)

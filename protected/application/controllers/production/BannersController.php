@@ -57,7 +57,7 @@ class BannersController extends \AjaxController
             'res' => $render
         );
 
-        $this->ajaxResponseCode($response);
+        $this->ajaxResponseNoCache($response);
         return true;
     }
 

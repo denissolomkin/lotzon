@@ -58,7 +58,7 @@ class LotteryController extends \AjaxController
                     "filledTickets" => \TicketsModel::instance()->getUnplayedTickets($ticket->getPlayerId())
                 )
             );
-            $this->ajaxResponseCode($res, 403);
+            $this->ajaxResponseNoCache($res, 403);
             return false;
         }
 
@@ -69,7 +69,7 @@ class LotteryController extends \AjaxController
                     "filledTickets" => \TicketsModel::instance()->getUnplayedTickets($ticket->getPlayerId())
                 )
             );
-            $this->ajaxResponseCode($res, 403);
+            $this->ajaxResponseNoCache($res, 403);
             return false;
         }
 
@@ -83,7 +83,7 @@ class LotteryController extends \AjaxController
                         "filledTickets" => \TicketsModel::instance()->getUnplayedTickets($ticket->getPlayerId())
                     )
                 );
-                $this->ajaxResponseCode($res, 402);
+                $this->ajaxResponseNoCache($res, 402);
                 return false;
             }
         }
@@ -108,7 +108,7 @@ class LotteryController extends \AjaxController
             )
         );
 
-        $this->ajaxResponseCode($res);
+        $this->ajaxResponseNoCache($res);
     }
 
     public function buyGoldTicketAction()
@@ -125,11 +125,11 @@ class LotteryController extends \AjaxController
         $goldPrice = SettingsModel::instance()->getSettings('goldPrice')->getValue($country);
 
         if ($goldPrice != $price) {
-            $this->ajaxResponseCode(array("message"=>"PRICE_NOT_SAME"),403);
+            $this->ajaxResponseNoCache(array("message"=>"PRICE_NOT_SAME"),403);
         }
 
         if ($player->getGoldTicket()>0) {
-            $this->ajaxResponseCode(array("message"=>"ALREADY_BOUGHT"),400);
+            $this->ajaxResponseNoCache(array("message"=>"ALREADY_BOUGHT"),400);
         }
 
         try {
@@ -153,7 +153,7 @@ class LotteryController extends \AjaxController
                     "filledTickets" => \TicketsModel::instance()->getUnplayedTickets($player->getId())
                 )
             );
-            $this->ajaxResponseCode($res, 402);
+            $this->ajaxResponseNoCache($res, 402);
         }
         catch (EntityException $e) {
             \TicketsModel::instance()->rollBack();
@@ -172,7 +172,7 @@ class LotteryController extends \AjaxController
             )
         );
 
-        $this->ajaxResponseCode($res);
+        $this->ajaxResponseNoCache($res);
     }
 
     public function historyAction()
@@ -225,7 +225,7 @@ class LotteryController extends \AjaxController
             $response['res']['lottery']['history'][$id]['type'] = $lotteryType;
         }
 
-        $this->ajaxResponseCode($response);
+        $this->ajaxResponseNoCache($response);
         return true;
     }
 
@@ -292,7 +292,7 @@ class LotteryController extends \AjaxController
             return false;
         }
 
-        $this->ajaxResponseCode($response);
+        $this->ajaxResponseNoCache($response);
         return true;
     }
 
@@ -331,7 +331,7 @@ class LotteryController extends \AjaxController
             }
         }
 
-        $this->ajaxResponseCode($response);
+        $this->ajaxResponseNoCache($response);
         return true;
     }
 
@@ -364,7 +364,7 @@ class LotteryController extends \AjaxController
             ),
         );
 
-        $this->ajaxResponseCode($response);
+        $this->ajaxResponseNoCache($response);
         return true;
     }
 

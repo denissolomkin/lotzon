@@ -70,7 +70,7 @@ class FriendsController extends \AjaxController
             }
         }
 
-        $this->ajaxResponseCode($response);
+        $this->ajaxResponseNoCache($response);
         return true;
     }
 
@@ -122,7 +122,7 @@ class FriendsController extends \AjaxController
             }
         }
 
-        $this->ajaxResponseCode($response);
+        $this->ajaxResponseNoCache($response);
         return true;
     }
 
@@ -179,7 +179,7 @@ class FriendsController extends \AjaxController
             }
         }
 
-        $this->ajaxResponseCode($response);
+        $this->ajaxResponseNoCache($response);
         return true;
     }
 
@@ -230,7 +230,7 @@ class FriendsController extends \AjaxController
             ),
         );
 
-        $this->ajaxResponseCode($response);
+        $this->ajaxResponseNoCache($response);
         return true;
     }
 
@@ -267,7 +267,7 @@ class FriendsController extends \AjaxController
             )
         );
 
-        $this->ajaxResponseCode($response);
+        $this->ajaxResponseNoCache($response);
         return true;
     }
 
@@ -324,7 +324,7 @@ class FriendsController extends \AjaxController
             ),
         );
 
-        $this->ajaxResponseCode($response);
+        $this->ajaxResponseNoCache($response);
         return true;
     }
 
@@ -361,7 +361,7 @@ class FriendsController extends \AjaxController
             )
         );
 
-        $this->ajaxResponseCode($response);
+        $this->ajaxResponseNoCache($response);
         return true;
     }
 

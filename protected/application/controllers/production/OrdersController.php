@@ -141,7 +141,7 @@ class OrdersController extends \AjaxController
                 "message" => "MONEY_NO_ENOUGH",
                 "res"     => array()
             );
-            $this->ajaxResponseCode($res, 402);
+            $this->ajaxResponseNoCache($res, 402);
         }
         catch(EntityException $e) {
             $order->rollBack();
@@ -158,7 +158,7 @@ class OrdersController extends \AjaxController
             )
         );
 
-        $this->ajaxResponseCode($res);
+        $this->ajaxResponseNoCache($res);
     }
 
     public function cashoutAction()
@@ -219,7 +219,7 @@ class OrdersController extends \AjaxController
                 "message" => "MONEY_NO_ENOUGH",
                 "res"     => array()
             );
-            $this->ajaxResponseCode($res, 402);
+            $this->ajaxResponseNoCache($res, 402);
         }
         catch(EntityException $e) {
             $order->rollBack();
@@ -237,6 +237,6 @@ class OrdersController extends \AjaxController
             )
         );
 
-        $this->ajaxResponseCode($res);
+        $this->ajaxResponseNoCache($res);
     }
 }

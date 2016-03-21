@@ -64,7 +64,7 @@ class SlotsController extends \AjaxController
             );
 
             $response['res']['games']['slots'][$game->getId()] = $game->export('item');
-            $this->ajaxResponseCode($response);
+            $this->ajaxResponseNoCache($response);
 
         }
 
@@ -184,7 +184,7 @@ class SlotsController extends \AjaxController
             $this->ajaxResponseBadRequest('GAME_NOT_ENABLED');
         }
 
-        $this->ajaxResponseCode($response);
+        $this->ajaxResponseNoCache($response);
     }
 
     private function playerAward($player, $game)

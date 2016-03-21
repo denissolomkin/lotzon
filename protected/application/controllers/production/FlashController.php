@@ -46,7 +46,7 @@ class FlashController extends \AjaxController
                 )
             ));
 
-        $this->ajaxResponseCode($response);
+        $this->ajaxResponseNoCache($response);
     }
 
     public function itemAction($id = null)
@@ -70,7 +70,7 @@ class FlashController extends \AjaxController
                         "$id" => $game
                     ))));
 
-        $this->ajaxResponseCode($response);
+        $this->ajaxResponseNoCache($response);
 
     }
 }

@@ -59,7 +59,7 @@ class CommentsController extends \AjaxController
             ),
         );
 
-        $this->ajaxResponseCode($response);
+        $this->ajaxResponseNoCache($response);
         return true;
     }
 
@@ -101,7 +101,7 @@ class CommentsController extends \AjaxController
                 $response = array();
         }
 
-        $this->ajaxResponseCode($response);
+        $this->ajaxResponseNoCache($response);
         return true;
     }
 
@@ -126,14 +126,14 @@ class CommentsController extends \AjaxController
             'player' => array(
                 'count' => array(
                     'notifications' => array(
-                        'session' => 0,
-                        'server'  => 0
+                        'server' => 0,
+                        'local'  => 0
                     )
                 )
             )
         );
 
-        $this->ajaxResponseCode($response,200);
+        $this->ajaxResponseNoCache($response,200);
         return true;
     }
 
@@ -144,6 +144,8 @@ class CommentsController extends \AjaxController
         }
 
         $this->authorizedOnly();
+
+        // die(include 'res/GET/communication/_notifications');
 
         $offset   = $this->request()->get('offset', NULL);
         $count    = $this->request()->get('count', self::$notificationsPerPage);
@@ -190,7 +192,7 @@ class CommentsController extends \AjaxController
                     'count' => array(
                         'notifications' => array(
                             "server"  => CommentsModel::instance()->getNotificationsCount($playerId),
-                            "session" => "+".count($comments)
+                            "local" => "+".count($comments)
                         )
                     )
                 )
@@ -206,7 +208,7 @@ class CommentsController extends \AjaxController
             return false;
         }
 
-        $this->ajaxResponseCode($response,200);
+        $this->ajaxResponseNoCache($response,200);
         return true;
     }
 
@@ -286,7 +288,7 @@ class CommentsController extends \AjaxController
             );
         }
 
-        $this->ajaxResponseCode($response,201);
+        $this->ajaxResponseNoCache($response,201);
         return true;
     }
 
@@ -351,7 +353,7 @@ class CommentsController extends \AjaxController
             )
         );
 
-        $this->ajaxResponseCode($response);
+        $this->ajaxResponseNoCache($response);
         return true;
     }
 
@@ -387,7 +389,7 @@ class CommentsController extends \AjaxController
             "res" => array(
                 "communication" => array(
                     "comments" => array(
-                        "$commentId" => array(
+                        $commentId => array(
                             "like" => array(
                                 "id" => $commentId,
                                 "likes" => CommentsModel::instance()->getLikes($commentId),
@@ -399,7 +401,7 @@ class CommentsController extends \AjaxController
             )
         );
 
-        $this->ajaxResponseCode($response,200);
+        $this->ajaxResponseNoCache($response,200);
         return true;
     }
 
@@ -435,7 +437,7 @@ class CommentsController extends \AjaxController
             "res" => array(
                 "communication" => array(
                     "comments" => array(
-                        "$commentId" => array(
+                        $commentId => array(
                             "like" => array(
                                 "id" => $commentId,
                                 "likes" => CommentsModel::instance()->getLikes($commentId),
@@ -447,7 +449,7 @@ class CommentsController extends \AjaxController
             )
         );
 
-        $this->ajaxResponseCode($response,200);
+        $this->ajaxResponseNoCache($response,200);
         return true;
     }
 

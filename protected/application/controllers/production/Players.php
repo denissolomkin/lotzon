@@ -340,7 +340,7 @@ class Players extends \AjaxController
 
         try {
             $player->setSocialName($provider)->disableSocial();
-            $this->ajaxResponseCode(array(
+            $this->ajaxResponseNoCache(array(
                 'player' => array(
                     'social' => $player->getSocial()
                 )));
@@ -526,7 +526,7 @@ class Players extends \AjaxController
             )
         );
 
-        $this->ajaxResponseCode($response);
+        $this->ajaxResponseNoCache($response);
         return true;
     }
 
@@ -555,7 +555,7 @@ class Players extends \AjaxController
                 )
             )
         );
-        $this->ajaxResponseCode($response);
+        $this->ajaxResponseNoCache($response);
         return true;
     }
 
@@ -582,7 +582,7 @@ class Players extends \AjaxController
                 $player->setYandexMoney("41001".$billing['yandexMoney']);
             $player->update();
         } catch (EntityException $e) {
-            $this->ajaxResponseCode(array("message" => $e->getMessage()), $e->getCode());
+            $this->ajaxResponseNoCache(array("message" => $e->getMessage()), $e->getCode());
 
             return false;
         }
@@ -598,7 +598,7 @@ class Players extends \AjaxController
             )
         );
 
-        $this->ajaxResponseCode($res);
+        $this->ajaxResponseNoCache($res);
 
         return true;
     }
@@ -620,7 +620,7 @@ class Players extends \AjaxController
         $search = trim(strip_tags($search));
 
         if (mb_strlen($search, 'utf-8')<3) {
-            $this->ajaxResponseCode(array("message" => "Request too short",),400);
+            $this->ajaxResponseNoCache(array("message" => "Request too short",),400);
             return false;
         }
 
@@ -634,7 +634,7 @@ class Players extends \AjaxController
                 'name' => $user['Name']
             );
         }
-        $this->ajaxResponseCode($response);
+        $this->ajaxResponseNoCache($response);
         return true;
     }
 
@@ -676,7 +676,7 @@ class Players extends \AjaxController
                 }
             }
         } catch (EntityException $e) {
-            $this->ajaxResponseCode(array("message" => $e->getMessage()), $e->getCode());
+            $this->ajaxResponseNoCache(array("message" => $e->getMessage()), $e->getCode());
             return false;
         }
 
@@ -689,7 +689,7 @@ class Players extends \AjaxController
             )
         );
 
-        $this->ajaxResponseCode($res);
+        $this->ajaxResponseNoCache($res);
 
         return true;
     }
@@ -729,7 +729,7 @@ class Players extends \AjaxController
                 /*->setCountry($country)*/
                 ->update();
         } catch (EntityException $e) {
-            $this->ajaxResponseCode(array("message" => $e->getMessage()), $e->getCode());
+            $this->ajaxResponseNoCache(array("message" => $e->getMessage()), $e->getCode());
             return false;
         }
 
@@ -751,7 +751,7 @@ class Players extends \AjaxController
             )
         );
 
-        $this->ajaxResponseCode($res);
+        $this->ajaxResponseNoCache($res);
 
         return true;
     }
@@ -771,7 +771,7 @@ class Players extends \AjaxController
             )
         );
 
-        $this->ajaxResponseCode($res);
+        $this->ajaxResponseNoCache($res);
 
         return true;
     }

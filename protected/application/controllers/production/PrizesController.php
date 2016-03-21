@@ -72,7 +72,7 @@ class PrizesController extends \AjaxController
             $response['res']['prizes']['exchange']['categories'] = $categories;
         }
 
-        $this->ajaxResponseCode($response,200);
+        $this->ajaxResponseNoCache($response,200);
         return true;
     }
 
@@ -98,7 +98,7 @@ class PrizesController extends \AjaxController
         $response = array();
         $response['res']['prizes']['exchange']['goods'][$itemId] = $item->exportTo('list');
 
-        $this->ajaxResponseCode($response,200);
+        $this->ajaxResponseNoCache($response,200);
         return true;
     }
 
@@ -133,7 +133,7 @@ class PrizesController extends \AjaxController
                 $order->getItem()->setQuantity($order->getItem()->getQuantity() - 1)->update();
             }
         } catch(EntityException $e) {
-            $this->ajaxResponseCode(array("message" => $e->getMessage()), $e->getCode());
+            $this->ajaxResponseNoCache(array("message" => $e->getMessage()), $e->getCode());
 
             return false;
         }
@@ -149,7 +149,7 @@ class PrizesController extends \AjaxController
             )
         );
 
-        $this->ajaxResponseCode($res);
+        $this->ajaxResponseNoCache($res);
     }
 
 }

@@ -99,7 +99,7 @@ class ReportsController extends \AjaxController
             }
         }
 
-        $this->ajaxResponseCode($response);
+        $this->ajaxResponseNoCache($response);
         return true;
     }
 
@@ -158,7 +158,7 @@ class ReportsController extends \AjaxController
             $response['res']['reports']['payments'][] = $order;
         }
 
-        $this->ajaxResponseCode($response);
+        $this->ajaxResponseNoCache($response);
         return true;
     }
 
@@ -201,7 +201,7 @@ class ReportsController extends \AjaxController
             $response['res']['reports']['referrals'][$player->getId()] = $player->export('referral');
         }
 
-        $this->ajaxResponseCode($response);
+        $this->ajaxResponseNoCache($response);
         return true;
     }
 

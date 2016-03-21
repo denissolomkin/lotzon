@@ -49,7 +49,7 @@ class BlogsController extends \AjaxController
         }
 
         if (!$blog->getEnable()) {
-            $this->ajaxResponseCode(array(),404);
+            $this->ajaxResponseNoCache(array(),404);
         }
 
         $response = array(
@@ -62,7 +62,7 @@ class BlogsController extends \AjaxController
             ),
         );
 
-        $this->ajaxResponseCode($response);
+        $this->ajaxResponseNoCache($response);
         return true;
     }
 
@@ -105,7 +105,7 @@ class BlogsController extends \AjaxController
             $response['res']['blog']['posts'][$id] = $blog->exportTo('list');
         }
 
-        $this->ajaxResponseCode($response);
+        $this->ajaxResponseNoCache($response);
         return true;
     }
 
@@ -144,7 +144,7 @@ class BlogsController extends \AjaxController
             $response['res'][$id] = $blog->exportTo('similar');
         }
 
-        $this->ajaxResponseCode($response);
+        $this->ajaxResponseNoCache($response);
         return true;
     }
 }

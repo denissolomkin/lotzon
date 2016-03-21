@@ -250,7 +250,7 @@ class PingController extends \AjaxController
         if(!empty($delete))
             $response['delete']['badges'] = $delete;
 
-        $this->ajaxResponseCode($response);
+        $this->ajaxResponseNoCache($response);
     }
 
 }

@@ -103,7 +103,7 @@ class GamesController extends \AjaxController
 
         }
 
-        $this->ajaxResponseCode($response);
+        $this->ajaxResponseNoCache($response);
     }
 
     public function itemAction($key = null, $id = null)
@@ -191,7 +191,7 @@ class GamesController extends \AjaxController
                 $response['res']['games'][$game->getType()][$game->getId()]['fund'] = $fund;
             }
 
-            $this->ajaxResponseCode($response);
+            $this->ajaxResponseNoCache($response);
 
         } else {
             $this->ajaxResponse(array(), 0, 'GAME_NOT_FOUND');
@@ -260,7 +260,7 @@ class GamesController extends \AjaxController
             'now' => $games
         );
 
-        $this->ajaxResponseCode($response);
+        $this->ajaxResponseNoCache($response);
     }
 
     public function ratingAction($key = NULL, $id = NULL)
@@ -310,6 +310,6 @@ class GamesController extends \AjaxController
                     'rating' => $list
                 )));
 
-        $this->ajaxResponseCode($response);
+        $this->ajaxResponseNoCache($response);
     }
 }
