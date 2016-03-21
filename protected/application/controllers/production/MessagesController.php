@@ -69,7 +69,7 @@ class MessagesController extends \AjaxController
             $response['res']['communication']['messages'][$message->getId()] = $export;
         }
 
-        $this->ajaxResponseCode($response);
+        $this->ajaxResponseNoCache($response);
         return true;
     }
 
@@ -117,7 +117,7 @@ class MessagesController extends \AjaxController
         MessagesModel::instance()->markRead($userId,$playerId);
         $response['player']['count']['messages'] = \MessagesModel::instance()->getStatusCount($playerId, 0);
 
-        $this->ajaxResponseCode($response);
+        $this->ajaxResponseNoCache($response);
         return true;
     }
 
@@ -141,7 +141,7 @@ class MessagesController extends \AjaxController
             return false;
         }
 
-        $this->ajaxResponseCode($response);
+        $this->ajaxResponseNoCache($response);
         return true;
     }
 
@@ -215,7 +215,7 @@ class MessagesController extends \AjaxController
         );
         $response['res']['users'][$toPlayerId]['messages'][$obj->getId()] = $obj->export('list');
 
-        $this->ajaxResponseCode($response,201);
+        $this->ajaxResponseNoCache($response,201);
         return true;
     }
 
@@ -233,7 +233,7 @@ class MessagesController extends \AjaxController
             "imageName" => $imageName,
         );
 
-        $this->ajaxResponseCode($res);
+        $this->ajaxResponseNoCache($res);
 
         return true;
     }
@@ -253,7 +253,7 @@ class MessagesController extends \AjaxController
             $this->ajaxResponseInternalError();
         }
 
-        $this->ajaxResponseCode(array());
+        $this->ajaxResponseNoCache(array());
 
         return true;
     }
