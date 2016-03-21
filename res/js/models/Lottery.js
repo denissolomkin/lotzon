@@ -258,7 +258,6 @@
                             });
 
                             Lottery.prepareTickets(Lottery.data.id);
-                            Lottery.update();
 
                             return json;
                             break;
@@ -275,12 +274,14 @@
         prepareTickets: function(id) {
 
             var href = 'lottery-' + id + '-tickets',
-                json = ((id == parseInt(Tickets.lastLotteryId) + 1) ? {
+                isLastResult = (id == parseInt(Tickets.lastLotteryId) + 1);
+                json = isLastResult ? {
                     key: href,
                     cache: "session",
                     res: Tickets.filledTickets
-                } : null),
-                format = function(json) {
+                } : null,
+                format = function(json, isLastResult) {
+                    isLastResult && Lottery.update();
                     Lottery.tickets = json;
                     Lottery.renderAnimation();
                     console.log('prepareTickets: ', Lottery.tickets);
@@ -290,7 +291,8 @@
             R.json({
                 href: href,
                 json: json,
-                format: format
+                format: format,
+                arguments: isLastResult
             });
         },
 
