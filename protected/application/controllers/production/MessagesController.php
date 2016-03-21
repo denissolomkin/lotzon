@@ -161,7 +161,7 @@ class MessagesController extends \AjaxController
         $obj = new Message;
         $obj->setPlayerId($playerId)
             ->setToPlayerId($toPlayerId)
-            ->setText($text);
+            ->setText(htmlspecialchars(strip_tags($text)));
 
         if ($image!="") {
             \Common::saveImageMultiResolution('',PATH_FILESTORAGE.'messages/',$image, array(array(600),1),PATH_FILESTORAGE.'temp/'.$image);

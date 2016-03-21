@@ -71,7 +71,6 @@ class Message extends Entity
         switch ($action) {
             case 'create' :
             case 'update' :
-                $this->setText(htmlspecialchars(strip_tags($this->getText())));
                 if (!$this->getText()) {
                     throw new EntityException("Text can not be empty", 400);
                 }
