@@ -581,8 +581,8 @@ class Users extends PrivateArea
                 'message' => 'OK',
                 'data'    => array(),
             );
-            try {
 
+            try {
                 if($players = $this->request()->post('ids')){
                     $players = explode(',', $players);
                 } else {
@@ -592,6 +592,15 @@ class Users extends PrivateArea
                 foreach($players as $playerId) {
                     if(!is_numeric($playerId))
                         continue;
+
+                    if($playerId) {
+                        $message = new \Message;
+                        $message->setPlayerId(SettingsModel::instance()->getSettings('counters')->getValue('USER_REVIEW_DEFAULT'))
+                            ->setToPlayerId($playerId)
+                            ->setText($this->request()->post('text'))
+                            ->create();
+                    }
+
                     $notice = new Notice();
                     $notice->setPlayerId($playerId)
                         ->setUserId(Session2::connect()->get(Admin::SESSION_VAR)->getId())
