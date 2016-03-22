@@ -251,13 +251,13 @@
 
                             console.error('prepareData: ', Lottery.data);
 
-                            Cache.init({
+                            Tickets.countFilled() && Cache.init({
                                 href: '/lottery/history/' + Lottery.data.id,
                                 storage: "session",
                                 json: {res: Object.deepExtend(Object.clone(json), {type: 'mine'})}
                             });
 
-                            Lottery.prepareTickets(Lottery.data.id);
+                            !Game.isRun() && Lottery.prepareTickets(Lottery.data.id);
 
                             return json;
                             break;

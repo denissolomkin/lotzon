@@ -91,7 +91,7 @@
             
             console.log("Start:", options.href, options.template);
 
-            if(!options.template){
+            if(!options.template) {
                 D.error(options);
                 return;
             }
@@ -460,7 +460,7 @@
                             options.url = false;
                         }
 
-                        onTop && DOM.hide(render);
+                        onTop && !render.classList.contains('pop-box') && DOM.hide(render);
 
                         if (options.init.template.indexOf('-item') !== -1)
                             template =
