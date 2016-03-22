@@ -149,7 +149,7 @@ endforeach;
 </script>
 <style>
     #R2D2 {
-    <?php if($_SERVER['HTTP_HOST']=='new.lotzon.com'):?>
+    <?php if($_SERVER['HTTP_HOST']=='new.lotzon.com' || $_SERVER['HTTP_HOST']=='lotzon.com'):?>
         display: none;
     <?php endif; ?>
         position: relative;
