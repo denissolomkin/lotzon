@@ -756,7 +756,7 @@ Config::instance()->publicResources = array(
 Config::instance()->hybridAuth = array(
 
     // "base_url" the url that point to HybridAuth Endpoint (where the index.php and config.php are found)
-    "base_url" => "http:".(Config::instance()->SSLEnabled ? 's' : '')."//".(isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : 'lotzon.com')."/auth/endpoint/",
+    "base_url" => "http://".(isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : 'lotzon.com')."/auth/endpoint/",
 
     "providers" => array (
 
