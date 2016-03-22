@@ -190,34 +190,36 @@ class MessagesController extends \AjaxController
 
         $response = array(
             'message' => 'message-successfully-sent',
-            'cache' => array(
-                'communication-messages' => 'session'
+            'cache'   => array(
+                'communication-messages' => 'session',
             ),
             'res'     => array(
                 'users'         => array(
                     $toPlayerId => array(
-                        'messages' => array()
+                        'messages' => array(),
                     ),
                 ),
                 'communication' => array(
                     'messages' => array(
                         $obj->getId() => array(
-                            'user' => $player->export('card'),
-                            'id'   => $toPlayerId,
-                            'date' => $obj->getDate(),
-                            'text' => $obj->getText(),
-                            'img'  => $obj->getImg
-                        )
-                    )
-                )
+                            'user'      => $player->export('card'),
+                            'id'        => $toPlayerId,
+                            'author_id' => $playerId,
+                            'date'      => $obj->getDate(),
+                            'text'      => $obj->getText(),
+                            'img'       => $obj->getImg,
+                            'isUnread'  => true,
+                        ),
+                    ),
+                ),
             ),
             'delete'  => array(
                 'communication' => array(
                     'messages' => array(
-                        $toPlayerId => NULL
-                    )
-                )
-            )
+                        $toPlayerId => null,
+                    ),
+                ),
+            ),
         );
         $response['res']['users'][$toPlayerId]['messages'][$obj->getId()] = $obj->export('list');
 
