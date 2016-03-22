@@ -72,7 +72,7 @@
                 if (typeof options === 'object') {
 
                     if ('target' in options) {
-                        if(options.target.getAttribute('target') == '_blank')
+                        if(options.target.getAttribute('target') == '_blank' || this.getAttribute('target') == '_blank' )
                             return true;
                         options.preventDefault();
                         options.stopPropagation();
