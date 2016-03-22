@@ -595,7 +595,7 @@ class Users extends PrivateArea
 
                     if($playerId) {
                         $message = new \Message;
-                        $message->setPlayerId(SettingsModel::instance()->getSettings('counters')->getValue('USER_REVIEW_DEFAULT'))
+                        $message->setPlayerId(SettingsModel::instance()->getSettings('counters')->getValue('USER_ORDERS_DEFAULT'))
                             ->setToPlayerId($playerId)
                             ->setText($this->request()->post('text'))
                             ->create();

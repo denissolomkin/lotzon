@@ -21,7 +21,8 @@
                     '<span class="fa fa-cogs"></span> НАСТРОЙКИ',
 
                     'PLAYER_TIMEOUT'=>'Таймаут, через который игрок считается оффлайн (сек)',
-                    'USER_REVIEW_DEFAULT'=>'Пользователь по умолчанию для ответов на отзывы',
+                    'USER_REVIEW_DEFAULT'=>'Админ по умолчанию для ответов на отзывы',
+                    'USER_ORDERS_DEFAULT'=>'Админ для отправки подтверждения выплат',
                     'INVITES_PER_WEEK'=>'Количество приглашений по email в неделю',
                     'APPROVES_TO_AUTOPUBLISH' => '<span class="fa fa-thumbs-o-up"></span> Опубликованных комментариев для автомодерации',
                     'BOT_TIMEZONES'=>'<span class="fa fa-plug"></span> Количество временных зон для ботов',
