@@ -72,6 +72,8 @@
                 if (typeof options === 'object') {
 
                     if ('target' in options) {
+                        if(options.target == '_blank')
+                            return true;
                         options.preventDefault();
                         options.stopPropagation();
                     }
