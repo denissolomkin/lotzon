@@ -10,6 +10,7 @@
             <img src="{{avatar user.img user.id 50}}" class="loading" onload="this.style.background = 'none'" onerror="Player.getAvatar.call(this)">
         </div>
         <div class="message-name">{{user.name}}</div>
+        <div class="message-date">{{day date 'calendar'}} {{i18n 'title-message-at'}} {{day date 'HH:MM'}}</div>
     </a>
     <a href="/users/{{user.id}}/messages">
         <div class="message-text">

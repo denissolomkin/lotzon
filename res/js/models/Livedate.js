@@ -42,11 +42,14 @@
 
                 switch (true) {
 
-                    case moment().add('days', -1).isSame(moment.unix(date), 'day') && !format:
+                    case moment().add('days', -1).isSame(moment.unix(date), 'day') && (!format || format == 'calendar'):
                         return i18n('title-day-yesterday');
                         break;
-                    case moment().isSame(moment.unix(date), 'day') && !format:
+                    case moment().isSame(moment.unix(date), 'day') && (!format || format == 'calendar'):
                         return i18n('title-day-today');
+                        break;
+                    case format === 'calendar':
+                        return moment.unix(date).format('D MMM');
                         break;
                     default:
                         return moment.unix(date).format(format || 'DD.MM.YYYY');
