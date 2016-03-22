@@ -11,10 +11,10 @@
 
         <!-- Social icons -->
         <div class="footer-social-icons">
-            <a href="#" class="fb"></a>
-            <a href="#" class="vk"></a>
-            <a href="#" class="ok"></a>
-            <a href="#" class="tw"></a>
+            <a href="https://www.facebook.com/pages/Lotzon/714221388659166" target="_blank" class="fb"></a>
+            <a href="http://vk.com/lotzon" target="_blank" class="vk"></a>
+            <a href="http://ok.ru/group/52501162950725" target="_blank" class="ok"></a>
+            <a href="https://twitter.com/LOTZON_COM" target="_blank" class="tw"></a>
         </div>
     </div>
     <!-- Popup msgs '.show - show  .timer - hide close button'-->
