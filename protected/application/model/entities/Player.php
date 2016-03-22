@@ -1761,18 +1761,18 @@ class Player extends Entity
                 $ret = array(
                     'id'       => $this->getId(),
                     'img'      => $this->getAvatar(),
-                    'birthday' => $this->getBirthday(),
+                    /*'birthday' => $this->getBirthday(),*/
                     'title'    => array(
                         'nickname'   => $this->getNicName(),
-                        'name'       => $this->getName(),
+                        /*'name'       => $this->getName(),
                         'surname'    => $this->getSurname(),
-                        'patronymic' => $this->getSecondName()
+                        'patronymic' => $this->getSecondName()*/
                     ),
-                    'location' => array(
+                    /*'location' => array(
                         'country' => $this->getCountry(),
                         'city'    => $this->getCity()
                     ),
-                    'social'     => $this->getSocial()
+                    'social'     => $this->getSocial()*/
                 );
                 if ($this->_isFriend!==null) {
                     $ret['isFriend'] = $this->_isFriend;
