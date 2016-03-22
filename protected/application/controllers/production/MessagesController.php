@@ -66,6 +66,12 @@ class MessagesController extends \AjaxController
         foreach ($list as $id=>$message) {
             $export = $message->export('talk');
             $export['talk_id'] = $id;
+            $toPlayerId        = $message->getToPlayerId();
+            if ($toPlayerId==$playerId) {
+                $export['author_id'] = $message->getPlayerId();
+            } else {
+                $export['author_id'] = $playerId;
+            }
             $response['res']['communication']['messages'][$message->getId()] = $export;
         }
 

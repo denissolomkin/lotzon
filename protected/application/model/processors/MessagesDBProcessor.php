@@ -217,7 +217,7 @@ class MessagesDBProcessor implements IProcessor
                     `Players`.`Id` PlayerId,
                     `Players`.`Avatar` PlayerImg,
                     `Players`.`Nicname` PlayerName,
-                    (SELECT IFNULL(MIN(m2.Status),1) FROM Messages as m2 WHERE m2.PlayerId = `Players`.Id AND m2.ToPlayerId = :playerid) as Status
+                    (SELECT IF(mes.ToPlayerId=:playerid,IFNULL(MIN(m2.Status),1),mes.Status) FROM Messages as m2 WHERE m2.PlayerId = `Players`.Id AND m2.ToPlayerId = :playerid) as Status
                 FROM `Messages` as mes
                 JOIN
                 (
