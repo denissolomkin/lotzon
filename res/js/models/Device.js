@@ -117,6 +117,7 @@
         },
 
         switchGoTop: function () {
+            return true;
             yScroll >= 600
                 ? (!this.gototop.style.opacity || this.gototop.style.opacity === 0 || !this.gototop.style.display || this.gototop.style.display === 'none') && fadeIn(this.gototop)
                 : this.gototop.style.opacity === "1" && fadeOut(this.gototop);
