@@ -563,11 +563,8 @@
                     key.push(find['id']);
                     if (this.delete(this.storages[find.storage], key)) {
                         this.save(this.storages[find.storage]);
-                        console.error("delete " + find['id']);
-                    } else
-                        console.log('can\'t delete');
-                } else
-                    console.log('not found');
+                    }
+                }
 
             }
         },

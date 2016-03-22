@@ -334,7 +334,7 @@ $(function () {
         'ne': function (v1, v2) {
             return v1 !== v2;
         },
-        'neNotStrict': function (v1, v2) {
+        'notlike': function (v1, v2) {
             return v1 != v2;
         },
         'lt': function (v1, v2) {
