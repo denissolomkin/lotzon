@@ -7,7 +7,7 @@
             <div class="go-to-top"></div>
         </a>
         <!-- Logo -->
-        <a href="/" class="footer-logo"></a>
+        <div class="footer-logo"></div>
 
         <!-- Social icons -->
         <div class="footer-social-icons">
