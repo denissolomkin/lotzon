@@ -31,7 +31,7 @@
                                     <a href="/users/{{id}}/message" class="send-msg uk-float-left">
                                         {{i18n "button-users-write-message"}}
                                     </a>
-                                    {{#if (neNotStrict null isFriend)}}
+                                    {{#if (notlike null isFriend)}}
                                     <form action="/users/requests/{{id}}" method="post" class="uk-float-left add-friends {{#if (ne false isFriend)}}hidden{{/if}} ">
                                         <button type="submit">{{i18n "button-user-friendship"}}</button>
                                     </form>
@@ -61,7 +61,7 @@
                                 <div>{{title.surname}}</div>
                             </li>
                             {{/if}}
-                            {{#if (neNotStrict null birthday)}}
+                            {{#if (notlike null birthday)}}
                             <li>
                                 <i>{{i18n "title-profile-birthday"}}</i>
                                 <div class="wrapper-margin-right">{{day birthday}}
