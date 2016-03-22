@@ -1,5 +1,5 @@
-﻿<div id="communication-messages-{{id}}" talk-id="{{talk_id}}" class="message{{#if (and isUnread (like author_id user.id)}} message-unread{{/if}}">
-    {{#if (and isUnread (like author_id user.id)}}
+﻿<div id="communication-messages-{{id}}" talk-id="{{talk_id}}" class="message{{#if isUnread}} message-unread{{/if}}">
+    {{#if isUnread}}
     <div class="mark-read" data-id="{{user.id}}">
         <div class="service-pop-up">{{i18n "title-mark-as-read"}}</div>
     </div>
@@ -19,7 +19,7 @@
                 </div>
             </div>
             {{/if}}
-            <div  class="{{#if (notlike author_id user.id)}}message-answer{{#if (ne isUnread true)}} message-read{{/if}}{{/if}}">
+            <div class="{{#if (notlike author_id user.id)}}message-answer{{#if isUserRead}} message-read{{/if}}{{/if}}">
                 <p>
                     {{{getSmile text}}}
                 </p>
