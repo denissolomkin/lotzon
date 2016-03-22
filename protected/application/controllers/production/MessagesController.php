@@ -71,6 +71,9 @@ class MessagesController extends \AjaxController
                 $export['author_id'] = $message->getPlayerId();
             } else {
                 $export['author_id'] = $playerId;
+                if (!isset($export['isUnread'])) {
+                    $export['isUserRead'] = true;
+                }
             }
             $response['res']['communication']['messages'][$message->getId()] = $export;
         }
@@ -208,7 +211,6 @@ class MessagesController extends \AjaxController
                             'date'      => $obj->getDate(),
                             'text'      => $obj->getText(),
                             'img'       => $obj->getImg,
-                            'isUnread'  => true,
                         ),
                     ),
                 ),
