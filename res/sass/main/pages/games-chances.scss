@@ -59,6 +59,9 @@ $black_15: rgba(0,0,0,0.15);
             margin-top: 20px;
             max-height: 50px;
             cursor: pointer;
+            &:hover{
+                opacity: 0.5;
+            }
             + p {
                 text-transform: uppercase;
                 background: $color_bright_sun_approx;
@@ -155,6 +158,7 @@ $black_15: rgba(0,0,0,0.15);
                 color: #000;
                 transition: all .2s linear;
                 &:hover{
+                    opacity: 1;
                     background: $color_gravel_approx;
                     background: #000;
                     border: 1px solid $color_gravel_approx;
