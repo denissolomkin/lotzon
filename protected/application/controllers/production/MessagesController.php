@@ -74,6 +74,7 @@ class MessagesController extends \AjaxController
                 if (!isset($export['isUnread'])) {
                     $export['isUserRead'] = true;
                 }
+                unset($export['isUnread']);
             }
             $response['res']['communication']['messages'][$message->getId()] = $export;
         }
