@@ -213,6 +213,13 @@ class OrdersController extends \AjaxController
             $sum = $order->getData()['summ']['value'];
             $order->getPlayer()->addMoney(-1*$sum, $order->getText());
             $order->commit();
+        } catch(EntityException $e) {
+            $order->rollBack();
+            $res = array(
+                "message" => $e->getMessage(),
+                "res"     => array()
+            );
+            $this->ajaxResponseNoCache($res, 402);
         } catch (\Exception $e) {
             \TicketsModel::instance()->rollBack();
             $res = array(
@@ -221,10 +228,7 @@ class OrdersController extends \AjaxController
             );
             $this->ajaxResponseNoCache($res, 402);
         }
-        catch(EntityException $e) {
-            $order->rollBack();
-            $this->ajaxResponseInternalError();
-        }
+
 
         $player->fetch();
         $res = array(
