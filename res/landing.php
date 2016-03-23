@@ -406,7 +406,7 @@
                             <a href="javascript:void(0)" class="tb_a-r swap-form">Регистрация</a>
                         </div>
                         <!-- REGISTRATION FORM -->
-                        <form name="register" data-ref="">
+                        <form name="register" data-ref="<?=$ref?>">
                             <div id="reg-form">
                                 <div class="rf-txt">Укажите Ваш email. На него будет выслана информация для завершения регистрации.</div>
                                 <div class="ib-l">
@@ -423,11 +423,11 @@
                                 <div class="sl-bk">
                                     <div class="sl-bk-tl"><div class="sl-bk-tl" style="font-stretch: normal; margin-bottom: 20px;">Зарегистрироваться через социальную сеть:</div><div style="color: rgb(0, 0, 0); font-family: Handbook-regular; font-size: medium; line-height: 16px; background-color: rgb(255, 228, 0);"></div></div>
                                     <div>
-                                        <a href="./auth/Facebook?method=user" class="fb"></a>
-                                        <a href="./auth/Vkontakte?method=user" class="vk"></a>
-                                        <a href="./auth/Odnoklassniki?method=user" class="ok"></a>
-                                        <a href="./auth/Google?method=user" class="gp"></a>
-                                        <a href="./auth/Twitter?method=user" class="tw"></a>
+                                        <a href="./auth/Facebook?method=user<?=($ref?'&ref='.$ref:'')?>" class="fb"></a>
+                                        <a href="./auth/Vkontakte?method=user<?=($ref?'&ref='.$ref:'')?>" class="vk"></a>
+                                        <a href="./auth/Odnoklassniki?method=user<?=($ref?'&ref='.$ref:'')?>" class="ok"></a>
+                                        <a href="./auth/Google?method=user<?=($ref?'&ref='.$ref:'')?>" class="gp"></a>
+                                        <a href="./auth/Twitter?method=user<?=($ref?'&ref='.$ref:'')?>" class="tw"></a>
                                     </div>
                                 </div>
                                 <div class="ch-b"><span style="text-align: center;">Регистрируясь, Вы соглашаетесь с&nbsp;</span><a class="rs-sw" style="font-stretch: normal; text-align: center;">правилами участия</a><span style="text-align: center;">.</span></div>
@@ -458,11 +458,11 @@
                                     <input type="submit" class="sb_but" value="Играть">
                                 </div>
                                 <div class="sl-bk">
-                                    <a href="./auth/Facebook?method=log-in" class="fb"></a>
-                                    <a href="./auth/Vkontakte?method=log-in" class="vk"></a>
-                                    <a href="./auth/Odnoklassniki?method=log-in" class="ok"></a>
-                                    <a href="./auth/Google?method=log-in" class="gp"></a>
-                                    <a href="./auth/Twitter?method=log-in" class="tw"></a>
+                                    <a href="./auth/Facebook?method=log-in<?=($ref?'&ref='.$ref:'')?>" class="fb"></a>
+                                    <a href="./auth/Vkontakte?method=log-in<?=($ref?'&ref='.$ref:'')?>" class="vk"></a>
+                                    <a href="./auth/Odnoklassniki?method=log-in<?=($ref?'&ref='.$ref:'')?>" class="ok"></a>
+                                    <a href="./auth/Google?method=log-in<?=($ref?'&ref='.$ref:'')?>" class="gp"></a>
+                                    <a href="./auth/Twitter?method=log-in<?=($ref?'&ref='.$ref:'')?>" class="tw"></a>
                                 </div>
                             </div>
                         </form>

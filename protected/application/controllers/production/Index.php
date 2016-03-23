@@ -328,7 +328,7 @@ class Index extends \SlimController\SlimController
     protected function landing()
     {
 
-        global $isMobile, $slider, $player, $error;
+        global $isMobile, $slider, $player, $error, $ref;
 
         $detect   = new MobileDetect;
         $isMobile = $detect->isMobile();
@@ -367,6 +367,8 @@ class Index extends \SlimController\SlimController
         ) {
             $session->set('REFERER', $referer['host'] ?: $referer['path']);
         }
+
+        $ref = $this->ref;
 
         return include("res/landing.php");
 
