@@ -38,7 +38,7 @@
 
             <!-- SITE TOP -->
             <div class="site-top">
-                <div id="banner-desktop-top" class="banner-3">
+                <div id="banner-desktop-top" class="banner-3" style="height: 150px;">
                 </div>
             </div>
             <!-- end of SITE TOP -->
