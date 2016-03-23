@@ -31,6 +31,20 @@
 
         banner: {
 
+            load: function f(href) {
+
+                if(typeof href == 'object')
+                    while(href.length)
+                        f(href.shift());
+                 else
+                    R.json({
+                        href: href,
+                        format: function (data) {
+                            $('#' + href).empty().append(data);
+                        },
+                    });
+            },
+
             moment: function (data) {
 
                 if (Device.isMobile())
@@ -45,8 +59,9 @@
                         div.innerHTML = data.json.block;
 
                         while (div.children.length > 0) {
+
                             if (div.children[0].tagName === 'SCRIPT') {
-                                var s = document.getElementsByTagName('script')[0],
+                                var //s = document.getElementsByTagName('script')[0],
                                     po = document.createElement('script');
                                 po.type = 'text/javascript';
                                 po.async = true;
@@ -218,20 +233,9 @@
         },
 
         updateBanners: function () {
-
-            if (1 || /new.lotzon.com/.test(location.hostname)) {
-                if (Device.mobile) {
-                    R.push('/banner/tablet/top');
-                    // R.push('/banner/tablet/bottom');
-                } else {
-                    // R.push('/banner/desktop/fixed');
-                    R.push({
-                        href: '/banner/desktop/top',
-                        after: function(options){ $(options.rendered).html(options.json); }
-                    });
-                    R.push('/banner/desktop/right');
-                }
-            }
+            Device.isMobile()
+                ? Content.banner.load('banner-tablet-top')
+                : Content.banner.load(['banner-desktop-right', 'banner-desktop-top']);
         },
 
         after: {
