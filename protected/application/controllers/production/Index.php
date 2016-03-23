@@ -211,6 +211,7 @@ class Index extends \SlimController\SlimController
                 "online" => (int)\SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT')
             ),
             "adminId"            => (int)\SettingsModel::instance()->getSettings('counters')->getValue('USER_REVIEW_DEFAULT'),
+            "minMoneyOutput"          => (int)\SettingsModel::instance()->getSettings('counters')->getValue('MIN_MONEY_OUTPUT'),
             "tempFilestorage"    => '/filestorage/temp',
             "filestorage"        => '/filestorage',
             "websocketUrl"       => 'ws' . (\Config::instance()->SSLEnabled ? 's' : '') . '://' . $_SERVER['SERVER_NAME'] . ':' . \Config::instance()->wsPort,
