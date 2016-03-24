@@ -74,7 +74,7 @@
 
                 $input_money.val(input_money);
 
-                return input_money >= parseFloat(Config.minMoneyOutput);
+                return true || input_money >= parseFloat(Config.minMoneyOutput);
 
             },
 
