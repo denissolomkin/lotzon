@@ -198,7 +198,7 @@
                             'id': comment.getAttribute("data-user-id")
                         },
                         'comment_id': comment.getAttribute("data-comment-id"),
-                        'post_id': comment.getAttribute('data-post-id')
+                        'object_id': comment.getAttribute('data-object-id')
                     };
 
                 // delete other forms
@@ -210,7 +210,7 @@
 
                 // push new form
                 R.push({
-                    href: (json.post_id ? 'blog-post-view' : 'communication') + '-comments-replyform',
+                    href: (json.object_id ? 'blog-post-view' : 'communication') + '-comments-replyform',
                     json: json,
                     node: node
                 });
