@@ -588,14 +588,14 @@ class Players extends \AjaxController
         }
 
         $res = array(
-            "player"  => array(
-                "billing"  => array(
-                    "webMoney"    => $player->getWebMoney(),
-                    "yandexMoney" => $player->getYandexMoney(),
-                    "qiwi"        => $player->getQiwi(),
-                    "phone"       => $player->getPhone()
+            "player" => array(
+                "billing" => array(
+                    "webmoney" => $player->getWebMoney(),
+                    "yandex"   => $player->getYandexMoney(),
+                    "qiwi"     => $player->getQiwi(),
+                    "phone"    => $player->getPhone(),
                 ),
-            )
+            ),
         );
 
         $this->ajaxResponseNoCache($res);
