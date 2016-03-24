@@ -1,7 +1,7 @@
 <div class="comment-content"
      data-user-name="{{user.name}}"
      data-user-id="{{user.id}}"
-     {{#if object_id}} data-post-id="{{object_id}}" {{/if}}
+     {{#if object_id}} data-object-id="{{object_id}}" {{/if}}
      data-comment-id="{{or comment_id id}}">
     <div class="comment-top">
         <a href="/user/{{user.id}}">
