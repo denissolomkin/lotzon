@@ -200,6 +200,9 @@ $(function () {
         'lottery': function (fn, options) {
             return prepareHelper(fn, options, arguments, 'Tickets');
         },
+        'config': function (fn, options) {
+            return prepareHelper(fn, options, arguments, 'Config');
+        },
         'partial': function f(name, args) {
 
             try {

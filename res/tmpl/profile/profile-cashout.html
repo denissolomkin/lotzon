@@ -14,9 +14,10 @@
                     </div>
                 </span>
                 <div class="clearfix option hidden rules-text">
+                    <p>{{i18n "text-cashout-rules-min"}} {{config "minMoneyOutput"}} {{player "getCurrency"}}</p>
                     <p>{{i18n "text-cashout-rules-time"}}</p>
                     <p>{{i18n "text-cashout-see-info"}} <a href="/reports/payments" class="">{{i18n "title-profile-payments-history"}}</a></p>
-                    <p>{{i18n "text-cashout-write-us"}} <a href="/users/{{player "getAdmin"}}/message" class="write-admin">{{i18n "title-profile-message-admin"}}</a></p>
+                    <p>{{i18n "text-cashout-write-us"}} <a href="/users/0/message" class="write-admin">{{i18n "title-profile-message-admin"}}</a></p>
                 </div>
             </div>
 
