@@ -400,9 +400,10 @@
 
         ping: function () {
 
+            var forms = Content.forms4ping();
             Form.post({
                 action: '/ping',
-                data: {forms: Content.forms4ping()}
+                data: {forms: forms}
             })
         },
 
