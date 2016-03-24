@@ -221,7 +221,7 @@ class MoneyOrder extends Entity
                 if (!$this->getData()['summ']['value']) {
                     throw new EntityException("EMPTY_SUMM", 400);   
                 }
-                if (!is_numeric($this->getData()['summ']['value']) || $this->getData()['summ']['value'] <= 0 || (SettingsModel::instance()->getSettings('counters')->getValue('MIN_MONEY_OUTPUT') && $this->getData()['summ']['value'] < SettingsModel::instance()->getSettings('counters')->getValue('MIN_MONEY_OUTPUT'))) {
+                if (!is_numeric($this->getData()['summ']['value']) || $this->getData()['summ']['value'] <= 0 || (SettingsModel::instance()->getSettings('counters')->getValue('MIN_MONEY_OUTPUT') && $this->getData()['summ']['value'] < SettingsModel::instance()->getSettings('counters')->getValue('MIN_MONEY_OUTPUT') && $this->getType()!=self::GATEWAY_POINTS)) {
                     throw new EntityException("INVALID_SUMM", 400);
                 }
                 if ($this->getData()['summ']['value'] > $this->getPlayer()->getBalance(self::FOR_UPDATE)['Money']) {
