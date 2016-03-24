@@ -127,6 +127,8 @@
 
             if (message==='error')
                 return;
+            else
+                message = i18n(message);
 
             D.log(message, 'error');
             D.isEnable("alert") && alert(message);
