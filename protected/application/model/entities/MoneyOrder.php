@@ -215,26 +215,47 @@ class MoneyOrder extends Entity
                 if (!$this->getPlayer()) {
                     throw new EntityException("INVALID_PLAYER", 400);
                 }
-                if (!in_array($this->getType(), array(self::GATEWAY_ITEM, self::GATEWAY_PHONE, self::GATEWAY_QIWI, self::GATEWAY_WEBMONEY, self::GATEWAY_YANDEX, self::GATEWAY_P24, self::GATEWAY_POINTS))) {
-                    throw new EntityException("INVALID_PAYMENT_GATEWAY", 400);
-                }
+
                 if (!$this->getData()['summ']['value']) {
                     throw new EntityException("EMPTY_SUMM", 400);   
                 }
+
                 if (!is_numeric($this->getData()['summ']['value']) || $this->getData()['summ']['value'] <= 0) {
                     throw new EntityException("INVALID_SUMM", 400);
                 }
-                if ($this->getType()!=self::GATEWAY_POINTS
+
+                if ($this->getType() != self::GATEWAY_POINTS
                     && SettingsModel::instance()->getSettings('counters')->getValue('MIN_MONEY_OUTPUT')
                     && $this->getData()['summ']['value'] < SettingsModel::instance()->getSettings('counters')->getValue('MIN_MONEY_OUTPUT')) {
                     throw new EntityException("INVALID_MIN_OUTPUT", 400);
                 }
+
                 if ($this->getData()['summ']['value'] > $this->getPlayer()->getBalance(self::FOR_UPDATE)['Money']) {
                     throw new EntityException("INSUFFICIENT_FUNDS", 400);
                 }
+
                 $data = $this->getData();
                 switch ($this->getType()) {
-                    /*case self::GATEWAY_CARD:
+
+                    /*
+                    case self::GATEWAY_P24:
+                        if (empty($data['card-number']['value'])) {
+                            throw new EntityException("EMPTY_CARD_NUMBER", 400);
+                        }
+                        if (empty($data['name']['value'])) {
+                            throw new EntityException("EMPTY_CREDENTIALS", 400);
+                        }
+                        $data['name']['value'] = htmlspecialchars(strip_tags($data['name']['value']));
+                         // clean up card number
+                        $cardNumber = preg_replace("/[^0-9]/", "", $data['card-number']['value']);
+                        // verify visa or mastercard
+                        if (!preg_match("/^((4[0-9]{12}(?:[0-9]{3}))|(5[1-5][0-9]{14}))$/", $cardNumber)) {
+                            throw new EntityException("INVALID_CARD_NUMBER", 400);
+                        }
+                        $this->setNumber($cardNumber);
+                    break;
+
+                    case self::GATEWAY_CARD:
                         // clean up card number
                         if (empty($data['number']['value'])) {
                             throw new EntityException("EMPTY_CARD_NUMBER", 400);
@@ -245,21 +266,11 @@ class MoneyOrder extends Entity
                             throw new EntityException("INVALID_CARD_NUMBER", 400);
                         }
                         if (empty($data['name']['value'])) {
-                            throw new EntityException("EMPTY_CREDENTIALS", 400);       
+                            throw new EntityException("EMPTY_CREDENTIALS", 400);
                         }
                         $data['name']['value'] = htmlspecialchars(strip_tags($data['name']['value']));
-                    break;*/
-                    case self::GATEWAY_PHONE:
-                        $number = $this->getPlayer()->getPhone();
-                        if (!$number) {
-                            throw new EntityException("EMPTY_PHONE", 400);
-                        }
-                        if (!preg_match('/^[+0-9\- ()]*$/', $number)) {
-                            throw new EntityException("INVALID_PHONE_FORMAT", 400);
-                        }
-                        $number = preg_replace("/[^0-9]/", "", $number);
-                        $this->setNumber(($number[0]==0?'38':'').$number);
-                        break;
+                    break;
+
                     case self::GATEWAY_QIWI:
                         $number = $this->getPlayer()->getQiwi();
                         if (!$number) {
@@ -271,9 +282,23 @@ class MoneyOrder extends Entity
                         $number = preg_replace("/[^0-9]/", "", $number);
                         $this->setNumber(($number[0]==0?'38':'').$number);
                     break;
+                    */
+
+                    case self::GATEWAY_PHONE:
+                        $number = $this->getPlayer()->getPhone();
+                        if (!$number) {
+                            throw new EntityException("EMPTY_PHONE", 400);
+                        }
+                        if (!preg_match('/^[+0-9\- ()]*$/', $number)) {
+                            throw new EntityException("INVALID_PHONE_FORMAT", 400);
+                        }
+                        $number = preg_replace("/[^0-9]/", "", $number);
+                        $this->setNumber(($number[0]==0?'38':'').$number);
+                        break;
+
+
                     case self::GATEWAY_WEBMONEY:
                         $number = $this->getPlayer()->getWebMoney();
-
                         if (!$number) {
                             throw new EntityException("EMPTY_WEBMONEY_PURSE", 400);          
                         }
@@ -282,6 +307,7 @@ class MoneyOrder extends Entity
                         }
                         $this->setNumber($number);
                     break;
+
                     case self::GATEWAY_YANDEX:
                         $number = $this->getPlayer()->getYandexMoney();
                         if (!$number) {
@@ -291,22 +317,6 @@ class MoneyOrder extends Entity
                             throw new EntityException("INVALID_YANDEX_PURSE", 400);   
                         }
                         $this->setNumber($number);
-                    break;
-                    case self::GATEWAY_P24:
-                        if (empty($data['card-number']['value'])) {
-                            throw new EntityException("EMPTY_CARD_NUMBER", 400);    
-                        }
-                        if (empty($data['name']['value'])) {
-                            throw new EntityException("EMPTY_CREDENTIALS", 400);       
-                        }
-                        $data['name']['value'] = htmlspecialchars(strip_tags($data['name']['value']));
-                         // clean up card number
-                        $cardNumber = preg_replace("/[^0-9]/", "", $data['card-number']['value']);
-                        // verify visa or mastercard
-                        if (!preg_match("/^((4[0-9]{12}(?:[0-9]{3}))|(5[1-5][0-9]{14}))$/", $cardNumber)) {
-                            throw new EntityException("INVALID_CARD_NUMBER", 400);
-                        }
-                        $this->setNumber($cardNumber);
                     break;
 
                     case self::GATEWAY_ITEM:
@@ -336,12 +346,17 @@ class MoneyOrder extends Entity
                         $data['summ'] = array('title'=>'Сумма','value'=>$item->getSum());
 
                         break;
+
                     case self::GATEWAY_POINTS:
                         $rate = CountriesModel::instance()->getCountry($this->getPlayer()->getCountry())->loadCurrency()->getRate();
                         $this->setStatus(1)
                             ->setText('Конвертация денег')
                             ->getPlayer()
                             ->addPoints((int)(round($this->getData()['summ']['value'],2)*$rate), "Обмен денег на баллы");
+                        break;
+
+                    default:
+                        throw new EntityException("INVALID_PAYMENT_GATEWAY", 400);
                         break;
                 }
                 $this->setSum($data['summ']['value'] / CountriesModel::instance()->getCountry($this->getPlayer()->getCountry())->loadCurrency()->getCoefficient());

@@ -80,7 +80,6 @@ class OrdersController extends \AjaxController
         $data = $this->request()->post('data');
         if (is_array($data)) {
             $order = new MoneyOrder();
-//            $order->setPlayer(Session2::connect()->get(Player::IDENTITY))
             $order->setPlayer($this->session->get(Player::IDENTITY))
                   ->setType($data['type']);
             unset($data['type']);

@@ -559,85 +559,6 @@ class Players extends \AjaxController
         return true;
     }
 
-    public function billingAction() {
-        if (!$this->request()->isAjax()) {
-            return false;
-        }
-
-        $this->authorizedOnly();
-
-        $player = new Player;
-        $player->setId($this->session->get(Player::IDENTITY)->getId())->fetch();
-
-        $billing = $this->request()->put('billing', array());
-
-        try {
-            if (!$player->getPhone() && $billing['phone'])
-                $player->setPhone($billing['phone']);
-            if (!$player->getQiwi() && $billing['qiwi'])
-                $player->setQiwi($billing['qiwi']);
-            if (!$player->getWebMoney() && $billing['webmoney'])
-                $player->setWebMoney($billing['webmoney']);
-            if (!$player->getYandexMoney() && $billing['yandex'])
-                $player->setYandexMoney("41001".$billing['yandex']);
-            $player->update();
-        } catch (EntityException $e) {
-            $this->ajaxResponseNoCache(array("message" => $e->getMessage()), $e->getCode());
-
-            return false;
-        }
-
-        $res = array(
-            "player" => array(
-                "billing" => array(
-                    "webmoney" => $player->getWebMoney(),
-                    "yandex"   => $player->getYandexMoney(),
-                    "qiwi"     => $player->getQiwi(),
-                    "phone"    => $player->getPhone(),
-                ),
-            ),
-        );
-
-        $this->ajaxResponseNoCache($res);
-
-        return true;
-    }
-
-    /**
-     * Поиск пользователей
-     *
-     * @return bool
-     */
-    public function searchAction()
-    {
-        if (!$this->request()->isAjax()) {
-            return false;
-        }
-
-        $this->authorizedOnly();
-
-        $search = $this->request()->get('name');
-        $search = trim(strip_tags($search));
-
-        if (mb_strlen($search, 'utf-8')<3) {
-            $this->ajaxResponseNoCache(array("message" => "Request too short",),400);
-            return false;
-        }
-
-        $list   = \PlayersModel::instance()->search($search);
-
-        $response = array('res' => array());
-        foreach ($list as $user) {
-            $response['res'][] = array(
-                'id'   => $user['Id'],
-                'img'  => $user['Img'],
-                'name' => $user['Name']
-            );
-        }
-        $this->ajaxResponseNoCache($response);
-        return true;
-    }
-
     public function settingsAction()
     {
         if (!$this->request()->isAjax()) {
@@ -647,7 +568,7 @@ class Players extends \AjaxController
         $this->authorizedOnly();
 
         $favorite   = $this->request()->post('favorite');
-        $email      = $this->request()->post('email');
+        $subscribe  = $this->request()->post('email');
         $oldPass    = $this->request()->post('oldPass', '');
         $newPass    = $this->request()->post('newPass', '');
         $repeatPass = $this->request()->post('repeatPass', '');
@@ -663,7 +584,7 @@ class Players extends \AjaxController
         }
 
         try {
-            $player->updateNewsSubscribe($email == 1 ? true : false)->setFavoriteCombination($fav)->update();
+            $player->updateNewsSubscribe($subscribe == 1 ? true : false)->setFavoriteCombination($fav)->update();
             if (($oldPass != '') && ($newPass != '') && ($repeatPass != '')) {
                 if ($player->getPassword() === $player->compilePassword($oldPass)) {
                     if ($newPass == $repeatPass) {
@@ -728,6 +649,7 @@ class Players extends \AjaxController
                 ->setBirthDay($birthday)
                 /*->setCountry($country)*/
                 ->update();
+            $this->session->set(Player::IDENTITY, $player);
         } catch (EntityException $e) {
             $this->ajaxResponseNoCache(array("message" => $e->getMessage()), $e->getCode());
             return false;
@@ -775,4 +697,86 @@ class Players extends \AjaxController
 
         return true;
     }
+
+    public function billingAction() {
+        if (!$this->request()->isAjax()) {
+            return false;
+        }
+
+        $this->authorizedOnly();
+
+        $player = new Player;
+        $player->setId($this->session->get(Player::IDENTITY)->getId())->fetch();
+
+        $billing = $this->request()->put('billing', array());
+
+        try {
+            if (!$player->getPhone() && $billing['phone'])
+                $player->setPhone($billing['phone']);
+            if (!$player->getQiwi() && $billing['qiwi'])
+                $player->setQiwi($billing['qiwi']);
+            if (!$player->getWebMoney() && $billing['webmoney'])
+                $player->setWebMoney($billing['webmoney']);
+            if (!$player->getYandexMoney() && $billing['yandex'])
+                $player->setYandexMoney("41001".$billing['yandex']);
+            $player->update();
+            $this->session->set(Player::IDENTITY, $player);
+
+        } catch (EntityException $e) {
+            $this->ajaxResponseNoCache(array("message" => $e->getMessage()), $e->getCode());
+
+            return false;
+        }
+
+        $res = array(
+            "player" => array(
+                "billing" => array(
+                    "webmoney" => $player->getWebMoney(),
+                    "yandex"   => $player->getYandexMoney(),
+                    "qiwi"     => $player->getQiwi(),
+                    "phone"    => $player->getPhone(),
+                ),
+            ),
+        );
+
+        $this->ajaxResponseNoCache($res);
+
+        return true;
+    }
+
+    /**
+     * Поиск пользователей
+     *
+     * @return bool
+     */
+    public function searchAction()
+    {
+        if (!$this->request()->isAjax()) {
+            return false;
+        }
+
+        $this->authorizedOnly();
+
+        $search = $this->request()->get('name');
+        $search = trim(strip_tags($search));
+
+        if (mb_strlen($search, 'utf-8')<3) {
+            $this->ajaxResponseNoCache(array("message" => "Request too short",),400);
+            return false;
+        }
+
+        $list   = \PlayersModel::instance()->search($search);
+
+        $response = array('res' => array());
+        foreach ($list as $user) {
+            $response['res'][] = array(
+                'id'   => $user['Id'],
+                'img'  => $user['Img'],
+                'name' => $user['Name']
+            );
+        }
+        $this->ajaxResponseNoCache($response);
+        return true;
+    }
+
 }
