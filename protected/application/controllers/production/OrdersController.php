@@ -182,6 +182,7 @@ class OrdersController extends \AjaxController
                 break;
             case \MoneyOrder::GATEWAY_QIWI:
                 $number = $player->getQiwi();
+                $this->ajaxResponseBadRequest("SELECT_OTHER_METHOD");
                 break;
             case \MoneyOrder::GATEWAY_WEBMONEY:
                 $number = $player->getWebMoney();
@@ -190,7 +191,7 @@ class OrdersController extends \AjaxController
                 $number = $player->getYandexMoney();
                 break;
             default:
-                $this->ajaxResponseInternalError("WRONG_GATEWAY");
+                $this->ajaxResponseBadRequest("WRONG_GATEWAY");
         }
 
 
