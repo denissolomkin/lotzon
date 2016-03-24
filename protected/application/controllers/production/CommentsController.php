@@ -90,6 +90,12 @@ class CommentsController extends \AjaxController
             array_pop($list);
         }
 
+        if ($objectId>0) {
+            foreach ($list as $key=>$value) {
+                $list[$key]['object_id'] = $objectId;
+            }
+        }
+
         switch ($module) {
             case 'comments' :
                 $response['res']['communication']['comments'] = $list;
@@ -274,14 +280,17 @@ class CommentsController extends \AjaxController
                 $comments[$obj->getParentId()]['answers'][$obj->getId()] = $obj->export('JSON');
             }
 
-            $response['res'] = array(
-                'communication' => array(
-                    'comments' => $comments,
-                ),
-            );
-
+            switch ($module) {
+                case 'comments' :
+                    $response['res']['communication']['comments'] = $comments;
+                    break;
+                case 'blog' :
+                    $response['res']['blog']['post'][$objectId]['comments'] = $comments;
+                    break;
+                default:
+                    $response = array();
+            }
         } else {
-
             $response = array(
                 "message" => "message-comment-sent-success",
                 "res" => array()
