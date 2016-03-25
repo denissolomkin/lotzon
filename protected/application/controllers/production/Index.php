@@ -373,6 +373,11 @@ class Index extends \SlimController\SlimController
         }
 
         $ref = $this->ref;
+        $metrika = array(
+            'metrikaDisabled' => $session->get('REFERER'),
+            'yandexMetrika' => (int)SettingsModel::instance()->getSettings('counters')->getValue('YANDEX_METRIKA'),
+            'googleAnalytics' => SettingsModel::instance()->getSettings('counters')->getValue('GOOGLE_ANALYTICS')
+        );
 
         return include("res/landing.php");
 
@@ -431,7 +436,6 @@ class Index extends \SlimController\SlimController
             'comments'        => $comments,
             'lastLottery'     => $lastLottery,
             'ref'             => $this->ref,
-            'metrikaDisabled' => $session->get('REFERER'),
         ));
     }
 
