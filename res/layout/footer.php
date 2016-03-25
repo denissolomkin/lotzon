@@ -69,13 +69,27 @@
 
 </script>
 
+<?php if($config['googleAnalytics']): ?>
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', '<?php echo $config['googleAnalytics'];?>', 'auto');
+    ga('send', 'pageview');
+
+</script>
+<?php endif; ?>
+
+<?php if($config['yandexMetrika']): ?>
 <!-- Yandex.Metrika counter -->
 <script type="text/javascript">
     (function (d, w, c) {
         (w[c] = w[c] || []).push(function() {
             try {
-                w.yaCounter26806191 = new Ya.Metrika({
-                    id:26806191,
+                w.yaCounter<?php echo $config['yandexMetrika'];?> = new Ya.Metrika({
+                    id:<?php echo $config['yandexMetrika'];?>,
                     clickmap:true,
                     trackLinks:true,
                     accurateTrackBounce:true,
@@ -97,9 +111,9 @@
         } else { f(); }
     })(document, window, "yandex_metrika_callbacks");
 </script>
-<noscript><div><img src="https://mc.yandex.ru/watch/26806191" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<noscript><div><img src="https://mc.yandex.ru/watch/<?php echo $config['yandexMetrika'];?>" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
-
+<?php endif; ?>
 
 <?php
 $dirs = array('libs', 'plugins', 'functions', 'controllers', 'games', 'models', 'core');

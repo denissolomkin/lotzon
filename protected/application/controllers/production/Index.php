@@ -227,7 +227,7 @@ class Index extends \SlimController\SlimController
                 "blog-posts" => (int)$counters->getValue('POSTS_PER_PAGE'),
             ),
             'yandexMetrika' => (int)$counters->getValue('YANDEX_METRIKA'),
-            'googleAnalytics' => (int)$counters->getValue('GOOGLE_ANALYTICS'),
+            'googleAnalytics' => $counters->getValue('GOOGLE_ANALYTICS'),
         );
 
         $debug = array(
