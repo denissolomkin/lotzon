@@ -18,6 +18,10 @@
                     'HOURS_ADD'=>'Добавление ко времени на сайте (часов)',
                     'MIN_MONEY_OUTPUT'=>'Минимальное количество денег для вывода',
 
+                    '<span class="fa fa-dashboard"></span> СЧЕТЧИКИ',
+                    'YANDEX_METRIKA'=>'Yandex.Metrika',
+                    'GOOGLE_ANALYTICS'=>'Google Analytics',
+
                     '<span class="fa fa-cogs"></span> НАСТРОЙКИ',
 
                     'PLAYER_TIMEOUT'=>'Таймаут, через который игрок считается оффлайн (сек)',

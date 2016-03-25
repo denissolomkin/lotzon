@@ -100,6 +100,7 @@ class Index extends \SlimController\SlimController
 
         $detect   = new MobileDetect;
         $isMobile = $detect->isMobile();
+        $counters = \SettingsModel::instance()->getSettings('counters');
 
         $session = new Session();
         $session->set('isMobile', $isMobile);
@@ -193,8 +194,8 @@ class Index extends \SlimController\SlimController
 
         /* todo delete slider */
         $slider = array(
-            "sum"     => (LotteriesModel::instance()->getMoneyTotalWin() + SettingsModel::instance()->getSettings('counters')->getValue('MONEY_ADD')) * CountriesModel::instance()->getCountry($this->country)->loadCurrency()->getCoefficient(),
-            "winners" => LotteriesModel::instance()->getWinnersCount() + SettingsModel::instance()->getSettings('counters')->getValue('WINNERS_ADD'),
+            "sum"     => (LotteriesModel::instance()->getMoneyTotalWin() + $counters->getValue('MONEY_ADD')) * CountriesModel::instance()->getCountry($this->country)->loadCurrency()->getCoefficient(),
+            "winners" => LotteriesModel::instance()->getWinnersCount() + $counters->getValue('WINNERS_ADD'),
             "jackpot" => LotterySettingsModel::instance()->loadSettings()->getPrizes($this->country)[6]['sum'],
             "players" => PlayersModel::instance()->getMaxId(),
             "timer"   => LotterySettingsModel::instance()->loadSettings()->getNearestGame() + strtotime('00:00:00', time()) - time(),
@@ -207,24 +208,26 @@ class Index extends \SlimController\SlimController
 
         $config = array(
             "timeout"            => array(
-                "ping"   => (int)\SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT'),
-                "online" => (int)\SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT')
+                "ping"   => (int)$counters->getValue('PLAYER_TIMEOUT'),
+                "online" => (int)$counters->getValue('PLAYER_TIMEOUT')
             ),
-            "adminId"            => (int)\SettingsModel::instance()->getSettings('counters')->getValue('USER_REVIEW_DEFAULT'),
-            "minMoneyOutput"          => (int)\SettingsModel::instance()->getSettings('counters')->getValue('MIN_MONEY_OUTPUT'),
+            "adminId"            => (int)$counters->getValue('USER_REVIEW_DEFAULT'),
+            "minMoneyOutput"          => (int)$counters->getValue('MIN_MONEY_OUTPUT'),
             "tempFilestorage"    => '/filestorage/temp',
             "filestorage"        => '/filestorage',
             "websocketUrl"       => 'ws' . (\Config::instance()->SSLEnabled ? 's' : '') . '://' . $_SERVER['SERVER_NAME'] . ':' . \Config::instance()->wsPort,
             "websocketEmulation" => false,
             "page"               => $session->get('page'),
             "limits"             => array(
-                "lottery-history" => (int)\SettingsModel::instance()->getSettings('counters')->getValue('LOTTERIES_PER_PAGE'),
-                "communication-comments" => (int)\SettingsModel::instance()->getSettings('counters')->getValue('COMMENTS_PER_PAGE'),
-                "communication-messages" => (int)\SettingsModel::instance()->getSettings('counters')->getValue('MESSAGES_PER_PAGE'),
-                "communication-notifications" => (int)\SettingsModel::instance()->getSettings('counters')->getValue('NOTIFICATIONS_PER_PAGE'),
-                "users-friends" => (int)\SettingsModel::instance()->getSettings('counters')->getValue('FRIENDS_PER_PAGE'),
-                "blog-posts" => (int)\SettingsModel::instance()->getSettings('counters')->getValue('POSTS_PER_PAGE'),
-            )
+                "lottery-history" => (int)$counters->getValue('LOTTERIES_PER_PAGE'),
+                "communication-comments" => (int)$counters->getValue('COMMENTS_PER_PAGE'),
+                "communication-messages" => (int)$counters->getValue('MESSAGES_PER_PAGE'),
+                "communication-notifications" => (int)$counters->getValue('NOTIFICATIONS_PER_PAGE'),
+                "users-friends" => (int)$counters->getValue('FRIENDS_PER_PAGE'),
+                "blog-posts" => (int)$counters->getValue('POSTS_PER_PAGE'),
+            ),
+            'yandexMetrika' => (int)$counters->getValue('YANDEX_METRIKA'),
+            'googleAnalytics' => (int)$counters->getValue('GOOGLE_ANALYTICS'),
         );
 
         $debug = array(
