@@ -187,6 +187,10 @@ Config::instance()->privateResources =  array(
     '/private/banner/'      => array(
         'post' => 'controllers\admin\Banners:banner',
     ),
+    '/private/ad/'      => array(
+        'get' => 'controllers\admin\Ad:index',
+        'post' => 'controllers\admin\Ad:save',
+    ),
     '/private/bonuses/' => array(
         'get'  => 'controllers\admin\Bonuses:index',
         'post' => 'controllers\admin\Bonuses:save',

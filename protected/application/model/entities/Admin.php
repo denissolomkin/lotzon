@@ -17,7 +17,7 @@ class Admin extends Entity
                 'countries'=>array('icon'=>'globe','name'=>'Страны'),
                 'currencies'=>array('icon'=>'money','name'=>'Валюты'),
                 'languages'=>array('icon'=>'language','name'=>'Языки'),
-                'statictexts'=>array('icon'=>'font','name'=>'Переводы'),
+                /*'statictexts'=>array('icon'=>'font','name'=>'Переводы'),*/
             )),
 
         'Настройки'=>array('icon'=>'cogs',
@@ -33,10 +33,11 @@ class Admin extends Entity
 
         'Контент'=>array('icon'=>'th-list',
             'pages'=>array(
-                'banners'=>array('icon'=>'code','name'=>'Баннеры'),
+                'banners'=>array('icon'=>'code','name'=>'Старые баннеры'),
+                'ad'=>array('icon'=>'youtube-play','name'=>'Новые баннеры'),
                 'images'=>array('icon'=>'image','name'=>'Изображения'),
-                'comments'=>array('icon'=>'comment','name'=>'Комментарии'),
-                'news'=>array('icon'=>'calendar','name'=>'Новости'),
+                /*'comments'=>array('icon'=>'comment','name'=>'Комментарии'),
+                'news'=>array('icon'=>'calendar','name'=>'Новости'),*/
                 'shop'=>array('icon'=>'shopping-cart','name'=>'Товары'),
                 'partners'=>array('icon'=>'suitcase','name'=>'Партнеры'),
                 'maillist'=>array('icon'=>'envelope','name'=>'email рассылка'),
@@ -50,7 +51,7 @@ class Admin extends Entity
                 'qgames'=>array('icon'=>'puzzle-piece','name'=>'Конструктор игр'),
                 'ogames'=>array('icon'=>'gamepad','name'=>'Онлайн-игры'),
                 'fgames'=>array('icon'=>'facebook','name'=>'Flash-игры'),
-                'gamebots'=>array('icon'=>'plug','name'=>'Боты'),
+                /*'gamebots'=>array('icon'=>'plug','name'=>'Боты'),*/
                 'gametop'=>array('icon'=>'star','name'=>'Наши в топе'),
                 'lottery'=>array('icon'=>'gift','name'=>'Розыгрыши'),
             )),
@@ -62,7 +63,7 @@ class Admin extends Entity
                 'reports/UserRegistrations'=>array('icon'=>'user-plus','name'=>'Регистрации'),
                 'reports/UserReviews'=>array('icon'=>'thumbs-o-up','name'=>'Отзывы'),
                 'reports/OnlineGames'=>array('icon'=>'gamepad','name'=>'Онлайн-игры'),
-                'reports/BotWins'=>array('icon'=>'plug','name'=>'Выигрыши ботов'),
+                /*'reports/BotWins'=>array('icon'=>'plug','name'=>'Выигрыши ботов'),*/
                 'reports/TopOnlineGames'=>array('icon'=>'trophy','name'=>'ТОП онлайн-игр'),
                 'reports/LotteryWins'=>array('icon'=>'gift','name'=>'Розыгрыши'),
             )),
