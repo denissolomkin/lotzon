@@ -117,13 +117,33 @@ vertical-align: middle;}
 }
 .form-control-banner {width:100%;vertical-align: top;padding: 0.5px;font-size:10px;}
 
+#ad-banners h3 {
+    margin: 0px;
+}
+
+#ad-banners h2 {
+    margin: 0px;
+}
+
 .sector {
     background: #fff;
     padding: 10px !important;
     margin:5px 5px 0 0;
     border-radius: 10px;
+    box-shadow: gray 2px 2px 0px;
 }
-
+.zone {
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,e5e5e5+100;White+3D */
+    background: #ffffff; /* Old browsers */
+    background: -moz-linear-gradient(top,  #ffffff 0%, #e5e5e5 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom,  #ffffff 0%,#e5e5e5 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=0 ); /* IE6-9 */
+    border-radius: 10px;padding: 10px;margin: 0 0 5px 0 ;
+}
+.devices {
+    clear: both;
+}
 .nobr {white-space: nowrap;}
 .flex {display: inline-flex;}
 .ticket-numbers {

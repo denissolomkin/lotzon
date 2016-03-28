@@ -314,85 +314,53 @@ Config::instance()->privateResources =  array(
 Config::instance()->publicResources = array(
     '/' => 'controllers\production\Index:index',
     '/ping' => 'controllers\production\PingController:index',
-    /*
-    '/vkproxy/' => 'controllers\production\Index:VKProxy',
-    '/feedback/' => 'controllers\production\Index:feedback',
-    '/trailer/' => array(
-        'get'   => 'controllers\production\TrailerController:index',
-        'post'  => 'controllers\production\TrailerController:subscribe'
-    ),
-    */
     '/stats/promo/' => 'controllers\production\Index:stats',
+    /**
+     * Authentication
+     */       /*  */
     '/players/register/' => array(
         'post'  => 'controllers\production\Players:register',
     ),
-
     '/players/resendPassword/' => array(
         'post'  => 'controllers\production\Players:resendPassword',
     ),
     '/players/login/' => array(
         'post'  => 'controllers\production\Players:login',
     ),
-    '/players/login/vk/' => array(
-        'get' => 'controllers\production\Players:loginVk',
-    ),
+    '/players/logout/' => 'controllers\production\Players:logout',
+    /**
+     * Socials
+     */
     '/auth/:provider' => 'controllers\production\AuthController:auth',
     '/auth/endpoint/' => 'controllers\production\AuthController:endpoint',
     '/players/trouble/:trouble' => 'controllers\production\Players:trouble',
-    '/players/disableSocial/:provider' => 'controllers\production\Players:disableSocial',
-    '/players/logout/' => 'controllers\production\Players:logout',
+    '/profile/social/' => array(
+        'delete' => 'controllers\production\Players:disableSocial',
+    ),
+    /**
+     * Socials refpost
+     */
     '/players/social/:provider' => 'controllers\production\Players:social',
-    '/players/update/' => array(
-        'post'  => 'controllers\production\Players:update',
-    ),
-    '/players/updateAvatar' => array(
-        'post'  => 'controllers\production\Players:saveAvatar',
-        'delete' => 'controllers\production\Players:removeAvatar',
-    ),
-    '/players/ping' => 'controllers\production\Players:ping',
-    '/game/ticket/' => array(
-        'post'  => 'controllers\production\Game:createTicket',
-    ),
-    '/content/lotteries/' => 'controllers\production\ContentController:lotteries',
-    '/content/shop/'      => 'controllers\production\ContentController:shop',
-    '/content/banner/:sector'      => 'controllers\production\ContentController:banner',
-    '/content/news/'      => 'controllers\production\ContentController:news',
-    '/content/reviews/'      => 'controllers\production\ContentController:reviews',
-    '/order/item/'        => 'controllers\production\OrdersController:orderItem',
-    '/order/money/'       => 'controllers\production\OrdersController:orderMoney',
-    '/review/save/'        => 'controllers\production\ReviewsController:save',
-    '/review/uploadImage/'       => 'controllers\production\ReviewsController:uploadImage',
-    '/review/removeImage/'       => 'controllers\production\ReviewsController:removeImage',
-    '/content/lottery/:lotteryId' => 'controllers\production\ContentController:lotteryDetails',
-    '/content/lottery/next/:lotteryId' => 'controllers\production\ContentController:nextLotteryDetails',
-    '/content/lottery/prev/:lotteryId' => 'controllers\production\ContentController:prevLotteryDetails',
-    '/content/transactions/:currency/'  => 'controllers\production\ContentController:transactions',
-    '/content/notices/'  => 'controllers\production\ContentController:notices',
-
+    /**
+     * Invites
+     */
     '/invites/email' => 'controllers\production\InvitesController:emailInvite',
-    '/language/:lang' => 'controllers\production\Players:changeLanguage',
-    '/chance/build/:identifier' => array(
-        'get' => 'controllers\production\Game:startChanceGame',
-    ),
-    '/chance/play/:identifier' => array(
-        'post' => 'controllers\production\Game:chanceGamePlay',
-    ),
-    '/quickgame/build/:key' => array(
-        'get' => 'controllers\production\Game:startQuickGame',
-    ),
-    '/quickgame/play/:key' => array(
-        'post' => 'controllers\production\Game:playQuickGame',
-    ),
-    '/quickgame/preview/:key' => array(
-        'post' => 'controllers\production\Game:previewQuickGame',
-    ),
+    /**
+     * Subscribe
+     */
     '/unsubscribe/' => array(
         'get'  => 'controllers\production\Maillist:unsubscribe',
         'post' => 'controllers\production\Maillist:doUnsubscribe',
     ),
+    /**
+     * Link Redirect
+     */
     '/lnk/:uin' => array(
         'get'  => 'controllers\production\LinkRedirectController:getLink',
     ),
+    /**
+     * Banner
+     */
     '/banner/:device/:location(/:page)' => 'controllers\production\BannersController:index',
     /**
      * Moment games
@@ -684,9 +652,6 @@ Config::instance()->publicResources = array(
     /**
      * Profile orders
      */
-    '/profile/social/' => array(
-        'delete' => 'controllers\production\Players:disableSocial',
-    ),
     '/profile/convert' => array(
         'post' => 'controllers\production\OrdersController:convert'
     ),
@@ -721,6 +686,7 @@ Config::instance()->publicResources = array(
     '/profile/edit' => array(
         'put' => 'controllers\production\Players:edit'
     ),
+    '/language/:lang' => 'controllers\production\Players:changeLanguage',
     /**
      * Friends
      */
@@ -795,13 +761,3 @@ Config::instance()->hybridAuth = array(
 
     )
 );
-
-/*
-Config::instance()->vkCredentials = array(
-    'appId'        => '4617228',
-    'secret'       => 'hbTNQKCHQ03tk5XLISmy',
-    'redirectUrl' => 'http://lotzon.com/players/login/vk?redirected=1',
-    'scope'        => 'email',
-);
-
-*/

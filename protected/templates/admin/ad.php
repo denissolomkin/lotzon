@@ -14,11 +14,11 @@
     </div>
 </div>
 
-<div class="container-fluid banners">
+<div class="banners">
 
     <form role="form" action="/private/ad" method="POST">
         <input type="hidden" name="ad[]" value="">
-        <div class="row-fluid">
+        <div class="row-fluid  container-fluid">
             <h2>Баннеры
                 <?php
                 foreach ($banners['devices'] as $device => $zones) : ?>
@@ -31,7 +31,7 @@
             </h2>
         </div>
 
-        <div id="ad-banners" class="row-fluid" style="margin-left: -15px;width:100%;padding: 0 0 5px 5px;">
+        <div id="ad-banners" class="row-fluid" style="padding: 0 10px;">
 
             <?php
             foreach ($banners['devices'] as $device => $locations) { ?>
@@ -39,9 +39,9 @@
                 <div class="devices" id="<?php echo $device; ?>">
 
                     <!-- device -->
-                    <h2 style="text-align: center;">
+                    <h1 style="text-align: center;">
                         <span class="fa fa-<?php echo $device; ?>"></span> <?php echo ucfirst($device); ?>
-                    </h2>
+                    </h1>
 
                     <?php
                     $locations += array('context' => 'Контекстная');
@@ -49,8 +49,8 @@
                     foreach ($locations as $location => $name) { ?>
 
                         <!-- zone -->
-                        <div class="col-md-12"
-                             style="background: #ccc;border-radius: 10px;padding: 10px;margin: 10px 0;">
+                        <div class="col-md-12 zone"
+                             style="">
                             <h3>
                                 <button type="button" class="btn btn-primary"
                                         onclick="
@@ -224,8 +224,7 @@
             '   </div>' +
             '   <div class="col-md-2">' +
             '       <select size=1 name="ad[' + device + '][' + location + '][' + page + '][' + gid + '][' + bid + '][countries][]"  multiple="multiple" class="form-control-banner input-sm" value="" placeholder="Страны">' +
-            <? foreach ($supportedCountries as $country) { ?>'<option value="<?=$country?>"><?=$country?></option>' +
-            <? } ?>
+            <? foreach ($supportedCountries as $country) : ?>'<option value="<?=$country?>"><?=$country?></option>' + <? endforeach; ?>
             '       </select>' +
             '       <button type="button" class="btn btn-info btn-xs view-banner right"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></button>' +
             '   </div>' +
@@ -242,53 +241,14 @@
 
     $(document).on("click", ".view-banner", function (event) {
 
-        var dat = {
-            div: $(this).parent().parent().find('.div').text(),
-            script: $(this).parent().parent().find('.script').text(),
-        };
-
-        $.ajax({
-            url: "/private/banner/",
-            method: 'POST',
-            data: dat,
-            async: true,
-            dataType: 'json',
-            success: function (data) {
-                $("#banner-holder").find('.modal-body').empty().append(data.res);
-                $("#banner-holder").modal();
-                $("#banner-holder").find('.cls').on('click', function () {
-                    $("#banner-holder").modal('hide');
-                })
-            },
-            error: function () {}
-        });
-
-        return;
-
-        el = document.getElementsByClassName("modal-body");
-
-        $("#banner-holder").find('.modal-body').append($($(this).parent().parent().find('.div').text()));
-        eval($(this).parent().parent().find('.div').text());
-        $.each($($(this).parent().parent().find('.div,.script').text()), function (id, val) {
-            if ($(val).prop("tagName") == 'SCRIPT') {
-                if (url = $(val).attr('src')) {
-                    var script = document.createElement("script");
-                    script.type = "text/javascript";
-                    script.src = url;
-                    el[0].appendChild(script);
-                } else {
-                    var script = document.createElement("script");
-                    script.type = "text/javascript";
-                    script.text = $(val).text();
-                    el[0].appendChild(script);
-                }
-            }
-        })
-
+        $("#banner-holder")
+            .find('.modal-body').empty()
+            .append($(this).parent().parent().find('.div').val())
+            .append($(this).parent().parent().find('.script').val());
         $("#banner-holder").modal();
-        $("#banner-holder").find('.cls').on('click', function () {
+        $("#banner-holder").find('.cls').off().on('click', function () {
             $("#banner-holder").modal('hide');
-        })
+        });
     });
 
 
