@@ -29,6 +29,7 @@
                         <span class="fa fa-<?php echo $device; ?>"></span> <?php echo ucfirst($device); ?>
                     </button>
                 <?php endforeach; ?>
+                <input type="text" id="filter" style="width: 100px; vertical-align: bottom;" placeholder="фильтр">
                 <button type="submit" class="btn btn-success right">Сохранить</button>
             </h2>
         </div>
@@ -236,6 +237,23 @@
     $(document).on("click", ".del-group", function (event) {
         $(this).parent().parent().remove();
     });
+
+
+    $('#filter').on('input', filter);
+
+    function filter(){
+
+        $('.banner').show();
+        if (this.value !== '') {
+            $('.banner').filter(function (id) {
+                return ($(this).find('textarea').filter(
+                    function () {
+                        return this.value.indexOf($('#filter').val()) !== -1
+                    }
+                ).length) < 1;
+            }).hide();
+        }
+    }
 
     $(document).on("click", ".del-banner", function (event) {
         $(this).parent().parent().remove();
