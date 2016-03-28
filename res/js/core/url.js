@@ -92,8 +92,8 @@
                         D.log(['updateURL:', url], 'info');
                         $("html, body").animate({scrollTop: 0}, 'slow');
                         Navigation.menu.hide();
-                        Content.updateBanners();
                         history.pushState(options.init, "Lotzon", url);
+                        Content.updateBanners();
                         Config.yandexMetrika && window['yaCounter'+Config.yandexMetrika].hit(document.location.protocol + '//' + document.location.host + url, {title: 'Lotzon', referer: oldUrl});
                     }
 

@@ -1,4 +1,4 @@
 <?php echo "<!-- {$this->getTitle()} -->".
-    str_replace('document.write', "$('#{{$this->getGroup()}}').append", $this->getDiv()) .
-    str_replace('document.write', "$('#{{$this->getGroup()}}').append", $this->getScript()) ;
+    str_replace('document.write', "$('#banner-{$this->getDevice()}-{$this->getLocation()}').append", $this->getDiv()) .
+    str_replace('document.write', "$('#banner-{$this->getDevice()}-{$this->getLocation()}').append", $this->getScript()) ;?>
 ?>

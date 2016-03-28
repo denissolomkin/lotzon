@@ -9,17 +9,8 @@ class OrdersController extends \AjaxController
 {
     public function init()
     {
-        $this->session = new Session();
         parent::init();
-        if ($this->validRequest()) {
-//            if (!Session2::connect()->get(Player::IDENTITY) instanceof PLayer) {
-            if (!$this->session->get(Player::IDENTITY) instanceof Player) {
-                $this->ajaxResponse(array(), 0, 'NOT_AUTHORIZED');
-            }    
-//            Session2::connect()->get(Player::IDENTITY)->markOnline();
-            $this->session->get(Player::IDENTITY)->markOnline();
-
-        }
+        $this->authorizedOnly();
     }
 
     public function orderItemAction()

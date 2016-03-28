@@ -13,30 +13,15 @@ Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');
 
 class ChanceController extends \AjaxController
 {
-    private $session;
 
     public function init()
     {
-        $this->session = new Session();
         parent::init();
-    }
-
-    private function authorizedOnly()
-    {
-        if (!$this->session->get(Player::IDENTITY) instanceof Player) {
-            $this->ajaxResponseUnauthorized();
-
-            return false;
-        }
-
-        return true;
+        $this->authorizedOnly();
     }
 
     public function listAction($key)
     {
-
-        $this->validateRequest();
-        $this->authorizedOnly();
 
         if (!$key) {
             $this->ajaxResponseBadRequest('EMPTY_GAMES_KEY');
@@ -74,9 +59,6 @@ class ChanceController extends \AjaxController
 
     public function itemAction($key = 'QuickGame', $id = null)
     {
-
-        $this->validateRequest();
-        $this->authorizedOnly();
 
         $publishedGames = GamesPublishedModel::instance()->getList()[$key];
 
@@ -123,9 +105,6 @@ class ChanceController extends \AjaxController
 
     public function startAction($key = 'QuickGame', $id = null)
     {
-
-        $this->validateRequest();
-        $this->authorizedOnly();
 
         $publishedGames = GamesPublishedModel::instance()->getList()[$key];
         $response       = array();
@@ -230,7 +209,9 @@ class ChanceController extends \AjaxController
 
         $banner = new Banner;
         $response['res']['block'] = $banner
-            ->setGroup('game' . $game->getId())
+            ->setDevice('desktop')
+            ->setLocation('chance')
+            ->setPage($game->getId())
             ->setCountry($player->getCountry())
             ->setTemplate('chance')
             ->setKey($key=='Moment'?'moment':'random')
@@ -242,9 +223,6 @@ class ChanceController extends \AjaxController
 
     public function playAction($key = 'QuickGame')
     {
-
-        $this->validateRequest();
-        $this->authorizedOnly();
 
         switch (true) {
             case !($player = $this->session->get(Player::IDENTITY)):

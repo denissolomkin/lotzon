@@ -9,65 +9,57 @@ class ReviewsController extends \AjaxController
 {
     public function init()
     {
-        $this->session = new Session();
         parent::init();
-        if ($this->validRequest()) {
-            if (!$this->session->get(Player::IDENTITY) instanceof Player) {
-                $this->ajaxResponse(array(), 0, 'NOT_AUTHORIZED');
-            }    
-            $this->session->get(Player::IDENTITY)->markOnline();
-        }
+        $this->authorizedOnly();
     }
 
     public function saveAction()
     {
-        if ($this->request()->isAjax()) {
-            $response = array(
-                'status'  => 1,
-                'message' => 'OK',
-                'data'    => array(),
-            );
+        $response = array(
+            'status' => 1,
+            'message' => 'OK',
+            'data' => array(),
+        );
 
-            $playerId = $this->session->get(Player::IDENTITY)->getId();
-            $text = $this->request()->post('text');
-            $reviewId = $this->request()->post('reviewId');
-            $image = $this->request()->post('image');
+        $playerId = $this->session->get(Player::IDENTITY)->getId();
+        $text = $this->request()->post('text');
+        $reviewId = $this->request()->post('reviewId');
+        $image = $this->request()->post('image');
 
-            $reviewObj = new Review;
-            $reviewObj->setPlayerId($playerId)
-                ->setText($text)
-                ->setReviewId($reviewId)
-                ->setImage($image);
+        $reviewObj = new Review;
+        $reviewObj->setPlayerId($playerId)
+            ->setText($text)
+            ->setReviewId($reviewId)
+            ->setImage($image);
 
-            try {
-                $reviewObj->create();
-            } catch (EntityException $e) {
-                $response['status'] = 0;
-                $response['message'] = $e->getMessage();
-            }
-
-            die(json_encode($response));
+        try {
+            $reviewObj->create();
+        } catch (EntityException $e) {
+            $response['status'] = 0;
+            $response['message'] = $e->getMessage();
         }
+
+        die(json_encode($response));
+
     }
 
     public function removeImageAction()
     {
 
-        if ($this->request()->isAjax()) {
+        $response = array(
+            'status' => 1,
+            'message' => 'OK',
+            'data' => array(),
+        );
+
+        $image = $this->request()->post('image');
+
+        if (ReviewsModel::instance()->imageExists($image))
             $response = array(
-                'status'  => 1,
-                'message' => 'OK',
-                'data'    => array(),
-            );
-
-            $image = $this->request()->post('image');
-
-            if(ReviewsModel::instance()->imageExists($image))
-                $response = array(
-                'status'  => 0,
+                'status' => 0,
                 'message' => 'Image Links To Review',
             );
-            else
+        else
             try {
 
                 @unlink(PATH_FILESTORAGE . 'reviews/' . $image);
@@ -76,8 +68,8 @@ class ReviewsController extends \AjaxController
                 $response['message'] = $e->getMessage();
             }
 
-            die(json_encode($response));
-        }
+        die(json_encode($response));
+
     }
 
 

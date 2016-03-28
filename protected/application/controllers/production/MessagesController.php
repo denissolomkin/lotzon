@@ -7,35 +7,18 @@ Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');
 
 class MessagesController extends \AjaxController
 {
-    private $session;
-
     static $messagesPerPage;
 
     public function init()
     {
         self::$messagesPerPage = (int)SettingsModel::instance()->getSettings('counters')->getValue('MESSAGES_PER_PAGE') ? : 10;
 
-        $this->session = new Session();
         parent::init();
-    }
-
-    private function authorizedOnly()
-    {
-        if (!$this->session->get(Player::IDENTITY) instanceof Player) {
-            $this->ajaxResponseUnauthorized();
-            return false;
-        }
-        $this->session->get(Player::IDENTITY)->markOnline();
-        return true;
+        $this->authorizedOnly();
     }
 
     public function indexAction()
     {
-        if (!$this->request()->isAjax()) {
-            return false;
-        }
-
-        $this->authorizedOnly();
 
         $playerId = $this->session->get(Player::IDENTITY)->getId();
         $count    = $this->request()->get('count', self::$messagesPerPage);
@@ -85,11 +68,6 @@ class MessagesController extends \AjaxController
 
     public function listAction($userId)
     {
-        if (!$this->request()->isAjax()) {
-            return false;
-        }
-
-        $this->authorizedOnly();
 
         $playerId = $this->session->get(Player::IDENTITY)->getId();
         $count    = $this->request()->get('count', self::$messagesPerPage);
@@ -133,11 +111,6 @@ class MessagesController extends \AjaxController
 
     public function markReadAction($userId)
     {
-        if (!$this->request()->isAjax()) {
-            return false;
-        }
-
-        $this->authorizedOnly();
 
         $response = array();
         $playerId = $this->session->get(Player::IDENTITY)->getId();
@@ -157,11 +130,6 @@ class MessagesController extends \AjaxController
 
     public function createAction()
     {
-        if (!$this->request()->isAjax()) {
-            return false;
-        }
-
-        $this->authorizedOnly();
 
         $playerId   = $this->session->get(Player::IDENTITY)->getId();
         $text       = $this->request()->post('text');
@@ -232,14 +200,14 @@ class MessagesController extends \AjaxController
 
     public function imageAction()
     {
-        $this->authorizedOnly();
 
         try {
             $imageName = uniqid() . ".png";
-            \Common::saveImageMultiResolution('image',PATH_FILESTORAGE.'temp/',$imageName);
+            \Common::saveImageMultiResolution('image',PATH_FILESTORAGE.'temp/', $imageName);
         } catch (\Exception $e) {
             $this->ajaxResponseInternalError();
         }
+
         $res = array(
             "imageName" => $imageName,
         );
@@ -251,7 +219,6 @@ class MessagesController extends \AjaxController
 
     public function imageDeleteAction()
     {
-        $this->authorizedOnly();
         $image = $this->request()->delete('image', null);
 
         if (is_null($image)) {

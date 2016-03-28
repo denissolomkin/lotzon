@@ -59,10 +59,11 @@
             },
 
             scroll: function (event) {
-                Device.getScroll();
-                Device.switchGoTop();
-                Navigation.menu.fix();
-                Content.infiniteScrolling();
+                Device.getScroll(event);
+                Device.switchGoTop(event);
+                Navigation.menu.fix(event);
+                Content.infiniteScrolling(event);
+                Content.banner.scroll(event);
             },
 
             goTop: function () {

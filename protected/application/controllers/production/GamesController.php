@@ -10,30 +10,15 @@ Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');
 
 class GamesController extends \AjaxController
 {
-    private $session;
 
     public function init()
     {
-        $this->session = new Session();
         parent::init();
-    }
-
-    private function authorizedOnly()
-    {
-        if (!$this->session->get(Player::IDENTITY) instanceof Player) {
-            $this->ajaxResponseUnauthorized();
-
-            return false;
-        }
-        $this->session->get(Player::IDENTITY)->markOnline();
-
-        return true;
+        $this->authorizedOnly();
     }
 
     public function listAction($key = NULL)
     {
-        $this->validateRequest();
-        $this->authorizedOnly();
 
         if (!$key) {
             $this->ajaxResponseBadRequest('EMPTY_GAMES_KEY');
@@ -108,9 +93,6 @@ class GamesController extends \AjaxController
 
     public function itemAction($key = null, $id = null)
     {
-
-        $this->validateRequest();
-        $this->authorizedOnly();
 
         if (!$key) {
             $this->ajaxResponseBadRequest('EMPTY_GAMES_KEY');
@@ -203,9 +185,6 @@ class GamesController extends \AjaxController
     public function nowAction($key = NULL, $id = null)
     {
 
-        $this->validateRequest();
-        $this->authorizedOnly();
-
         if (!$key) {
             $this->ajaxResponse(array(), 0, 'EMPTY_GAMES_KEY');
         }
@@ -265,9 +244,6 @@ class GamesController extends \AjaxController
 
     public function ratingAction($key = NULL, $id = NULL)
     {
-
-        $this->validateRequest();
-        $this->authorizedOnly();
 
         if (!$key) {
             $this->ajaxResponse(array(), 0, 'EMPTY_GAMES_KEY');

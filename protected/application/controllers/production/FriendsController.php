@@ -16,27 +16,13 @@ class FriendsController extends \AjaxController
     public function init()
     {
         self::$friendsPerPage = (int)SettingsModel::instance()->getSettings('counters')->getValue('FRIENDS_PER_PAGE') ? : 10;
-        $this->session = new Session();
-        parent::init();
-    }
 
-    private function authorizedOnly()
-    {
-        if (!$this->session->get(Player::IDENTITY) instanceof Player) {
-            $this->ajaxResponseUnauthorized();
-            return false;
-        }
-        $this->session->get(Player::IDENTITY)->markOnline();
-        return true;
+        parent::init();
+        $this->authorizedOnly();
     }
 
     public function listAction()
     {
-        if (!$this->request()->isAjax()) {
-            return false;
-        }
-
-        $this->authorizedOnly();
 
         $offset = $this->request()->get('offset');
         $count  = $this->request()->get('count', self::$friendsPerPage);
@@ -76,11 +62,6 @@ class FriendsController extends \AjaxController
 
     public function requestsAction()
     {
-        if (!$this->request()->isAjax()) {
-            return false;
-        }
-
-        $this->authorizedOnly();
 
         $offset = $this->request()->get('offset');
         $count  = $this->request()->get('count', self::$friendsPerPage);
@@ -128,11 +109,6 @@ class FriendsController extends \AjaxController
 
     public function chronicleAction()
     {
-        if (!$this->request()->isAjax()) {
-            return false;
-        }
-
-        $this->authorizedOnly();
 
         $offset = $this->request()->get('offset');
         $count  = $this->request()->get('count', self::$friendsPerPage);
@@ -185,11 +161,6 @@ class FriendsController extends \AjaxController
 
     public function updateRequestAction($userId)
     {
-        if (!$this->request()->isAjax()) {
-            return false;
-        }
-
-        $this->authorizedOnly();
 
         $status  = $this->request()->put('status');
 
@@ -236,11 +207,6 @@ class FriendsController extends \AjaxController
 
     public function deleteRequestAction($userId)
     {
-        if (!$this->request()->isAjax()) {
-            return false;
-        }
-
-        $this->authorizedOnly();
 
         $playerId = $this->session->get(Player::IDENTITY)->getId();
 
@@ -273,11 +239,6 @@ class FriendsController extends \AjaxController
 
     public function addRequestAction($userId)
     {
-        if (!$this->request()->isAjax()) {
-            return false;
-        }
-
-        $this->authorizedOnly();
 
         $playerId = $this->session->get(Player::IDENTITY)->getId();
 
@@ -330,11 +291,6 @@ class FriendsController extends \AjaxController
 
     public function removeAction($userId)
     {
-        if (!$this->request()->isAjax()) {
-            return false;
-        }
-
-        $this->authorizedOnly();
 
         $playerId = $this->session->get(Player::IDENTITY)->getId();
 

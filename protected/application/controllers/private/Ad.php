@@ -23,6 +23,45 @@ class Ad extends PrivateArea
         $list = SettingsModel::instance()->getSettings($this->activeMenu)->getValue();
         $games = GameConstructorModel::instance()->getChanceGames();
         $supportedCountries = CountriesModel::instance()->getCountries();
+        $banners = array(
+            'pages' => array(
+                'default' => 'По умолчанию',
+                'blog' => 'Блог',
+                'lottery' => 'Лотерея',
+                'games' => 'Игры',
+                'community' => 'Общение',
+                'friends' => 'Друзья',
+                'prizes' => 'Витрина'
+            ),
+            'devices' => array(
+                'desktop' => array(
+                    'brand' => 'Брендирование',
+                    'top' => 'Шапка',
+                    'right' => 'Боковой',
+                    'teaser' => 'Тизерка'
+                ),
+                'tablet' => array(
+                    'popup' => 'Всплывайка'
+                ),
+                'mobile' => array(
+                    'popup' => 'Всплывайка'
+                )
+            ),
+            'context' => array(
+                'lottery' => 'Лотерея',
+                'ticket' => 'Билет',
+                'prize' => 'Приз',
+                'post' => 'Статья',
+                'comment' => 'Комментарий'
+            ),
+            'chance' => array()
+        );
+
+        foreach($games as $id => $game)
+            $banners['chance'][$id] = $game->getTitle(1);
+
+        if (!is_array($list))
+            $list = array();
 
         $this->render('admin/'.$this->activeMenu, array(
             'title'      => 'Баннеры на сайте',
@@ -30,7 +69,7 @@ class Ad extends PrivateArea
             'activeMenu' => $this->activeMenu,
             'supportedCountries'  => $supportedCountries,
             'list'       => $list,
-            'games'      => $games
+            'banners'    => $banners
         ));
     }
 

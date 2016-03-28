@@ -7,7 +7,6 @@ Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');
 
 class CommentsController extends \AjaxController
 {
-    private $session;
 
     static $notificationsPerPage;
     static $commentsPerPage;
@@ -17,27 +16,12 @@ class CommentsController extends \AjaxController
         self::$commentsPerPage = (int)SettingsModel::instance()->getSettings('counters')->getValue('COMMENTS_PER_PAGE') ? : 10;
         self::$notificationsPerPage = (int)SettingsModel::instance()->getSettings('counters')->getValue('NOTIFICATIONS_PER_PAGE') ? : 10;
 
-        $this->session = new Session();
         parent::init();
-    }
-
-    private function authorizedOnly()
-    {
-        if (!$this->session->get(Player::IDENTITY) instanceof Player) {
-            $this->ajaxResponseUnauthorized();
-            return false;
-        }
-        $this->session->get(Player::IDENTITY)->markOnline();
-        return true;
+        $this->authorizedOnly();
     }
 
     public function itemAction($commentId)
     {
-        if (!$this->request()->isAjax()) {
-            return false;
-        }
-
-        $this->authorizedOnly();
 
         $comment = new Comment;
         $comment->setId($commentId)->fetch();
@@ -65,11 +49,6 @@ class CommentsController extends \AjaxController
 
     public function listAction($module = 'comments', $objectId = 0)
     {
-        if (!$this->request()->isAjax()) {
-            return false;
-        }
-
-        $this->authorizedOnly();
 
         $count    = $this->request()->get('count', self::$commentsPerPage);
         $beforeId = $this->request()->get('before_id', NULL);
@@ -113,11 +92,6 @@ class CommentsController extends \AjaxController
 
     public function deleteNotificationsAction()
     {
-        if (!$this->request()->isAjax()) {
-            return false;
-        }
-
-        $this->authorizedOnly();
 
         $playerId = $this->session->get(Player::IDENTITY)->getId();
 
@@ -145,11 +119,6 @@ class CommentsController extends \AjaxController
 
     public function notificationsAction()
     {
-        if (!$this->request()->isAjax()) {
-            return false;
-        }
-
-        $this->authorizedOnly();
 
         // die(include 'res/GET/communication/_notifications');
 
@@ -220,11 +189,6 @@ class CommentsController extends \AjaxController
 
     public function createAction($module = 'comments', $objectId = 0)
     {
-        if (!$this->request()->isAjax()) {
-            return false;
-        }
-
-        $this->authorizedOnly();
 
         $playerId   = $this->session->get(Player::IDENTITY)->getId();
         $text       = $this->request()->post('text');
@@ -303,11 +267,6 @@ class CommentsController extends \AjaxController
 
     public function complainAction($commentId)
     {
-        if (!$this->request()->isAjax()) {
-            return false;
-        }
-
-        $this->authorizedOnly();
 
         $playerId = $this->session->get(Player::IDENTITY)->getId();
 
@@ -368,11 +327,6 @@ class CommentsController extends \AjaxController
 
     public function likeAction($commentId)
     {
-        if (!$this->request()->isAjax()) {
-            return false;
-        }
-
-        $this->authorizedOnly();
 
         $comment = new Comment;
         try {
@@ -416,11 +370,6 @@ class CommentsController extends \AjaxController
 
     public function dislikeAction($commentId)
     {
-        if (!$this->request()->isAjax()) {
-            return false;
-        }
-
-        $this->authorizedOnly();
 
         $comment = new Comment;
         try {

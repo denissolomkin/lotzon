@@ -15,18 +15,6 @@
             return el.id;
         },
 
-        append: function (str, el) {
-
-            this.insert(str, el);
-
-        },
-
-        prepend: function (str, el) {
-
-            this.insert(str, el, true);
-
-        },
-
         change: function(el){
             DOM.event(el, 'change');
         },
@@ -134,22 +122,64 @@
 
         },
 
+        append: function (str, el) {
+            this.insert(str, el);
+        },
+
+        prepend: function (str, el) {
+            this.insert(str, el, true);
+        },
+
         insert: function f(str, el, prepend) {
 
             if (typeof str === 'string')
                 str = this.create(str);
 
+            if (typeof el === 'string')
+                el = this.byId(el);
+
+            if(!("nodeType" in el)){
+                console.error('parent is not node in DOM.insert()');
+                return false;
+            }
+
             if (str) {
                 if (str.length && !("nodeType" in str)) {
                     while (str.length > 0) {
-                        !prepend
+                        this.insert(str[0], el, prepend);
+                        console.error(str, str[0]);
+                        /*!prepend
                             ? el.appendChild(str[0])
-                            : el.insertBefore(str[0], el.firstChild);
+                            : el.insertBefore(str[0], el.firstChild);*/
                     }
                 } else if ("nodeType" in str) {
-                    !prepend
-                        ? el.appendChild(str)
-                        : el.insertBefore(str, el.firstChild);
+
+                    if(prepend){
+
+                        el.insertBefore(str, el.firstChild);
+
+                    } else {
+
+                        if (str.tagName === 'SCRIPT') {
+                            var //s = document.getElementsByTagName('script')[0],
+                                po = document.createElement('script');
+                            po.type = 'text/javascript';
+                            po.async = true;
+
+                            if (str.src) {
+                                po.src = str.src;
+                            } else {
+                                po.innerHTML = str.innerHTML;
+                            }
+
+                            el.appendChild(po);
+                            //s.parentNode.insertBefore(po, s);
+
+                        } else {
+                            el.appendChild(str);
+                        }
+                    }
+
                 }
             }
 

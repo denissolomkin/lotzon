@@ -12,30 +12,15 @@ Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');
 
 class SlotsController extends \AjaxController
 {
-    private $session;
 
     public function init()
     {
-        $this->session = new Session();
         parent::init();
-    }
-
-    private function authorizedOnly()
-    {
-        if (!$this->session->get(Player::IDENTITY) instanceof Player) {
-            $this->ajaxResponseUnauthorized();
-
-            return false;
-        }
-
-        return true;
+        $this->authorizedOnly();
     }
 
     public function itemAction($key = 'ChanceGame', $id = null)
     {
-
-        $this->validateRequest();
-        $this->authorizedOnly();
 
         $publishedGames = GamesPublishedModel::instance()->getList()[$key];
 
@@ -73,9 +58,6 @@ class SlotsController extends \AjaxController
 
     public function startAction($key = 'ChanceGame', $id = null)
     {
-
-        $this->validateRequest();
-        $this->authorizedOnly();
 
         $publishedGames = GamesPublishedModel::instance()->getList()[$key];
         $response       = array();

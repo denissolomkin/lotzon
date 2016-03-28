@@ -10,35 +10,16 @@ Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');
 
 class PingController extends \AjaxController
 {
-    private $session;
-
 
     public function init()
     {
 
-        $this->session = new Session();
         parent::init();
-    }
-
-    private function authorizedOnly()
-    {
-        if (!$this->session->get(Player::IDENTITY) instanceof Player) {
-            $this->ajaxResponseUnauthorized();
-
-            return false;
-        }
-
-        return true;
+        $this->authorizedOnly();
     }
 
     public function indexAction()
     {
-
-        if (!$this->request()->isAjax()) {
-            return false;
-        }
-
-        $this->authorizedOnly();
 
         $badges          = array(
             'notifications' => array(),

@@ -11,7 +11,6 @@ Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');
 
 class LotteryController extends \AjaxController
 {
-    private $session;
 
     static $lotteriesPerPage;
     static $ticketsCount;
@@ -22,25 +21,9 @@ class LotteryController extends \AjaxController
         self::$lotteriesPerPage = (int)SettingsModel::instance()->getSettings('counters')->getValue('LOTTERIES_PER_PAGE') ? : 10;
         self::$ticketsCount     = \LotterySettings::TOTAL_TICKETS;
         self::$defaultCountry   = CountriesModel::instance()->defaultCountry();
-        $this->session = new Session();
-        parent::init();
-        if ($this->validRequest()) {
-            if (!$this->session->get(Player::IDENTITY) instanceof Player) {
-                $this->ajaxResponseUnauthorized();
-                return false;
-            }
-            $this->session->get(Player::IDENTITY)->markOnline();
-        }
-    }
 
-    private function authorizedOnly()
-    {
-        if (!$this->session->get(Player::IDENTITY) instanceof Player) {
-            $this->ajaxResponseUnauthorized();
-            return false;
-        }
-        $this->session->get(Player::IDENTITY)->markOnline();
-        return true;
+        parent::init();
+        $this->authorizedOnly();
     }
 
     public function createTicketAction()
@@ -177,11 +160,6 @@ class LotteryController extends \AjaxController
 
     public function historyAction()
     {
-        if (!$this->request()->isAjax()) {
-            return false;
-        }
-
-        $this->authorizedOnly();
 
         $playerId = $this->session->get(Player::IDENTITY)->getId();
 
@@ -231,11 +209,6 @@ class LotteryController extends \AjaxController
 
     public function lotteryInfoAction($lotteryId)
     {
-        if (!$this->request()->isAjax()) {
-            return false;
-        }
-
-        $this->authorizedOnly();
 
         $player = new \Player;
         $player_country = $player->setId($this->session->get(Player::IDENTITY)->getId())->fetch()->getCountry();
@@ -298,11 +271,6 @@ class LotteryController extends \AjaxController
 
     public function lotteryTicketsAction($lotteryId)
     {
-        if (!$this->request()->isAjax()) {
-            return false;
-        }
-
-        $this->authorizedOnly();
 
         $player = new Player;
         $player->setId($this->session->get(Player::IDENTITY)->getId())->fetch();
@@ -337,11 +305,6 @@ class LotteryController extends \AjaxController
 
     public function ticketsAction()
     {
-        if (!$this->request()->isAjax()) {
-            return false;
-        }
-
-        $this->authorizedOnly();
 
         $player = new Player;
         $player->setId($this->session->get(Player::IDENTITY)->getId())->fetch();

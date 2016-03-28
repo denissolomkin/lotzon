@@ -10,20 +10,13 @@ Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');
 class PrizesController extends \AjaxController
 {
     static  $prizesPerPage;
-    private $session;
 
     public function init()
     {
         self::$prizesPerPage = (int)SettingsModel::instance()->getSettings('counters')->getValue('PRIZES_PER_PAGE') ? : 9;
-        $this->session = new Session();
+
         parent::init();
-        if ($this->validRequest()) {
-            if (!$this->session->get(Player::IDENTITY) instanceof PLayer) {
-                $this->ajaxResponseUnauthorized();
-                return false;
-            }
-            $this->session->get(Player::IDENTITY)->markOnline();
-        }
+        $this->authorizedOnly();
     }
 
     public function listAction()
@@ -77,8 +70,6 @@ class PrizesController extends \AjaxController
     }
 
     public function goodAction($itemId) {
-
-        $this->validateRequest();
 
         $player = new Player;
         $player_countries = $player->setId($this->session->get(Player::IDENTITY)->getId())->fetch()->getCountry();

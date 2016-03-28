@@ -8,10 +8,12 @@ class Banner extends Entity
 {
     protected
         $_id = 0,
-        $_group = '',
         $_key = '',
-        $_country = '',
+        $_device = '',
         $_template = '',
+        $_location = '',
+        $_page = '',
+        $_country = '',
         $_div = '',
         $_script = '',
         $_enabled = false,
@@ -21,27 +23,36 @@ class Banner extends Entity
     public function random()
     {
 
-        $banners = SettingsModel::instance()->getSettings('banners')->getValue()[$this->getGroup()];
+        $banners = SettingsModel::instance()->getSettings('ad')->getValue($this->getDevice());
 
-        if(is_array($banners)){
-            foreach ($banners as $group) {
-                if (is_array($group)) {
-                    shuffle($group);
-                    foreach ($group as $banner) {
+        if(is_array($banners) && isset($banners[$this->getLocation()])) {
 
-                        if (is_array($banner['countries']) and !in_array($this->getCountry(), $banner['countries']))
-                            continue;
+            if (isset($banners[$this->getLocation()][$this->getPage()]))
+                $banners = $banners[$this->getLocation()][$this->getPage()];
+            elseif (isset($banners[$this->getLocation()]['default']))
+                $banners = $banners[$this->getLocation()]['default'];
+            else
+                $banners = false;
 
-                        $this->setDiv($banner['div'])
-                            ->setScript($banner['script'])
-                            ->setTitle($banner['title'])
-                            ->setEnabled($banners['settings']['enabled'])
-                            ->setChance($banner['chance']);
+            if (is_array($banners))
+                foreach ($banners as $group) {
+                    if (is_array($group)) {
+                        shuffle($group);
+                        foreach ($group as $banner) {
 
-                        break;
+                            if (!$banner['title'] OR (is_array($banner['countries']) AND !in_array($this->getCountry(), $banner['countries'])))
+                                continue;
+
+                            $this->setDiv($banner['div'])
+                                ->setScript($banner['script'])
+                                ->setTitle($banner['title'])
+                                ->setEnabled($banners['settings']['enabled'])
+                                ->setChance($banner['chance']);
+
+                            break;
+                        }
                     }
                 }
-            }
         }
 
         return $this;
@@ -53,7 +64,10 @@ class Banner extends Entity
 
         if($this->isTitle()) {
             ob_start();
-            include_once(PATH_TEMPLATES . 'banner/' . $this->getTemplate() . '.php');
+            $template = $this->getTemplate();
+            if($this->getLocation() == 'context')
+                $template .= '-'.$this->getLocation().'-'.$this->getPage();
+            include_once(PATH_TEMPLATES . 'banner/' . $template . '.php');
             $response = ob_get_contents();
             ob_end_clean();
         }

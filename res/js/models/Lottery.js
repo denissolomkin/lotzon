@@ -10,7 +10,7 @@
             Carousel.initOwl();
             Ticket.render();
             Tickets.countdown();
-            !Device.mobile && R.push('/banner/desktop/lottery');
+            Content.banner.load('banner-desktop-context-lottery');
 
         },
 

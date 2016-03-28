@@ -4,6 +4,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 class AjaxController extends \SlimController\SlimController
 {
+    protected $session;
 
     public function __construct(\Slim\Slim &$app)
     {
@@ -13,11 +14,8 @@ class AjaxController extends \SlimController\SlimController
 
     public function init()
     {
-    }
-
-    public function validRequest()
-    {
-        return $this->request()->isAjax();
+        $this->session = new Session();
+        $this->validateRequest();
     }
 
     public function ajaxResponse(array $data, $status = 1, $message = 'OK')
@@ -29,6 +27,18 @@ class AjaxController extends \SlimController\SlimController
         );
 
         die(json_encode($response));
+    }
+
+    protected function authorizedOnly()
+    {
+        if (!$this->session->get(Player::IDENTITY) instanceof Player) {
+            $this->ajaxResponseUnauthorized();
+            return false;
+        }
+
+        $this->session->get(Player::IDENTITY)->markOnline();
+
+        return true;
     }
 
     protected function validateRequest()

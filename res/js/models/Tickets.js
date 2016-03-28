@@ -9,8 +9,14 @@
                 Tickets.countdown(init.timeToLottery);
             }
 
+            if(init.hasOwnProperty('lastLotteryId') && this.lastLotteryId != init.lastLotteryId)
+                delete this.randomTicket;
+
             D.log('Tickets.init', 'func');
             Object.deepExtend(this, init);
+
+            if(!this.hasOwnProperty('randomTicket'))
+                this.randomTicket = this.getUnfilled();
 
             if('filledTickets' in init) {
                 Ticket.render();
@@ -43,6 +49,17 @@
                 if(this.filledTickets[i] && typeof this.filledTickets[i] === 'object')
                     count++;
             return count;
+        },
+
+        "getUnfilled": function () {
+
+            var unfilled = [];
+
+            for (i = 1; i <= this.totalTickets; i++)
+                if(this.filledTickets.hasOwnProperty(i) && this.filledTickets[i] !== false && !this.filledTickets[i])
+                    unfilled.push(i);
+
+            return unfilled.length && unfilled[Math.floor(Math.random()*unfilled.length)];
         },
 
         "renderTickets": function () {

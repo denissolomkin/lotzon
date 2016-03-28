@@ -16,48 +16,6 @@
 
 <div class="container-fluid banners">
 
-    <? $banners = array(
-        'pages' => array(
-            'default' => 'По умолчанию',
-            'blog' => 'Блог',
-            'lottery' => 'Лотерея',
-            'games' => 'Игры',
-            'community' => 'Общение',
-            'friends' => 'Друзья',
-            'prizes' => 'Витрина'
-        ),
-        'devices' => array(
-            'desktop' => array(
-                'brand' => 'Брендирование',
-                'top' => 'Шапка',
-                'right' => 'Боковой',
-                'teaser' => 'Тизерка'
-            ),
-            'tablet' => array(
-                'popup' => 'Всплывайка'
-            ),
-            'mobile' => array(
-                'popup' => 'Всплывайка'
-            )
-        ),
-        'context' => array(
-            'lottery' => 'Лотерея',
-            'ticket' => 'Билет',
-            'prize' => 'Приз',
-            'post' => 'Статья',
-            'comment' => 'Комментарий'
-        ),
-        'games' => array()
-    );
-
-    foreach($games as $id => $game)
-        $banners['games'][$id] = $game->getTitle(1);
-
-    if (!is_array($list))
-        $list = array();
-
-    ?>
-
     <form role="form" action="/private/ad" method="POST">
         <input type="hidden" name="ad[]" value="">
         <div class="row-fluid">
@@ -87,12 +45,12 @@
 
                     <?php
                     $locations += array('context' => 'Контекстная');
-                    $locations += array('games' => 'Игры');
+                    $locations += array('chance' => 'Шансы');
                     foreach ($locations as $location => $name) { ?>
 
                         <!-- zone -->
                         <div class="col-md-12"
-                             style="background: #ccc;border-radius: 10px;padding: 10px;margin: 10px 0;width: 100%;">
+                             style="background: #ccc;border-radius: 10px;padding: 10px;margin: 10px 0;">
                             <h3>
                                 <button type="button" class="btn btn-primary"
                                         onclick="
@@ -335,106 +293,3 @@
 
 
 </script>
-
-<?php /*
-
-<div class="row-fluid"
-             style="background: #ccc;margin-left: -15px;position: absolute;display:none;padding: 0 0 5px 5px;">
-
-            <?php unset($list['settings']);
-
-if (is_array($list))
-    foreach ($list as $sid => $sector) : ?>
-
-                    <div class="col-md-3 row-banner">
-                        <div class="sector">
-                            <div>
-                                <button type="button" data-sector="<?= $sid ?>"
-                                        class="btn btn-success btn-xs add-group"><span
-                                        class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button>
-                                <span class="glyphicon glyphicon-filter" aria-hidden="true"></span>
-                                <small><?= (strstr($sid, 'game') ? $games[(str_replace('game', '', $sid))]->getTitle('RU') : $sid); ?></small>
-                                <input type="hidden" name="ad[<?= $sid ?>]" value="">
-                            </div>
-                            <div id="<?= $sid ?>">
-                                <? $gid = 0;
-        if (is_array($sector))
-            foreach ($sector as $group) : ?>
-
-                                        <div id="group<?= $gid ?>" class='group' data-gid="<?= $gid ?>"
-                                             style="clear: both;">
-
-                                            <div class="row-fluid" style="">
-                                                <input type="hidden" name="ad[<?= $sid ?>][<?= $gid ?>]" value="">
-                                                <button type="button" data-group="<?= $gid ?>" data-sector="<?= $sid ?>"
-                                                        class="btn btn-success  add-banner btn-xs">
-                                                    <span class="glyphicon glyphicon-plus-sign"
-                                                          aria-hidden="true"></span>
-                                                </button>
-                                                <button type="button" class="btn btn-danger del-group btn-xs">
-                                                    <span class="glyphicon glyphicon-minus-sign"
-                                                          aria-hidden="true"></span>
-                                                </button>
-                                                <small>Группа баннеров №<?= ($gid + 1) ?></small>
-                                            </div>
-
-                                            <? $bid = 0;
-                if (is_array($group))
-                    foreach ($group as $banner) : ?>
-                                                    <div class="row-banner banner" data-bid="<?= $bid ?>">
-                                                        <div class="col-md-3" style="display: flex;">
-                                                            <button type="button" style="margin-top: 0px;"
-                                                                    data-sector="<?= $key ?>"
-                                                                    class="btn btn-danger del-banner btn-xs">
-                                                                <span class="glyphicon glyphicon-minus-sign"
-                                                                      aria-hidden="true"></span>
-                                                            </button>
-                                                            <textarea placeholder="Title" rows=1
-                                                                      class="form-control-banner input-md"
-                                                                      name="ad[<?= $sid ?>][<?= $gid ?>][<?= $bid ?>][title]"><?= $banner['title']; ?></textarea>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <textarea placeholder="Div" rows=1
-                                                                      class="form-control-banner input-md div"
-                                                                      name="ad[<?= $sid ?>][<?= $gid ?>][<?= $bid ?>][div]"><?= $banner['div']; ?></textarea>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <textarea placeholder="Script" rows=1
-                                                                      class="form-control-banner input-md script"
-                                                                      name="ad[<?= $sid ?>][<?= $gid ?>][<?= $bid ?>][script]"><?= $banner['script']; ?></textarea>
-                                                        </div>
-                                                        <div class="col-md-1">
-                                                            <input placeholder="Chance"
-                                                                   class="form-control-banner input-md"
-                                                                   name="ad[<?= $sid ?>][<?= $gid ?>][<?= $bid ?>][chance]"
-                                                                   value="<?= $banner['chance']; ?>">
-                                                        </div>
-                                                        <div class="col-md-2" style="display: flex;">
-                                                            <select
-                                                                name="ad[<?= $sid ?>][<?= $gid ?>][<?= $bid ?>][countries][]"
-                                                                size="1" multiple="multiple"
-                                                                class="form-control-banner input-sm" value=""
-                                                                placeholder="Страны"/>
-                                                            <? foreach ($supportedCountries as $country) { ?>
-                                                                <option <?= (is_array($banner['countries']) && array_search($country, $banner['countries']) !== false ? ' selected ' : ''); ?>
-                                                                    value="<?= $country ?>"><?= $country ?></option>
-                                                            <? } ?>
-                                                            </select>
-                                                            <button type="button"
-                                                                    class="btn btn-info btn-xs view-banner right">
-                                                                <span class="glyphicon glyphicon-eye-open"
-                                                                      aria-hidden="true"></span>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                    <? $bid++; ?>
-                                                <? endforeach ?>
-                                        </div>
-                                        <? $gid++; ?>
-                                    <? endforeach ?>
-                            </div>
-                        </div>
-                    </div>
-                <? endforeach ?>
-        </div>
-*/ ?>

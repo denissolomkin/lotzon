@@ -7,7 +7,6 @@ Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');
 
 class ReportsController extends \AjaxController
 {
-    private $session;
 
     static $reportsPerPage;
 
@@ -15,28 +14,12 @@ class ReportsController extends \AjaxController
     {
         self::$reportsPerPage = (int)SettingsModel::instance()->getSettings('counters')->getValue('REPORTS_PER_PAGE') ? : 20;
 
-        $this->session = new Session();
         parent::init();
-    }
-
-    private function authorizedOnly()
-    {
-        if (!$this->session->get(Player::IDENTITY) instanceof Player) {
-            $this->ajaxResponseUnauthorized();
-            return false;
-        }
-        $this->session->get(Player::IDENTITY)->markOnline();
-        return true;
+        $this->authorizedOnly();
     }
 
     public function transactionsAction()
     {
-
-        if (!$this->request()->isAjax()) {
-            return false;
-        }
-
-        $this->authorizedOnly();
 
         $playerId = $this->session->get(Player::IDENTITY)->getId();
         $currency = $this->request()->get('currency', 'money');
@@ -106,12 +89,6 @@ class ReportsController extends \AjaxController
     public function paymentsAction()
     {
 
-        if (!$this->request()->isAjax()) {
-            return false;
-        }
-
-        $this->authorizedOnly();
-
         $playerId = $this->session->get(Player::IDENTITY)->getId();
         $offset   = $this->request()->get('offset', NULL);
 
@@ -164,12 +141,6 @@ class ReportsController extends \AjaxController
 
     public function referralsAction()
     {
-        if (!$this->request()->isAjax()) {
-            return false;
-        }
-
-        $this->authorizedOnly();
-
 
         $playerId = $this->session->get(Player::IDENTITY)->getId();
         $offset   = $this->request()->get('offset', NULL);

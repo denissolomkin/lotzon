@@ -7,35 +7,17 @@ Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');
 
 class BlogsController extends \AjaxController
 {
-    private $session;
-
     static $blogsPerPage;
 
     public function init()
     {
         self::$blogsPerPage = (int)SettingsModel::instance()->getSettings('counters')->getValue('BLOGS_PER_PAGE') ? : 10;
-
-        $this->session = new Session();
         parent::init();
-    }
-
-    private function authorizedOnly()
-    {
-        if (!$this->session->get(Player::IDENTITY) instanceof Player) {
-            $this->ajaxResponseUnauthorized();
-            return false;
-        }
-        $this->session->get(Player::IDENTITY)->markOnline();
-        return true;
+        $this->authorizedOnly();
     }
 
     public function postAction($id)
     {
-        if (!$this->request()->isAjax()) {
-            return false;
-        }
-
-        $this->authorizedOnly();
 
         try {
             $blog = new \Blog;
@@ -68,11 +50,6 @@ class BlogsController extends \AjaxController
 
     public function listAction()
     {
-        if (!$this->request()->isAjax()) {
-            return false;
-        }
-
-        $this->authorizedOnly();
 
         $lang     = $this->session->get(Player::IDENTITY)->getLang();
         $count    = $this->request()->get('count', self::$blogsPerPage);
@@ -111,11 +88,6 @@ class BlogsController extends \AjaxController
 
     public function similarAction($blogId)
     {
-        if (!$this->request()->isAjax()) {
-            return false;
-        }
-
-        $this->authorizedOnly();
 
         $lang     = $this->session->get(Player::IDENTITY)->getLang();
         $count    = $this->request()->get('count', self::$blogsPerPage);

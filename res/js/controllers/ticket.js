@@ -44,6 +44,10 @@
 
         },
 
+        isBannerActive: function(){
+            return document.getElementById('banner-desktop-context-ticket').children.length;
+        },
+
         switch: function () {
 
             D.log('Ticket.switch');
@@ -61,7 +65,10 @@
                         && (document.querySelectorAll(Ticket.tabs + ':not(.done)').length && document.querySelectorAll(Ticket.tabs)[Tickets.selectedTab - 1].classList.contains('done')),
                     tabs = [];
 
-                switch (true){
+                if(isLi && Ticket.isBannerActive())
+                    return;
+
+                switch (true) {
 
                     /* фактическое нажатие */
                     case isLi:
@@ -72,8 +79,8 @@
                     case !Tickets.selectedTab:
                     case isReselect:
 
-                        switch (true){
-                            case (tabs = document.querySelectorAll(Ticket.tabs + ':not(.done):not(.unavailable)')) && tabs.length  !== 0:
+                        switch (true) {
+                            case (tabs = document.querySelectorAll(Ticket.tabs + ':not(.done):not(.unavailable)')) && tabs.length !== 0:
                                 break;
                             case (tabs = document.querySelectorAll(Ticket.tabs + ':not(.done)')) && tabs.length !== 0:
                                 break;
@@ -96,6 +103,10 @@
                     template: Tickets.isAvailable() ? 'lottery-ticket-item' : 'lottery-ticket-unavailable' + Tickets.selectedTab,
                     json    : Tickets,
                     after   : function () {
+
+                        if (Tickets.selectedTab == Tickets.randomTicket)
+                            Content.banner.load('banner-desktop-context-ticket');
+
                         Tickets.isGold()
                             ? document.querySelector('.ticket-box').classList.add('gold')
                             : document.querySelector('.ticket-box').classList.remove('gold');
@@ -121,7 +132,7 @@
         },
 
         validate: function () {
-            return Ticket.countBalls() === Tickets.requiredBalls
+            return Ticket.countBalls() === Tickets.requiredBalls && !Ticket.isBannerActive();
         },
 
         update: function () {
@@ -134,6 +145,9 @@
         action: {
 
             clickFavorite: function (e) {
+
+                if(Ticket.isBannerActive())
+                    return false;
 
                 if ($(e.target).hasClass('after') || Ticket.isLoading())
                     return false;
@@ -162,6 +176,9 @@
             },
 
             clickBall: function (event) {
+
+                if(Ticket.isBannerActive())
+                    return false;
 
                 var li = $(this),
                     requiredBalls;
@@ -194,9 +211,11 @@
 
             clickRandom: function (e) {
 
-                if ($(e.target).hasClass('after') || Ticket.isLoading())
+                if(Ticket.isBannerActive())
                     return false;
 
+                if ($(e.target).hasClass('after') || Ticket.isLoading())
+                    return false;
 
                 Ticket.clearActionsAfter();
 

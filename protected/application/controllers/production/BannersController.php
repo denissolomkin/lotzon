@@ -7,43 +7,31 @@ Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');
 
 class BannersController extends \AjaxController
 {
-    private $session;
 
     public function init()
     {
-
-        $this->session = new Session();
         parent::init();
-    }
-
-    private function authorizedOnly()
-    {
-        if (!$this->session->get(Player::IDENTITY) instanceof Player) {
-            $this->ajaxResponseUnauthorized();
-            return false;
-        }
-        $this->session->get(Player::IDENTITY)->markOnline();
-        return true;
-    }
-
-    public function indexAction($device, $location)
-    {
-        if (!$this->request()->isAjax()) {
-            return false;
-        }
-
         $this->authorizedOnly();
+    }
+
+    public function indexAction($device, $location, $page = null)
+    {
+
         $player = $this->session->get(Player::IDENTITY);
+        $page = $page ?: $this->request()->get('page');
 
         try {
 
             $banner  = new Banner;
 
             $render = $banner
-                ->setGroup(ucfirst($device).ucfirst($location))
+                ->setDevice($device)
+                ->setLocation($location)
+                ->setPage($page)
                 ->setCountry($player->getCountry())
                 ->setTemplate($device)
-                ->setKey($device)
+                /*->setGroup(ucfirst($device).ucfirst($location))
+                ->setKey($device)*/
                 ->random()
                 ->render();
 

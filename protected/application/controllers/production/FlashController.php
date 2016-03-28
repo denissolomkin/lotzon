@@ -12,30 +12,15 @@ Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');
 
 class FlashController extends \AjaxController
 {
-    private $session;
 
     public function init()
     {
-        $this->session = new Session();
         parent::init();
-    }
-
-    private function authorizedOnly()
-    {
-        if (!$this->session->get(Player::IDENTITY) instanceof Player) {
-            $this->ajaxResponseUnauthorized();
-
-            return false;
-        }
-
-        return true;
+        $this->authorizedOnly();
     }
 
     public function listAction()
     {
-
-        $this->validateRequest();
-        $this->authorizedOnly();
 
         $list = SettingsModel::instance()->getSettings('flashGames')->getValue();
 
@@ -51,8 +36,6 @@ class FlashController extends \AjaxController
 
     public function itemAction($id = null)
     {
-        $this->validateRequest();
-        $this->authorizedOnly();
 
         if (!$id) {
             $this->ajaxResponseBadRequest('GAME_ID_EMPTY');

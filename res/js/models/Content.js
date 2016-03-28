@@ -33,16 +33,41 @@
 
             load: function f(href) {
 
-                if(typeof href == 'object')
-                    while(href.length)
+                if (typeof href == 'object')
+                    while (href.length)
                         f(href.shift());
-                 else
-                    R.json({
-                        href: href,
-                        format: function (data) {
-                            $('#' + href).empty().append(data);
+                else
+                    Form.get({
+                        action: href,
+                        after: function (data) {
+                            $('#' + href).empty().append(data.json.res);
                         },
+                        data: {
+                            page: /\w+/gi.test(document.location.pathname) && document.location.pathname.match(/\w+/gi)[0]
+                        }
                     });
+            },
+
+            scroll: function(event) {
+
+                if (Device.isMobile())
+                    return;
+
+                var teaser = document.getElementById('banner-desktop-teaser'),
+                    height = document.getElementsByTagName('header')[0].getBoundingClientRect().height;
+
+                if (teaser) {
+                    if (document.getElementById('banner-desktop-right').getBoundingClientRect().bottom < height) {
+                        if (teaser.style.position !== 'fixed') {
+                            teaser.style.position = 'fixed';
+                            teaser.style.top = height + 'px';
+                        }
+                    } else if (teaser.style.position === 'fixed') {
+                        teaser.style.position = 'relative';
+                        teaser.style.top = '0px';
+                    }
+
+                }
             },
 
             moment: function (data) {
@@ -51,38 +76,9 @@
                     return;
 
                 if (data.json.hasOwnProperty('block') && data.json.block) {
-
                     var node = data.hasOwnProperty('node') && data.node.getElementsByClassName('ad')[0];
                     if (node) {
-
-                        var div = document.createElement('div');
-                        div.innerHTML = data.json.block;
-
-                        while (div.children.length > 0) {
-
-                            if (div.children[0].tagName === 'SCRIPT') {
-                                var //s = document.getElementsByTagName('script')[0],
-                                    po = document.createElement('script');
-                                po.type = 'text/javascript';
-                                po.async = true;
-
-                                if (div.children[0].src) {
-                                    po.src = div.children[0].src;
-                                } else {
-                                    po.innerHTML = div.children[0].innerHTML;
-                                }
-
-
-
-                                div.removeChild(div.children[0]);
-                                node.appendChild(po);
-                                //s.parentNode.insertBefore(po, s);
-
-                            } else {
-                                node.appendChild(div.children[0]);
-                            }
-
-                        }
+                        $(node).empty().append(data.json.block);
                     }
                 }
             }
@@ -235,7 +231,7 @@
         updateBanners: function () {
             Device.isMobile()
                 ? Content.banner.load('banner-tablet-top')
-                : Content.banner.load(['banner-desktop-right', 'banner-desktop-top']);
+                : Content.banner.load(['banner-desktop-right', 'banner-desktop-teaser', 'banner-desktop-top']);
         },
 
         after: {
