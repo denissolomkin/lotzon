@@ -45,7 +45,12 @@
         },
 
         isBannerActive: function(){
-            return document.getElementById('banner-desktop-context-ticket').children.length;
+
+            var ticketBanner = document.getElementById('banner-desktop-context-ticket');
+            return ticketBanner
+                && ticketBanner.children
+                && ticketBanner.children.length;
+
         },
 
         switch: function () {
