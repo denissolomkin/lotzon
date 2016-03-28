@@ -19,11 +19,13 @@
     <form role="form" action="/private/ad" method="POST">
         <input type="hidden" name="ad[]" value="">
         <div class="row-fluid  container-fluid">
-            <h2>Баннеры
+            <h2 style="text-align: center"><span class="left"> Баннеры
+            <input type="checkbox" name='ad[settings][enabled]' <?=$list['settings']['enabled']?'checked ':'';?>data-toggle="toggle">
+                </span>
                 <?php
                 foreach ($banners['devices'] as $device => $zones) : ?>
-                    <button type="button" onclick="$('.devices').hide();$('#'+this.value).show();"
-                            class="btn btn-primary" value="<?php echo $device; ?>">
+                    <button type="button" onclick="$(this).parent().find('button').removeClass('active');$(this).addClass('active');$('.devices').hide();$('#'+this.value).show();"
+                            class="btn btn-default" value="<?php echo $device; ?>">
                         <span class="fa fa-<?php echo $device; ?>"></span> <?php echo ucfirst($device); ?>
                     </button>
                 <?php endforeach; ?>
@@ -49,7 +51,7 @@
                     foreach ($locations as $location => $name) { ?>
 
                         <!-- zone -->
-                        <div class="col-md-12 zone"
+                        <div class="col-xs-12 zone"
                              style="">
                             <h3>
                                 <button type="button" class="btn btn-primary"
@@ -70,7 +72,7 @@
 
 
                                 <!-- page or context -->
-                                <div class="col-md-3 row-banner <?php echo is_array($sector) ? '' : 'hidden'; ?>">
+                                <div class="col-md-4 col-xs-12 col-sm-6 row-banner <?php echo is_array($sector) ? '' : 'hidden'; ?>">
                                     <div class="sector">
                                         <div class="title">
                                             <button data-page="<?=$page?>" data-location="<?=$location?>" data-device="<?=$device?>" type="button" class="btn btn-success btn-xs add-group">
@@ -102,7 +104,7 @@
                                                         if (is_array($group))
                                                             foreach ($group as $banner) { ?>
                                                                 <div class="row-banner banner" data-bid="<?= $bid ?>">
-                                                                    <div class="col-md-3" style="display: flex;">
+                                                                    <div class="col-md-2" style="display: flex;">
                                                                         <button type="button" style="margin-top: 0px;" class="btn btn-danger del-banner btn-xs">
                                                                             <span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>
                                                                         </button>
@@ -110,12 +112,12 @@
                                                                       class="form-control-banner input-md"
                                                                       name="ad[<?= $device ?>][<?= $location ?>][<?= $page ?>][<?= $gid ?>][<?= $bid ?>][title]"><?= $banner['title']; ?></textarea>
                                                                     </div>
-                                                                    <div class="col-md-3">
+                                                                    <div class="col-md-4">
                                                             <textarea placeholder="Div" rows=1
                                                                       class="form-control-banner input-md div"
                                                                       name="ad[<?= $device ?>][<?= $location ?>][<?= $page ?>][<?= $gid ?>][<?= $bid ?>][div]"><?= $banner['div']; ?></textarea>
                                                                     </div>
-                                                                    <div class="col-md-3">
+                                                                    <div class="col-md-4">
                                                             <textarea placeholder="Script" rows=1
                                                                       class="form-control-banner input-md script"
                                                                       name="ad[<?= $device ?>][<?= $location ?>][<?= $page ?>][<?= $gid ?>][<?= $bid ?>][script]"><?= $banner['script']; ?></textarea>
@@ -126,7 +128,7 @@
                                                                                name="ad[<?= $device ?>][<?= $location ?>][<?= $page ?>][<?= $gid ?>][<?= $bid ?>][chance]"
                                                                                value="<?= $banner['chance']; ?>">
                                                                     </div>
-                                                                    <div class="col-md-2" style="display: flex;">
+                                                                    <div class="col-md-1" style="display: flex;">
                                                                         <select
                                                                             name="ad[<?= $device ?>][<?= $location ?>][<?= $page ?>][<?= $gid ?>][<?= $bid ?>][countries][]"
                                                                             size="1" multiple="multiple"
@@ -209,20 +211,20 @@
 
         $('#' + id).append(
             '<div class="row-banner banner" data-bid="' + bid + '">' +
-            '   <div class="col-md-3" style="display: flex;">' +
+            '   <div class="col-md-2" style="display: flex;">' +
             '       <button type="button" class="btn btn-xs btn-danger del-banner" style="margin-top: 0px;"><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></button>' +
             '       <textarea placeholder="Title" rows=1 class="form-control-banner input-md" name="ad[' + device + '][' + location + '][' + page + '][' + gid + '][' + bid + '][title]"></textarea>' +
             '   </div>' +
-            '   <div class="col-md-3">' +
+            '   <div class="col-md-4">' +
             '       <textarea placeholder="Div" rows=1 class="form-control-banner input-md div" name="ad[' + device + '][' + location + '][' + page + '][' + gid + '][' + bid + '][div]"></textarea>' +
             '   </div>' +
-            '   <div class="col-md-3">' +
+            '   <div class="col-md-4">' +
             '       <textarea placeholder="Script" rows=1 class="form-control-banner input-md script" name="ad[' + device + '][' + location + '][' + page + '][' + gid + '][' + bid + '][script]"></textarea>' +
             '   </div>' +
             '   <div class="col-md-1">' +
             '       <input placeholder="Chance" class="form-control-banner input-md" name="ad[' + device + '][' + location + '][' + page + '][' + gid + '][' + bid + '][chance]">' +
             '   </div>' +
-            '   <div class="col-md-2">' +
+            '   <div class="col-md-1" style="display: flex;height:21px;">' +
             '       <select size=1 name="ad[' + device + '][' + location + '][' + page + '][' + gid + '][' + bid + '][countries][]"  multiple="multiple" class="form-control-banner input-sm" value="" placeholder="Страны">' +
             <? foreach ($supportedCountries as $country) : ?>'<option value="<?=$country?>"><?=$country?></option>' + <? endforeach; ?>
             '       </select>' +

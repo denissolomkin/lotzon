@@ -103,7 +103,8 @@ vertical-align: middle;}
     padding: 15px;
 }
 
-.banners select{position: absolute;padding: 1px 0 0 0;font-size: 11px;}
+.banners select{padding: 1px 0 0 0;font-size: 11px;
+    margin-right: -17px;}
 .banners .btn-success{float:right;margin-top: 3px;}
 .banners .row-banner  {padding:0;display: inline-block;}
 .banners .row-banner.banner {margin-bottom: -8px;margin-top: 3px;width: 100%;}
@@ -111,7 +112,6 @@ vertical-align: middle;}
 .banners .row-banner div{padding:0;vertical-align: top;}
 .banners .view-banner {
     right: 0;
-    position: absolute;
     margin-top: 0;
     z-index: 20;
 }
