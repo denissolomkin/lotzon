@@ -24,6 +24,7 @@ class Banner extends Entity
     {
 
         $banners = SettingsModel::instance()->getSettings('ad')->getValue($this->getDevice());
+        $enabled = SettingsModel::instance()->getSettings('ad')->getValue('enabled');
 
         if(is_array($banners) && isset($banners[$this->getLocation()])) {
 
@@ -45,8 +46,8 @@ class Banner extends Entity
 
                             $this->setDiv($banner['div'])
                                 ->setScript($banner['script'])
+                                ->setEnabled($enabled)
                                 ->setTitle($banner['title'])
-                                ->setEnabled($banners['settings']['enabled'])
                                 ->setChance($banner['chance']);
 
                             break;

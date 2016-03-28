@@ -20,7 +20,7 @@
         <input type="hidden" name="ad[]" value="">
         <div class="row-fluid  container-fluid">
             <h2 style="text-align: center"><span class="left"> Баннеры
-            <input type="checkbox" name='ad[settings][enabled]' <?=$list['settings']['enabled']?'checked ':'';?>data-toggle="toggle">
+            <input type="checkbox" name='ad[enabled]' <?=$list['enabled']?'checked ':'';?>data-toggle="toggle">
                 </span>
                 <?php
                 foreach ($banners['devices'] as $device => $zones) : ?>
