@@ -961,7 +961,7 @@ input.input-radio:checked + label.input-radio:before {
   padding-left: 25px;
   // transition: padding 1s linear;
   transition: right .5s linear;
-  
+  z-index: 90;
   .arrow{
     position: absolute;
     left: 0;
