@@ -273,9 +273,11 @@ class ShopItemOrder extends Entity
                 if (!$this->getPhone()) {
                     throw new EntityException("ORDER_INVALID_PHONE", 400);
                 }
+                /*
                 if ($this->getPhone() && !preg_match('/^[+0-9\- ()]*$/', $this->getPhone())) {
                     throw new EntityException("INVALID_PHONE_FORMAT", 400);
                 }
+                */
                 if (!$this->getCity()) {
                     throw new EntityException("ORDER_INVALID_CITY", 400);
                 }
@@ -283,7 +285,7 @@ class ShopItemOrder extends Entity
                     throw new EntityException("ORDER_INVALID_ADDRESS", 400);
                 }
                 if (!$this->getChanceGameId() && $this->getPlayer()->getBalance()['Points'] < $this->getItem()->getPrice()) {
-                    throw new EntityException("NOT_ENOUGH_MONEY", 400);
+                    throw new EntityException("POINTS_NOT_ENOUGH", 400);
                 }
 
                 $this->setName(htmlspecialchars(strip_tags($this->getName())));

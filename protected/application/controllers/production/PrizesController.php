@@ -99,6 +99,9 @@ class PrizesController extends \AjaxController
         try {
             $item = new \ShopItem();
             $item->setId($itemId)->fetch();
+            if ((($item->getQuantity()==0)and($item->getQuantity()!==NULL))or(!$item->isVisible())) {
+                throw new EntityException("INVALID_ITEM", 400);
+            }
         } catch (EntityException $e) {
             $this->ajaxResponseNotFound();
             return false;
@@ -110,13 +113,13 @@ class PrizesController extends \AjaxController
         $order = new \ShopItemOrder();
         $order->setPlayer($this->session->get(Player::IDENTITY))
             ->setItem($item)
-            ->setName($player->getName())
-            ->setSurname($player->getSurname())
-            ->setNumber($player->getPhone())
-            ->setPhone($player->getPhone())
-            ->setRegion($player->getZip())
-            ->setCity($player->getCity())
-            ->setAddress($player->getZip().' '.$player->getAddress());
+            ->setName($player->getName()!=''?$player->getName():' ')
+            ->setSurname($player->getSurname()!=''?$player->getSurname():' ')
+            ->setNumber($player->getPhone()!=null?$player->getPhone():' ')
+            ->setPhone($player->getPhone()!=null?$player->getPhone():' ')
+            ->setRegion($player->getZip()!=''?$player->getZip():' ')
+            ->setCity($player->getCity()!=''?$player->getCity():' ')
+            ->setAddress($player->getAddress()!=''?$player->getAddress():' ');
 
         try {
             $order->create();
