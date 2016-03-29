@@ -146,39 +146,14 @@
             if (str) {
                 if (str.length && !("nodeType" in str)) {
                     while (str.length > 0) {
-                        this.insert(str[0], el, prepend);
-                        console.error(str, str[0]);
-                        /*!prepend
+                        !prepend
                             ? el.appendChild(str[0])
-                            : el.insertBefore(str[0], el.firstChild);*/
+                            : el.insertBefore(str[0], el.firstChild);
                     }
                 } else if ("nodeType" in str) {
-
-                    if(prepend){
-
-                        el.insertBefore(str, el.firstChild);
-
-                    } else {
-
-                        if (str.tagName === 'SCRIPT') {
-                            var //s = document.getElementsByTagName('script')[0],
-                                po = document.createElement('script');
-                            po.type = 'text/javascript';
-                            po.async = true;
-
-                            if (str.src) {
-                                po.src = str.src;
-                            } else {
-                                po.innerHTML = str.innerHTML;
-                            }
-
-                            el.appendChild(po);
-                            //s.parentNode.insertBefore(po, s);
-
-                        } else {
-                            el.appendChild(str);
-                        }
-                    }
+                    !prepend
+                        ? el.appendChild(str)
+                        : el.insertBefore(str, el.firstChild);
 
                 }
             }
