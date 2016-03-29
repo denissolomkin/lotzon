@@ -29,8 +29,8 @@ class Ad extends PrivateArea
                 'blog' => 'Блог',
                 'lottery' => 'Лотерея',
                 'games' => 'Игры',
-                'community' => 'Общение',
-                'friends' => 'Друзья',
+                'communication' => 'Общение',
+                'users' => 'Друзья',
                 'prizes' => 'Витрина'
             ),
             'devices' => array(
