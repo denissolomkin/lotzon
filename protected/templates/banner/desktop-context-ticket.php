@@ -1,5 +1,5 @@
 <?php $id=time();
-$timer = is_numeric($banner['title']) ? $banner['title'] : 15; ?>
+$timer = is_numeric($this->getTitle()) ? $this->getTitle() : 15; ?>
 <div>
     <div style="z-index: 5;margin-top: 390px;margin-left: 320px;position: absolute;">
         <div class="timer" id="timer_videobanner<?php echo $id;?>"> загрузка...</div>
