@@ -41,6 +41,7 @@ class Ad extends PrivateArea
                     'teaser' => 'Тизерка'
                 ),
                 'tablet' => array(
+                    'top' => 'Шапка',
                     'popup' => 'Всплывайка'
                 ),
                 'mobile' => array(
