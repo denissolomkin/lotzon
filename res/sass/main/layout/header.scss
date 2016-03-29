@@ -92,7 +92,7 @@
 }
 
 .i-purse:before { 
-    content: '\e804';
+    // content: '\e804';
     font-size: 19px;
     margin-right: 5px;
     margin-bottom: 6px;
@@ -100,13 +100,15 @@
 .i-msg {
     font-size: 26px;
     &:before { 
-        content: '\e80f'; font-size: 26px;
+        // content: '\e80f'; 
+        font-size: 26px;
     } /* '' */
 }
 .i-msg2   {
     font-size: 24px;
     &:before { 
-        content: '\e811'; font-size: 24px;
+        // content: '\e811'; 
+        font-size: 24px;
     } /* '' */  
 }
  
@@ -281,15 +283,25 @@ div {
     height: 50px;
 }
 
-.is-countdown {
-    background-color: #fee518;
-    font-size: 50px;
-    border: none;
-    width: 90px;
-    top: 0;
-    position: absolute;
-    right: 0;
+// .is-countdown {
+//     background-color: #fee518;
+//     font-size: 50px;
+//     border: none;
+//     width: 90px;
+//     top: 0;
+//     position: absolute;
+//     right: 0;
+// }
+
+#lottery{
+    #banner-desktop-context-ticket{
+        position: absolute;
+        z-index: 5;
+        width: 100%;
+    }
 }
+
+
 .ad {
     .is-countdown{
         box-sizing: content-box;
