@@ -173,16 +173,6 @@ class Players extends \AjaxController
 
     }
 
-    public function logoutAction()
-    {
-        $this->authorizedOnly();
-
-        if($this->session->has(Player::IDENTITY))
-            $this->session->get(Player::IDENTITY)->disableAutologin();
-        session_destroy();
-        $this->redirect('/');
-    }
-
     public function updateAction()
     {
         $this->authorizedOnly();
