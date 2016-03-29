@@ -287,9 +287,7 @@
 
                         case 'text':
                         case 'hidden':
-                            filter = node.value === ''
-                            || (node.classList.contains('float') && parseFloat(node.value) <= 0)
-                            || (node.classList.contains('int') && parseInt(node.value) <= 0);
+                            filter = node.value === '' || (node.classList.contains('float') && parseFloat(node.value) <= 0) || (node.classList.contains('int') && parseInt(node.value) <= 0);
                             break;
                         case 'radio':
                             filter = node.form.querySelectorAll('[name="' + node.name + '"]:checked').length !== 1;
@@ -302,7 +300,7 @@
                     break;
 
                 case 'DIV':
-                    filter = node.innerHTML === '';
+                    filter = node.innerHTML === '' || (node.getAttribute('data-default') && node.innerHTML.replace(node.getAttribute('data-default'),'').length < 10);
                     break;
             }
 

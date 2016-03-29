@@ -221,7 +221,7 @@
 
                     event.stopPropagation();
                     D.log(['Navigation.backBlock:', this.parentNode.id], 'info');
-                    DOM.remove(DOM.up('content-box', this));
+                    DOM.remove(DOM.up('.content-box', this));
                     history.back();
 
                 }

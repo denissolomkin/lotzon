@@ -65,7 +65,9 @@
             $(document).on("keydown", '[contenteditable]', Comments.checkInput);
 
 
-            $(document).on('click', '.no-image, .thumb', Comments.showPreviewImage);
+            // $(document).on('click', '.no-image, .thumb', Comments.showPreviewImage);
+            $(document).on('click', '.thumb .i-x-slim', Comments.deleteImage);
+            $(document).on('click', '.input-file-wrapper', Comments.uploadImage);
       
 
             $(document).on('touchstart', '.site-overlay', function () {

@@ -98,21 +98,25 @@
             this.class(css, node);
         },
 
-        up: function (str, el, method) {
+        up: function (str, el) {
 
-            switch (method) {
-                case "class":
-                default:
-                    str = str.indexOf('.') === 0 ? str.substring(1) : str;
+            switch (str[0]) {
+
+                case ".":
+                    str = str.substring(1);
                     while (el && el.classList && !el.classList.contains(str) && el.parentNode)
                         el = el.parentNode;
                     return el.classList && el.classList.contains(str) && el;
                     break;
-                case "id":
+
+                case "#":
+                    str = str.substring(1);
                     while (el && el.id !== str && el.parentNode)
                         el = el.parentNode;
                     break;
-                case "tag":
+
+                default:
+                    str = str.toUpperCase();
                     while (el && el.nodeName !== str && el.parentNode)
                         el = el.parentNode;
                     break;

@@ -1,14 +1,8 @@
-(function() {
+(function () {
 
     Comments = {
 
         notificationsList: '.c-notifications-list',
-
-        currentReview: {
-            image: '',
-            text: '',
-            id: 0,
-        },
 
         emotionsToServer: {
             '<img src="/res/img/smiles_png/i-smile-smile.png" class="i-smile-smile">': ':)',
@@ -33,30 +27,26 @@
             '<img src="/res/img/smiles_png/i-smile-dislike.png" class="i-smile-dislike">': '*DISLIKE*'
         },
 
-        getEmotionsHTML: function() {
+        getEmotionsHTML: function () {
             var html = '';
             for (var emotion in Comments.emotionsToServer)
                 html += emotion;
             return html;
         },
 
-        hideNotifications: function() {
+        hideNotifications: function () {
             if ($(Comments.notificationsList).is(':visible')) {
                 $(Comments.notificationsList).slideUp('fast');
             }
         },
 
-        renderNotifications: function() {
-
+        renderNotifications: function () {
 
             var notifications = document.getElementById('communication-notifications');
+
             if (notifications) {
                 var notificationsList = notifications.getElementsByClassName('c-notifications-list')[0];
-                if (!Player.getCount('notifications')
-                    || !notificationsList
-                    || notificationsList.style.display !== 'block'
-                    // || (Player.getCount('notifications') && !notificationsList)
-                ) { //1 || Player.getCount('notifications') && (notificationsList && notificationsList.style.display !== 'block')
+                if (!Player.getCount('notifications') || !notificationsList || notificationsList.style.display !== 'block') {
                     console.error('renderNotifications');
                     R.push({
                         href: 'communication-notifications',
@@ -69,22 +59,22 @@
 
         do: {
 
-            hideNotifications: function(event) {
-                if (!DOM.up('c-notifications', event.target))
+            hideNotifications: function (event) {
+                if (!DOM.up('.c-notifications', event.target))
                     Comments.hideNotifications();
             },
 
-            showNotifications: function() {
+            showNotifications: function () {
                 $(Comments.notificationsList).slideDown('fast');
                 DOM.byId('communication-notifications').querySelector('form button[type="submit"]') ? Content.infiniteScrolling() : R.push('communication-notifications-list');
             },
 
-            closeNotification: function(event) {
+            closeNotification: function (event) {
 
                 event.preventDefault();
                 event.stopPropagation();
 
-                var notification = DOM.up('c-notification', this),
+                var notification = DOM.up('.c-notification', this),
                     obj = {
                         communication: {
                             notifications: {}
@@ -97,7 +87,7 @@
 
             },
 
-            closeNotifications: function(event) {
+            closeNotifications: function (event) {
 
                 event.preventDefault();
                 event.stopPropagation();
@@ -111,7 +101,7 @@
 
                 Player.decrement('local', notifications.length);
 
-                if(notifications.length) {
+                if (notifications.length) {
                     for (var i = 0; i < notifications.length; i++) {
                         obj.communication.notifications[notifications[i].getAttribute('data-id')] = null;
                     }
@@ -123,19 +113,19 @@
 
             },
 
-            deleteNotifications: function(event) {
+            deleteNotifications: function (event) {
 
                 Form.send.call(this, {
                     action: '/communication/notifications',
                     method: 'DELETE',
-                    after: function(){
-                        Cache.init({'drop':{'communication':['notifications']}});
+                    after: function () {
+                        Cache.init({'drop': {'communication': ['notifications']}});
                     }
                 });
 
             },
 
-            viewComment: function(event) {
+            viewComment: function (event) {
 
                 var selector = '.c-notification [href="' + U.parse(this.href, 'url') + '"]',
                     notifications = document.getElementById('communication-notifications').querySelectorAll(selector),
@@ -159,23 +149,23 @@
                     event.stopPropagation();
                     Comments.hideNotifications();
                     DOM.scroll(loadedComment);
-                    setTimeout(function(){
-                        setTimeout(function(){
+                    setTimeout(function () {
+                        setTimeout(function () {
                             loadedComment.classList.remove('animated');
                             loadedComment.classList.remove('tada');
-                        },2000);
+                        }, 2000);
                         loadedComment.classList.add('animated');
                         loadedComment.classList.add('tada');
-                    },500);
+                    }, 500);
 
                 }
 
 
             },
 
-            complainForm: function() {
+            complainForm: function () {
 
-                var comment = DOM.up('comment-content', this),
+                var comment = DOM.up('.comment-content', this),
                     id = comment.parentNode.getAttribute("data-id");
 
                 // push new form
@@ -187,11 +177,11 @@
 
             },
 
-            replyForm: function() {
+            replyForm: function () {
 
-                var comment = DOM.up('comment-content', this),
-                    node = DOM.up('comment', comment),
-                    commentsList = DOM.up('render-list', node),
+                var comment = DOM.up('.comment-content', this),
+                    node = DOM.up('.comment', comment),
+                    commentsList = DOM.up('.render-list', node),
                     json = {
                         'user': {
                             "name": comment.getAttribute("data-user-name"),
@@ -217,7 +207,7 @@
 
             },
 
-            mobileForm: function() {
+            mobileForm: function () {
 
                 if (!Device.isMobile())
                     return;
@@ -234,12 +224,12 @@
 
         after: {
 
-            reply: function() {
+            reply: function () {
 
                 var form = this;
 
                 if (form.elements['comment_id'].value) {
-                    setTimeout(function() {
+                    setTimeout(function () {
                         if (form.parentNode)
                             form.parentNode.removeChild(form);
                     }, form.getElementsByClassName('modal-message').length ? Form.getTimeout() : 0);
@@ -251,7 +241,7 @@
 
             },
 
-            replyForm: function(options) {
+            replyForm: function (options) {
 
                 if (!DOM.onScreen(options.rendered))
                     DOM.scroll(options.rendered);
@@ -262,112 +252,93 @@
                 DOM.cursor('.message-form-area', options.rendered);
             },
 
-            showComment: function(options) {
+            showComment: function (options) {
                 var commentReply = options.rendered.querySelector('.comment-content .comment-reply-btn');
                 if (commentReply)
                     commentReply.click();
-            },
-
+            }
 
         },
 
         validate: {
-
-            reply: function(event) {
+            reply: function (event) {
                 return true;
             }
         },
 
-        showPreviewImage: function(e) {
-            // e.preventDefault();
+        uploadImage: function () {
 
-            var span = document.createElement('span');
-            span.className = 'thumb';
-            span.innerHTML = '<i class="i-x-slim"></i>';
-            document.querySelector('.message-form-actions').insertBefore(span, null);
-
-            var image = $('.thumb ');
-
-            if (!Comments.currentReview.image)
-
-            {
-
-                // create form
-                var form = $('<form method="POST" enctype="multipart/form-data"><input type="file" name="image"/></form>');
-
-                $input = form.find('input[type="file"]').damnUploader({
+            // create form
+            var form = DOM.up('form', this),
+                $form = $('<form method="POST" enctype="multipart/form-data"><input type="file" name="image"/></form>'),
+                $input = $form.find('input[type="file"]').damnUploader({
                     url: '/image',
                     fieldName: 'image',
-                    data: Comments.currentReview,
-                    dataType: 'json',
+                    dataType: 'json'
                 });
 
-                $input.off('du.add').on('du.add', function(e) {
+            $input.off('du.add').on('du.add', function (e) {
+                e.uploadItem.completeCallback = function (success, data, status) {
+                    if (success) {
+                        var span = document.createElement('span');
+                        span.className = 'thumb';
+                        span.style.background = 'url(' + Config.tempFilestorage + '/' + data.imageName + ') center';
+                        span.style.height = '55px';
+                        span.style['background-size'] = 'cover';
+                        span.innerHTML = '<i class="i-x-slim"></i>';
+                        form.querySelector('.message-form-actions').insertBefore(span, null);
 
-                    e.uploadItem.completeCallback = function(succ, data, status) {
-                        image.css({
-                            'background': 'url(' + Config.tempFilestorage + '/' + data.imageName + ') center',
-                            'height': '55px',
-                            'background-size': 'cover'
-                        });
-                        Comments.currentReview.image = data.imageName;
+                        if(!form.elements['image']){
+                            var input = document.createElement('input');
+                            input.type = 'hidden';
+                            input.name = 'image';
+                            form.appendChild(input);
+                        }
 
-                    };
+                        form.elements['image'].value = data.imageName;
 
-                    e.uploadItem.progressCallback = function(perc) {
-                        console.log(perc)
+                    } else {
+                        D.error.call(form, ['Code: ', status]);
                     }
+                };
+                e.uploadItem.progressCallback = function (perc) {
+                };
+                e.uploadItem.upload();
+            });
 
-                    e.uploadItem.addPostData('Id', Comments.currentReview.id);
-                    e.uploadItem.addPostData('Image', Comments.currentReview.image);
-                    e.uploadItem.upload();
-
-                });
-                $(this).closest('.message-form').find('.no-image').removeClass('no-image');
-                $(this).closest('.message-form').find('.input-file').attr('disabled', 'disabled');
-                form.find('input[type="file"]').click();
-                Comments.currentReview.image = image;
-                console.log(Comments.currentReview.image);
-            } else {
-
-                $.ajax({
-                    url: '/image',
-                    method: 'DELETE',
-                    async: true,
-                    data: {
-                        image: Comments.currentReview.image
-                    },
-                    dataType: 'json',
-                    success: function(data) {
-                        image.remove();
-                        Comments.currentReview.image = null;
-
-                    },
-                    error: function() {
-                        alert('Unexpected server error');
-                    }
-
-                });
-                $(this).closest('.message-form').find('.fa-file-image-o').addClass('no-image');
-                $(this).closest('.message-form').find('.input-file').attr('disabled', 'false');
-            }
+            Comments.deleteImage.call(this);
+            $form.find('input[type="file"]').click();
         },
 
+        deleteImage: function () {
 
+            var form = DOM.up('form', this);
+            var image = form && form.elements['image'];
 
-        showSmiles: function() {
+            if (image && image.value)
+                Form.delete({
+                    action: '/image',
+                    data: {
+                        image: image.value
+                    },
+                    after: function () {
+                        DOM.remove('.thumb', form);
+                        image.value = null;
+                    }
+                });
+        },
+
+        showSmiles: function () {
+
             $(this).closest('.message-form').find('.smiles').toggleClass('hidden');
             $(this).toggleClass('active');
+
         },
 
+        chooseSmiles: function (e) {
 
-
-        chooseSmiles: function(e) {
-            console.log(e);
             div = $(this).closest('.message-form-actions').prev();
             div.append($(this).clone());
-
-            // var result = $('div[contenteditable="true"]')[0];
 
             var result = $(this).closest('.message-form').find('div[contenteditable="true"]')[0];
             result.focus();
@@ -391,11 +362,10 @@
             }
         },
 
-        pasteText: function(e) {
+        pasteText: function (e) {
 
-
-            var text = '';
-            var that = $(this);
+            var text = '',
+                that = $(this);
 
             if (e.clipboardData)
                 text = e.clipboardData.getData('text/plain');
@@ -408,37 +378,37 @@
                 document.execCommand('insertHTML', false, $(text).html());
                 return false;
             } else { // IE > 7
-                that.find('*').each(function() {
+                that.find('*').each(function () {
                     $(this).addClass('within');
                 });
 
-                setTimeout(function() {
-                    that.find('*').each(function() {
+                setTimeout(function () {
+                    that.find('*').each(function () {
                         $(this).not('.within').contents().unwrap();
                     });
                 }, 1);
             }
         },
 
-        extractTextWithWhitespace :  function ( elems ) {
-                var ret = "", elem;
+        extractTextWithWhitespace: function (elems) {
+            var ret = "", elem;
 
-                for ( var i = 0; elems[i]; i++ ) {
-                    elem = elems[i];
+            for (var i = 0; elems[i]; i++) {
+                elem = elems[i];
                 // Get the text from text nodes and CDATA nodes
-                if ( elem.nodeType === 3 || elem.nodeType === 4 ) {
+                if (elem.nodeType === 3 || elem.nodeType === 4) {
                     ret += elem.nodeValue + "\n";
 
-                // Traverse every thing else, except comment nodes
-                } else if ( elem.nodeType !== 8 ) {
-                    ret += extractTextWithWhitespace2( elem.childNodes );
-            }
+                    // Traverse every thing else, except comment nodes
+                } else if (elem.nodeType !== 8) {
+                    ret += extractTextWithWhitespace2(elem.childNodes);
+                }
             }
 
             return ret;
-                },
+        },
 
-        checkInput: function(e) {
+        checkInput: function (e) {
 
             var key = e.keyCode,
                 el = $(this)[0];
@@ -469,16 +439,10 @@
 
 
             }
-          
+
         },
 
-        addImage: function(form) {
-            form.data.image = Comments.currentReview.image;
-
-            return form;
-        },
-
-        getFullPicture: function(event){
+        getFullPicture: function (event) {
             event.preventDefault();
 
             var co = {
@@ -488,57 +452,54 @@
                             <i class="i-x-slim" onclick="this.parentNode.parentNode.removeAttribute(\'class\')" ></i>\
                             <div class="content"></div>\
                          </div>'
-            }
+            };
 
-            if(!co.url) return;
+            if (!co.url) return;
 
-            if(!co.element) {
+            if (!co.element) {
                 co.element = document.createElement('div');
                 co.element.id = 'FullPictureWrapper';
                 co.element.setAttribute("onclick", "this.removeAttribute('class')");
                 co.element.innerHTML = co.html;
 
                 document.body.appendChild(co.element);
-            }else{
+            } else {
                 co.element.removeAttribute("class");
             }
 
             co.img = document.createElement('img');
-            co.img.src =  co.url;
+            co.img.src = co.url;
 
             co.element.querySelector('.content').innerHTML = '';
             co.element.querySelector('.content').appendChild(co.img);
 
-            co.img.onload = function(){
+            co.img.onload = function () {
                 co.element.setAttribute("class", "load");
             }
 
-            console.error(co);
             return false;
         },
 
-        smilePost: function(form) {
-            if ($('.smiles').hasClass('hidden')) {
+        smilePost: function (form) {
 
-            } else {
-                console.log('VISIBLE');
+            if (!$('.smiles').hasClass('hidden'))
                 $('.smiles').addClass('hidden');
-            }
 
             for (var emotion in Comments.emotionsToServer) {
-                form.data.text = form.data.text.replaceAll(emotion, Comments.emotionsToServer[emotion]);
+                form.data.text = form.data.text
+                    .replaceAll(emotion, Comments.emotionsToServer[emotion]);
             }
-            
-            form.data.text = form.data.text.replace(/(<br\/*>(\s*))+/ig, '\n');
-            form.data.text = form.data.text.replace(/&nbsp;/g, '');
-            
+
+            form.data.text = form.data.text
+                .replace(/(<br\/*>(\s*))+/ig, '\n')
+                .replace(/&nbsp;/g, '');
+
             return form;
 
         },
 
-        submit: function(form) {
+        submit: function (form) {
             Comments.smilePost(form);
-            Comments.addImage(form);
             return form;
         }
 

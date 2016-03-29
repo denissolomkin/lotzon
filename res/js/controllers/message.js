@@ -72,9 +72,13 @@
             },
 
             searchUser: function () {
+
                 var find = this.value;
+
                 document.getElementById('communication-messages-new-users').innerHTML = '';
+
                 Messages.typingTimer && clearTimeout(Messages.typingTimer);
+
                 if (find.length >= 3)
                     Messages.typingTimer = setTimeout(function () {
                         R.push({
