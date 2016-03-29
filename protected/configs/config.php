@@ -340,7 +340,7 @@ Config::instance()->publicResources = array(
     /**
      * Socials refpost
      */
-    '/players/social/:provider' => 'controllers\production\Players:social',
+    '/players/social/:provider' => 'controllers\production\Players:socialPost',
     /**
      * Invites
      */

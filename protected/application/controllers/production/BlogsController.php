@@ -13,6 +13,7 @@ class BlogsController extends \AjaxController
     {
         self::$blogsPerPage = (int)SettingsModel::instance()->getSettings('counters')->getValue('BLOGS_PER_PAGE') ? : 10;
         parent::init();
+        $this->validateRequest();
         $this->authorizedOnly();
     }
 

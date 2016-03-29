@@ -19,6 +19,7 @@ class MessagesController extends \AjaxController
 
     public function indexAction()
     {
+        $this->validateRequest();
 
         $playerId = $this->session->get(Player::IDENTITY)->getId();
         $count    = $this->request()->get('count', self::$messagesPerPage);
@@ -68,6 +69,7 @@ class MessagesController extends \AjaxController
 
     public function listAction($userId)
     {
+        $this->validateRequest();
 
         $playerId = $this->session->get(Player::IDENTITY)->getId();
         $count    = $this->request()->get('count', self::$messagesPerPage);
@@ -111,6 +113,7 @@ class MessagesController extends \AjaxController
 
     public function markReadAction($userId)
     {
+        $this->validateRequest();
 
         $response = array();
         $playerId = $this->session->get(Player::IDENTITY)->getId();
@@ -130,6 +133,7 @@ class MessagesController extends \AjaxController
 
     public function createAction()
     {
+        $this->validateRequest();
 
         $playerId   = $this->session->get(Player::IDENTITY)->getId();
         $text       = $this->request()->post('text');
@@ -219,6 +223,8 @@ class MessagesController extends \AjaxController
 
     public function imageDeleteAction()
     {
+        $this->validateRequest();
+
         $image = $this->request()->delete('image', null);
 
         if (is_null($image)) {

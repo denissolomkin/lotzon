@@ -20,14 +20,6 @@ class AuthController extends \SlimController\SlimController {
 
     }
 
-    public function logoutAction()
-    {
-        if($this->session->has(Player::IDENTITY))
-            $this->session->get(Player::IDENTITY)->disableAutologin();
-        session_destroy();
-        $this->redirect('/');
-    }
-
     public function endpointAction()
     {
             require_once PATH_PROTECTED . 'external/hybridauth/index.php';

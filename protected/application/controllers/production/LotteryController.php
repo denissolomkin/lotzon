@@ -23,6 +23,7 @@ class LotteryController extends \AjaxController
         self::$defaultCountry   = CountriesModel::instance()->defaultCountry();
 
         parent::init();
+        $this->validateRequest();
         $this->authorizedOnly();
     }
 

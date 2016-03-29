@@ -17,6 +17,7 @@ class CommentsController extends \AjaxController
         self::$notificationsPerPage = (int)SettingsModel::instance()->getSettings('counters')->getValue('NOTIFICATIONS_PER_PAGE') ? : 10;
 
         parent::init();
+        $this->validateRequest();
         $this->authorizedOnly();
     }
 

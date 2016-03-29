@@ -16,6 +16,7 @@ class PrizesController extends \AjaxController
         self::$prizesPerPage = (int)SettingsModel::instance()->getSettings('counters')->getValue('PRIZES_PER_PAGE') ? : 9;
 
         parent::init();
+        $this->validateRequest();
         $this->authorizedOnly();
     }
 

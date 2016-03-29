@@ -14,6 +14,7 @@ class GamesController extends \AjaxController
     public function init()
     {
         parent::init();
+        $this->validateRequest();
         $this->authorizedOnly();
     }
 

@@ -18,6 +18,7 @@ class FriendsController extends \AjaxController
         self::$friendsPerPage = (int)SettingsModel::instance()->getSettings('counters')->getValue('FRIENDS_PER_PAGE') ? : 10;
 
         parent::init();
+        $this->validateRequest();
         $this->authorizedOnly();
     }
 

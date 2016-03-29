@@ -15,7 +15,6 @@ class AjaxController extends \SlimController\SlimController
     public function init()
     {
         $this->session = new Session();
-        $this->validateRequest();
     }
 
     public function ajaxResponse(array $data, $status = 1, $message = 'OK')
@@ -44,8 +43,7 @@ class AjaxController extends \SlimController\SlimController
     protected function validateRequest()
     {
         if (!$this->request()->isAjax()) {
-            $session = new Session();
-            $session->set('page', $this->request()->getResourceUri());
+            $this->session->set('page', $this->request()->getResourceUri());
             $this->redirect('/');
         } else
             return true;

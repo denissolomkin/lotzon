@@ -19,17 +19,17 @@ class Players extends \AjaxController
 
     public function registerAction()
     {
+        $this->validateRequest();
+
         $agreed = $this->request()->post('agree', false);
         $email = $this->request()->post('email', null);
+
         if (empty($email)) {
             $this->ajaxResponse(array(), 0, 'EMPTY_EMAIL');
-        }
-        if (!$agreed) {
+        } else if (!$agreed) {
             $this->ajaxResponse(array(), 0, 'AGREE_WITH_RULES');
-        }
-        if (!in_array($_SERVER['HTTP_HOST'], array('stag.lotzon.com', 'lotzon2.com', 'new.lotzon.com', 'lotzon.test', 'lotzon.com', 'testbed.lotzon.com', '192.168.1.253', '192.168.56.101', 'lotzon')))
+        } else if (!in_array($_SERVER['HTTP_HOST'], array('stag.lotzon.com', 'lotzon2.com', 'new.lotzon.com', 'lotzon.test', 'lotzon.com', 'testbed.lotzon.com', '192.168.1.253', '192.168.56.101', 'lotzon')))
             $this->ajaxResponse(array(), 0, 'ACCESS_DENIED');
-
 
         $player = new Player();
         $player->setEmail($email);
@@ -105,11 +105,13 @@ class Players extends \AjaxController
             'id' => $player->getId(),
         ));
 
-
     }
 
     public function loginAction()
     {
+
+        $this->validateRequest();
+
         $email = $this->request()->post('email', null);
         $password = $this->request()->post('password', null);
         $rememberMe = $this->request()->post('remember', false);
@@ -170,108 +172,48 @@ class Players extends \AjaxController
 
         $this->ajaxResponse(array());
 
-
     }
 
-    public function updateAction()
+    public function logoutAction()
     {
-        $this->authorizedOnly();
 
-        $email = $this->request()->post('email');
-
-        if ($this->session->get(Player::IDENTITY)->getEmail() !== $email) {
-            $this->ajaxResponse(array(), 0, 'FRAUD');
-        }
-
-        $player = new Player();
-        $player->setId($this->session->get(Player::IDENTITY)->getId())->fetch();
-
-        try {
-
-            if ($this->request()->post('bd') && (!strtotime($this->request()->post('bd')) || !preg_match('/^[0-3][0-9].[0-1][0-9].[1,2][0-9][0-9]{2}$/', $this->request()->post('bd')))) {
-                throw new EntityException("INVALID_DATE_FORMAT", 400);
-            }
-
-            if (!$player->getPhone() && $this->request()->post('phone'))
-                $player->setPhone($this->request()->post('phone'));
-            if (!$player->getQiwi() && $this->request()->post('qiwi'))
-                $player->setQiwi($this->request()->post('qiwi'));
-            if (!$player->getWebMoney() && $this->request()->post('webmoney'))
-                $player->setWebMoney($this->request()->post('webmoney'));
-            if (!$player->getYandexMoney() && $this->request()->post('yandex'))
-                $player->setYandexMoney($this->request()->post('yandex'));
-            if (!$player->getBirthday() && $this->request()->post('bd'))
-                $player->setBirthday(strtotime($this->request()->post('bd')));
-
-            $favs = $this->request()->post('favs', array());
-            $player->setNicname($this->request()->post('nick'))
-                ->setName($this->request()->post('name'))
-                ->setSurName($this->request()->post('surname'))
-                ->setSecondName($this->request()->post('secondname'))
-                ->setVisibility($this->request()->post('visible', false))
-                ->setFavoriteCombination($favs)
-                ->update();
-
-            $this->session->set(Player::IDENTITY, $player);
-        } catch (EntityException $e) {
-
-            /* rollback */
-            switch ($e->getMessage()) {
-                case 'INVALID_DATE_FORMAT':
-                    $player->setBirthday(null);
-                    break;
-                case 'INVALID_PHONE_FORMAT':
-                case 'PHONE_BUSY':
-                    $player->setPhone(null);
-                    break;
-                case 'INVALID_QIWI_FORMAT':
-                case 'QIWI_BUSY':
-                    $player->setQiwi(null);
-                    break;
-                case 'INVALID_WEBMONEY_FORMAT':
-                case 'WEBMONEY_BUSY':
-                    $player->setWebMoney(null);
-                    break;
-                case 'INVALID_YANDEXMONEY_FORMAT':
-                case 'YANDEXMONEY_BUSY':
-                    $player->setYandexMoney(null);
-                    break;
-            }
-            $this->ajaxResponse(array(), 0, $e->getMessage());
-        }
-
-        if ($pwd = $this->request()->post('password')) {
-            $pwd = trim($pwd);
-            $player->writeLog(array('action' => 'CHANGE_PASSWORD', 'desc' => $player->hidePassword($pwd), 'status' => 'info'))
-                ->changePassword($pwd);
-        }
-
-        $this->session->set(Player::IDENTITY, $player);
-        $this->ajaxResponse(array());
+        if($this->session->has(Player::IDENTITY))
+            $this->session->get(Player::IDENTITY)->disableAutologin();
+        session_destroy();
+        $this->redirect('/');
     }
 
     public function saveAvatarAction()
     {
-
-        $this->authorizedOnly();
-
-        try {
-            $imageName = $this->session->get(Player::IDENTITY)->uploadAvatar();
-
-            $data = array(
-                'imageName' => $imageName,
-                'imageWebPath' => '/filestorage/avatars/' . (ceil($this->session->get(Player::IDENTITY)->getId() / 100)) . '/' . $imageName,
-            );
-
-            $this->ajaxResponse($data);
-
-        } catch (\Exception $e) {
-            $this->ajaxResponse(array(), 0, 'INVALID');
+        if (!$this->session->get(Player::IDENTITY)) {
+            $this->ajaxResponse(array(), 0, 'FRAUD');
         }
+        else
+            try {
+                $imageName = $this->session->get(Player::IDENTITY)->uploadAvatar();
+                $data = array(
+                    'imageName' => $imageName,
+                    'imageWebPath' => '/filestorage/avatars/' . (ceil($this->session->get(Player::IDENTITY)->getId() / 100)) . '/' . $imageName,
+                );
+                $this->ajaxResponse($data);
+            } catch (\Exception $e) {
+                $this->ajaxResponse(array(), 0, 'INVALID');
+            }
+    }
+
+    public function removeAvatarAction()
+    {
+        if ($this->session->get(Player::IDENTITY)->getAvatar()) {
+            @unlink(PATH_FILESTORAGE . 'avatars/' . (ceil($this->session->get(Player::IDENTITY)->getId() / 100)) . '/' . $this->session->get(Player::IDENTITY)->getAvatar());
+        }
+        $this->session->get(Player::IDENTITY)->setAvatar("")->saveAvatar();
+        $this->ajaxResponse(array());
     }
 
     public function changeLanguageAction($lang)
     {
+
+        $this->validateRequest();
         $this->authorizedOnly();
 
         if(!($lang=substr($lang,0,2)) || !(LanguagesModel::instance()->isLang($lang))) {
@@ -284,21 +226,11 @@ class Players extends \AjaxController
         }
     }
 
-    public function removeAvatarAction()
-    {
-        $this->authorizedOnly();
-
-        if ($this->session->get(Player::IDENTITY)->getAvatar()) {
-            @unlink(PATH_FILESTORAGE . 'avatars/' . (ceil($this->session->get(Player::IDENTITY)->getId() / 100)) . '/' . $this->session->get(Player::IDENTITY)->getAvatar());
-        }
-        $this->session->get(Player::IDENTITY)->setAvatar("")->saveAvatar();
-
-        $this->ajaxResponse(array());
-    }
 
     public function disableSocialAction($provider = null)
     {
 
+        $this->validateRequest();
         $this->authorizedOnly();
 
         if (!($provider = $provider ?: $this->request()->delete('provider'))) {
@@ -322,6 +254,7 @@ class Players extends \AjaxController
     public function troubleAction($trouble)
     {
 
+        $this->validateRequest();
         $this->authorizedOnly();
 
         try {
@@ -334,6 +267,9 @@ class Players extends \AjaxController
 
     public function resendPasswordAction()
     {
+
+        $this->validateRequest();
+
         $email = $this->request()->post('email');
         $player = new Player();
         $player->setEmail($email);
@@ -363,8 +299,10 @@ class Players extends \AjaxController
      *
      * @param string $provider Имя социальной сети
      */
-    public function socialAction($provider)
+    public function socialPostAction($provider)
     {
+
+        $this->validateRequest();
         $this->authorizedOnly();
 
         if ($this->session->get(Player::IDENTITY)->getSocialPostsCount($provider) > 0) {
@@ -389,8 +327,10 @@ class Players extends \AjaxController
      *
      * @throws EntityException
      */
-    public function userInfoAction($playerId) {
+    public function userInfoAction($playerId)
+    {
 
+        $this->validateRequest();
         $this->authorizedOnly();
 
         $player = new Player();
@@ -418,6 +358,7 @@ class Players extends \AjaxController
     public function cardAction($playerId)
     {
 
+        $this->validateRequest();
         $this->authorizedOnly();
 
         $player = new Player();
@@ -437,6 +378,7 @@ class Players extends \AjaxController
     public function settingsAction()
     {
 
+        $this->validateRequest();
         $this->authorizedOnly();
 
         $favorite   = $this->request()->post('favorite');
@@ -490,6 +432,7 @@ class Players extends \AjaxController
     public function editAction()
     {
 
+        $this->validateRequest();
         $this->authorizedOnly();
 
         $nickname = $this->request()->post('nickname');
@@ -549,12 +492,13 @@ class Players extends \AjaxController
 
     public function avatarAction()
     {
+
         $this->authorizedOnly();
 
         try {
             $imageName = $this->session->get(Player::IDENTITY)->uploadAvatar();
         } catch (\Exception $e) {
-            $this->ajaxResponseInternalError();
+            $this->ajaxResponseInternalError($e->getMessage());
         }
         $res = array(
             "player"  => array(
@@ -567,8 +511,10 @@ class Players extends \AjaxController
         return true;
     }
 
-    public function billingAction() {
+    public function billingAction()
+    {
 
+        $this->validateRequest();
         $this->authorizedOnly();
 
         $player = new Player;
@@ -617,6 +563,8 @@ class Players extends \AjaxController
      */
     public function searchAction()
     {
+
+        $this->validateRequest();
         $this->authorizedOnly();
 
         $search = $this->request()->get('name');

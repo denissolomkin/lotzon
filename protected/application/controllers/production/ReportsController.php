@@ -15,6 +15,7 @@ class ReportsController extends \AjaxController
         self::$reportsPerPage = (int)SettingsModel::instance()->getSettings('counters')->getValue('REPORTS_PER_PAGE') ? : 20;
 
         parent::init();
+        $this->validateRequest();
         $this->authorizedOnly();
     }
 
