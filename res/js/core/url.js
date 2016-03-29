@@ -94,7 +94,7 @@
                         Navigation.menu.hide();
                         history.pushState(options.init, "Lotzon", url);
                         Content.updateBanners();
-                        Config.yandexMetrika && window['yaCounter'+Config.yandexMetrika].hit(document.location.protocol + '//' + document.location.host + url, {title: 'Lotzon', referer: oldUrl});
+                        Config.hasOwnProperty('yandexMetrika') && Config.yandexMetrika && window['yaCounter'+Config.yandexMetrika] && window['yaCounter'+Config.yandexMetrika].hit(document.location.protocol + '//' + document.location.host + url, {title: 'Lotzon', referer: oldUrl});
                     }
 
                 }
