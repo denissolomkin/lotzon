@@ -527,15 +527,4 @@ class Index extends \SlimController\SlimController
 
         die(json_encode($response));
     }
-
-
-    public function logoutAction()
-    {
-
-        $session = new Session();
-        if($session->has(Player::IDENTITY))
-            $session->get(Player::IDENTITY)->disableAutologin();
-        session_destroy();
-        $this->redirect('/');
-    }
 }

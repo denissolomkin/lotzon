@@ -327,7 +327,7 @@ Config::instance()->publicResources = array(
     '/players/login/' => array(
         'post'  => 'controllers\production\Players:login',
     ),
-    '/players/logout/' => 'controllers\production\Index:logout',
+    '/players/logout/' => 'controllers\production\AuthController:logout',
     /**
      * Socials
      */
