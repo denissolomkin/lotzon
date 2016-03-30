@@ -13,7 +13,7 @@
 	<meta property="og:url" content="https://lotzon.com/">
 	<meta property="og:title" content="Lotzon">
 	<meta property="og:description" content="Играл и буду играть">
-	<meta property="og:image" content="http://testbed.lotzon.com/tpl/img/social-share.jpg">
+	<meta property="og:image" content="https://lotzon.com/tpl/img/social-share.jpg">
 
 	<meta name="twitter:card" content="summary" />
 	<meta name="twitter:site" content="@LOTZON_COM" />
