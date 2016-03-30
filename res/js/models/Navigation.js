@@ -98,6 +98,7 @@
 
                 Navigation.menu.switch();
                 Content.ready();
+                Player.ping();
                 Player.updateBalance();
             }
 
