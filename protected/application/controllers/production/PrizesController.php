@@ -99,7 +99,7 @@ class PrizesController extends \AjaxController
         try {
             $item = new \ShopItem();
             $item->setId($itemId)->fetch();
-            if (($item->getQuantity()==0)or(!$item->isVisible())) {
+            if ((($item->getQuantity()==0)and($item->getQuantity()!==NULL))or(!$item->isVisible())) {
                 throw new EntityException("INVALID_ITEM", 400);
             }
         } catch (EntityException $e) {
