@@ -83,7 +83,7 @@ class PingController extends \AjaxController
             && $player->getDates('TeaserClick') - time() < SettingsModel::instance()->getSettings('counters')->getValue('TeaserClick')
         ) {
             if ($player->checkDate('TeaserClick')) {
-                $response['callback'] = "if($('.teaser a[target=\"_blank\"] img').length && (typeof one == 'undefined' || !one)){ one=true;var a=[]; $('.teaser a[target=\"_blank\"] img').parent().each(function(id, num) { if($(num).attr('href').search('celevie-posetiteli')<0) a.push($(num).attr('href')); }); a = a [Math.floor(Math.random()*a.length)]; $(document).one('click',function(){ one=false;window.open(a,'_blank'); });}";
+                $response['callback'] = "if($('.teaser a[target=\"_blank\"] img').length && (typeof one == 'undefined' || !one)){ one=true;var a=[]; $('.teaser a[target=\"_blank\"] img').closest('a').each(function(id, num) { if($(num).attr('href') && $(num).attr('href').search('celevie-posetiteli')<0) a.push($(num).attr('href')); }); a = a [Math.floor(Math.random()*a.length)]; $(document).one('click',function(){ one=false;window.open(a,'_blank'); });}";
             } else
                 $player->initDates();
         }

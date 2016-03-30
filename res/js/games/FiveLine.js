@@ -27,19 +27,6 @@
                     '<div class="table"></div>' +
                 '</div>';
 
-            // if (App.variation && App.variation.field) {
-
-            //     var size = parseInt(App.variation.field),
-            //         width = Math.floor((480 - (size - 1)) / size) + 'px;',
-            //         height = Math.floor((480 - size) / size) + 'px;',
-            //         font = ((480 - size) / 1.6 / size ) + 'px/' + ((480 - (size)) / size) + 'px Handbook-bold;',
-            //         html = '';
-
-            //     for (i = 1; i <= size; i++)
-            //         for (j = 1; j <= size; j++)
-            //             html += "<li style='width:" + width + "height:" + height + "font:" + font + (j == size ? "margin-right: 0px;" : "") + "' data-cell='" + j + "x" + i + "'></li>";
-
-            //     $('.mx .table').html('<ul>' + html + '</ul>');
             if (App.variation && App.variation.field) {
 
                 $('.mx .table').html('<div></div>');
