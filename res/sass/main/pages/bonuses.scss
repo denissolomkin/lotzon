@@ -308,12 +308,13 @@
   }
   & .ae-social {
     height: 42px;
-    a {
+    div {
       height: 42px;
       width: 37px;
       &:before {
         line-height: 42px;
         font-size: 35px;
+        cursor: pointer;
       }
     }
   }

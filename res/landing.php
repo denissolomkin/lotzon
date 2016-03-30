@@ -10,7 +10,7 @@
     <link href="/res/img/favicones/favicon.png.ico?v=666" rel="shortcut icon">
 
 	<meta property="og:type" content="article">
-	<meta property="og:url" content="http://testbed.lotzon.com/">
+	<meta property="og:url" content="https://lotzon.com/">
 	<meta property="og:title" content="Lotzon">
 	<meta property="og:description" content="Играл и буду играть">
 	<meta property="og:image" content="http://testbed.lotzon.com/tpl/img/social-share.jpg">
@@ -19,7 +19,7 @@
 	<meta name="twitter:site" content="@LOTZON_COM" />
 	<meta name="twitter:title" content="Lotzon" />
 	<meta name="twitter:description" content="Играл и буду играть" />
-	<meta name="twitter:image" content="http://testbed.lotzon.com/tpl/img/social-share.jpg" />
+	<meta name="twitter:image" content="https://lotzon.com/tpl/img/social-share.jpg" />
 
     <?php if (isset($isMobile)) { if($isMobile) { ?>
         <link rel="stylesheet" href="/res/css/landing/landing_mobile.css">
