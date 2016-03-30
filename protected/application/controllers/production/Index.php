@@ -273,10 +273,11 @@ class Index extends \SlimController\SlimController
         if (!$session->has('QuickGameLastDate'))
             $session->set('QuickGameLastDate', time());
 
+        $seo = SEOModel::instance()->getSEOSettings();
+
         return include("res/index.php");
 
         $session         = new Session();
-        $seo             = SEOModel::instance()->getSEOSettings();
         $seo['pages']    = ($seo['pages'] ? $page : 0);
         $player          = $session->get(Player::IDENTITY)->fetch();
         $lotterySettings = LotterySettingsModel::instance()->loadSettings();
@@ -378,6 +379,8 @@ class Index extends \SlimController\SlimController
             'yandexMetrika' => (int)SettingsModel::instance()->getSettings('counters')->getValue('YANDEX_METRIKA'),
             'googleAnalytics' => SettingsModel::instance()->getSettings('counters')->getValue('GOOGLE_ANALYTICS')
         );
+
+        $seo = SEOModel::instance()->getSEOSettings();
 
         return include("res/landing.php");
 

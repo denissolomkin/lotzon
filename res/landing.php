@@ -1,7 +1,11 @@
 <!doctype html>
 <html>
 <head>
-	<title>Lotzon</title>
+	<title><?php echo $seo['title'];?></title>
+
+	<meta name="description" content="<?php echo $seo['desc'];?>">
+	<meta name="keywords" content="<?php echo $seo['kw'];?>" />
+
 	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
