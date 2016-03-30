@@ -42,7 +42,7 @@
                         case 'start':
                             $('.SeaBattle .mx').addClass('started');
 
-                            // for sheme
+                            // for scheme
                             if ($('.SeaBattle .mx .shipsSheme').length === 0) {
                                 $('.SeaBattle .mx').append('<div class="shipsSheme o"></div><div class="shipsSheme m"></div>');
                             }
@@ -56,7 +56,6 @@
                             break;
 
                         case 'ready':
-
                             for (var playerId in App.players)
                                 if (App.players.hasOwnProperty(playerId) && playerId != Player.id && (App.current = playerId))
                                     break;
@@ -86,8 +85,6 @@
                     Game.initTimers();
                     Game.end() && Apps.SeaBattle.end();
 
-                    //>>>>>> dont forget remove this!!!!
-                    Game.destroyTimeOut();
                 }
 
             },
@@ -246,13 +243,11 @@
             // on game start
 
             if ((cell = cell || App.cell)) {
+
                 var playerId = (cell.coord.split("x")[2]),
                     classCell = playerId == Player.id ? 'm' : 'o',
                     $gameField = $(Game.field),
                     $cell = $('.inner div[data-cell="' + cell.coord + '"]', $gameField);
-
-                if (move = cell.class == 'e' ? 1 : cell.class == 'd' ? 2 : cell.class == 'k' ? 3 : null)
-                    Apps.playAudio([App.key, 'Move-' + classCell + '-' + move]);
 
                 $('div.player' + playerId + ' .inner > div.last', $gameField).removeClass('last');
 
@@ -268,6 +263,9 @@
                 } else {
 
                     var div = '<div class="' + cell.class + '" style="background:' + $cell.css('background') + ';width:' + $cell.css('width') + ';height:' + $cell.css('height') + '"></div>';
+
+                    if ((move = (cell.class == 'e' ? 1 : (cell.class == 'd' ? 2 : (cell.class == 'k' ? 3 : null)))))
+                        Apps.playAudio([App.key, 'Move-' + classCell + '-' + move]);
 
                     $cell
                         .html(div)

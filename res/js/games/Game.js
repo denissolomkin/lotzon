@@ -49,6 +49,9 @@
 
             // отрисовка игроков
 
+            Apps.playAudio([App.key, App.action]);
+            console.error(App.key, App.action);
+
             if ((['move', 'timeout', 'pass'].indexOf(App.action) == -1 &&
                     (App.action != 'ready' || Object.size(App.players) == App.current.length)) || !document.querySelectorAll('.mx .players div').length) {
 
