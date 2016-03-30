@@ -163,6 +163,8 @@
             "blog-post-view": Blog.init,
             "blog-post-view-comments-replyform": Comments.after.replyForm,
 
+            "profile-bonuses": Bonuses.init,
+
             "communication-messages": Messages.init,
             "communication-comments-replyform": Comments.after.replyForm,
             "communication-comments-view": Comments.after.showComment,

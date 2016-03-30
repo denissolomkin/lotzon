@@ -25,6 +25,17 @@
 
 
     Bonuses = {
+        init: function (data) {
+            $('.ae-social').socialLikes({
+                url: 'http://testbed.lotzon.com/?ref=' + Player.id,
+                title: 'Играл и буду играть',
+                counters: false,
+                singleTitle: 'Играл и буду играть',
+                data: {
+                    media: 'http://testbed.lotzon.com/tpl/img/social-share.jpg'
+                }
+            });
+        },
         showBanner: function () {  
             $('.bonus-banner-view-item').removeClass('active');
             $('.show-banner > div').hide();
