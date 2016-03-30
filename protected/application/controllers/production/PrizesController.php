@@ -116,7 +116,8 @@ class PrizesController extends \AjaxController
             ->setPhone($player->getPhone()!=null?$player->getPhone():' ')
             ->setRegion($player->getZip()!=''?$player->getZip():' ')
             ->setCity($player->getCity()!=''?$player->getCity():' ')
-            ->setAddress($player->getAddress()!=''?$player->getAddress():' ');
+            ->setAddress($player->getAddress());
+            //->setAddress($player->getAddress()!=''?$player->getAddress():' ');
 
         try {
             $order->create();
