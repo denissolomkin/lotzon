@@ -1,10 +1,9 @@
 <div id="games-random" class="pop-box content-main moment-game-box">
     <div class="inner">
-        <i class="i-x-slim close-pop-box"></i>
+        <i class="i-x-slim" onclick="location.reload();"></i>
         <div class="title">
             <h1>{{Title}}</h1>
         </div>
-
         <div class="description">
             {{{Description}}}
         </div>
@@ -14,7 +13,6 @@
                 {{#each (for 1 "<=" Field.y) as |value key| }}
                 <div class='vw vh vf clearfix'>
                     {{#each (for 1 "<=" ../Field.x) }}
-                    <!--                    <div style="padding:0; width:{{../Field.w}}{{../../Field.w}}px; height:{{../Field.h}}{{../../Field.h}}px; margin:0 {{../Field.r}}{{../../Field.r}}px {{../Field.b}}{{../../Field.b}}px 0; ">-->
                     <div>
                         <div class='inner'>
                             <button type=button data-cell="{{this}}x{{value}}"><i class='i-question'></i><i class='i-x'></i></button>
