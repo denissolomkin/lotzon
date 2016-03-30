@@ -27,12 +27,12 @@
     Bonuses = {
         init: function (data) {
             $('.ae-social').socialLikes({
-                url: 'http://testbed.lotzon.com/?ref=' + Player.id,
-                title: 'Играл и буду играть',
+                url: 'https://lotzon.com/?ref=' + Player.id,
+                title: 'LOTZON. Выигрывает каждый!',
                 counters: false,
-                singleTitle: 'Играл и буду играть',
+                singleTitle: 'LOTZON. Выигрывает каждый!',
                 data: {
-                    media: 'http://testbed.lotzon.com/tpl/img/social-share.jpg'
+                    media: 'https://lotzon.com/tpl/img/social-share.jpg'
                 }
             });
         },
