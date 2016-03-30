@@ -27,9 +27,6 @@
 
                 {{#if (eq type 'item')}}
 
-
-                {{#if (checkAll (player "location.country") (player "location.city"))}}
-
                 <!-- Данные заполнены -->
                 <div class="personal-data-inf-header clearfix">
                     <div class="personal-data-inf-title">{{i18n "title-prize-goods-delivery"}}</div>
@@ -62,22 +59,18 @@
                             <td>{{player "location.city"}}</td>
                         </tr>
                         <tr>
-                            <td>{{i18n "title-street"}}</td>
-                            <td>{{player "location.street"}}</td>
+                            <td>{{i18n "title-zip"}}</td>
+                            <td>{{player "location.zip"}}</td>
                         </tr>
                         <tr>
-                            <td>{{i18n "title-building"}}</td>
-                            <td>{{player "location.building"}}</td>
-                        </tr>
-                        <tr>
-                            <td>{{i18n "title-appartment"}}</td>
-                            <td>{{player "location.appartment"}}</td>
+                            <td>{{i18n "title-address"}}</td>
+                            <td>{{player "location.address"}}</td>
                         </tr>
                         </tbody>
                         <tbody>
                         <tr>
                             <td>{{i18n "title-phone"}}</td>
-                            <td>{{player "location.phone"}}</td>
+                            <td>{{player "billing.phone"}}</td>
                         </tr>
                         </tbody>
                     </table>
@@ -89,16 +82,6 @@
                     <button name="submit" type="submit" class="btn-flat">{{i18n "button-prize-send-request"}}</button>
                 </div>
                 <!-- end of Данные заполнены -->
-
-                {{else}}
-                <!-- Данные НЕ заполнены -->
-                <div class="ex-prize-not-filled">
-                    {{i18n "title-delivery-info-absent"}}<br>
-
-                    {{i18n "title-delivery-info-fill"}}<a href="/profile/edit">{{i18n "title-my-datas"}}</a>
-                </div>
-                <!-- end of Данные НЕ заполнены -->
-                {{/if}}
 
                 {{/if}}
 

@@ -110,13 +110,13 @@ class PrizesController extends \AjaxController
         $order = new \ShopItemOrder();
         $order->setPlayer($this->session->get(Player::IDENTITY))
             ->setItem($item)
-            ->setName($player->getName())
-            ->setSurname($player->getSurname())
-            ->setNumber($player->getPhone())
-            ->setPhone($player->getPhone())
-            ->setRegion($player->getZip())
-            ->setCity($player->getCity())
-            ->setAddress($player->getZip().' '.$player->getAddress());
+            ->setName($player->getName()!=''?$player->getName():' ')
+            ->setSurname($player->getSurname()!=''?$player->getSurname():' ')
+            ->setNumber($player->getPhone()!=null?$player->getPhone():' ')
+            ->setPhone($player->getPhone()!=null?$player->getPhone():' ')
+            ->setRegion($player->getZip()!=''?$player->getZip():' ')
+            ->setCity($player->getCity()!=''?$player->getCity():' ')
+            ->setAddress($player->getAddress()!=''?$player->getAddress():' ');
 
         try {
             $order->create();

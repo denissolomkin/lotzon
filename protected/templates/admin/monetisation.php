@@ -407,7 +407,7 @@
                         <? else : ?> <td> <? endif ?>
                         <img class="right" src="../tpl/img/<?=$order->getType()?>.png"><?=(($order->getType()=='webmoney')?($order->getData()['card-number'] ? $order->getData()['card-number']['value'][0] : $order->getData()['webmoney']['value'][0]):(in_array($order->getType(),array('phone','qiwi'))?'+':''))?><?=($order->getNumber()?:'')?></td>
                         <td>
-                            <? foreach ($order->getData() as $key => $data) { ?>
+                            <? if (is_array($order->getData())) foreach ($order->getData() as $key => $data) { ?>
                                 <?=$data['title']?>: <?=$data['value']?> <?=($key=='summ' ? $currency :'');?><br />
                             <? } ?>
 

@@ -340,6 +340,8 @@
                 "title-name" : "Имя",
                 "title-patronymic" : "Отчество",
                 "title-country" : "Страна",
+                "title-zip" : "Индекс",
+                "title-address" : "Адрес",
                 "title-city" : "Город",
                 "title-street" : "Улица",
                 "title-building" : "Дом",
@@ -382,6 +384,7 @@
                 "SELECT_OTHER_METHOD": "Выберите другой способ вывода",
                 "INVALID_PAYMENT_GATEWAY": "Выбран неправильный платежный шлюз",
                 "MONEY_NO_ENOUGH": "На балансе недостаточно денег",
+                "POINTS_NOT_ENOUGH" : "На балансе недостаточно баллов",
                 "INSUFFICIENT_FUNDS": "На балансе недостаточно средств",
                 "INVALID_MIN_OUTPUT": "Сумма вывода должна быть больше минимально допустимой"
 
