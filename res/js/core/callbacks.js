@@ -129,6 +129,9 @@
             $(document).on('click', '.choice .change', Profile.do.cancelFavorite);
             $(document).on('click', '.bonus-banner-view-item', Bonuses.showBanner);
             $(document).on('click', '.bonus-share-banner-view .close', Bonuses.hideBanner);
+
+            $(document).on('click', '#games-moment .close-pop-box, #games-random .close-pop-box', function(){location.reload();});
+
             // $(document).on('click', '.banner-copy-btn', Bonuses.copyBanner);
             // $(document).on('click', '.banner-copy-btn a', Bonuses.downloadFile);
 
