@@ -16,7 +16,7 @@
 	<meta property="og:image" content="http://testbed.lotzon.com/tpl/img/social-share.jpg">
 
 	<meta name="twitter:card" content="summary" />
-	<meta name="twitter:site" content="http://testbed.lotzon.com/" />
+	<meta name="twitter:site" content="@LOTZON_COM" />
 	<meta name="twitter:title" content="Lotzon" />
 	<meta name="twitter:description" content="Играл и буду играть" />
 	<meta name="twitter:image" content="http://testbed.lotzon.com/tpl/img/social-share.jpg" />
