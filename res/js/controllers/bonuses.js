@@ -28,9 +28,9 @@
         init: function (data) {
             $('.ae-social').socialLikes({
                 url: 'https://lotzon.com/?ref=' + Player.id,
-                title: 'LOTZON - выигрывает каждый',
+                title: 'LOTZON. Выигрывает каждый!',
                 counters: false,
-                singleTitle: 'LOTZON - выигрывает каждый',
+                singleTitle: 'LOTZON. Выигрывает каждый!',
                 data: {
                     media: 'https://lotzon.com/tpl/img/social-share.jpg'
                 }
