@@ -2,8 +2,8 @@
 
 namespace controllers\production;
 
-use \OnlineGamesModel, \LotterySettingsModel, \SettingsModel, \StaticSiteTextsModel, \StaticTextsModel, \Player, \PlayersModel, \ShopModel;
-use \TicketsModel, \LotteriesModel, \Session2, \CountriesModel, \SEOModel, \Admin, \LanguagesModel, \GameSettingsModel, \QuickGamesModel, \NoticesModel, \ReviewsModel, \CommentsModel, \EmailInvites, \Common;
+use \LotterySettingsModel, \SettingsModel, \StaticTextsModel, \Player, \PlayersModel, \ShopModel;
+use \TicketsModel, \LotteriesModel, \Session2, \CountriesModel, \SEOModel, \Admin, \LanguagesModel, \NoticesModel, \ReviewsModel, \CommentsModel, \EmailInvites, \Common;
 use GeoIp2\Database\Reader;
 use Symfony\Component\HttpFoundation\Session\Session;
 use \Detection\MobileDetect;
@@ -109,7 +109,7 @@ class Index extends \SlimController\SlimController
         $gamePlayer = new \GamePlayer();
         $gamePlayer->setId($playerObj->getId())->fetch();
 
-        if(($error = $session->get('ERROR') ?: ($_SESSION['ERROR'] ?: false))) {
+        if(($error = ($session->get('ERROR') ?: ($_SESSION['ERROR'] ?: false)))) {
             $session->remove('ERROR');
             unset($_SESSION['ERROR']);
         }
@@ -380,6 +380,16 @@ class Index extends \SlimController\SlimController
             'googleAnalytics' => SettingsModel::instance()->getSettings('counters')->getValue('GOOGLE_ANALYTICS')
         );
 
+        if ($session->has('SOCIAL_IDENTITY')) {
+            if ($session->has('SOCIAL_IDENTITY_DISABLED')) {
+                $session->remove('SOCIAL_IDENTITY');
+                $session->remove('SOCIAL_IDENTITY_DISABLED');
+            } else {
+                $socialIdentity = $session->get('SOCIAL_IDENTITY');
+                $session->set('SOCIAL_IDENTITY_DISABLED', 1);
+            }
+        }
+
         $seo = SEOModel::instance()->getSEOSettings();
 
         return include("res/landing.php");
@@ -411,18 +421,8 @@ class Index extends \SlimController\SlimController
             }
             $comments = $stripped;
         }
+
         $lastLottery = LotteriesModel::instance()->getLastPublishedLottery();
-
-        if ($session->has('SOCIAL_IDENTITY')) {
-            if ($session->has('SOCIAL_IDENTITY_DISABLED')) {
-                $session->remove('SOCIAL_IDENTITY');
-                $session->remove('SOCIAL_IDENTITY_DISABLED');
-            } else {
-                $socialIdentity = $session->get('SOCIAL_IDENTITY');
-                $session->set('SOCIAL_IDENTITY_DISABLED', 1);
-            }
-        }
-
 
         $this->render('production/landing', array(
             'showLoginScreen' => $showLoginScreen,
