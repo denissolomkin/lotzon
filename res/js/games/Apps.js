@@ -2,9 +2,9 @@
 
     Apps = {
 
-        audio: [],
-        modes: [],
-        variations: [],
+        audio: {},
+        modes: {},
+        variations: {},
         sample: null,
 
         playAudio: function (key) {
