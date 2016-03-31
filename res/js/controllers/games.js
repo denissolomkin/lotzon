@@ -74,7 +74,6 @@ var Games = {
         init: function(options) {
             Games.online.tabs();
             Games.online.hideSelectedButtons();
-            console.error(options);
             Apps.audio[options.json.key] = Object.clone(options.json.audio);
             // show MoreDescription-button if desc.height > 360px
             var desc = $(".game-description > div");
