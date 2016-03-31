@@ -197,6 +197,7 @@ class AuthController extends \SlimController\SlimController {
                         }
 
                     } catch (EntityException $e) {
+                        $this->session->set('ERROR', $e->getMessage());
                         // do nothing
                     }
 
