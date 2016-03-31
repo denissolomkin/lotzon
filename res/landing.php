@@ -48,6 +48,34 @@
 		<p class="landing_middle"><?php echo $slider['players'] ?> <span>зарегистрированных</span></p>
 	</div>
 
+	<!-- ==========================================================================
+                                    ERROR POPUP
+    ========================================================================== -->
+
+	<? if($error) :?>
+		<div class="mail-popup popup" id="error-block" style="display: block;">
+			<div class="mb-table">
+				<div class="mb-tr">
+					<div class="mb-td">
+						<div class="lp-b">
+							<div class="pu-b-c" id="mb-close" onclick="$('#error-block').fadeOut(200);"></div>
+							<div class="b-m">
+
+								<!-- add class "registration" or "login" -->
+
+
+								<div class="t-b">
+									<?=$error;?>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	<? endif ?>
+
 <div class="login-popup popup" id="login-block">
     <div class="lb-table">
         <div class="lb-tr">
