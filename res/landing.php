@@ -17,13 +17,13 @@
 	<meta property="og:url" content="https://lotzon.com/">
 	<meta property="og:title" content="Lotzon">
 	<meta property="og:description" content="LOTZON. Выигрывает каждый!">
-	<meta property="og:image" content="https://lotzon.com/tpl/img/social-share.jpg">
+	<meta property="og:image" content="https://lotzon.com/res/img/lotzon_soc.png">
 
 	<meta name="twitter:card" content="summary" />
 	<meta name="twitter:site" content="@LOTZON_COM" />
 	<meta name="twitter:title" content="Lotzon" />
 	<meta name="twitter:description" content="LOTZON. Выигрывает каждый!" />
-	<meta name="twitter:image" content="https://lotzon.com/tpl/img/social-share.jpg" />
+	<meta name="twitter:image" content="https://lotzon.com/res/img/lotzon_soc.png" />
 
     <?php if (isset($isMobile)) { if($isMobile) { ?>
         <link rel="stylesheet" href="/res/css/landing/landing_mobile.css">
