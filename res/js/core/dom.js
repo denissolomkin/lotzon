@@ -176,12 +176,12 @@
         all: function (f, el, parent) {
 
             if (typeof el === 'string') {
-                el = parent && parent.querySelectorAll(el) || document.querySelectorAll(el);
+                el = (parent && typeof parent !== 'string' && parent.querySelectorAll(el)) || document.querySelectorAll(el);
             }
 
             if (el && el.length) {
                 for (var i = 0; i < el.length; i++) {
-                    f(el[i]);
+                    f(el[i], parent);
                 }
             }
         },
@@ -256,12 +256,13 @@
             }
         },
 
-        hide: function f(el, parent) {
+        hide: function f(el, skip) {
 
             if (el && typeof el === 'object' && "nodeType" in el) {
-                el.style.display = "none";
+                if(!skip || !el.classList.contains(skip))
+                    el.style.display = "none";
             } else
-                this.all(f, el, parent)
+                this.all(f, el, skip)
 
         },
 

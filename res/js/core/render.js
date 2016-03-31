@@ -151,7 +151,7 @@
             if (page && page.classList.contains('content-main')) {
 
                 if(!DOM.visible('.on-top').length) {
-                    DOM.hide(page.parentNode.children);
+                    DOM.hide(page.parentNode.children, 'pop-box');
                     DOM.show(page);
                     options.url !== false && (options.url = true);
                     R.afterHTML(options);
@@ -418,7 +418,7 @@
                         if (!render.classList.contains('pop-box')) {
                             if (compare(render.classList, ['content-box', 'content-box-item', 'content-main'])) {
                                 //such as blog-post-view, games-online & games-chance
-                                !onTop && DOM.hide(node.parentNode && node.parentNode.children);
+                                !onTop && DOM.hide(node.parentNode && node.parentNode.children, 'pop-box');
                             }
                         } else {
                             options.url = false;
@@ -452,15 +452,15 @@
                         if (!render.classList.contains('pop-box')) {
                             if (compare(render.classList, ['content-box-item', 'content-main'])) {
                                 //such as games-online & games-chance
-                                !onTop && DOM.hide(node.children);
+                                !onTop && DOM.hide(node.children, 'pop-box');
                             } else if (node.id == 'content') {
-                                !onTop && DOM.hide(node.children);
+                                !onTop && DOM.hide(node.children, 'pop-box');
                             }
                         } else {
                             options.url = false;
                         }
 
-                        onTop && !render.classList.contains('pop-box') && DOM.hide(render);
+                        onTop && !render.classList.contains('pop-box') && DOM.hide(render, 'pop-box');
 
                         if (options.init.template.indexOf('-item') !== -1)
                             template =
