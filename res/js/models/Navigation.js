@@ -88,16 +88,16 @@
                     selector = 'a[href="/' + U.parse(pathname, 'url') + '"]',
                     anchor = document.querySelector(selector);
 
-                if (anchor){
+                if (anchor) {
                     console.info('byClick');
                     DOM.click(anchor);
-                }  else {
+                } else {
                     console.info('byPush');
                     R.push(pathname);
                 }
 
                 Navigation.menu.switch();
-                Content.ready();
+                Content.updateBanners();
                 Player.ping();
                 Player.updateBalance();
             }

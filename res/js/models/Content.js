@@ -19,10 +19,6 @@
 
         },
 
-        ready: function () {
-            this.updateBanners();
-        },
-
         badge: {
             close: function () {
                 DOM.remove(DOM.up('.badge', this));
@@ -43,6 +39,7 @@
                             $('#' + href).empty().append(data.json.res);
                         },
                         data: {
+                            href: window.location.pathname,
                             page: /\w+/gi.test(document.location.pathname) && document.location.pathname.match(/\w+/gi)[0]
                         }
                     });
@@ -229,9 +226,11 @@
         },
 
         updateBanners: function () {
-            Device.isMobile()
-                ? Content.banner.load('banner-tablet-top')
-                : Content.banner.load(['banner-desktop-right', 'banner-desktop-teaser', 'banner-desktop-top']);
+            if(window.location.pathname !== '/') {
+                Device.isMobile()
+                    ? Content.banner.load('banner-tablet-top')
+                    : Content.banner.load(['banner-desktop-right', 'banner-desktop-teaser', 'banner-desktop-top']);
+            }
         },
 
         after: {
