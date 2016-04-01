@@ -20,6 +20,7 @@
                     'REVIEWS_PER_PAGE'=>'<span class="fa fa-thumbs-o-up"></span> Отзывов на странице',
                     'NOTIFICATIONS_PER_PAGE' => '<span class="glyphicon glyphicon-bell" ></span> Уведомлений на странице',
                     'MESSAGES_PER_PAGE' => '<span class="fa fa-envelope"></span> Сообщений на странице',
+                    'LOTTERIES_PER_PAGE'=>'<span class="fa fa-gift"></span> Лотерей на странице',
                     'MESSAGE_BADGE_TIMEOUT'=>'Таймаут на удаление плашки сообщения (сек)',
 
 
@@ -45,7 +46,7 @@
                     'WINNERS_ADD'=>'Добавление к общему количеству победителей',
                     'HOURS_ADD'=>'Добавление ко времени на сайте (часов)',
                     'MIN_MONEY_OUTPUT'=>'Минимальное количество денег для вывода',
-                    'LOTTERIES_PER_PAGE'=>'<span class="fa fa-gift"></span> Лотерей на странице',
+                    'HOLIDAY_LOTTERY_ID'=>'Id праздничной лотереи с 7 билетами',
 
                     '<span class="fa fa-code"></span> НАКЛИКИВАНИЕ',
                     'TeaserClick'=>'Пауза для накликивания (сек)',
