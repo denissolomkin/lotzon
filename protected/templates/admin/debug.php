@@ -16,7 +16,7 @@
                     <?= $log['Ip']; ?>
                 </div>
                 <div class="col-md-5" style="color:red;">
-                    <?= $log['Log']; ?>
+                    <? echo strip_tags($log['Log']); ?>
                 </div>
                 <div class="col-md-5" style="color: lightgrey;">
                     <?= $log['Agent']; ?>
