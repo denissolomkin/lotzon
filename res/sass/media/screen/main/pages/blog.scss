@@ -1,54 +1,45 @@
-
 #blog-posts {
-	.post-item-title {
-		font-size: 25px;
-    	line-height: 30px;
-    	margin-bottom: 14px;
-    	font-weight: normal;
-	}
+    .post-item-title {
+        line-height: 1;
+        margin-bottom: 15px;
+        font-weight: normal;
+        font-size: 20px;
+        color: #000000;
+        text-align: left;
+    }
 }
 
 @media (max-width: 479px) {
-	#blog-post-view {
-	    & .comment-content {
-	      padding-left: 70px;
-	    }
-	    & .comment-img {
-	      position: absolute;
-	    }
-	    & .comment-like {
-	      top: 0;
-	    }
-	    .post-comments .render-list-form .message-form-wrapper {
-	      padding-left: 70px;
-	    }
-	}
-}	
+    #blog-post-view {
+        & .comment-content {
+            padding-left: 70px;
+        }
+        & .comment-img {
+            position: absolute;
+        }
+        & .comment-like {
+            top: 0;
+        }
+        .post-comments .render-list-form .message-form-wrapper {
+            padding-left: 70px;
+        }
+    }
+}
 
 .comment-reply {
     display: inline!important;
 }
+
 #blog-posts {
-
-	& .post-item-img {
-		margin: 0;
-	}
-
+    & .post-item-img {
+        margin: 0;
+    }
 }
 
-#blog-post-view .post > .title {
-    font-size: 25px;
-    line-height: 30px;
-    margin-bottom: 14px;
-    font-weight: normal;
-}
 #blog-post-view .message-form-wrapper button[type="submit"] {
-	font-family: Handbook-bold;
+    font-weight: bold;
 }
 
-// .comment-description, .message-form-area {
-// 	line-height: 1.5;
-// }
-.comment-description{
-	line-height: 1.5;
+.comment-description {
+    line-height: 1.5;
 }

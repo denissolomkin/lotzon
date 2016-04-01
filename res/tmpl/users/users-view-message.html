@@ -1,6 +1,7 @@
-﻿<div id="users-view-message" class="content-box">
-
-    <div class="content-box-header"><span class="back i-arrow-left large-visible"></span><span class="back i-arrow-slim-left small-visible"></span>{{i18n "title-messages-new-message"}}</div>
+<div id="users-view-message" class="content-box">
+    {{partial 'common-content-box-header-partial' (i18n "title-messages-new-message") }}
+    
+    <!-- <div class="content-box-header"><span class="back i-arrow-slim-left large-visible"></span><span class="back i-arrow-slim-left small-visible"></span>{{i18n "title-messages-new-message"}}</div> -->
 
     <div class="content-box-content clearfix">
 
@@ -11,7 +12,7 @@
 
                 <div class="nm-selected">
                     <div class="nm-friend">
-                        <div class="nm-friend-img">
+                        <div class="nm-friend-img {{#if isOnline}} online {{/if}}">
                             <img src="{{avatar img id 100}}"
                                  class="loading"
                                  onload="this.style.background = 'none'"

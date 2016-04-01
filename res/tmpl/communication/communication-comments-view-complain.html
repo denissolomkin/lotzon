@@ -1,17 +1,18 @@
 {{#if (player "moderator")}}
-<form id="communication-comments-{{id}}-complain"
-      method="post"
-      action="/communication/comments/{{id}}/complain"
-      class="comment-complain">
-    <select name="complain">
-        <option value="">{{i18n "title-complain-select"}}</option>
-        <option value="obscene">{{i18n "title-complain-obscene"}}</option>
-        <option value="abuse">{{i18n "title-complain-abuse"}}</option>
-        <option value="spam">{{i18n "title-complain-spam"}}</option>
-        <option value="duplicate">{{i18n "title-complain-duplicate"}}</option>
-        <option value="other">{{i18n "title-complain-other"}}</option>
-    </select>
-    <button type="submit"> {{i18n "button-send"}} </button>
-    <button type="button" onclick="this.parentNode.parentNode.removeChild(this.parentNode);"> {{i18n "button-cancel"}} </button>
+<form id="communication-comments-{{id}}-complain" method="post" action="/communication/comments/{{id}}/complain" class="comment-complain">
+    <div class="complain-wrapper">
+        
+        <select name="complain">
+            <option value="">{{i18n "title-complain-select"}}</option>
+            <option value="obscene">{{i18n "title-complain-obscene"}}</option>
+            <option value="abuse">{{i18n "title-complain-abuse"}}</option>
+            <option value="spam">{{i18n "title-complain-spam"}}</option>
+            <option value="duplicate">{{i18n "title-complain-duplicate"}}</option>
+            <option value="other">{{i18n "title-complain-other"}}</option>
+        </select>
+
+        <button type="submit"> {{i18n "button-send"}} </button>
+        <button type="button" onclick="this.parentNode.parentNode.removeChild(this.parentNode);"> {{i18n "button-cancel"}}</button>
+    </div>
 </form>
 {{/if}}

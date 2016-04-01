@@ -21,9 +21,6 @@
 	width: auto;
 }
 #profile-edit {
-	& .content-box-header {
-		background: none;
-	}
 	& .daterangepicker.dropdown-menu {
 		left: -50px;
 	}
@@ -93,9 +90,6 @@
 }
 @media (max-width: 767px) {
 	#profile-settings {
-	  & .content-box-header {
-	    background: transparent;
-		}
 		& .radio-text {
 			margin: 0;
 		}
@@ -149,9 +143,6 @@
 	}
 
 	#profile-convert {
-		& .content-box-header {
-			background: none;	
-		}
 		& .cc-title {
 			text-align: center;
 			& span {

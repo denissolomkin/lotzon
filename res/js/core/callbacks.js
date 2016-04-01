@@ -106,6 +106,13 @@
             $(document).on('change', 'form input[type="checkbox"].required', Form.do.validate);
             $(document).on('change', 'form textarea.required', Form.do.validate);
             $(document).on('change', 'form input[type="file"].required', Form.do.validate);
+            // $(document).ready(function() {
+            //     $("#password").on("keypress keyup keydown", function() {
+            //         var pass = $(this).val();
+            //         $("#strength_human").text(checkPassStrength(pass));
+            //         $("#strength_score").text(scorePassword(pass));
+            //     });
+            // });
 
 
             /* autoload */
@@ -226,6 +233,7 @@
         "put": { // update
 
             "profile-edit": Profile.update.details,
+            "profile-complete": Profile.update.complete,
             "profile-settings": Profile.update.settings,
             "profile-billing": Profile.update.billing,
 
@@ -244,6 +252,7 @@
             "lottery-ticket": Ticket.validate,
             "profile-convert": Profile.validate.convert,
             "profile-cashout": Profile.validate.cashout,
+            "profile-complete": Profile.validate.complete,
             "prizes-exchange-goods": Prize.validate.exchange,
             "blog-post-view-comments": Comments.validate.reply,
             "app-view": Games.online.validate.create,

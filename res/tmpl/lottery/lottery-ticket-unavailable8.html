@@ -1,11 +1,15 @@
 <div id="lottery-ticket-item" class="ticket-item clearfix">
     <div class="condition">
 
-        {{i18n "message-lottery-ticket-8"}}
-
+        {{{i18n "message-lottery-ticket-8"}}}
+		<br>
+		<br>
         <form action="/lottery/gold" method="post">
             <input type="hidden" value="{{this.priceGold}}" name="price">
             {{i18n "title-lottery-ticket-gold-price"}} {{this.priceGold}} {{player "getCurrency"}}
+            <br>
+            <span>{{i18n "title-lottery-ticket-gold-price-last"}}</span>
+            <br>
             <br>
             <button name="submit" type="submit" class="btn-flat">{{i18n "button-lottery-ticket-gold-buy"}}</button>
         </form>

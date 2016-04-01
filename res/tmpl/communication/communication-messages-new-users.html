@@ -9,7 +9,7 @@
                      data-user-id="{{ id }}"
                      data-user-img="{{ img }}"
                      data-user-name="{{ name }}">
-                    <div class="nm-friend-img">
+                    <div class="nm-friend-img {{#if isOnline}} online {{/if}}">
                         <img src="{{avatar img id 50}}"
                              class="loading"
                              onload="this.style.background = 'none'"

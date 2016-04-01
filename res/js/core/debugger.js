@@ -30,7 +30,7 @@
             /**/
             window.onerror = function (message, url, line, col, error) {
 
-                D.debug([message, url, line]);
+                D.error([message, url, line]);
                 return true;
             };
         },
@@ -117,38 +117,6 @@
 
             return D["config"] && D["config"][key];
 
-        },
-
-        "debug": function (message) {
-
-            message = typeof message === 'object'
-                ? message.join(' ')
-                : message;
-
-            if (message === 'error')
-                return;
-
-            Form.stop();
-            R.event('error');
-
-            Content.badge.init({
-                system:
-                    [{
-                        uid: Math.random().toString(16).slice(2),
-                        message: message,
-                        timer: 3,
-                        timeout: 'close'
-                    }]
-                });
-
-            Form.post({
-                action: 'debug',
-                data: {
-                    message: message
-                }
-            });
-
-            return false;
         },
 
         "error": function (message) {

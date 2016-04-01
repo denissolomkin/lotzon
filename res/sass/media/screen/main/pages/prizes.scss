@@ -64,3 +64,35 @@
     margin: 0 -20px 20px;
   }
 }
+
+
+@media (min-width: 1200px) {
+// PRIZES FOT POINTS ------------------- //
+
+.prizes-for-points {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.prize {
+  width: 245px;
+  padding-right: 25px;
+
+
+}
+
+.prize:nth-child(3n+3) {
+  margin-right: 0;
+}
+
+
+
+.ex-prize-not-filled {
+  margin: 0 -30px;
+}
+
+#prizes-exchange .content-box-item-content {
+  padding: 0;
+}
+}
+

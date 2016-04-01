@@ -8,11 +8,11 @@
 }
 
 #blog-post-view {
-  font-family: handbookpro-regular;
+  font-weight: normal;
   font-size: 15.5px;
   & .post {
     & .title {
-      font-family: Handbook-bold;
+      font-weight: bold;
       font-size: 23px;
       line-height: 27px;
       margin-bottom: 18px;
@@ -22,7 +22,7 @@
 
 #blog-post-view .more-posts .title, #blog-post-view .post-comments .title {
     margin: 0 -20px;
-    font: 17px handbookpro-regular;
+    font-size: 17px;
     padding-top: 20px;
     padding: 10px 20px;
     background: #fafafa;
@@ -37,11 +37,11 @@
     }
   }
   #blog-post-view {
-    font-family: handbookpro-regular;
+    font-weight: normal;
     font-size: 15.5px;
     & .post {
       & .title {
-        font-family: Handbook-bold;
+        font-weight: bold;
         font-size: 25px;
         line-height: 23px;
         margin-bottom: 18px;
@@ -50,7 +50,7 @@
   }
   #blog-post-view .more-posts .title, #blog-post-view .post-comments .title {
     margin: 0 -20px;
-    font: 17px handbookpro-regular;
+    font-size: 17px;
     padding: 10px 20px;
     background: #fafafa;
     text-align: left; 

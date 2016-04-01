@@ -100,6 +100,8 @@
                 Content.updateBanners();
                 Player.ping();
                 Player.updateBalance();
+
+                !Player.isComplete && R.push('profile-popup');
             }
 
         },

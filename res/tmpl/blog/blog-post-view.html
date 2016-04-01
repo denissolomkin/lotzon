@@ -1,7 +1,9 @@
 <div id="blog-post-view" class="content-box">
+    
+    {{ partial 'common-content-box-header-partial' (i18n "menu-blog") }}
 
-    <!-- <a href="/blog" class="content-box-header"><span class="back i-arrow-left"></span>{{i18n "menu-blog"}}</a>  -->
-    <div class="content-box-header"><span class="back i-arrow-left large-visible "></span><span class="back i-arrow-slim-left small-visible "></span>{{i18n "menu-blog"}}</div>
+    <!-- <div class="content-box-header"><span class="back i-arrow-slim-left large-visible "></span><span class="back i-arrow-slim-left small-visible "></span>{{i18n "menu-blog"}}</div> -->
+    
     <div class="content-box-content clearfix">
         <div class="content-box-item post">
 
@@ -12,7 +14,9 @@
                 <div class="post-inf clearfix">
                     <div class="post-date live-date" data-stamp="{{ date }}">{{from date }}</div>
                     <div class="post-views-comments">
-                        <div class="post-comments-inf">{{ stat.comments}}</div>
+                        <div class="post-item-comments-inf">
+                            <i class="i-msg2">{{ stat.comments}}</i>
+                        </div>
                     </div>
                 </div>
 

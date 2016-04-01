@@ -1,5 +1,7 @@
 <div id="profile-settings" class="content-box">
-    <div class="content-box-header"><span class="back i-arrow-left large-visible"></span><span class="back i-arrow-slim-left small-visible "></span>{{i18n "title-profile-settings"}}</div>
+    {{partial 'common-content-box-header-partial' (i18n "title-profile-settings") }}
+    <!-- <div class="content-box-header"><span class="back i-arrow-slim-left large-visible"></span><span class="back i-arrow-slim-left small-visible "></span>{{i18n "title-profile-settings"}}</div> -->
+
     <div class="content-box-content clearfix">
         <div class="content-box-item">
             <form action="/profile/settings" method="put" class="settings clearfix">

@@ -154,7 +154,7 @@ $(function () {
             var data = this;
 
             setTimeout(function () {
-                var item = document.querySelector('#badges-' + (data.uid?"system-"+data.uid:(data.key?"notifications-"+data.key:"messages-"+data.id)));
+                var item = document.querySelector('#badges-' + (data.key?"notifications-"+data.key:"messages-"+data.id));
                 if (!item) {
                     return "no item found";
                 }

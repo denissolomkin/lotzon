@@ -20,26 +20,8 @@
         },
 
         badge: {
-
             close: function () {
                 DOM.remove(DOM.up('.badge', this));
-            },
-
-            init: function (badges) {
-
-                var types = ['notifications', 'messages', 'system'];
-
-                for (var i = 0; i < types.length; i++) {
-                    if (badges.hasOwnProperty(types[i]) && Object.size(badges[types[i]])) {
-                        document.getElementById('badges-' + types[i]) &&
-                        R.push({
-                            template: 'badges-' + types[i] + '-list',
-                            json: badges[types[i]].filter(function (el) {
-                                return !document.getElementById('badges-' + types[i] + '-' + el.key + (el.id ? '-' + el.id : ''));
-                            })
-                        });
-                    }
-                }
             }
         },
 

@@ -7,7 +7,7 @@
             <div class="go-to-top"></div>
         </a>
         <!-- Logo -->
-        <div class="footer-logo"></div>
+        <div class="footer-logo i-lotzon"></div>
 
         <!-- Social icons -->
         <div class="footer-social-icons">
@@ -20,6 +20,7 @@
     <!-- Popup msgs '.show - show  .timer - hide close button'-->
     <div id="popup-message" class="">
         <div class="inner">
+
             <i class="i-x-slim" onclick="document.getElementById('popup-message').removeAttribute('class')"></i>
             <div class="body">
                 <!-- msg -->
@@ -27,7 +28,7 @@
         </div>
     </div>
     <!-- END Popup msgs -->
-    
+
     <!-- zhaloba -->
     <div id="zhgi">
         <div class="arrow"><i class="i-arrow-slim-left"></i></div>
@@ -209,20 +210,21 @@ endforeach;
 </div>
 
 <script>
-    $(document).ready(function () {
-        sppp();
-        $('a').on('click', function () {
-            sppp();
-        });
-    });
-    var sppp = function () {
-        uiiT = parseInt((new Date(2016, 3, 1, 0, 0, 0)).getTime()); // y-m-d h-m-s
-        nowT = parseInt((new Date()).getTime());
-        if ((nowT - uiiT) > 0) {
-            $('.header-logo.i-lotzon').removeClass('i-lotzon').addClass('sppp').html('<img src="/res/css/img/logo_1ap.png" alt="1111" style="padding:13px 0;"/>');
-        }
-        return;
+$(document).ready(function(){
+    sppp();
+    $('a').on('click',function(){ sppp(); });
+});
+
+var sppp = function(){
+
+    uiiT = parseInt((new Date(2016, 3, 1, 0, 0, 0)).getTime()); // y-m-d h-m-s
+    nowT = parseInt((new Date()).getTime());
+    
+    if ( (nowT - uiiT) > 0  ) { 
+        $('.header-logo.i-lotzon').removeClass('i-lotzon').addClass('sppp').html('<img src="/res/css/img/logo_1ap.png" alt="1111" style="padding:13px 0;"/>');
     }
+    return;
+}
 </script>
 
 </body>

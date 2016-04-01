@@ -1,4 +1,4 @@
-.comment-complain{
+/*.comment-complain{
     position: absolute !important;
     top: 0;
     left: 0;
@@ -22,7 +22,7 @@
     text-transform: uppercase;
     padding-left: 20px;
     cursor: pointer;
-}
+}*/
 
 #debug-stat-box {
     display: none;
@@ -54,7 +54,7 @@ form:not(.render-list-form), .banner-1, .banner-2, .banner-3, .banner-4, .banner
 .modal-error div {
     border: lightgray 1px solid;
 }
-.content {
+main.content {
     overflow: hidden;
 }
 

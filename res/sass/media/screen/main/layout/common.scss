@@ -1,50 +1,65 @@
 html {
-  min-width: 1024px;
-  overflow: scroll;
+    min-width: 1024px;
+    overflow: scroll;
+}
+
+body {
+    .header > .sticky_box {
+        width: 984px;
+        > .container {
+            padding: 0;
+        }
+    }
+    > .wrapper {
+        width: 984px;
+        background: #ffffff;
+        margin-left: auto;
+        margin-right: auto;
+    }
 }
 
 .container {
-  width: 980px;
-  max-width: none;
+    width: 984px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: none;
+    padding: 20px 0;
 }
 
-.content {
-  float: left;
-  width: 670px;
-  margin-bottom: 30px;
-   padding: 0 10px 10px 0;
+main.content {
+    float: left;
+    box-sizing: initial;
+    width: 614px;
+    padding: 0 20px;
 }
 
-.content-box-item {
-  padding: 20px;
-}
 .content-box {
-  margin: 0;
+    margin: 0;
 }
-// SIDEBAR -------------------------------- //
 
+// SIDEBAR -------------------------------- //
 .sidebar {
-  display: block;
-  float: right;
-  width: 310px;
-  padding-left: 10px;
+    display: block;
+    float: right;
+    margin: 0 20px 0 10px;
+    width: 300px;
 }
 
 // BANNERS ------------------------------ //
 .banner-1 {
-  height: 135px;
-  margin-bottom: 30px;
+    height: 135px;
+    margin-bottom: 30px;
 }
 
 .banner-1,
 .banner-2 {
-  display: none;
+    display: none;
 }
 
 .banner-3,
 .banner-4,
 .banner-5 {
-  display: block;
+    display: block;
 }
 
 .banner-3 {
@@ -53,18 +68,42 @@ html {
     left: -200%;
     text-align: center;
     line-height: 0;
-    >*{
+    >* {
         display: inline-block;
         // margin: 0px auto;
     }
 }
 
 .banner-4 {
-  height: 600px;
-  margin-bottom: 30px;
+    height: 600px;
+    margin-bottom: 30px;
 }
 
 .banner-5 {
-  height: 300px;
-  margin-bottom: 30px;
+    height: 300px;
+    margin-bottom: 30px;
+}
+
+@media (min-width: 1200px) {
+    body {
+        .header > .sticky_box {
+            width: 1080px;
+        }
+        > .wrapper {
+            width: 1080px;
+        }
+    }
+    .container {
+        width: 1080px;
+    }
+    main.content {
+        width: 710px;
+    }
+    .content-box-tab {
+        padding: 0 30px;
+    }
+    .content-box-item-top {
+        padding: 20px 30px 0;
+    }
+    // BANNERS ------------------------------ //
 }

@@ -71,7 +71,7 @@
 	    height: 62px;
 	    margin-right: 7px;
 	    float: left;
-	    font: 25px  Handbook-bold;
+	    font-size: 25px;
 	    line-height: 60px;
 	    color: #000;
 	    text-align: center;
@@ -135,7 +135,7 @@
 			& .g-oc_li {
 				width: 62px;
 				height: 62px;
-				font: 25px Handbook-bold;
+				font-size: 25px ;
     			line-height: 62px;
 				margin-right: 7px;
 				&:last-child {
@@ -154,7 +154,8 @@
 	}			
 
 	& .ghd-won {
-		font: 15.5px / 1 handbookpro-regular;
+		font-size: 15.5px;
+		line-height: 1;
 		& .grid-container {
 			max-width: 320px;
 		}
@@ -180,12 +181,6 @@
 		
 	}
 }
-
-#lottery-view .content-box-header span {
-	display: none;
-}
-
-
 
 @media (min-width: 600px) {
 
@@ -216,7 +211,7 @@
 		    height: 72px;
 		    margin-right: 13px;
 		    float: left;
-		    font: 25px  Handbook-bold;
+		    font-size: 25px;
 		    line-height: 70px;
 		    color: #000;
 		    text-align: center;
@@ -288,7 +283,7 @@
 				& .g-oc_li {
 					width: 72px;
 					height: 72px;
-					font: 25px Handbook-bold;
+					font-size: 25px;
 	    			line-height: 72px;
 					margin-right: 13px;
 					&:last-child {
@@ -307,7 +302,8 @@
 		}			
 
 		& .ghd-won {
-			font: 15.5px / 1 handbookpro-regular;
+			font-size: 15.5px;
+			line-height: 1;
 			& .grid-container {
 				max-width: 320px;
 			}

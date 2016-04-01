@@ -28,21 +28,19 @@
             {{/tickets}}
         </ul>
 
-        {{#if win}}
         <div class="ghd-text ghd-won">
             <div class="grid-container">
-                {{#each win}}
-                <div class="width-50">
-                    <span>{{i18n 'title-lottery-won' currency}}:</span>
-                    <strong>{{number prize}}</strong>
+                <div>
+                    <span>{{i18n 'title-lottery-won-POINT'}}</span>
+                    <strong>{{number win.POINT.prize}}</strong>
                 </div>
-                {{/each}}
+                <div>
+                    <span>{{i18n 'title-lottery-won-MONEY'}}</span>
+                    <strong>{{number win.MONEY.prize}}</strong>
+                </div>
+                
             </div>
         </div>
-        {{else}}
-            <div class="ghd-text ghd-fale">{{i18n "title-lottery-not-won"}}</div>
-        {{/if}}
-
     {{else}}
         <div class="ghd-won">{{i18n "title-lottery-not-play"}}</div>
     {{/if}}

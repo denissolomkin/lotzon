@@ -84,7 +84,6 @@
                     Apps.SeaBattle.drawShips();
                     Game.initTimers();
                     Game.end() && Apps.SeaBattle.end();
-
                 }
 
             },
@@ -344,12 +343,7 @@
 
 
                     $.each(matrix, function(i, v) {
-                        // console.error(">>>>> i v >>>>", i, v);
-                        // console.error(">>>>> x y >>>>", i, v);
-
                         if (y + v[0] > 0 && y + v[0] <= size_y && x + v[1] > 0 && x + v[1] <= size_x)
-                        // console.error('field[y + v[0]][x + v[1]] >>>>field['+ y + "" + v[0] + "][" + x + "" + v[1] + "]");
-                        // console.error('ship', ship);
                             if (field[y + v[0]][x + v[1]]) {
                             ret = true;
                         }

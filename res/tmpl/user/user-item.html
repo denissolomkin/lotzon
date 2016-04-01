@@ -1,5 +1,7 @@
 <div id="user-{{id}}">
-    <div class="content-box-header"><span class="back i-arrow-left large-visible"></span><span class="back i-arrow-slim-left small-visible "></span>{{or title.nickname name}}</div>
+    {{partial 'common-content-box-header-partial' (or title.nickname name) }}
+    <!-- <div class="content-box-header"><span class="back i-arrow-slim-left large-visible"></span><span class="back i-arrow-slim-left small-visible "></span>{{or title.nickname name}}</div> -->
+
     <div class="content-box-content clearfix">
         <div class="content-box-item">
             <div class="ae-personal-inf">

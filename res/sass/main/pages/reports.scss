@@ -57,8 +57,8 @@
 .ph-header {
   margin: 0 -10px 20px;
   padding: 0 10px;
-  font-size: 15px;
-  font-family:  'Handbook-bold'
+  font-size: 15.5px;
+  font-weight: bold;
 }
 .ph-header-item {
   float: left;
@@ -150,7 +150,7 @@ border: none;
     & .report-top-wrapper {
       margin-top: 20px;
       letter-spacing: 0.7px;
-      font-family: 'handbookpro-regular';
+      font-weight: normal;
       font-size: 15.5px;
       color: #4D4D4D;
       padding: 0 20px;
@@ -168,7 +168,7 @@ border: none;
     }
   }
   & .r-header-item {
-    font-size: 15px;
+    font-size: 15.5px;
     & .tooltip-block{
       position: relative;
       color: #4990e2;
@@ -195,7 +195,7 @@ border: none;
     border-bottom:0;
 
     color: #000;
-    font-family: 'Handbook-bold';
+    font-weight: bold;
   }
 }
 
@@ -339,7 +339,7 @@ border: none;
     top: 35px;
   }
   & .daterangepicker .calendar th, .daterangepicker .calendar td {
-    font-size: 15px;
+    font-size: 15.5px;
   }
   & .daterangepicker.dropdown-menu.opensright:before {
     right: auto;

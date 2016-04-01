@@ -6,7 +6,7 @@
 .cabinet-bonuses .title {
   font-size: 17px;
   margin-bottom: 20px;
-  // font-family: 'Handbook-bold';
+  // font-weight: bold;
 }
 
 // ----------------------------------- //
@@ -139,22 +139,6 @@
 }
 
 
-.bonus-share-url-copy {
-  width: 100%;
-  position: relative;
-  padding-left: 200px;
-  box-sizing: border-box;
-
-  label{
-    position: absolute;
-    left: 0;
-    top: 3px;
-    width: 180px;
-  }
-  input{
-    width: 100%;
-  }
-}
 .bonus-share-url-copy input {
   padding: 6px 10px;
   margin-bottom: 20px;
@@ -187,8 +171,8 @@
 .bonus-banner-view-btn {
   cursor: pointer;
   color: #4a90e2;
-  font-family: 'Handbook-bold';
-  font-size: 15px;
+  font-weight: bold;
+  font-size: 15.5px;
   &:hover {
     text-decoration: none;
   }
@@ -268,7 +252,7 @@
   display: inline-block;
   color: black;
   color: #4a90e2;
-  font-family: 'Handbook-bold';
+  font-weight: bold;
   cursor: pointer;
 }
 
@@ -293,7 +277,7 @@
   margin: 0 50px 0 10px;
   cursor: pointer;
   color: #4a90e2;
-  font-family: 'Handbook-bold';
+  font-weight: bold;
 }
 
 #profile-bonuses {
@@ -327,8 +311,8 @@
     } 
   }
   & .bold {
-    // font-family: 'Handbook-bold';
-    font-size: 15px;
+    // font-weight: bold;
+    font-size: 15.5px;
     color: #000;
   }
   & .info_block {

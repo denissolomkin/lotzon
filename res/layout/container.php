@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container clearfix">
     <main class="content clearfix">
 
         <div id="banner-tablet-top" class="banner-1">
@@ -10,9 +10,6 @@
         
         <div class="badges-container">
             <div id="badges-messages">
-            </div>
-
-            <div id="badges-system">
             </div>
 
             <div id="badges-notifications">

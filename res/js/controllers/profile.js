@@ -11,12 +11,12 @@
                 $(document).off('change', '.ae-personal-inf input.datepicker', Profile.do.checkCalendar);
 
                 if (Player.birthday) {
-                 $('input.datepicker').daterangepicker({
+                    $('input.datepicker').daterangepicker({
                         singleDatePicker: true,
                         "showDropdowns": true,
                         startDate: new Date(Player.birthday * 1000),
                         autoUpdateInput: true
-                        });
+                    });
                 } else {
                     $('input.datepicker').daterangepicker({
                         singleDatePicker: true,
@@ -25,12 +25,12 @@
                     });
                     $('input.datepicker').val('');
                 }
-                
+
                 $(document).on('change', '.ae-personal-inf input.datepicker', Profile.do.checkCalendar);
-        
+
                 R.push({
-                    template:'profile-edit-countries',
-                    href: '/res/countries/'  + Player.language.current
+                    template: 'profile-edit-countries',
+                    href: '/res/countries/' + Player.language.current
                 });
 
             },
@@ -46,6 +46,10 @@
                 $('input[type="text"][name="billing[webmoney]"]').inputmask('a999999999999');
 
             },
+
+            complete: function() {
+
+            }
 
         },
 
@@ -82,6 +86,57 @@
                 if ($('.new-pass').val() != $('.repeat-pass').val()) {
                     $('.hidden-notice').css('display', 'block');
                 } else $('.hidden-notice').css('display', 'none');
+            },
+
+            complete: function() {
+                // alert(1);
+
+                return true;
+            }
+
+                passCheck: {
+
+                scorePassword: function(pass) {
+                    var score = 0;
+                    if (!pass)
+                        return score;
+
+                    // award every unique letter until 5 repetitions
+                    var letters = new Object();
+                    for (var i = 0; i < pass.length; i++) {
+                        letters[pass[i]] = (letters[pass[i]] || 0) + 1;
+                        score += 5.0 / letters[pass[i]];
+                    }
+
+                    // bonus points for mixing it up
+                    var variations = {
+                        digits: /\d/.test(pass),
+                        lower: /[a-z]/.test(pass),
+                        upper: /[A-Z]/.test(pass),
+                        nonWords: /\W/.test(pass),
+                    }
+
+                    variationCount = 0;
+                    for (var check in variations) {
+                        variationCount += (variations[check] == true) ? 1 : 0;
+                    }
+                    score += (variationCount - 1) * 10;
+
+                    return parseInt(score);
+                },
+
+                checkPassStrength: function(pass) {
+                    var score = scorePassword(pass);
+                    if (score > 80)
+                        return "strong";
+                    if (score > 60)
+                        return "good";
+                    if (score >= 30)
+                        return "weak";
+
+                    return "";
+                }
+
             }
         },
 
@@ -122,20 +177,20 @@
                         var url = Player.getAvatar();
 
                         image.attr('src', url);
-                        $('.avatar-bg').css({'background' : 'url(' + url + ')  no-repeat 50%', 'background-size' : 'cover'});
+                        $('.avatar-bg').css({ 'background': 'url(' + url + ')  no-repeat 50%', 'background-size': 'cover' });
 
                         holder.addClass('true');
                         holder.append(image);
 
-                       /* $('form[name="profile"]').find('.pi-ph.true').off('click').on('click', function(e) {
-                            e.stopPropagation();
+                        /* $('form[name="profile"]').find('.pi-ph.true').off('click').on('click', function(e) {
+                             e.stopPropagation();
 
-                            removePlayerAvatar(function(data) {
-                                $('form[name="profile"]').find('.pi-ph').find('img').remove();
-                                $('form[name="profile"]').find('.pi-ph').removeClass('true');
-                            }, function() {}, function() {});
-                        });
-                        */
+                             removePlayerAvatar(function(data) {
+                                 $('form[name="profile"]').find('.pi-ph').find('img').remove();
+                                 $('form[name="profile"]').find('.pi-ph').removeClass('true');
+                             }, function() {}, function() {});
+                         });
+                         */
                     };
 
                     e.uploadItem.progressCallback = function(perc) {}
@@ -233,18 +288,17 @@
                 $('.ae-combination-box li:not(.selected)').removeClass('unavailable');
             },
 
-            checkCalendar : function(e) {
+            checkCalendar: function(e) {
 
                 console.log(e);
 
                 var placeholder = $('div.placeholder');
 
                 if ($(this).val() != "") {
-                    placeholder.css('display','none');
-                      console.log(placeholder.css('display'));
-                }
-                else {
-                    placeholder.css('display','block');
+                    placeholder.css('display', 'none');
+                    console.log(placeholder.css('display'));
+                } else {
+                    placeholder.css('display', 'block');
                 }
             }
 

@@ -1,134 +1,140 @@
-
-
 .ph-won,
 .ph-won-text {
-  width: 35%;
-  padding: 0 20px 0 20px ;
+    width: 35%;
+    padding: 0 20px 0 20px;
 }
 
 .ph-method,
 .ph-method-text {
-  width: 35%;
-  padding: 0 50px 0 0 ;
+    width: 35%;
+    padding: 0 50px 0 0;
 }
 
 .ph-status,
 .ph-status-text {
-  width: 15%;
+    width: 15%;
 }
 
 .ph-header {
-  margin: 0 -20px 0;
-  padding: 0 20px;
-  height: 45px;
-  line-height: 45px;
-  background: #FAFAFA;
+    margin: 0 -20px 0;
+    padding: 0 20px;
+    height: 45px;
+    line-height: 45px;
+    background: #FAFAFA;
 }
-// ------------------ //
 
+// ------------------ //
 .r-nickname,
 .r-nickname-text {
-  width: 37%;
+    width: 37%;
 }
 
 .r-registered,
-.r-subreferrals-text{
-  width: 15%;
+.r-subreferrals-text {
+    width: 15%;
 }
 
 .r-games,
 .r-games-text {
-  width: 10%;
-
+    width: 10%;
 }
 
 .r-active,
 .r-active-text {
-  width: 22%;
+    width: 22%;
 }
 
 .r-profit,
 .r-profit-text {
-  width: 13%;
+    width: 13%;
 }
-
 
 .r-header,
 .r-item {
-  margin-left: -20px;
-  margin-right: -20px;
-  padding-left: 20px;
-  padding-right: 20px;
+    margin-left: -20px;
+    margin-right: -20px;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 // ------------------ //
 .r-header {
-  display: block;
+    display: block;
 }
+
 .r-header-item {
-  float: left;
+    float: left;
 }
+
 // ------------------ //
 .r-item {
-  padding: 14px 20px;
-  line-height: 1.4;
-  &:hover:before {
-    top: 10px;
-    right: 10px;
-  }
+    padding: 14px 20px;
+    line-height: 1.4;
+    &:hover:before {
+        top: 10px;
+        right: 10px;
+    }
 }
+
 .r-inf-names {
-  display: none;
+    display: none;
 }
+
 .r-inf {
-  float: none;
+    float: none;
 }
+
 .r-inf-item {
-  float: left;
+    float: left;
 }
+
 .r-active {
-  text-align: center;
+    text-align: center;
 }
+
 // ------------------ //
 .r-nickname,
 .r-nickname-text {
-  width: 45%;
+    width: 45%;
 }
+
 .r-registered,
-.r-subreferrals-text{
-  width: 23%;
+.r-subreferrals-text {
+    width: 23%;
 }
+
 .r-games,
 .r-games-text {
-  width: 20%;
+    width: 20%;
 }
+
 .r-active,
 .r-active-text {
-  width: 17%;
+    width: 17%;
 }
+
 .r-profit,
 .r-profit-text {
-  width: 15%;
+    width: 15%;
 }
 
-
-
 .cabinet-transaction-history .content-box-cat {
-  float: right;
-  margin: auto;
+    float: right;
+    margin: auto;
 }
 
 .cabinet-transaction-history .content-box-cat a {
-  display: table-cell;
-  padding: 0 10px;
-  margin-right: 5px;
+    display: table-cell;
+    padding: 0 10px;
+    margin-right: 5px;
 }
 
-.cabinet-referrals  {
-  .content-box-cat {
-    margin-bottom: 20px;
-  }
+.cabinet-referrals {
+    .content-box-cat {
+        margin-bottom: 20px;
+    }
 }
+
 .cabinet-referrals .content-box-item-top {
     padding: 0 10px 0;
 }
@@ -139,4 +145,56 @@
     // cursor: pointer;
     position: relative;
     line-height: 1.4;
+}
+
+@media (min-width: 1200px) {
+    .ph-won,
+    .ph-won-text {
+        width: 35%;
+        padding: 0 20px 0 20px;
+    }
+    .ph-method,
+    .ph-method-text {
+        width: 35%;
+        padding: 0 50px 0 0;
+    }
+    .ph-status,
+    .ph-status-text {
+        width: 15%;
+    }
+    .ph-header {
+        margin: 0 -30px 0;
+        padding: 0 30px;
+        height: 45px;
+        line-height: 45px;
+        background: #FAFAFA;
+    }
+    .ph-item {
+        margin: 0 -30px;
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+    // ------------------ //
+    .ph-won,
+    .ph-won-text {
+        width: 35%;
+    }
+    .ph-method,
+    .ph-method-text {
+        width: 35%;
+    }
+    .ph-status,
+    .ph-status-text {
+        width: 15%;
+    }
+    .cabinet-referrals .content-box-item-top {
+        padding: 0 10px 0;
+    }
+    .th-item {
+        margin: 0 -30px;
+        padding: 13px 30px 0;
+        cursor: pointer;
+        position: relative;
+        line-height: 1.4;
+    }
 }

@@ -140,7 +140,6 @@
 
                     var ballData = lotteryData.statistics[type][i],
                         sum = ballData.sum * ballData.matches;
-
                     if (!lotterySummary[type])
                         lotterySummary[type] = {};
 
@@ -152,9 +151,15 @@
                     };
 
                     if(ballData.currency && ballData.matches !== null) {
-                        if (!lotterySummary.totalSum[ballData.currency])
+                        if (!lotterySummary.totalSum[ballData.currency]){
                             lotterySummary.totalSum[ballData.currency] = 0;
+                        }
                         lotterySummary.totalSum[ballData.currency] += sum;
+                        
+                        if (!lotterySummary.totalSum['matches']){
+                            lotterySummary.totalSum['matches'] = 0;
+                        }
+                        lotterySummary.totalSum['matches'] += ballData.matches;
                     }
 
                 }
@@ -198,8 +203,8 @@
 
                     if (!isNumeric(i))
                         continue;
-
-                    $('tr.balls-matches-' + i + ' td:eq(0)', $table)
+                    // td:eq(1) - пушо 2 смежные колонки
+                    $('tr.balls-matches-' + i + ' td:eq(1)', $table)
                         .delay(1000)
                         .next().html(lotterySummary.default[i].matches || 0).spincrement({'thousandSeparator': ' '})
                         .next().html(
@@ -209,12 +214,18 @@
                 }
 
                 $won.delay(2000).fadeIn(1000);
+                
                 setTimeout(function() {
                     for (var currency in lotterySummary.totalSum) {
                         if(lotterySummary.totalSum.hasOwnProperty(currency))
                             $('span.' + currency, $won)
                                 .html(parseFloat(lotterySummary.totalSum[currency].toFixed(2)))
                                 .spincrement({'thousandSeparator': ' '});
+                        if(lotterySummary.totalSum.hasOwnProperty('matches')){
+                            $('span.matches', $won)
+                                .html(lotterySummary.totalSum.matches)
+                                .spincrement({'thousandSeparator': ' '});
+                        }
                     }
                 }, 3000);
                $(window).off('scroll', summaryVisible); 
