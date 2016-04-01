@@ -18,7 +18,7 @@
             <span class="comment-date"><span>{{from this.date}}</span></span>
             <span class="comment-reply">
                 <span class="comment-reply-btn">{{i18n "button-answer"}}</span>
-                {{#if (player "moderator")}}
+                {{#if (player "is.moderator")}}
                 {{#if (like moderator 0)}}
                 <span class="comment-complain-btn">{{i18n "button-complain"}}</span>
                 {{/if}}
