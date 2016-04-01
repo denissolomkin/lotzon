@@ -46,6 +46,11 @@ class MaillistTask extends Entity
             'type'        => 'text',
             'default'     => '1',
         ),
+        'Id' => array(
+            'description' => 'Id',
+            'type'        => 'text',
+            'default'     => '0'
+        ),
     );
 
     static $EVENTS = array(

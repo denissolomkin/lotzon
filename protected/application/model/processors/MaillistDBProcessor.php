@@ -153,6 +153,9 @@ class MaillistDBProcessor implements IProcessor
                 case 'Valid':
                     $where[] = 'p.Valid '.$filter['equal'].' ('.$ids.')';
                     break;
+                case 'Id':
+                    $where[] = 'p.Id '.$filter['equal'].' ('.$ids.')';
+                    break;
             }
             $values = array_merge($values, $val);
         }
