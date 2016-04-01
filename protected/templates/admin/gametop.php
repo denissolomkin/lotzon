@@ -82,10 +82,14 @@
 
                         <br>
 
-
-                        <div class="input-group hide">
-                            <span class="input-group-addon"><i class="fa fa-plus-square"></i></span>
-                            <input type="text" class="form-control" name="Increment" placeholder="Наращивание" value="">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-sliders"></i></span>
+                            <select class="form-control" name="Increment">
+                                <option value="">Вероятность</option>
+                                <? for ($i = 10; $i <=100; $i+=10) :?>
+                                    <option value="<?=$i?>"><?=$i?>%</option>
+                                <? endfor; ?>
+                            </select>
                         </div>
 
                         <div class="input-group">
@@ -102,10 +106,6 @@
                             <span class="input-group-addon"><i class="fa fa-stop"></i></span>
                             <input type="text" class="form-control" name="End" placeholder="До" value="">
                         </div>
-
-                        <div class="input-group">
-                        </div>
-                        
                 <button class="btn btn-success save-button"><span class="glyphicon glyphicon-floppy-disk"></span> Сохранить</button>
             </div>
         </div>
@@ -145,7 +145,7 @@
         $('[name="GameId"]',    form).val(player.GameId).change();
         $('[name="Currency"]',  form).val(player.Currency).change();
         $('[name="Rating"]',    form).val(player.Rating);
-        $('[name="Increment"]', form).val(player.Increment);
+        $('[name="Increment"]', form).val(player.Increment).change();
         $('[name="Start"]',     form).val(player.Start);
         $('[name="End"]',       form).val(player.End);
 

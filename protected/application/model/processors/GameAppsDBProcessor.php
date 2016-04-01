@@ -499,7 +499,12 @@ class GameAppsDBProcessor implements IProcessor
 
         $sql = "UPDATE `OnlineGamesTop`
                   SET Rating = Rating + IF( RAND() < 0.5,1,26 ), `LastUpdate` = :now
-                  WHERE `Month` = :month AND `Start` <= :time AND `End` >= :time AND `Period` > 0 AND `LastUpdate` < :now - Period*60
+                  WHERE `Month` = :month
+                        AND `Increment` >= ROUND(RAND() * 100)
+                        AND `Start` <= :time
+                        AND `End` >= :time
+                        AND `Period` > 0
+                        AND `LastUpdate` < :now - Period*60
                 ";
 
         try {
