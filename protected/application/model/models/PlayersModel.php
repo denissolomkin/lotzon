@@ -59,6 +59,16 @@ class PlayersModel extends Model
         return $this->getProcessor()->getList($limit, $offset, $sort, $search);
     }
 
+    public function addDebug($player, $log = null)
+    {
+        return $this->getProcessor()->addDebug($player, $log);
+    }
+
+    public function listDebug()
+    {
+        return $this->getProcessor()->listDebug();
+    }
+
     public function getLog($playerId, $action=null)
     {
         return $this->getProcessor()->getLog($playerId, $action);

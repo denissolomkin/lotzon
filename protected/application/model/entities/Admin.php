@@ -66,6 +66,7 @@ class Admin extends Entity
                 /*'reports/BotWins'=>array('icon'=>'plug','name'=>'Выигрыши ботов'),*/
                 'reports/TopOnlineGames'=>array('icon'=>'trophy','name'=>'ТОП онлайн-игр'),
                 'reports/LotteryWins'=>array('icon'=>'gift','name'=>'Розыгрыши'),
+                'debug'=>array('icon'=>'terminal','name'=>'Дебаг'),
             )),
     );
 

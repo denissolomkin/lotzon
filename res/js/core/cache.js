@@ -70,19 +70,7 @@
                 }
 
                 if (init.hasOwnProperty('badges') && Object.size(init.badges)) {
-
-                    var badges = ['notifications', 'messages'];
-
-                    for (var i = 0; i < badges.length; i++) {
-                        if (init.badges.hasOwnProperty(badges[i]) && Object.size(init.badges[badges[i]])) {
-                            R.push({
-                                template: 'badges-' + badges[i] + '-list',
-                                json: init.badges[badges[i]].filter(function (el) {
-                                    return !document.getElementById('badges-' + badges[i] + '-' + el.key + (el.id ? '-' + el.id : ''));
-                                })
-                            });
-                        }
-                    }
+                    Content.badge.init(init.badges);
                 }
 
                 /* for response by R.json */

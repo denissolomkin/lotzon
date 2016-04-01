@@ -71,6 +71,51 @@ class PlayersDBProcessor implements IProcessor
         return $player;
     }
 
+    public function listDebug()
+    {
+        $sql = "SELECT * FROM `Debug`
+                ORDER BY Id DESC
+                LIMIT 100";
+
+        try {
+            $sth = DB::Connect()
+                ->prepare($sql);
+            $sth->execute();
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
+        }
+
+        $logs=array();
+        foreach ($sth->fetchAll() as $data) {
+            $data['Date']=date('d.m.Y H:i:s', $data['Date']);
+            $logs[] = $data;
+        }
+        return $logs;
+    }
+
+    public function addDebug(Entity $player, $log)
+    {
+        $sql = "INSERT INTO `Debug` (`PlayerId`, `Date`, `Agent`, `Ip`, `Log`)
+                VALUES (:id, :date, :agent, :ip, :log)";
+
+        try {
+            DB::Connect()
+                ->prepare($sql)
+                ->execute(
+                    array(
+                        ':id'      => $player->getId(),
+                        ':date'    => time(),
+                        ':agent'   => $player->getAgent(),
+                        ':ip'      => $player->getLastIp(),
+                        ':log'     => $log
+                    ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query ".$e->getMessage(), 500);
+        }
+
+        return true;
+    }
+
     public function writeLog(Entity $player, $options)
     {
         $sql = "INSERT INTO `PlayerLogs` (`PlayerId`, `Action`, `Status`, `Desc`, `Time`)

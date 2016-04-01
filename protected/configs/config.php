@@ -211,6 +211,9 @@ Config::instance()->privateResources =  array(
         'get' => 'controllers\admin\Blacklist:index',
         'post' => 'controllers\admin\Blacklist:save',
     ),
+    '/private/debug/'      => array(
+        'get' => 'controllers\admin\Debug:index'
+    ),
     '/private/moderators/'      => array(
         'get' => 'controllers\admin\Moderators:index',
         'post' => 'controllers\admin\Moderators:save',
@@ -315,6 +318,9 @@ Config::instance()->privateResources =  array(
 Config::instance()->publicResources = array(
     '/' => 'controllers\production\Index:index',
     '/ping' => 'controllers\production\PingController:index',
+    '/debug' => array(
+        'post' => 'controllers\production\DebugController:add',
+    ),
     '/stats/promo/' => 'controllers\production\Index:stats',
     /**
      * Authentication

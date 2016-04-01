@@ -12,6 +12,9 @@
             <div id="badges-messages">
             </div>
 
+            <div id="badges-system">
+            </div>
+
             <div id="badges-notifications">
             </div>
         </div>
