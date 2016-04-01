@@ -285,11 +285,15 @@
 
                 el.style.opacity = 1;
 
-                (function fade() {
+                setTimeout(function(){
+                    el.style.display = "none";
+                }, 1000);
+
+                (function fadeOut() {
                     if ((el.style.opacity -= .1) < 0) {
                         el.style.display = "none";
                     } else {
-                        requestAnimationFrame(fade);
+                        requestAnimationFrame(fadeOut);
                     }
                 })();
 
@@ -305,11 +309,15 @@
                 el.style.opacity = 0;
                 el.style.display = null;
 
-                (function fade() {
+                setTimeout(function(){
+                    el.style.opacity = 1;
+                }, 1000);
+
+                (function fadeIn() {
                     var val = parseFloat(el.style.opacity);
                     if (!((val += .1) > 1)) {
                         el.style.opacity = val;
-                        requestAnimationFrame(fade);
+                        requestAnimationFrame(fadeIn);
                     }
                 })();
 
