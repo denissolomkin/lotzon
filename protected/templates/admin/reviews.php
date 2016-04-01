@@ -183,6 +183,12 @@ $defaults = array(
                                     </button>
                                 <? endif ?>
 
+                                <? if ($player->getCounters('Message')>0): ?>
+                                    <button class="btn btn-xs btn-success messages-trigger" data-id="<?=$player->getId()?>">
+                                        <span class="fa fa-inbox" aria-hidden="true"></span><?=$player->getCounters('Message')>1?$player->getCounters('Message'):''?>
+                                    </button>
+                                <? endif ?>
+
                                 <? if ($player->getCounters()['Log']>0): ?>
                                     <button class="btn btn-xs btn-<?=($player->getCounters()['Log']>1?'danger':(($player->getCounters()['Log']==1 AND $player->getValid())?'success':'warning'))?> logs-trigger" data-id="<?=$player->getId()?>">
                                         <span class="glyphicon glyphicon-time" aria-hidden="true"></span><?=$player->getCounters()['Log']>1?$player->getCounters()['Log']:''?>

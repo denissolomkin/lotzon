@@ -218,6 +218,12 @@
                             </button>
                             <? endif ?>
 
+                                <? if ($player->getCounters('Message')>0): ?>
+                                    <button class="btn btn-xs btn-success messages-trigger" data-id="<?=$player->getId()?>">
+                                        <span class="fa fa-inbox" aria-hidden="true"></span><?=$player->getCounters('Message')>1?$player->getCounters('Message'):''?>
+                                    </button>
+                                <? endif ?>
+
                                 <? if (($orders=$player->getCounters('ShopOrder')+$player->getCounters('MoneyOrder'))>0): ?>
                             <button class="btn btn-xs btn-success orders-trigger" data-id="<?=$player->getId()?>">
                                 <span class="glyphicon glyphicon-tag" aria-hidden="true"></span><?=($orders>1?$orders:'');?>

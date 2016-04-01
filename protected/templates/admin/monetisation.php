@@ -173,6 +173,12 @@
                                     </button>
                                 <? endif ?>
 
+                                <? if ($player->getCounters('Message')>0): ?>
+                                    <button class="btn btn-xs btn-success messages-trigger" data-id="<?=$player->getId()?>">
+                                        <span class="fa fa-inbox" aria-hidden="true"></span><?=$player->getCounters('Message')>1?$player->getCounters('Message'):''?>
+                                    </button>
+                                <? endif ?>
+
                                 <!--button class="btn btn-xs btn-warning transactions-trigger" data-id="<?=$player->getId()?>">T</button>
                             <button class="btn btn-xs btn-warning stats-trigger" data-id="<?=$player->getId()?>">Р</button-->
                                 <? if ($player->getCounters()['Log']>0): ?>
@@ -389,6 +395,12 @@
                                 <? if ($player->getCounters()['Review']>0):
                                     ?><button class="btn btn-xs btn-success reviews-trigger" data-id="<?=$player->getId()?>">
                                         <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span><?=$player->getCounters()['Review']>1?$player->getCounters()['Review']:''?>
+                                    </button>
+                                <? endif ?>
+
+                                <? if ($player->getCounters('Message')>0): ?>
+                                    <button class="btn btn-xs btn-success reviews-messages" data-id="<?=$player->getId()?>">
+                                        <span class="fa fa-inbox" aria-hidden="true"></span><?=$player->getCounters('Message')>1?$player->getCounters('Message'):''?>
                                     </button>
                                 <? endif ?>
 

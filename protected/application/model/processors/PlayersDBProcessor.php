@@ -489,9 +489,9 @@ class PlayersDBProcessor implements IProcessor
 
         $sql = "TRUNCATE TABLE `GamesTmpBots`;
         INSERT INTO `GamesTmpBots` (id, name, avatar, country, lang, utc)
-              SELECT Id, Nicname, Avatar, Country, IFNULL(NULLIF(Lang,''),'RU'), IFNULL(UTC,1)
+              SELECT Id, Nicname, Avatar, Country, IFNULL(NULLIF(Lang,''),'RU'), UTC
               FROM `Players`
-              WHERE Bot = 1;";
+              WHERE Bot = 1 AND UTC > 0;";
 
         try {
 
@@ -622,6 +622,7 @@ class PlayersDBProcessor implements IProcessor
                 (SELECT COUNT(Id) FROM `ShopOrders`     WHERE `PlayerId` = `Players`.`Id`) ShopOrder,
                 (SELECT COUNT(Id) FROM `MoneyOrders`    WHERE `PlayerId` = `Players`.`Id` AND `Type`!='points') MoneyOrder,
                 (SELECT COUNT(Id) FROM `PlayerReviews`  WHERE `PlayerId` = `Players`.`Id` ) Review,
+                (SELECT COUNT(Id) FROM `Messages`       WHERE `PlayerId` = `Players`.`Id` OR `ToPlayerId` = `Players`.`Id` ) Message,
                 (SELECT count(*)  FROM `Players` p      WHERE p.`Phone` = `Players`.`Phone` OR p.Qiwi=`Players`.Qiwi OR `p`.WebMoney = `Players`.WebMoney OR `p`.YandexMoney= `Players`.YandexMoney) as Mult,
                 (SELECT AVG(Win)  FROM PlayerGames      WHERE PlayerId=`Players`.`Id` AND GameId=1 AND Price>0) WhoMore,
                 (SELECT AVG(Win)  FROM PlayerGames      WHERE PlayerId=`Players`.`Id` AND GameId=2 AND Price>0) SeaBattle,
@@ -804,6 +805,7 @@ class PlayersDBProcessor implements IProcessor
                 (SELECT COUNT(Id) FROM `ShopOrders`     WHERE `PlayerId` = `Players`.`Id`) ShopOrder,
                 (SELECT COUNT(Id) FROM `MoneyOrders`    WHERE `PlayerId` = `Players`.`Id` AND `Type`!='points') MoneyOrder,
                 (SELECT COUNT(Id) FROM `PlayerReviews`  WHERE `PlayerId` = `Players`.`Id` ) Review,
+                (SELECT COUNT(Id) FROM `Messages`       WHERE `PlayerId` = `Players`.`Id` OR `ToPlayerId` = `Players`.`Id` ) Message,
                 (SELECT count(*)  FROM `Players` p      WHERE p.`Phone` = `Players`.`Phone` OR p.Qiwi=`Players`.Qiwi OR `p`.WebMoney = `Players`.WebMoney OR `p`.YandexMoney= `Players`.YandexMoney) as Mult,
                 (SELECT AVG(Win)  FROM PlayerGames      WHERE PlayerId=`Players`.`Id` AND GameId=1 AND Price>0) WhoMore,
                 (SELECT AVG(Win)  FROM PlayerGames      WHERE PlayerId=`Players`.`Id` AND GameId=2 AND Price>0) SeaBattle,
@@ -906,6 +908,35 @@ class PlayersDBProcessor implements IProcessor
         }
 
         return $reviews;
+    }
+
+
+    public function getMessages($playerId)
+    {
+        $sql = "SELECT `Messages`.*, t.`Nicname` ToPlayerName, p.`Nicname` PlayerName
+                FROM `Messages`
+                LEFT JOIN `Players` t ON t.`Id` = `Messages`.`ToPlayerId`
+                LEFT JOIN `Players` p ON p.`Id` = `Messages`.`PlayerId`
+                WHERE `PlayerId` = :pid OR `ToPlayerId` = :pid
+                ORDER BY `Id` DESC";
+
+        try {
+            $res = DB::Connect()->prepare($sql);
+            $res->execute(array(
+                ':pid' => $playerId,
+                ':pid' => $playerId,
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+        $messages = array();
+        foreach ($res->fetchAll() as $messageData) {
+            $messageData['Date']=date('d.m.Y H:i:s', $messageData['Date']);
+            $messages[] = $messageData;
+        }
+
+        return $messages;
     }
 
     public function getTickets($playerId)
@@ -1116,6 +1147,7 @@ class PlayersDBProcessor implements IProcessor
 
     public function saveAvatar(Entity $player)
     {
+
         $sql = "UPDATE `Players` SET `Avatar` = :av WHERE  `Id` = :plid";
 
         try {

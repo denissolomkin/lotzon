@@ -552,6 +552,31 @@
     </div>
 </div>
 
+<div class="modal fade users" id="messages-holder" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h4>Сообщения</h4>
+                <hr />
+                <table class="table table-striped" >
+                    <thead>
+                    <th>Дата</th>
+                    <th>Сообщение</th>
+                    <th></th>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default cls">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade users" id="notes-holder" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -1271,6 +1296,43 @@ function updateProfile(plid){
         }
     });
 }
+/* MESSAGE BLOCK */
+$('.messages-trigger').on('click', function() {
+    $.ajax({
+        url: "/private/users/messages/" + $(this).data('id'),
+        method: 'GET',
+        async: true,
+        dataType: 'json',
+        success: function(data) {
+            if (data.status == 1) {
+                var tdata = '';
+                $(data.data.messages).each(function(id, tr) {
+                    tdata += '<tr><td>'
+                        + tr.Date
+                        + '</td><td>'
+                        + (tr.Image?'<img src="/filestorage/messages/'+tr.Image+'">':'')
+                        + tr.Text
+                        + '</td><td style="text-align: right;">'
+                        + '<span style="display: block;" class="label label-default">' + tr.PlayerName + '</span>' + '<span style="display: block;" class="label label-primary">' + tr.ToPlayerName + '</span>'
+                        + '</td>'
+                });
+
+                $("#messages-holder").find('tbody').html(tdata);
+                $("#messages-holder").modal();
+                $("#messages-holder").find('.cls').on('click', function() {
+                    $("#messages-holder").modal('hide');
+                })
+            } else {
+                alert(data.message);
+            }
+        },
+        error: function() {
+            alert('Unexpected server error');
+        }
+    });
+});
+/* END MESSAGE BLOCK */
+
 /* REVIEW BLOCK */
 $('.reviews-trigger').on('click', function() {
     $.ajax({

@@ -89,6 +89,11 @@ class PlayersModel extends Model
         return $this->getProcessor()->getReviews($playerId);
     }
 
+    public function getMessages($playerId)
+    {
+        return $this->getProcessor()->getMessages($playerId);
+    }
+
     public function getTickets($playerId)
     {
         return $this->getProcessor()->getTickets($playerId);

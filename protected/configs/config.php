@@ -169,6 +169,7 @@ Config::instance()->privateResources =  array(
     '/private/users/:playerId/avatar' => 'controllers\admin\Users:avatar',
     '/private/users/logs/:playerId' => 'controllers\admin\Users:logs',
     '/private/users/reviews/:playerId' => 'controllers\admin\Users:reviews',
+    '/private/users/messages/:playerId' => 'controllers\admin\Users:messages',
     '/private/users/logins/:playerId' => 'controllers\admin\Users:logins',
     '/private/users/mults/:playerId' => 'controllers\admin\Users:mults',
     '/private/users/orders/:playerId' => 'controllers\admin\Users:orders',
