@@ -131,7 +131,7 @@
             Form.stop();
             R.event('error');
 
-            Content.badge.init({
+            0 && Content.badge.init({
                 system:
                     [{
                         uid: Math.random().toString(16).slice(2),
