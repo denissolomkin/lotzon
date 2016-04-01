@@ -128,9 +128,13 @@ class Index extends \SlimController\SlimController
             "id"       => $playerObj->getId(),
             "img"      => $playerObj->getAvatar(),
             "email"    => $playerObj->getEmail(),
-            "isComplete" => $playerObj->isComplete(),
             "gender"   => $playerObj->getGender(),
             "moderator"=> in_array($playerObj->getId(), (array) SettingsModel::instance()->getSettings('moderators')->getValue()),
+            "is" => array(
+                "complete" => $playerObj->isComplete(),
+                "valid"    => $playerObj->isValid(),
+                "moderator"=> in_array($playerObj->getId(), (array) SettingsModel::instance()->getSettings('moderators')->getValue()),
+            ),
             "title"    => array(
                 "name"       => $playerObj->getName(),
                 "surname"    => $playerObj->getSurname(),
