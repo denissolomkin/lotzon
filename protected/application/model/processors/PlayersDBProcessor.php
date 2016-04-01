@@ -6,8 +6,8 @@ class PlayersDBProcessor implements IProcessor
 {
     public function create(Entity $player)
     {
-        $sql = "INSERT INTO `Players` (`Email`, `Password`, `Salt`, `Country`, `City`, `Zip`, `Address`, `Lang`, `Visible`, `Ip`, `Hash`, `Valid`, `Name`, `Surname`, `AdditionalData`, `ReferalId`, `Agent`, `Referer`)
-                VALUES (:email, :passwd, :salt, :cc, :city, :zip, :address, :cl, :vis, :ip, :hash, :valid, :name, :surname, :ad, :rid, :agent, :referer)";
+        $sql = "INSERT INTO `Players` (`Email`, `Password`, `Salt`, `Country`, `City`, `Zip`, `Address`, `Lang`, `Visible`, `Ip`, `Hash`, `Complete`, `Valid`, `Name`, `Surname`, `AdditionalData`, `ReferalId`, `Agent`, `Referer`)
+                VALUES (:email, :passwd, :salt, :cc, :city, :zip, :address, :cl, :vis, :ip, :hash, :complete, :valid, :name, :surname, :ad, :rid, :agent, :referer)";
 
         try {
             DB::Connect()->prepare($sql)->execute(array(
@@ -24,7 +24,8 @@ class PlayersDBProcessor implements IProcessor
                 ':vis'      => 1,
                 ':ip'       => $player->getIP(),
                 ':hash'     => $player->getHash(),
-                ':valid'    => (int)$player->getValid(),
+                ':complete' => (int)$player->isComplete(),
+                ':valid'    => (int)$player->isValid(),
                 ':name'     => $player->getName(),
                 ':surname'  => $player->getSurname(),
                 ':ad'       => is_array($player->getAdditionalData()) ? serialize($player->getAdditionalData()) : '',
@@ -199,7 +200,7 @@ class PlayersDBProcessor implements IProcessor
                     `Phone` = :phone, `Qiwi` = :qiwi, `YandexMoney` = :ym, `WebMoney` = :wm,
                     `Birthday` = :bd, `Avatar` = :avatar, `Visible` = :vis, `Favorite` = :fav,
                     `City` = :city, `Zip` = :zip, `Address` = :address,
-                    `Valid` = :vld, `GamesPlayed` = :gp, `AdditionalData` = :ad, `Ip` = :ip, `LastIp` = :lip, `Agent` = :agent,
+                    `Valid` = :vld, `Complete` = :complete, `GamesPlayed` = :gp, `AdditionalData` = :ad, `Ip` = :ip, `LastIp` = :lip, `Agent` = :agent,
                     `UTC` = :utc
                 WHERE `Id` = :id OR `Email` = :email";
 
@@ -230,7 +231,8 @@ class PlayersDBProcessor implements IProcessor
                 ':email'    => $player->getEmail(),
                 ':vis'      => (int)$player->getVisibility(),
                 ':fav'      => is_array($player->getFavoriteCombination()) ? serialize($player->getFavoriteCombination()) : '',
-                ':vld'      => $player->getValid(),
+                ':vld'      => (int)$player->isValid(),
+                ':complete' => (int)$player->isComplete(),
                 ':gp'       => $player->getGamesPlayed(),
                 ':ad'       => is_array($player->getAdditionalData()) ? serialize($player->getAdditionalData()) : '',
                 ':lip'      => $player->getLastIp(),
@@ -1131,13 +1133,14 @@ class PlayersDBProcessor implements IProcessor
 
     public function changePassword(Entity $player)
     {
-        $sql = "UPDATE `Players` SET `Password` = :pw, `Salt` = :salt WHERE  `Id` = :plid";
+        $sql = "UPDATE `Players` SET `Password` = :pw, `Salt` = :salt, `Complete` = :complete WHERE  `Id` = :plid";
 
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
                 ':pw'  => $player->getPassword(),
                 ':salt'  => $player->getSalt(),
+                ':complete'  => $player->isComplete(),
                 ':plid' => $player->getId(),
             ));
         } catch (PDOException $e) {

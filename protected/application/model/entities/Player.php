@@ -22,10 +22,10 @@ class Player extends Entity
         'dates'=>array('Moment','QuickGame','ChanceGame','AdBlockLast','AdBlocked','WSocket','TeaserClick','Ping','Login','Notice','Registration'),
         'counters'=>array('WhoMore','SeaBattle','Notice','Note','AdBlock','Log','Ip','MyReferal','Referal','MyInviter','Inviter','ShopOrder','MoneyOrder','Review','CookieId','Mult'));
 
-    private $_id         = 0;
-    private $_email      = '';
-    private $_password   = '';
-    private $_salt       = '';
+    protected $_id         = 0;
+    protected $_email      = '';
+    protected $_password   = '';
+    protected $_salt       = '';
 
     private $_socialid     = 0;
     private $_socialemail  = '';
@@ -37,12 +37,12 @@ class Player extends Entity
     private $_surname    = '';
     private $_secondName = '';
     private $_avatar     = '';
-    private $_agent     = '';
-    private $_referer     = '';
+    private $_agent      = '';
+    private $_referer    = '';
 
     protected $_gender  = null;
 
-    private $_phone      = null;
+    protected $_phone      = null;
     private $_yandexMoney = null;
     private $_qiwi       = null;
     private $_webMoney   = null;
@@ -50,14 +50,17 @@ class Player extends Entity
 
     private $_favoriteCombination = array();
     private $_visible             = false;
+
+    protected $_valid           = 0;
+    protected $_complete        = 1;
     protected $_ban             = false;
     protected $_bot             = false;
     protected $_utc             = null;
 
-    private $_dates = array();
+    private $_dates          = array();
     private $_dateAdBlocked  = '';
     private $_country        = '';
-    private $_lang        = '';
+    private $_lang           = '';
 
     private $_generatedPassword = '';
 
@@ -79,7 +82,6 @@ class Player extends Entity
     private $_webSocket  = 0;
 
     private $_admin = false;
-    private $_valid = 0;
     private $_hash = '';
     private $_ip = '';
     private $_lastip = '';
@@ -106,30 +108,6 @@ class Player extends Entity
     public function init()
     {
         $this->setModelClass('PlayersModel');
-    }
-
-    public function setId($id)
-    {
-        $this->_id = $id;
-
-        return $this;
-    }
-
-    public function getId()
-    {
-        return $this->_id;
-    }
-
-    public function setBan($status)
-    {
-        $this->_ban = $status;
-
-        return $this;
-    }
-
-    public function getBan()
-    {
-        return $this->_ban;
     }
 
     public function setNewsSubscribe($newsSubscribe)
@@ -252,42 +230,6 @@ class Player extends Entity
         return $this->_socialemail;
     }
 
-    public function setEmail($email)
-    {
-        $this->_email = $email;
-
-        return $this;
-    }
-
-    public function getEmail()
-    {
-        return $this->_email;
-    }
-
-    public function setPassword($password)
-    {
-        $this->_password = $password;
-
-        return $this;
-    }
-
-    public function getPassword()
-    {
-        return $this->_password;
-    }
-
-    public function setSalt($salt)
-    {
-        $this->_salt = $salt;
-
-        return $this;
-    }
-
-    public function getSalt()
-    {
-        return $this->_salt;
-    }
-
     public function setNicName($nicName)
     {
         $this->_nicName = $nicName;
@@ -346,18 +288,6 @@ class Player extends Entity
     public function getCookieId()
     {
         return $this->_cookieId;
-    }
-
-    public function setPhone($phone)
-    {
-        $this->_phone = $phone;
-
-        return $this;
-    }
-
-    public function getPhone()
-    {
-        return $this->_phone;
     }
 
     public function setBirthday($birthday)
@@ -627,18 +557,6 @@ class Player extends Entity
         }
 
         return $this;
-    }
-
-    public function setValid($valid)
-    {
-        $this->_valid = $valid;
-
-        return $this;
-    }
-
-    public function getValid()
-    {
-        return $this->_valid;
     }
 
     public function setAdBlock($check)
@@ -1602,8 +1520,9 @@ class Player extends Entity
 
     public function changePassword($password)
     {
-        $this->setSalt("");
-        $this->setPassword($this->compilePassword($password));
+        $this->setSalt("")
+            ->setPassword($this->compilePassword($password))
+            ->setComplete(1);
 
         $model = $this->getModelClass();
 
@@ -1687,6 +1606,7 @@ class Player extends Entity
                  ->setLastIp($data['LastIp'])
                  ->setHash($data['Hash'])
                  ->setValid($data['Valid'])
+                 ->setComplete($data['Complete'])
                  ->setInviterId($data['InviterId'])
                  ->setReferalId($data['ReferalId'])
                  ->setReferalPaid($data['ReferalPaid'])
