@@ -277,7 +277,7 @@ class Users extends PrivateArea
                     'WebMoney' => $player->getWebMoney()?:'',
                     'Country' => $player->getCountry(),
                     'Lang' => $player->getLang(),
-                    'UTC' => $player->getUtc()?:'',
+                    'Utc' => $player->getUtc()?:'',
                 );
 
             } catch (ModelException $e) {
@@ -321,7 +321,7 @@ class Users extends PrivateArea
                     ->setSurName($this->request()->post('Surname'))
                     ->setCountry($this->request()->post('Country'))
                     ->setLang($this->request()->post('Lang'))
-                    ->setUtc($this->request()->post('UTC'))
+                    ->setUtc($this->request()->post('Utc', null))
                     ->update();
 
             } catch (EntityException $e){
@@ -422,6 +422,29 @@ class Users extends PrivateArea
             try {
                 $response['data'] = array(
                     'reviews' => PlayersModel::instance()->getReviews($playerId),
+                );
+
+            } catch (ModelException $e) {
+                $response['status'] = 0;
+                $response['message'] = $e->getMessage();
+            }
+
+            die(json_encode($response));
+        }
+        $this->redirect('/private');
+    }
+
+    public function messagesAction($playerId)
+    {
+        if ($this->request()->isAjax()) {
+            $response = array(
+                'status'  => 1,
+                'message' => 'OK',
+                'data'    => array(),
+            );
+            try {
+                $response['data'] = array(
+                    'messages' => PlayersModel::instance()->getMessages($playerId),
                 );
 
             } catch (ModelException $e) {
