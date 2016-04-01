@@ -83,7 +83,7 @@
                         <br>
 
 
-                        <div class="input-group">
+                        <div class="input-group hide">
                             <span class="input-group-addon"><i class="fa fa-plus-square"></i></span>
                             <input type="text" class="form-control" name="Increment" placeholder="Наращивание" value="">
                         </div>
@@ -97,11 +97,15 @@
                             <span class="input-group-addon"><i class="fa fa-play"></i></span>
                             <input type="text" class="form-control" name="Start" placeholder="С" value="">
                         </div>
+
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-stop"></i></span>
                             <input type="text" class="form-control" name="End" placeholder="До" value="">
+                        </div>
 
-                    </div>
+                        <div class="input-group">
+                        </div>
+                        
                 <button class="btn btn-success save-button"><span class="glyphicon glyphicon-floppy-disk"></span> Сохранить</button>
             </div>
         </div>
@@ -111,9 +115,10 @@
 
 
 <script>
-    var gameTop = eval(<?=json_encode($gameTop)?>);
-    var template = $('#player-template');
-    var xhr;
+    var gameTop = eval(<?=json_encode($gameTop)?>),
+        template = $('#player-template'),
+        timezones = <?= $timezones?>,
+        xhr;
 
 
     $('[name="month"]').datepicker({
@@ -164,7 +169,6 @@
 
         form = $(this).parents('.form-group');
 
-
         $('img',                form).attr('src','../tpl/img/preloader.gif');
         $('.name',              form).text('...');
 
@@ -178,13 +182,23 @@
             dataType: 'json',
             success: function(data) {
                 player = data.data;
-                $('img',                form).attr('src',
+                $('img', form).attr(
+                    'src',
                     player.Nicname
-                        ? (player.Avatar?'../filestorage/avatars/'+Math.ceil(player.Id/100)+'/'+player.Avatar:'../tpl/img/default.jpg')
+                        ? (player.Avatar?'../filestorage/users/50/'+player.Avatar:'../tpl/img/default.jpg')
                         : ''
                 );
 
                 $('.name', form).text(player.Nicname?player.Nicname:data.message);
+
+                if(timezones) {
+                    if((player.Utc = parseInt(player.Utc))) {
+                        $('input[name="Start"]', form).val((24 / timezones * (player.Utc) - 24 / timezones) + ':00');
+                        $('input[name="End"]', form).val((24 / timezones * player.Utc - 1) + ':59');
+                    } else {
+                        $('input[name="End"], input[name="Start"]', form).val('');
+                    }
+                }
             },
             error: function() {
 
@@ -194,8 +208,6 @@
         xhr;
 
     });
-
-
 
     $(document).on('click', ".save-button", function() {
 

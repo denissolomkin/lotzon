@@ -21,6 +21,7 @@ class GameTop extends \PrivateArea
     {
         $month = (strtotime($this->request()->get('month', null))?:mktime(0, 0, 0, date("n"), 1));
         $gameTop = GameAppsModel::instance()->getGameTop($month);
+        $timezones = SettingsModel::instance()->getSettings('counters')->getValue('BOT_TIMEZONES');
         $onlineGames = array();
 
         foreach(\GameConstructorModel::instance()->getList()['online'] as $onlineGame)
@@ -31,6 +32,7 @@ class GameTop extends \PrivateArea
             'title'              => 'Наши в топе',
             'activeMenu'         => $this->activeMenu,
             'gameTop'            => $gameTop,
+            'timezones'          => $timezones,
             'onlineGames'        => $onlineGames,
             'month'              => $month
         ));
@@ -57,7 +59,8 @@ class GameTop extends \PrivateArea
             $response['data'] = array(
                 'Id'=>$player->getId(),
                 'Avatar'=>$player->getAvatar(),
-                'Nicname'=>$player->getNicname()
+                'Nicname'=>$player->getNicname(),
+                'Utc'=>$player->getUtc()
             );
 
             die(json_encode($response));
