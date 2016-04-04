@@ -212,17 +212,20 @@ class CommentsController extends \AjaxController
             ->setModule($module)
             ->setObjectId($objectId);
 
-        if ($image!="") {
-            \Common::saveImageMultiResolution('',PATH_FILESTORAGE.'reviews/',$image, array(array(600),1),PATH_FILESTORAGE.'temp/'.$image);
-            \Common::removeImageMultiResolution(PATH_FILESTORAGE.'temp/',$image);
-        }
 
         $obj->setImage($image);
 
         try {
+
             if(CommentsModel::instance()->canPlayerPublish($playerId))
                 $obj->setStatus(1);
             $obj->create();
+
+            if ($image!="") {
+                \Common::saveImageMultiResolution('', PATH_FILESTORAGE . 'reviews/', $image, array(array(600), 1), PATH_FILESTORAGE . 'temp/' . $image);
+                \Common::removeImageMultiResolution(PATH_FILESTORAGE . 'temp/', $image);
+            }
+
 
         } catch (\EntityException $e) {
             $this->ajaxResponseInternalError($e->getMessage());
