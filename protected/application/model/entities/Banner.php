@@ -1,7 +1,5 @@
 <?php
 
-use \SettingsModel;
-
 Application::import(PATH_APPLICATION . 'model/Entity.php');
 
 class Banner extends Entity

@@ -1,7 +1,5 @@
 <?php
 
-use \Player;
-
 Application::import(PATH_APPLICATION . 'model/Entity.php');
 
 class MaillistMessage extends Entity

@@ -1,5 +1,4 @@
 <?php
-use \GameConstructor;
 
 class GamePublished extends Entity
 {
