@@ -120,8 +120,6 @@
             $(document).on('change', 'form input.repeat-pass', Profile.validate.passwordRepeat);
             $(document).on('change', '.cc-out .cc-sum', Profile.validate.convert);
 
-
-
             $(document).on('click', '.ae-combination-box li', Profile.do.selectFavorite);
             $(document).on('click', '.s-lang .radio-text', Profile.do.changeLanguage);
             $(document).on('click', '.change', Profile.do.openOption);
@@ -130,11 +128,8 @@
             $(document).on('click', '.bonus-banner-view-item', Bonuses.showBanner);
             $(document).on('click', '.bonus-share-banner-view .close', Bonuses.hideBanner);
 
-            $(document).on('click', '#games-moment .close-pop-box, #games-random .close-pop-box', function(){location.reload();});
-
             // $(document).on('click', '.banner-copy-btn', Bonuses.copyBanner);
             // $(document).on('click', '.banner-copy-btn a', Bonuses.downloadFile);
-
 
             /* game */
             $(document).on('click', '.mx .players .m .btn-ready', Game.do.ready);
