@@ -9,6 +9,7 @@
 
         "config": {},
         "statBox": null,
+        "lastError": null,
 
         "init": function (init) {
 
@@ -123,6 +124,11 @@
 
             Form.stop();
             R.event('error');
+
+            if(data[0] === 'Script error.' || data[0] === D.lastError)
+                return false;
+
+            D.lastError = data[0];
 
             0 && Content.badge.init({
                 system:
