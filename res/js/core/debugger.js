@@ -121,9 +121,6 @@
 
         "debug": function (data) {
 
-            if (message === 'error')
-                return;
-
             Form.stop();
             R.event('error');
 
