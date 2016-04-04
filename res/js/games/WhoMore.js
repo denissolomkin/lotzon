@@ -20,6 +20,7 @@
         'initStatuses': function() {
 
             if (App.extra) {
+                delete App.extra;
                 Game.drawEqualMessage();
             }
 

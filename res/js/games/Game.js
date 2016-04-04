@@ -175,7 +175,7 @@
 
                     var player = {
                         "avatar": "",
-                        "name": i18n('waiting...')
+                        "name": i18n('title-game-waiting')
                     };
 
                     for (i = Object.size(players); i < App.playerNumbers; i++) {

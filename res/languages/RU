@@ -141,6 +141,7 @@
                 "text-game-place-ships": "Расставьте корабли в необходимом порядке.<br><br>Что бы изменить ориентацию корабля, кликните по нему дважды.",
                 "title-game-ready": "Готов",
                 "title-game-waiting-player": "Ожидаем соперника",
+                "title-game-waiting": "ожидаем...",
                 "button-game-replay": "Повторить игру",
                 "button-game-new": "Другой соперник",
                 "button-game-exit": "Выход",
