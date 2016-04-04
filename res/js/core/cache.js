@@ -103,8 +103,12 @@
 
         /* desc: callback after localize ready */
         "ready": function () {
-            Navigation.load();
-            error && D.error(error);
+            if(Navigation) {
+                Navigation.load();
+                error && D.error(error);
+            } else {
+                setTimeout(Cache.ready, 200);
+            }
         },
 
         /* desc: load storages from localStorage to Memory */
