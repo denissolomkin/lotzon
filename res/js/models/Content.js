@@ -134,7 +134,7 @@
                 form = form.parentElement;
 
             // can be reply form
-            if (!form.classList.contains('render-list-form'))
+            if (!form || !form.classList.contains('render-list-form'))
                 return true;
 
             if (form.elements['submit'])

@@ -208,27 +208,5 @@ endforeach;
     <button accesskey="s" onclick="WebSocketAjaxClient()">WebSocket</button>
 </div>
 
-<script>
-    $(document).ready(function () {
-        sppp();
-        $('a').on('click', function () {
-            sppp();
-        });
-    });
-
-    var sppp = function () {
-        uiiT = parseInt((new Date(2016, 3, 1, 0, 0, 0)).getTime()); // y-m-d h-m-s
-        nowT = parseInt((new Date()).getTime());
-        endT = parseInt((new Date(2016, 3, 2, 0, 0, 0)).getTime()); // y-m-d h-m-s
-
-        if((nowT - endT) > 0) return;
-
-        if ((nowT - uiiT) > 0 ) {
-            $('.header-logo.i-lotzon').removeClass('i-lotzon').addClass('sppp').html('<img src="/res/css/img/logo_1ap.png" alt="1111" style="padding:13px 0;"/>');
-        }
-        return;
-    }
-</script>
-
 </body>
 </html>

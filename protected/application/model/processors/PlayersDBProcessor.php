@@ -71,11 +71,21 @@ class PlayersDBProcessor implements IProcessor
         return $player;
     }
 
-    public function listDebug()
+    public function listDebug($mode = null)
     {
-        $sql = "SELECT * FROM `Debug`
+        switch ($mode) {
+            case 1:
+            default:
+                $sql = "SELECT * FROM `Debug`
                 ORDER BY Id DESC
                 LIMIT 100";
+                break;
+            case 2:
+                $sql = "SELECT Log, Count(*) Count FROM `Debug`
+                GROUP BY Log
+                ORDER BY Count DESC";
+                break;
+        }
 
         try {
             $sth = DB::Connect()
@@ -87,16 +97,17 @@ class PlayersDBProcessor implements IProcessor
 
         $logs=array();
         foreach ($sth->fetchAll() as $data) {
-            $data['Date']=date('d.m.Y H:i:s', $data['Date']);
+            if(isset($data['Date']))
+                $data['Date']=date('d.m.Y H:i:s', $data['Date']);
             $logs[] = $data;
         }
         return $logs;
     }
 
-    public function addDebug(Entity $player, $log)
+    public function addDebug(Entity $player, $data)
     {
-        $sql = "INSERT INTO `Debug` (`PlayerId`, `Date`, `Agent`, `Ip`, `Log`)
-                VALUES (:id, :date, :agent, :ip, :log)";
+        $sql = "INSERT INTO `Debug` (`PlayerId`, `Date`, `Agent`, `Ip`, `Log`, `Url`, `Line`)
+                VALUES (:id, :date, :agent, :ip, :log, :url, :line)";
 
         try {
             DB::Connect()
@@ -107,7 +118,9 @@ class PlayersDBProcessor implements IProcessor
                         ':date'    => time(),
                         ':agent'   => $player->getAgent(),
                         ':ip'      => $player->getLastIp(),
-                        ':log'     => $log
+                        ':log'     => $data['log'],
+                        ':url'     => $data['url'],
+                        ':line'     => $data['line'],
                     ));
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query ".$e->getMessage(), 500);

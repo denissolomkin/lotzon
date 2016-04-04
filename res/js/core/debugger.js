@@ -119,11 +119,7 @@
 
         },
 
-        "debug": function (message) {
-
-            message = typeof message === 'object'
-                ? message.join(' ')
-                : message;
+        "debug": function (data) {
 
             if (message === 'error')
                 return;
@@ -144,7 +140,9 @@
             Form.post({
                 action: 'debug',
                 data: {
-                    message: message
+                    log: data[0],
+                    url: data[1],
+                    line: data[2]
                 }
             });
 

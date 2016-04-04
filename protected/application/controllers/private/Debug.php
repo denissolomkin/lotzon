@@ -19,7 +19,8 @@ class Debug extends PrivateArea
     public function indexAction()
     {
 
-        $list    = \PlayersModel::instance()->listDebug();
+        $mode    = $this->request()->get('mode', null);
+        $list    = \PlayersModel::instance()->listDebug($mode);
 
         $this->render('admin/debug', array(
             'title'      => 'Дебаг',
