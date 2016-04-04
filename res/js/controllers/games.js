@@ -1,70 +1,3 @@
-var fakeCounter = 0,
-    debug = 0;
-var fakeRandomData = [{
-    "Uid": "568b9d3875b2b",
-    "Prize": {
-        "t": "item",
-        "v": "96",
-        "s": "5436a10e394a3.jpg",
-        "n": "\u0422\u0435\u0440\u043c\u043e\u043a\u0440\u0443\u0436\u043a\u0430 Stanley"
-    },
-    "Cell": "1x1",
-    "Moves": 3,
-    "comb": []
-}, {
-    "Uid": "568b9d3875b2b",
-    "Prize": {
-        "t": "points",
-        "v": "250"
-    },
-    "Cell": "2x1",
-    "Moves": 2,
-    "comb": []
-}, {
-    "Uid": "568b9d3875b2b",
-    "Prize": {
-        "t": "money",
-        "v": "25"
-    },
-    "Cell": "2x1",
-    "Moves": 1,
-    "comb": []
-}, {
-    "Uid": "568b9d3875b2b",
-    "Prize": false,
-    "Cell": "3x1",
-    "Moves": 0,
-    "GameField": {
-        "1x1": {
-            "t": "item",
-            "v": "96",
-            "s": "5436a10e394a3.jpg",
-            "n": "\u0422\u0435\u0440\u043c\u043e\u043a\u0440\u0443\u0436\u043a\u0430 Stanley"
-        },
-        "2x1": {
-            "t": "points",
-            "v": "25"
-        },
-        "3x1": false
-    },
-    "GamePrizes": {
-        "MONEY": 250,
-        "POINT": 25,
-        "ITEM": " \u0422\u0435\u0440\u043c\u043e\u043a\u0440\u0443\u0436\u043a\u0430 Stanley"
-    },
-    "comb": [],
-    "player": {
-        "balance": {
-            "points": 1097,
-            "money": "2307.85"
-        }
-    }
-}, {
-    "status": 0,
-    "message": "\u0418\u0433\u0440\u0430 \u043d\u0435 \u043d\u0430\u0439\u0434\u0435\u043d\u0430",
-    "res": []
-}];
-
 var Games = {
 
     disableNow: false,
@@ -441,16 +374,6 @@ var Games = {
                 var cell = $(this).data('cell'),
                     element = this;
 
-                ////////////////////////////////////////////////////////////////
-                //                DELETE
-                if (debug === 1) {
-                    var data = { json: fakeRandomData[fakeCounter] };
-                    Games.random.actions(element, data);
-                    fakeCounter >= fakeRandomData.length - 1 ? fakeCounter = 0 : fakeCounter += 1;
-                    return;
-                }
-                ////////////////////////////////////////////////////////////////
-                // console.debug("random - url>>>",Games.random.conf.url);
                 Form.get.call(this, {
                     href: Games.random.conf.url,
                     data: { 'cell': cell },
