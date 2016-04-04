@@ -207,14 +207,15 @@ class WebSocketController implements MessageComponentInterface
     public function periodicStack()
     {
 
-        $gameConstructor = new GameConstructorOnline();
-
         if (GamePlayersModel::instance()->hasStack()) {
+
+            $gameConstructor = new GameConstructorOnline();
 
             foreach (GamePlayersModel::instance()->getStack() as $key => $modes) {
 
                 $gameConstructor
                     ->setType('online')
+                    ->setId(null)
                     ->setKey($key)
                     ->fetch();
 
@@ -275,7 +276,6 @@ class WebSocketController implements MessageComponentInterface
 
                                 $this->initGame($clients, $key, $appMode, $gameConstructor->initVariation($appVariation), $id);
                             }
-
                         }
                     }
                 }
@@ -666,7 +666,9 @@ class WebSocketController implements MessageComponentInterface
                 ->update();
 
             $conn->resourceId = $player->getId();
-            $this->clients($player->getId(), $conn);
+
+            if(!$this->clients($player->getId(), $conn))
+                return;
 
             echo $this->time(0, 'OPEN') . " " . "#{$conn->resourceId} " . $conn->Session->getId() . "\n";
 
@@ -795,7 +797,8 @@ class WebSocketController implements MessageComponentInterface
 
                 if (!($client = $this->clients($player->getId())) || !($client instanceof ConnectionInterface)) {
                     echo $this->time(0, 'WARNING') . "  соединение #{$player->getId()} {$from->Session->getId()} не найдено в коллекции клиентов \n";
-                    $this->clients($player->getId(), $from);
+                    if(!$this->clients($player->getId(), $from))
+                        return;
                 }
 
                 switch ($type) {
@@ -1419,11 +1422,14 @@ class WebSocketController implements MessageComponentInterface
                 if ($first) {
                     if ($first == 'unset') {
                         unset($this->{$key}[$second]);
-                    } else {
-                        if ($second) {
+                        $array = true;
+                    } elseif(is_numeric($first) && is_array($this->{$key})) {
+                        if ($second instanceof ConnectionInterface) {
                             $this->{$key}[$first] = $second;
                         }
-                        $array = isset($this->{$key}[$first]) ? $this->{$key}[$first] : null;
+                        $array =  isset($this->{$key}[$first]) ? $this->{$key}[$first] : null;
+                    } else {
+                        $array = false;
                     }
                 }
             }
