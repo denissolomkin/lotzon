@@ -148,9 +148,15 @@
 
         "error": function (message) {
 
-            message = typeof message === 'object'
-                ? message.join(' ')
-                : message;
+            if(typeof message === 'object'){
+                if(message[0] == 'Unauthorized'){
+                    location.reload();
+                    return false;
+                } else {
+                    message = message.join(' ');
+                }
+            }
+
 
             if (message==='error')
                 return;
