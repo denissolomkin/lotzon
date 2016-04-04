@@ -16,6 +16,7 @@
                 "message-lottery-ticket-8": "Для доступа к золотому билету №8 вы должны его приобрести",
                 "title-lottery-ticket": "Билет",
                 "title-lottery-ticket-gold-price": "Цена золотого билета",
+                "title-lottery-ticket-gold-last": "Билет действителен один розыгрыш",
                 "title-lottery-info" : "информация о розыгрыше",
                 "title-lottery-guessed-numbers" : "Угаданных чисел",
                 "title-lottery-quantity-winnings" : "Выигрышей",

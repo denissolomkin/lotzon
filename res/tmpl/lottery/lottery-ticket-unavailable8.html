@@ -5,7 +5,10 @@
 
         <form action="/lottery/gold" method="post">
             <input type="hidden" value="{{this.priceGold}}" name="price">
+            <br>
             {{i18n "title-lottery-ticket-gold-price"}} {{this.priceGold}} {{player "getCurrency"}}
+            <br>
+            <small style="font-size: 13px;">{{i18n "title-lottery-ticket-gold-last"}} </small>
             <br>
             <button name="submit" type="submit" class="btn-flat">{{i18n "button-lottery-ticket-gold-buy"}}</button>
         </form>
