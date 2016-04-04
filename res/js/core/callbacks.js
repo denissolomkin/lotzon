@@ -106,13 +106,6 @@
             $(document).on('change', 'form input[type="checkbox"].required', Form.do.validate);
             $(document).on('change', 'form textarea.required', Form.do.validate);
             $(document).on('change', 'form input[type="file"].required', Form.do.validate);
-            // $(document).ready(function() {
-            //     $("#password").on("keypress keyup keydown", function() {
-            //         var pass = $(this).val();
-            //         $("#strength_human").text(checkPassStrength(pass));
-            //         $("#strength_score").text(scorePassword(pass));
-            //     });
-            // });
 
 
             /* autoload */
@@ -126,6 +119,7 @@
             $(document).on('click', '.pi-ph.true', Profile.do.updateAvatar);
             $(document).on('change', 'form input.repeat-pass', Profile.validate.passwordRepeat);
             $(document).on('change', '.cc-out .cc-sum', Profile.validate.convert);
+            $(document).on('keypress keyup keydown', 'form .checkPass', Profile.validate.checkPass);
 
 
 
@@ -233,7 +227,7 @@
         "put": { // update
 
             "profile-edit": Profile.update.details,
-            "profile-complete": Profile.update.complete,
+            // "profile-complete": Profile.update.complete,
             "profile-settings": Profile.update.settings,
             "profile-billing": Profile.update.billing,
 

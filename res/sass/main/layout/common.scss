@@ -1072,6 +1072,20 @@ input.input-radio:checked + label.input-radio:before {
     }
     .option{
         margin-bottom: 40px;
+        .alert{
+            font-size:13px;
+            color:#ff4242;
+            text-align:center;
+        }
+        .checkPass-alert{
+            @extend .alert;
+            &.gold{
+                color: gold;
+            }
+            &.green{
+                color: green;
+            }
+        }
     }
     .ae-user-img {
         width: 150px;

@@ -47,9 +47,9 @@
 
             },
 
-            complete: function() {
+            // complete: function() {
 
-            }
+            // }
 
         },
 
@@ -89,53 +89,87 @@
             },
 
             complete: function() {
-                // alert(1);
+                alert(1);
 
                 return true;
-            }
+            },
 
-                passCheck: {
+            checkPass:function() {
 
-                scorePassword: function(pass) {
-                    var score = 0;
-                    if (!pass)
-                        return score;
+                // console.debug('!!!!!!!!!>>> ',$(this).val() );
+                
+                var cpf = {
+                    scorePassword: function(pass) {
+                        var score = 0;
+                        if (!pass)
+                            return score;
 
-                    // award every unique letter until 5 repetitions
-                    var letters = new Object();
-                    for (var i = 0; i < pass.length; i++) {
-                        letters[pass[i]] = (letters[pass[i]] || 0) + 1;
-                        score += 5.0 / letters[pass[i]];
+                        // award every unique letter until 5 repetitions
+                        var letters = new Object();
+                        for (var i = 0; i < pass.length; i++) {
+                            letters[pass[i]] = (letters[pass[i]] || 0) + 1;
+                            score += 5.0 / letters[pass[i]];
+                        }
+
+                        // bonus points for mixing it up
+                        var variations = {
+                            digits: /\d/.test(pass),
+                            lower: /[a-z]/.test(pass),
+                            upper: /[A-Z]/.test(pass),
+                            nonWords: /\W/.test(pass),
+                        }
+
+                        variationCount = 0;
+                        for (var check in variations) {
+                            variationCount += (variations[check] == true) ? 1 : 0;
+                        }
+                        score += (variationCount - 1) * 10;
+
+                        return parseInt(score);
+                    },
+
+                    checkPassStrength: function(pass) {
+                        var score = cpf.scorePassword(pass);
+                        if (score > 1000)
+                            return "Пожалуйста уберите животное от клавиатуры!";
+                        if (score > 200)
+                            return "Вы сами его хоть запомните?";
+                        if (score > 100)
+                            return "Крут";
+                        if (score > 80)
+                            return "Норм";
+                        if (score > 60)
+                            return "Так себе";
+                        if (score >= 30)
+                            return "Слабый";
+                        return "";
                     }
-
-                    // bonus points for mixing it up
-                    var variations = {
-                        digits: /\d/.test(pass),
-                        lower: /[a-z]/.test(pass),
-                        upper: /[A-Z]/.test(pass),
-                        nonWords: /\W/.test(pass),
-                    }
-
-                    variationCount = 0;
-                    for (var check in variations) {
-                        variationCount += (variations[check] == true) ? 1 : 0;
-                    }
-                    score += (variationCount - 1) * 10;
-
-                    return parseInt(score);
-                },
-
-                checkPassStrength: function(pass) {
-                    var score = scorePassword(pass);
-                    if (score > 80)
-                        return "strong";
-                    if (score > 60)
-                        return "good";
-                    if (score >= 30)
-                        return "weak";
-
-                    return "";
                 }
+
+                var pass    = $(this).val();
+                var form    = $(this).closest('form');
+                var alertTo = form.find('.checkPass-alert');
+
+                // alertTo.text( cpf.checkPassStrength(pass)+' - '+cpf.scorePassword(pass) );
+                alertTo.text( cpf.checkPassStrength(pass) );
+                
+                //clear classes                
+                form.removeClass('success');
+                alertTo.attr('class', 'checkPass-alert');
+
+                if(cpf.scorePassword(pass) > 80){
+                    alertTo.addClass('green');
+                }
+                if(cpf.scorePassword(pass) > 60){
+                    alertTo.addClass('gold');
+                    form.addClass('success');
+                }
+
+                // console.debug(cpf.scorePassword(pass));
+                // $(document).ready(function() {
+                    
+                    
+                // });
 
             }
         },
