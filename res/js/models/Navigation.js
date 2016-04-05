@@ -89,11 +89,14 @@
                     anchor = document.querySelector(selector);
 
                 if (anchor) {
-                    console.info('byClick');
+                    console.info('byClick:', pathname);
                     DOM.click(anchor);
                 } else {
-                    console.info('byPush');
-                    R.push(pathname);
+                    console.info('byPush:', pathname);
+                    R.push({
+                        href: pathname,
+                        url: true
+                    });
                 }
 
                 Navigation.menu.switch();

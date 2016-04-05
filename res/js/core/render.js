@@ -140,33 +140,35 @@
                 options.href = options.href.replace(/\/\w*$/, '');
             }
 
-            if (options.target || options.state)
-                var page = document.getElementById(U.parse(U.parse(options.href), 'tmpl'));
-
             if (R.rendering.indexOf(options.href) !== -1) {
                 console.error("Dublicate:", options);
                 return false;
             }
 
-            if (page && page.classList.contains('content-main')) {
+            if(!DOM.visible('.on-top').length) {
 
-                if(!DOM.visible('.on-top').length) {
+                if (options.target || options.state)
+                    var page = document.getElementById(U.parse(U.parse(options.href), 'tmpl'));
+
+                if (page && page.classList.contains('content-main')) {
+
                     DOM.hide(page.parentNode.children, 'pop-box');
                     DOM.show(page);
-                    options.url !== false && (options.url = true);
+                    if(options.url !== false)
+                        options.url = true;
                     R.afterHTML(options);
                     U.update(options);
+
+                } else {
+
+                    R.event('push', options);
+                    R.queue.push(options);
+                    R.rendering.push(options.href);
+
+                    if (!R.isRendering)
+                        R.render();
+
                 }
-
-            } else {
-
-                R.event('push', options);
-                R.queue.push(options);
-                R.rendering.push(options.href);
-
-                if (!R.isRendering)
-                    R.render();
-
             }
 
         },

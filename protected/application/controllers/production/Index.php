@@ -124,6 +124,10 @@ class Index extends \SlimController\SlimController
             unset($_SESSION['ERROR']);
         }
 
+        if(($page = $this->session->get('page'))) {
+            $this->session->remove('page');
+        }
+
         $player = array(
             "id"       => $playerObj->getId(),
             "img"      => $playerObj->getAvatar(),
@@ -232,7 +236,7 @@ class Index extends \SlimController\SlimController
             "filestorage"        => '/filestorage',
             "websocketUrl"       => 'ws' . (\Config::instance()->SSLEnabled ? 's' : '') . '://' . $_SERVER['SERVER_NAME'] . ':' . \Config::instance()->wsPort,
             "websocketEmulation" => false,
-            "page"               => $this->session->get('page'),
+            "page"               => $page,
             "limits"             => array(
                 "lottery-history" => (int)$counters->getValue('LOTTERIES_PER_PAGE'),
                 "communication-comments" => (int)$counters->getValue('COMMENTS_PER_PAGE'),
