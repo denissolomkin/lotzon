@@ -243,7 +243,6 @@ class CommentsController extends \AjaxController
 
             if (!$obj->getParentId()) {
                 $comments[$obj->getId()] = $obj->export('JSON');
-                $response['message'] = "message-comment-publish-success";
             } else {
                 $comments[$obj->getParentId()]['answers'][$obj->getId()] = $obj->export('JSON');
             }
