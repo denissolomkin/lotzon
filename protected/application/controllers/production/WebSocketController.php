@@ -428,66 +428,79 @@ class WebSocketController implements MessageComponentInterface
     public function runGame($appName, $appUid, $action, $playerId = null, $data = null)
     {
         if ($app = $this->apps($appUid)) {
+
             $this->_class = $class = '\\' . $appName;
             echo $this->time() . " " . "$appName $appUid $action " . (empty($app->_bot) || !in_array($playerId, $app->_bot) ? "игрок №" : 'бот №') . $playerId . ($action != 'startAction' ? ' (текущий №' . implode(',', $app->currentPlayers()) . ")" : '') . " \n";
 
-            if (isset($playerId) && ($_client = $this->clients($playerId))) {
-                $player = $_client->Session->get(Player::IDENTITY);
-            }
+            if (isset($playerId)) {
 
-            if (isset($playerId) && $app->getClients($playerId) && !isset($app->getClients($playerId)->bot)
-                && (in_array($action, array('replayAction', 'startAction', 'readyAction'))
-                    && (!$player->checkBalance($app->getCurrency(), $app->getPrice())))
-            ) {
-                if ($_client) {
-                    #echo $this->time() . " " . "Игрок {$from->resourceId} - недостаточно средств для игры\n";
-                    return $_client->send(json_encode(array('error' => 'INSUFFICIENT_FUNDS')));
+                $_client = $this->clients($playerId);
+
+                if (in_array($action, array('replayAction', 'startAction', 'readyAction')) && $app->getClients($playerId) && !isset($app->getClients($playerId)->bot)) {
+                    if ($_client) {
+                        $_player = $_client->Session->get(Player::IDENTITY);
+
+                        if ($_player && $_player instanceof Player) {
+
+                            if (!$_player->checkBalance($app->getCurrency(), $app->getPrice())) {
+                                #echo $this->time() . " " . "Игрок {$from->resourceId} - недостаточно средств для игры\n";
+                                return $_client->send(json_encode(array('error' => 'INSUFFICIENT_FUNDS')));
+                            }
+
+                        } else {
+
+                            echo $this->time(0, 'ERROR') . " runGame: игрок #{$playerId} без Entity Player \n";
+                            return $_client->send(json_encode(array('error' => 'PLAYER_NOT_FOUND')));
+                        }
+
+                    } else {
+
+                        echo $this->time(0, 'ERROR') . " runGame: Client #{$playerId} не найден в коллекции\n";
+                        return false;
+                    }
+
                 }
-            } else {
 
                 #echo $this->time() . " " . "прошли проверку, устанавливаем клиента \n";
-                if (isset($playerId)) {
-                    $app->setClient($playerId);
-                }
-
-                #echo $this->time() . " " . "пробуем вызвать экшн \n";
-                if ($app->getClient() && ($app->isRun() || $action != 'moveAction')) {
-
-                    if(method_exists($app, $action) && is_callable(array($app, $action))) {
-                        call_user_func(array($app, $action), $data);
-                    } else if($_client) {
-                        return $_client->send(json_encode(array('error' => 'WRONG_ACTION')));
-                    }
-
-                    #echo $this->time() . " " . "рассылаем игрокам результат обработки \n";
-                    if(count($app->getResponse()))
-                        $this->sendCallback($app->getResponse(), $app->getCallback());
-                }
-
-
-                if ($playerId && ($action == 'timeoutAction' || $action == 'quitAction') && !array_key_exists($playerId, $app->getClients())) {
-
-                    if ($_client) {
-                        echo $this->time(1) . " отправляем клиенту quit \n";
-                        $_client->send(json_encode(array('path' => 'quit')));
-                    }
-
-                    echo $this->time(1) . " " . $appName . ' ' . $appUid . " удаление appId у игрока №{$playerId}\n";
-
-                    $gamePlayer = new GamePlayer;
-                    $gamePlayer
-                        ->setId($playerId)
-                        ->fetch();
-
-                    $gamePlayer
-                        ->setAppUid(null)
-                        ->setAppMode(null)
-                        ->update();
-                }
-
-                $this->checkGame($app);
-
+                $app->setClient($playerId);
             }
+
+            #echo $this->time() . " " . "пробуем вызвать экшн \n";
+            if ($app->getClient() && ($app->isRun() || $action != 'moveAction')) {
+
+                if (method_exists($app, $action) && is_callable(array($app, $action))) {
+                    call_user_func(array($app, $action), $data);
+                } else if ($_client) {
+                    return $_client->send(json_encode(array('error' => 'WRONG_ACTION')));
+                }
+
+                #echo $this->time() . " " . "рассылаем игрокам результат обработки \n";
+                if (count($app->getResponse()))
+                    $this->sendCallback($app->getResponse(), $app->getCallback());
+            }
+
+
+            if ($playerId && ($action == 'timeoutAction' || $action == 'quitAction') && !array_key_exists($playerId, $app->getClients())) {
+
+                if ($_client) {
+                    echo $this->time(1) . " отправляем клиенту quit \n";
+                    $_client->send(json_encode(array('path' => 'quit')));
+                }
+
+                echo $this->time(1) . " " . $appName . ' ' . $appUid . " удаление appId у игрока №{$playerId}\n";
+
+                $gamePlayer = new GamePlayer;
+                $gamePlayer
+                    ->setId($playerId)
+                    ->fetch();
+
+                $gamePlayer
+                    ->setAppUid(null)
+                    ->setAppMode(null)
+                    ->update();
+            }
+
+            $this->checkGame($app);
 
         } else {
 
