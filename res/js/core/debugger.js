@@ -28,9 +28,8 @@
              }
              });
              */
-            /**/
-            window.onerror = function (message, url, line, col, error) {
 
+            window.onerror = function (message, url, line, col, error) {
                 D.debug([message, url, line]);
                 return true;
             };
@@ -154,20 +153,20 @@
 
         "error": function (message) {
 
-            if(typeof message === 'object'){
-                if(message[0] == 'Unauthorized'){
+
+            if(typeof message === 'object') {
+
+                if (message[0] === 'Unauthorized') {
                     location.reload();
                     return false;
                 } else {
-                    message = message.join(' ');
+                    message[0] = i18n(message[0]);
+                    message = message.join('<br>');
                 }
             }
 
-
-            if (message==='error')
+            if (message === 'error')
                 return;
-            else
-                message = i18n(message);
 
             D.log(message, 'error');
             D.isEnable("alert") && alert(message);
