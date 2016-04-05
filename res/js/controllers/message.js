@@ -48,6 +48,11 @@
                     'json': {}
                 });
 
+                R.push({
+                    template: 'users-view-messages-form',
+                    json    : {}
+                });
+
             },
 
             setUser: function () {
@@ -66,6 +71,11 @@
 
                 R.push({
                     template: 'communication-messages-new-user',
+                    json    : user
+                });
+
+                R.push({
+                    template: 'users-view-messages-form',
                     json    : user
                 });
 

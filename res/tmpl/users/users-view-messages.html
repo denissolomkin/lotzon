@@ -6,17 +6,7 @@
         <div class="content-box-item">
 
             {{partial 'users-view-messages-replyform' this}}
-
-            <form action="/users/{{id}}/messages/list" method="get" class="render-list-form">
-
-                <div class="render-list" id="users-{{id}}-messages-list">
-                </div>
-
-                <div class="container-center">
-                    <button name="submit" type="submit" class="btn-flat infinite-scrolling">{{i18n "button-load-more"}}</button>
-                </div>
-
-            </form>
+            {{partial 'users-view-messages-form' this}}
 
         </div>
     </div>

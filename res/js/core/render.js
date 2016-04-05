@@ -88,7 +88,7 @@
 
             options.template = U.parse(options.template || U.parse(this.href || options.href), 'tmpl');
             options.href = U.parse(options.href || this.href || options.template, 'url');
-            
+
             console.log("Start:", options.href, options.template);
 
             if(!options.template) {
@@ -545,6 +545,12 @@
                     options.url = true;
             }
 
+            // garbage collector
+            var contentBoxes = document.getElementById('content').children;
+            if (contentBoxes && contentBoxes.length)
+                for (var index = 0; index < contentBoxes.length; index ++)
+                    if (contentBoxes[index].classList.contains('content-box') && contentBoxes[index].style.display === 'none')
+                        DOM.remove(contentBoxes[index]);
 
             D.log(['Render.afterHTML callback:', U.parse(options.init.template, 'tmpl')], 'render');
             U.update(options);
