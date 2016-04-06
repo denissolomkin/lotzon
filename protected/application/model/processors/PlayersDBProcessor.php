@@ -1471,12 +1471,14 @@ class PlayersDBProcessor implements IProcessor
                     `Players`.`Avatar` Img,
                     `Players`.`Nicname` Name
                 FROM `Players`
-                WHERE LOWER(`Players`.`Nicname`) LIKE LOWER('%".$search."%')
+                WHERE LOWER(`Players`.`Nicname`) LIKE LOWER(:search)
                 "
                 . (($count === NULL)  ? "" : " LIMIT " . (int)$count);
         try {
             $sth = DB::Connect()->prepare($sql);
-            $sth->execute();
+            $sth->execute(array(
+                ':search' => '%'.$search.'%'
+            ));
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query " . $e, 1);
         }
