@@ -251,6 +251,7 @@ class Index extends \SlimController\SlimController
 
         $debug = array(
             "config" => array(
+                "dev"     => \Config::instance()->dev ?: false,
                 "stat"    => false,
                 "alert"   => false,
                 "render"  => false,
@@ -300,6 +301,7 @@ class Index extends \SlimController\SlimController
             'layout'    => false,
             'player'    => $player,
             'lottery'   => $lottery,
+            'debug'     => $debug,
             'slider'    => $slider,
             'config'    => $config,
             'isMobile'  => $isMobile,

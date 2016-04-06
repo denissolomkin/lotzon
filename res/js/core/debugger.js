@@ -124,12 +124,12 @@
             Form.stop();
             R.event('error');
 
-            if(data[0] === 'Script error.' || data[0] === D.lastError)
+            if(data[0] === 'Script error.' || data[0] === 'Script error' || data[0] === D.lastError)
                 return false;
+            else
+                D.lastError = data[0];
 
-            D.lastError = data[0];
-
-            0 && Content.badge.init({
+            D.isEnable("dev") && Content.badge.init({
                 system:
                     [{
                         uid: Math.random().toString(16).slice(2),
