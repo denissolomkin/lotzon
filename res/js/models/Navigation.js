@@ -27,12 +27,14 @@
 
         path: [],
         loadedBlocks: 0,
-        requiredBlocks: 3,
+        requiredBlocks: null,
         body: null,
 
         init: function (init) {
             D.log('Navigation.init', 'menu');
             Object.deepExtend(this, init);
+
+            this.requiredBlocks = Device.mobile ? 2 : 3;
 
             window.addEventListener('popstate', function(event) {
                 event.stopPropagation();
@@ -50,6 +52,7 @@
         },
 
         load: function () {
+
             this.loadedBlocks = 0;
 
             // menu buttons
@@ -57,24 +60,32 @@
                 'template': 'menu-buttons',
                 'json': Player
             });
-            
-            // Balance menu
-            R.push({
-                'template': 'menu-balance',
-                'json': Player
-            });
 
-            // Navigation menu
-            R.push({
-                'template': 'menu-navigation',
-                'json': this.navigation
-            });
+            if(Device.mobile) {
 
-            // Navigation menu mobile
-            R.push({
-                'template': 'menu-navigation-mobile',
-                'json': this.navigation
-            });
+                // Navigation menu mobile
+                R.push({
+                    'template': 'menu-navigation-mobile',
+                    'json': {
+                        navigation: this.navigation,
+                        balance:  this.balance,
+                    }
+                });
+
+            } else {
+
+                // Balance menu
+                R.push({
+                    'template': 'menu-balance',
+                    'json': this.balance
+                });
+
+                // Navigation menu desktop
+                R.push({
+                    'template': 'menu-navigation',
+                    'json': this.navigation
+                });
+            }
         },
 
         ready: function () {

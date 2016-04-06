@@ -58,11 +58,15 @@
 
                 "menu-reports-referrals": "Мои рефералы",
 
-
                 "button-balance-cashout": "Вывести",
                 "button-balance-convert": "Конвертировать",
                 "button-balance-transactions": "История транзакций",
                 "button-balance-payments": "История выплат",
+
+                "menu-profile-cashout": "Вывести",
+                "menu-profile-convert": "Конвертировать",
+                "menu-reports-transactions": "История транзакций",
+                "menu-reports-payments": "История выплат",
 
                 "button-more": "Подробнее",
                 "button-save": "Сохранить",

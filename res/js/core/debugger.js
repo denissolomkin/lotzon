@@ -133,7 +133,7 @@
                 system:
                     [{
                         uid: Math.random().toString(16).slice(2),
-                        message: message,
+                        message: data.join('<br>'),
                         timer: 3,
                         timeout: 'close'
                     }]

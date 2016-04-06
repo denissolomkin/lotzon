@@ -60,10 +60,10 @@
                     'users/0/messages',
                     'support/rules',
                     'support/faq',
-                    /*'support/help',*/
                     'logout'
                 ]
-            }
+            },
+            balance: ['profile/cashout', 'profile/convert', 'reports/transactions', 'reports/payments']
         },
         debugConf = <?php echo json_encode($debug, JSON_PRETTY_PRINT); ?>
 
@@ -144,9 +144,9 @@ endforeach;
         D.init(debugConf); // init debugger
         U.init(); // init url handler
         Slider.init(slider); // echo slider
+        Device.init(device); // detect
         Navigation.init(menu); // init navigation
         Livedate.init(timestamp); // update dates in realtime
-        Device.init(device); // detect
 
         Cache.drop(); // init cache engine
         EventHandler.init(); // init event engine

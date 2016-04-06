@@ -1,6 +1,6 @@
 <nav id="menu-navigation" class="menu">
     {{#each .}}
-    <ul class="{{@key}} a123">
+    <ul class="{{@key}}">
         {{#each this}}
             <li><a href="/{{.}}">{{i18n "menu" .}}
             {{{countHTML .}}}

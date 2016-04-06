@@ -152,6 +152,8 @@
         "get": {
 
             "menu-slider": Slider.after,
+
+            "menu-buttons": Navigation.ready,
             "menu-balance": Navigation.ready,
             "menu-navigation": Navigation.ready,
             "menu-navigation-mobile": Navigation.ready,
