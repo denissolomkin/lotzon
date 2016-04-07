@@ -1,0 +1,30 @@
+<div id="balance-convert" class="content-box convert">
+    <div class="content-box-header"><span class="back i-arrow-left large-visible"></span><span class="back i-arrow-slim-left small-visible "></span>Конвертация</div>
+
+    <div class="content-box-content clearfix">
+        <div class="content-box-item cabinet-convert">
+            <div class="cc-title"><span>{{i18n "title-profile-convert"}}</span>{{i18n "title-profile-convert-rate"}}  {{currency.iso}} = {{currency.rate}} {{i18n "title-of-points"}}</div>
+
+            <div class="cc-form">
+                <form action="/balance/convert" method="post">
+                    <div class="cc-form-top clearfix">
+                        <div class="cc-out">
+                            <div class="title">{{i18n "title-profile-put-currency"}}</div>
+                            <input class="cc-sum float required" type="text" name="sum" value="" />
+                            <span class="cc-currency">{{currency.iso}}</span>
+                        </div>
+                        <div class="cc-income">
+                            <span class="title">{{i18n "title-profile-get-points"}}</span>
+                             <input class="cc-sum" type="text" disabled="disabled" value="" / >
+      
+                            <span class="cc-currency">{{i18n "title-of-points"}}</span>
+                        </div>
+                    </div>
+                    <div class="container-center"><button name="submit" type="submit" class="btn-flat">{{i18n "button-profile-get-points"}}</button></div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+</div><!-- .content-box -->

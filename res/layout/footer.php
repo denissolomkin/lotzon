@@ -63,7 +63,7 @@
                     'logout'
                 ]
             },
-            balance: ['profile/cashout', 'profile/convert', 'reports/transactions', 'reports/payments']
+            balance: ['balance/cashout', 'balance/convert', 'reports/transactions', 'reports/payments']
         },
         debugConf = <?php echo json_encode($debug, JSON_PRETTY_PRINT); ?>
 
