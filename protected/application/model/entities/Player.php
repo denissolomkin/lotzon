@@ -46,7 +46,7 @@ class Player extends Entity
     private $_yandexMoney = null;
     private $_qiwi       = null;
     private $_webMoney   = null;
-    private $_birthday   = '';
+    private $_birthday   = null;
 
     private $_favoriteCombination = array();
     private $_visible             = false;
