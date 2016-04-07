@@ -570,7 +570,7 @@ class Players extends \AjaxController
         $search = $this->request()->get('name');
         $search = trim(strip_tags($search));
 
-        if ($search=='') {
+        if (mb_strlen($search, 'utf-8')==0) {
             $this->ajaxResponseNoCache(array('res'=>array()));
             return false;
         }
