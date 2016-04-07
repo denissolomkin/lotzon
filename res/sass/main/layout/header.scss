@@ -296,11 +296,14 @@ div {
 #lottery{
     #banner-desktop-context-ticket{
         position: absolute;
-        z-index: 5;
+        // z-index: 5;
         width: 100%;
         height: inherit;
         overflow: hidden;
-        
+        > *{
+            position: relative;
+            z-index: 5;
+        }
         .timer-wrapper{
             position: absolute;
             bottom: 15px;
