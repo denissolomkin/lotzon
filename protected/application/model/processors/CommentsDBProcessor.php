@@ -119,9 +119,9 @@ class CommentsDBProcessor implements IProcessor
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
-                ':module' => $module,
+                ':module'   => $module,
                 ':objectId' => $objectId,
-                ':status' => $status,
+                ':status'   => $status,
             ));
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query " . $e, 1);
@@ -150,10 +150,10 @@ class CommentsDBProcessor implements IProcessor
                     `Status` = :status
                 AND
                     `ObjectId` = :objectId"
-            . (($parentId === NULL) ? " AND (`ParentId` IS NULL)" : " AND (`PlayerReviews`.`ParentId` = $parentId)")
-            . (($beforeId === NULL) ? "" : " AND (`PlayerReviews`.`Id` < $beforeId)")
-            . (($afterId === NULL) ? "" : " AND (`PlayerReviews`.`Id` > $afterId)")
-            . (($modifyDate === NULL) ? "" : " AND (`PlayerReviews`.`ModifyDate` > $modifyDate)
+            . (($parentId === NULL) ? " AND (`ParentId` IS NULL)" : " AND (`PlayerReviews`.`ParentId` = ".(int)$parentId.")")
+            . (($beforeId === NULL) ? "" : " AND (`PlayerReviews`.`Id` < ".(int)$beforeId.")")
+            . (($afterId === NULL) ? "" : " AND (`PlayerReviews`.`Id` > ".(int)$afterId.")")
+            . (($modifyDate === NULL) ? "" : " AND (`PlayerReviews`.`ModifyDate` > ".(int)$modifyDate.")
                                                     OR (`PlayerReviews`.Id IN
                                                         (SELECT ParentId FROM PlayerReviews WHERE
                                                                    `Module` = :module
@@ -162,7 +162,7 @@ class CommentsDBProcessor implements IProcessor
                                                                 AND
                                                                     `ObjectId` = :objectId
                                                                 AND
-                                                                    `ModifyDate` > $modifyDate)
+                                                                    `ModifyDate` > ".(int)$modifyDate.")
                                                         )")
             . "
                 ORDER BY `PlayerReviews`.`Id` DESC"
@@ -170,9 +170,9 @@ class CommentsDBProcessor implements IProcessor
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
-                ':module' => $module,
+                ':module'   => $module,
                 ':objectId' => $objectId,
-                ':status' => $status,
+                ':status'   => $status,
             ));
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query " . $e, 1);

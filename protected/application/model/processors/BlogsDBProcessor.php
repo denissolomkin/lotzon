@@ -103,12 +103,11 @@ class BlogsDBProcessor implements IProcessor
                     *
                 FROM `Blog`
                 WHERE"
-                . (($enable === NULL) ? "" : " (`Enable` = $enable) AND ")
-                . "
-                    `Lang` = :lang"
-                . (($beforeId === NULL) ? "" : " AND (`Id` < $beforeId)")
-                . (($afterId === NULL) ? "" : " AND (`Id` > $afterId)")
-                . (($modifyDate === NULL)  ? "" : " AND (`DateModify` > $modifyDate) ")
+                . (($enable === NULL) ? "" : " (`Enable` = ".(int)$enable.") AND ")
+                . " `Lang` = :lang "
+                . (($beforeId === NULL) ? "" : " AND (`Id` < ".(int)$beforeId.")")
+                . (($afterId === NULL) ? "" : " AND (`Id` > ".(int)$afterId.")")
+                . (($modifyDate === NULL)  ? "" : " AND (`DateModify` > ".(int)$modifyDate.")")
                 . "
                 ORDER BY `DateCreated` "
                 . (($count === NULL)  ? "" : " LIMIT " . (int)$count);
@@ -182,8 +181,8 @@ class BlogsDBProcessor implements IProcessor
                     `Blog`.`Enable` = :enable
                 AND
                     `Blog`.`Lang` = :lang"
-            . (($beforeId === NULL) ? "" : " AND (`Id` < $beforeId)")
-            . (($afterId === NULL) ? "" : " AND (`Id` > $afterId)")
+            . (($beforeId === NULL) ? "" : " AND (`Id` < ".(int)$beforeId.")")
+            . (($afterId === NULL) ? "" : " AND (`Id` > ".(int)$afterId.")")
             . "
                 ORDER BY `DateCreated` DESC";
         try {

@@ -147,8 +147,8 @@ class MessagesDBProcessor implements IProcessor
                     )
                 )
                     "
-                . (($beforeId === NULL) ? "" : " AND (`Messages`.`Id` < $beforeId)")
-                . (($afterId === NULL)  ? "" : " AND (`Messages`.`Id` > $afterId)")
+                . (($beforeId === NULL) ? "" : " AND (`Messages`.`Id` < ".(int)$beforeId.")")
+                . (($afterId === NULL)  ? "" : " AND (`Messages`.`Id` > ".(int)$afterId.")")
                 . "
                 ORDER BY `Messages`.`Id` DESC"
                 . (($count === NULL)  ? "" : " LIMIT " . (int)$count);
@@ -234,7 +234,7 @@ class MessagesDBProcessor implements IProcessor
                     `Players`
                   ON
                     `Players`.`Id` = q.pid"
-            . (($modifyDate === NULL)  ? "" : " WHERE mes.`Date` > $modifyDate ")
+            . (($modifyDate === NULL)  ? "" : " WHERE mes.`Date` > ".(int)$modifyDate)
             . (($count === NULL)  ? "" : " LIMIT " . (int)$count);
         if ($offset) {
             $sql .= " OFFSET " . (int)$offset;
