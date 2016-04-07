@@ -572,6 +572,7 @@ class Players extends \AjaxController
 
         if ($search=='') {
             $this->ajaxResponseNoCache(array('res'=>array()));
+            return false;
         }
 
         if (mb_strlen($search, 'utf-8')<3) {
