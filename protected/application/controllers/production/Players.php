@@ -570,6 +570,11 @@ class Players extends \AjaxController
         $search = $this->request()->get('name');
         $search = trim(strip_tags($search));
 
+        if (mb_strlen($search, 'utf-8')==0) {
+            $this->ajaxResponseNoCache(array('res'=>array()));
+            return false;
+        }
+
         if (mb_strlen($search, 'utf-8')<3) {
             $this->ajaxResponseNoCache(array("message" => "Request too short",),400);
             return false;

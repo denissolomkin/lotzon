@@ -183,7 +183,7 @@ class CommentsDBProcessor implements IProcessor
             $comment = new \Comment;
             $comments[$commentData['Id']] = $comment->formatFrom('DB', $commentData)->export('JSON');
             if (!$commentData['ParentId']) {
-                $comments[$commentData['Id']]['answers'] = $this->getList($module, $objectId, $count, $beforeId = NULL, $afterId = NULL, $status, $commentData['Id']);
+                $comments[$commentData['Id']]['answers'] = $this->getList($module, $objectId, NULL, $beforeId = NULL, $afterId = NULL, $status, $commentData['Id']);
             } else {
                 $comments[$commentData['Id']]['comment_id'] = $commentData['ParentId'];
             }
