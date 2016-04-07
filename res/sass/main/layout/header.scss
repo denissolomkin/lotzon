@@ -298,6 +298,24 @@ div {
         position: absolute;
         z-index: 5;
         width: 100%;
+        height: inherit;
+        overflow: hidden;
+        
+        .timer-wrapper{
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            margin-left: -75px;
+            .timer{
+                box-sizing: border-box;
+                padding: 5px 10px;
+                border-radius: 3px;
+                background: #4a4a4a;
+                text-align: center;
+                color: #ffffff;
+                width: 150px;
+            }
+        }
     }
 }
 

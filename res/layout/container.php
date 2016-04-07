@@ -23,8 +23,8 @@
             <div style="height: 100%; background: #ccc;"></div>
         </div-->
 
-        <script src='https://www.google.com/recaptcha/api.js'></script>
-        <div class="g-recaptcha" data-sitekey="6Le3tBwTAAAAAPFjR2AUJbyDB_kuEGMFT4GJK6PR"></div>
+        <!--script src='https://www.google.com/recaptcha/api.js'></script>
+        <div-- class="g-recaptcha" data-sitekey="6Le3tBwTAAAAAPFjR2AUJbyDB_kuEGMFT4GJK6PR"></div-->
 
     </main><!-- .content -->
 
