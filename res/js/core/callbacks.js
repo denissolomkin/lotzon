@@ -201,12 +201,19 @@
 
             "profile-convert": Player.updateBalance,
             "profile-cashout": Profile.after.cashout,
+
+            "balance-convert": Player.updateBalance,
+            "balance-cashout": Balance.after.cashout,
+
             "lottery-ticket": Ticket.update,
             "lottery-gold": Ticket.update,
+
             "prizes-exchange-goods": Prize.update.exchange,
             "blog-post-view-comments": Comments.after.reply,
+
             "communication-comments": Comments.after.reply,
             "communication-notifications": Comments.renderNotifications,
+
             "users-requests-view": Profile.after.request,
             "games-slots-view": Games.slots.play
 
@@ -241,6 +248,10 @@
             "lottery-ticket": Ticket.validate,
             "profile-convert": Profile.validate.convert,
             "profile-cashout": Profile.validate.cashout,
+
+            "balance-convert": Balance.validate.convert,
+            "balance-cashout": Balance.validate.cashout,
+
             "prizes-exchange-goods": Prize.validate.exchange,
             "blog-post-view-comments": Comments.validate.reply,
             "app-view": Games.online.validate.create,

@@ -115,8 +115,8 @@
                 template: options.template
             });
 
-            /* substitution JSON with profile if template has "/profile/" */
-            if (options.template.search(/profile/) !== -1 && (options.template.search(/-/) == -1 || options.template.match(/-/g).length < 2)) {
+            /* substitution JSON with profile if template has "/profile/" or "/balance/" */
+            if ((options.template.search(/profile-/) !== -1 || options.template.search(/balance-/) !== -1) && (options.template.search(/-/) == -1 || options.template.match(/-/g).length < 2)) {
                 options.json = Player;
             }
 
