@@ -128,7 +128,7 @@ class WebSocketController implements MessageComponentInterface
 
                     if ($gameConstructor->getOptions('f')) {
                         #echo "GAME HAVEN'T STACK, GAME RUN IMMEDIATELY \n";
-                        continue;
+                        break;
                     }
 
                     #echo "periodicCreate: {$gameConstructor->getKey()}\n";
