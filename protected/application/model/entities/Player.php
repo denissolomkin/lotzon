@@ -209,6 +209,19 @@ class Player extends Entity
         return $check;
     }
 
+    public function getAge() {
+
+        if($this->getBirthday()) {
+            $birthday = new DateTime();
+            $birthday->setTimestamp($this->getBirthday());
+            $now = new DateTime();
+            $age = $now->diff($birthday);
+            return $age->y < 100 ? $age->y : null;
+        } else
+            return null;
+
+    }
+
     /**
      * Декремент счётчика оплачиваемых реф.ссылок в соц.сети $provider
      *
@@ -1212,20 +1225,26 @@ class Player extends Entity
                 );
                 break;
             case 'info':
+                $this->initPrivacy();
                 $ret = array(
                     'id'       => $this->getId(),
                     'img'      => $this->getAvatar(),
                     /*'birthday' => $this->getBirthday(),*/
                     'title'    => array(
                         'nickname'   => $this->getNicname(),
-                        /*'name'       => $this->getName(),
-                        'surname'    => $this->getSurname(),
-                        'patronymic' => $this->getSecondName()*/
+                        'name'       => $this->getPrivacy('Name') == 2 || ($this->getPrivacy('Name') == 1 && $this->getFriend()) ? $this->getName() : null,
+                        'surname'       => $this->getPrivacy('Surname') == 2 || ($this->getPrivacy('Surname') == 1 && $this->getFriend()) ? $this->getSurname() : null,
+                        /*'patronymic' => $this->getSecondName()*/
                     ),
-                    /*'location' => array(
-                        'country' => $this->getCountry(),
-                        'city'    => $this->getCity()
-                    ),
+                    'gender'   => $this->getPrivacy('Gender') == 2 || ($this->getPrivacy('Gender') == 1 && $this->getFriend()) ? $this->getGender() : null,
+                    'age'      => $this->getPrivacy('Age') == 2 || ($this->getPrivacy('Age') == 1 && $this->getFriend()) ? $this->getAge() : null,
+                    'birthday' => $this->getPrivacy('Birthday') == 2 || ($this->getPrivacy('Birthday') == 1 && $this->getFriend()) ? date('d.m.', $this->getBirthday())."1900" : null,
+                    'zip'      => $this->getPrivacy('Zip') == 2 || ($this->getPrivacy('Zip') == 1 && $this->getFriend()) ? $this->getZip() : null,
+                    'address'  => $this->getPrivacy('Address') == 2 || ($this->getPrivacy('Address') == 1 && $this->getFriend()) ? $this->getAddress() : null,
+                    'location' => array(
+                        'country'    => $this->getPrivacy('Country') == 2 || ($this->getPrivacy('Country') == 1 && $this->getFriend()) ? $this->getCountry() : null,
+                        'city'       => $this->getPrivacy('City') == 2 || ($this->getPrivacy('City') == 1 && $this->getFriend()) ? $this->getCity() : null,
+                    ),/*
                     'social'     => $this->getSocial()*/
                 );
                 if ($this->getFriend()!==null) {

@@ -67,8 +67,8 @@
                                         {{#if (null gender)}}
                                             <option value="">{{i18n "title-profile-choose"}}</option>
                                         {{/if}}
-                                            <option value="female" {{#if (like "female" gender)}}selected="selected"{{/if}}>Женский</option>
-                                            <option value="male" {{#if (like "male" gender)}}selected="selected"{{/if}}>Мужской</option>
+                                            <option value="female" {{#if (like "female" gender)}}selected="selected"{{/if}}>{{i18n "title-profile-gender-female"}}</option>
+                                            <option value="male" {{#if (like "male" gender)}}selected="selected"{{/if}}>{{i18n "title-profile-gender-male"}}</option>
                                         </select>
                                         {{{privacyHTML 'Gender'}}}
 
