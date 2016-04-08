@@ -44,7 +44,7 @@ class Players extends \AjaxController
         }
 
         $player->setVisible(true)
-            ->setIP(Common::getUserIp())
+            ->setIp(Common::getUserIp())
             ->setHash(md5(uniqid()))
             ->setValid(false)
             ->setLang(CountriesModel::instance()->getCountry($player->getCountry())->getLang());
