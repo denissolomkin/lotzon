@@ -61,11 +61,11 @@ class PingController extends \AjaxController
         */
 
         $player
-            ->setDateAdBlocked(($AdBlockDetected ? time() : null))
-            ->setAdBlock(($AdBlockDetected ? time() : null))
+            ->setDates('AdBlocked',($AdBlockDetected ? time() : null))
+            ->setDates('AdBlockLast',($AdBlockDetected ? time() : null))
             ->markOnline();
 
-        if (($player->getAdBlock() && !$AdBlockDetected) || (!$player->getAdBlock() && $AdBlockDetected)) {
+        if (($player->getDates('AdBlockLast') && !$AdBlockDetected) || (!$player->getDates('AdBlockLast') && $AdBlockDetected)) {
             $player->writeLog(array(
                 'action' => 'AdBlock',
                 'desc'   => ($AdBlockDetected ? 'ADBLOCK_DETECTED' : 'ADBLOCK_DISABLED'),

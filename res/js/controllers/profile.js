@@ -27,7 +27,8 @@
                 }
                 
                 $(document).on('change', '.ae-personal-inf input.datepicker', Profile.do.checkCalendar);
-        
+
+
                 R.push({
                     template:'profile-edit-countries',
                     href: '/res/countries/'  + Player.language.current

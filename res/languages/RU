@@ -204,7 +204,15 @@
                 "title-profile-city": "Город",
                 "title-profile-address": "Адрес",
                 "title-profile-zip": "Индекс",
-                "title-profile-birthday": "Дата рождения",
+                "title-profile-birthday": "День рождения",
+                "title-profile-birthyear": "Год рождения",
+                "title-profile-day": "день",
+                "title-profile-month": "месяц",
+                "title-profile-year": "год",
+
+                "title-profile-privacy-nobody": "никто",
+                "title-profile-privacy-friends": "друзья",
+                "title-profile-privacy-all": "все",
                 "title-profile-socials": "Привязаные соцсети",
                 "title-profile-setting":"Регистрация",
                 "title-profile-account-delete":"удалить аккаунт",
@@ -218,7 +226,6 @@
                 "title-profile-get-email": "Получать письма",
                 "title-profile-social-link": "Привязать соцсети",
                 "title-profile-settings-change" :"изменить",
-                "button-cancel":"отмена",
                 "title-profile-favorite":"Любимая комбинация",
                 "title-profile-billing": "ИЗМЕНЕНИЕ РЕКВИЗИТОВ",
                 "title-profile-details": "Контактные данные",
@@ -246,6 +253,7 @@
 
                 "title-button-yes": "да",
                 "title-button-no": "нет",
+                "button-cancel":"отмена",
 
                 "title-enter-old-password": "введите старый пароль",
                 "title-enter-new-password": "введите новый пароль",

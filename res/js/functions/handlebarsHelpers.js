@@ -177,19 +177,37 @@ $(function () {
             + (count ? '' : ' style="display:none;"')
             + '>' + count + '</span>';
         },
+        'privacyHTML': function(key, def){
+
+            var rules = ['nobody', 'friends', 'all'],
+                lock = typeof def === 'number' ? def : false,
+                html = '<select' + (lock !== false ? ' disabled' : '') + ' class="profile-privacy' + (lock !== false ? ' default' : '') + '" name="privacy[' + key + ']">';
+
+            for (var i = 0; i < rules.length; i++)
+                html += '<option value="' + i + '" ' + (i == lock || i == Player.getPrivacy(key) ? 'selected="selected"' : '') + ' >' + i18n("title-profile-privacy-" + rules[i]) + '</option>';
+
+            html += '</select>';
+            return html;
+        },
         'avatar': Player.getAvatar,
         'currency': Player.getCurrency,
         'number': Player.fineNumbers,
         'count': Player.getCount,
         'from': Livedate.fn.from,
-        'mobile': Device.isMobile,
         'day': Livedate.fn.day,
+        'days': function (date) {
+            return moment(date).daysInMonth();
+        },
+        'mobile': Device.isMobile,
         'emotions': Comments.getEmotionsHTML,
         'limit': function (key) {
             return Config.hasOwnProperty('limits') && Config.limits.hasOwnProperty(key) ? Config.limits[key] : 5;
         },
         'i18n': function () {
             return Cache.i18n(arguments);
+        },
+        'moment': function (fn, options) {
+            return prepareHelper(fn, options, arguments, 'moment');
         },
         'player': function (fn, options) {
             return prepareHelper(fn, options, arguments, 'Player');
@@ -324,6 +342,9 @@ $(function () {
         },
         'null': function (v1) {
             return v1 === null;
+        },
+        'isset': function (v1) {
+            return v1 !== undefined && v1 !== null;
         },
         'true': function (v1) {
             return v1 === true;

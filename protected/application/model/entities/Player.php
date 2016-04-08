@@ -20,328 +20,97 @@ class Player extends Entity
 
     static $MASK = array(
         'dates'=>array('Moment','QuickGame','ChanceGame','AdBlockLast','AdBlocked','WSocket','TeaserClick','Ping','Login','Notice','Registration'),
-        'counters'=>array('WhoMore','SeaBattle','Notice','Note','AdBlock','Log','Ip','MyReferal','Referal','MyInviter','Inviter','ShopOrder','MoneyOrder','Review','Message','CookieId','Mult'));
+        'counters'=>array('WhoMore','SeaBattle','Notice','Note','AdBlock','Log','Ip','MyReferal','Referal','MyInviter','Inviter','ShopOrder','MoneyOrder','Review','Message','CookieId','Mult'),
+        'privacy'=>array('Name','Surname','Gender','Birthday','Age','Zip','Address') // list of variables, which can be modify by player
+    );
 
     protected $_id         = 0;
     protected $_email      = '';
     protected $_password   = '';
     protected $_salt       = '';
+    protected $_hash       = '';
 
-    private $_socialid     = 0;
-    private $_socialemail  = '';
-    private $_socialname   = '';
-    private $_socialenable = 1;
+    protected $_socialId     = 0;
+    protected $_socialEmail  = '';
+    protected $_socialName   = '';
+    protected $_socialEnable = 1;
 
-    private $_nicName    = '';
-    private $_name       = '';
-    private $_surname    = '';
-    private $_secondName = '';
-    private $_avatar     = '';
-    private $_agent      = '';
-    private $_referer    = '';
-
-    protected $_gender  = null;
-
-    protected $_phone      = null;
-    private $_yandexMoney = null;
-    private $_qiwi       = null;
-    private $_webMoney   = null;
-    private $_birthday   = null;
-
-    private $_favoriteCombination = array();
-    private $_visible             = false;
-
-    protected $_valid           = 0;
-    protected $_complete        = 1;
-    protected $_ban             = false;
-    protected $_bot             = false;
-    protected $_utc             = null;
-
-    private $_dates          = array();
-    private $_dateAdBlocked  = '';
-    private $_country        = '';
-    private $_lang           = '';
-
-    private $_generatedPassword = '';
-
-    private $_points      = 0;
-    private $_money       = 0;
-    private $_gamesPlayed = 0;
+    protected $_nicname    = '';
+    protected $_name       = '';
+    protected $_surname    = '';
+    protected $_secondName = '';
+    protected $_avatar     = '';
+    protected $_birthday   = null;
+    protected $_gender     = null;
 
     protected $_city    = '';
     protected $_zip     = '00000';
     protected $_address = '';
+
+    protected $_agent      = '';
+    protected $_referer    = '';
+
+    protected $_phone       = null;
+    protected $_yandexMoney = null;
+    protected $_qiwi        = null;
+    protected $_webMoney    = null;
+
+    protected $_favoriteCombination = array();
+    protected $_visible             = false;
+    protected $_valid           = 0;
+    protected $_complete        = 1;
+    protected $_ban             = false;
+    protected $_bot             = false;
+    protected $_admin           = false;
+    protected $_utc             = null;
+
+    protected $_privacy        = array();
+    protected $_dates          = array();
+    protected $_country        = '';
+    protected $_lang           = '';
+
+    protected $_generatedPassword = '';
+
+    protected $_points      = 0;
+    protected $_money       = 0;
+    protected $_gamesPlayed = 0;
 
     /**
      * @var array Счётчик оставшихся оплачиваемых реф.ссылок в соц.сетях [имя соц.сети]=>[количество]
      */
     private $_socialPostsCount = array();
 
-    //private $_online     = 0;
-    private $_adBlock    = 0;
-    private $_webSocket  = 0;
+    protected $_ip = '';
+    protected $_lastIp = '';
+    protected $_cookieId = 0;
 
-    private $_admin = false;
-    private $_hash = '';
-    private $_ip = '';
-    private $_lastip = '';
-    private $_cookieId = 0;
-
-    private $_inviterId = 0;
-    private $_referalId = 0;
-    private $_referalPaid = 0;
+    protected $_inviterId = 0;
+    protected $_referalId = 0;
+    protected $_referalPaid = 0;
 
     protected $_referralsProfit = 0;
     protected $_referralPay     = 0;
 
     protected $_goldTicket = 0;
 
-    private $_newsSubscribe = 1;
+    protected $_newsSubscribe = 1;
 
     protected $_additionalData = array();
-    // filled only when list of players fetched
-    private $_isTicketsFilled = array();
-    private $_counters = array();
 
-    private $_isFriend = null;
+    // filled only when list of players fetched
+    protected $_ticketsFilled = 0;
+    protected $_counters = array();
+
+    protected $_friend = null;
 
     public function init()
     {
         $this->setModelClass('PlayersModel');
     }
 
-    public function setNewsSubscribe($newsSubscribe)
-    {
-        $this->_newsSubscribe = $newsSubscribe;
-
-        return $this;
-    }
-
-    public function getNewsSubscribe()
-    {
-        return $this->_newsSubscribe;
-    }
-
-    public function setReferer($referer)
-    {
-        $this->_referer = $referer;
-
-        return $this;
-    }
-
-    public function getReferer()
-    {
-        return $this->_referer;
-    }
-
-    public function setWebmoney($val)
-    {
-        $this->_webMoney = $val;
-
-        return $this;
-    }
-
-    public function getWebMoney()
-    {
-        return $this->_webMoney;
-    }
-
-    public function setQiwi($val)
-    {
-        $this->_qiwi = $val;
-
-        return $this;
-    }
-
-    public function getQiwi()
-    {
-        return $this->_qiwi;
-    }
-
-    public function setYandexMoney($val)
-    {
-        $this->_yandexMoney = $val;
-
-        return $this;
-    }
-
-    public function getYandexMoney()
-    {
-        return $this->_yandexMoney;
-    }
-
-    public function setAgent($agent)
-    {
-        $this->_agent = $agent;
-
-        return $this;
-    }
-
-    public function getAgent()
-    {
-        return $this->_agent;
-    }
-
-    public function setSocialEnable($socialenable)
-    {
-        $this->_socialenable = $socialenable;
-
-        return $this;
-    }
-
-    public function getSocialEnable()
-    {
-        return $this->_socialenable;
-    }
-
-    public function setSocialId($socialid)
-    {
-        $this->_socialid = $socialid;
-
-        return $this;
-    }
-
-    public function getSocialId()
-    {
-        return $this->_socialid;
-    }
-
-    public function setSocialName($socialname)
-    {
-        $this->_socialname = $socialname;
-
-        return $this;
-    }
-
-    public function getSocialName()
-    {
-        return $this->_socialname;
-    }
-
-    public function setSocialEmail($socialemail)
-    {
-        $this->_socialemail = $socialemail;
-
-        return $this;
-    }
-
-    public function getSocialEmail()
-    {
-        return $this->_socialemail;
-    }
-
-    public function setNicName($nicName)
-    {
-        $this->_nicName = $nicName;
-
-        return $this;
-    }
-
     public function getNicName()
     {
-        return $this->_nicName;
-    }
-
-    public function setName($name)
-    {
-        $this->_name = $name;
-
-        return $this;
-    }
-
-    public function getName()
-    {
-        return $this->_name;
-    }
-
-    public function setSurname($surname)
-    {
-        $this->_surname = $surname;
-
-        return $this;
-    }
-
-    public function getSurname()
-    {
-        return $this->_surname;
-    }
-
-    public function setSecondName($secondName)
-    {
-        $this->_secondName = $secondName;
-
-        return $this;
-    }
-
-    public function getSecondName()
-    {
-        return $this->_secondName;
-    }
-
-    public function setCookieId($id)
-    {
-        $this->_cookieId = $id;
-
-        return $this;
-    }
-
-    public function getCookieId()
-    {
-        return $this->_cookieId;
-    }
-
-    public function setBirthday($birthday)
-    {
-        $this->_birthday = $birthday;
-
-        return $this;
-    }
-
-    public function getBirthday($format = null)
-    {
-        $date = $this->_birthday;
-
-        if (!is_null($format)) {
-            $date = date($format, $this->_birthday);
-        }
-
-        return $date;
-    }
-
-    public function setDateRegistered($dateRegistered)
-    {
-        $this->_dateRegistered = $dateRegistered;
-
-        return $this;
-    }
-
-    public function getDateRegistered($format = null)
-    {
-        $date = $this->_dateRegistered;
-
-        if (!is_null($format)) {
-            $date = date($format, $this->_dateRegistered);
-        }
-
-        return $date;
-    }
-
-    public function setDateLastMoment($date)
-    {
-        $this->_dateLastMoment = $date;
-
-        return $this;
-    }
-
-    public function getDateLastMoment($format = null)
-    {
-        $date = $this->_dateLastMoment;
-
-        if (!is_null($format)) {
-            $date = date($format, $this->_dateLastMoment);
-        }
-
-        return $date;
+        return $this->_nicname;
     }
 
     public function setLang($lang)
@@ -355,96 +124,12 @@ class Player extends Entity
         return $this;
     }
 
-    public function getLang()
-    {
-        return $this->_lang;
-    }
-
-    public function setCountry($country)
-    {
-        $this->_country = $country;
-
-        return $this;
-    }
-
-    public function getCountry()
-    {
-        return $this->_country;
-    }
-
-    public function setAvatar($avatar)
-    {
-        $this->_avatar = $avatar;
-
-        return $this;
-    }
-
-    public function getAvatar()
-    {
-        return $this->_avatar;
-    }
-
-    public function setVisibility($v)
-    {
-        $this->_visible = $v;
-
-        return $this;
-    }
-
-    public function getVisibility()
-    {
-        return  $this->_visible;
-    }
-
-    public function setFavoriteCombination(array $combination)
-    {
-        $this->_favoriteCombination = $combination;
-
-        return $this;
-    }
-
     public function getFavoriteCombination()
     {
         if (!is_array($this->_favoriteCombination)) {
             return array_fill(1,\LotterySettings::REQUIRED_BALLS, null);
         }
         return array_pad($this->_favoriteCombination, \LotterySettings::REQUIRED_BALLS, null);
-    }
-
-    public function setPoints($points)
-    {
-        $this->_points = $points;
-
-        return $this;
-    }
-
-    public function getPoints()
-    {
-        return $this->_points;
-    }
-
-    public function setMoney($money)
-    {
-        $this->_money = $money;
-
-        return $this;
-    }
-
-    public function getMoney()
-    {
-        return $this->_money;
-    }
-
-    public function setGamesPlayed($gamesPlayed)
-    {
-        $this->_gamesPlayed = $gamesPlayed;
-
-        return $this;
-    }
-
-    public function getGamesPlayed()
-    {
-        return $this->_gamesPlayed;
     }
 
     public function getInvitesCount()
@@ -524,19 +209,6 @@ class Player extends Entity
         return $check;
     }
 
-    public function checkLastGame($key)
-    {
-        $model = $this->getModelClass();
-
-        try {
-            return $model::instance()->checkLastGame($key, $this);
-        } catch (ModelException $e) {
-            throw new EntityException('INTERNAL_ERROR', 500);
-        }
-
-        return false;
-    }
-
     /**
      * Декремент счётчика оплачиваемых реф.ссылок в соц.сети $provider
      *
@@ -559,127 +231,13 @@ class Player extends Entity
         return $this;
     }
 
-    public function setAdBlock($check)
-    {
-        $this->_adBlock = $check;
-
-        return $this;
-    }
-
-    public function getAdBlock()
-    {
-        return $this->_adBlock;
-    }
-
-    public function setDateAdBlocked($date)
-    {
-        if($date)
-            $this->_dateAdBlocked = $date;
-
-        return $this;
-    }
-
-    public function getDateAdBlocked()
-    {
-        return $this->_dateAdBlocked;
-    }
-
-    public function setWebSocket($check)
-    {
-        $this->_webSocket = $check;
-
-        return $this;
-    }
-
-    public function getWebSocket()
-    {
-        return $this->_webSocket;
-    }
-
-    public function setHash($hash)
-    {
-        $this->_hash = $hash;
-
-        return $this;
-    }
-
-    public function getHash()
-    {
-        return $this->_hash;
-    }
-
-    public function setIP($ip)
-    {
-        $this->_ip = $ip;
-
-        return $this;
-    }
-
-    public function getIP()
-    {
-        return $this->_ip;
-    }
-
     public function setLastIP($ip)
     {
-        if(!$this->getIP()){
+        if(!$this->getIp()){
             $this->setIp($ip);
-        } elseif($ip!=$this->getIP()){
-            $this->_lastip = $ip;
+        } elseif($ip!=$this->getIp()){
+            $this->_lastIp = $ip;
         }
-        return $this;
-    }
-
-    public function getLastIP()
-    {
-        return $this->_lastip;
-    }
-
-    public function setInviterId($inviterId)
-    {
-        $this->_inviterId = $inviterId;
-
-        return $this;
-    }
-
-    public function getInviterId()
-    {
-        return $this->_inviterId;
-    }
-
-    public function setReferalId($referalId)
-    {
-        $this->_referalId = $referalId;
-
-        return $this;
-    }
-
-    public function getReferalId()
-    {
-        return $this->_referalId;
-    }
-
-    public function isAdmin()
-    {
-        return $this->_admin;
-    }
-
-    public function setAdmin($status)
-    {
-        $this->_admin = $status;
-
-        return $this;
-    }
-
-    public function isReferalPaid()
-    {
-        return $this->_referalPaid;
-    }
-
-    public function setReferalPaid($status)
-    {
-        $this->_referalPaid = $status;
-
         return $this;
     }
 
@@ -790,11 +348,6 @@ class Player extends Entity
         return $socials;
     }
 
-    public function isTicketsFilled()
-    {
-        return $this->_isTicketsFilled;
-    }
-
     public function generatePassword()
     {
         $an = array(
@@ -806,8 +359,8 @@ class Player extends Entity
         $pass .= substr(str_shuffle($an[1]), 0, 6);
         $pass .= substr(str_shuffle($an[2]), 0, 4);
 
-        $this->_generatedPassword = str_shuffle($pass);
-        return $this->_generatedPassword;
+        $this->setGeneratedPassword(str_shuffle($pass));
+        return $this->getGeneratedPassword();
     }
 
     public function hidePassword($pass)
@@ -860,7 +413,7 @@ class Player extends Entity
             break;
             case 'update' :
                 $this->validEmail();
-                $this->setNicName(trim(htmlspecialchars(strip_tags($this->getNicName()))));
+                $this->setNicname(trim(htmlspecialchars(strip_tags($this->getNicname()))));
                 $this->checkNickname();
 
                 if ($this->getPhone()){
@@ -985,24 +538,23 @@ class Player extends Entity
         return $this;
     }
 
-    public function getCounters($key=null)
+    public function initPrivacy($data=null)
     {
-        if($key){
-            if(isset($this->_counters[$key])){
-                return $this->_counters[$key];
-            } else {
-                return false;
-            }
-        } else
-            return $this->_counters;
-    }
 
-    public function setCounters($counters, $update=false)
-    {
-        if($update){
-            $this->_counters[$counters] = $update;
+        if (!$data) {
+
+            $model = $this->getModelClass();
+            try {
+                $this->setPrivacy($model::instance()->loadPrivacy($this));
+            } catch (ModelException $e) {
+                throw new EntityException($e->getMessage(), $e->getCode());
+            }
+
         } else {
-            $this->_counters = $counters;
+
+            foreach (self::$MASK['privacy'] as $key)
+                if (isset($data[$key]))
+                    $this->setPrivacy($data[$key], $key);
         }
 
         return $this;
@@ -1027,43 +579,9 @@ class Player extends Entity
             if(isset($data[$key]))
                 $dates[$key] = $data[$key];
 
-        $this->setDates($dates)
-            ->setDateLastMoment($data['Moment'])
-            ->setAdBlock($data['AdBlockLast'])
-            ->setDateAdBlocked($data['AdBlocked'])
-            ->setWebSocket($data['WSocket']);
+        $this->setDates($dates);
 
         return $this;
-    }
-
-    public function setDates($dates, $update=false)
-    {
-        if($update){
-            $this->_dates[$dates] = $update;
-        } else {
-            $this->_dates = $dates;
-        }
-
-        return $this;
-    }
-
-    public function getDates($key = null, $format = null)
-    {
-        if($key){
-
-            if(isset($this->_dates[$key])){
-                if (!is_null($format)) {
-                    return date($format, $this->_dates[$key]);
-                } else {
-                    return $this->_dates[$key];
-                }
-            } else {
-                return false;
-            }
-
-        } else
-            return $this->_dates;
-
     }
 
     public function updateCookieId($cookie)
@@ -1228,6 +746,19 @@ class Player extends Entity
         return true;
     }
 
+    public function updatePrivacy()
+    {
+        $model = $this->getModelClass();
+
+        try {
+            $model::instance()->updatePrivacy($this);
+        } catch (ModelException $e) {
+            throw new EntityException('INTERNAL_ERROR', 500);
+        }
+
+        return $this;
+    }
+
     public function updateSocial()
     {
         $model = $this->getModelClass();
@@ -1339,10 +870,9 @@ class Player extends Entity
 
         Common::sendEmail($this->getEmail(), 'Регистрация на www.lotzon.com', 'player_registration', array(
             'login' => $this->getEmail(),
-            'password'  => $this->_generatedPassword,
+            'password'  => $this->getGeneratedPassword(),
             'hash'  => $this->getHash(),
         ));
-        //$this->login($this->_generatedPassword);
 
         return $this;
     }
@@ -1452,7 +982,8 @@ class Player extends Entity
             ->setAgent($_SERVER['HTTP_USER_AGENT'])
             ->update()
             ->updateLogin()
-            ->writeLogin();
+            ->writeLogin()
+            ->initPrivacy();
 
         $session->set(Player::IDENTITY, $this);
 
@@ -1571,7 +1102,7 @@ class Player extends Entity
                  ->setEmail($data['Email'])
                  ->setPassword($data['Password'])
                  ->setSalt($data['Salt'])
-                 ->setNicName($data['Nicname'])
+                 ->setNicname($data['Nicname'])
                  ->setName($data['Name'])
                  ->setSurname($data['Surname'])
                  ->setSecondName($data['SecondName'])
@@ -1580,11 +1111,6 @@ class Player extends Entity
                  ->setYandexMoney($data['YandexMoney'])
                  ->setWebMoney($data['WebMoney'])
                  ->setBirthday($data['Birthday'])
-                 //->setDateLastNotice($data['DateNoticed'])
-                 //->setDateLastMoment($data['Moment'])
-                 //->setAdBlock($data['AdBlock'])
-                 //->setDateAdBlocked($data['DateAdBlocked'])
-                 //->setWebSocket($data['WebSocket'])
                  ->setCountry($data['Country'])
                  ->setCity($data['City'])
                  ->setZip($data['Zip'])
@@ -1594,7 +1120,7 @@ class Player extends Entity
                  ->setAgent($data['Agent'])
                  ->setGender($data['Gender'])
                  ->setReferer($data['Referer'])
-                 ->setVisibility((boolean)$data['Visible'])
+                 ->setVisible((boolean)$data['Visible'])
                  ->setFavoriteCombination(!empty($data['Favorite']) ? @unserialize($data['Favorite']) : array())
                  ->setPoints($data['Points'])
                  ->setMoney($data['Money'])
@@ -1618,7 +1144,7 @@ class Player extends Entity
                  ->setGoldTicket($data['GoldTicket']);
 
             if (isset($data['TicketsFilled'])) {
-                $this->_isTicketsFilled = $data['TicketsFilled'];
+                $this->setTicketsFilled($data['TicketsFilled']);
             }
             if (isset($data['Ping'])) {
                 $this->initDates($data);
@@ -1654,9 +1180,9 @@ class Player extends Entity
     public function setFriendship($friendId)
     {
         if (\FriendsModel::instance()->getStatus($friendId, $this->getId())===0) {
-            $this->_isFriend = 'request';
+            $this->setFriend('request');
         } else {
-            $this->_isFriend = \FriendsModel::instance()->isFriend($friendId, $this->getId());
+            $this->setFriend(\FriendsModel::instance()->isFriend($friendId, $this->getId()));
         }
 
         return $this;
@@ -1669,7 +1195,7 @@ class Player extends Entity
                 $ret = array(
                     'id'           => $this->getId(),
                     'img'          => $this->getAvatar(),
-                    'name'         => $this->getNicName(),
+                    'name'         => $this->getNicname(),
                     'subreferrals' => array(
                         'total'  => \PlayersModel::instance()->getReferralsCount($this->getId()),
                         'active' => \PlayersModel::instance()->getReferralsCount($this->getId(),true),
@@ -1682,7 +1208,7 @@ class Player extends Entity
                 $ret = array(
                     'id'   => $this->getId(),
                     'img'  => $this->getAvatar(),
-                    'name' => $this->getNicName()
+                    'name' => $this->getNicname()
                 );
                 break;
             case 'info':
@@ -1691,7 +1217,7 @@ class Player extends Entity
                     'img'      => $this->getAvatar(),
                     /*'birthday' => $this->getBirthday(),*/
                     'title'    => array(
-                        'nickname'   => $this->getNicName(),
+                        'nickname'   => $this->getNicname(),
                         /*'name'       => $this->getName(),
                         'surname'    => $this->getSurname(),
                         'patronymic' => $this->getSecondName()*/
@@ -1702,8 +1228,8 @@ class Player extends Entity
                     ),
                     'social'     => $this->getSocial()*/
                 );
-                if ($this->_isFriend!==null) {
-                    $ret['isFriend'] = $this->_isFriend;
+                if ($this->getFriend()!==null) {
+                    $ret['isFriend'] = $this->getFriend();
                 }
                 break;
             default:

@@ -351,6 +351,10 @@
             }
         },
 
+        getPrivacy: function(key){
+            return this.hasOwnProperty('privacy') && this.privacy.hasOwnProperty(key) && this.privacy[key];
+        },
+
         updatePoints: function (newSum) {
             var balance = {
                 balance: {

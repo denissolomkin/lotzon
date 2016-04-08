@@ -93,7 +93,7 @@ class ShopItem extends Entity
         return $this->_category;
     }
 
-    public function setVisibility($visible)
+    public function setVisible($visible)
     {
         $this->_visible = $visible;
 

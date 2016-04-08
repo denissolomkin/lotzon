@@ -143,7 +143,7 @@ class WebSocketController implements MessageComponentInterface
                                     ->setId($gameConstructor->getId())
                                     ->fetch();
 
-                                $bot        = (object)array_pop($availableBots);
+                                $bot        = (object) array_pop($availableBots);
                                 $gamePlayer = new GamePlayer();
                                 $gamePlayer
                                     ->formatFrom('bot', $bot)
@@ -165,7 +165,7 @@ class WebSocketController implements MessageComponentInterface
 
                                     $this->initGame($clients, $gameConstructor->getKey(), $appMode, $appVariation);
 
-                                } else if (0) {
+                                } else {
 
                                     $gamePlayer
                                         ->setAppName($gameConstructor->getKey())
@@ -729,7 +729,7 @@ class WebSocketController implements MessageComponentInterface
                     'time'   => time(),
                     'id'     => $player->getId(),
                     'avatar' => $player->getAvatar(),
-                    'name'   => $player->getNicName());
+                    'name'   => $player->getNicname());
                 $bot                       = (object)SettingsModel::instance()->getSettings('gameBots')->getValue()[array_rand(SettingsModel::instance()->getSettings('gameBots')->getValue())];
                 $clients[$bot->id]         = $bot;
                 $this->initGame($clients, $key, $mode, OnlineGamesModel::instance()->getGame($key)->initVariation(), $player->getId());
@@ -1216,7 +1216,7 @@ class WebSocketController implements MessageComponentInterface
                             } elseif ($data->message == 'players') {
 
                                 foreach ($this->clients() as $client)
-                                    $names[] = $client->Session->get(Player::IDENTITY)->getNicName();
+                                    $names[] = $client->Session->get(Player::IDENTITY)->getNicname();
 
                                 $from->send(json_encode(
                                     array(
@@ -1298,7 +1298,7 @@ class WebSocketController implements MessageComponentInterface
                                             'path' => 'appchat',
                                             'res'  => array(
                                                 'uid'     => $player->getId(),
-                                                'user'    => $player->getNicName(),
+                                                'user'    => $player->getNicname(),
                                                 'message' => $data->message)
                                         )
                                     ));

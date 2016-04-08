@@ -42,7 +42,6 @@
         <input type="hidden" name="Month" value="<?=$month?>">
 
     <div class="form-group">
-        <label class="control-label">&nbsp;</label>
         <div class="form-inline">
             <div class="col-md-1">
                 <img src="">
@@ -86,7 +85,7 @@
                             <span class="input-group-addon"><i class="fa fa-sliders"></i></span>
                             <select class="form-control" name="Increment">
                                 <option value="">Вероятность</option>
-                                <? for ($i = 10; $i <=100; $i+=10) :?>
+                                <? for ($i = 0; $i <=100; $i+=10) :?>
                                     <option value="<?=$i?>"><?=$i?>%</option>
                                 <? endfor; ?>
                             </select>

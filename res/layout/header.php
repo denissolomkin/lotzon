@@ -27,11 +27,6 @@
         <link rel="stylesheet" href="/res/css/slots.css" type="text/css">
         <link rel="stylesheet" href="/res/css/social-likes_birman.css">
         <link rel="stylesheet" href="/res/css/denis.css">
-        <style>
-            #lottery #banner-desktop-context-ticket {
-                z-index: 0 !important;
-            }
-        </style>
 
 
         <?php $antiblock_short_urls = array('http://bit.ly/1a7HKts','http://is.gd/vqQzAN','http://tr.im/44bh2','http://tr.im/44bh4','http://ow.ly/lZZNF'); ?>

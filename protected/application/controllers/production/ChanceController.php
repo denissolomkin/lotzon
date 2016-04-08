@@ -263,7 +263,7 @@ class ChanceController extends \AjaxController
             $this->session->remove($key);
             $this->session->remove($key . 'Important');
 
-            if ($player->checkLastGame($key)) {
+            if ($player->checkDate($key)) {
 
                 $this->playerAward($player, $game);
                 $response['player'] = array(

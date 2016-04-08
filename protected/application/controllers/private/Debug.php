@@ -20,7 +20,7 @@ class Debug extends PrivateArea
     {
 
         $mode    = $this->request()->get('mode', null);
-        $list    = \PlayersModel::instance()->listDebug($mode);
+        $list    = \DebugModel::instance()->getList($mode);
 
         $this->render('admin/debug', array(
             'title'      => 'Дебаг',

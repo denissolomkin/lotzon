@@ -3,6 +3,7 @@
 namespace controllers\production;
 
 use \LotterySettingsModel, \SettingsModel, \StaticTextsModel, \Player, \PlayersModel, \ShopModel;
+use Ratchet\Wamp\Exception;
 use \TicketsModel, \LotteriesModel, \Session2, \CountriesModel, \SEOModel, \Admin, \LanguagesModel, \NoticesModel, \ReviewsModel, \CommentsModel, \EmailInvites, \Common;
 use GeoIp2\Database\Reader;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -128,6 +129,29 @@ class Index extends \SlimController\SlimController
             $this->session->remove('page');
         }
 
+        /* todo
+        patch for old Player Entity in Memcache sessions
+        delete after week at April 17 or after drop Memcache
+        */
+        try {
+            $playerObj->getPrivacy();
+
+        } catch (\Exception $e) {
+
+            if ($e->getCode() === 501) {
+                $this->session->get(Player::IDENTITY)->fetch();
+                $playerId = $playerObj->getId();
+                $playerObj = new Player();
+                $playerObj
+                    ->setId($playerId)
+                    ->fetch()
+                    ->initPrivacy();
+                $this->session->set(Player::IDENTITY, $playerObj);
+
+            } else
+                throw new Exception($e->getMessagee(), $e->getCode());
+        }
+
         $player = array(
             "id"       => $playerObj->getId(),
             "img"      => $playerObj->getAvatar(),
@@ -139,11 +163,12 @@ class Index extends \SlimController\SlimController
                 "valid"    => $playerObj->isValid(),
                 "moderator"=> in_array($playerObj->getId(), (array) SettingsModel::instance()->getSettings('moderators')->getValue()),
             ),
+            "privacy"  => $playerObj->getPrivacy(),
             "title"    => array(
                 "name"       => $playerObj->getName(),
                 "surname"    => $playerObj->getSurname(),
                 "patronymic" => $playerObj->getSecondName(),
-                "nickname"   => $playerObj->getNicName(),
+                "nickname"   => $playerObj->getNicname(),
             ),
             "language" => array(
                 "current"   => $playerObj->getLang(),

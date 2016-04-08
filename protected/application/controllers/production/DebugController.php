@@ -22,7 +22,7 @@ class DebugController extends \AjaxController
         $url = $this->request()->post('url', null);
         $line = $this->request()->post('line', null);
 
-        \PlayersModel::instance()->addDebug($player, array(
+        \DebugModel::instance()->addLog($player, array(
             "log" => $message ?: $log,
             "url" => $url,
             "line" => $line,

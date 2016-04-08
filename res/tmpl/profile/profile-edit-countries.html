@@ -4,4 +4,6 @@
 	    <option value="{{@key}}" {{#if (eq @key (player "location.country"))}} selected="selected"{{/if}}>{{.}}</option>
 		{{/each}}
 	</select>
+
+	{{{privacyHTML 'country' 2}}}
 </div>`
