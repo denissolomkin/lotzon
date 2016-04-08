@@ -126,7 +126,7 @@ class WebSocketController implements MessageComponentInterface
                         continue;
                     }
 
-                    if (0 && $gameConstructor->getOptions('f')) {
+                    if ($gameConstructor->getOptions('f')) {
                         #echo "GAME HAVEN'T STACK, GAME RUN IMMEDIATELY \n";
                         continue;
                     }
@@ -149,7 +149,7 @@ class WebSocketController implements MessageComponentInterface
                                     ->formatFrom('bot', $bot)
                                     ->update();
 
-                                if (0 && $gameConstructor->getOptions('f')) {
+                                if ($gameConstructor->getOptions('f')) {
 
                                     $appMode = array(
                                         'currency' => 'POINT',
