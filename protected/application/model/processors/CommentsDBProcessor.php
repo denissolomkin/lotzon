@@ -75,12 +75,17 @@ class CommentsDBProcessor implements IProcessor
                     `PlayerReviews`.*,
                     `Players`.`Avatar` PlayerImg,
                     `Players`.`Nicname` PlayerName,
+                    `PlayerDates`.`Ping` PlayerPing,
                     (SELECT COUNT(*) FROM `PlayerReviewsLikes` WHERE `PlayerReviewsLikes`.CommentId=`PlayerReviews`.Id) AS LikesCount
                 FROM `PlayerReviews`
                 LEFT JOIN
                     `Players`
                   ON
                     `Players`.`Id` = `PlayerReviews`.`PlayerId`
+                LEFT JOIN
+                    `PlayerDates`
+                  ON
+                    `Players`.`Id` = `PlayerDates`.`PlayerId`
                 WHERE
                     `PlayerReviews`.`Id` = :id
                 LIMIT 1";
