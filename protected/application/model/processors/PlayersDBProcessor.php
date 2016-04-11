@@ -1432,8 +1432,13 @@ class PlayersDBProcessor implements IProcessor
         $sql = "SELECT
                     `Players`.`Id` Id,
                     `Players`.`Avatar` Img,
-                    `Players`.`Nicname` Name
+                    `Players`.`Nicname` Name,
+                    `PlayerDates`.`Ping` Ping
                 FROM `Players`
+                LEFT JOIN
+                  `PlayerDates`
+                ON
+                  `Players`.`Id` = `PlayerDates`.`PlayerId`
                 WHERE LOWER(`Players`.`Nicname`) LIKE LOWER(:search)
                 "
                 . (($count === NULL)  ? "" : " LIMIT " . (int)$count);

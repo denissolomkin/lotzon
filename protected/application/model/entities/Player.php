@@ -1164,7 +1164,8 @@ class Player extends Entity
                 $ret = array(
                     'id'   => $this->getId(),
                     'img'  => $this->getAvatar(),
-                    'name' => $this->getNicname()
+                    'name' => $this->getNicname(),
+                    'ping' => $this->getDates('Ping'),
                 );
                 break;
             case 'info':
@@ -1177,6 +1178,7 @@ class Player extends Entity
                         'name'       => $this->applyPrivacy('Name'),
                         'surname'    => $this->applyPrivacy('Surname'),
                     ),
+                    'ping'     => $this->getDates('Ping'),
                     'gender'   => $this->applyPrivacy('Gender'),
                     'age'      => $this->applyPrivacy('Age'),
                     'birthday' => $this->applyPrivacy('Birthday') ? date('d.m.', $this->getBirthday())."1900" : null,
@@ -1185,8 +1187,10 @@ class Player extends Entity
                     'location' => array(
                         'country'    => $this->applyPrivacy('Country'),
                         'city'       => $this->applyPrivacy('City'),
-                    ),/*
-                    'social'     => $this->getSocial()*/
+                    ),
+                    /*
+                    'social'     => $this->getSocial()
+                    */
                 );
                 if ($this->getFriend()!==null) {
                     $ret['isFriend'] = $this->getFriend();
