@@ -286,4 +286,9 @@ class PlayersModel extends Model
     {
         return $this->getProcessor()->updateGoldTicket($player, $quantity);
     }
+
+    public function getPlayersPing($ids)
+    {
+        return $this->getProcessor()->getPlayersPing($ids);
+    }
 }

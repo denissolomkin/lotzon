@@ -1489,6 +1489,25 @@ class PlayersDBProcessor implements IProcessor
         return $players;
     }
 
+    public function getPlayersPing($ids)
+    {
+        if (!is_array($ids)) {
+            throw new ModelException('Bad request', 403);
+        }
+
+        $inQuery = implode(',', array_fill(0, count($ids), '?'));
+        $sql     = "SELECT `PlayerId`,`Ping` FROM `PlayerDates` WHERE `PlayerId` IN (" . $inQuery . ")";
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            foreach ($ids as $k => $id) {
+                $sth->bindValue(($k + 1), $id);
+            }
+            $sth->execute();
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+        return $sth->fetchAll();
+    }
 
     public function getReferralsCount($playerId, $onlyActive = false)
     {

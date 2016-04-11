@@ -57,6 +57,7 @@ class PingController extends \AjaxController
         $gamesPublished    = \GamesPublishedModel::instance()->getList();
         $AdBlockDetected = $this->request()->post('online', null);
         $forms           = $this->request()->post('forms', array());
+        $usersAtPage     = $this->request()->post('users', array());
 
         /*
         * Unread Notices
@@ -251,6 +252,17 @@ class PingController extends \AjaxController
         $response['player']['count'] = $counters;
         if(!empty($delete))
             $response['delete']['badges'] = $delete;
+
+        /**
+         * Ping
+         */
+        if ($usersAtPage!=array()) {
+            $pings = \PlayersModel::instance()->getPlayersPing($usersAtPage);
+            $response['statuses'] = array();
+            foreach($pings as $player_ping) {
+                $response['statuses'][$player_ping['PlayerId']] = $player_ping['Ping'];
+            }
+        }
 
         $this->ajaxResponseNoCache($response);
     }
