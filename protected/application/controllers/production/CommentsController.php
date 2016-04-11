@@ -160,6 +160,7 @@ class CommentsController extends \AjaxController
             }
 
             $response = array(
+                'cache'  => 'local',
                 'res'    => array(
                     'communication' => array(
                         'notifications' => $comments,
