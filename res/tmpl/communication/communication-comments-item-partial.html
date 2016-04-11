@@ -5,7 +5,7 @@
      data-comment-id="{{or comment_id id}}">
     <div class="comment-top">
         <a href="/user/{{user.id}}">
-            <div class="comment-img">
+            <div data-user-id="{{user.id}}" class="comment-img user-status {{#if (player "isOnline" user.ping)}} online {{/if}}">
                 <img src="{{avatar this.user.img this.user.id 50}}"
                      class="loading"
                      onload="this.style.background = 'none'"

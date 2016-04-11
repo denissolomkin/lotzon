@@ -11,7 +11,7 @@
 
                 <div class="nm-selected">
                     <div class="nm-friend">
-                        <div class="nm-friend-img">
+                        <div data-user-id="{{id}}" class="nm-friend-img user-status {{#if (player "isOnline" user.ping)}} online {{/if}}">
                             <img src="{{avatar img id 100}}"
                                  class="loading"
                                  onload="this.style.background = 'none'"

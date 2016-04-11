@@ -4,7 +4,7 @@
     <div class="nm-selected">
         <div class="nm-change">{{i18n "title-messages-change-user"}}</div>
         <div class="nm-friend">
-            <div class="nm-friend-img">
+            <div data-user-id="{{id}}" class="nm-friend-img user-status {{#if (player "isOnline" ping)}} online {{/if}}">
                 <img src="{{avatar img id 50}}"
                      class="loading"
                      onload="this.style.background = 'none'"

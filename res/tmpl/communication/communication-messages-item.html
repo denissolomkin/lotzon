@@ -5,7 +5,7 @@
     </div>
     {{/if}}
     <a href="/user/{{user.id}}">
-        <div class="message-img">
+        <div data-user-id="{{user.id}}" class="message-img user-status {{#if (player "isOnline" user.ping)}} online {{/if}}">
             <div class="service-pop-up">{{i18n "title-mark-online"}}</div>
             <img src="{{avatar user.img user.id 50}}" class="loading" onload="this.style.background = 'none'" onerror="Player.getAvatar.call(this)">
         </div>
