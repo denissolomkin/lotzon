@@ -379,7 +379,7 @@ class CommentsDBProcessor implements IProcessor
                     pr.*,
                     `Players`.`Avatar` PlayerImg,
                     `Players`.`Nicname` PlayerName,
-                    `PlayerDates`.`Ping` PlayerPing,
+                    pd.`Ping` PlayerPing,
                     prparent.`Text` ParentText
                 FROM `PlayerReviews` AS pr
                 LEFT JOIN
