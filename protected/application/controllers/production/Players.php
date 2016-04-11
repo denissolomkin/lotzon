@@ -595,7 +595,8 @@ class Players extends \AjaxController
             $response['res'][] = array(
                 'id'   => $user['Id'],
                 'img'  => $user['Img'],
-                'name' => $user['Name']
+                'name' => $user['Name'],
+                'ping' => $user['Ping'],
             );
         }
         $this->ajaxResponseNoCache($response);
