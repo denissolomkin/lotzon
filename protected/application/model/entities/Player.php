@@ -204,7 +204,7 @@ class Player extends Entity
         }
 
         if($check)
-            $this->setDates($key, time());
+            $this->setDates(time(), $key);
 
         return $check;
     }
@@ -873,7 +873,7 @@ class Player extends Entity
         $psw=$this->generatePassword();
         $this->setPassword($this->compilePassword($psw))
             ->setAgent($_SERVER['HTTP_USER_AGENT'])
-            ->setDates('Registration',time())
+            ->setDates(time(), 'Registration')
             ->setReferer($session->get('REFERER'));
 
         parent::create();
@@ -987,7 +987,7 @@ class Player extends Entity
         $session = new Session();
         $session->set('QuickGameLastDate',($this->getDates('Login') < strtotime(date("Y-m-d"))? $this->getDates('Login') : time() ));
 
-        $this->setDates('Login',time())
+        $this->setDates(time(), 'Login')
             ->setCookieId(($_COOKIE[self::PLAYERID_COOKIE]?:$this->getId()))
             ->setLastIp(Common::getUserIp())
             ->updateIp(Common::getUserIp())
@@ -1081,7 +1081,7 @@ class Player extends Entity
 
     public function updateNotice()
     {
-        $this->setDates('Notice', time());
+        $this->setDates(time(), 'Notice');
 
         $model = $this->getModelClass();
 
@@ -1094,7 +1094,7 @@ class Player extends Entity
 
     public function markOnline()
     {
-        $this->setDates('Ping',time());
+        $this->setDates(time(), 'Ping');
         $model = $this->getModelClass();
 
         try {

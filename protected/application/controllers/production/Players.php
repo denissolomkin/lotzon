@@ -85,7 +85,7 @@ class Players extends \AjaxController
             $player->setAdditionalData($social->getAdditionalData())
                 ->setName($social->getName())
                 ->setSurname($social->getSurname())
-                ->setDates('Login', time())
+                ->setDates(time(), 'Login')
                 ->update()
                 ->updateLogin()
                 ->setSocialId($social->getSocialId())
