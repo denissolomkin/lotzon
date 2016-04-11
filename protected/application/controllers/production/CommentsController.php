@@ -144,6 +144,7 @@ class CommentsController extends \AjaxController
                         "id"   => $commentData['PlayerId'],
                         "img"  => $commentData['PlayerImg'],
                         "name" => $commentData['PlayerName'],
+                        "ping" => $commentData['PlayerPing'],
                     ),
                     "id"         => $commentData['Id'],
                     "comment_id" => $commentData['ParentId'],
