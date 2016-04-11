@@ -1221,7 +1221,8 @@ class Player extends Entity
                 $ret = array(
                     'id'   => $this->getId(),
                     'img'  => $this->getAvatar(),
-                    'name' => $this->getNicname()
+                    'name' => $this->getNicname(),
+                    'ping' => $this->getDates('Ping'),
                 );
                 break;
             case 'info':
@@ -1236,6 +1237,7 @@ class Player extends Entity
                         'surname'       => $this->getPrivacy('Surname') == 2 || ($this->getPrivacy('Surname') == 1 && $this->getFriend()) ? $this->getSurname() : null,
                         /*'patronymic' => $this->getSecondName()*/
                     ),
+                    'ping' => $this->getDates('Ping'),
                     'gender'   => $this->getPrivacy('Gender') == 2 || ($this->getPrivacy('Gender') == 1 && $this->getFriend()) ? $this->getGender() : null,
                     'age'      => $this->getPrivacy('Age') == 2 || ($this->getPrivacy('Age') == 1 && $this->getFriend()) ? $this->getAge() : null,
                     'birthday' => $this->getPrivacy('Birthday') == 2 || ($this->getPrivacy('Birthday') == 1 && $this->getFriend()) ? date('d.m.', $this->getBirthday())."1900" : null,
