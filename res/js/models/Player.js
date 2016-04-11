@@ -404,10 +404,15 @@
 
         ping: function () {
 
-            var forms = Content.forms4ping();
+            var forms = Content.forms4ping(),
+                users = Content.users4ping();
+
             Form.post({
                 action: '/ping',
-                data: {forms: forms}
+                data: {
+                    forms: forms,
+                    users: users
+                }
             })
         },
 

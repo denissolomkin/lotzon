@@ -210,6 +210,45 @@
 
         },
 
+        users4ping: function () {
+
+            var userStatuses = DOM.visible('.user-status'),
+                users = [],
+                id = 0;
+
+            if (userStatuses.length) {
+                for (var i = 0; i < userStatuses.length; i++) {
+                    id = userStatuses[i].getAttribute('data-user-id');
+                    users[id] = id;
+                }
+            }
+
+            return users;
+
+        },
+
+       updateStatuses: function (statuses) {
+
+           var userStatuses,
+               id;
+
+           if (statuses.length) {
+               for (id in statuses) {
+                   if (statuses.hasOwnProperty(id)) {
+                       userStatuses = document.querySelectorAll('.user-status[data-user-id="' + id + '"]');
+                       if (userStatuses.length) {
+                           for (var i = 0; i < userStatuses.length; i++) {
+                               userStatuses[i].classList.add('online');
+                           }
+                       }
+                   }
+               }
+           }
+
+           return statuses.length;
+
+       },
+
         forms4ping: function () {
 
             var renderForms = DOM.visible('.render-list-form:not(.track-disabled)'),
