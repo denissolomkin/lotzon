@@ -98,7 +98,7 @@ class AuthController extends \SlimController\SlimController {
 
                 if(!$this->session->has(Player::IDENTITY)){
                     $this->session->set('QuickGameLastDate',($player->getDates('Login') < strtotime(date("Y-m-d")) ? $player->getDates('Login') : time()));
-                    $player->setDates('Login',time());
+                    $player->setDates(time(), 'Login');
                 }
 
                 // try to catch avatar
@@ -168,7 +168,7 @@ class AuthController extends \SlimController\SlimController {
 
                             $player->setLang(CountriesModel::instance()->getCountry($player->getCountry())->getLang());
                             $player->setValid(true)
-                                ->setDates('Login',time())
+                                ->setDates(time(), 'Login')
                                 ->create();
 
                             if(!$player->isSocialUsed() && SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_social_registration')) // If Social Id didn't use earlier

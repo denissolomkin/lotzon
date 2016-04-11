@@ -31,6 +31,26 @@ class PingController extends \AjaxController
         $delete          = array();
         $player          = $this->session->get(Player::IDENTITY);
 
+
+        /* todo delete
+        patch for old Player Entity in Memcache sessions
+        delete after week at April 17 or after drop Memcache
+        */
+        try {
+            $player->getPrivacy();
+
+        } catch (\Exception $e) {
+            $this->session->get(Player::IDENTITY)->fetch();
+            $playerId = $player->getId();
+            $player = new Player();
+            $player
+                ->setId($playerId)
+                ->fetch()
+                ->initPrivacy();
+            $this->session->set(Player::IDENTITY, $player);
+        }
+
+
         /* todo delete after merge LOT-22 */
         $player->initDates();
 
@@ -61,8 +81,8 @@ class PingController extends \AjaxController
         */
 
         $player
-            ->setDates('AdBlocked',($AdBlockDetected ? time() : null))
-            ->setDates('AdBlockLast',($AdBlockDetected ? time() : null))
+            ->setDates(($AdBlockDetected ? time() : null), 'AdBlocked')
+            ->setDates(($AdBlockDetected ? time() : null), 'AdBlockLast')
             ->markOnline();
 
         if (($player->getDates('AdBlockLast') && !$AdBlockDetected) || (!$player->getDates('AdBlockLast') && $AdBlockDetected)) {

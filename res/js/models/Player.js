@@ -449,7 +449,7 @@
 
         isOnline: function (ping) {
             ping = ping && typeof ping === 'object' && ping.hasOwnProperty('ping') && ping.ping || ping;
-            return ping && ping + Livedate.diff + Config.timeout.online > moment().unix();
+            return ping && (parseInt(ping) + Livedate.diff + Config.timeout.online > moment().unix());
         },
 
         getAvatar: function (img, id, width) {
