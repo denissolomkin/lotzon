@@ -75,11 +75,6 @@ class Player extends Entity
     protected $_money       = 0;
     protected $_gamesPlayed = 0;
 
-    /**
-     * @var array Счётчик оставшихся оплачиваемых реф.ссылок в соц.сетях [имя соц.сети]=>[количество]
-     */
-    private $_socialPostsCount = array();
-
     protected $_ip = '';
     protected $_lastIp = '';
     protected $_cookieId = 0;
@@ -150,48 +145,6 @@ class Player extends Entity
         return SettingsModel::instance()->getSettings('counters')->getValue('INVITES_PER_WEEK') - $this->getInvitesCount();
     }
 
-    /**
-     * Возвращает счётчик остатка оплачиваемых постов для соц.сети $provider
-     *
-     * @author subsan <subsan@online.ua>
-     *
-     * @param  string|null     $provider Имя социальной сети | Весь массив счётчиков
-     * @return int|array|false           Количество оставшихся постов | Весь массив | не найден счётчик для соц.сети $provider
-     */
-    public function getSocialPostsCount($provider = null)
-    {
-        if ($provider === null) {
-            return $this->_socialPostsCount;
-        }
-        if (isset($this->_socialPostsCount[$provider])) {
-            return $this->_socialPostsCount[$provider];
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * Устанавливает счётчик остатка оплачиваемых постов для соц.сетей
-     *
-     * @author subsan <subsan@online.ua>
-     *
-     * @param  mixed[] $sp Массив [имя счётчика => количество оставшихся постов]
-     * @return object      this
-     */
-    public function setSocialPostsCount($sp)
-    {
-        // @TODO разобраться почему на public иногда $this->_socialPostsCount = (int)
-        if (is_array($this->_socialPostsCount)===false) {
-            $this->_socialPostsCount = array();
-        }
-        if (is_array($sp)) {
-            foreach ($sp as $key => $value) {
-                $this->_socialPostsCount[$key] = $value;
-            }
-        }
-        return $this;
-    }
-
     public function checkDate($key)
     {
         $model = $this->getModelClass();
@@ -220,28 +173,6 @@ class Player extends Entity
         } else
             return null;
 
-    }
-
-    /**
-     * Декремент счётчика оплачиваемых реф.ссылок в соц.сети $provider
-     *
-     * @author subsan <subsan@online.ua>
-     *
-     * @param  string $provider Имя социальной сети
-     * @return object           this
-     */
-    public function decrementSocialPostsCount($provider)
-    {
-        $this->setSocialPostsCount(array($provider => ($this->getSocialPostsCount($provider) - 1)));
-        $model = $this->getModelClass();
-
-        try {
-            $model::instance()->decrementSocialPostsCount($this);
-        } catch (ModelException $e) {
-            throw new EntityException('INTERNAL_ERROR', 500);
-        }
-
-        return $this;
     }
 
     public function setLastIP($ip)
@@ -1138,8 +1069,6 @@ class Player extends Entity
                  ->setPoints($data['Points'])
                  ->setMoney($data['Money'])
                  ->setGamesPlayed($data['GamesPlayed'])
-                 //->setInvitesCount($data['InvitesCount'])
-                 ->setSocialPostsCount(!empty($data['SocialPostsCount']) ? @unserialize($data['SocialPostsCount']) : array())
                  ->setCookieId($data['CookieId'])
                  ->setIp($data['Ip'])
                  ->setLastIp($data['LastIp'])
@@ -1201,6 +1130,20 @@ class Player extends Entity
         return $this;
     }
 
+    public function applyPrivacy($field)
+    {
+        switch (true) {
+            case $this->getPrivacy($field) == 2:
+            case $this->getPrivacy($field) == 1 && $this->getFriend():
+                return $this->{'get' . $field}();
+                break;
+
+            default:
+                return null;
+                break;
+        }
+    }
+
     public function export($to)
     {
         switch ($to) {
@@ -1230,24 +1173,24 @@ class Player extends Entity
                 $ret = array(
                     'id'       => $this->getId(),
                     'img'      => $this->getAvatar(),
-                    /*'birthday' => $this->getBirthday(),*/
                     'title'    => array(
                         'nickname'   => $this->getNicname(),
-                        'name'       => $this->getPrivacy('Name') == 2 || ($this->getPrivacy('Name') == 1 && $this->getFriend()) ? $this->getName() : null,
-                        'surname'       => $this->getPrivacy('Surname') == 2 || ($this->getPrivacy('Surname') == 1 && $this->getFriend()) ? $this->getSurname() : null,
-                        /*'patronymic' => $this->getSecondName()*/
+                        'name'       => $this->applyPrivacy('Name'),
+                        'surname'    => $this->applyPrivacy('Surname'),
                     ),
-                    'ping' => $this->getDates('Ping'),
-                    'gender'   => $this->getPrivacy('Gender') == 2 || ($this->getPrivacy('Gender') == 1 && $this->getFriend()) ? $this->getGender() : null,
-                    'age'      => $this->getPrivacy('Age') == 2 || ($this->getPrivacy('Age') == 1 && $this->getFriend()) ? $this->getAge() : null,
-                    'birthday' => $this->getPrivacy('Birthday') == 2 || ($this->getPrivacy('Birthday') == 1 && $this->getFriend()) ? date('d.m.', $this->getBirthday())."1900" : null,
-                    'zip'      => $this->getPrivacy('Zip') == 2 || ($this->getPrivacy('Zip') == 1 && $this->getFriend()) ? $this->getZip() : null,
-                    'address'  => $this->getPrivacy('Address') == 2 || ($this->getPrivacy('Address') == 1 && $this->getFriend()) ? $this->getAddress() : null,
+                    'ping'     => $this->getDates('Ping'),
+                    'gender'   => $this->applyPrivacy('Gender'),
+                    'age'      => $this->applyPrivacy('Age'),
+                    'birthday' => $this->applyPrivacy('Birthday') ? date('d.m.', $this->getBirthday())."1900" : null,
+                    'zip'      => $this->applyPrivacy('Zip'),
+                    'address'  => $this->applyPrivacy('Address'),
                     'location' => array(
-                        'country'    => $this->getPrivacy('Country') == 2 || ($this->getPrivacy('Country') == 1 && $this->getFriend()) ? $this->getCountry() : null,
-                        'city'       => $this->getPrivacy('City') == 2 || ($this->getPrivacy('City') == 1 && $this->getFriend()) ? $this->getCity() : null,
-                    ),/*
-                    'social'     => $this->getSocial()*/
+                        'country'    => $this->applyPrivacy('Country'),
+                        'city'       => $this->applyPrivacy('City'),
+                    ),
+                    /*
+                    'social'     => $this->getSocial()
+                    */
                 );
                 if ($this->getFriend()!==null) {
                     $ret['isFriend'] = $this->getFriend();

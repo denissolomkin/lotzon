@@ -447,9 +447,14 @@
             return balls;
         },
 
-        isOnline: function (ping) {
-            ping = ping && typeof ping === 'object' && ping.hasOwnProperty('ping') && ping.ping || ping;
-            return ping && (parseInt(ping) + Livedate.diff + Config.timeout.online > moment().unix());
+        isOnline: function (data) {
+
+            var ping = typeof data === 'object' ? data.hasOwnProperty('ping') && data.ping : data,
+                playerId = typeof data === 'object' && data.hasOwnProperty('id') && data.id;
+
+            return (playerId && playerId != this.id) || !ping
+                ? null
+                : ping && parseInt(ping) + Livedate.diff + Config.timeout.online > moment().unix();
         },
 
         getAvatar: function (img, id, width) {

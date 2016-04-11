@@ -60,7 +60,8 @@
                 var user = {
                     id  : this.getAttribute('data-user-id'),
                     name: this.getAttribute('data-user-name'),
-                    img : this.getAttribute('data-user-img')
+                    img : this.getAttribute('data-user-img'),
+                    ping : this.getAttribute('data-user-ping')
                 };
 
                 document.getElementById('communication-messages-new')

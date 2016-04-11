@@ -1264,31 +1264,6 @@ class PlayersDBProcessor implements IProcessor
         }
     }
 
-    /**
-     * Сохранение в базу массива счётчиков остатка оплачиваемых реф.постов в соц.сетях
-     *
-     * @author subsan <subsan@online.ua>
-     *
-     * @param  object $player
-     * @return object
-     */
-    public function decrementSocialPostsCount(Entity $player)
-    {
-        $sql = "UPDATE `Players` SET `SocialPostsCount` = :ic WHERE  `Id` = :plid";
-
-        try {
-            $sth = DB::Connect()->prepare($sql);
-            $sth->execute(array(
-                ':ic'   => is_array($player->getSocialPostsCount()) ? serialize($player->getSocialPostsCount()) : '',
-                ':plid' => $player->getId(),
-            ));
-        } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query", 500);
-        }
-
-        return $player;
-    }
-
     public function updateCookieId(Entity $player, $cookie)
     {
         $sql = "REPLACE INTO `PlayerCookies` (`PlayerId`, `CookieId`, `Time`) VALUES (:id, :cookie, :tm)";
