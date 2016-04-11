@@ -223,30 +223,40 @@
                 }
             }
 
-            return users;
+            return Tools.getArrayKeys(users);
 
         },
 
        updateStatuses: function (statuses) {
-
-           var userStatuses,
-               id;
-
-           if (statuses.length) {
-               for (id in statuses) {
+           if (statuses) {
+               for (var id in statuses) {
                    if (statuses.hasOwnProperty(id)) {
-                       userStatuses = document.querySelectorAll('.user-status[data-user-id="' + id + '"]');
+
+                       var userStatuses = document.querySelectorAll('.user-status[data-user-id="' + id + '"]'),
+                           online = Player.isOnline({id: id, ping: statuses[id]});
+
                        if (userStatuses.length) {
                            for (var i = 0; i < userStatuses.length; i++) {
-                               userStatuses[i].classList.add('online');
+                               switch (online){
+                                   case true:
+                                       userStatuses[i].classList.remove('offline');
+                                       userStatuses[i].classList.add('online');
+                                       break;
+                                   case false:
+                                       userStatuses[i].classList.add('offline');
+                                       userStatuses[i].classList.remove('online');
+                                       break;
+                                   case null:
+                                       userStatuses[i].classList.remove('online');
+                                       userStatuses[i].classList.remove('offline');
+                                       break;
+                               }
                            }
                        }
                    }
                }
            }
-
-           return statuses.length;
-
+           return true;
        },
 
         forms4ping: function () {
