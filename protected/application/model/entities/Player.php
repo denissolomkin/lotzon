@@ -1095,11 +1095,11 @@ class Player extends Entity
     public function markOnline()
     {
         $this->setDates('Ping',time());
-
         $model = $this->getModelClass();
 
         try {
             $model::instance()->markOnline($this);
+
         } catch (ModelException $e) {
             throw new EntityException('INTERNAL_ERROR', 500);
         }

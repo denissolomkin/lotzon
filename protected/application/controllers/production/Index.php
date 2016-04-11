@@ -129,28 +129,24 @@ class Index extends \SlimController\SlimController
             $this->session->remove('page');
         }
 
-        /* todo
+        /* todo delete
         patch for old Player Entity in Memcache sessions
         delete after week at April 17 or after drop Memcache
         */
         try {
-            $playerObj->getPrivacy();
+            $player->getPrivacy();
 
         } catch (\Exception $e) {
-
-            if ($e->getCode() === 501) {
-                $this->session->get(Player::IDENTITY)->fetch();
-                $playerId = $playerObj->getId();
-                $playerObj = new Player();
-                $playerObj
-                    ->setId($playerId)
-                    ->fetch()
-                    ->initPrivacy();
-                $this->session->set(Player::IDENTITY, $playerObj);
-
-            } else
-                throw new Exception($e->getMessagee(), $e->getCode());
+            $this->session->get(Player::IDENTITY)->fetch();
+            $playerId = $player->getId();
+            $player = new Player();
+            $player
+                ->setId($playerId)
+                ->fetch()
+                ->initPrivacy();
+            $this->session->set(Player::IDENTITY, $player);
         }
+
 
         $player = array(
             "id"       => $playerObj->getId(),
