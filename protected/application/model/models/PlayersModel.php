@@ -242,11 +242,6 @@ class PlayersModel extends Model
         return $this->getProcessor()->getInvitesCount($player);
     }
 
-    public function decrementSocialPostsCount(Entity $player)
-    {
-        return $this->getProcessor()->decrementSocialPostsCount($player);
-    }
-
     public function isExists($id)
     {
         return $this->getProcessor()->isExists($id);

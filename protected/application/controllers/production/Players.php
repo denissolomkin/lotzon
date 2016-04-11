@@ -305,19 +305,9 @@ class Players extends \AjaxController
         $this->validateRequest();
         $this->authorizedOnly();
 
-        if ($this->session->get(Player::IDENTITY)->getSocialPostsCount($provider) > 0) {
-            $this->session->get(Player::IDENTITY)->decrementSocialPostsCount($provider);
-            if (SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_social_post')) {
-                $this->session->get(Player::IDENTITY)->addPoints(
-                    SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_social_post'),
-                    StaticTextsModel::instance()->setLang($this->session->get(Player::IDENTITY)->getLang())->getText('bonus_social_post')." ".$provider);
-            }
-            $this->ajaxResponse(array(
-                'postsCount' => $this->session->get(Player::IDENTITY)->getSocialPostsCount($provider),
-            ));
-        } else {
-            $this->ajaxResponse(array(), 0, 'NO_MORE_POSTS');
-        }
+        $this->ajaxResponse(array(
+            'postsCount' => true
+        ));
     }
 
     /**
