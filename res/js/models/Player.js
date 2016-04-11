@@ -417,10 +417,9 @@
 
         checkMoney: function (input_money) {
 
-//            input_money = input_money.replaceArray([',','б','Б','ю','Ю'], '.');
-            input_money = input_money.replace(/[^\d.-]/g, ".");
-            input_money = input_money.replace('..', '.');
-//            input_money = input_money.replace(/[^\d.-]/g, "");
+            input_money = input_money
+                .replace(/[^\d.-]/g, ".")
+                .replace('..', '.');
             input_money = input_money.match(/\d*[,.]\d{2}/) || input_money;
 
             if (!isNumeric(input_money))
@@ -449,7 +448,8 @@
         },
 
         isOnline: function (ping) {
-            return ping + Config.timeout.online > new Date();
+            ping = ping && typeof ping === 'object' && ping.hasOwnProperty('ping') && ping.ping || ping;
+            return ping && ping + Livedate.diff + Config.timeout.online > moment().unix();
         },
 
         getAvatar: function (img, id, width) {
