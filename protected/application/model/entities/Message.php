@@ -7,6 +7,7 @@ class Message extends Entity
     protected $_toPlayerId  = 0;
     protected $_playerImg   = '';
     protected $_playerName  = '';
+    protected $_playerPing  = null;
     protected $_text        = '';
     protected $_image       = '';
     protected $_date        = 0;
@@ -33,24 +34,26 @@ class Message extends Entity
         switch ($to) {
             case 'list':
                 $ret = array(
-                    'user'         => array(
+                    'user' => array(
                         'id'   => $this->getPlayerId(),
                         'img'  => $this->getPlayerImg(),
                         'name' => $this->getPlayerName(),
+                        'ping' => $this->getPlayerPing(),
                     ),
                     'id'           => $this->getId(),
                     'recipient_id' => $this->getToPlayerId(),
                     'date'         => $this->getDate(),
                     'text'         => $this->getText(),
-                    'img'          => $this->getImage() === NULL ? "" : $this->getImage(),
+                    'img'          => $this->getImage() === null ? "" : $this->getImage(),
                 );
                 break;
             case 'talk':
                 $ret = array(
-                    'user'         => array(
+                    'user' => array(
                         'id'   => $this->getPlayerId(),
                         'img'  => $this->getPlayerImg(),
                         'name' => $this->getPlayerName(),
+                        'ping' => $this->getPlayerPing(),
                     ),
                     'id'           => $this->getPlayerId(),
                     'date'         => $this->getDate(),
