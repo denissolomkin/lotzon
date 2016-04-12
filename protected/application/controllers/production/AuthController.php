@@ -80,7 +80,7 @@ class AuthController extends \SlimController\SlimController {
                 ->setSocialEmail($profile->email);
             $loggedIn = false;
             try {
-                $player->fetch();
+                $player->fetch()->initDates();
 
                 if($player->getBan()){
                     $this->session->set('ERROR', StaticTextsModel::instance()->setLang($player->getLang())->getText('ACCESS_DENIED'));

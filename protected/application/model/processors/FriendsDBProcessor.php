@@ -41,8 +41,8 @@ class FriendsDBProcessor implements IProcessor
                   `Players` AS pl
                 ON
                   pl.`Id` = IF(fr.UserId=:playerid, fr.FriendId, fr.UserId)
-                JOIN
-                  `PlayerDates` AS dat
+                LEFT JOIN
+                  `PlayerPing` AS dat
                 ON
                   dat.`PlayerId` = pl.`Id`
                 WHERE

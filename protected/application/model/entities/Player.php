@@ -886,7 +886,8 @@ class Player extends Entity
         ));
 
         try {
-            $this->fetch();
+            $this->fetch()
+                ->initDates();
         } catch (EntityException $e) {
             if ($e->getCode() == 404) {
                 throw new EntityException("PLAYER_NOT_FOUND", 404);
@@ -1088,7 +1089,7 @@ class Player extends Entity
             if (isset($data['TicketsFilled'])) {
                 $this->setTicketsFilled($data['TicketsFilled']);
             }
-            if (isset($data['Ping'])) {
+            if (isset($data['Registration'])) {
                 $this->initDates($data);
             }
 

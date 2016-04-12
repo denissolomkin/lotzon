@@ -383,29 +383,23 @@ class PlayersDBProcessor implements IProcessor
     public function fetch(Entity $player)
     {
         if ($player->getId() > 0) {
-            $sql = "SELECT p.*, d.* FROM `Players` p
-                LEFT JOIN `PlayerDates` d
-                  ON d.`PlayerId`=p.`Id`
+            $sql = "SELECT p.* FROM `Players` p
                 WHERE p.`Id` = :id";
 
             $sql_params = array(
                 ':id' => $player->getId(),
             );
         } elseif ($player->getSocialName() == '') {
-            $sql = "SELECT p.*, d.* FROM `Players` p
-                LEFT JOIN `PlayerDates` d
-                  ON d.`PlayerId`=p.`Id`
+            $sql = "SELECT p.* FROM `Players` p
                 WHERE p.`Email` = :email";
 
             $sql_params = array(
                 ':email' => $player->getEmail(),
             );
         } else {
-            $sql = "SELECT p.*, d.* FROM `Players` p
+            $sql = "SELECT p.* FROM `Players` p
                 LEFT JOIN `PlayerSocials` s
                   ON s.`PlayerId`=p.`Id`
-                LEFT JOIN `PlayerDates` d
-                  ON d.`PlayerId`=p.`Id`
                 WHERE p.`Email` = :email
                   OR p.`Email` = :socialemail
                   OR (s.`SocialId` = :socialid AND s.`SocialName` = :socialname AND s.`Enabled` = 1)
@@ -549,7 +543,7 @@ class PlayersDBProcessor implements IProcessor
         $sql = "SELECT
                 SUM(Money / IFNULL((SELECT `Coefficient` FROM `MUICountries` cn LEFT JOIN `MUICurrency` c ON c.Id=cn.Currency WHERE cn.`Code`=`Players`.`Country` LIMIT 1),1)) Money,
                 SUM(Points) Points,
-                (SELECT COUNT( * ) FROM (SELECT 1 FROM `PlayerDates` WHERE Ping > :ping) o) Online,
+                (SELECT COUNT( * ) FROM (SELECT 1 FROM `PlayerPing` WHERE Ping > :ping) o) Online,
                 (SELECT COUNT( * ) FROM (SELECT 1 FROM `LotteryTickets` WHERE LotteryId = 0 GROUP BY PlayerId) t ) Tickets
                 FROM `Players`
                 ";
@@ -644,6 +638,7 @@ class PlayersDBProcessor implements IProcessor
                 (SELECT COUNT(Id) FROM `LotteryTickets` WHERE `LotteryId` = 0 AND `PlayerId` = `Players`.`Id`) AS TicketsFilled
                 FROM `Players`
                 LEFT JOIN `PlayerDates` ON `PlayerDates` . `PlayerId`=`Id`
+                LEFT JOIN `PlayerPing` ON `PlayerPing` . `PlayerId`=`Id`
                 LEFT JOIN `PlayerIps` ON `PlayerIps`.PlayerId =  `Players`.Id
                 LEFT JOIN `PlayerIps` i ON i.Ip IN (`PlayerIps`.Ip)
                 LEFT JOIN `PlayerCookies` ON `PlayerCookies`.PlayerId = Id
@@ -743,7 +738,7 @@ class PlayersDBProcessor implements IProcessor
                 elseif ($search['where'] == 'InviterId')
                     $search = ' WHERE `Players`.InviterId = ' . $search['query'];
                 elseif ($search['where'] == 'Ping')
-                    $search = ' WHERE `PlayerDates`.Ping > ' . (time() - (SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT') ?: 300));
+                    $search = ' WHERE `PlayerPing`.Ping > ' . (time() - (SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT') ?: 300));
                 elseif ($search['where'] == 'Ip')
                     $search  = 'JOIN `PlayerIps` ON `PlayerIps`.PlayerId = `Players`.Id AND `PlayerIps`.Ip IN(SELECT Ip FROM PlayerIps WHERE PlayerId='.$search['query'].')';
                 //$search= ' WHERE LastIp IN ("'.(str_replace(",",'","',$search['query'])).'") OR Ip IN ("'.(str_replace(",",'","',$search['query'])).'")';
@@ -756,7 +751,7 @@ class PlayersDBProcessor implements IProcessor
         }
 
         $sql = "SELECT COUNT(DISTINCT(Id)) as `counter`
-                FROM `Players` LEFT JOIN PlayerDates ON PlayerDates.PlayerId = Id
+                FROM `Players` LEFT JOIN PlayerPing ON PlayerPing.PlayerId = Id
                 {$search}";
 
 
@@ -783,7 +778,7 @@ class PlayersDBProcessor implements IProcessor
                 elseif ($search['where'] == 'InviterId')
                     $search = ' WHERE `Players`.InviterId = ' . $search['query'];
                 elseif ($search['where'] == 'Ping')
-                    $search = ' WHERE `PlayerDates`.Ping > ' . (time() - (SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT') ?: 300));
+                    $search = ' WHERE `PlayerPing`.Ping > ' . (time() - (SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT') ?: 300));
                 elseif ($search['where'] == 'Ip')
                     $search  = 'JOIN `PlayerIps` ON `PlayerIps`.PlayerId = `Players`.Id AND `PlayerIps`.Ip IN(SELECT Ip FROM PlayerIps WHERE PlayerId='.$search['query'].')';
                 //$search= ' WHERE LastIp IN ("'.(str_replace(",",'","',$search['query'])).'") OR Ip IN ("'.(str_replace(",",'","',$search['query'])).'")';
@@ -833,7 +828,7 @@ class PlayersDBProcessor implements IProcessor
                 {$search}
                 GROUP BY `Players`.`Id`";
         $sql = "SELECT Id From Players
-                Left join PlayerDates ON PlayerDates.PlayerId=Id
+                Left join PlayerPing ON PlayerPing.PlayerId=Id
                 {$search}
                 GROUP BY Id";
         if (count($sort)) {
@@ -855,7 +850,7 @@ class PlayersDBProcessor implements IProcessor
             throw new ModelException("Error processing storage query", 500);
         }
         $ids = $res->fetchColumn(0)?:0;
-        $sql = "SELECT `Players`.*,`PlayerDates`.*,
+        $sql = "SELECT `Players`.*,`PlayerDates`.*,`PlayerPing`.`Ping`,
                 (SELECT COUNT(Id) FROM `PlayerNotes`    WHERE `PlayerId` = `Players`.`Id`) Note,
                 (SELECT COUNT(Id) FROM `PlayerNotices`  WHERE `PlayerId` = `Players`.`Id`) Notice,
                 (SELECT COUNT(Id) FROM `PlayerNotices`  WHERE `PlayerId` = `Players`.`Id` AND Type='AdBlock') AdBlock,
@@ -876,6 +871,7 @@ class PlayersDBProcessor implements IProcessor
                 (SELECT COUNT(Id) FROM `LotteryTickets` WHERE `LotteryId` = 0 AND `PlayerId` = `Players`.`Id`) AS TicketsFilled
                 FROM `Players`
                 LEFT JOIN `PlayerDates` ON `PlayerDates` . `PlayerId`=`Id`
+                LEFT JOIN `PlayerPing` ON `PlayerPing` . `PlayerId`=`Id`
                 LEFT JOIN `PlayerIps` ON `PlayerIps`.PlayerId =  `Players`.Id
                 LEFT JOIN `PlayerIps` i ON i.Ip IN (`PlayerIps`.Ip)
                 LEFT JOIN `PlayerCookies` ON `PlayerCookies`.PlayerId = Id
@@ -1356,20 +1352,16 @@ class PlayersDBProcessor implements IProcessor
     public function markOnline(Entity $player)
     {
 
-        $sql = "UPDATE `PlayerDates`
-                SET `AdBlockLast` = :adbl,
-                    `AdBlocked` = :adb,
-                    `WSocket` = :ws,
-                    `Ping` = :onl
-                WHERE `PlayerId` = :plid";
+        $sql = "INSERT INTO
+                  `PlayerPing` (PlayerId, Ping)
+                VALUES (:plid, :onl)
+                ON DUPLICATE KEY UPDATE
+                  Ping=:onl";
 
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
                 ':onl'   => (int)$player->getDates('Ping'),
-                ':adbl'  => (int)$player->getDates('AdBlockLast'),
-                ':adb'   => (int)$player->getDates('AdBlocked'),
-                ':ws'    => ($player->getDates('WSocket')?time():0),
                 ':plid'  => $player->getId(),
             ));
 
@@ -1433,12 +1425,12 @@ class PlayersDBProcessor implements IProcessor
                     `Players`.`Id` Id,
                     `Players`.`Avatar` Img,
                     `Players`.`Nicname` Name,
-                    `PlayerDates`.`Ping` Ping
+                    `PlayerPing`.`Ping` Ping
                 FROM `Players`
                 LEFT JOIN
-                  `PlayerDates`
+                  `PlayerPing`
                 ON
-                  `Players`.`Id` = `PlayerDates`.`PlayerId`
+                  `Players`.`Id` = `PlayerPing`.`PlayerId`
                 WHERE LOWER(`Players`.`Nicname`) LIKE LOWER(:search)
                 "
                 . (($count === NULL)  ? "" : " LIMIT " . (int)$count);
@@ -1496,7 +1488,7 @@ class PlayersDBProcessor implements IProcessor
         }
 
         $inQuery = implode(',', array_fill(0, count($ids), '?'));
-        $sql     = "SELECT `PlayerId`,`Ping` FROM `PlayerDates` WHERE `PlayerId` IN (" . $inQuery . ")";
+        $sql     = "SELECT `PlayerId`,`Ping` FROM `PlayerPing` WHERE `PlayerId` IN (" . $inQuery . ")";
         try {
             $sth = DB::Connect()->prepare($sql);
             foreach ($ids as $k => $id) {

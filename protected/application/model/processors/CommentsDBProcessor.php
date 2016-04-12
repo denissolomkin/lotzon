@@ -75,7 +75,7 @@ class CommentsDBProcessor implements IProcessor
                     `PlayerReviews`.*,
                     `Players`.`Avatar` PlayerImg,
                     `Players`.`Nicname` PlayerName,
-                    `PlayerDates`.`Ping` PlayerPing,
+                    `PlayerPing`.`Ping` PlayerPing,
                     (SELECT COUNT(*) FROM `PlayerReviewsLikes` WHERE `PlayerReviewsLikes`.CommentId=`PlayerReviews`.Id) AS LikesCount
                 FROM `PlayerReviews`
                 LEFT JOIN
@@ -83,9 +83,9 @@ class CommentsDBProcessor implements IProcessor
                   ON
                     `Players`.`Id` = `PlayerReviews`.`PlayerId`
                 LEFT JOIN
-                    `PlayerDates`
+                    `PlayerPing`
                   ON
-                    `Players`.`Id` = `PlayerDates`.`PlayerId`
+                    `Players`.`Id` = `PlayerPing`.`PlayerId`
                 WHERE
                     `PlayerReviews`.`Id` = :id
                 LIMIT 1";
@@ -143,7 +143,7 @@ class CommentsDBProcessor implements IProcessor
                     `PlayerReviews`.*,
                     `Players`.`Avatar` PlayerImg,
                     `Players`.`Nicname` PlayerName,
-                    `PlayerDates`.`Ping` PlayerPing,
+                    `PlayerPing`.`Ping` PlayerPing,
                     (SELECT COUNT(*) FROM `PlayerReviewsLikes` WHERE `PlayerReviewsLikes`.CommentId=`PlayerReviews`.Id) AS LikesCount
                 FROM `PlayerReviews`
                 LEFT JOIN
@@ -151,9 +151,9 @@ class CommentsDBProcessor implements IProcessor
                   ON
                     `Players`.`Id` = `PlayerReviews`.`PlayerId`
                 LEFT JOIN
-                    `PlayerDates`
+                    `PlayerPing`
                   ON
-                    `Players`.`Id` = `PlayerDates`.`PlayerId`
+                    `Players`.`Id` = `PlayerPing`.`PlayerId`
                 WHERE
                     `Module` = :module
                 AND
@@ -191,12 +191,7 @@ class CommentsDBProcessor implements IProcessor
         $comments = array();
         foreach ($sth->fetchAll() as $commentData) {
             $comment = new \Comment;
-            $comments[$commentData['Id']] = $comment->formatFrom('DB', $commentData)->export('JSON');
-            if (!$commentData['ParentId']) {
-                $comments[$commentData['Id']]['answers'] = $this->getList($module, $objectId, NULL, $beforeId = NULL, $afterId = NULL, $status, $commentData['Id']);
-            } else {
-                $comments[$commentData['Id']]['comment_id'] = $commentData['ParentId'];
-            }
+            $comments[$commentData['Id']] = $comment->formatFrom('DB', $commentData);
         }
 
         return $comments;
@@ -225,32 +220,44 @@ class CommentsDBProcessor implements IProcessor
         return $count;
     }
 
-    public function isLiked($commentId, $playerId)
+    public function isLiked($commentsIds, $playerId)
     {
+        if (!is_array($commentsIds)) {
+            throw new ModelException('Bad request', 403);
+        }
+
+        if ($commentsIds == array()) {
+            return array();
+        }
+
+        $inQuery = implode(',', array_fill(0, count($commentsIds), '?'));
+
         $sql = "SELECT
                     *
                 FROM
                   `PlayerReviewsLikes`
                 WHERE
-                  CommentId=:commentid
+                  CommentId IN (".$inQuery.")
                 AND
-                  PlayerId=:playerid";
+                  PlayerId=?";
 
         try {
             $sth = DB::Connect()->prepare($sql);
-            $sth->execute(array(
-                ':commentid' => $commentId,
-                ':playerid' => $playerId,
-            ));
+            foreach ($commentsIds as $k => $id) {
+                $sth->bindValue(($k + 1), $id);
+            }
+            $sth->bindParam($k + 2,$playerId);
+            $sth->execute();
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query", 500);
         }
 
-        if (!$sth->rowCount()) {
-            return false;
+        $likes = array();
+        foreach ($sth->fetchAll() as $like) {
+            $likes[$like['CommentId']] = $like['PlayerId'];
         }
 
-        return true;
+        return $likes;
     }
 
     public function like($commentId, $playerId)
@@ -379,7 +386,7 @@ class CommentsDBProcessor implements IProcessor
                     pr.*,
                     `Players`.`Avatar` PlayerImg,
                     `Players`.`Nicname` PlayerName,
-                    pd.`Ping` PlayerPing,
+                    pp.`Ping` PlayerPing,
                     prparent.`Text` ParentText
                 FROM `PlayerReviews` AS pr
                 LEFT JOIN
@@ -394,6 +401,10 @@ class CommentsDBProcessor implements IProcessor
                     `PlayerDates` AS pd
                 ON
                     pd.`PlayerId` = :playerid
+                LEFT JOIN
+                    `PlayerPing` AS pp
+                ON
+                    pp.`PlayerId` = :playerid
                 WHERE
                     pr.`Module` = :module
                 AND

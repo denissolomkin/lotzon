@@ -127,16 +127,16 @@ class MessagesDBProcessor implements IProcessor
                     `Messages`.*,
                     `Players`.`Avatar` PlayerImg,
                     `Players`.`Nicname` PlayerName,
-                    `PlayerDates`.`Ping` PlayerPing
+                    `PlayerPing`.`Ping` PlayerPing
                 FROM `Messages`
                 LEFT JOIN
                     `Players`
                   ON
                     `Players`.`Id` = `Messages`.`PlayerId`
                 LEFT JOIN
-                    `PlayerDates`
+                    `PlayerPing`
                   ON
-                    `Players`.`Id` = `PlayerDates`.`PlayerId`
+                    `Players`.`Id` = `PlayerPing`.`PlayerId`
                 WHERE
                 (
                     (
@@ -185,16 +185,16 @@ class MessagesDBProcessor implements IProcessor
                     `Messages`.*,
                     `Players`.`Avatar` PlayerImg,
                     `Players`.`Nicname` PlayerName,
-                    `PlayerDates`.`Ping` PlayerPing
+                    `PlayerPing`.`Ping` PlayerPing
                 FROM `Messages`
                 LEFT JOIN
                     `Players`
                   ON
                     `Players`.`Id` = `Messages`.`PlayerId`
                 LEFT JOIN
-                    `PlayerDates`
+                    `PlayerPing`
                   ON
-                    `Players`.`Id` = `PlayerDates`.`PlayerId`
+                    `Players`.`Id` = `PlayerPing`.`PlayerId`
                 WHERE
                     `Messages`.`ToPlayerId` = :playerid
                 AND
@@ -227,7 +227,7 @@ class MessagesDBProcessor implements IProcessor
                     `Players`.`Id` PlayerId,
                     `Players`.`Avatar` PlayerImg,
                     `Players`.`Nicname` PlayerName,
-                    `PlayerDates`.`Ping` PlayerPing,
+                    `PlayerPing`.`Ping` PlayerPing,
                     (SELECT IF(mes.ToPlayerId=:playerid,IFNULL(MIN(m2.Status),1),mes.Status) FROM Messages as m2 WHERE m2.PlayerId = `Players`.Id AND m2.ToPlayerId = :playerid) as Status
                 FROM `Messages` as mes
                 JOIN
@@ -246,9 +246,9 @@ class MessagesDBProcessor implements IProcessor
                   ON
                     `Players`.`Id` = q.pid
                 LEFT JOIN
-                    `PlayerDates`
+                    `PlayerPing`
                   ON
-                    `Players`.`Id` = `PlayerDates`.`PlayerId`"
+                    `Players`.`Id` = `PlayerPing`.`PlayerId`"
             . (($modifyDate === NULL)  ? "" : " WHERE mes.`Date` > ".(int)$modifyDate)
             . (($count === NULL)  ? "" : " LIMIT " . (int)$count);
         if ($offset) {

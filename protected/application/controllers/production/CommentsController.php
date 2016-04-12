@@ -51,12 +51,14 @@ class CommentsController extends \AjaxController
     public function listAction($module = 'comments', $objectId = 0)
     {
 
+        $playerId = $this->session->get(Player::IDENTITY)->getId();
+
         $count    = $this->request()->get('count', self::$commentsPerPage);
         $beforeId = $this->request()->get('before_id', NULL);
         $afterId  = $this->request()->get('after_id', NULL);
 
         try {
-            $list = CommentsModel::instance()->getList($module, $objectId, $count+1, $beforeId, $afterId);
+            $list = CommentsModel::instance()->getList($module, $objectId, $count+1, $beforeId, $afterId, 1, NULL, NULL, $playerId);
         } catch (\PDOException $e) {
             $this->ajaxResponseInternalError();
             return false;
@@ -342,7 +344,7 @@ class CommentsController extends \AjaxController
         }
 
         $playerId = $this->session->get(Player::IDENTITY)->getId();
-        $is_liked = CommentsModel::instance()->isLiked($commentId, $playerId);
+        $is_liked = CommentsModel::instance()->isLiked(array($commentId), $playerId);
 
         try {
             if (!$is_liked) {
@@ -385,7 +387,7 @@ class CommentsController extends \AjaxController
         }
 
         $playerId = $this->session->get(Player::IDENTITY)->getId();
-        $is_liked = CommentsModel::instance()->isLiked($commentId, $playerId);
+        $is_liked = CommentsModel::instance()->isLiked(array($commentId), $playerId);
 
         try {
             if ($is_liked) {
