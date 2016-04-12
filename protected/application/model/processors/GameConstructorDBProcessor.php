@@ -1,7 +1,5 @@
 <?php
 
-use \GameConstructor;
-
 class GameConstructorDBProcessor
 {
 

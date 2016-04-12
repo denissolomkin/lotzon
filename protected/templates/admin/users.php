@@ -69,7 +69,7 @@
                         </td>
                         <td class="profile-trigger pointer" data-id="<?=$player->getId()?>">
                             <div <? if($player->getAvatar()) : ?>data-toggle="tooltip" data-html="1" data-placement="auto" title="<img src='../filestorage/avatars/<?=(ceil($player->getId() / 100)) . '/'.$player->getAvatar()?>'>"<? endif ?>>
-                            <?=($player->getNicName())?><?=($player->getDates('Ping')>time()-SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT')?'<i class="online right">•</i>':'');?>
+                            <?=($player->getNicname())?><?=($player->getDates('Ping')>time()-SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT')?'<i class="online right">•</i>':'');?>
                             <br>
                             <?=($player->getSurname() . " " . $player->getName() . " " . $player->getSecondName())?><? if($player->getAvatar() AND 0) echo '<img src="../filestorage/'.'avatars/' . (ceil($player->getId() / 100)) . '/'.$player->getAvatar().'">'?></td>
                             </div>
@@ -101,7 +101,7 @@
                             </div>
                             <br>
                             <?if($player->getReferer()) {?><div data-toggle="tooltip" data-placement="right" title="<?=$player->getReferer()?>" class=""><span class="label label-danger">!</span><?}?>
-                                <div class="date-registration"><i class="fa fa-clock-o"></i> <?=$player->getDates('Registration','d.m.Y H:i')?></div>
+                                <div class="date-registration"><i class="fa fa-clock-o"></i> <?=date('d.m.Y H:i', $player->getDates('Registration'))?></div>
                                 <?if($player->getReferer()) {?></div><?}?>
                         </td>
 
@@ -109,7 +109,7 @@
                         <td <?=($player->getCounters('Ip')>1?"onclick=\"location.href='?search[where]=Ip&search[query]=".$player->getId()."'\"":'')?> class='<?=($player->getCounters('Ip')>1?'pointer ':'')?>nobr div-ips'>
                             <? if($player->getCounters('Ip')>1) : ?>
                                 <div class="label label-danger label-ips"><?=$player->getCounters('Ip')?></div>
-                           <? endif ?><?=($player->getLastIP()?'<div class="ips">'.$player->getIP().'<br>'.$player->getLastIP().'</div>':$player->getIP())?></td>
+                           <? endif ?><?=($player->getLastIp()?'<div class="ips">'.$player->getIp().'<br>'.$player->getLastIp().'</div>':$player->getIp())?></td>
                         <td <?=(($player->getCounters('CookieId')>1)
                             ?'onclick="location.href=\'?search[where]=CookieId&search[query]='.$player->getId().'\';" class="pointer danger">
                             <div data-toggle="tooltip" data-placement="right" title="'.$player->getCookieId().'" >
@@ -130,7 +130,7 @@
                         </td>
 
                         <td class="logins-trigger pointer <?=($player->getDates('Login')?(($player->getDates('Login') < strtotime('-7 day', time())) ? "warning" : "success"):'danger')?>"  data-id="<?=$player->getId()?>">
-                            <?=($player->getDates('Ping')?'<div class="datestamps nobr right">'.($player->getDates('Login','d.m.Y&\nb\sp;H:i')).'<br>'.(str_replace($player->getDates('Login','d.m.Y'),'',$player->getDates('Ping','d.m.Y H:i'))).'</div>':($player->getDates('Login')?'<div class="right">'.$player->getDates('Login','d.m.Y H:i').'</div>':''))?>
+                            <?=($player->getDates('Ping')?'<div class="datestamps nobr right">'.(date('d.m.Y&\nb\sp;H:i', $player->getDates('Login'))).'<br>'.str_replace(date('d.m.Y', $player->getDates('Login')),'',date('d.m.Y H:i', $player->getDates('Ping'))).'</div>':($player->getDates('Login')?'<div class="right">'.date('d.m.Y H:i', $player->getDates('Login')).'</div>':''))?>
                         </td>
 
                         <td <?=($player->getGamesPlayed()?'':'class="danger"')?>>
@@ -142,7 +142,7 @@
                             <?}?>
 
                             <? if ($player->isTicketsFilled() || $player->getGamesPlayed()){?>
-                                <span class="tickets-trigger pointer" data-id="<?=$player->getId()?>"><i class="glyphicon glyphicon-tags" aria-hidden="true"></i>&nbsp;<?=$player->isTicketsFilled()?:''?></span>
+                                <span class="tickets-trigger pointer" data-id="<?=$player->getId()?>"><i class="glyphicon glyphicon-tags" aria-hidden="true"></i>&nbsp;<?=$player->getTicketsFilled()?:''?></span>
                             <? } ?>
 
                             <? if($player->getDates('QuickGame')){?>
@@ -180,8 +180,8 @@
                         </td>
 
                         <td>
-                            <? if($player->getDateAdBlocked()) :?>
-                            <button class="btn btn-xs btn-<?=($player->getAdBlock()?'danger':($player->getDateAdBlocked() < strtotime('-14 day', time()) ? "success" : "warning" ))?> logs-trigger" data-action="AdBlock" data-id="<?=$player->getId()?>">
+                            <? if($player->getDates('AdBlocked')) :?>
+                            <button class="btn btn-xs btn-<?=($player->getDates('AdBlockLast')?'danger':($player->getDates('AdBlocked') < strtotime('-14 day', time()) ? "success" : "warning" ))?> logs-trigger" data-action="AdBlock" data-id="<?=$player->getId()?>">
                                 <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><?=($player->getCounters('AdBlock')?:'')?></button>
                             <? endif ?>
                         </td>
@@ -279,7 +279,7 @@ $('.search-users').on('click', function() {
         '<option value="">Везде</option>' +
         '<option value="Id">Id</option>' +
         '<option value="Ip">Ip</option>' +
-        '<option value="NicName">Ник</option>' +
+        '<option value="Nicname">Ник</option>' +
         '<option value="ReferalId">Реферал</option>' +
         '<option value="CookieId">Cookie</option>' +
         '<option value="Ping">Online</option>' +

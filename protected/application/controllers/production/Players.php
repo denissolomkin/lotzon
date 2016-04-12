@@ -43,11 +43,11 @@ class Players extends \AjaxController
             $player->setCountry(CountriesModel::instance()->defaultCountry());
         }
 
-        $player->setVisibility(true);
-        $player->setIP(Common::getUserIp());
-        $player->setHash(md5(uniqid()));
-        $player->setValid(false);
-        $player->setLang(CountriesModel::instance()->getCountry($player->getCountry())->getLang());
+        $player->setVisible(true)
+            ->setIp(Common::getUserIp())
+            ->setHash(md5(uniqid()))
+            ->setValid(false)
+            ->setLang(CountriesModel::instance()->getCountry($player->getCountry())->getLang());
 
         if ($ref = $this->request()->post('ref', null)) {
             $player->setReferalId((int)$ref);
@@ -85,7 +85,7 @@ class Players extends \AjaxController
             $player->setAdditionalData($social->getAdditionalData())
                 ->setName($social->getName())
                 ->setSurname($social->getSurname())
-                ->setDates('Login', time())
+                ->setDates(time(), 'Login')
                 ->update()
                 ->updateLogin()
                 ->setSocialId($social->getSocialId())
@@ -305,19 +305,9 @@ class Players extends \AjaxController
         $this->validateRequest();
         $this->authorizedOnly();
 
-        if ($this->session->get(Player::IDENTITY)->getSocialPostsCount($provider) > 0) {
-            $this->session->get(Player::IDENTITY)->decrementSocialPostsCount($provider);
-            if (SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_social_post')) {
-                $this->session->get(Player::IDENTITY)->addPoints(
-                    SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_social_post'),
-                    StaticTextsModel::instance()->setLang($this->session->get(Player::IDENTITY)->getLang())->getText('bonus_social_post')." ".$provider);
-            }
-            $this->ajaxResponse(array(
-                'postsCount' => $this->session->get(Player::IDENTITY)->getSocialPostsCount($provider),
-            ));
-        } else {
-            $this->ajaxResponse(array(), 0, 'NO_MORE_POSTS');
-        }
+        $this->ajaxResponse(array(
+            'postsCount' => true
+        ));
     }
 
     /**
@@ -435,32 +425,39 @@ class Players extends \AjaxController
         $this->validateRequest();
         $this->authorizedOnly();
 
+        $player = new Player();
+        $player->setId($this->session->get(Player::IDENTITY)->getId())->fetch();
+
         $nickname = $this->request()->post('nickname');
         $name     = $this->request()->post('name');
         $surname  = $this->request()->post('surname');
         $gender   = $this->request()->post('gender', null);
-        $birthday = $this->request()->post('datepicker');
+        $birthday = $this->request()->post('datepicker') ?: $this->request()->post('month',0)."/".$this->request()->post('day',0)."/".$this->request()->post('year',1900);
         $city     = $this->request()->post('city');
         $zip      = $this->request()->post('zip');
         $address  = $this->request()->post('address');
         $country  = $this->request()->post('country');
+        $privacy  = $this->request()->post('privacy', array());
 
-        $player = new Player();
-        $player->setId($this->session->get(Player::IDENTITY)->getId())->fetch();
-
-        $birthday = strtotime($birthday);
+        $birthday = $birthday !== '0/0/1900' && $birthday !== '' ? strtotime($birthday) : null;
 
         try {
+
             $player->setNicname($nickname)
                 ->setName($name)
-                ->setSurName($surname)
+                ->setSurname($surname)
                 ->setGender($gender==''?null:$gender)
                 ->setCity($city)
                 ->setZip($zip)
                 ->setAddress($address)
-                ->setBirthDay($birthday)
+                ->setBirthday($birthday)
                 /*->setCountry($country)*/
                 ->update();
+
+            $player->initPrivacy()      // init all from DB
+                ->initPrivacy($privacy) // update from POST
+                ->updatePrivacy();
+
             $this->session->set(Player::IDENTITY, $player);
         } catch (EntityException $e) {
             $this->ajaxResponseNoCache(array("message" => $e->getMessage()), $e->getCode());
@@ -472,7 +469,7 @@ class Players extends \AjaxController
                 "title"    => array(
                     "name"       => $player->getName(),
                     "surname"    => $player->getSurname(),
-                    "nickname"   => $player->getNicName(),
+                    "nickname"   => $player->getNicname(),
                 ),
                 "gender"   => $player->getGender(),
                 "birthday" => $player->getBirthday(),
@@ -482,6 +479,7 @@ class Players extends \AjaxController
                     "address" => $player->getAddress(),
                     "country" => $player->getCountry(),
                 ),
+                "privacy"  => $player->getPrivacy(),
             )
         );
 
@@ -570,6 +568,11 @@ class Players extends \AjaxController
         $search = $this->request()->get('name');
         $search = trim(strip_tags($search));
 
+        if (mb_strlen($search, 'utf-8')==0) {
+            $this->ajaxResponseNoCache(array('res'=>array()));
+            return false;
+        }
+
         if (mb_strlen($search, 'utf-8')<3) {
             $this->ajaxResponseNoCache(array("message" => "Request too short",),400);
             return false;
@@ -582,7 +585,8 @@ class Players extends \AjaxController
             $response['res'][] = array(
                 'id'   => $user['Id'],
                 'img'  => $user['Img'],
-                'name' => $user['Name']
+                'name' => $user['Name'],
+                'ping' => $user['Ping'],
             );
         }
         $this->ajaxResponseNoCache($response);

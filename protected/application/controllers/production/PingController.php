@@ -31,12 +31,33 @@ class PingController extends \AjaxController
         $delete          = array();
         $player          = $this->session->get(Player::IDENTITY);
 
+
+        /* todo delete
+        patch for old Player Entity in Memcache sessions
+        delete after week at April 17 or after drop Memcache
+        */
+        try {
+            $player->getPrivacy();
+
+        } catch (\Exception $e) {
+            $this->session->get(Player::IDENTITY)->fetch();
+            $playerId = $player->getId();
+            $player = new Player();
+            $player
+                ->setId($playerId)
+                ->fetch()
+                ->initPrivacy();
+            $this->session->set(Player::IDENTITY, $player);
+        }
+
+
         /* todo delete after merge LOT-22 */
         $player->initDates();
 
         $gamesPublished    = \GamesPublishedModel::instance()->getList();
         $AdBlockDetected = $this->request()->post('online', null);
         $forms           = $this->request()->post('forms', array());
+        $usersAtPage     = $this->request()->post('users', array());
 
         /*
         * Unread Notices
@@ -61,11 +82,11 @@ class PingController extends \AjaxController
         */
 
         $player
-            ->setDateAdBlocked(($AdBlockDetected ? time() : null))
-            ->setAdBlock(($AdBlockDetected ? time() : null))
+            ->setDates(($AdBlockDetected ? time() : null), 'AdBlocked')
+            ->setDates(($AdBlockDetected ? time() : null), 'AdBlockLast')
             ->markOnline();
 
-        if (($player->getAdBlock() && !$AdBlockDetected) || (!$player->getAdBlock() && $AdBlockDetected)) {
+        if (($player->getDates('AdBlockLast') && !$AdBlockDetected) || (!$player->getDates('AdBlockLast') && $AdBlockDetected)) {
             $player->writeLog(array(
                 'action' => 'AdBlock',
                 'desc'   => ($AdBlockDetected ? 'ADBLOCK_DETECTED' : 'ADBLOCK_DISABLED'),
@@ -231,6 +252,17 @@ class PingController extends \AjaxController
         $response['player']['count'] = $counters;
         if(!empty($delete))
             $response['delete']['badges'] = $delete;
+
+        /**
+         * Ping
+         */
+        if ($usersAtPage!=array()) {
+            $pings = \PlayersModel::instance()->getPlayersPing($usersAtPage);
+            $response['statuses'] = array();
+            foreach($pings as $player_ping) {
+                $response['statuses'][$player_ping['PlayerId']] = $player_ping['Ping'];
+            }
+        }
 
         $this->ajaxResponseNoCache($response);
     }

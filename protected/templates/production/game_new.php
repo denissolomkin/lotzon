@@ -788,7 +788,7 @@ Por favor, desactive el bloqueador de anuncios!'); ?>
                                     <div class="pi-et-bk">
                                         <div class="pi-inp-bk">
                                             <div class="ph" data-default="<?=$MUI->getText('placeholder-nickname')?>"><?=$MUI->getText('placeholder-nickname')?></div>
-                                            <input autocomplete="off" spellcheck="false" type="text" name="nick" data-valid="<?=($player->getNicName() ? $player->getNicName() : 'id' . $player->getId())?>" value="<?=($player->getNicName() ? $player->getNicName() : 'id' . $player->getId())?>" />
+                                            <input autocomplete="off" spellcheck="false" type="text" name="nick" data-valid="<?=($player->getNicname() ? $player->getNicname() : 'id' . $player->getId())?>" value="<?=($player->getNicname() ? $player->getNicname() : 'id' . $player->getId())?>" />
                                         </div>
                                         <div class="pi-inp-bk">
                                             <div class="ph" data-default="<?=$MUI->getText('placeholder-surname')?>"><?=$MUI->getText('placeholder-surname')?></div>
@@ -800,7 +800,7 @@ Por favor, desactive el bloqueador de anuncios!'); ?>
                                         </div>
                                         <div class="pi-inp-bk td">
                                             <div class="ph" data-default="<?=$MUI->getText('placeholder-birthday')?>"><?=$MUI->getText('placeholder-birthday')?></div>
-                                            <input autocomplete="off" spellcheck="false" maxlength="10" placeholder="<?=$MUI->getText('placeholder-birthday')?>" type="text" name="bd" <?=$player->getBirthday()?'disabled':''?>  data-valid="<?=($player->getBirthday() ? $player->getBirthday('d.m.Y') : '')?>" value="<?=($player->getBirthday() ? $player->getBirthday('d.m.Y') : '')?>"/>
+                                            <input autocomplete="off" spellcheck="false" maxlength="10" placeholder="<?=$MUI->getText('placeholder-birthday')?>" type="text" name="bd" <?=$player->getBirthday()?'disabled':''?>  data-valid="<?=($player->getBirthday() ? date('d.m.Y', $player->getBirthday()) : '')?>" value="<?=($player->getBirthday() ? date('d.m.Y', $player->getBirthday()) : '')?>"/>
                                         </div>
                                         <div class="pi-inp-bk td">
                                             <div class="ph" data-default="<?=$MUI->getText('placeholder-phone')?>"><?=$MUI->getText('placeholder-phone')?></div>
@@ -845,7 +845,7 @@ Por favor, desactive el bloqueador de anuncios!'); ?>
                                     </div>
                                     <div class="save-bk">
                                         <div class="sb-ch-td">
-                                            <input type="checkbox" name="visible" id="rulcheck" hidden <?=($player->getVisibility() ? "checked" : "")?> />
+                                            <input type="checkbox" name="visible" id="rulcheck" hidden <?=($player->isVisible() ? "checked" : "")?> />
                                             <label for="rulcheck"><?=$MUI->getText('label-show-my-name')?></label>
                                         </div>
 

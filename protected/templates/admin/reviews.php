@@ -49,7 +49,7 @@ $defaults = array(
                             <div onclick="window.open('/private/users?search[where]=Id&search[query]=<?=$player->getId();?>')" data-id="<?=$player->getId()?>" class="left pointer<?=$player->getBan()?' danger':''?>" style="width: 80%;" <? if($player->getAvatar()) : ?>data-toggle="tooltip" data-html="1" data-placement="auto" title="<img style='width:32px;' src='../filestorage/avatars/<?=(ceil($player->getId() / 100)) . '/'.$player->getAvatar()?>'>"<? endif ?>>
                                 <?=$player->getNicname()?>
                                 <br>
-                                <?=$player->getName()?> <?=$player->getSurName()?> <?=$player->getSecondName()?>
+                                <?=$player->getName()?> <?=$player->getSurname()?> <?=$player->getSecondName()?>
 
                             </div>
                             <div style="position: relative;text-align: right;" class="pointer profile-trigger<?=$player->getBan()?' danger':''?>" data-id="<?=$player->getId()?>">
@@ -129,13 +129,13 @@ $defaults = array(
 
                             <div class="left">
                                 <? if($player->getCounters()['Ip']>1):?>
-                                    <button class="btn btn-xs btn-danger" <?=($player->getLastIP() || $player->getIP()?"onclick=\"window.open('users?search[where]=Ip&search[query]=".$player->getId():'')?>');">
+                                    <button class="btn btn-xs btn-danger" <?=($player->getLastIp() || $player->getIp()?"onclick=\"window.open('users?search[where]=Ip&search[query]=".$player->getId():'')?>');">
                                     <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span><?=$player->getCounters()['Ip']?>
                                 </button>
                             <? endif ?>
 
-                                <? if ($player->getDateAdBlocked()):?>
-                                    <button class="btn btn-xs btn-<?=($player->getAdBlock()?'danger':($player->getDateAdBlocked() < strtotime('-14 day', time()) ? "success" : "warning" ))?> logs-trigger" data-action="AdBlock" data-id="<?=$player->getId()?>">
+                                <? if ($player->getDates('AdBlocked')):?>
+                                    <button class="btn btn-xs btn-<?=($player->getDates('AdBlockLast')?'danger':($player->getDates('AdBlocked') < strtotime('-14 day', time()) ? "success" : "warning" ))?> logs-trigger" data-action="AdBlock" data-id="<?=$player->getId()?>">
                                         <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><?=($player->getCounters()['AdBlock']?:'')?>
                                     </button>
                                 <? endif ?>

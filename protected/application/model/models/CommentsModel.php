@@ -19,9 +19,32 @@ class CommentsModel extends Model
         return $this->getProcessor()->getCount($module, $objectId, $status);
     }
 
-    public function getList($module, $objectId, $count = NULL, $beforeId = NULL, $afterId = NULL, $status = 1, $parentId = NULL, $modifyDate = NULL)
+    public function getList($module, $objectId, $count = NULL, $beforeId = NULL, $afterId = NULL, $status = 1, $parentId = NULL, $modifyDate = NULL, $playerId = NULL)
     {
-        return $this->getProcessor()->getList($module, $objectId, $count, $beforeId, $afterId, $status, $parentId, $modifyDate);
+        $res = array();
+        $comments = $this->getProcessor()->getList($module, $objectId, $count, $beforeId, $afterId, $status, $parentId, $modifyDate);
+
+        if ($playerId) {
+            $likes = $this->isLiked(array_keys($comments), $playerId);
+        } else {
+            $likes = array();
+        }
+
+        foreach ($comments as $id => $comment) {
+            $res[$id] = $comment->export('JSON');
+            if (!$comment->getParentId()) {
+                $res[$id]['answers'] = $this->getList($module, $objectId, NULL, $beforeId = NULL, $afterId = NULL, $status, $id, NULL, $playerId);
+            } else {
+                $res[$id]['comment_id'] = $comment->getParentId();
+            }
+            if (isset($likes[$id])) {
+                $res[$id]['is_liked'] = true;
+            } else {
+                $res[$id]['is_liked'] = false;
+            }
+        }
+
+        return $res;
     }
 
     public function getLikes($commentId)
@@ -34,9 +57,9 @@ class CommentsModel extends Model
         return $this->getProcessor()->canPlayerPublish($playerId);
     }
 
-    public function isLiked($commentId, $playerId)
+    public function isLiked($commentsIds, $playerId)
     {
-        return $this->getProcessor()->isLiked($commentId, $playerId);
+        return $this->getProcessor()->isLiked($commentsIds, $playerId);
     }
 
     public function like($commentId, $playerId)

@@ -377,7 +377,7 @@ class GameAppsDBProcessor implements IProcessor
 
             unset($row['Currency'],$row['GameId'], $row['Top']);
 
-            if(!isset($rating[$gid][$cur]['#'.$row['I']]) || $top)
+            if(!isset($rating[$gid][$cur]['#'.$row['I']]))
                 $rating[$gid][$cur]['#'.$row['I']] = $row;
 
         }

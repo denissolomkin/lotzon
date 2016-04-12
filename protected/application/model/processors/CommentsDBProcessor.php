@@ -75,12 +75,17 @@ class CommentsDBProcessor implements IProcessor
                     `PlayerReviews`.*,
                     `Players`.`Avatar` PlayerImg,
                     `Players`.`Nicname` PlayerName,
+                    `PlayerPing`.`Ping` PlayerPing,
                     (SELECT COUNT(*) FROM `PlayerReviewsLikes` WHERE `PlayerReviewsLikes`.CommentId=`PlayerReviews`.Id) AS LikesCount
                 FROM `PlayerReviews`
                 LEFT JOIN
                     `Players`
                   ON
                     `Players`.`Id` = `PlayerReviews`.`PlayerId`
+                LEFT JOIN
+                    `PlayerPing`
+                  ON
+                    `Players`.`Id` = `PlayerPing`.`PlayerId`
                 WHERE
                     `PlayerReviews`.`Id` = :id
                 LIMIT 1";
@@ -119,9 +124,9 @@ class CommentsDBProcessor implements IProcessor
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
-                ':module' => $module,
+                ':module'   => $module,
                 ':objectId' => $objectId,
-                ':status' => $status,
+                ':status'   => $status,
             ));
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query " . $e, 1);
@@ -138,22 +143,27 @@ class CommentsDBProcessor implements IProcessor
                     `PlayerReviews`.*,
                     `Players`.`Avatar` PlayerImg,
                     `Players`.`Nicname` PlayerName,
+                    `PlayerPing`.`Ping` PlayerPing,
                     (SELECT COUNT(*) FROM `PlayerReviewsLikes` WHERE `PlayerReviewsLikes`.CommentId=`PlayerReviews`.Id) AS LikesCount
                 FROM `PlayerReviews`
                 LEFT JOIN
                     `Players`
                   ON
                     `Players`.`Id` = `PlayerReviews`.`PlayerId`
+                LEFT JOIN
+                    `PlayerPing`
+                  ON
+                    `Players`.`Id` = `PlayerPing`.`PlayerId`
                 WHERE
                     `Module` = :module
                 AND
                     `Status` = :status
                 AND
                     `ObjectId` = :objectId"
-            . (($parentId === NULL) ? " AND (`ParentId` IS NULL)" : " AND (`PlayerReviews`.`ParentId` = $parentId)")
-            . (($beforeId === NULL) ? "" : " AND (`PlayerReviews`.`Id` < $beforeId)")
-            . (($afterId === NULL) ? "" : " AND (`PlayerReviews`.`Id` > $afterId)")
-            . (($modifyDate === NULL) ? "" : " AND (`PlayerReviews`.`ModifyDate` > $modifyDate)
+            . (($parentId === NULL) ? " AND (`ParentId` IS NULL)" : " AND (`PlayerReviews`.`ParentId` = ".(int)$parentId.")")
+            . (($beforeId === NULL) ? "" : " AND (`PlayerReviews`.`Id` < ".(int)$beforeId.")")
+            . (($afterId === NULL) ? "" : " AND (`PlayerReviews`.`Id` > ".(int)$afterId.")")
+            . (($modifyDate === NULL) ? "" : " AND (`PlayerReviews`.`ModifyDate` > ".(int)$modifyDate.")
                                                     OR (`PlayerReviews`.Id IN
                                                         (SELECT ParentId FROM PlayerReviews WHERE
                                                                    `Module` = :module
@@ -162,7 +172,7 @@ class CommentsDBProcessor implements IProcessor
                                                                 AND
                                                                     `ObjectId` = :objectId
                                                                 AND
-                                                                    `ModifyDate` > $modifyDate)
+                                                                    `ModifyDate` > ".(int)$modifyDate.")
                                                         )")
             . "
                 ORDER BY `PlayerReviews`.`Id` DESC"
@@ -170,9 +180,9 @@ class CommentsDBProcessor implements IProcessor
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
-                ':module' => $module,
+                ':module'   => $module,
                 ':objectId' => $objectId,
-                ':status' => $status,
+                ':status'   => $status,
             ));
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query " . $e, 1);
@@ -181,12 +191,7 @@ class CommentsDBProcessor implements IProcessor
         $comments = array();
         foreach ($sth->fetchAll() as $commentData) {
             $comment = new \Comment;
-            $comments[$commentData['Id']] = $comment->formatFrom('DB', $commentData)->export('JSON');
-            if (!$commentData['ParentId']) {
-                $comments[$commentData['Id']]['answers'] = $this->getList($module, $objectId, $count, $beforeId = NULL, $afterId = NULL, $status, $commentData['Id']);
-            } else {
-                $comments[$commentData['Id']]['comment_id'] = $commentData['ParentId'];
-            }
+            $comments[$commentData['Id']] = $comment->formatFrom('DB', $commentData);
         }
 
         return $comments;
@@ -215,32 +220,44 @@ class CommentsDBProcessor implements IProcessor
         return $count;
     }
 
-    public function isLiked($commentId, $playerId)
+    public function isLiked($commentsIds, $playerId)
     {
+        if (!is_array($commentsIds)) {
+            throw new ModelException('Bad request', 403);
+        }
+
+        if ($commentsIds == array()) {
+            return array();
+        }
+
+        $inQuery = implode(',', array_fill(0, count($commentsIds), '?'));
+
         $sql = "SELECT
                     *
                 FROM
                   `PlayerReviewsLikes`
                 WHERE
-                  CommentId=:commentid
+                  CommentId IN (".$inQuery.")
                 AND
-                  PlayerId=:playerid";
+                  PlayerId=?";
 
         try {
             $sth = DB::Connect()->prepare($sql);
-            $sth->execute(array(
-                ':commentid' => $commentId,
-                ':playerid' => $playerId,
-            ));
+            foreach ($commentsIds as $k => $id) {
+                $sth->bindValue(($k + 1), $id);
+            }
+            $sth->bindParam($k + 2,$playerId);
+            $sth->execute();
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query", 500);
         }
 
-        if (!$sth->rowCount()) {
-            return false;
+        $likes = array();
+        foreach ($sth->fetchAll() as $like) {
+            $likes[$like['CommentId']] = $like['PlayerId'];
         }
 
-        return true;
+        return $likes;
     }
 
     public function like($commentId, $playerId)
@@ -369,6 +386,7 @@ class CommentsDBProcessor implements IProcessor
                     pr.*,
                     `Players`.`Avatar` PlayerImg,
                     `Players`.`Nicname` PlayerName,
+                    pp.`Ping` PlayerPing,
                     prparent.`Text` ParentText
                 FROM `PlayerReviews` AS pr
                 LEFT JOIN
@@ -383,6 +401,10 @@ class CommentsDBProcessor implements IProcessor
                     `PlayerDates` AS pd
                 ON
                     pd.`PlayerId` = :playerid
+                LEFT JOIN
+                    `PlayerPing` AS pp
+                ON
+                    pp.`PlayerId` = :playerid
                 WHERE
                     pr.`Module` = :module
                 AND

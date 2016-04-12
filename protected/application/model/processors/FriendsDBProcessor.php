@@ -41,8 +41,8 @@ class FriendsDBProcessor implements IProcessor
                   `Players` AS pl
                 ON
                   pl.`Id` = IF(fr.UserId=:playerid, fr.FriendId, fr.UserId)
-                JOIN
-                  `PlayerDates` AS dat
+                LEFT JOIN
+                  `PlayerPing` AS dat
                 ON
                   dat.`PlayerId` = pl.`Id`
                 WHERE
@@ -50,7 +50,7 @@ class FriendsDBProcessor implements IProcessor
                     OR
                     fr.`UserId` = :playerid)"
                 . (($status === NULL) ? "" : " AND (`fr`.`Status` = ".(int)$status.")")
-                . (($search === NULL) ? "" : " AND (LOWER(`pl`.`Nicname`) LIKE LOWER('%".$search."%'))")
+                . (($search === NULL) ? "" : " AND (LOWER(`pl`.`Nicname`) LIKE LOWER(:search))")
                 . "ORDER BY PlayerName"
             . (($count === NULL)  ? "" : " LIMIT " . (int)$count);
         if ($offset) {
@@ -58,9 +58,17 @@ class FriendsDBProcessor implements IProcessor
         }
         try {
             $sth = DB::Connect()->prepare($sql);
-            $sth->execute(array(
-                ':playerid' => $playerId,
-            ));
+            if ($search === NULL) {
+                $exec_array = array(
+                    ':playerid' => $playerId,
+                );
+            } else {
+                $exec_array = array(
+                    ':playerid' => $playerId,
+                    ':search'   => '%'.$search.'%'
+                );
+            }
+            $sth->execute($exec_array);
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query " . $e, 1);
         }

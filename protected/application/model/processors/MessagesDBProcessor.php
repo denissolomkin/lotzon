@@ -126,12 +126,17 @@ class MessagesDBProcessor implements IProcessor
         $sql = "SELECT
                     `Messages`.*,
                     `Players`.`Avatar` PlayerImg,
-                    `Players`.`Nicname` PlayerName
+                    `Players`.`Nicname` PlayerName,
+                    `PlayerPing`.`Ping` PlayerPing
                 FROM `Messages`
                 LEFT JOIN
                     `Players`
                   ON
                     `Players`.`Id` = `Messages`.`PlayerId`
+                LEFT JOIN
+                    `PlayerPing`
+                  ON
+                    `Players`.`Id` = `PlayerPing`.`PlayerId`
                 WHERE
                 (
                     (
@@ -147,8 +152,8 @@ class MessagesDBProcessor implements IProcessor
                     )
                 )
                     "
-                . (($beforeId === NULL) ? "" : " AND (`Messages`.`Id` < $beforeId)")
-                . (($afterId === NULL)  ? "" : " AND (`Messages`.`Id` > $afterId)")
+                . (($beforeId === NULL) ? "" : " AND (`Messages`.`Id` < ".(int)$beforeId.")")
+                . (($afterId === NULL)  ? "" : " AND (`Messages`.`Id` > ".(int)$afterId.")")
                 . "
                 ORDER BY `Messages`.`Id` DESC"
                 . (($count === NULL)  ? "" : " LIMIT " . (int)$count);
@@ -179,12 +184,17 @@ class MessagesDBProcessor implements IProcessor
         $sql = "SELECT
                     `Messages`.*,
                     `Players`.`Avatar` PlayerImg,
-                    `Players`.`Nicname` PlayerName
+                    `Players`.`Nicname` PlayerName,
+                    `PlayerPing`.`Ping` PlayerPing
                 FROM `Messages`
                 LEFT JOIN
                     `Players`
                   ON
                     `Players`.`Id` = `Messages`.`PlayerId`
+                LEFT JOIN
+                    `PlayerPing`
+                  ON
+                    `Players`.`Id` = `PlayerPing`.`PlayerId`
                 WHERE
                     `Messages`.`ToPlayerId` = :playerid
                 AND
@@ -217,6 +227,7 @@ class MessagesDBProcessor implements IProcessor
                     `Players`.`Id` PlayerId,
                     `Players`.`Avatar` PlayerImg,
                     `Players`.`Nicname` PlayerName,
+                    `PlayerPing`.`Ping` PlayerPing,
                     (SELECT IF(mes.ToPlayerId=:playerid,IFNULL(MIN(m2.Status),1),mes.Status) FROM Messages as m2 WHERE m2.PlayerId = `Players`.Id AND m2.ToPlayerId = :playerid) as Status
                 FROM `Messages` as mes
                 JOIN
@@ -233,8 +244,12 @@ class MessagesDBProcessor implements IProcessor
                 LEFT JOIN
                     `Players`
                   ON
-                    `Players`.`Id` = q.pid"
-            . (($modifyDate === NULL)  ? "" : " WHERE mes.`Date` > $modifyDate ")
+                    `Players`.`Id` = q.pid
+                LEFT JOIN
+                    `PlayerPing`
+                  ON
+                    `Players`.`Id` = `PlayerPing`.`PlayerId`"
+            . (($modifyDate === NULL)  ? "" : " WHERE mes.`Date` > ".(int)$modifyDate)
             . (($count === NULL)  ? "" : " LIMIT " . (int)$count);
         if ($offset) {
             $sql .= " OFFSET " . (int)$offset;

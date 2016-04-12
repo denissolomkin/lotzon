@@ -215,7 +215,7 @@ class Users extends PrivateArea
                         'status' => $order->getStatus(),
                         'number' => $order->getPhone(),
                         'username' => ($order->getUserName()?$order->getUserName().': ':'').($order->getDateProcessed()?date('d.m.Y H:i:s', $order->getDateProcessed()):''),
-                        'playername' => ($order->getPlayer()?$order->getPlayer()->getNicname().'<br>'.$order->getPlayer()->getSurName().' '.$order->getPlayer()->getName().' '.$order->getPlayer()->getSecondName():''),
+                        'playername' => ($order->getPlayer()?$order->getPlayer()->getNicname().'<br>'.$order->getPlayer()->getSurname().' '.$order->getPlayer()->getName().' '.$order->getPlayer()->getSecondName():''),
                         'item' => $order->getItem()->getTitle(),
                         'name' => $order->getSurname().' '.$order->getName.' '.$order->getSecondName(),
                         'phone' => $order->getPhone(),
@@ -236,7 +236,7 @@ class Users extends PrivateArea
                         'status' => $order->getStatus(),
                         'number' => $order->getNumber(),
                         'username' => ($order->getUserName()?$order->getUserName().': ':'').($order->getDateProcessed()?date('d.m.Y H:i:s', $order->getDateProcessed()):''),
-                        'playername' => ($order->getPlayer()?$order->getPlayer()->getNicname().'<br>'.$order->getPlayer()->getSurName().' '.$order->getPlayer()->getName().' '.$order->getPlayer()->getSecondName():null),
+                        'playername' => ($order->getPlayer()?$order->getPlayer()->getNicname().'<br>'.$order->getPlayer()->getSurname().' '.$order->getPlayer()->getName().' '.$order->getPlayer()->getSecondName():null),
                         'type' => $order->getType(),
                         'data' => (implode('</br>',$dataOrder)),
                         'date' => date('d.m.Y H:i:s', $order->getDateOrdered()),
@@ -267,10 +267,10 @@ class Users extends PrivateArea
                 $response['data'] = array(
                     'Avatar' => $player->getAvatar(),
                     'Id' => $player->getId(),
-                    'Nicname' => $player->getNicName(),
+                    'Nicname' => $player->getNicname(),
                     'Name' => $player->getName(),
                     'Surname' => $player->getSurname(),
-                    'Birthday' => $player->getBirthday()?$player->getBirthday('d.m.Y'):'',
+                    'Birthday' => $player->getBirthday()?date('d.m.Y', $player->getBirthday()):'',
                     'Phone' => $player->getPhone()?:'',
                     'Qiwi' => $player->getQiwi()?:'',
                     'YandexMoney' => $player->getYandexMoney()?:'',
@@ -308,7 +308,6 @@ class Users extends PrivateArea
                 }
 
                 $player->setPhone($this->request()->post('phone'));
-
                 $player->setQiwi($this->request()->post('qiwi'));
                 $player->setWebMoney($this->request()->post('webmoney'));
                 $player->setYandexMoney($this->request()->post('yandexmoney'));
@@ -318,7 +317,7 @@ class Users extends PrivateArea
 
                 $player->setNicname($this->request()->post('Nicname'))
                     ->setName($this->request()->post('Name'))
-                    ->setSurName($this->request()->post('Surname'))
+                    ->setSurname($this->request()->post('Surname'))
                     ->setCountry($this->request()->post('Country'))
                     ->setLang($this->request()->post('Lang'))
                     ->setUtc($this->request()->post('Utc', null))

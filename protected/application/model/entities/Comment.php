@@ -8,6 +8,7 @@ class Comment extends Entity
     protected $_playerId    = 0;
     protected $_playerImg   = '';
     protected $_playerName  = '';
+    protected $_playerPing  = null;
     protected $_complain    = '';
     protected $_moderatorId = 0;
     protected $_moderatorName = '';
@@ -46,14 +47,16 @@ class Comment extends Entity
                     'id'   => $this->getPlayerId(),
                     'img'  => $this->getPlayerImg(),
                     'name' => $this->getPlayerName(),
+                    'ping' => $this->getPlayerPing(),
                 ),
                 'moderator' => $this->getModeratorId(),
-                'id'    => $this->getId(),
-                'date'  => $this->getDate(),
-                'text'  => $this->getText(),
-                'likes' => $this->getLikesCount(),
-                'img'   => $this->getImage()===NULL?"":$this->getImage(),
+                'id'        => $this->getId(),
+                'date'      => $this->getDate(),
+                'text'      => $this->getText(),
+                'likes'     => $this->getLikesCount(),
+                'img'       => $this->getImage() === null ? "" : $this->getImage(),
             );
+
             return $ret;
         }
     }

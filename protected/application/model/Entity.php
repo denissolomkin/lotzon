@@ -128,7 +128,7 @@ abstract class Entity
             }
         }
 
-        throw new Exception("Method $method is not defined in " . get_class($this) . "!");
+        throw new Exception("Method $method is not defined in " . get_class($this) . "!", 501);
     }
 
     public function setModelClass($modelClassName)

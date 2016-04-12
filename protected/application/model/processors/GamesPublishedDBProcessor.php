@@ -1,5 +1,4 @@
 <?php
-use \GamePublished;
 
 Application::import(PATH_INTERFACES . 'IProcessor.php');
 

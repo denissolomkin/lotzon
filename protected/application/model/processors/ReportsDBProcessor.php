@@ -151,6 +151,60 @@ SELECT CONCAT(YEAR(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date))) `Mo
         return $sth->fetchAll();
     }
 
+    public function getRating($gameId=null)
+    {
+        $month = mktime(0, 0, 0, date("n"), 1);
+
+        /* Rating For All Games And Players */
+
+        $sql = "(SELECT g.GameId, g.Currency, p.Nicname N,  p.Avatar A, p.Id I, (sum(g.Win)*25+count(g.Id)) R, 0 Top
+                                FROM `PlayerGames` g
+                                JOIN Players p On p.Id=g.PlayerId
+                                WHERE g.`Month`=:month AND g.`IsFee` = 1 ". ($gameId?' AND g.`GameId` = '.$gameId:'') ."
+                                group by g.GameId, g.Currency, g.PlayerId)
+
+                    UNION ALL
+
+                    (SELECT t.GameId, t.Currency, p.Nicname N,  p.Avatar A, p.Id I, t.Rating R, 1 Top
+                                FROM `OnlineGamesTop` t
+                                JOIN Players p On p.Id=t.PlayerId
+                                WHERE t.`Month`=:month ". ($gameId?' AND t.`GameId` = '.$gameId:'') ."
+                                )
+
+                                order by Currency, R DESC
+                                ";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(
+                array(
+                    ':month' => $month
+                ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+
+        }
+
+
+        $rating = array();
+
+        foreach ($sth->fetchAll() as $row) {
+
+            $cur = $row['Currency'];
+            $gid = $row['GameId'];
+            $top = $row['Top'];
+
+            unset($row['Currency'],$row['GameId'], $row['Top']);
+
+            if(!isset($rating[$gid][$cur]['#'.$row['I']]) || $top)
+                $rating[$gid][$cur]['#'.$row['I']] = $row;
+
+        }
+
+        return $rating;
+
+    }
+
     public function getTopOnlineGames($dateFrom=null, $dateTo=null, $args=null)
     {
 

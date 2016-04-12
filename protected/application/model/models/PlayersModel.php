@@ -44,11 +44,6 @@ class PlayersModel extends Model
         return $this->getProcessor()->checkDate($key, $player);
     }
 
-    public function checkLastGame($key, Entity $player)
-    {
-        return $this->getProcessor()->checkLastGame($key, $player);
-    }
-
     public function updateCookieId(Entity $player, $cookie)
     {
         return $this->getProcessor()->updateCookieId($player, $cookie);
@@ -57,16 +52,6 @@ class PlayersModel extends Model
     public function getList($limit = 0, $offset = 0, $sort = array(), $search=null)
     {
         return $this->getProcessor()->getList($limit, $offset, $sort, $search);
-    }
-
-    public function addDebug($player, $log = null)
-    {
-        return $this->getProcessor()->addDebug($player, $log);
-    }
-
-    public function listDebug()
-    {
-        return $this->getProcessor()->listDebug();
     }
 
     public function getLog($playerId, $action=null)
@@ -142,6 +127,16 @@ class PlayersModel extends Model
     public function initDates(Entity $player)
     {
         return $this->getProcessor()->initDates($player);
+    }
+
+    public function loadPrivacy(Entity $player)
+    {
+        return $this->getProcessor()->loadPrivacy($player);
+    }
+
+    public function updatePrivacy(Entity $player)
+    {
+        return $this->getProcessor()->updatePrivacy($player);
     }
 
     public function updateSocial(Entity $player)
@@ -247,11 +242,6 @@ class PlayersModel extends Model
         return $this->getProcessor()->getInvitesCount($player);
     }
 
-    public function decrementSocialPostsCount(Entity $player)
-    {
-        return $this->getProcessor()->decrementSocialPostsCount($player);
-    }
-
     public function isExists($id)
     {
         return $this->getProcessor()->isExists($id);
@@ -295,5 +285,10 @@ class PlayersModel extends Model
     public function updateGoldTicket(Entity $player, $quantity)
     {
         return $this->getProcessor()->updateGoldTicket($player, $quantity);
+    }
+
+    public function getPlayersPing($ids)
+    {
+        return $this->getProcessor()->getPlayersPing($ids);
     }
 }

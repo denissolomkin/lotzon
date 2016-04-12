@@ -666,6 +666,15 @@ Config::instance()->publicResources = array(
         'post' => 'controllers\production\OrdersController:cashout'
     ),
     /**
+     * Balance orders
+     */
+    '/balance/convert' => array(
+        'post' => 'controllers\production\OrdersController:convert'
+    ),
+    '/balance/cashout' => array(
+        'post' => 'controllers\production\OrdersController:cashout'
+    ),
+    /**
      * Prizes
      */
     '/prizes/exchange' => array(

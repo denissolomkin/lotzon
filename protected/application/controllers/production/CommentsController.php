@@ -51,12 +51,14 @@ class CommentsController extends \AjaxController
     public function listAction($module = 'comments', $objectId = 0)
     {
 
+        $playerId = $this->session->get(Player::IDENTITY)->getId();
+
         $count    = $this->request()->get('count', self::$commentsPerPage);
         $beforeId = $this->request()->get('before_id', NULL);
         $afterId  = $this->request()->get('after_id', NULL);
 
         try {
-            $list = CommentsModel::instance()->getList($module, $objectId, $count+1, $beforeId, $afterId);
+            $list = CommentsModel::instance()->getList($module, $objectId, $count+1, $beforeId, $afterId, 1, NULL, NULL, $playerId);
         } catch (\PDOException $e) {
             $this->ajaxResponseInternalError();
             return false;
@@ -144,6 +146,7 @@ class CommentsController extends \AjaxController
                         "id"   => $commentData['PlayerId'],
                         "img"  => $commentData['PlayerImg'],
                         "name" => $commentData['PlayerName'],
+                        "ping" => $commentData['PlayerPing'],
                     ),
                     "id"         => $commentData['Id'],
                     "comment_id" => $commentData['ParentId'],
@@ -159,6 +162,7 @@ class CommentsController extends \AjaxController
             }
 
             $response = array(
+                'cache'  => 'local',
                 'res'    => array(
                     'communication' => array(
                         'notifications' => $comments,
@@ -212,17 +216,20 @@ class CommentsController extends \AjaxController
             ->setModule($module)
             ->setObjectId($objectId);
 
-        if ($image!="") {
-            \Common::saveImageMultiResolution('',PATH_FILESTORAGE.'reviews/',$image, array(array(600),1),PATH_FILESTORAGE.'temp/'.$image);
-            \Common::removeImageMultiResolution(PATH_FILESTORAGE.'temp/',$image);
-        }
 
         $obj->setImage($image);
 
         try {
+
             if(CommentsModel::instance()->canPlayerPublish($playerId))
                 $obj->setStatus(1);
             $obj->create();
+
+            if ($image!="") {
+                \Common::saveImageMultiResolution('', PATH_FILESTORAGE . 'reviews/', $image, array(array(600), 1), PATH_FILESTORAGE . 'temp/' . $image);
+                \Common::removeImageMultiResolution(PATH_FILESTORAGE . 'temp/', $image);
+            }
+
 
         } catch (\EntityException $e) {
             $this->ajaxResponseInternalError($e->getMessage());
@@ -240,7 +247,6 @@ class CommentsController extends \AjaxController
 
             if (!$obj->getParentId()) {
                 $comments[$obj->getId()] = $obj->export('JSON');
-                $response['message'] = "message-comment-publish-success";
             } else {
                 $comments[$obj->getParentId()]['answers'][$obj->getId()] = $obj->export('JSON');
             }
@@ -338,7 +344,7 @@ class CommentsController extends \AjaxController
         }
 
         $playerId = $this->session->get(Player::IDENTITY)->getId();
-        $is_liked = CommentsModel::instance()->isLiked($commentId, $playerId);
+        $is_liked = CommentsModel::instance()->isLiked(array($commentId), $playerId);
 
         try {
             if (!$is_liked) {
@@ -381,7 +387,7 @@ class CommentsController extends \AjaxController
         }
 
         $playerId = $this->session->get(Player::IDENTITY)->getId();
-        $is_liked = CommentsModel::instance()->isLiked($commentId, $playerId);
+        $is_liked = CommentsModel::instance()->isLiked(array($commentId), $playerId);
 
         try {
             if ($is_liked) {

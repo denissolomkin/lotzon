@@ -35,7 +35,7 @@ class AjaxController extends \SlimController\SlimController
             return false;
         }
 
-        $this->session->get(Player::IDENTITY)->markOnline();
+        // $this->session->get(Player::IDENTITY)->markOnline();
 
         return true;
     }

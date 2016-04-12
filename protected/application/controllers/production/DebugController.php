@@ -17,8 +17,17 @@ class DebugController extends \AjaxController
     public function addAction()
     {
         $player = $this->session->get(Player::IDENTITY);
-        $message =$this->request()->post('message');
-        \PlayersModel::instance()->addDebug($player, $message);
+        $message = $this->request()->post('message', null);
+        $log = $this->request()->post('log', null);
+        $url = $this->request()->post('url', null);
+        $line = $this->request()->post('line', null);
+
+        \DebugModel::instance()->addLog($player, array(
+            "log" => $message ?: $log,
+            "url" => $url,
+            "line" => $line,
+        ));
+
         $this->ajaxResponseNoCache(array('res'=>array()));
     }
 

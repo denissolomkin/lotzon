@@ -457,7 +457,7 @@
             var ping = typeof data === 'object' ? data.hasOwnProperty('ping') && data.ping : data,
                 playerId = typeof data === 'object' && data.hasOwnProperty('id') && data.id;
 
-            return (playerId && playerId != this.id) || !ping
+            return (playerId && playerId == this.id) || !ping
                 ? null
                 : ping && parseInt(ping) + Livedate.diff + Config.timeout.online > moment().unix();
         },

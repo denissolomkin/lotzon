@@ -1,7 +1,5 @@
 <?php
 
-use \Player;
-
 Application::import(PATH_APPLICATION . 'model/Entity.php');
 
 class MaillistMessage extends Entity
@@ -202,7 +200,7 @@ class MaillistMessage extends Entity
                     case '%name%':
                         $name = $player->getName();
                         if ($name=='') {
-                            $name = $player->getNicName();
+                            $name = $player->getNicname();
                         }
                         $render['html'] = str_replace($macros, $name, $render['html']);
                         break;

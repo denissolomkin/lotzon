@@ -22,7 +22,7 @@ class PlayersDBProcessor implements IProcessor
 
                 ':cl'       => $player->getLang(),
                 ':vis'      => 1,
-                ':ip'       => $player->getIP(),
+                ':ip'       => $player->getIp(),
                 ':hash'     => $player->getHash(),
                 ':complete' => (int)$player->isComplete(),
                 ':valid'    => (int)$player->isValid(),
@@ -34,10 +34,12 @@ class PlayersDBProcessor implements IProcessor
                 ':referer'    => $player->getReferer(),
             ));
         } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
+            throw new ModelException("Error processing storage query", 500);
         }
 
         $player->setId(DB::Connect()->lastInsertId());
+
+        /* INSERT INTO DATES TABLE */
 
         $sql = "INSERT INTO `PlayerDates` (`PlayerId`,`Login`,`Registration`) VALUES (:id, :dl, :dr)";
 
@@ -48,20 +50,33 @@ class PlayersDBProcessor implements IProcessor
                 ':dr'       => (int)$player->getDates('Registration'),
             ));
         } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
+            throw new ModelException("Error processing storage query", 500);
         }
 
+        /* INSERT INTO PRIVACY TABLE */
+
+        $sql = "INSERT INTO `PlayerPrivacy` (`PlayerId`) VALUES (:id)";
+
+        try {
+            DB::Connect()->prepare($sql)->execute(array(
+                ':id'       => (int)$player->getId()
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+        /* INSERT INTO COOKIE AND IP TABLE */
 
         try {
             $player->setCookieId($_COOKIE[Player::PLAYERID_COOKIE]?:$player->getId())
                 ->updateCookieId($player->getCookieId())
                 ->updateIp($player->getIp())
-                ->setNicName('Участник ' . $player->getId());
+                ->setNicname('Участник ' . $player->getId());
 
             if(!$_COOKIE[Player::PLAYERID_COOKIE])
                 setcookie(Player::PLAYERID_COOKIE, $player->getCookieId(), time() + Player::AUTOLOGIN_COOKIE_TTL, '/');
 
-            DB::Connect()->prepare("UPDATE `Players` SET `CookieId`=:ccid, `NicName` = CONCAT('Участник ', `Id`) WHERE `Id` = :id")->execute(array(
+            DB::Connect()->prepare("UPDATE `Players` SET `CookieId`=:ccid, `Nicname` = CONCAT('Участник ', `Id`) WHERE `Id` = :id")->execute(array(
                 ':id' => $player->getId(),
                 ':ccid' => $player->getCookieId(),
             ));
@@ -69,51 +84,6 @@ class PlayersDBProcessor implements IProcessor
         } catch (PDOException $e){}
 
         return $player;
-    }
-
-    public function listDebug()
-    {
-        $sql = "SELECT * FROM `Debug`
-                ORDER BY Id DESC
-                LIMIT 100";
-
-        try {
-            $sth = DB::Connect()
-                ->prepare($sql);
-            $sth->execute();
-        } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
-        }
-
-        $logs=array();
-        foreach ($sth->fetchAll() as $data) {
-            $data['Date']=date('d.m.Y H:i:s', $data['Date']);
-            $logs[] = $data;
-        }
-        return $logs;
-    }
-
-    public function addDebug(Entity $player, $log)
-    {
-        $sql = "INSERT INTO `Debug` (`PlayerId`, `Date`, `Agent`, `Ip`, `Log`)
-                VALUES (:id, :date, :agent, :ip, :log)";
-
-        try {
-            DB::Connect()
-                ->prepare($sql)
-                ->execute(
-                    array(
-                        ':id'      => $player->getId(),
-                        ':date'    => time(),
-                        ':agent'   => $player->getAgent(),
-                        ':ip'      => $player->getLastIp(),
-                        ':log'     => $log
-                    ));
-        } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query ".$e->getMessage(), 500);
-        }
-
-        return true;
     }
 
     public function writeLog(Entity $player, $options)
@@ -130,7 +100,7 @@ class PlayersDBProcessor implements IProcessor
                 ':tm'      => time()
             ));
         } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
+            throw new ModelException("Error processing storage query", 500);
         }
 
         return $player;
@@ -149,7 +119,7 @@ class PlayersDBProcessor implements IProcessor
                 ':tm'      => time()
             ));
         } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
+            throw new ModelException("Error processing storage query", 500);
         }
 
         return $player;
@@ -167,7 +137,7 @@ class PlayersDBProcessor implements IProcessor
                 ':tm'       => time()
             ));
         } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
+            throw new ModelException("Error processing storage query", 500);
         }
 
         return $player;
@@ -189,7 +159,7 @@ class PlayersDBProcessor implements IProcessor
                     ':enabled'      => $player->getSocialEnable(),
                 ));
             } catch (PDOException $e) {
-                throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
+                throw new ModelException("Error processing storage query", 500);
             }
 
         return $player;
@@ -208,7 +178,7 @@ class PlayersDBProcessor implements IProcessor
                     ':socialname'   => $player->getSocialName(),
                 ));
             } catch (PDOException $e) {
-                throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
+                throw new ModelException("Error processing storage query", 500);
             }
 
         return $player;
@@ -231,7 +201,7 @@ class PlayersDBProcessor implements IProcessor
                 return $sth->fetchColumn();
 
             } catch (PDOException $e) {
-                throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
+                throw new ModelException("Error processing storage query", 500);
             }
 
 
@@ -274,7 +244,7 @@ class PlayersDBProcessor implements IProcessor
                 ':ip'       => $player->getIp(),
                 ':ckid'     => $player->getCookieId(),
                 ':email'    => $player->getEmail(),
-                ':vis'      => (int)$player->getVisibility(),
+                ':vis'      => (int)$player->isVisible(),
                 ':fav'      => is_array($player->getFavoriteCombination()) ? serialize($player->getFavoriteCombination()) : '',
                 ':vld'      => (int)$player->isValid(),
                 ':complete' => (int)$player->isComplete(),
@@ -285,7 +255,7 @@ class PlayersDBProcessor implements IProcessor
                 ':utc'      => $player->getUtc(),
             ));
         } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
+            throw new ModelException("Error processing storage query", 500);
         }
 
         return $player;
@@ -305,7 +275,7 @@ class PlayersDBProcessor implements IProcessor
                 ':newsSubscribe' => $newsSubscribe,
             ));
         } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
+            throw new ModelException("Error processing storage query", 500);
         }
         $player->setNewsSubscribe($newsSubscribe);
         return $player;
@@ -323,7 +293,7 @@ class PlayersDBProcessor implements IProcessor
                 ':qt' => $quantity,
             ));
         } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
+            throw new ModelException("Error processing storage query", 500);
         }
 
         return $player;
@@ -343,7 +313,7 @@ class PlayersDBProcessor implements IProcessor
                 ':qt'   => $quantity,
             ));
         } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
+            throw new ModelException("Error processing storage query", 500);
         }
 
         return $player;
@@ -413,29 +383,23 @@ class PlayersDBProcessor implements IProcessor
     public function fetch(Entity $player)
     {
         if ($player->getId() > 0) {
-            $sql = "SELECT p.*, d.* FROM `Players` p
-                LEFT JOIN `PlayerDates` d
-                  ON d.`PlayerId`=p.`Id`
+            $sql = "SELECT p.* FROM `Players` p
                 WHERE p.`Id` = :id";
 
             $sql_params = array(
                 ':id' => $player->getId(),
             );
         } elseif ($player->getSocialName() == '') {
-            $sql = "SELECT p.*, d.* FROM `Players` p
-                LEFT JOIN `PlayerDates` d
-                  ON d.`PlayerId`=p.`Id`
+            $sql = "SELECT p.* FROM `Players` p
                 WHERE p.`Email` = :email";
 
             $sql_params = array(
                 ':email' => $player->getEmail(),
             );
         } else {
-            $sql = "SELECT p.*, d.* FROM `Players` p
+            $sql = "SELECT p.* FROM `Players` p
                 LEFT JOIN `PlayerSocials` s
                   ON s.`PlayerId`=p.`Id`
-                LEFT JOIN `PlayerDates` d
-                  ON d.`PlayerId`=p.`Id`
                 WHERE p.`Email` = :email
                   OR p.`Email` = :socialemail
                   OR (s.`SocialId` = :socialid AND s.`SocialName` = :socialname AND s.`Enabled` = 1)
@@ -506,7 +470,7 @@ class PlayersDBProcessor implements IProcessor
 
 
         } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query: ".$e->getMessage(), 500);
+            throw new ModelException("Error processing storage query", 500);
         }
 
         return true;
@@ -523,7 +487,7 @@ class PlayersDBProcessor implements IProcessor
                 ':st'  => $player->isBan(),
             ));
         } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query: ". $e->getMessage(), 500);
+            throw new ModelException("Error processing storage query", 500);
         }
 
         return $player;
@@ -547,7 +511,7 @@ class PlayersDBProcessor implements IProcessor
             while ($sth->nextRowset());
 
         } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query: " . $e->getMessage(), 500);
+            throw new ModelException("Error processing storage query", 500);
         }
 
         return true;
@@ -564,7 +528,7 @@ class PlayersDBProcessor implements IProcessor
                 ':st'  => $player->isBot(),
             ));
         } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query: ". $e->getMessage(), 500);
+            throw new ModelException("Error processing storage query", 500);
         }
 
         return $player;
@@ -579,7 +543,7 @@ class PlayersDBProcessor implements IProcessor
         $sql = "SELECT
                 SUM(Money / IFNULL((SELECT `Coefficient` FROM `MUICountries` cn LEFT JOIN `MUICurrency` c ON c.Id=cn.Currency WHERE cn.`Code`=`Players`.`Country` LIMIT 1),1)) Money,
                 SUM(Points) Points,
-                (SELECT COUNT( * ) FROM (SELECT 1 FROM `PlayerDates` WHERE Ping > :ping) o) Online,
+                (SELECT COUNT( * ) FROM (SELECT 1 FROM `PlayerPing` WHERE Ping > :ping) o) Online,
                 (SELECT COUNT( * ) FROM (SELECT 1 FROM `LotteryTickets` WHERE LotteryId = 0 GROUP BY PlayerId) t ) Tickets
                 FROM `Players`
                 ";
@@ -590,7 +554,7 @@ class PlayersDBProcessor implements IProcessor
                 ':ping' => (time()-(SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT')?:300))
             ));
             return $sth->fetch();
-        } catch (PDOException $e) {echo $e->getMessage();
+        } catch (PDOException $e) {
             throw new ModelException("Error processing storage query", 500);
         }
     }
@@ -674,6 +638,7 @@ class PlayersDBProcessor implements IProcessor
                 (SELECT COUNT(Id) FROM `LotteryTickets` WHERE `LotteryId` = 0 AND `PlayerId` = `Players`.`Id`) AS TicketsFilled
                 FROM `Players`
                 LEFT JOIN `PlayerDates` ON `PlayerDates` . `PlayerId`=`Id`
+                LEFT JOIN `PlayerPing` ON `PlayerPing` . `PlayerId`=`Id`
                 LEFT JOIN `PlayerIps` ON `PlayerIps`.PlayerId =  `Players`.Id
                 LEFT JOIN `PlayerIps` i ON i.Ip IN (`PlayerIps`.Ip)
                 LEFT JOIN `PlayerCookies` ON `PlayerCookies`.PlayerId = Id
@@ -688,7 +653,7 @@ class PlayersDBProcessor implements IProcessor
                 ':id'    => $player->getId(),
             ));
             return $sth->fetch();
-        } catch (PDOException $e) {echo $e->getMessage();
+        } catch (PDOException $e) {
             throw new ModelException("Error processing storage query", 500);
         }
 
@@ -705,9 +670,58 @@ class PlayersDBProcessor implements IProcessor
                 ':id'    => $player->getId(),
             ));
             return $sth->fetch();
-        } catch (PDOException $e) {echo $e->getMessage();
+        } catch (PDOException $e) {
             throw new ModelException("Error processing storage query", 500);
         }
+    }
+
+    public function loadPrivacy(Player $player)
+    {
+
+        $sql = "SELECT * FROM `PlayerPrivacy` WHERE PlayerId = :id";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':id'    => $player->getId(),
+            ));
+
+            $data = $sth->fetch();
+            unset($data['PlayerId']);
+            return $data;
+
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+    }
+
+    public function updatePrivacy(Entity $player)
+    {
+
+        try {
+            $sql = "UPDATE `PlayerPrivacy`
+                      SET `Name` = :nam, `Surname` = :snm, `Gender` = :gnr, `Birthday` = :bdy, `Age` = :age, `Zip` = :zip, `Address` = :adr, `City` = :cit, `Country` = :cnt
+                      WHERE `PlayerId` = :pid";
+
+            DB::Connect()->prepare($sql)->execute(array(
+                ':nam'  => $player->getPrivacy('Name'),
+                ':snm'  => $player->getPrivacy('Surname'),
+                ':gnr'  => $player->getPrivacy('Gender'),
+                ':bdy'  => $player->getPrivacy('Birthday'),
+                ':age'  => $player->getPrivacy('Age'),
+                ':zip'  => $player->getPrivacy('Zip'),
+                ':adr'  => $player->getPrivacy('Address'),
+                ':cit'  => $player->getPrivacy('City'),
+                ':cnt'  => $player->getPrivacy('Country'),
+                ':pid'  => $player->getId(),
+            ));
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+        return $player;
+
     }
 
     public function getPlayersCount($search=null)
@@ -724,7 +738,7 @@ class PlayersDBProcessor implements IProcessor
                 elseif ($search['where'] == 'InviterId')
                     $search = ' WHERE `Players`.InviterId = ' . $search['query'];
                 elseif ($search['where'] == 'Ping')
-                    $search = ' WHERE `PlayerDates`.Ping > ' . (time() - (SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT') ?: 300));
+                    $search = ' WHERE `PlayerPing`.Ping > ' . (time() - (SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT') ?: 300));
                 elseif ($search['where'] == 'Ip')
                     $search  = 'JOIN `PlayerIps` ON `PlayerIps`.PlayerId = `Players`.Id AND `PlayerIps`.Ip IN(SELECT Ip FROM PlayerIps WHERE PlayerId='.$search['query'].')';
                 //$search= ' WHERE LastIp IN ("'.(str_replace(",",'","',$search['query'])).'") OR Ip IN ("'.(str_replace(",",'","',$search['query'])).'")';
@@ -737,7 +751,7 @@ class PlayersDBProcessor implements IProcessor
         }
 
         $sql = "SELECT COUNT(DISTINCT(Id)) as `counter`
-                FROM `Players` LEFT JOIN PlayerDates ON PlayerDates.PlayerId = Id
+                FROM `Players` LEFT JOIN PlayerPing ON PlayerPing.PlayerId = Id
                 {$search}";
 
 
@@ -764,7 +778,7 @@ class PlayersDBProcessor implements IProcessor
                 elseif ($search['where'] == 'InviterId')
                     $search = ' WHERE `Players`.InviterId = ' . $search['query'];
                 elseif ($search['where'] == 'Ping')
-                    $search = ' WHERE `PlayerDates`.Ping > ' . (time() - (SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT') ?: 300));
+                    $search = ' WHERE `PlayerPing`.Ping > ' . (time() - (SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT') ?: 300));
                 elseif ($search['where'] == 'Ip')
                     $search  = 'JOIN `PlayerIps` ON `PlayerIps`.PlayerId = `Players`.Id AND `PlayerIps`.Ip IN(SELECT Ip FROM PlayerIps WHERE PlayerId='.$search['query'].')';
                 //$search= ' WHERE LastIp IN ("'.(str_replace(",",'","',$search['query'])).'") OR Ip IN ("'.(str_replace(",",'","',$search['query'])).'")';
@@ -814,7 +828,7 @@ class PlayersDBProcessor implements IProcessor
                 {$search}
                 GROUP BY `Players`.`Id`";
         $sql = "SELECT Id From Players
-                Left join PlayerDates ON PlayerDates.PlayerId=Id
+                Left join PlayerPing ON PlayerPing.PlayerId=Id
                 {$search}
                 GROUP BY Id";
         if (count($sort)) {
@@ -832,11 +846,11 @@ class PlayersDBProcessor implements IProcessor
         try {
             $res = DB::Connect()->prepare($sql);
             $res->execute();
-        } catch (PDOException $e) {echo $e->getMessage();
+        } catch (PDOException $e) {
             throw new ModelException("Error processing storage query", 500);
         }
         $ids = $res->fetchColumn(0)?:0;
-        $sql = "SELECT `Players`.*,`PlayerDates`.*,
+        $sql = "SELECT `Players`.*,`PlayerDates`.*,`PlayerPing`.`Ping`,
                 (SELECT COUNT(Id) FROM `PlayerNotes`    WHERE `PlayerId` = `Players`.`Id`) Note,
                 (SELECT COUNT(Id) FROM `PlayerNotices`  WHERE `PlayerId` = `Players`.`Id`) Notice,
                 (SELECT COUNT(Id) FROM `PlayerNotices`  WHERE `PlayerId` = `Players`.`Id` AND Type='AdBlock') AdBlock,
@@ -857,6 +871,7 @@ class PlayersDBProcessor implements IProcessor
                 (SELECT COUNT(Id) FROM `LotteryTickets` WHERE `LotteryId` = 0 AND `PlayerId` = `Players`.`Id`) AS TicketsFilled
                 FROM `Players`
                 LEFT JOIN `PlayerDates` ON `PlayerDates` . `PlayerId`=`Id`
+                LEFT JOIN `PlayerPing` ON `PlayerPing` . `PlayerId`=`Id`
                 LEFT JOIN `PlayerIps` ON `PlayerIps`.PlayerId =  `Players`.Id
                 LEFT JOIN `PlayerIps` i ON i.Ip IN (`PlayerIps`.Ip)
                 LEFT JOIN `PlayerCookies` ON `PlayerCookies`.PlayerId = Id
@@ -871,7 +886,7 @@ class PlayersDBProcessor implements IProcessor
         try {
             $res = DB::Connect()->prepare($sql);
             $res->execute();
-        } catch (PDOException $e) {echo $e->getMessage();
+        } catch (PDOException $e) {
             throw new ModelException("Error processing storage query", 500);
         }
         $players = array();
@@ -1245,31 +1260,6 @@ class PlayersDBProcessor implements IProcessor
         }
     }
 
-    /**
-     * Сохранение в базу массива счётчиков остатка оплачиваемых реф.постов в соц.сетях
-     *
-     * @author subsan <subsan@online.ua>
-     *
-     * @param  object $player
-     * @return object
-     */
-    public function decrementSocialPostsCount(Entity $player)
-    {
-        $sql = "UPDATE `Players` SET `SocialPostsCount` = :ic WHERE  `Id` = :plid";
-
-        try {
-            $sth = DB::Connect()->prepare($sql);
-            $sth->execute(array(
-                ':ic'   => is_array($player->getSocialPostsCount()) ? serialize($player->getSocialPostsCount()) : '',
-                ':plid' => $player->getId(),
-            ));
-        } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query", 500);
-        }
-
-        return $player;
-    }
-
     public function updateCookieId(Entity $player, $cookie)
     {
         $sql = "REPLACE INTO `PlayerCookies` (`PlayerId`, `CookieId`, `Time`) VALUES (:id, :cookie, :tm)";
@@ -1281,7 +1271,7 @@ class PlayersDBProcessor implements IProcessor
                 ':tm'       => time()
             ));
         } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
+            throw new ModelException("Error processing storage query", 500);
         }
 
         return $player;
@@ -1308,30 +1298,13 @@ class PlayersDBProcessor implements IProcessor
     public function checkDate($key, Entity $player)
     {
         $sql = "UPDATE `PlayerDates` SET `{$key}` = :date WHERE `PlayerId` = :id AND `{$key}` < :min";
+        $date = \SettingsModel::instance()->getSettings('counters')->getValue($key) ?: \GamesPublishedModel::instance()->getList()[$key]->getOptions('min')*60;
 
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
                 ':date'  => time(),
-                ':min'  => time() - \SettingsModel::instance()->getSettings('counters')->getValue($key),
-                ':id'  => $player->getId(),
-            ));
-        } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query", 500);
-        }
-
-        return $sth->rowCount();
-    }
-
-    public function checkLastGame($key, Entity $player)
-    {
-        $sql = "UPDATE `PlayerDates` SET `{$key}` = :date WHERE `PlayerId` = :id AND `{$key}` < :min";
-
-        try {
-            $sth = DB::Connect()->prepare($sql);
-            $sth->execute(array(
-                ':date'  => time(),
-                ':min'  => time() - \GamesPublishedModel::instance()->getList()[$key]->getOptions('min')*60,
+                ':min'  => time() - $date,
                 ':id'  => $player->getId(),
             ));
         } catch (PDOException $e) {
@@ -1379,25 +1352,20 @@ class PlayersDBProcessor implements IProcessor
     public function markOnline(Entity $player)
     {
 
-        $sql = "UPDATE `PlayerDates`
-                SET `AdBlockLast` = :adbl,
-                    `AdBlocked` = :adb,
-                    `WSocket` = :ws,
-                    `Ping` = :onl
-                WHERE `PlayerId` = :plid";
+        $sql = "INSERT INTO
+                  `PlayerPing` (PlayerId, Ping)
+                VALUES (:plid, :onl)
+                ON DUPLICATE KEY UPDATE
+                  Ping=:onl";
 
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
                 ':onl'   => (int)$player->getDates('Ping'),
-                ':adbl'  => (int)$player->getAdBlock(),
-                ':adb'   => (int)$player->getDateAdBlocked(),
-                ':ws'    => ($player->getWebSocket()?time():0),
                 ':plid'  => $player->getId(),
             ));
 
         } catch (PDOException $e) {
-            error_log($e->getMessage());
             throw new ModelException("Error processing storage query", 500);
         }
 
@@ -1456,14 +1424,21 @@ class PlayersDBProcessor implements IProcessor
         $sql = "SELECT
                     `Players`.`Id` Id,
                     `Players`.`Avatar` Img,
-                    `Players`.`Nicname` Name
+                    `Players`.`Nicname` Name,
+                    `PlayerPing`.`Ping` Ping
                 FROM `Players`
-                WHERE LOWER(`Players`.`Nicname`) LIKE LOWER('%".$search."%')
+                LEFT JOIN
+                  `PlayerPing`
+                ON
+                  `Players`.`Id` = `PlayerPing`.`PlayerId`
+                WHERE LOWER(`Players`.`Nicname`) LIKE LOWER(:search)
                 "
                 . (($count === NULL)  ? "" : " LIMIT " . (int)$count);
         try {
             $sth = DB::Connect()->prepare($sql);
-            $sth->execute();
+            $sth->execute(array(
+                ':search' => '%'.$search.'%'
+            ));
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query " . $e, 1);
         }
@@ -1506,6 +1481,25 @@ class PlayersDBProcessor implements IProcessor
         return $players;
     }
 
+    public function getPlayersPing($ids)
+    {
+        if (!is_array($ids)) {
+            throw new ModelException('Bad request', 403);
+        }
+
+        $inQuery = implode(',', array_fill(0, count($ids), '?'));
+        $sql     = "SELECT `PlayerId`,`Ping` FROM `PlayerPing` WHERE `PlayerId` IN (" . $inQuery . ")";
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            foreach ($ids as $k => $id) {
+                $sth->bindValue(($k + 1), $id);
+            }
+            $sth->execute();
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+        return $sth->fetchAll();
+    }
 
     public function getReferralsCount($playerId, $onlyActive = false)
     {

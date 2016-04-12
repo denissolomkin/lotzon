@@ -88,15 +88,12 @@
                                             <option value="{{.}}" {{#if (isset (player "birthday"))}}{{#if (like . (day (player "birthday") 'YYYY '))}}selected="selected"{{/if}}{{/if}}>{{.}}</option>
                                             {{/each}}
                                         </select>
-
-
                                     </div>
                                     <div class="privacy-box">
-                                        {{{privacyHTML 'Age '}}}
-                                            <i class="i-pencil2"></i>
-                                        </div>
+                                        {{{privacyHTML 'Age'}}}
+                                        <i class="i-pencil2"></i>
+                                    </div>
                                 </li>
-
                                 <li>
                                     <i>{{i18n "title-profile-birthday"}}</i>
                                     <div class="select-wrapper i-arrow-down">
@@ -120,7 +117,7 @@
                                         </select>
                                     </div>
                                     <div class="privacy-box">
-                                        {{{privacyHTML 'Birthday '}}}
+                                        {{{privacyHTML 'Birthday'}}}
                                         <i class="i-pencil2"></i>
                                     </div>
                                 </li>
@@ -130,7 +127,7 @@
                                         {{i18n "title-loading"}}
                                     </div>
                                     <div class="privacy-box">
-                                        {{{privacyHTML 'country' 2}}}
+                                        {{{privacyHTML 'Country' 2}}}
                                         <i class="i-pencil2"></i>
                                     </div>
                                 </li>
@@ -140,7 +137,7 @@
                                         <input placeholder="{{i18n 'title-profile-write-city '}}" name="city" type="text" value="{{#if location.city}}{{location.city}}{{/if}}">
                                     </div>
                                     <div class="privacy-box">
-                                        {{{privacyHTML 'City ' 2}}}
+                                        {{{privacyHTML 'City' 2}}}
                                         <i class="i-pencil2"></i>
                                     </div>
                                 </li>
@@ -150,9 +147,9 @@
                                         <input placeholder="{{i18n 'title-profile-write-zip '}}" name="zip" type="text" value="{{#if location.zip}}{{location.zip}}{{/if}}">
                                     </div>
                                     <div class="privacy-box">
-                                        {{{privacyHTML 'Zip '}}}
-                                            <i class="i-pencil2"></i>
-                                        </div>
+                                        {{{privacyHTML 'Zip'}}}
+                                        <i class="i-pencil2"></i>
+                                    </div>
                                 </li>
                                 <li>
                                     <i>{{i18n "title-profile-address"}}</i>
@@ -160,9 +157,9 @@
                                         <input placeholder="{{i18n 'title-profile-write-address '}}" name="address" type="text" value="{{#if location.address}}{{location.address}}{{/if}}">
                                     </div>
                                     <div class="privacy-box">
-                                        {{{privacyHTML 'Address '}}}
-                                            <i class="i-pencil2"></i>
-                                        </div>
+                                        {{{privacyHTML 'Address'}}}
+                                        <i class="i-pencil2"></i>
+                                    </div>
                                 </li>
                                 <li>
                                     <i>Email</i>
@@ -170,7 +167,7 @@
                                         {{#if email}}{{email}}{{/if}}
                                     </div>
                                     <div class="privacy-box">
-                                        {{{privacyHTML 'Email ' 0}}}
+                                        {{{privacyHTML 'Email' 0}}}
                                             <i class="i-pencil2"></i>
                                         </div>
                                 </li>
@@ -207,7 +204,7 @@
                                         {{/each}}
                                     </div>
                                     <div class="privacy-box">
-                                            {{{privacyHTML 'Social ' 0}}}
+                                            {{{privacyHTML 'Social' 0}}}
                                             <i class="i-pencil2"></i>
                                         </div>
                                 </li>

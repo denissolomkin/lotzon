@@ -3,6 +3,7 @@
 namespace controllers\production;
 
 use \LotterySettingsModel, \SettingsModel, \StaticTextsModel, \Player, \PlayersModel, \ShopModel;
+use Ratchet\Wamp\Exception;
 use \TicketsModel, \LotteriesModel, \Session2, \CountriesModel, \SEOModel, \Admin, \LanguagesModel, \NoticesModel, \ReviewsModel, \CommentsModel, \EmailInvites, \Common;
 use GeoIp2\Database\Reader;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -107,87 +108,109 @@ class Index extends \SlimController\SlimController
 
     protected function game($page)
     {
-        global $isMobile, $player, $config, $debug, $slider, $lottery;
-
         $detect   = new MobileDetect;
         $isMobile = $detect->isMobile();
         $counters = \SettingsModel::instance()->getSettings('counters');
 
         $this->session->set('isMobile', $isMobile);
-        $playerObj = $this->session->get(Player::IDENTITY)->fetch();
+        $player = $this->session->get(Player::IDENTITY)->fetch();
 
         $gamePlayer = new \GamePlayer();
-        $gamePlayer->setId($playerObj->getId())->fetch();
+        $gamePlayer->setId($player->getId())->fetch();
 
         if(($error = ($this->session->get('ERROR') ?: ($_SESSION['ERROR'] ?: false)))) {
             $this->session->remove('ERROR');
             unset($_SESSION['ERROR']);
         }
 
-        $player = array(
-            "id"       => $playerObj->getId(),
-            "img"      => $playerObj->getAvatar(),
-            "email"    => $playerObj->getEmail(),
-            "gender"   => $playerObj->getGender(),
-            "moderator"=> in_array($playerObj->getId(), (array) SettingsModel::instance()->getSettings('moderators')->getValue()),
+        if(($page = $this->session->get('page'))) {
+            $this->session->remove('page');
+        }
+
+        /* todo delete
+        patch for old Player Entity in Memcache sessions
+        delete after week at April 17 or after drop Memcache
+        */
+        try {
+            $player->getPrivacy();
+
+        } catch (\Exception $e) {
+            $this->session->get(Player::IDENTITY)->fetch();
+            $playerId = $player->getId();
+            $player = new Player();
+            $player
+                ->setId($playerId)
+                ->fetch()
+                ->initPrivacy();
+            $this->session->set(Player::IDENTITY, $player);
+        }
+
+
+        $playerObj = array(
+            "id"       => $player->getId(),
+            "img"      => $player->getAvatar(),
+            "email"    => $player->getEmail(),
+            "gender"   => $player->getGender(),
+            "moderator"=> in_array($player->getId(), (array) SettingsModel::instance()->getSettings('moderators')->getValue()),
             "is" => array(
-                "complete" => $playerObj->isComplete(),
-                "valid"    => $playerObj->isValid(),
-                "moderator"=> in_array($playerObj->getId(), (array) SettingsModel::instance()->getSettings('moderators')->getValue()),
+                "complete" => $player->isComplete(),
+                "valid"    => $player->isValid(),
+                "moderator"=> in_array($player->getId(), (array) SettingsModel::instance()->getSettings('moderators')->getValue()),
             ),
+            "privacy"  => $player->getPrivacy(),
             "title"    => array(
-                "name"       => $playerObj->getName(),
-                "surname"    => $playerObj->getSurname(),
-                "patronymic" => $playerObj->getSecondName(),
-                "nickname"   => $playerObj->getNicName(),
+                "name"       => $player->getName(),
+                "surname"    => $player->getSurname(),
+                "patronymic" => $player->getSecondName(),
+                "nickname"   => $player->getNicname(),
             ),
             "language" => array(
-                "current"   => $playerObj->getLang(),
+                "current"   => $player->getLang(),
                 "available" => array(
                     "RU" => "Русский",
                     "EN" => "English",
                     "UA" => "Украiнська"
                 )
             ),
-            "birthday" => $playerObj->getBirthday(),
+            "birthday" => $player->getBirthday(),
             "count"    => array(
-                "lotteries"     => $playerObj->getGamesPlayed(),
-                "friends" => \FriendsModel::instance()->getStatusCount($playerObj->getId(), 1),
+                "lotteries"     => $player->getGamesPlayed(),
+                "friends" => \FriendsModel::instance()->getStatusCount($player->getId(), 1),
                 "menu" => array(
                     "users" => array(
-                        "requests" => \FriendsModel::instance()->getStatusCount($playerObj->getId(), 0, true),
+                        "requests" => \FriendsModel::instance()->getStatusCount($player->getId(), 0, true),
                     ),
                     "communication" => array(
                         "notifications" => array(
-                            "server" => \CommentsModel::instance()->getNotificationsCount($playerObj->getId()),
+                            "server" => \CommentsModel::instance()->getNotificationsCount($player->getId()),
                             "local" => 0
                         ),
-                        "messages"      => \MessagesModel::instance()->getStatusCount($playerObj->getId(), 0)
+                        "messages"      => \MessagesModel::instance()->getStatusCount($player->getId(), 0)
                     )
                 ),
             ),
-            "favorite" => $playerObj->getFavoriteCombination(),
+            "favorite" => $player->getFavoriteCombination(),
             "location" => array(
-                "country" => $playerObj->getCountry(),
-                "city"    => $playerObj->getCity(),
-                "zip"     => $playerObj->getZip(),
-                "address" => $playerObj->getAddress(),
+                "country" => $player->getCountry(),
+                "city"    => $player->getCity(),
+                "zip"     => $player->getZip(),
+                "address" => $player->getAddress(),
             ),
             "balance"  => array(
-                "points" => $playerObj->getPoints(),
-                "money"  => $playerObj->getMoney(),
+                "points" => $player->getPoints(),
+                "money"  => $player->getMoney(),
                 "lotzon" => 1500
             ),
             "currency" => CountriesModel::instance()->getCountry($this->country)->loadCurrency()->getSettings(),
             "billing"  => array(
-                "webmoney"    => $playerObj->getWebMoney(),
-                "yandex"      => $playerObj->getYandexMoney(),
-                "qiwi"        => $playerObj->getQiwi(),
-                "phone"       => $playerObj->getPhone()
+                "webmoney"    => $player->getWebMoney(),
+                "yandex"      => $player->getYandexMoney(),
+                "qiwi"        => $player->getQiwi(),
+                "phone"       => $player->getPhone()
             ),
-            "social"   => $playerObj->getSocial(),
+            "social"   => $player->getSocial(),
             "settings" => array(
-                "newsSubscribe" => $playerObj->getNewsSubscribe()
+                "newsSubscribe" => $player->getNewsSubscribe()
             ),
             "games"    => array(
                 'chance' => $this->session->has('ChanceGame') ? $this->session->get('ChanceGame')->getId() : false,
@@ -199,8 +222,8 @@ class Index extends \SlimController\SlimController
                 ),
             ),
             "referral" => array(
-                'total'  => PlayersModel::instance()->getReferralsCount($playerObj->getId()),
-                'profit' => $playerObj->getReferralsProfit()
+                'total'  => PlayersModel::instance()->getReferralsCount($player->getId()),
+                'profit' => $player->getReferralsProfit()
             )
         );
 
@@ -232,7 +255,7 @@ class Index extends \SlimController\SlimController
             "filestorage"        => '/filestorage',
             "websocketUrl"       => 'ws' . (\Config::instance()->SSLEnabled ? 's' : '') . '://' . $_SERVER['SERVER_NAME'] . ':' . \Config::instance()->wsPort,
             "websocketEmulation" => false,
-            "page"               => $this->session->get('page'),
+            "page"               => $page,
             "limits"             => array(
                 "lottery-history" => (int)$counters->getValue('LOTTERIES_PER_PAGE'),
                 "communication-comments" => (int)$counters->getValue('COMMENTS_PER_PAGE'),
@@ -247,6 +270,7 @@ class Index extends \SlimController\SlimController
 
         $debug = array(
             "config" => array(
+                "dev"     => \Config::instance()->dev ?: false,
                 "stat"    => false,
                 "alert"   => false,
                 "render"  => false,
@@ -275,7 +299,7 @@ class Index extends \SlimController\SlimController
             "totalBalls"    => \LotterySettings::TOTAL_BALLS,
             "requiredBalls" => \LotterySettings::REQUIRED_BALLS,
             "totalTickets"  => \LotterySettings::TOTAL_TICKETS,
-            "filledTickets" => \TicketsModel::instance()->getUnplayedTickets($playerObj->getId()),
+            "filledTickets" => \TicketsModel::instance()->getUnplayedTickets($player->getId()),
             "priceGold"     => SettingsModel::instance()->getSettings('goldPrice')->getValue($this->country),
             "prizes"        => array(
                 "default" => LotterySettingsModel::instance()->loadSettings()->getPrizes($this->country),
@@ -294,8 +318,9 @@ class Index extends \SlimController\SlimController
 
         $this->render('../../res/index.php', array(
             'layout'    => false,
-            'player'    => $player,
+            'player'    => $playerObj,
             'lottery'   => $lottery,
+            'debug'     => $debug,
             'slider'    => $slider,
             'config'    => $config,
             'isMobile'  => $isMobile,

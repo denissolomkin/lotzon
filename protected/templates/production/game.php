@@ -523,7 +523,7 @@
                                     <div class="tw"><span>пригласить</span></div>
                                 </div-->
                                 <div class="rp-bk">
-                                    <div class="rp-txt">Опубликовать пост с реферальной ссылкой +<?=Player::SOCIAL_POST_COST?> баллов <br/> (постов на этой неделе <span class="sposts-count"><?=$player->getSocialPostsCount()?></span>)</div>
+                                    <div class="rp-txt">Опубликовать пост с реферальной ссылкой +<?=Player::SOCIAL_POST_COST?> баллов <br/> (постов на этой неделе <span class="sposts-count">10</span>)</div>
                                     <div class="rp-sl-bk">
                                         <!--a href="javascript:void(0)" class="tw"></a>
                                         <a href="javascript:void(0)" class="gp"></a>
@@ -559,7 +559,7 @@
                                     <div class="pi-et-bk">
                                         <div class="pi-inp-bk">
                                             <div class="ph" data-default="Никнейм">Никнейм</div>
-                                            <input autocomplete="off" spellcheck="false" type="text" name="nick" data-valid="<?=($player->getNicName() ? $player->getNicName() : 'id' . $player->getId())?>" value="<?=($player->getNicName() ? $player->getNicName() : 'id' . $player->getId())?>" />
+                                            <input autocomplete="off" spellcheck="false" type="text" name="nick" data-valid="<?=($player->getNicname() ? $player->getNicname() : 'id' . $player->getId())?>" value="<?=($player->getNicname() ? $player->getNicname() : 'id' . $player->getId())?>" />
                                         </div>
                                         <div class="pi-inp-bk">
                                             <div class="ph" data-default="Фамилия">Фамилия</div>
@@ -575,7 +575,7 @@
                                         </div>
                                         <div class="pi-inp-bk td">
                                             <div class="ph" data-default="Дата рождения">Дата рождения</div>
-                                            <input autocomplete="off" spellcheck="false" maxlength="10" placeholder="Дата рождения в формате ДД.ММ.ГГГГ" type="text" name="bd" data-valid="<?=($player->getBirthday() ? $player->getBirthday('d.m.Y') : '')?>" value="<?=($player->getBirthday() ? $player->getBirthday('d.m.Y') : '')?>"/>
+                                            <input autocomplete="off" spellcheck="false" maxlength="10" placeholder="Дата рождения в формате ДД.ММ.ГГГГ" type="text" name="bd" data-valid="<?=($player->getBirthday() ? date('d.m.Y', $player->getBirthday()) : '')?>" value="<?=($player->getBirthday() ? date('d.m.Y', $player->getBirthday()) : '')?>"/>
                                         </div>
                                         <div class="pi-inp-bk td">
                                             <div class="ph" data-default="Пароль">Пароль</div>
@@ -604,7 +604,7 @@
                                     </div>
                                     <div class="save-bk">
                                         <div class="sb-ch-td">
-                                            <input type="checkbox" name="visible" id="rulcheck" hidden <?=($player->getVisibility() ? "checked" : "")?> />
+                                            <input type="checkbox" name="visible" id="rulcheck" hidden <?=($player->isVisible() ? "checked" : "")?> />
                                             <label for="rulcheck">Показывать мое имя<br/>в списке победителей</label>
                                         </div>
                                         <div class="sb-ch-td">
