@@ -404,10 +404,15 @@
 
         ping: function () {
 
-            var forms = Content.forms4ping();
+            var forms = Content.forms4ping(),
+                users = Content.users4ping();
+
             Form.post({
                 action: '/ping',
-                data: {forms: forms}
+                data: {
+                    forms: forms,
+                    users: users
+                }
             })
         },
 
@@ -452,7 +457,7 @@
             var ping = typeof data === 'object' ? data.hasOwnProperty('ping') && data.ping : data,
                 playerId = typeof data === 'object' && data.hasOwnProperty('id') && data.id;
 
-            return (playerId && playerId != this.id) || !ping
+            return (playerId && playerId == this.id) || !ping
                 ? null
                 : ping && parseInt(ping) + Livedate.diff + Config.timeout.online > moment().unix();
         },

@@ -2,7 +2,7 @@
 <div id="users-{{#if (like (player 'id') user.id)}}{{recipient_id}}{{else}}{{user.id}}{{/if}}-messages-{{id}}" data-id="{{id}}" class="message">
     <a href="/user/{{user.id}}">
         <div class="message-top">
-            <div class="message-img">
+            <div data-user-id="{{user.id}}" class="message-img user-status {{#if (player "isOnline" user.ping)}} online {{/if}}">
                 <img src="{{avatar user.img user.id 50}}"
                      class="loading"
                      onload="this.style.background = 'none'"

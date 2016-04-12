@@ -1,5 +1,17 @@
 (function () {
 
+    Tools = {
+        getArrayKeys: function (obj) {
+            var keys = [];
+            for (key in obj) {
+                if (obj.hasOwnProperty(key)) {
+                    keys[keys.length] = key;
+                }
+            }
+            return keys;
+        }
+    };
+
     extend = function (Child, Parent) {
         var F = function () {
         };

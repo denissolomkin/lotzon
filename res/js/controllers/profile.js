@@ -8,26 +8,6 @@
 
         init: {
             edit: function() {
-                $(document).off('change', '.ae-personal-inf input.datepicker', Profile.do.checkCalendar);
-
-                if (Player.birthday) {
-                 $('input.datepicker').daterangepicker({
-                        singleDatePicker: true,
-                        "showDropdowns": true,
-                        startDate: new Date(Player.birthday * 1000),
-                        autoUpdateInput: true
-                        });
-                } else {
-                    $('input.datepicker').daterangepicker({
-                        singleDatePicker: true,
-                        "showDropdowns": true,
-                        autoUpdateInput: true
-                    });
-                    $('input.datepicker').val('');
-                }
-                
-                $(document).on('change', '.ae-personal-inf input.datepicker', Profile.do.checkCalendar);
-
 
                 R.push({
                     template:'profile-edit-countries',
