@@ -414,12 +414,90 @@
     // padding-left: 30px;
     /* i -150px left */
     padding-left: 180px;
-    & > *:not(i){
-      width: 100%;
-    }
     & > * {
       line-height: 45px;
     }
+    .select-wrapper{
+      width: 100%;
+    }
+    .privacy-box{
+      // min-width: 55%;
+      // width: 40px;
+      // ^^^^^^^^^^^ 4 test
+      position: absolute;
+      top: 0;
+      right: 0;
+
+      > i{
+        display: inline-block;
+        color:#4a90e2;
+        font-size: 11px;
+        cursor: pointer;
+      }
+
+      .buttons-group{
+        display: inline-block;
+        text-align: left;
+        // on disabled
+        &.disabled{
+          // background-color: transparent;
+          .button{
+              label{
+                background-color: transparent;
+                cursor: default;
+                display: none;
+              }
+              input:checked + label {
+                display: initial;
+                span{
+                  display: none;
+                }
+                i{
+                  display: initial;
+                  color: #9e9e9e;
+                }
+              }
+          }
+          & + i{
+            display: none;
+          }
+        }
+        // END on disabled
+      }
+      .button{
+          display: inline-block;
+          font-size: 0;
+      }
+
+      input[type="radio"]{
+        position: absolute;
+        left: -9999px;
+        &:checked + label{
+            background: #e9e9e9;
+            i, span{
+              // color: red;
+            }
+        }
+      }
+      label{
+        height: 100%;
+        display: inline-block;
+        cursor: pointer;
+        padding: 0 10px;
+        height: 45px;
+        span{
+          color: #4a4a4a !important;
+          font-size: 15.5px;
+        }
+        i{
+          color: #4a4a4a;
+          font-size: 13px;
+          margin: 0 7px 0 0;
+        }
+      }
+
+    }
+
   }
   & li.user-actions {
     padding-left: 30px;

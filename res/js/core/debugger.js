@@ -9,6 +9,7 @@
 
         "config": {},
         "statBox": null,
+        "lastError": null,
 
         "init": function (init) {
 
@@ -27,9 +28,8 @@
              }
              });
              */
-            /**/
-            window.onerror = function (message, url, line, col, error) {
 
+            window.onerror = function (message, url, line, col, error) {
                 D.debug([message, url, line]);
                 return true;
             };
@@ -119,23 +119,21 @@
 
         },
 
-        "debug": function (message) {
-
-            message = typeof message === 'object'
-                ? message.join(' ')
-                : message;
-
-            if (message === 'error')
-                return;
+        "debug": function (data) {
 
             Form.stop();
             R.event('error');
 
-            Content.badge.init({
+            if(data[0] === 'Script error.' || data[0] === 'Script error' || data[0] === D.lastError)
+                return false;
+            else
+                D.lastError = data[0];
+
+            D.isEnable("dev") && Content.badge.init({
                 system:
                     [{
                         uid: Math.random().toString(16).slice(2),
-                        message: message,
+                        message: data.join('<br>'),
                         timer: 3,
                         timeout: 'close'
                     }]
@@ -144,7 +142,9 @@
             Form.post({
                 action: 'debug',
                 data: {
-                    message: message
+                    log: data[0],
+                    url: data[1],
+                    line: data[2]
                 }
             });
 
@@ -153,14 +153,20 @@
 
         "error": function (message) {
 
-            message = typeof message === 'object'
-                ? message.join(' ')
-                : message;
 
-            if (message==='error')
+            if(typeof message === 'object') {
+
+                if (message[0] === 'Unauthorized') {
+                    location.reload();
+                    return false;
+                } else {
+                    message[0] = i18n(message[0]);
+                    message = message.join('<br>');
+                }
+            }
+
+            if (message === 'error')
                 return;
-            else
-                message = i18n(message);
 
             D.log(message, 'error');
             D.isEnable("alert") && alert(message);

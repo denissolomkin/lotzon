@@ -4,19 +4,20 @@
 
 
         <div class="content-box-item-top clearfix">
+            
             <div class="content-box-cat">
 
-                <span class="position-relative">
+                <div class="input-box">
                     <input id="radio-prizes-category-all" name="category" type="radio" value="" checked>
                     <label for="radio-prizes-category-all">{{i18n "title-lottery-history-all"}}</label>
-                </span>
+                </div>
 
                 {{#each categories}}
-                <span class="position-relative">
+                <div class="input-box">
                     <input id="radio-prizes-category-{{ id }}" name="category" type="radio"
                            value="{{ id }}">
                     <label for="radio-prizes-category-{{ id }}">{{ title }}</label>
-                </span>
+                </div>
                 {{/each}}
 
             </div>

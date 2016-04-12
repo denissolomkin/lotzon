@@ -84,7 +84,7 @@ span.count{
   display: inline-block;
   text-decoration: inherit;
   width: 1em;
-  margin-right: .2em;
+  // margin-right: .2em;
   text-align: center;
   /* opacity: .8; */
  
@@ -97,7 +97,7 @@ span.count{
  
   /* Animation center compensation - margins should be symmetric */
   /* remove if not needed */
-  margin-left: .2em;
+  // margin-left: .2em;
  
   /* you can be more comfortable with increased icons size */
   /* font-size: 120%; */
@@ -226,8 +226,29 @@ div {
 #lottery{
     #banner-desktop-context-ticket{
         position: absolute;
-        z-index: 5;
+        // z-index: 5;
         width: 100%;
+        height: inherit;
+        overflow: hidden;
+        > *{
+            position: relative;
+            z-index: 5;
+        }
+        .timer-wrapper{
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            margin-left: -75px;
+            .timer{
+                box-sizing: border-box;
+                padding: 5px 10px;
+                border-radius: 3px;
+                background: #4a4a4a;
+                text-align: center;
+                color: #ffffff;
+                width: 150px;
+            }
+        }
     }
 }
 
@@ -733,6 +754,10 @@ header .owl-theme .owl-controls .owl-page span {
 .i-check:before { content: '\e834'; } /* '' */
 .i-arrow-curve:before { content: '\e835'; } /* '' */
 .i-ok-simple:before { content: '\e836'; } /* '' */
+.i-earth:before { content: '\e837'; } /* '' */
+.i-person3:before { content: '\e838'; } /* '' */
+.i-lock:before { content: '\e839'; } /* '' */
+.i-pencil2:before { content: '\e83a'; } /* '' */
 
 
 
@@ -2814,17 +2839,30 @@ header .owl-theme .owl-controls .owl-page span {
 /////////////////////////////////////SMILES/////////////////////////////////////////////////////////////
 
 .smiles {
-  margin-left: -10px;
+  margin-left: 30px;
+  &.hidden{
+    display: none;
+  }
   & > *   {
      display: block;
     float: left;
-    height: 25px;
-    padding-left: 10px;
+    height: 20px;
+    margin-left: 5px;
     margin-bottom: 10px;
     text-align: right; 
     cursor: pointer;
+    box-sizing: border-box;
   }
 }  
+// hide old smiles from new_message
+.message-form .smiles [data='old']{
+    display: none;
+}
+img[class^="i-smile"]{
+    max-width: 20px;
+    max-height: 20px;
+}
+
 span[class^="i-smile"] {
     &:before {
       display: inline-block;

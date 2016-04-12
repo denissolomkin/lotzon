@@ -1,70 +1,3 @@
-var fakeCounter = 0,
-    debug = 0;
-var fakeRandomData = [{
-    "Uid": "568b9d3875b2b",
-    "Prize": {
-        "t": "item",
-        "v": "96",
-        "s": "5436a10e394a3.jpg",
-        "n": "\u0422\u0435\u0440\u043c\u043e\u043a\u0440\u0443\u0436\u043a\u0430 Stanley"
-    },
-    "Cell": "1x1",
-    "Moves": 3,
-    "comb": []
-}, {
-    "Uid": "568b9d3875b2b",
-    "Prize": {
-        "t": "points",
-        "v": "250"
-    },
-    "Cell": "2x1",
-    "Moves": 2,
-    "comb": []
-}, {
-    "Uid": "568b9d3875b2b",
-    "Prize": {
-        "t": "money",
-        "v": "25"
-    },
-    "Cell": "2x1",
-    "Moves": 1,
-    "comb": []
-}, {
-    "Uid": "568b9d3875b2b",
-    "Prize": false,
-    "Cell": "3x1",
-    "Moves": 0,
-    "GameField": {
-        "1x1": {
-            "t": "item",
-            "v": "96",
-            "s": "5436a10e394a3.jpg",
-            "n": "\u0422\u0435\u0440\u043c\u043e\u043a\u0440\u0443\u0436\u043a\u0430 Stanley"
-        },
-        "2x1": {
-            "t": "points",
-            "v": "25"
-        },
-        "3x1": false
-    },
-    "GamePrizes": {
-        "MONEY": 250,
-        "POINT": 25,
-        "ITEM": " \u0422\u0435\u0440\u043c\u043e\u043a\u0440\u0443\u0436\u043a\u0430 Stanley"
-    },
-    "comb": [],
-    "player": {
-        "balance": {
-            "points": 1097,
-            "money": "2307.85"
-        }
-    }
-}, {
-    "status": 0,
-    "message": "\u0418\u0433\u0440\u0430 \u043d\u0435 \u043d\u0430\u0439\u0434\u0435\u043d\u0430",
-    "res": []
-}];
-
 var Games = {
 
     disableNow: false,
@@ -85,6 +18,7 @@ var Games = {
                 desc.prev().show();
             }
         },
+
         // скрывает одиночные кнопки в вкладке "создать" 
         hideSelectedButtons: function(){
 
@@ -108,6 +42,7 @@ var Games = {
             }
 
         },
+
         //online view
         tabs: function() {
             var tabs = $('#games-online-view-tabs > div'),
@@ -140,39 +75,33 @@ var Games = {
 
             create: function(e) {
 
-                
                 // return if this != form
                 if (this.tagName !== "FORM") return false;
 
-
-
-
                 var valid = false,
-                    msg = 'title-games-insufficient_funds';
-                    
-                // stupid aple!!!!!
-                var mode = document.querySelector('[name="mode"]:checked');
-                // var mode = this.mode.value.split('-');
-                if(mode && mode.value){
+                    msg = 'title-games-insufficient_funds',
+                    mode = document.querySelector('[name="mode"]:checked'); // stupid aple!!!!!
+
+                if(mode && mode.value) {
                     mode = mode.value.split('-');
                     switch (mode[0]) {
                         case 'POINT':
-                            valid = Player.balance.points*1 >= mode[1]*1;
+                            valid = Player.balance.points * 1 >= mode[1] * 1;
                             // console.debug('Player.balance.points >= mode[1]', Player.balance.points + '>=' + mode[1]);
                             break;
                         case 'MONEY':
-                            valid = Player.balance.money*1 >= mode[1]*1;
+                            valid = Player.balance.money * 1 >= mode[1] * 1;
                             // console.debug('Player.balance.money >= mode[1]', Player.balance.money + '>=' + mode[1]);
                             break;
                         case 'LOTZON':
-                            valid = Player.balance.lotzon*1 >= mode[1]*1;
+                            valid = Player.balance.lotzon * 1 >= mode[1] * 1;
                             // console.debug('Player.balance.lotzon >= mode[1]', Player.balance.lotzon + '>=' + mode[1]);
                             break;
                         case '':
                             msg = 'title-games-select_rate';
                             break;
                     }
-                }else{
+                } else {
                     msg = 'title-games-select_rate';
                 }
 
@@ -182,7 +111,7 @@ var Games = {
                 }
                 return valid;
 
-            },
+            }
         }
 
     },
@@ -253,7 +182,7 @@ var Games = {
             //         if(Object.keys(fields).length > 0){
 
             //             // update all cells to default state
-            //             Games.chance.resset();
+            //             Games.chance.reset();
 
             //             // draw played cells
             //             for(var i in fields){
@@ -275,6 +204,7 @@ var Games = {
             //     }
             // });
         },
+
         //chances view
         get: function(elements, id) {
 
@@ -319,6 +249,7 @@ var Games = {
                 });
             });
         },
+
         play: function(id) {
             Form.post.call(this, {
                 href: '/games/chance/' + id,
@@ -343,7 +274,7 @@ var Games = {
                     if(Object.keys(fields).length > 0){
 
                         // update all cells to default state
-                        Games.chance.resset();
+                        Games.chance.reset();
 
                         // draw played cells
                         for(var i in fields){
@@ -365,13 +296,14 @@ var Games = {
                         // update trigger 'game ready'
                         Games.chance.conf.play = !0;
                         // update all cells to default state
-                        Games.chance.resset();
+                        Games.chance.reset();
                         // add class for css styles
                         $("#games-chance-view-chance").attr('class', 'game-started');
                     }
                 }
             });
         },
+
         end: function(fields) {
             for (var i in fields) {
                 if (fields[i]) {
@@ -382,22 +314,27 @@ var Games = {
             }
 
         },
+        
         prizesMoves: function(moves) {
             var missCounter = Games.chance.conf.data.field.m - moves;
             //            data-current
             $("#games-chance-view-chance [data-current]").removeClass('current');
             $("#games-chance-view-chance [data-current=" + missCounter + "]").addClass('current');
         },
-        resset: function() {
+        
+        reset: function() {
             $("#games-chance-view-cells button").removeAttr('class');
         }
     },
+    
     random: {
+        
         conf: {
             data: {},
             play: !1,
             url: ""
         },
+        
         init: function(data) {
             if (!data.json) {
                 return false;
@@ -432,6 +369,7 @@ var Games = {
             // set ad
             Content.banner.moment(data);
         },
+        
         get: function(elements, id) {
 
             $(elements).click(function() {
@@ -441,16 +379,6 @@ var Games = {
                 var cell = $(this).data('cell'),
                     element = this;
 
-                ////////////////////////////////////////////////////////////////
-                //                DELETE
-                if (debug === 1) {
-                    var data = { json: fakeRandomData[fakeCounter] };
-                    Games.random.actions(element, data);
-                    fakeCounter >= fakeRandomData.length - 1 ? fakeCounter = 0 : fakeCounter += 1;
-                    return;
-                }
-                ////////////////////////////////////////////////////////////////
-                // console.debug("random - url>>>",Games.random.conf.url);
                 Form.get.call(this, {
                     href: Games.random.conf.url,
                     data: { 'cell': cell },
@@ -460,6 +388,7 @@ var Games = {
                 });
             });
         },
+        
         actions: function(element, data) {
             if (data.json.error)
                 return;
@@ -483,6 +412,7 @@ var Games = {
             }
             $(element).addClass('played');
         },
+        
         makePrizeCell: function(prize) {
             var html = "<div class='flipFix'>"
             switch (prize.t) {
@@ -500,6 +430,7 @@ var Games = {
             }
             return html += "</div>";
         },
+        
         end: function(data) {
             var fields = data.GameField;
             for (var i in fields) {
@@ -507,12 +438,11 @@ var Games = {
                     $(".moment-game-box").removeClass('game-started');
                     $('.moment-game-box button[data-cell="' + i + '"]').html(Games.random.makePrizeCell(fields[i])).addClass('win');
                     Games.random.conf.play = !1;
-
                     Games.random.showMessage(data.GamePrizes);
-                    //                    Games.random.destroy(5);
                 }
             }
         },
+        
         showMessage: function(data) {
             var msg = "<p>";
             if (data && data.length !== 0) {
@@ -534,11 +464,5 @@ var Games = {
             $(".moment-game-box .message").css({ "display": "none" }).html(msg).delay(2000).fadeIn(200);
 
         },
-        //        remove block by timeout
-        destroy: function(timer) {
-            setTimeout(function() {
-                $(".moment-game-box").remove();
-            }, timer * 1000);
-        }
     }
 };

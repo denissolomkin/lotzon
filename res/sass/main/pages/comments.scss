@@ -31,8 +31,9 @@ $color-online: #7ed321;
             &:after {
                 content: "";
                 display: block;
-                width: 6px;
-                height: 6px;
+                width: 11px;
+                height: 11px;
+                border: 1px solid #ffffff;
                 border-radius: 50%;
                 background: $color-offline;
                 top: 0;
@@ -61,7 +62,7 @@ $color-online: #7ed321;
     display: inline-block;
     // margin-right: 13px;
     font-weight: bold;
-    color: #000;
+    color: #222222;
     font-size: 15.5px;
     &:hover {
         opacity: 0.85;
@@ -72,10 +73,25 @@ $color-online: #7ed321;
     color: #4A4A4A;
 }
 
+input.comment-reply-btn {
+    border: none;
+    background: transparent;
+    box-shadow: none;
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 10;
+    width: 100%;
+    cursor: pointer;
+}
+
 .comment-date {
     font-size: 13px;
     color: #5a5a5a;
     white-space: nowrap;
+    margin-left: 10px;
     & span:first-child {
         margin-right: 20px;
     }
@@ -86,11 +102,12 @@ $color-online: #7ed321;
         display: none;
         font-size: 15.5px;
         color: #4a90e2;
+        text-transform: capitalize;
         
         > *{
             display: none;
             cursor: pointer;
-            text-transform: lowercase;
+            // text-transform: lowercase;
         }
         
         & .separator {
@@ -112,22 +129,47 @@ $color-online: #7ed321;
         left: 0;
         width: 100%;
         height: 100%;
-        padding: 0 0 0 90px;
+        padding: 30px 0 0 90px;
 
         .complain-wrapper{
             background: white;
             width: 100%;
             height: 100%;
         }
+        .buttons-group{
+            display: inline-block;
 
+            .button{
+                display: inline-block;
+            }
+            input{
+                opacity: 0;
+                margin: 0;
+            }
+            label{
+                font-size:15.5px;
+                color:#ff4242;
+                text-align:left;
+                margin: 0 30px 0 0;
+                opacity: 0.9;
+                transition: all .2s linear;
+                cursor: pointer;
+                &:hover{
+                    opacity: 1;
+                }
+            }
+        }
         button{
             cursor: pointer;
-            text-transform: uppercase;
+            text-transform: capitalize;
             color: red;
             padding-left: 20px;
-            font-size: 14px;
+            font-size: 15.5px;
             height: 15px;
             background: none;
+        }
+        .cancel{
+            color: #4a4a4a;
         }
     }
     .comment-complain-btn{
@@ -143,6 +185,8 @@ $color-online: #7ed321;
 
 
 .comment-like {
+    font-family: 'Handbook';
+    color: #4a4a4a;
     opacity: 1;
     position: absolute;
     top: 3px;
@@ -151,8 +195,9 @@ $color-online: #7ed321;
     font-size: 14px;
     background: none;
     font-weight: normal;
-    // width: 18px;
+    cursor: pointer;
     height: 15px;
+
     &:hover {
         background: none;
         color: #000;
@@ -162,17 +207,17 @@ $color-online: #7ed321;
         width: 18px;
         height: 15px;
         position: absolute;
-        top: 0;
+        top: 2px;
         left: 0;
     }
-    &.fa-heart {
+    &.user.fa-heart {
         &:before {
             color: #FFEF00;
         }
     }
-    &.fa-heart-o {
+    &.default.fa-heart {
         &:before {
-            color: #000;
+            color: #dfdfdf;
         }
     }
 }
@@ -220,7 +265,7 @@ form.loading > * {
 
 // COMMENT ANSWER -------------------------- //
 .comment.answer {
-    margin-top: 20px;
+    margin: 15px 0 0;
     padding-left: 70px;
 }
 
@@ -246,13 +291,9 @@ form.loading > * {
         background: none;
         color: #4a90e2;
         cursor: pointer;
-        font-weight: bold;
         &:hover {
             text-decoration: underline;
         }
-    }
-    & .message-form-smileys {
-        top: -1px;
     }
     & hr {
         margin: 5px -20px 5px;
@@ -343,28 +384,49 @@ form.loading > * {
         position: relative;
     }
     .c-notification-img {
-        width: 30px;
-        height: 30px;
+        width: 36px;
+        height: 36px;
         position: absolute;
         top: 4px;
         left: 0;
-        // user is online
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -ms-box-sizing: border-box;
+        box-sizing: border-box;
+        img {
+                width: 30px;
+                height: 30px;
+                line-height: 36px;
+                min-width: 0;
+                min-height: 0;
+                border-radius: 100%;
+                overflow: hidden;
+                border: 3px solid transparent;
+                -webkit-box-sizing: content-box;
+                -moz-box-sizing: content-box;
+                -ms-box-sizing: content-box;
+                box-sizing: content-box;
+        }
+        &:after {
+                content: "";
+                display: block;
+                width: 9px;
+                height: 9px;
+                border: 1px solid #ffffff;
+                border-radius: 50%;
+                background: $color-offline;
+                top: 0;
+                right: 0;
+                position: absolute;
+        }
+        
         &.online {
-            img {
-                border: 3px solid $color-online;
+            &:after {
+                background: $color-online;
             }
         }
-        & img {
-            display: block;
-            width: 100%;
-            height: auto;
-            border-radius: 50%;
-            min-height: 0;
-            min-width: 0;
-            border: 3px solid $color-offline;
-            box-sizing: content-box;
-        }
     }
+
     .view-comment {
         padding: 0 0 0 20px;
     }
@@ -485,41 +547,34 @@ form.loading > * {
     color: #4a4a4a;
 }
 
-.message-text {
-    color: #4a4a4a;
-    line-height: 1.27;
-}
 
+.message-text,
 .comment-description,
 .message-form-area {
     line-height: 20px;
-}
-
-.message-form-area {
+    margin-bottom: 20px;
     cursor: text;
+ 
+    &:focus {
+        outline: none;
+    }
     & img[class^="i-smile"] {
         padding-left: 0;
-        margin-right: 5px;
-        margin-left: 5px;
-        margin-bottom: 0;
-        margin-top: 10px;
+        margin: 0 5px -5px 5px;
         cursor: text;
-        max-width: 18px;
+        max-width: 20px;
         position: relative;
+        line-height: 0;
     }
 }
 
-.comment-description {
-    cursor: text;
-    & img[class^="i-smile"] {
-        padding-left: 0;
-        margin-right: 5px;
-        margin-left: 5px;
-        margin-bottom: 0;
-        cursor: text;
-        max-width: 18px;
-        position: relative;
-    }
+.message-text {
+    color: #4a4a4a;
+    margin-bottom: 0;
+    cursor: pointer;
+}
+.comment-description{
+    margin-bottom: 0;
 }
 
 .message-form-area div + img[class^="i-smile"] {

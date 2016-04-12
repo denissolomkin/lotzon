@@ -8,25 +8,6 @@
 
         init: {
             edit: function() {
-                $(document).off('change', '.ae-personal-inf input.datepicker', Profile.do.checkCalendar);
-
-                if (Player.birthday) {
-                    $('input.datepicker').daterangepicker({
-                        singleDatePicker: true,
-                        "showDropdowns": true,
-                        startDate: new Date(Player.birthday * 1000),
-                        autoUpdateInput: true
-                    });
-                } else {
-                    $('input.datepicker').daterangepicker({
-                        singleDatePicker: true,
-                        "showDropdowns": true,
-                        autoUpdateInput: true
-                    });
-                    $('input.datepicker').val('');
-                }
-
-                $(document).on('change', '.ae-personal-inf input.datepicker', Profile.do.checkCalendar);
 
                 R.push({
                     template: 'profile-edit-countries',
@@ -89,9 +70,26 @@
             },
 
             complete: function() {
-                alert(1);
+                console.debug(this);
 
-                return true;
+                var form    = $(this),
+                    name    = form.find('[name="nickname"]').val(),
+                    pass    = form.find('[name="newPass"]').val(),
+                    cPass   = form.find('[name="repeatPass"]').val(),
+                    valid   = true;
+
+                    if(pass !== cPass){
+                        // alert('no')
+                        valid = false;   
+                        form.find('[name="repeatPass"]').siblings('.alert').fadeIn(200);
+                    }
+                    if(name.length ){}
+
+                    setTimeout(function(){
+                        form.find('.alert').fadeOut(200);
+                    }, 4000);
+
+                return valid;
             },
 
             checkPass:function() {
@@ -136,11 +134,11 @@
                             return "Вы сами его хоть запомните?";
                         if (score > 100)
                             return "Крут";
-                        if (score > 80)
-                            return "Норм";
                         if (score > 60)
+                            return "Норм";
+                        if (score > 40)
                             return "Так себе";
-                        if (score >= 30)
+                        if (score >= 10)
                             return "Слабый";
                         return "";
                     }
@@ -150,26 +148,21 @@
                 var form    = $(this).closest('form');
                 var alertTo = form.find('.checkPass-alert');
 
-                // alertTo.text( cpf.checkPassStrength(pass)+' - '+cpf.scorePassword(pass) );
                 alertTo.text( cpf.checkPassStrength(pass) );
                 
                 //clear classes                
                 form.removeClass('success');
                 alertTo.attr('class', 'checkPass-alert');
 
-                if(cpf.scorePassword(pass) > 80){
+                if(cpf.scorePassword(pass) > 60){
                     alertTo.addClass('green');
                 }
-                if(cpf.scorePassword(pass) > 60){
+                if(cpf.scorePassword(pass) > 40){
                     alertTo.addClass('gold');
                     form.addClass('success');
                 }
 
                 // console.debug(cpf.scorePassword(pass));
-                // $(document).ready(function() {
-                    
-                    
-                // });
 
             }
         },

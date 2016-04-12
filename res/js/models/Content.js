@@ -134,7 +134,7 @@
                 form = form.parentElement;
 
             // can be reply form
-            if (!form.classList.contains('render-list-form'))
+            if (!form || !form.classList.contains('render-list-form'))
                 return true;
 
             if (form.elements['submit'])
@@ -209,6 +209,55 @@
             }
 
         },
+
+        users4ping: function () {
+
+            var userStatuses = DOM.visible('.user-status'),
+                users = [],
+                id = 0;
+
+            if (userStatuses.length) {
+                for (var i = 0; i < userStatuses.length; i++) {
+                    id = userStatuses[i].getAttribute('data-user-id');
+                    users[id] = id;
+                }
+            }
+
+            return Tools.getArrayKeys(users);
+
+        },
+
+       updateStatuses: function (statuses) {
+           if (statuses) {
+               for (var id in statuses) {
+                   if (statuses.hasOwnProperty(id)) {
+
+                       var userStatuses = document.querySelectorAll('.user-status[data-user-id="' + id + '"]'),
+                           online = Player.isOnline({id: id, ping: statuses[id]});
+
+                       if (userStatuses.length) {
+                           for (var i = 0; i < userStatuses.length; i++) {
+                               switch (online){
+                                   case true:
+                                       userStatuses[i].classList.remove('offline');
+                                       userStatuses[i].classList.add('online');
+                                       break;
+                                   case false:
+                                       userStatuses[i].classList.add('offline');
+                                       userStatuses[i].classList.remove('online');
+                                       break;
+                                   case null:
+                                       userStatuses[i].classList.remove('online');
+                                       userStatuses[i].classList.remove('offline');
+                                       break;
+                               }
+                           }
+                       }
+                   }
+               }
+           }
+           return true;
+       },
 
         forms4ping: function () {
 

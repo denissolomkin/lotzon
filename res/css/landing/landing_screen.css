@@ -333,7 +333,7 @@ Table */
 .landing .right-content .ib-p {
     margin-top: 20px;
 }
-
+.landing #pass-rec-form-success,
 .landing .password-recovery-box {
     display: none;
 }
@@ -516,6 +516,17 @@ social */
     background-color: transparent;
     width: 100%;
     max-width: 600px;
+
+}
+.landing .info-popup .inner{
+    margin-top: -80px;
+    
+
+    font-size:15.5px;
+    color:#4a4a4a;
+    letter-spacing:0.2px;
+    line-height:19px;
+    text-align:left;
 }
 
 .landing .info-popup .close-box{
@@ -598,6 +609,14 @@ CLOSE BUTTON */
 .landing .popup .bottom{
     margin-top: 60px;
 }
+.landing .popup .bottom.license{
+    position: absolute;
+    bottom: 40px;
+    text-align: center;
+    width: 100%;
+    left: 0;
+}
+
 .landing .popup .bottom > *{
     display: block;
     text-align: center;
@@ -886,6 +905,7 @@ comments */
     display: inline-block;
     width: 330px;
     margin-right: 41px;
+    min-height: 160px;
 }
 .landing .comments .comment:last-child {
     margin-right: 0;
@@ -930,14 +950,16 @@ comments */
     color: #ffffff;
 }
 .landing .comments .img{
-    
-}
-
-.landing .comments .img img{
     width: 50px;
     height: 50px;
     overflow: hidden;
     border-radius: 50%;
+}
+
+.landing .comments .img img{
+    min-width: 50px;
+    min-height: 50px;
+    max-width: 50px;
 }
 /* END
 comments */

@@ -129,7 +129,7 @@
                             if (data.hasOwnProperty('responseText')) {
 
                                 Form.stop.call(that);
-                                D.error.call(that, 'SERVER RESPONSE ERROR: ' + form.url);
+                                D.error.call(that, ['SERVER RESPONSE ERROR', form.action]);
 
                             } else {
 
@@ -169,7 +169,7 @@
 
                             console.log(data);
                             Form.stop.call(that);
-                            D.error.call(that, data && (data.message || data.responseJSON && data.responseJSON.message || data.statusText) || 'NOT FOUND' + "<br>" + form.url);
+                            D.error.call(that, [data && (data.message || data.responseJSON && data.responseJSON.message || data.statusText) || 'NOT FOUND', form.action]);
 
                             if (Callbacks['error'][form.callback]) {
                                 D.log(['C.error.callback']);
@@ -185,7 +185,6 @@
         do: {
 
             validate: function (event) {
-
                 var form = this;
 
                 while (form.nodeName !== 'FORM')

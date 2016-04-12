@@ -1122,10 +1122,11 @@ footer.unvisible {
                 margin: 15px;
                 padding: 10px;
                 cursor: pointer;
+                color: #000000;
                 &:hover {
                 }
                 span {
-                    display: none;
+                    // display: none;
                 }
             }
             .gm-pr .pr-ph-bk {

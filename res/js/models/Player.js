@@ -351,6 +351,10 @@
             }
         },
 
+        getPrivacy: function(key){
+            return this.hasOwnProperty('privacy') && this.privacy.hasOwnProperty(key) && this.privacy[key];
+        },
+
         updatePoints: function (newSum) {
             var balance = {
                 balance: {
@@ -400,10 +404,15 @@
 
         ping: function () {
 
-            var forms = Content.forms4ping();
+            var forms = Content.forms4ping(),
+                users = Content.users4ping();
+
             Form.post({
                 action: '/ping',
-                data: {forms: forms}
+                data: {
+                    forms: forms,
+                    users: users
+                }
             })
         },
 
@@ -413,10 +422,9 @@
 
         checkMoney: function (input_money) {
 
-//            input_money = input_money.replaceArray([',','б','Б','ю','Ю'], '.');
-            input_money = input_money.replace(/[^\d.-]/g, ".");
-            input_money = input_money.replace('..', '.');
-//            input_money = input_money.replace(/[^\d.-]/g, "");
+            input_money = input_money
+                .replace(/[^\d.-]/g, ".")
+                .replace('..', '.');
             input_money = input_money.match(/\d*[,.]\d{2}/) || input_money;
 
             if (!isNumeric(input_money))
@@ -444,8 +452,14 @@
             return balls;
         },
 
-        isOnline: function (ping) {
-            return ping + Config.timeout.online > new Date();
+        isOnline: function (data) {
+
+            var ping = typeof data === 'object' ? data.hasOwnProperty('ping') && data.ping : data,
+                playerId = typeof data === 'object' && data.hasOwnProperty('id') && data.id;
+
+            return (playerId && playerId != this.id) || !ping
+                ? null
+                : ping && parseInt(ping) + Livedate.diff + Config.timeout.online > moment().unix();
         },
 
         getAvatar: function (img, id, width) {

@@ -121,8 +121,6 @@
             $(document).on('change', '.cc-out .cc-sum', Profile.validate.convert);
             $(document).on('keypress keyup keydown', 'form .checkPass', Profile.validate.checkPass);
 
-
-
             $(document).on('click', '.ae-combination-box li', Profile.do.selectFavorite);
             $(document).on('click', '.s-lang .radio-text', Profile.do.changeLanguage);
             $(document).on('click', '.change', Profile.do.openOption);
@@ -131,11 +129,8 @@
             $(document).on('click', '.bonus-banner-view-item', Bonuses.showBanner);
             $(document).on('click', '.bonus-share-banner-view .close', Bonuses.hideBanner);
 
-            $(document).on('click', '#games-moment .close-pop-box, #games-random .close-pop-box', function(){location.reload();});
-
             // $(document).on('click', '.banner-copy-btn', Bonuses.copyBanner);
             // $(document).on('click', '.banner-copy-btn a', Bonuses.downloadFile);
-
 
             /* game */
             $(document).on('click', '.mx .players .m .btn-ready', Game.do.ready);
@@ -158,6 +153,8 @@
         "get": {
 
             "menu-slider": Slider.after,
+
+            "menu-buttons": Navigation.ready,
             "menu-balance": Navigation.ready,
             "menu-navigation": Navigation.ready,
             "menu-navigation-mobile": Navigation.ready,
@@ -205,12 +202,19 @@
 
             "profile-convert": Player.updateBalance,
             "profile-cashout": Profile.after.cashout,
+
+            "balance-convert": Player.updateBalance,
+            "balance-cashout": Balance.after.cashout,
+
             "lottery-ticket": Ticket.update,
             "lottery-gold": Ticket.update,
+
             "prizes-exchange-goods": Prize.update.exchange,
             "blog-post-view-comments": Comments.after.reply,
+
             "communication-comments": Comments.after.reply,
             "communication-notifications": Comments.renderNotifications,
+
             "users-requests-view": Profile.after.request,
             "games-slots-view": Games.slots.play
 
@@ -247,6 +251,9 @@
             "profile-convert": Profile.validate.convert,
             "profile-cashout": Profile.validate.cashout,
             "profile-complete": Profile.validate.complete,
+            "balance-convert": Balance.validate.convert,
+            "balance-cashout": Balance.validate.cashout,
+
             "prizes-exchange-goods": Prize.validate.exchange,
             "blog-post-view-comments": Comments.validate.reply,
             "app-view": Games.online.validate.create,
@@ -257,7 +264,8 @@
 
             "communication-comments":  Comments.submit,
             "communication-messages":  Comments.submit,
-            "blog-post-view-comments": Comments.submit
+            "blog-post-view-comments": Comments.submit,
+            "communication-comments-view-complain": Comments.complain
         }
 
     };

@@ -49,9 +49,11 @@
 
             if (init) {
 
-                if (init.player) {
+                if (init.player)
                     Player.init(init.player);
-                }
+
+                if (init.statuses)
+                    Content.updateStatuses(init.statuses);
 
                 if (init.tickets)
                     Tickets.init(init.tickets);
@@ -65,13 +67,11 @@
                 if (init.update)
                     this.update(init.update);
 
-                if (init.callback) {
+                if (init.callback)
                     eval(init.callback);
-                }
 
-                if (init.hasOwnProperty('badges') && Object.size(init.badges)) {
+                if (init.hasOwnProperty('badges') && Object.size(init.badges))
                     Content.badge.init(init.badges);
-                }
 
                 /* for response by R.json */
                 if (init.response) {
@@ -85,7 +85,6 @@
                 } else if (options) {
                     options.json = init;
                     return this.set(options);
-
 
                     /* for ??? */
                 } else if (init.res) {
@@ -103,8 +102,12 @@
 
         /* desc: callback after localize ready */
         "ready": function () {
-            Navigation.load();
-            error && D.error(error);
+            if(Navigation) {
+                Navigation.load();
+                error && D.error(error);
+            } else {
+                setTimeout(Cache.ready, 200);
+            }
         },
 
         /* desc: load storages from localStorage to Memory */

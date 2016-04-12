@@ -1,98 +1,120 @@
 // PRIZES FOT POINTS ------------------- //
-
 .prizes-for-points {
-  padding-left: 60px;
-  padding-right: 60px;
+    padding-left: 60px;
+    padding-right: 60px;
 }
 
 .prize {
-	width: 245px;
-  padding-right: 25px;
-  float: left;
+    width: 220px;
+    margin-right: 65px;
+    float: left;
 }
 
-.ex-prize-description {
-  width: 274px;
-}
 
-.prize:nth-child(3n+3) {
-  margin-right: 0;
+.prize:nth-child(2n+2) {
+    margin-right: 0;
 }
 
 #prizes-exchange .content-box-item-content {
-  padding: 0 30px;
+    padding: 0 30px;
 }
-
+// for img 300px
+.ex-prize{
+  position: relative;
+  padding-left: 300px;
+  min-height: 300px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+  
+}
 .ex-prize-img {
-  width: 300px;
-  float: left;
-  margin-right: 0;
-}
-.ex-prize-img:before {
-  display: none;
+    width: 300px;
+    height: 300px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    text-align: center;
 
+    // width: 50%;
+    // float: left;
+    padding: 20px;
+    margin-right: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+    
+    &:before {
+        display: none;
+    }
+    img {
+        position: static;
+    }
+    > div{
+      width: 100%;
+      border: 20px solid transparent;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      -ms-box-sizing: border-box;
+      box-sizing: border-box;
+      
+    }
 }
-.ex-prize-img img {
-  width: 100%;
-  position: static;
-}
+
 .ex-prize-description {
-  width: 390px;
-  float: right;
-  padding-left: 20px;
+    width: 100%;
+    float: right;
+    padding: 20px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+    
 }
 
-
-@media (max-width: 1200px) {
-
-  .ex-prize-description {
-    width: 320px;
-    padding-left: 30px;
-
-  }
-  .personal-data-inf-header {
+.personal-data-inf-header {
     padding: 0 20px;
-    margin: 0 -20px 10px;
-  }
-  .personal-data-edit {
+    margin: 0 0 10px;
+}
+.personal-data-edit {
     right: 20px;
-  }
-  .prize-delivery-inf td:first-child { 
+}
+.prize-delivery-inf td:first-child {
     padding-left: 20px;
-  }
-  .prize-delivery-inf {
-    margin: 0 -20px 20px;
-  }
+}
+.prize-delivery-inf {
+    margin: 0 0 20px;
 }
 
 
 @media (min-width: 1200px) {
-// PRIZES FOT POINTS ------------------- //
-
-.prizes-for-points {
-  padding-left: 30px;
-  padding-right: 30px;
+    // PRIZES FOT POINTS ------------------- //
+    #prizes-exchange .content-box-item-content {
+        padding: 0;
+        margin: 0 -5px 0 0;
+    }
+    .prize:nth-child(3n+3) {
+        margin-right: 0;
+    }
+    .prizes-for-points {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+    .prize:nth-child(2n+2),
+    .prize {
+        width: 220px;
+        margin: 0 5px 5px 0;
+    }
+    .prize:nth-child(3n+3) {
+        margin-right: 0;
+    }
+    .ex-prize-not-filled {
+        margin: 0 -30px;
+    }
 }
-
-.prize {
-  width: 245px;
-  padding-right: 25px;
-
-
-}
-
-.prize:nth-child(3n+3) {
-  margin-right: 0;
-}
-
-
-
-.ex-prize-not-filled {
-  margin: 0 -30px;
-}
-
-#prizes-exchange .content-box-item-content {
-  padding: 0;
-}
-}
-

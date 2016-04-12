@@ -185,6 +185,13 @@
             min-width: 100%;
             min-height: 30px;
             position: relative;
+
+            span[class^='i-']{
+                transition: all .2s linear;
+            }
+            &:hover span[class^='i-']{
+                opacity: 0.5;
+            }
             &:before {
                 content: '';
                 display: inline-block;
@@ -695,7 +702,7 @@
             height: 41px;
             border-radius: 50%;
             text-align: center;
-            letter-spacing: -2px;
+            letter-spacing: normal;
             position: absolute;
             left: 0;
             top: -42px;

@@ -6,6 +6,15 @@
                      class="loading"
                      onload="this.style.background = 'none'"
                      onerror="this.style.background = 'none'; this.src = '/filestorage/shop/default.jpg'">
+                
+                {{#if (like this.quantity 0)}} 
+                    <div class="prize-inf zero"> {{i18n "title-limited-quantity"}}</div> 
+                {{/if}}
+
+                {{#if (gt this.quantity 0)}} 
+                    <div class="prize-inf limit"> {{i18n "title-prizes-limited"}} {{this.quantity}} {{i18n "title-prizes-pieces"}}</div> 
+                {{/if}}
+                
             </div>
             <div class="prize-name">
                 {{ this.title }}
@@ -16,6 +25,6 @@
             </div>
         </div>
           
-            {{#if (like this.quantity 0)}} <div class="prize-inf"> {{i18n "title-limited-quantity"}}</div> {{/if}}
+
     </a>
 </div>

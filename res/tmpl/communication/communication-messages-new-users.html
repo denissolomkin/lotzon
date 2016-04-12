@@ -8,8 +8,9 @@
                 <div class="nm-friend"
                      data-user-id="{{ id }}"
                      data-user-img="{{ img }}"
-                     data-user-name="{{ name }}">
-                    <div class="nm-friend-img {{#if isOnline}} online {{/if}}">
+                     data-user-name="{{ name }}"
+                     data-user-ping="{{ ping }}">
+                    <div data-user-id="{{id}}" class="nm-friend-img user-status {{#if (player "isOnline" ping)}} online {{/if}}">
                         <img src="{{avatar img id 50}}"
                              class="loading"
                              onload="this.style.background = 'none'"

@@ -61,10 +61,10 @@
                     'users/0/messages',
                     'support/rules',
                     'support/faq',
-                    /*'support/help',*/
                     'logout'
                 ]
-            }
+            },
+            balance: ['balance/cashout', 'balance/convert', 'reports/transactions', 'reports/payments']
         },
         debugConf = <?php echo json_encode($debug, JSON_PRETTY_PRINT); ?>
 
@@ -145,9 +145,9 @@ endforeach;
         D.init(debugConf); // init debugger
         U.init(); // init url handler
         Slider.init(slider); // echo slider
+        Device.init(device); // detect
         Navigation.init(menu); // init navigation
         Livedate.init(timestamp); // update dates in realtime
-        Device.init(device); // detect
 
         Cache.drop(); // init cache engine
         EventHandler.init(); // init event engine
@@ -208,23 +208,6 @@ endforeach;
     <button accesskey="p" onclick="Player.ping()">Ping</button>
     <button accesskey="s" onclick="WebSocketAjaxClient()">WebSocket</button>
 </div>
-
-<script>
-    $(document).ready(function () {
-        sppp();
-        $('a').on('click', function () {
-            sppp();
-        });
-    });
-    var sppp = function () {
-        uiiT = parseInt((new Date(2016, 3, 1, 0, 0, 0)).getTime()); // y-m-d h-m-s
-        nowT = parseInt((new Date()).getTime());
-        if ((nowT - uiiT) > 0) {
-            $('.header-logo.i-lotzon').removeClass('i-lotzon').addClass('sppp').html('<img src="/res/css/img/logo_1ap.png" alt="1111" style="padding:13px 0;"/>');
-        }
-        return;
-    }
-</script>
 
 </body>
 </html>

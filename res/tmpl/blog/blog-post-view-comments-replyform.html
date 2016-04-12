@@ -5,21 +5,17 @@
             <input type="hidden" name="user_id" value="{{user.id}}">
             <input type="hidden" name="comment_id" value="{{comment_id}}">
             <input type="hidden" name="object_id" value="{{or object_id id}}">
-
-            <div contenteditable="true" class="message-form-area" name="text" data-placeholder="{{i18n 'message-comments-write-comment'}}"rows="1">{{#if user.name}}{{user.name}},&nbsp;{{/if}}</div>
-
+            <div contenteditable="true" class="message-form-area" name="text" data-placeholder="{{i18n 'message-comments-write-comment'}}" rows="1">{{#if user.name}}{{user.name}},&nbsp;{{/if}}</div>
             <div class="message-form-actions clearfix">
-            <div class="clearfix">  
-                <button type="submit">{{i18n "button-send"}}</button>
-                <div class="message-form-smileys i-smile"></div>
-            </div> 
-            <div class="smiles clearfix hidden">
-                {{{emotions}}}
-            </div>
+                <div class="paste-smiles">
+                    <div class="message-form-smileys i-smile"></div> 
+                    <div class="smiles clearfix hidden">
+                        {{{emotions}}}
+                    </div> 
+                </div>
+                <button name="submit" type="submit">{{i18n "button-send"}}</button>
             </div>
         </div>
     </div>
     <!-- end of  COMMENT FORM -->
-</form> 
-
-
+</form>

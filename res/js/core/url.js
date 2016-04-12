@@ -92,7 +92,7 @@
                         D.log(['updateURL:', url], 'info');
                         $("html, body").animate({scrollTop: 0}, 'slow');
                         Navigation.menu.hide();
-                        history.pushState(options.init, "Lotzon", url);
+                        history && history.pushState(options.init, "Lotzon", url);
                         Content.updateBanners();
 
                         Config.hasOwnProperty('yandexMetrika')

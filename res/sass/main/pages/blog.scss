@@ -33,6 +33,11 @@
     font-weight: normal;
     font-size: 15.5px;
     padding-bottom: 1px;
+
+    //communication messages
+    .message-form-actions{
+        padding-left: 0;
+    }
     .content-box-header {
         line-height: 30px;
         height: 30px;
@@ -158,55 +163,9 @@
     }
 }
 
-input.comment-reply-btn {
-    border: none;
-    background: transparent;
-    box-shadow: none;
-    // display: block;
-    position: absolute;
-    right: 0;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    z-index: 10;
-    width: 100%;
-    cursor: pointer;
-}
-
-.thumb {
-    width: 70px;
-    display: block;
-    position: relative;
-    cursor: pointer;
-    i {
-        display: block;
-        background: rgba(0, 0, 0, 0.5);
-        position: absolute;
-        z-index: 10;
-        width: 100%;
-        height: 100%;
-        &:before {
-            content: '\e81b';
-            position: absolute;
-            top: 2px;
-            right: 2px;
-            color: #fff;
-            display: inline-block;
-            z-index: 11;
-        }
-    }
-}
-
 .comment-reply {
     & .comment-reply-btn {
         display: none;
-    }
-}
-
-.message-form-area {
-    margin-bottom: 20px;
-    &:focus {
-        outline: none;
     }
 }
 
@@ -478,6 +437,17 @@ input.comment-reply-btn {
         font-size: 15.5px;
         margin-bottom: 10px;
     }
+    a{
+        font-family: 'Handbook' !important;
+        color: #4a90e2 !important;
+        cursor: pointer;
+        opacity: 0.9;
+        transition: all .2s linear;
+        &:hover{
+            opacity: 1;
+        }
+    }
+    
     //bold
     span[style*='bold']{
         font-family: 'Handbook' !important;

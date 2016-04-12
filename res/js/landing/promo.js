@@ -69,10 +69,14 @@ $(function() {
 
             // >>> toggle recover-pass
             $('.login-box #rec-pass, .password-recovery-box .back').on('click', function() {
-                console.debug('>>>>>>> recover');
+                
+                //restore form|msg
+                $('#pass-rec-form-success').hide();
+                $('form[name="rec-pass"]').show();
 
                 $('.password-recovery-box').toggle();
                 $('.login-box').toggle();
+
             });
 
             // >>> check empty EMAIL input !! old class
@@ -95,7 +99,18 @@ $(function() {
                 resendPassword(email, function() {
 
                     form.find('input[name="login"]').val('');
-                    form.attr('class', 'success');
+                    // form.attr('class', 'success');
+
+                    form.hide();
+                    $('#pass-rec-form-success').show();
+
+                    setTimeout(function(){
+                        form.show();
+                        $('#pass-rec-form-success').hide();
+                        $('.password-recovery-box').hide();
+                        $('.login-box').show();
+                    },5000);
+
 
                 }, function(data) {
 

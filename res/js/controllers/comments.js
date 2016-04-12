@@ -6,25 +6,32 @@
 
         emotionsToServer: {
             '<img src="/res/img/smiles_png/i-smile-smile.png" class="i-smile-smile">': ':)',
-            '<img src="/res/img/smiles_png/i-smile-crying.png" class="i-smile-crying">': ':(',
-            '<img src="/res/img/smiles_png/i-smile-happy.png" class="i-smile-happy">': '*HAPPY*',
-            '<img src="/res/img/smiles_png/i-smile-cool.png" class="i-smile-cool">': '8)',
             '<img src="/res/img/smiles_png/i-smile-laughing.png" class="i-smile-laughing">': ':D',
-            '<img src="/res/img/smiles_png/i-smile-surprise.png" class="i-smile-surprise">': ':O',
+            '<img src="/res/img/smiles_png/i-smile-cool.png" class="i-smile-cool">': '8)',
             '<img src="/res/img/smiles_png/i-smile-wink.png" class="i-smile-wink">': ';)',
-            '<img src="/res/img/smiles_png/i-smile-tongue.png" class="i-smile-tongue">': ':P',
-            '<img src="/res/img/smiles_png/i-smile-money.png" class="i-smile-money">': '$)',
             '<img src="/res/img/smiles_png/i-smile-confused.png" class="i-smile-confused">': '*CONFUSED*',
+            '<img src="/res/img/smiles_png/i-smile-sad.png" class="i-smile-sad">': '*SAD*',
+            '<img src="/res/img/smiles_png/i-smile-surprise.png" class="i-smile-surprise">': ':O',
             '<img src="/res/img/smiles_png/i-smile-angry.png" class="i-smile-angry">': '*ANGRY*',
             '<img src="/res/img/smiles_png/i-smile-kiss.png" class="i-smile-kiss">': ':*',
-            '<img src="/res/img/smiles_png/i-smile-security.png" class="i-smile-security">': '*SECURITY*',
-            '<img src="/res/img/smiles_png/i-smile-sleepi.png" class="i-smile-sleepi">': '*SLEEPI*',
+            '<img src="/res/img/smiles_png/i-smile-tongue.png" class="i-smile-tongue">': ':P',
+            '<img src="/res/img/smiles_png/i-smile-wasntme.png" class="i-smile-wasntme">': '*WASNTME*',
+            '<img src="/res/img/smiles_png/i-smile-party.png" class="i-smile-party">': '*PARTY*',
+            '<img src="/res/img/smiles_png/i-smile-dull.png" class="i-smile-dull">': '*|-(*',
+            '<img src="/res/img/smiles_png/i-smile-facepalm.png" class="i-smile-facepalm">': '*FACEPALM*',
+            '<img src="/res/img/smiles_png/i-smile-love.png" class="i-smile-love">': '*LOVE*',
             '<img src="/res/img/smiles_png/i-smile-geek.png" class="i-smile-geek">': '*GEEK*',
-            '<img src="/res/img/smiles_png/i-smile-gay.png" class="i-smile-gay">': '*GAY*',
-            '<img src="/res/img/smiles_png/i-smile-robot.png" class="i-smile-robot">': '*ROBOT*',
-            '<img src="/res/img/smiles_png/i-smile-clown.png" class="i-smile-clown">': '*CLOWN*',
             '<img src="/res/img/smiles_png/i-smile-like.png" class="i-smile-like">': '*LIKE*',
-            '<img src="/res/img/smiles_png/i-smile-dislike.png" class="i-smile-dislike">': '*DISLIKE*'
+            '<img src="/res/img/smiles_png/i-smile-dislike.png" class="i-smile-dislike">': '*DISLIKE*',
+            '<img src="/res/img/smiles_png/i-smile-crying.png" class="i-smile-crying">': ':(',
+            '<img src="/res/img/smiles_png/i-smile-robot.png" class="i-smile-robot">': '*ROBOT*',
+            // old smiles 
+            '<img data="old" src="/res/img/smiles_png/i-smile-happy.png" class="i-smile-happy">': '*HAPPY*',
+            '<img data="old" src="/res/img/smiles_png/i-smile-money.png" class="i-smile-money">': '$)',
+            '<img data="old" src="/res/img/smiles_png/i-smile-security.png" class="i-smile-security">': '*SECURITY*',
+            '<img data="old" src="/res/img/smiles_png/i-smile-sleepi.png" class="i-smile-sleepi">': '*SLEEPI*',
+            '<img data="old" src="/res/img/smiles_png/i-smile-gay.png" class="i-smile-gay">': '*GAY*',
+            '<img data="old" src="/res/img/smiles_png/i-smile-clown.png" class="i-smile-clown">': '*CLOWN*'
         },
 
         getEmotionsHTML: function () {
@@ -286,7 +293,7 @@
                         span.style.height = '55px';
                         span.style['background-size'] = 'cover';
                         span.innerHTML = '<i class="i-x-slim"></i>';
-                        form.querySelector('.message-form-actions').insertBefore(span, null);
+                        form.querySelector('.message-form-actions .paste-image').insertBefore(span, null);
 
                         if(!form.elements['image']){
                             var input = document.createElement('input');
@@ -501,6 +508,9 @@
         submit: function (form) {
             Comments.smilePost(form);
             return form;
+        },
+
+        complain: function (form) {
         }
 
     }

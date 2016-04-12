@@ -9,17 +9,18 @@
             <div contenteditable="true" class="message-form-area required" name="text" data-placeholder="{{i18n 'message-users-write-message'}}" rows="1"></div>
 
             <div class="message-form-actions clearfix">
-
-                <label class="input-file-wrapper fa fa-file-image-o">
-                </label>
-
-                <div class="clearfix">
-                    <button name="submit" type="submit">{{i18n "button-send"}}</button>
-                    <div class="message-form-smileys i-smile"></div> 
+                <div class="paste-image">
+                    <label class="input-file-wrapper fa fa-file-image-o">
+                    </label>
                 </div>
-                <div class="smiles clearfix hidden">
-                    {{{emotions}}}
-                </div> 
+
+                <div class="paste-smiles">
+                    <div class="message-form-smileys i-smile"></div> 
+                    <div class="smiles clearfix hidden">
+                        {{{emotions}}}
+                    </div> 
+                </div>
+                <button name="submit" type="submit">{{i18n "button-send"}}</button>
             </div>
         </div>
     </div>

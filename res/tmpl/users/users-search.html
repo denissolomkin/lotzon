@@ -1,12 +1,54 @@
 <div id="users-search" class="content-box-item c-search">
-
     <form action="/users/search/list" method="get" class="render-list-form">
 
-        <div class="content-box-item-top">
-            <div class="friends-search">
-                <input type="text" class="friends-search-input" placeholder="Поиск">
-                <input type="text" class="friends-search-input" placeholder="Поиск по городу">
+        <div class="content-box-item-top users-filter">
+            <div class="input-box username">
+                <input type="text" name="name" placeholder="{{i18n "title-users-search-user"}}">
             </div>
+            <div class="input-box">
+                <select name="country" id="" >
+                    
+                    <option value=""></option>
+                    <option value="">country-002</option>
+                    <option value="">country-003</option>
+                    <option value="">country-004</option>
+                    <option value="">country-005</option>
+                    <option value="">country-006</option>
+                    <option value="">country-007</option>
+                    <option value="">country-008</option>
+                    <option value="">country-009</option>
+                    <option value="">country-010</option>
+                </select>
+            </div>
+            <div class="input-box">
+                <select name="city" id="" >
+                    
+                    <option value=""></option>
+                    <option value="">city-003</option>
+                    <option value="">city-004</option>
+                    <option value="">city-005</option>
+                    <option value="">city-006</option>
+                    <option value="">city-007</option>
+                    <option value="">city-008</option>
+                    <option value="">city-009</option>
+                    <option value="">city-010</option>
+                </select>
+            </div>
+            <div class="input-box">
+                <select name="gender" id="" >
+                    
+                    <option value=""></option>
+                    <option value="">man</option>
+                    <option value="">woman</option>
+                    <option value="">ufo</option>
+                </select>
+            </div>
+            <div class="input-box userage">
+                <label>{{i18n "title-users-search-age"}}</label>
+                <input type="text" name="age[from]" placeholder="{{i18n "title-users-search-age-from"}}">
+                <input type="text" name="age[to]" placeholder="{{i18n "title-users-search-age-to"}}">
+            </div>
+            
         </div>
 
         <div class="container-center">

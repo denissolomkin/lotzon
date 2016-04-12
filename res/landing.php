@@ -9,10 +9,11 @@
     <meta content="/res/img/favicones/favicon.png_128x128.png?v=666" itemprop="image">
     <link href="/res/img/favicones/favicon.png.ico?v=666" rel="shortcut icon">
 
+    <link rel="stylesheet" href="/res/css/landing/landing_screen.css">
     <?php if (isset($isMobile)) { if($isMobile) { ?>
-        <link rel="stylesheet" href="/res/css/landing/landing_mobile.css">
+        <!-- <link rel="stylesheet" href="/res/css/landing/landing_mobile.css"> -->
     <?php } else { ?>
-        <link rel="stylesheet" href="/res/css/landing/landing_screen.css">
+        <!-- <link rel="stylesheet" href="/res/css/landing/landing_screen.css"> -->
     <?php } } ?>
 	<script src="/res/js/libs/jquery-2.1.4.min.js"></script>
 	<script src="/res/js/landing/jquery.magnific-popup.min.js"></script>
@@ -56,16 +57,22 @@
                                     <div class="alert"></div>
                                 </div>
                                 <div class="input-text">
-                                    <div class="hidden-text">Новый пароль выслан на указанный email.</div>
-                                    <div class="text">Напишите ваш email, на него будет выслано письмо для востановления пароля</div>
+                                    <!-- <div class="hidden-text">Новый пароль выслан на указанный email.</div> -->
+                                    <div class="text">На этот email будет выслано письмо для восстановления пароля</div>
                                     <div class="alert"></div>
                                 </div>
                                 
                                 <div class="s-b">
-                                    <input type="submit" class="sb_but default disabled" disabled="" value="Продолжить">
+                                    <input type="submit" class="sb_but default disabled" disabled="" value="Восстановить">
                                 </div>
                             </div>
                         </form>
+                        <div id="pass-rec-form-success">
+                            <div class="input-text">
+                                <div class="text">Новый пароль выслан на указанный email.</div>
+                            </div>
+                        </div>
+                        
                     </div>
                     <div class="box login-box">
                         <!-- LOGIN FORM -->
@@ -119,40 +126,40 @@
             <div class="comment">
                 <div class="msg">
                     <div class="msg-inner">
-                        Synth polaroid bitters chillwave pickled. Vegan disrupt tousled, Portland keffiyeh aesthetic food truck sriracha cornhole single-origin coffee church-key roof party. Leggings ethical McSweeney's.
+                        Деньги пришли через 2 дня после заказа . Сайт отличный
                     </div>
                 </div>
                 <div class="uinfo">
                     <div class="img">
-                        <img src="/res/css/img/4000.png">
+                        <img src="/res/css/img/3f6f3106a467a08b30b325def5526482.jpg">
                     </div>
-                    <div class="name">Charles Howell</div>
+                    <div class="name">Яна Иванова</div>
                 </div>
             </div>
             <div class="comment">
                 <div class="msg">
                     <div class="msg-inner">
-                        Vestibulum rutrum quam vitae fringilla tincidunt. Suspendisse nec tortor urna. Ut laoreet sodales nisi, quis iaculis nulla iaculis vitae.
+                        Уже не первый раз вывожу денежные средства, всегда приходят вовремя, без задержек, спасибо большое)
                     </div>
                 </div>
                 <div class="uinfo">
                     <div class="img">
-                        <img src="/res/css/img/4000.png">
+                        <img src="/res/css/img/df7f03ffb97e701b0abcc9d8d0e79d3f.jpg">
                     </div>
-                    <div class="name">Paul Burton</div>
+                    <div class="name">Светлана Данилина</div>
                 </div>
             </div>
             <div class="comment">
                 <div class="msg">
                     <div class="msg-inner">
-                        Mauris non tempor quam, et lacinia sapien. Mauris accumsan eros eget libero posuere vulputate.
+                        Счет пополнен! Уже, даже и не знаю какая по счету оплата :) Спасибо LOTZON! Успеха проекту
                     </div>
                 </div>
                 <div class="uinfo">
                     <div class="img">
-                        <img src="/res/css/img/4000.png">
+                        <img src="/res/css/img/79f6fab49b8d430c8a3b530e22b81547.jpg">
                     </div>
-                    <div class="name">Kyle Pearson</div>
+                    <div class="name">Олег Горбанетно</div>
                 </div>
             </div>
         </div>
@@ -193,7 +200,7 @@
                             </div>
                         </div>
                         
-                        <div class="bottom">
+                        <div class="bottom license">
                             <span >Регистрируясь, вы принимаете</span>
                             <a class="rs-sw" >пользовательское соглашение</a>
                         </div>
@@ -253,14 +260,15 @@
             <div class="box about">
                 <h2>О НАС</h2>
                 <div>
-                    <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia architecto laboriosam magni nihil beatae expedita, tempora repellat, cumque quaerat libero provident? Vero impedit magnam autem vitae soluta obcaecati distinctio, eligendi.</div><br>
-                    <div>Odit molestias, saepe delectus veritatis. Veniam harum voluptate officiis, reiciendis fugit, odit ab deserunt. Nobis, nihil fugit labore saepe omnis ducimus soluta aspernatur praesentium eligendi assumenda officiis debitis temporibus suscipit.</div><br>
-                    <div>Ut nostrum, maiores ipsam voluptatibus non. Repellat, ullam praesentium commodi alias voluptate minima. Ullam earum perferendis, asperiores ratione esse voluptate ea, totam cumque. Quos eaque, autem quidem magni quia at.</div><br>
-                    <div>Facilis distinctio quos corrupti, deleniti ut nihil eveniet ex modi amet culpa consequatur in repellat vel veniam laudantium doloremque sed consequuntur atque earum voluptatum eaque numquam. Minus placeat, dolores dicta.</div><br>
-                    <div>Veritatis repellat optio, nisi autem cum amet architecto, maiores sit aliquam repudiandae blanditiis ipsum inventore, doloribus dignissimos, laborum nulla tenetur fuga eos ratione ea culpa dolores consequatur accusantium rerum nesciunt?</div><br>
-                    <div>Hic sunt, architecto maxime cupiditate maiores. Iste mollitia dolorem magni. Deserunt repellat quas, adipisci error quos labore iure cumque nam aliquid veritatis obcaecati sint tempora illo voluptates sed officia quia.</div><br>
-                    <div>Impedit fugiat nesciunt quis rem culpa ea non quisquam, minus, laudantium commodi hic blanditiis tempore at, nobis eaque. Laudantium perspiciatis veritatis dolorum modi beatae labore molestias, vero incidunt. Assumenda, maxime.</div>
-                    
+                    <div>Главный принцип и философия нашего проекта - Бесплатное участие.</div><br>
+                    <div>Мы решили сделать революцию в просмотре рекламы, за счет которой каждый участник проекта LOTZON сможет бесплатно играть и выиграть реальные деньги и призы.</div><br>
+                    <div>Теперь подробней, о том как это вообще возможно.</div><br>
+                    <div>Находясь на разных сайтах, вы просматриваете рекламу и заработанные от рекламы деньги владелец сайта ложит себе в карман. Такой принцип существует везде, интернет, телевидение, плакаты, журналы и т.д.</div><br>
+                    <div>Что получаете вы? Ничего особого - общение, просмотр новостей, просмотр фотографий, видео, игры.</div><br>
+                    <div>Мы решили пойти по новому пути и дать возможность каждому участнику LOTZON получить часть от прибыли заработанной на рекламе. Регистрируясь вы получите доступ к разным играм, в которых можно выиграть реальные деньги и призы, испытаете чувство драйва и азарта при этом никаких финансовых вложений от вас не требуется.</div><br>
+                    <div>А еще у нас постоянные конкурсы, общение, друзья и новые знакомства. Мы постоянно работаем над развитием сайта, стараемся радовать вас новыми возможностями.</div><br>
+                    <div>Мы не обещаем вам «золотые горы» как делают другие сайты, но при этом только отнимают заработанные вами деньги. У нас многое зависит от вашей удачи, смекалки, интуиции. Не можем не сказать, что кроме постоянных конкурсов и призов, каждый день проходит основной розыгрыш в котором у каждого участника есть шанс выиграть главный приз 3 миллиона рублей.</div><br>
+                    <div>LOTZON. Выигрывает каждый!</div>
                 </div>
             </div>
             <div class="box license">

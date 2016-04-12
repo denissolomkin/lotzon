@@ -1,7 +1,9 @@
 <div id="menu-balance" class="balance banner ad">
     <div class="balance-btn menu-btn-item">
 
-        <div class="title">{{{i18n "menu-title-player-balance"}}}</div>
+        <!-- <div class="title">{{{i18n "menu-title-player-balance"}}}</div> -->
+        <div class="title"><img src="/res/css/img/moneta.svg"></div>
+        
         <div>
             <span class="cabinet-balance-count">
                 <span class="holder-money">{{balance.money}}</span>
@@ -12,6 +14,7 @@
                 <span>{{i18n "title-of-points"}}</span>
             </span>
         </div>
+
         <div class="arrows">
             <i class="i-arrow-slim-down"></i>
             <i class="i-arrow-slim-top"></i>
@@ -21,11 +24,9 @@
     <!-- BALANCE MENU -->
     <div class="menu-balance menu-item">
         <div class="menu-balance-actions clearfix">
-            <a href="/profile/cashout" class="menu-balance-item">{{i18n "button-balance-cashout"}}</a>
-            <a href="/profile/convert" class="menu-balance-item">{{i18n "button-balance-convert"}}</a>
-        
-        <a href="/reports/transactions" class="menu-balance-item">{{i18n "button-balance-transactions"}}</a>
-        <a href="/reports/payments" class="menu-balance-item">{{i18n "button-balance-payments"}}</a>
+            {{#each .}}
+            <a href="/{{.}}" class="menu-balance-item">{{i18n "menu" .}}</a>
+            {{/each}}
         </div>
     </div>
     <!-- end of BALANCE MENU -->

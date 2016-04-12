@@ -88,7 +88,7 @@
 
             options.template = U.parse(options.template || U.parse(this.href || options.href), 'tmpl');
             options.href = U.parse(options.href || this.href || options.template, 'url');
-            
+
             console.log("Start:", options.href, options.template);
 
             if(!options.template) {
@@ -115,8 +115,8 @@
                 template: options.template
             });
 
-            /* substitution JSON with profile if template has "/profile/" */
-            if (options.template.search(/profile/) !== -1 && (options.template.search(/-/) == -1 || options.template.match(/-/g).length < 2)) {
+            /* substitution JSON with profile if template has "/profile/" or "/balance/" */
+            if ((options.template.search(/profile-/) !== -1 || options.template.search(/balance-/) !== -1) && (options.template.search(/-/) == -1 || options.template.match(/-/g).length < 2)) {
                 options.json = Player;
             }
 
@@ -140,33 +140,35 @@
                 options.href = options.href.replace(/\/\w*$/, '');
             }
 
-            if (options.target || options.state)
-                var page = document.getElementById(U.parse(U.parse(options.href), 'tmpl'));
-
             if (R.rendering.indexOf(options.href) !== -1) {
                 console.error("Dublicate:", options);
                 return false;
             }
 
-            if (page && page.classList.contains('content-main')) {
+            if(!DOM.visible('.on-top').length) {
 
-                if(!DOM.visible('.on-top').length) {
+                if (options.target || options.state)
+                    var page = document.getElementById(U.parse(U.parse(options.href), 'tmpl'));
+
+                if (page && page.classList.contains('content-main')) {
+
                     DOM.hide(page.parentNode.children, 'pop-box');
                     DOM.show(page);
-                    options.url !== false && (options.url = true);
+                    if(options.url !== false)
+                        options.url = true;
                     R.afterHTML(options);
                     U.update(options);
+
+                } else {
+
+                    R.event('push', options);
+                    R.queue.push(options);
+                    R.rendering.push(options.href);
+
+                    if (!R.isRendering)
+                        R.render();
+
                 }
-
-            } else {
-
-                R.event('push', options);
-                R.queue.push(options);
-                R.rendering.push(options.href);
-
-                if (!R.isRendering)
-                    R.render();
-
             }
 
         },
@@ -240,7 +242,7 @@
 
                     },
                     error   : function (data) {
-                        D.error.call(options, data && (data.message || data.responseJSON && data.responseJSON.message || data.statusText) + '<br>' + U.generate(options.href) || 'OBJECT NOT FOUND');
+                        D.error.call(options, [data && (data.message || data.responseJSON && data.responseJSON.message || data.statusText) || 'OBJECT NOT FOUND', options.href]);
                     },
                     timeout : R.timeout.ajax
                 });
@@ -336,7 +338,7 @@
 
                     },
                     error   : function (data) {
-                        D.error.call(options, data && (data.message || data.responseJSON && data.responseJSON.message || data.statusText) + '<br>' + U.generate(options.href) || 'TEMPLATE NOT FOUND');
+                        D.error.call(options, [data && (data.message || data.responseJSON && data.responseJSON.message || data.statusText) || 'TEMPLATE NOT FOUND', options.href]);
                     },
                     timeout : R.timeout.template
                 });
@@ -543,6 +545,12 @@
                     options.url = true;
             }
 
+            // garbage collector
+            var contentBoxes = document.getElementById('content').children;
+            if (contentBoxes && contentBoxes.length)
+                for (var index = 0; index < contentBoxes.length; index ++)
+                    if (contentBoxes[index].classList.contains('content-box') && contentBoxes[index].style.display === 'none')
+                        DOM.remove(contentBoxes[index]);
 
             D.log(['Render.afterHTML callback:', U.parse(options.init.template, 'tmpl')], 'render');
             U.update(options);

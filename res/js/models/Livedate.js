@@ -42,7 +42,7 @@
 
                 switch (true) {
 
-                    case moment().add('days', -1).isSame(moment.unix(date), 'day') && (!format || format == 'calendar'):
+                    case moment().add(-1, 'days').isSame(moment.unix(date), 'day') && (!format || format == 'calendar'):
                         return i18n('title-day-yesterday');
                         break;
                     case moment().isSame(moment.unix(date), 'day') && (!format || format == 'calendar'):

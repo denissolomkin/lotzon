@@ -2,7 +2,7 @@
     <div class="close-notification"></div>
     <a href="/communication/comments/{{comment_id}}" class="view-comment">
         <div class="c-notification-top">
-            <div class="c-notification-img {{#if isOnline}} online {{/if}}">
+            <div data-user-id="{{user.id}}" class="c-notification-img user-status {{#if (player "isOnline" user.ping)}} online {{/if}}">
                 <img src="{{avatar user.img user.id}}"
                      class="loading"
                      onload="this.style.background = 'none'"
