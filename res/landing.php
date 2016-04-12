@@ -166,7 +166,16 @@
     </div>
 
     <!-- POPUP -->
-    
+    <?php 
+        echo "<h1>Hi!!!</h1>";
+        
+        if($socialIdentity){   
+        echo "<pre>";
+            var_dump($socialIdentity);
+        echo "</pre>";
+        }
+        echo var_dump($error);
+    ?>
     <div class="popup <?php if($socialIdentity) echo 'social'; ?>" id="login-block" style="display: none;">
         <div class="popup-inner">
             <i class="popup-close i-x-slim"></i>
@@ -226,7 +235,7 @@
             </form>
             
             <!-- Social registration -->
-            <form name="social_register" data-ref="<?=$ref?>">
+            <form name="social_register">
                 
                 <div class="title box-inner">EMAIL</div>
                 <div class="box-inner">
@@ -246,6 +255,33 @@
                 </div>
                 
             </form>
+
+            <!-- Social error -->
+            <form name="social_error">
+                
+                <div class="title box-inner">ДОСТУП ЗАБЛОКИРОВАН</div>
+                <div class="box-inner">
+                    <div class="ib-l">
+                        <div class="text">Аккаунт заблокирован за нарушение правил участия.</div>
+                    </div>
+                </div>
+                
+            </form>
+            <!-- Social exist -->
+            <form name="social_exist" data-ref="<?=$ref?>">
+                
+                <div class="title box-inner">АККАУНТ УЖЕ ЗАРЕГИСТРИРОВАН</div>
+                <div class="box-inner">
+                    <div class="ib-l">
+                        <div class="text">Соцсеть через которую Вы хотите зарегистрироватся уже есть в нашей базе. <br><br>Нажмите кнопку «продолжить» для входа в аккаунт</div>
+                    </div>
+                    <div class="s-b">
+                        <input type="submit" disabled="" class="sb_but gold disabled" value="Продолжить">
+                    </div>
+                </div>
+                
+            </form>
+
         </div>
     </div>
     <!-- POPUP -->

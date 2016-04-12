@@ -1,112 +1,86 @@
-<div id="profile-edit" class="content-box">
-    {{partial 'common-content-box-header-partial' (i18n "title-profile-edit") }}
-    <div class="content-box-content clearfix">
-        <div class="content-box-item">
-            <div class="ae-personal-inf">
-                <form action="/profile/edit" method="put" class="clearfix" name="profile">
-                    <div class="ae-top">
-                        <div class="overflow-hid">
-                            <div></div>
-                            <div class="avatar-bg" style="background: url('{{avatar img id}}') no-repeat 50%; background-size: cover;" filter="url(/res/filter.svg#Blur)">
+<!-- <div id="profile-edit" class="content-box"> -->
+<div id="profile-edit" class="content-box-item clearfix">
+    <form action="/profile" method="put" class="clearfix" name="profile">
+        <div>
+            <ul class="ae-personal-form">
+                <li class="ae-personal-form-values ae-name-block">
+                    <ul>
+                        <li class="title">
+                            <p>{{i18n "title-profile-edit-title"}}</p>
+                        </li>
+                        <li>
+                            <i>{{i18n "title-profile-nickname"}} </i>
+                            <div class="select-wrapper">
+                                <input placeholder="{{i18n 'title-profile-write-nickname'}}" name="nickname" type="text" value="{{title.nickname}}">
+                                <span class="error-msg">{{i18n "title-profile-nickname-unavailable"}}</span>
                             </div>
-                            <svg xmlns="http://www.w3.org/2000/svg" height="0">
-                                <filter height="116%" width="116%" y="-8%" x="-8%" id="Blur">
-                                    <feGaussianBlur stdDeviation="8" in="SourceGraphic" />
-                                </filter>
-                            </svg>
-                            <div class="img-avatar-name">{{title.nickname}}</div>
-                            <div class="ae-user-img pi-ph true">
-                                <img src="{{avatar img id}}" alt="">
+                            <div class="privacy-box">
+                                {{{privacyHTML 'Nickname' 2}}}
+                                <i class="i-pencil2 open-privacy"></i>
                             </div>
+                        </li>
+                        <li>
+                            <i>{{i18n "title-profile-name"}}</i>
+                            <div class="select-wrapper">
+                                <input placeholder="{{i18n 'title-profile-write-name'}}" name="name" type="text" value="{{title.name}}">
+                            </div>
+                            <div class="privacy-box">
+                                {{{privacyHTML 'Name'}}}
+                                <i class="i-pencil2 open-privacy"></i>
+                            </div>
+                        </li>
+                        <li>
+                            <i>{{i18n "title-profile-surname"}} </i>
+                            <div class="select-wrapper">
+                                <input placeholder="{{i18n 'title-profile-write-surname'}}" name="surname" type="text" value="{{title.surname}}">
+                            </div>
+                            <div class="privacy-box">
+                                {{{privacyHTML 'Surname'}}}
+                                <i class="i-pencil2 open-privacy"></i>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <ul class="ae-personal-form">
+            <li class="ae-personal-form-values">
+                <ul>
+                    <li>
+                        <i>{{i18n "title-profile-gender"}}</i>
+                        <div class="select-wrapper">
+                            <select class="{{#if gender}} {{else}} default {{/if}}" name="gender" onchange="this.className=this.value">
+                                {{#if (null gender)}}
+                                <option value="">{{i18n "title-profile-choose"}}</option>
+                                {{/if}}
+                                <option value="female" {{#if (like "female" gender)}}selected="selected" {{/if}}>{{i18n "title-profile-gender-female"}}</option>
+                                <option value="male" {{#if (like "male" gender)}}selected="selected" {{/if}}>{{i18n "title-profile-gender-male"}}</option>
+                            </select>
                         </div>
-                    </div>
-                    <div>
-                        <ul class="ae-personal-form">
-                            <li class="ae-personal-form-values ae-name-block">
-                                <ul>
-                                    <li>
-                                        <i>{{i18n "title-profile-nickname"}} </i>
-                                        <div class="select-wrapper">
-                                            <input placeholder="{{i18n 'title-profile-write-nickname'}}" name="nickname" type="text" value="{{title.nickname}}">
-                                            <span class="error-msg">{{i18n "title-profile-nickname-unavailable"}}</span>
-                                        </div>
-                                        <div class="privacy-box">
-                                            {{{privacyHTML 'Nickname' 2}}}
-                                            <i class="i-pencil2"></i>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <i>{{i18n "title-profile-name"}}</i>
-                                        <div class="select-wrapper">
-                                            <input placeholder="{{i18n 'title-profile-write-name'}}" name="name" type="text" value="{{title.name}}">
-                                        </div>
-                                        <div class="privacy-box">
-                                            {{{privacyHTML 'Name'}}}
-                                            <i class="i-pencil2"></i>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <i>{{i18n "title-profile-surname"}} </i>
-                                        <div class="select-wrapper">
-                                            <input placeholder="{{i18n 'title-profile-write-surname'}}" name="surname" type="text" value="{{title.surname}}">
-                                        </div>
-                                        <div class="privacy-box">
-                                            {{{privacyHTML 'Surname'}}}
-                                            <i class="i-pencil2"></i>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                    <ul class="ae-personal-form">
-                        <li class="ae-personal-form-values">
-                            <ul>
-                                <li>
-                                    <i>{{i18n "title-profile-gender"}}</i>
-                                    <div class="select-wrapper i-arrow-down">
-                                        <select class="{{#if gender}} {{else}} default {{/if}}" name="gender" onchange="this.className=this.value">
-                                            {{#if (null gender)}}
-                                            <option value="">{{i18n "title-profile-choose"}}</option>
-                                            {{/if}}
-                                            <option value="female" {{#if (like "female" gender)}}selected="selected" {{/if}}>{{i18n "title-profile-gender-female"}}</option>
-                                            <option value="male" {{#if (like "male" gender)}}selected="selected" {{/if}}>{{i18n "title-profile-gender-male"}}</option>
-                                        </select>
-                                    </div>
-                                    <div class="privacy-box">
-                                        {{{privacyHTML 'Gender'}}}
-                                        <i class="i-pencil2"></i>
-                                    </div>
-                                </li>
-                                <li>
-                                    <i>{{i18n "title-profile-birthyear"}}</i>
-                                    <div class="select-wrapper i-arrow-down">
-                                        <select name="year" class="{{#if (null birthday)}}default{{/if}}" onchange="this.className=this.value">
-                                            {{#if (gt (diff (day null 'YYYY') 80) (day (or (player "birthday") -2000000000 ) 'YYYY' ) )}}
-                                            <option class="default" value="1000">{{i18n "title-profile-year"}}</option>
-                                            {{/if}} {{#each (for (diff (day null 'YYYY') 80) '<=' (diff (day null ' YYYY ') 18 ))}}
+                        <div class="privacy-box">
+                            {{{privacyHTML 'Gender'}}}
+                            <i class="i-pencil2 open-privacy"></i>
+                        </div>
+                    </li>
+                    <li>
+                        <i>{{i18n "title-profile-birthyear"}}</i>
+                        <div class="select-wrapper">
+                            <select name="year" class="{{#if (null birthday)}}default{{/if}}" onchange="this.className=this.value">
+                                {{#if (gt (diff (day null 'YYYY') 80) (day (or (player "birthday") -2000000000 ) 'YYYY' ) )}}
+                                <option class="default" value="1000">{{i18n "title-profile-year"}}</option>
+                                {{/if}} {{#each (for (diff (day null 'YYYY') 80) '<=' (diff (day null ' YYYY ') 18 ))}}
                                             <option value="{{.}}" {{#if (isset (player "birthday"))}}{{#if (like . (day (player "birthday") 'YYYY '))}}selected="selected"{{/if}}{{/if}}>{{.}}</option>
                                             {{/each}}
                                         </select>
                                     </div>
                                     <div class="privacy-box">
                                         {{{privacyHTML 'Age'}}}
-                                        <i class="i-pencil2"></i>
+                                        <i class="i-pencil2 open-privacy"></i>
                                     </div>
                                 </li>
                                 <li>
                                     <i>{{i18n "title-profile-birthday"}}</i>
-                                    <div class="select-wrapper i-arrow-down">
-
-                                        <select name="day" style="width: 30px; padding-right: 0px;" class="{{#if (null birthday)}}default{{/if}}" onchange="this.className=this.value">
-                                            {{#if (null birthday)}}
-                                            <option class="default" value="0">{{i18n "title-profile-day"}}</option>
-                                            {{/if}}
-                                            {{#each (for 1 '<=' (days (day (player "birthday") ' YYYY-MM ')) )}}
-                                            <option value="{{.}}" {{#if (isset (player "birthday"))}}{{#if (like . (day (player "birthday") 'D '))}}selected="selected"{{/if}}{{/if}}>{{.}}</option>
-                                            {{/each}}
-                                        </select>
-
+                                    <div class="select-wrapper">
                                         <select name="month" class="{{#if (null birthday)}}default{{/if}}" onchange="this.className=this.value">
                                             {{#if (null birthday)}}
                                             <option class="default" value="0">{{i18n "title-profile-month"}}</option>
@@ -115,20 +89,29 @@
                                             <option value="{{diff @key -1}}"{{#if (isset (player "birthday"))}} {{#if (like (diff @key -1) (day (player "birthday") 'M '))}}selected="selected"{{/if}}{{/if}}>{{.}}</option>
                                             {{/each}}
                                         </select>
+
+                                        <select name="day" class="{{#if (null birthday)}}default{{/if}}" onchange="this.className=this.value">
+                                            {{#if (null birthday)}}
+                                            <option class="default" value="0">{{i18n "title-profile-day"}}</option>
+                                            {{/if}}
+                                            {{#each (for 1 '<=' (days (day (player "birthday") ' YYYY-MM ')) )}}
+                                            <option value="{{.}}" {{#if (isset (player "birthday"))}}{{#if (like . (day (player "birthday") 'D '))}}selected="selected"{{/if}}{{/if}}>{{.}}</option>
+                                            {{/each}}
+                                        </select>
                                     </div>
                                     <div class="privacy-box">
                                         {{{privacyHTML 'Birthday'}}}
-                                        <i class="i-pencil2"></i>
+                                        <i class="i-pencil2 open-privacy"></i>
                                     </div>
                                 </li>
                                 <li>
                                     <i>{{i18n "title-profile-country"}}</i>
-                                    <div class="select-wrapper i-arrow-down" id="profile-edit-countries">
+                                    <div class="select-wrapper" id="profile-edit-countries">
                                         {{i18n "title-loading"}}
                                     </div>
                                     <div class="privacy-box">
                                         {{{privacyHTML 'Country' 2}}}
-                                        <i class="i-pencil2"></i>
+                                        <i class="i-pencil2 open-privacy"></i>
                                     </div>
                                 </li>
                                 <li>
@@ -138,7 +121,7 @@
                                     </div>
                                     <div class="privacy-box">
                                         {{{privacyHTML 'City' 2}}}
-                                        <i class="i-pencil2"></i>
+                                        <i class="i-pencil2 open-privacy"></i>
                                     </div>
                                 </li>
                                 <li>
@@ -148,7 +131,7 @@
                                     </div>
                                     <div class="privacy-box">
                                         {{{privacyHTML 'Zip'}}}
-                                        <i class="i-pencil2"></i>
+                                        <i class="i-pencil2 open-privacy"></i>
                                     </div>
                                 </li>
                                 <li>
@@ -158,7 +141,7 @@
                                     </div>
                                     <div class="privacy-box">
                                         {{{privacyHTML 'Address'}}}
-                                        <i class="i-pencil2"></i>
+                                        <i class="i-pencil2 open-privacy"></i>
                                     </div>
                                 </li>
                                 <li>
@@ -168,8 +151,8 @@
                                     </div>
                                     <div class="privacy-box">
                                         {{{privacyHTML 'Email' 0}}}
-                                            <i class="i-pencil2"></i>
-                                        </div>
+                                        <i class="i-pencil2 open-privacy"></i>
+                                    </div>
                                 </li>
                                 {{#if social.disabled}}
                                 <li class="ae-social">
@@ -204,9 +187,9 @@
                                         {{/each}}
                                     </div>
                                     <div class="privacy-box">
-                                            {{{privacyHTML 'Social' 0}}}
-                                            <i class="i-pencil2"></i>
-                                        </div>
+                                        {{{privacyHTML 'Social' 0}}}
+                                        <i class="i-pencil2 open-privacy"></i>
+                                    </div>
                                 </li>
                                 {{/if}}
 
@@ -218,10 +201,5 @@
                         <button name="submit" type="submit" class="btn-flat">{{i18n "button-save"}}</button>
                     </div>
                 </form>
-            </div>
-        </div>
-        <!-- .content-box-item -->
-    </div>
-    <!-- .content-box-content -->
 </div>
 <!-- .content-box -->

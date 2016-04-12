@@ -1,0 +1,48 @@
+<!-- <div id="profile-edit" class="content-box"> -->
+<div id="profile" class="content-main">
+    {{partial 'common-content-box-header-partial' (i18n "title-profile-edit") }}
+    <!-- <div class="content-box-content clearfix"> -->
+    <div class=" clearfix">
+        <div class="content-box-item">
+            <div class="ae-personal-inf">
+                    <div class="ae-top">
+                        <div class="overflow-hid">
+                            <div></div>
+                            <div class="avatar-bg" style="background: url('{{avatar img id}}') no-repeat 50%; background-size: cover;" filter="url(/res/filter.svg#Blur)">
+                            </div>
+                            <svg xmlns="http://www.w3.org/2000/svg" height="0">
+                                <filter height="116%" width="116%" y="-8%" x="-8%" id="Blur">
+                                    <feGaussianBlur stdDeviation="8" in="SourceGraphic" />
+                                </filter>
+                            </svg>
+                            <div class="img-avatar-name">{{title.nickname}}</div>
+                            <div class="ae-user-img pi-ph true">
+                                <img src="{{avatar img id}}" alt="">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-box-tabs clearfix">
+                        <a href="/profile/edit" class="content-box-tab">
+                            <div>{{i18n "title-profile-main"}}</div>
+                        </a>
+                        <a href="/profile/billing" class="content-box-tab">
+                            <div>{{i18n "title-profile-billing"}}</div>
+                        </a>
+                        <a href="/profile/combination" class="content-box-tab">
+                            <div>{{i18n "title-profile-combination"}}</div>
+                        </a>
+                        <a href="/profile/settings" class="content-box-tab">
+                            <div>{{i18n "title-profile-settings"}}</div>
+                        </a>
+                    </div>
+                    <!-- end of TABS -->
+                    <div class="content-box-content">
+                    </div>
+            </div>
+        </div>
+        <!-- .content-box-item -->
+    </div>
+    <!-- .content-box-content -->
+</div>
+<!-- .content-box -->

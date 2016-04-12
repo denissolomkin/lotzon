@@ -9,9 +9,19 @@
         init: {
             edit: function() {
 
+                // events
+                Profile.do.privacyBoxes();
+                
+                // chosen
+                $('select:not([name="country"])').chosen({
+                    disable_search:true
+                });
+                        
                 R.push({
                     template: 'profile-edit-countries',
-                    href: '/res/countries/' + Player.language.current
+                    href: '/res/countries/' + Player.language.current,
+                    after: function(){
+                    }
                 });
 
             },
@@ -239,7 +249,6 @@
                     console.log("second");
                     $(this).closest('.option-block').find('.hidden-notice').css('display', 'none');
                 }
-
             },
 
             openFavorite: function() {
@@ -270,7 +279,6 @@
                 if ($('.ae-combination-box li.selected').length == 6) {
                     $('.ae-combination-box li:not(.selected)').addClass('unavailable');
                 }
-
             },
 
             selectFavorite: function() {
@@ -327,8 +335,21 @@
                 } else {
                     placeholder.css('display', 'block');
                 }
-            }
+            },
 
+            privacyBoxes: function() {
+                $('.privacy-box').click(function(e){
+                    
+                    // no action for disabled
+                    if($(this).find('.buttons-group.disabled').length ) return;
+                 
+                    if( (e.target.tagName.toLowerCase() == 'i' &&  $(e.target).hasClass('open-privacy') ) || (e.target.tagName.toLowerCase() == 'input') ){
+                        $(this).toggleClass('active');  
+                        // console.error( e.target.tagName.toLowerCase());
+                    }
+
+                });
+            }
         },
 
         after: {

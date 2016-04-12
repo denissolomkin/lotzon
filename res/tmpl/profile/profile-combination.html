@@ -1,55 +1,12 @@
 <div id="profile-settings" class="content-box-item">
     {{partial 'common-content-box-header-partial' (i18n "title-profile-settings") }}
-    <!-- <div class="content-box-header"><span class="back i-arrow-slim-left large-visible"></span><span class="back i-arrow-slim-left small-visible "></span>{{i18n "title-profile-settings"}}</div> -->
-
+    
     <div class="content-box-content clearfix">
         <div class="content-box-item">
             <form action="/profile/settings" method="put" class="settings clearfix">
                 <div class="option-block clearfix container-center">
                     <div class="setting-title"> {{i18n "title-account-settings"}}</div>
                 </div>
-                <!--
-                <div class="option-block clearfix">
-                <div class="s-account_delete clearfix strip">
-                    <div class="title">{{i18n "title-profile-setting"}}</div>
-                    <div> {{#if (day registration)}}
-                        <span> {{day registration}} </span> {{else}}
-                        <span class="uk-disabled">день</span> {{/if}}
-                    </div>
-                    <div class="uk-float-right delete-reg show-option">
-                        <span class='change'>{{i18n "title-profile-account-delete"}}</span>
-                    </div>
-                    <div class="uk-float-right delete-reg hidden option">
-                        <div class="choice">
-                            <label class="radio-text">
-                                <input type="radio" name="email" value="1" checked>
-                                <span class="danger">{{i18n "title-profile-delete-yes"}}</span>
-                            </label>
-                            <label class="radio-text">
-                                <input type="radio" name="email" value="2">
-                                <span class="change">{{i18n "title-profile-delete-no"}}</span>
-                            </label>
-                        </div>
-                    </div>
-                    </div>
-                    <div class=" s-notice hidden option">
-                        <p>{{i18n "text-registration-delete-notice"}}</p>
-                    </div>
-                </div>
-                -->
-                <!--
-                <div class="option-block clearfix">
-                    <div class="s-lang clearfix strip">
-                        <div class="title">{{i18n "title-profile-site-language"}}</div>
-                        {{#each language.available}}
-                        <label class="radio-text">
-                            <input type="radio" name="site-lang" value="{{@key}}" {{#if (eq @key ../language.current)}} checked{{/if}}>
-                            <span>{{.}}</span>
-                        </label>
-                        {{/each}}
-                    </div>
-                </div>
-                -->
                 <div class="option-block">
                     <div class="s-pass clearfix strip">
                         <div class="title">{{i18n "title-profile-password"}}</div>
@@ -80,27 +37,7 @@
                     </div>
                     <p class="s-notice option hidden-notice mobile-notice">{{i18n "text-invalid-pass-repeat"}}</p>
                 </div>
-                <!--div class="option-block">
-                    <div class="tie-soc clearfix strip">
-                        <div class="title">{{i18n "title-profile-social-link"}} <a class="question" href="#"> (?) <span class="tooltip">
-                                    {{i18n 'text-social-bonus-link'}}
-                                </span></a></div>
-                        <div class="ae-social uk-float-left">
-                            <a href="#" class="ae-social-item i-Vkontakte" title="">
-                            </a>
-                            <a href="#" class="ae-social-item i-Facebook" title="">
-                            </a>
-                            <a href="#" class="ae-social-item i-Twitter">
-                            </a>
-                            <a href="#" class="ae-social-item i-Google">
-                            </a>
-                            <a href="#" class="ae-social-item i-Instagram">
-                            </a>
-                            <a href="#" class="ae-social-item i-Odnoklassniki">
-                            </a>
-                        </div>
-                    </div>
-                </div-->
+                
                 <div class="option-block">
                     <div class="s-email clearfix strip">
                         <div class="title">{{i18n "title-profile-get-email"}}</div>

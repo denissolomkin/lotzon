@@ -672,7 +672,22 @@ CLOSE BUTTON */
     display: none;
 }
 
+/*>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+.landing .popup form[name='social_exist']{
+    display: block;
+}
+.landing .popup form[name='social_exist'] .text{
+    text-align: center;
+    margin: 50px 0 20px;
+}
 
+.landing .popup form[name='social_error'] .title{
+    color: #f84e41;
+}
+.landing .popup form[name='social_error'] .text{
+    text-align: center;
+    margin: 50px 0 20px;
+}
 
 /* END
 popup*/

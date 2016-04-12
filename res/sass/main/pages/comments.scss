@@ -210,12 +210,12 @@ input.comment-reply-btn {
         top: 2px;
         left: 0;
     }
-    &.user.fa-heart {
+    &.user.fa-heart.is-liked {
         &:before {
             color: #FFEF00;
         }
     }
-    &.default.fa-heart {
+    &.fa-heart {
         &:before {
             color: #dfdfdf;
         }
