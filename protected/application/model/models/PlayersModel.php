@@ -267,9 +267,9 @@ class PlayersModel extends Model
         return $this->getProcessor()->markOnline($player);
     }
 
-    public function validateHash($hash)
+    public function validateHash($hash, $email)
     {
-        return $this->getProcessor()->validateHash($hash);
+        return $this->getProcessor()->validateHash($hash, $email);
     }
 
     public function search($search)
@@ -290,5 +290,13 @@ class PlayersModel extends Model
     public function getPlayersPing($ids)
     {
         return $this->getProcessor()->getPlayersPing($ids);
+    }
+
+    public function savePreregistration(Entity $player) {
+        return $this->getProcessor()->savePreregistration($player);
+    }
+
+    public function loadPreregistration(Entity $player) {
+        return $this->getProcessor()->savePreregistration($player);
     }
 }

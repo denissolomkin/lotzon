@@ -29,12 +29,13 @@ class Index extends \SlimController\SlimController
     {
         $this->session = new Session();
     }
-    
+
     public function indexAction($page = 'home')
     {
         // validate registration
         if ($vh = $this->request()->get('vh')) {
-            PlayersModel::instance()->validateHash($vh);
+            $m = $this->request()->get('m');
+            PlayersModel::instance()->validateHash($vh, $m);
         }
         // validate invite
         if ($hash = $this->request()->get('ivh')) {
@@ -354,10 +355,16 @@ class Index extends \SlimController\SlimController
             "currency" => CountriesModel::instance()->getCountry($this->country)->loadCurrency()->getSettings()
         );
 
+        $error = array();
         if ($this->session->has('ERROR') OR $_SESSION['ERROR']) {
-            $error = $this->session->get('ERROR') ?: $_SESSION['ERROR'];
+            $error['message'] = $this->session->get('ERROR') ?: $_SESSION['ERROR'];
             $this->session->remove('ERROR');
             unset($_SESSION['ERROR']);
+        }
+        if ($this->session->has('ERROR_CODE') OR $_SESSION['ERROR_CODE']) {
+            $error['code'] = $this->session->get('ERROR_CODE') ?: $_SESSION['ERROR_CODE'];
+            $this->session->remove('ERROR_CODE');
+            unset($_SESSION['ERROR_CODE']);
         }
 
         $referer         = parse_url($_SERVER['HTTP_REFERER']);
@@ -383,19 +390,24 @@ class Index extends \SlimController\SlimController
                 $this->session->set('SOCIAL_IDENTITY_DISABLED', 1);
             }
         }
+        if ($this->session->has('SOCIAL_NAME')) {
+            $socialName = $this->session->get('SOCIAL_NAME');
+            $this->session->remove('SOCIAL_NAME');
+        }
 
         $this->render('../../res/landing.php', array(
-            'layout'    => false,
-            'slider'    => $slider,
-            'player'    => $player,
-            'metrika'   => $metrika,
-            'isMobile'  => $detect->isMobile(),
-            'seo'       => SEOModel::instance()->getSEOSettings(),
+            'layout'          => false,
+            'slider'          => $slider,
+            'player'          => $player,
+            'metrika'         => $metrika,
+            'isMobile'        => $detect->isMobile(),
+            'seo'             => SEOModel::instance()->getSEOSettings(),
             'showLoginScreen' => !empty($_COOKIE['showLoginScreen']),
             'showEmail'       => $this->request()->get('m', false),
             'socialIdentity'  => $socialIdentity,
-            'ref'       => $this->ref,
-            'error'     => $error,
+            'ref'             => $this->ref,
+            'error'           => $error,
+            'socialName'      => $socialName,
         ));
 
     }

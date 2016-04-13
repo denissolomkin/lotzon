@@ -26,14 +26,14 @@ class AuthController extends \SlimController\SlimController {
 
     }
 
-    public function register($profile, $provider) {
+    public function register($profile, $provider)
+    {
 
         $player = new Player();
         $player->setEmail($this->session->get(Player::IDENTITY) ? $this->session->get(Player::IDENTITY)->getEmail() : $profile->email)
             ->setSocialId($profile->identifier)
             ->setSocialName($provider)
             ->setSocialEmail($profile->email);
-        $loggedIn     = false;
         $userNotFound = false;
         try {
             $player->fetch();
@@ -45,9 +45,30 @@ class AuthController extends \SlimController\SlimController {
 
         if ($userNotFound === false) {
             $this->session->set('ERROR', StaticTextsModel::instance()->setLang($player->getLang())->getText('USER_ALREADY_EXISTS'));
+            $this->session->set('ERROR_CODE', 409);
+            $this->session->set('SOCIAL_NAME', $provider);
             $this->redirect('/');
         }
 
+        try {
+            $player->setIp(Common::getUserIp())
+                ->setDates(time(), 'Registration');
+            if ($ref = $this->request()->get('ref')) {
+                $player->setReferalId((int)$ref);
+            }
+        } catch (EntityException $e) {
+            $this->session->set('ERROR', $e->getMessage());
+            $this->session->set('ERROR_CODE', 400);
+        }
+
+        $this->session->set('SOCIAL_IDENTITY', $player);
+
+        if(!$profile->email) {
+            $this->session->set('ERROR', StaticTextsModel::instance()->setLang($player->getLang())->getText('NEED_EMAIL'));
+            $this->session->set('ERROR_CODE', 428);
+        }
+
+        /*
         try {
             $geoReader =  new Reader(PATH_MMDB_FILE);
             $country = $geoReader->country(Common::getUserIp())->country;
@@ -107,6 +128,7 @@ class AuthController extends \SlimController\SlimController {
 
         } catch (EntityException $e) {
             $this->session->set('ERROR', $e->getMessage());
+            $this->session->set('ERROR_CODE', 400);
             // do nothing
         }
 
@@ -114,6 +136,8 @@ class AuthController extends \SlimController\SlimController {
             $this->session->set(Player::IDENTITY, $player);
 
         }
+
+        */
 
         $this->redirect(strstr($_SERVER['HTTP_REFERER'], 'lotzon.com') ? $_SERVER['HTTP_REFERER'] : '/');
 
@@ -190,6 +214,7 @@ class AuthController extends \SlimController\SlimController {
 
                 if ($player->getBan()) {
                     $this->session->set('ERROR', StaticTextsModel::instance()->setLang($player->getLang())->getText('ACCESS_DENIED'));
+                    $this->session->set('ERROR_CODE', 423);
                     $this->redirect('/');
                 }
 
@@ -238,11 +263,14 @@ class AuthController extends \SlimController\SlimController {
 
                 // fetch more than one player
                 if ($e->getCode() == 400) {
-                    $this->session->set('ERROR', StaticTextsModel::instance()->setLang($player->getLang())->getText('SOCIAL_USED'));
+                    $this->session->set('ERROR', StaticTextsModel::instance()->setLang($player->getLang())->getText('BAD_REQUEST'));
+                    $this->session->set('ERROR_CODE', 400);
                 } else if ($e->getCode() == 500) {
-                    $this->session->set('ERROR', $e->getMessage());
+                    $this->session->set('ERROR', StaticTextsModel::instance()->setLang($player->getLang())->getText('INTERNAL_SERVER_ERROR'));
+                    $this->session->set('ERROR_CODE', 500);
                 } else if ($e->getCode() == 404) {
                     $this->session->set('ERROR', StaticTextsModel::instance()->setLang($player->getLang())->getText('USER_NOT_FOUND'));
+                    $this->session->set('ERROR_CODE', 404);
                 }
             }
 

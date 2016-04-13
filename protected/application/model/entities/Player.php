@@ -1098,6 +1098,19 @@ class Player extends Entity
             }
         }
 
+        if ($from == 'Preregistration') {
+            $this->setEmail($data['Email'])
+                ->setIp($data['Ip'])
+                ->setHash($data['Hash'])
+                ->setReferalId($data['ReferalId']);
+            $this->setDates($data['DateRegistration'], 'Registration');
+            if ($data['SocialName']) {
+                $this->setSocialEmail($data['SocialEmail'])
+                    ->setSocialId($data['SocialId'])
+                    ->setSocialName($data['SocialName']);
+            }
+        }
+
         return $this;
     }
 
