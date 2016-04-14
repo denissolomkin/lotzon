@@ -280,6 +280,57 @@ class AuthController extends \SlimController\SlimController {
             }
 
             $this->redirect(strstr($_SERVER['HTTP_REFERER'], 'lotzon.com') ? $_SERVER['HTTP_REFERER'] : '/');
+        } elseif ($profile->method == 'link') {
+            $player = new Player();
+            $player->setEmail($this->session->get(Player::IDENTITY)?$this->session->get(Player::IDENTITY)->getEmail():$profile->email)
+                ->setSocialId($profile->identifier)
+                ->setSocialName($provider)
+                ->setSocialEmail($profile->email);
+            $loggedIn = false;
+            try {
+                $player->fetch()->initDates();
+                if($player->getBan()){
+                    $this->session->set('ERROR', StaticTextsModel::instance()->setLang($player->getLang())->getText('ACCESS_DENIED'));
+                    $this->redirect('/');
+                }
+                if(!$player->getName() AND $profile->firstName)
+                    $player->setName($profile->firstName);
+                if(!$player->getSurname() AND $profile->lastName)
+                    $player->setSurname($profile->lastName);
+                if(!$player->getValid() AND $profile->email AND $player->getEmail()==$profile->email)
+                    $player->setValid(true);
+                if(!$this->session->has(Player::IDENTITY)){
+                    $this->session->set('QuickGameLastDate',($player->getDates('Login') < strtotime(date("Y-m-d")) ? $player->getDates('Login') : time()));
+                    $player->setDates(time(), 'Login');
+                }
+                // try to catch avatar
+                if ($profile->photoURL AND !$player->getAvatar())
+                    $player->uploadAvatar($profile->photoURL);
+                if(!array_key_exists($provider, $player->getAdditionalData()) AND !$player->isSocialUsed() && SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_social_profile'))
+                    $player->addPoints(
+                        SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_social_profile'),
+                        StaticTextsModel::instance()->setLang($player->getLang())->getText('bonus_social_profile').$provider);
+                if(!$_COOKIE[Player::PLAYERID_COOKIE] OR $_COOKIE[Player::PLAYERID_COOKIE] != $player->getId() OR $_COOKIE[Player::PLAYERID_COOKIE] != $player->getCookieId() OR !$player->getCookieId())
+                    $player->updateCookieId($_COOKIE[Player::PLAYERID_COOKIE]?:$player->getId());
+                if(!$_COOKIE[Player::PLAYERID_COOKIE])
+                    setcookie(Player::PLAYERID_COOKIE, $player->getId(), time() + Player::AUTOLOGIN_COOKIE_TTL, '/');
+                $player->updateSocial()
+                    ->setAdditionalData(array($provider=>array_filter(get_object_vars($profile))))
+                    ->setCookieId($_COOKIE[Player::PLAYERID_COOKIE]?:$player->getId())
+                    ->setLastIp(Common::getUserIp())
+                    ->updateIp(Common::getUserIp())
+                    ->payReferal()
+                    ->setAgent($_SERVER['HTTP_USER_AGENT'])
+                    ->update()
+                    ->writeLogin();
+                $loggedIn = true;
+            } catch (EntityException $e) {
+
+            }
+            if ($loggedIn === true) {
+                $this->session->set(Player::IDENTITY, $player);
+            }
+            $this->redirect(strstr($_SERVER['HTTP_REFERER'], 'lotzon.com') ? $_SERVER['HTTP_REFERER'] : '/');
         } else {
             $this->register($profile, $provider);
         }

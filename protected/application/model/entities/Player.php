@@ -804,7 +804,7 @@ class Player extends Entity
         $psw=$this->generatePassword();
         $this->setPassword($this->compilePassword($psw))
             ->setAgent($_SERVER['HTTP_USER_AGENT'])
-            ->setDates(time(), 'Registration')
+            //->setDates(time(), 'Registration')
             ->setReferer($session->get('REFERER'));
 
         parent::create();
@@ -812,11 +812,13 @@ class Player extends Entity
         $this->updateIp(Common::getUserIp())
             ->writeLog(array('action'=>'PLAYER_CREATED', 'desc'=>$this->hidePassword($psw), 'status'=>'success'));
 
+        /*
         Common::sendEmail($this->getEmail(), 'Регистрация на www.lotzon.com', 'player_registration', array(
             'login' => $this->getEmail(),
             'password'  => $this->getGeneratedPassword(),
             'hash'  => $this->getHash(),
         ));
+        */
 
         return $this;
     }
@@ -1156,6 +1158,11 @@ class Player extends Entity
                 return null;
                 break;
         }
+    }
+
+    public function loadPreregistration() {
+        $model = $this->getModelClass();
+        return $model::instance()->loadPreregistration($this);
     }
 
     public function export($to)

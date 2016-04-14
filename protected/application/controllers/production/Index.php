@@ -35,7 +35,14 @@ class Index extends \SlimController\SlimController
         // validate registration
         if ($vh = $this->request()->get('vh')) {
             $m = $this->request()->get('m');
-            PlayersModel::instance()->validateHash($vh, $m);
+            // create player
+            $player = new Player();
+            $player->setEmail($m)->setHash($vh);
+            try {
+                $player->loadPreregistration();
+            } catch (ModelException $e) {
+                // do nothing just show promo page
+            }
         }
         // validate invite
         if ($hash = $this->request()->get('ivh')) {

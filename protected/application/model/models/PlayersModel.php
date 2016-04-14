@@ -297,6 +297,6 @@ class PlayersModel extends Model
     }
 
     public function loadPreregistration(Entity $player) {
-        return $this->getProcessor()->savePreregistration($player);
+        return $this->getProcessor()->loadPreregistration($player);
     }
 }

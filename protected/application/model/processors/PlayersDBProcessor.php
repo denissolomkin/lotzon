@@ -1426,17 +1426,23 @@ class PlayersDBProcessor implements IProcessor
 
     public function validateHash($hash, $email)
     {
-        $sql = "UPDATE `Players` SET `Valid` = 1 WHERE `Hash` = :hash";
+        $sql = "SELECT * FROM `PlayersPreregistration` WHERE `Email` = :email AND `Hash` = :hash";
 
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
                 ':hash'  => $hash,
+                ':email' => $email,
             ));
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query", 500);
         }
 
+        if (!$sth->rowCount()) {
+            return false;
+        }
+
+        return true;
     }
 
     public function updateInvite(Entity $player) {
