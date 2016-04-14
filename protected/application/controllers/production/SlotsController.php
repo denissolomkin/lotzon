@@ -137,13 +137,17 @@ class SlotsController extends \AjaxController
             if ($balance[$currencyBD] < $bet)
                 $this->ajaxResponseBadRequest('INSUFFICIENT_FUNDS');
 
+            $desc = array(
+                'id'    => $game->getId(),
+                'uid'   => $game->getUid(),
+                'type'  => 'Slots',
+                'title' => $game->getTitle($player->getLang())
+            );
+
             $player->{'add' . $currencyBD}(
                 $bet * -1,
-                array(
-                    'id' => $game->getUid(),
-                    'object' => $key,
-                    'title' => $game->getTitle($player->getLang())
-                ));
+                $desc
+            );
 
             $response['res'] = $game
                 ->setCurrency($currency)
@@ -175,26 +179,28 @@ class SlotsController extends \AjaxController
 
         foreach ($game->getGamePrizes() as $currency => $sum) {
             if ($sum) {
+
+                $desc = array(
+                    'id'    => $game->getId(),
+                    'uid'   => $game->getUid(),
+                    'type'  => 'Slots',
+                    'title' => "Выигрыш " . $game->getTitle($player->getLang())
+                );
+
                 switch ($currency) {
 
                     case LotterySettings::CURRENCY_MONEY:
                         $player->addMoney(
                             $sum,
-                            array(
-                                'id' => $game->getUid(),
-                                'object' => 'Slots',
-                                'title' => "Выигрыш " . $game->getTitle($player->getLang())
-                            ));
+                            $desc
+                        );
                         break;
 
                     case LotterySettings::CURRENCY_POINT:
                         $player->addPoints(
                             $sum,
-                            array(
-                                'id' => $game->getUid(),
-                                'object' => 'Slots',
-                                'title' => "Выигрыш " . $game->getTitle($player->getLang())
-                            ));
+                            $desc
+                        );
                         break;
                 }
             }

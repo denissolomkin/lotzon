@@ -63,6 +63,8 @@ class Player extends Entity
     protected $_bot             = false;
     protected $_admin           = false;
     protected $_utc             = null;
+    protected $_captchaTime     = 0;
+    protected $_captchaCount    = 0;
 
     protected $_privacy        = array();
     protected $_dates          = array();
@@ -829,22 +831,12 @@ class Player extends Entity
             $this->updateBalance('Money', $quantity);
         }
 
-        $transaction = new Transaction();
-        $transaction->setPlayerId($this->getId())
-                    ->setSum($quantity)
-                    ->setBalance($this->getMoney())
-                    ->setCurrency(LotterySettings::CURRENCY_MONEY);
-
-        if(is_array($description)) {
-            $transaction
-                ->setObjectType($description['type'])
-                ->setObjectId($description['id'])
-                ->setDescription($description['title']);
-        } else {
-            $transaction->setDescription($description);
-        }
-
-        $transaction->create();
+        $this->addTransaction(
+            LotterySettings::CURRENCY_MONEY,
+            $quantity,
+            $this->getMoney(),
+            $description
+        );
 
         return $this;
     }
@@ -858,16 +850,30 @@ class Player extends Entity
             $this->updateBalance('Points', $quantity);
         }
 
+        $this->addTransaction(
+            LotterySettings::CURRENCY_POINT,
+            $quantity,
+            $this->getPoints(),
+            $description
+        );
+
+        return $this;
+    }
+
+    public function addTransaction($currency, $quantity, $balance, $description = '')
+    {
+
         $transaction = new Transaction();
         $transaction->setPlayerId($this->getId())
-                    ->setBalance($this->getPoints())
-                    ->setSum($quantity)
-                    ->setCurrency(LotterySettings::CURRENCY_POINT);
+            ->setCurrency($currency)
+            ->setSum($quantity)
+            ->setBalance($balance);
 
-        if(is_array($description)) {
+        if (is_array($description)) {
             $transaction
                 ->setObjectType($description['type'])
-                ->setObjectId($description['id'])
+                ->setObjectId(isset($description['id']) ? $description['id'] : null)
+                ->setObjectUid(isset($description['uid']) ? $description['uid'] : null)
                 ->setDescription($description['title']);
         } else {
             $transaction->setDescription($description);
@@ -877,6 +883,7 @@ class Player extends Entity
 
         return $this;
     }
+
 
     public function login($password)
     {
@@ -1044,6 +1051,8 @@ class Player extends Entity
                  ->setBan($data['Ban'])
                  ->setBot($data['Bot'])
                  ->setUtc($data['UTC'])
+                 ->setCaptchaTime($data['CaptchaTime'])
+                 ->setCaptchaCount($data['CaptchaCount'])
                  ->setEmail($data['Email'])
                  ->setPassword($data['Password'])
                  ->setSalt($data['Salt'])

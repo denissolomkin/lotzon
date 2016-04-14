@@ -163,6 +163,7 @@ class ChanceController extends \AjaxController
                 ->setTime(time())
                 ->setLang($player->getLang())
                 ->setUid(uniqid())
+                ->setKey($key)
                 ->loadPrizes();
 
             $balance = $player->getBalance();
@@ -173,13 +174,17 @@ class ChanceController extends \AjaxController
                     $this->ajaxResponseBadRequest('INSUFFICIENT_FUNDS');
 
                 else {
+
+                    $desc = array(
+                        'id'    => $game->getId(),
+                        'uid'   => $game->getUid(),
+                        'type'  => $game->getKey(),
+                        'title' => $game->getTitle($player->getLang())
+                    );
+
                     $player->addPoints(
                         $game->getOptions('p') * -1,
-                        array(
-                            'id' => $game->getUid(),
-                            'object' => $key,
-                            'title' => $game->getTitle($player->getLang())
-                        )
+                        $desc
                     );
                 }
             }
@@ -201,7 +206,6 @@ class ChanceController extends \AjaxController
             if (!$game->isOver()) {
                 while (!$this->session->has($key))
                     $this->session->set($key, $game);
-
             }
 
         } else {
@@ -289,28 +293,31 @@ class ChanceController extends \AjaxController
     {
 
         foreach ($game->getGamePrizes() as $currency => $sum) {
+
             if ($sum) {
+
+                $desc = array(
+                    'id'    => $game->getId(),
+                    'uid'   => $game->getUid(),
+                    'type'  => $game->getKey(),
+                    'title' => "Выигрыш " . $game->getTitle($player->getLang())
+                );
+
                 switch ($currency) {
 
                     case LotterySettings::CURRENCY_MONEY:
                         $sum *= CountriesModel::instance()->getCountry($player->getCountry())->loadCurrency()->getCoefficient();
                         $player->addMoney(
                             $sum,
-                            array(
-                                'id' => $game->getUid(),
-                                'object' => 'Chance',
-                                'title' => "Выигрыш " . $game->getTitle($player->getLang())
-                            ));
+                            $desc
+                        );
                         break;
 
                     case LotterySettings::CURRENCY_POINT:
                         $player->addPoints(
                             $sum,
-                            array(
-                                'id' => $game->getUid(),
-                                'object' => 'Chance',
-                                'title' => "Выигрыш " . $game->getTitle($player->getLang())
-                            ));
+                            $desc
+                        );
                         break;
                 }
             }
