@@ -112,7 +112,7 @@ class LotteryController extends \AjaxController
             $this->ajaxResponseNoCache(array("message"=>"PRICE_NOT_SAME"),403);
         }
 
-        if ($player->getGoldTicket()>0) {
+        if (($player->getGoldTicket()>0)or(\TicketsModel::instance()->getUnplayedTickets($player->getId())[8]!==false)) {
             $this->ajaxResponseNoCache(array("message"=>"ALREADY_BOUGHT"),400);
         }
 
