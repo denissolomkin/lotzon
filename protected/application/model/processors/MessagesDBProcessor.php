@@ -4,7 +4,7 @@ class MessagesDBProcessor implements IProcessor
 {
     public function create(Entity $message)
     {
-        $sql = "INSERT INTO `Messages` (`Id`, `PlayerId`, `ToPlayerId`, `Text`, `Image`, `Date`) VALUES (:id, :playerid, :toplayerid, :text, :image, :date)";
+        $sql = "INSERT INTO `Messages` (`Id`, `PlayerId`, `ToPlayerId`, `Text`, `Image`, `Date`, `Approval`) VALUES (:id, :playerid, :toplayerid, :text, :image, :date, :approval)";
 
         try {
             $dbh = DB::Connect();
@@ -16,6 +16,7 @@ class MessagesDBProcessor implements IProcessor
                 ':text'       => $message->getText(),
                 ':image'      => $message->getImage(),
                 ':date'       => time(),
+                ':approval'   => $message->getApproval(),
             ));
         } catch (PDOExeption $e) {
             throw new ModelException("Unable to proccess storage query", 500);
@@ -29,7 +30,7 @@ class MessagesDBProcessor implements IProcessor
 
     public function update(Entity $message)
     {
-        $sql = "UPDATE `Messages` SET `Status` = :status, `Text` = :text, `Image` = :image WHERE `Id` = :id";
+        $sql = "UPDATE `Messages` SET `Status` = :status, `Text` = :text, `Image` = :image, `Approval` = :approval WHERE `Id` = :id";
 
         try {
             $sth = DB::Connect()->prepare($sql)->execute(array(
@@ -37,6 +38,7 @@ class MessagesDBProcessor implements IProcessor
                 ':status'     => $message->getStatus(),
                 ':text'       => $message->getText(),
                 ':image'      => $message->getImage(),
+                ':approval'      => $message->getApproval(),
             ));
         } catch (PDOexception $e) {
             throw new ModelException("Unable to proccess storage query", 500);
@@ -94,6 +96,68 @@ class MessagesDBProcessor implements IProcessor
         $message->formatFrom('DB', $data);
 
         return $message;
+    }
+
+    public function getMessagesToApprove($limit = null, $offset = null)
+    {
+        $sql = "SELECT
+                    `Messages`.*,
+                    `Players`.`Avatar` PlayerImg,
+                    `Players`.`Nicname` PlayerName,
+                    `PlayerPing`.`Ping` PlayerPing
+                FROM `Messages`
+                LEFT JOIN
+                    `Players`
+                  ON
+                    `Players`.`Id` = `Messages`.`PlayerId`
+                LEFT JOIN
+                    `PlayerPing`
+                  ON
+                    `Players`.`Id` = `PlayerPing`.`PlayerId`
+                WHERE `Approval` = 0
+                ORDER BY `Id` ";
+
+        if (!is_null($limit))
+            $sql .= " LIMIT " . (int)$limit;
+
+        if (!is_null($offset))
+            $sql .= " OFFSET " . (int)$offset;
+
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute();
+        } catch (PDOExeption $e) {
+            throw new ModelException("Unable to proccess storage query", 500);
+        }
+
+        $messages = array();
+        foreach ($sth->fetchAll() as $messageData) {
+            $message = new \Message;
+            $messages[$messageData['Id']] = $message->formatFrom('DB',$messageData);
+        }
+
+        return $messages;
+    }
+
+    public function getMessagesToApproveCount($approval = 0)
+    {
+        $sql = "SELECT
+                    COUNT(*)
+                FROM
+                  `Messages`
+                WHERE
+                    `Approval` = :approval";
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':approval' => $approval,
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query " . $e, 1);
+        }
+
+        return $sth->fetchColumn(0);
     }
 
     public function getStatusCount($playerId, $status = 0)

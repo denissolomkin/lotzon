@@ -143,6 +143,11 @@ Config::instance()->privateResources =  array(
     '/private/monetisation' => 'controllers\admin\Monetisation:index',
     '/private/monetisation/status/:id' => 'controllers\admin\Monetisation:status',
 
+    '/private/messages/' => 'controllers\admin\Messages:index',
+    '/private/messages/list/:playerId/:toPlayerId' => 'controllers\admin\Messages:list',
+    '/private/messages/approve/:id' => 'controllers\admin\Messages:approve',
+    '/private/messages/delete/:id' => 'controllers\admin\Messages:delete',
+
     '/private/users'        => 'controllers\admin\Users:index',
     '/private/users/profile/:playerId' => array(
         'get' => 'controllers\admin\Users:profile',
@@ -181,6 +186,10 @@ Config::instance()->privateResources =  array(
         'post' => 'controllers\admin\Users:addTransaction'
     ),
     '/private/users/transactions/:playerId' => 'controllers\admin\Users:transactions',
+    '/private/captcha/'      => array(
+        'get' => 'controllers\admin\Captcha:index',
+        'post' => 'controllers\admin\Captcha:save',
+    ),
     '/private/banners/'      => array(
         'get' => 'controllers\admin\Banners:index',
         'post' => 'controllers\admin\Banners:save',

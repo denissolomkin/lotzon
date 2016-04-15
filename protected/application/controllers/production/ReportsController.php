@@ -17,6 +17,7 @@ class ReportsController extends \AjaxController
         parent::init();
         $this->validateRequest();
         $this->authorizedOnly();
+        $this->validateCaptcha();
     }
 
     public function transactionsAction()

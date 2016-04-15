@@ -11,18 +11,17 @@ class DebugController extends \AjaxController
     {
         parent::init();
         $this->validateRequest();
-        $this->authorizedOnly();
+        $this->authorizedOnly(true);
     }
 
     public function addAction()
     {
-        $player = $this->session->get(Player::IDENTITY);
         $message = $this->request()->post('message', null);
         $log = $this->request()->post('log', null);
         $url = $this->request()->post('url', null);
         $line = $this->request()->post('line', null);
 
-        \DebugModel::instance()->addLog($player, array(
+        \DebugModel::instance()->addLog($this->player, array(
             "log" => $message ?: $log,
             "url" => $url,
             "line" => $line,

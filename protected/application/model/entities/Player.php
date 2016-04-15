@@ -20,7 +20,8 @@ class Player extends Entity
 
     static $MASK = array(
         'dates'=>array('Moment','QuickGame','ChanceGame','AdBlockLast','AdBlocked','WSocket','TeaserClick','Ping','Login','Notice','Registration'),
-        'counters'=>array('WhoMore','SeaBattle','Notice','Note','AdBlock','Log','Ip','MyReferal','Referal','MyInviter','Inviter','ShopOrder','MoneyOrder','Review','Message','CookieId','Mult'),
+        'stats'=>array('WhoMore','SeaBattle','Notice','Note','AdBlock','Log','Ip','MyReferal','Referal','MyInviter','Inviter','ShopOrder','MoneyOrder','Review','Message','CookieId','Mult'),
+        'counters'=>array('CaptchaCount','CaptchaTime'),
         'privacy'=>array('Name','Surname','Gender','Birthday','Age','Zip','Address') // list of variables, which can be modify by player
     );
 
@@ -68,6 +69,7 @@ class Player extends Entity
 
     protected $_privacy        = array();
     protected $_dates          = array();
+    protected $_counters       = array();
     protected $_country        = '';
     protected $_lang           = '';
 
@@ -96,7 +98,7 @@ class Player extends Entity
 
     // filled only when list of players fetched
     protected $_ticketsFilled = 0;
-    protected $_counters = array();
+    protected $_stats = array();
 
     protected $_friend = null;
 
@@ -458,6 +460,32 @@ class Player extends Entity
         return $this;
     }
 
+    public function initStats($data=null)
+    {
+
+        if(!$data) {
+            $model = $this->getModelClass();
+
+            try {
+                $data = $model::instance()->initStats($this);
+            } catch (ModelException $e) {
+                throw new EntityException($e->getMessage(), $e->getCode());
+
+            }
+        }
+
+        $stats = array();
+        foreach(self::$MASK['stats'] as $key)
+            if(isset($data['Stat'.$key]))
+                $stats[$key] = $data['Stat'.$key];
+            elseif(isset($data[$key]))
+                $stats[$key] = $data[$key];
+
+        $this->setStats($stats);
+
+        return $this;
+    }
+
     public function initCounters($data=null)
     {
 
@@ -474,9 +502,7 @@ class Player extends Entity
 
         $counters = array();
         foreach(self::$MASK['counters'] as $key)
-            if(isset($data['Counter'.$key]))
-                $counters[$key] = $data['Counter'.$key];
-            elseif(isset($data[$key]))
+            if(isset($data[$key]))
                 $counters[$key] = $data[$key];
 
         $this->setCounters($counters);
@@ -935,7 +961,8 @@ class Player extends Entity
             ->update()
             ->updateLogin()
             ->writeLogin()
-            ->initPrivacy();
+            ->initPrivacy()
+            ->initCounters();
 
         $session->set(Player::IDENTITY, $this);
 
@@ -1095,15 +1122,20 @@ class Player extends Entity
                  ->setAdditionalData(!empty($data['AdditionalData']) ? @unserialize($data['AdditionalData']) : null)
                  ->setGoldTicket($data['GoldTicket']);
 
+            if (isset($data['CaptchaCount'])) {
+                $this->initCounters($data);
+            }
+
             if (isset($data['TicketsFilled'])) {
                 $this->setTicketsFilled($data['TicketsFilled']);
             }
+
             if (isset($data['Registration'])) {
                 $this->initDates($data);
             }
 
             if (isset($data['MyReferal'])) {
-                $this->initCounters($data);
+                $this->initStats($data);
             }
         }
 

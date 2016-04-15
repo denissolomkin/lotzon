@@ -16,7 +16,8 @@ class PingController extends \AjaxController
 
         parent::init();
         $this->validateRequest();
-        $this->authorizedOnly();
+        $this->authorizedOnly(true);
+        $this->validateCaptcha();
     }
 
     public function indexAction()
@@ -29,30 +30,9 @@ class PingController extends \AjaxController
         $response        = array();
         $counters        = array();
         $delete          = array();
-        $player          = $this->session->get(Player::IDENTITY);
-
-
-        /* todo delete
-        patch for old Player Entity in Memcache sessions
-        delete after week at April 17 or after drop Memcache
-        */
-        try {
-            $player->getPrivacy();
-
-        } catch (\Exception $e) {
-            $this->session->get(Player::IDENTITY)->fetch();
-            $playerId = $player->getId();
-            $player = new Player();
-            $player
-                ->setId($playerId)
-                ->fetch()
-                ->initPrivacy();
-            $this->session->set(Player::IDENTITY, $player);
-        }
-
 
         /* todo delete after merge LOT-22 */
-        $player->initDates();
+        $this->player->initDates();
 
         $gamesPublished    = \GamesPublishedModel::instance()->getList();
         $AdBlockDetected = $this->request()->post('online', null);
@@ -63,9 +43,9 @@ class PingController extends \AjaxController
         * Unread Notices
         */
 
-        if (0 && $notice = \NoticesModel::instance()->getPlayerLastUnreadNotice($player)) {
+        if (0 && $notice = \NoticesModel::instance()->getPlayerLastUnreadNotice($this->player)) {
 
-            $counters['notices']       = \NoticesModel::instance()->getPlayerUnreadNotices($player);
+            $counters['notices']       = \NoticesModel::instance()->getPlayerUnreadNotices($this->player);
             $badges['notifications'][] = array(
                 'key'     => 'notice',
                 'title'   => 'title-notice',
@@ -81,13 +61,13 @@ class PingController extends \AjaxController
         * Adblock
         */
 
-        $player
+        $this->player
             ->setDates(($AdBlockDetected ? time() : null), 'AdBlocked')
             ->setDates(($AdBlockDetected ? time() : null), 'AdBlockLast')
             ->markOnline();
 
-        if (($player->getDates('AdBlockLast') && !$AdBlockDetected) || (!$player->getDates('AdBlockLast') && $AdBlockDetected)) {
-            $player->writeLog(array(
+        if (($this->player->getDates('AdBlockLast') && !$AdBlockDetected) || (!$this->player->getDates('AdBlockLast') && $AdBlockDetected)) {
+            $this->player->writeLog(array(
                 'action' => 'AdBlock',
                 'desc'   => ($AdBlockDetected ? 'ADBLOCK_DETECTED' : 'ADBLOCK_DISABLED'),
                 'status' => ($AdBlockDetected ? 'danger' : 'warning')
@@ -100,13 +80,13 @@ class PingController extends \AjaxController
         */
 
         if (SettingsModel::instance()->getSettings('counters')->getValue('TeaserClick')
-            && $player->getGamesPlayed() >= SettingsModel::instance()->getSettings('counters')->getValue('TEASER_CLICK_MIN_GAME')
-            && $player->getDates('TeaserClick') - time() < SettingsModel::instance()->getSettings('counters')->getValue('TeaserClick')
+            && $this->player->getGamesPlayed() >= SettingsModel::instance()->getSettings('counters')->getValue('TEASER_CLICK_MIN_GAME')
+            && $this->player->getDates('TeaserClick') - time() < SettingsModel::instance()->getSettings('counters')->getValue('TeaserClick')
         ) {
-            if ($player->checkDate('TeaserClick')) {
+            if ($this->player->checkDate('TeaserClick')) {
                 $response['callback'] = "if($('.teaser a[target=\"_blank\"] img').length && (typeof one == 'undefined' || !one)){ one=true;var a=[]; $('.teaser a[target=\"_blank\"] img').closest('a').each(function(id, num) { if($(num).attr('href') && $(num).attr('href').search('celevie-posetiteli')<0) a.push($(num).attr('href')); }); a = a [Math.floor(Math.random()*a.length)]; $(document).one('click',function(){ one=false;window.open(a,'_blank'); });}";
             } else
-                $player->initDates();
+                $this->player->initDates();
         }
 
 
@@ -121,11 +101,11 @@ class PingController extends \AjaxController
             $this->session->set($key . 'LastDate', time());
 
         /* todo delete after merge LOT-22 */
-        if ($player->getDates($key) > $this->session->get($key . 'LastDate'))
-            $this->session->set($key . 'LastDate', $player->getDates($key));
+        if ($this->player->getDates($key) > $this->session->get($key . 'LastDate'))
+            $this->session->set($key . 'LastDate', $this->player->getDates($key));
 
         $diff = ($this->session->get($key . 'LastDate') + $timer * 60) - time();
-        // print_r(array($player->getDates($key)-time(),$this->session->get($key . 'LastDate')-time(),$diff));
+        // print_r(array($this->player->getDates($key)-time(),$this->session->get($key . 'LastDate')-time(),$diff));
 
         if ($diff < 0){
             $badges['notifications'][] = array(
@@ -154,8 +134,8 @@ class PingController extends \AjaxController
         }
 
         /* todo delete after merge LOT-22 */
-        if ($player->getDates($key) > $this->session->has($key . 'LastDate'))
-            $this->session->set($key . 'LastDate', $player->getDates($key));
+        if ($this->player->getDates($key) > $this->session->has($key . 'LastDate'))
+            $this->session->set($key . 'LastDate', $this->player->getDates($key));
 
         if ($this->session->get($key . 'LastDate') && !$this->session->has($key) && isset($gamesPublished[$key])) {
 
@@ -191,13 +171,13 @@ class PingController extends \AjaxController
                 $response['res']['communication']['comments'] = $list;
             }
         }
-        $counters['notifications']['server'] = \CommentsModel::instance()->getNotificationsCount($player->getId());
+        $counters['notifications']['server'] = \CommentsModel::instance()->getNotificationsCount($this->player->getId());
 
         /**
          * Messages
          */
         if (isset($forms['communication-messages'])) {
-            $list = \MessagesModel::instance()->getLastTalks($player->getId(), NULL, NULL, $forms['communication-messages']['timing']);
+            $list = \MessagesModel::instance()->getLastTalks($this->player->getId(), NULL, NULL, $forms['communication-messages']['timing']);
             if (count($list) > 0) {
                 $response['res']['communication']['messages']    = array();
                 $response['cache']['communication-messages']     = 'session';
@@ -208,11 +188,11 @@ class PingController extends \AjaxController
                 }
             }
         }
-        $counters['messages'] = \MessagesModel::instance()->getStatusCount($player->getId(), 0);
+        $counters['messages'] = \MessagesModel::instance()->getStatusCount($this->player->getId(), 0);
         if ($counters['messages'] > 0) {
-            $list = \MessagesModel::instance()->getUnreadMessages($player->getId());
+            $list = \MessagesModel::instance()->getUnreadMessages($this->player->getId());
             if (count($list)>0) {
-                \MessagesModel::instance()->setNotificationsDate($player->getId());
+                \MessagesModel::instance()->setNotificationsDate($this->player->getId());
                 foreach ($list as $message) {
                     $badges['messages'][] = array(
                         "id" => $message->getId(), /* messageId */
@@ -246,7 +226,7 @@ class PingController extends \AjaxController
         /**
          * Friends
          */
-        $counters['requests'] = \FriendsModel::instance()->getStatusCount($player->getId(), 0, true);
+        $counters['requests'] = \FriendsModel::instance()->getStatusCount($this->player->getId(), 0, true);
 
         $response['badges']          = $badges;
         $response['player']['count'] = $counters;

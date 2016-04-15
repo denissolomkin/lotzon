@@ -11,7 +11,8 @@ class InvitesController extends \AjaxController
     {
         parent::init();
         $this->validateRequest();
-        $this->authorizedOnly();
+        $this->authorizedOnly(true);
+        $this->validateCaptcha();
     }
 
     public function emailInviteAction()
@@ -20,7 +21,7 @@ class InvitesController extends \AjaxController
 
         $invite = new EmailInvite();
         $invite->setEmail($email)
-               ->setInviter($this->session->get(Player::IDENTITY));
+               ->setInviter($this->player);
 
         try {
             $invite->create();
@@ -34,7 +35,7 @@ class InvitesController extends \AjaxController
         }
 
         $this->ajaxResponse(array(
-            'invitesCount' => $this->session->get(Player::IDENTITY)->getAvailableInvitesCount(),
+            'invitesCount' => $this->player->getAvailableInvitesCount(),
         ));
     }
 }

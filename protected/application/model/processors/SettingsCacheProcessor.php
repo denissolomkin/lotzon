@@ -17,19 +17,26 @@ class SettingsCacheProcessor extends BaseCacheProcessor implements IProcessor
     public function create(Entity $settings)
     {
         $settings = $this->getBackendProcessor()->create($settings);
-        $this->getList(true);
+        $this->recache();
         return $settings;
     }
 
-    public function getList($recache=false)
+    public function getList()
     {
-        if (($list = Cache::init()->get(self::LIST_CACHE_KEY)) === false OR $recache) {
-            $list = $this->getBackendProcessor()->getList();
-
-            if (!Cache::init()->set(self::LIST_CACHE_KEY , $list)) {
-                throw new ModelException("Unable to cache storage data", 500);
-            }
+        if (($list = Cache::init()->get(self::LIST_CACHE_KEY)) === false) {
+            $list = $this->recache();
         }
+        return $list;
+    }
+
+    public function recache()
+    {
+        $list = $this->getBackendProcessor()->getList();
+
+        if (!Cache::init()->set(self::LIST_CACHE_KEY , $list)) {
+            throw new ModelException("Unable to cache storage data", 500);
+        }
+
         return $list;
     }
 

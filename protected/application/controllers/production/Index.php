@@ -129,10 +129,10 @@ class Index extends \SlimController\SlimController
 
         /* todo delete
         patch for old Player Entity in Memcache sessions
-        delete after week at April 17 or after drop Memcache
+        delete after week from April 18 or after drop Memcache
         */
         try {
-            $player->getPrivacy();
+            $player->initStats();
 
         } catch (\Exception $e) {
             $this->session->get(Player::IDENTITY)->fetch();
@@ -141,7 +141,8 @@ class Index extends \SlimController\SlimController
             $player
                 ->setId($playerId)
                 ->fetch()
-                ->initPrivacy();
+                ->initPrivacy()
+                ->initCounters();
             $this->session->set(Player::IDENTITY, $player);
         }
 
@@ -266,6 +267,7 @@ class Index extends \SlimController\SlimController
             ),
             'yandexMetrika' => (int)$counters->getValue('YANDEX_METRIKA'),
             'googleAnalytics' => $counters->getValue('GOOGLE_ANALYTICS'),
+            'captchaKey' => $counters->getValue('CAPTCHA_CLIENT'),
         );
 
         $debug = array(

@@ -39,19 +39,4 @@ class SettingsModel extends Model
         return $settings;
     }
 
-    public function save($key, $value)
-    {
-    }
-
-    public function fetch(Entity $settings) {
-
-        try {
-            $settings = $this->getProcessor()->fetch($settings);
-        } catch (ModelException $e) {
-            throw new EntityException("Model Error", 500);
-        }
-
-        return $settings;
-    }
-
 }

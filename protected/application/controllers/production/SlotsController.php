@@ -17,7 +17,8 @@ class SlotsController extends \AjaxController
     {
         parent::init();
         $this->validateRequest();
-        $this->authorizedOnly();
+        $this->authorizedOnly(true);
+        $this->validateCaptcha();
     }
 
     public function itemAction($key = 'ChanceGame', $id = null)
@@ -33,12 +34,10 @@ class SlotsController extends \AjaxController
             $this->ajaxResponse(array(), 0, 'GAME_LIST_EMPTY');
         }
 
-        $lang = $this->session->get(Player::IDENTITY)->getLang();
-
         if ($game = $publishedGames->getLoadedGames()[array_search($id, $publishedGames->getGames())]) {
 
             $game
-                ->setLang($lang)
+                ->setLang($this->player->getLang())
                 ->loadPrizes();
 
             $response = array(
@@ -65,9 +64,6 @@ class SlotsController extends \AjaxController
 
         /* validate errors */
         switch (true) {
-            case !($player = $this->session->get(Player::IDENTITY)):
-                $error = 'PLAYER_NOT_FOUND';
-                break;
 
             case !$id:
                 $error = 'GAME_LIST_EMPTY';
@@ -93,14 +89,14 @@ class SlotsController extends \AjaxController
                 ->setId($gameConstructor->getId())
                 ->fetch();
 
-            $game->setUserId($player->getId())
+            $game->setUserId($this->player->getId())
                 ->setTimeout($publishedGames->getOptions('timeout'))
                 ->setTime(time())
-                ->setLang($player->getLang())
+                ->setLang($this->player->getLang())
                 ->setUid(uniqid())
                 ->loadPrizes();
 
-            $balance = $player->getBalance();
+            $balance = $this->player->getBalance();
 
             $currency = $this->request()->post('currency', null);
             $bet = $this->request()->post('bet', null);
@@ -141,10 +137,10 @@ class SlotsController extends \AjaxController
                 'id'    => $game->getId(),
                 'uid'   => $game->getUid(),
                 'type'  => 'Slots',
-                'title' => $game->getTitle($player->getLang())
+                'title' => $game->getTitle($this->player->getLang())
             );
 
-            $player->{'add' . $currencyBD}(
+            $this->player->{'add' . $currencyBD}(
                 $bet * -1,
                 $desc
             );
@@ -157,7 +153,7 @@ class SlotsController extends \AjaxController
             /* todo */
             $game->saveGame();
 
-            $balance = $player->getBalance();
+            $balance = $this->player->getBalance();
             $response['player'] = array(
                 "balance" => array(
                     "points" => $balance['Points'],
@@ -165,7 +161,7 @@ class SlotsController extends \AjaxController
                 )
             );
 
-            $this->playerAward($player, $game);
+            $this->playerAward($game);
 
         } else {
             $this->ajaxResponseBadRequest('GAME_NOT_ENABLED');
@@ -174,7 +170,7 @@ class SlotsController extends \AjaxController
         $this->ajaxResponseNoCache($response);
     }
 
-    private function playerAward($player, $game)
+    private function playerAward($game)
     {
 
         foreach ($game->getGamePrizes() as $currency => $sum) {
@@ -184,20 +180,20 @@ class SlotsController extends \AjaxController
                     'id'    => $game->getId(),
                     'uid'   => $game->getUid(),
                     'type'  => 'Slots',
-                    'title' => "Выигрыш " . $game->getTitle($player->getLang())
+                    'title' => "Выигрыш " . $game->getTitle($this->player->getLang())
                 );
 
                 switch ($currency) {
 
                     case LotterySettings::CURRENCY_MONEY:
-                        $player->addMoney(
+                        $this->player->addMoney(
                             $sum,
                             $desc
                         );
                         break;
 
                     case LotterySettings::CURRENCY_POINT:
-                        $player->addPoints(
+                        $this->player->addPoints(
                             $sum,
                             $desc
                         );

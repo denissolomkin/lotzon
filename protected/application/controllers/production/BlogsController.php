@@ -15,6 +15,7 @@ class BlogsController extends \AjaxController
         parent::init();
         $this->validateRequest();
         $this->authorizedOnly();
+        $this->validateCaptcha();
     }
 
     public function postAction($id)

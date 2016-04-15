@@ -20,6 +20,16 @@ class MessagesModel extends Model
         return $this->getProcessor()->getStatusCount($playerId, $status);
     }
 
+    public function getMessagesToApproveCount($approval = 0)
+    {
+        return $this->getProcessor()->getMessagesToApproveCount($approval);
+    }
+
+    public function getMessagesToApprove($limit = null, $offset = null)
+    {
+        return $this->getProcessor()->getMessagesToApprove($limit, $offset);
+    }
+
     public function getList($playerFirst, $playerSecond, $count = NULL, $beforeId = NULL, $afterId = NULL, $offset = NULL)
     {
         return $this->getProcessor()->getList($playerFirst, $playerSecond, $count, $beforeId, $afterId, $offset);

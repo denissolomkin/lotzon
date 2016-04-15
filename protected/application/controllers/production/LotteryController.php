@@ -23,14 +23,16 @@ class LotteryController extends \AjaxController
         self::$defaultCountry   = CountriesModel::instance()->defaultCountry();
 
         parent::init();
+
         $this->validateRequest();
-        $this->authorizedOnly();
+        $this->authorizedOnly(true);
+        $this->validateCaptcha();
     }
 
     public function createTicketAction()
     {
         $ticket = new LotteryTicket();
-        $ticket->setPlayerId($this->session->get(Player::IDENTITY)->getId());
+        $ticket->setPlayerId($this->player->getId());
         $ticket->setCombination($this->request()->post('combination'));
         $ticket->setTicketNum($this->request()->post('tickNum'));
         $ticket->setIsGold($this->request()->post('isGold',0)=="true"?1:0);
@@ -100,10 +102,10 @@ class LotteryController extends \AjaxController
         $price    = $this->request()->post('price');
 
         $player = new Player;
-        $player->setId($this->session->get(Player::IDENTITY)->getId())->fetch();
+        $player->setId($this->player->getId())->fetch();
         $country = (
         CountriesModel::instance()->isCountry($player->getCountry())
-            ? $this->session->get(Player::IDENTITY)->getCountry()
+            ? $this->player->getCountry()
             : CountriesModel::instance()->defaultCountry());
 
         $goldPrice = SettingsModel::instance()->getSettings('goldPrice')->getValue($country);
@@ -162,7 +164,7 @@ class LotteryController extends \AjaxController
     public function historyAction()
     {
 
-        $playerId = $this->session->get(Player::IDENTITY)->getId();
+        $playerId = $this->player->getId();
 
         $offset = $this->request()->get('offset');
         $count  = $this->request()->get('count', self::$lotteriesPerPage);
@@ -212,7 +214,7 @@ class LotteryController extends \AjaxController
     {
 
         $player = new \Player;
-        $player_country = $player->setId($this->session->get(Player::IDENTITY)->getId())->fetch()->getCountry();
+        $player_country = $player->setId($this->player->getId())->fetch()->getCountry();
 
         try {
             $lottery = \LotteriesModel::instance()->getLotteryDetails($lotteryId);
@@ -274,7 +276,7 @@ class LotteryController extends \AjaxController
     {
 
         $player = new Player;
-        $player->setId($this->session->get(Player::IDENTITY)->getId())->fetch();
+        $player->setId($this->player->getId())->fetch();
 
         try {
             $list = \TicketsModel::instance()->getPlayerTickets($player, $lotteryId);
@@ -308,7 +310,7 @@ class LotteryController extends \AjaxController
     {
 
         $player = new Player;
-        $player->setId($this->session->get(Player::IDENTITY)->getId())->fetch();
+        $player->setId($this->player->getId())->fetch();
 
         $response = array(
             "player" => array(

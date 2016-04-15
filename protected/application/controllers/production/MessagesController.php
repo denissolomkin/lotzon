@@ -15,6 +15,7 @@ class MessagesController extends \AjaxController
 
         parent::init();
         $this->authorizedOnly();
+        $this->validateCaptcha();
     }
 
     public function indexAction()
@@ -153,6 +154,23 @@ class MessagesController extends \AjaxController
         $obj->setImage($image);
 
         try {
+
+            $admins = array();
+
+            if(\SettingsModel::instance()->getSettings('counters')->getValue('USER_REVIEW_DEFAULT'))
+                array_push($admins, \SettingsModel::instance()->getSettings('counters')->getValue('USER_REVIEW_DEFAULT'));
+            if(\SettingsModel::instance()->getSettings('counters')->getValue('USER_ORDERS_DEFAULT'))
+                array_push($admins, \SettingsModel::instance()->getSettings('counters')->getValue('USER_ORDERS_DEFAULT'));
+
+            if (empty($admins) OR (!in_array($obj->getPlayerId(), $admins) AND (!in_array($obj->getToPlayerId(), $admins)))) {
+                foreach (array('www', 'http', '@', '.ru') as $needle) {
+                    if (stristr($obj->getText(), $needle)) {
+                        $obj->setApproval(0);
+                        break;
+                    }
+                }
+            }
+
             $obj->create();
         } catch (\EntityException $e) {
             $this->ajaxResponseInternalError($e->getMessage());

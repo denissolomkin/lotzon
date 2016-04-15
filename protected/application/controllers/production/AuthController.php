@@ -133,6 +133,8 @@ class AuthController extends \SlimController\SlimController {
                     ->payReferal()
                     ->setAgent($_SERVER['HTTP_USER_AGENT'])
                     ->update()
+                    ->initPrivacy()
+                    ->initCounters()
                     ->writeLogin();
 
                 $loggedIn = true;

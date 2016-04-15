@@ -123,7 +123,7 @@ class ShopItemOrder extends Entity
 
     public function setPlayer(Player $player) 
     {
-        $player->initCounters()->initDates();
+        $player->initStats()->initCounters()->initDates();
         $this->_player = $player;
 
         return $this;
