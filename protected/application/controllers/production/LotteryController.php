@@ -268,6 +268,7 @@ class LotteryController extends \AjaxController
             } else {
                 $response['res']['lottery'][$lotteryId]['nextId'] =  \LotteriesModel::instance()->getDependentLotteryId($lotteryId,'next', $player->getId());
                 $response['res']['lottery'][$lotteryId]['prevId'] =  \LotteriesModel::instance()->getDependentLotteryId($lotteryId,'prev', $player->getId());
+                $response['res']['lottery'][$lotteryId]['type']   = 'mine';
             }
 
 
