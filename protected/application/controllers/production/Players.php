@@ -403,20 +403,16 @@ class Players extends \AjaxController
         return true;
     }
 
-    public function settingsAction()
+    public function combinationAction()
     {
-
         $this->validateRequest();
         $this->authorizedOnly();
 
         $favorite   = $this->request()->post('favorite');
-        $subscribe  = $this->request()->post('email');
-        $oldPass    = $this->request()->post('oldPass', '');
-        $newPass    = $this->request()->post('newPass', '');
-        $repeatPass = $this->request()->post('repeatPass', '');
 
         $player = new Player;
         $player->setId($this->session->get(Player::IDENTITY)->getId())->fetch();
+
 
         $fav = array();
         foreach ($favorite as $number) {
@@ -426,7 +422,39 @@ class Players extends \AjaxController
         }
 
         try {
-            $player->updateNewsSubscribe($subscribe == 1 ? true : false)->setFavoriteCombination($fav)->update();
+            $player->setFavoriteCombination($fav)->update();
+        } catch (EntityException $e) {
+            $this->ajaxResponseNoCache(array("message" => $e->getMessage()), $e->getCode());
+            return false;
+        }
+
+        $res = array(
+            "player"  => array(
+                "favorite" => $player->getFavoriteCombination(),
+            )
+        );
+
+        $this->ajaxResponseNoCache($res);
+
+        return true;
+    }
+
+    public function settingsAction()
+    {
+
+        $this->validateRequest();
+        $this->authorizedOnly();
+
+        $subscribe  = $this->request()->post('email');
+        $oldPass    = $this->request()->post('oldPass', '');
+        $newPass    = $this->request()->post('newPass', '');
+        $repeatPass = $this->request()->post('repeatPass', '');
+
+        $player = new Player;
+        $player->setId($this->session->get(Player::IDENTITY)->getId())->fetch();
+
+        try {
+            $player->updateNewsSubscribe($subscribe == 1 ? true : false)->update();
             if (($oldPass != '') && ($newPass != '') && ($repeatPass != '')) {
                 if ($player->getPassword() === $player->compilePassword($oldPass)) {
                     if ($newPass == $repeatPass) {
@@ -448,7 +476,6 @@ class Players extends \AjaxController
                 "settings" => array(
                     "newsSubscribe" => $player->getNewsSubscribe()
                 ),
-                "favorite" => $player->getFavoriteCombination(),
             )
         );
 

@@ -696,6 +696,9 @@ Config::instance()->publicResources = array(
     '/profile/settings' => array(
         'put' => 'controllers\production\Players:settings'
     ),
+    '/profile/combination' => array(
+        'put' => 'controllers\production\Players:combination'
+    ),
     '/profile/avatar' => array(
         'post' => 'controllers\production\Players:avatar'
     ),
