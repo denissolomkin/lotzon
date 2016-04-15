@@ -878,16 +878,16 @@ div.comment-reply-btn {
       .ticket-box.gold .ticket-items .ticket-tabs {
         background: none; }
 
-#lottery-process {
+#lottery-process, #popup-lottery-process {
   height: 768px;
   max-width: 1366px; }
-  #lottery-process .container {
+#lottery-process .container, #popup-lottery-process .container {
     max-width: 686px;
     margin: 0 auto;
     min-width: 0; }
-    #lottery-process .container > div {
+#lottery-process .container > div, #popup-lottery-process .container > div {
       height: 73px; }
-      #lottery-process .container > div a {
+#lottery-process .container > div a, #popup-lottery-process .container > div a {
         top: 27px; }
 
 .ghd-tickets {
@@ -961,9 +961,9 @@ div.comment-reply-btn {
 #lottery .content-box-content .gh-inf {
   font-size: 15.5px; }
 
-#lottery-process.lottery-won {
+#lottery-process.lottery-won, #popup-lottery-process.lottery-won {
   min-width: 1024px; }
-  #lottery-process.lottery-won .balls-end-game .g-oc_li .goc_li-nb {
+#lottery-process.lottery-won .balls-end-game .g-oc_li .goc_li-nb, #popup-lottery-process.lottery-won .balls-end-game .g-oc_li .goc_li-nb {
     position: static; }
 
 .ghd-won {
@@ -974,19 +974,19 @@ div.comment-reply-btn {
 #lottery-ticket-item {
   height: inherit; }
 
-#lottery-process.lottery-won {
+#lottery-process.lottery-won, #popup-lottery-process.lottery-won {
   background: url(../img/1024.png) center center no-repeat; }
 
-#lottery-process {
+#lottery-process, #popup-lottery-process {
   min-width: 1024px;
   height: 768px; }
-  #lottery-process .container {
+#lottery-process .container, #popup-lottery-process .container {
     max-width: 700px;
     margin: 0 auto;
     min-width: 0; }
-    #lottery-process .container > div {
+#lottery-process .container > div, #popup-lottery-process .container > div {
       height: 73px; }
-      #lottery-process .container > div a {
+#lottery-process .container > div a, #popup-lottery-process .container > div a {
         top: 27px; }
 
 .ghd-tickets {
@@ -1038,7 +1038,7 @@ div.comment-reply-btn {
   margin-right: 55px; }
 
 @media (min-width: 1025px) {
-  #lottery-process.lottery-won {
+  #lottery-process.lottery-won,  #popup-lottery-process.lottery-won {
     background: url(../img/1366.png) center center no-repeat; } }
 
 .cabinet-game-history .content-box-item-content {
@@ -1463,7 +1463,7 @@ div.comment-reply-btn {
     margin-top: 34px; }
   #lottery-view .ghd-game-inf .title {
     margin: 0 -30px 15px; }
-  #lottery-process {
+  #lottery-process, #popup-lottery-process {
     width: 1366px; }
   .prizes-for-points {
     padding-left: 30px;

@@ -3,7 +3,6 @@
 namespace controllers\production;
 use \Application, \Player, \EntityException, \CountriesModel, \SettingsModel, \StaticTextsModel, \WideImage, \EmailInvites, \EmailInvite, \LanguagesModel, \Common, \NoticesModel, \GamesSettingsModel, \GameSettingsModel, \ChanceGamesModel;
 use \GeoIp2\Database\Reader;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 Application::import(PATH_APPLICATION . 'model/entities/Player.php');
 Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');
@@ -172,15 +171,6 @@ class Players extends \AjaxController
 
         $this->ajaxResponse(array());
 
-    }
-
-    public function logoutAction()
-    {
-
-        if($this->session->has(Player::IDENTITY))
-            $this->session->get(Player::IDENTITY)->disableAutologin();
-        session_destroy();
-        $this->redirect('/');
     }
 
     public function saveAvatarAction()

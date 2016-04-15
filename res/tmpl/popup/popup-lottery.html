@@ -1,0 +1,78 @@
+﻿<div id="popup-lottery" class="pop-box content-main">
+    <div id="popup-lottery-process" class="clearfix">
+    <button class="close won" onclick="parentNode.parentNode.remove()"></button>
+        <div class="container clearfix">
+
+            <div><!-- <a href="/lottery" class="header-logo"></a> --></div>
+
+            <ul class="balls-end-game clearfix">
+                {{#combination}}
+                <li class="g-oc_li unfilled">
+                    {{#each this}}
+                    <div class="goc_li-nb">
+                        <span class="g-oc_span">{{.}}</span>
+                    </div>
+                    {{/each}}
+                    <!-- <div class="goc_li-sh"></div>
+                    <div class="goc_li-sh2"></div> -->
+                </li>
+                {{/combination}}
+            </ul>
+
+            <section class="lottery-amimation-box">
+
+                <div class="ghd-tickets">
+                    {{#if tickets}}
+                    <ul>
+                        {{#tickets}}
+                        <li class="clearfix">
+                            <span>{{#if (eq num (lottery 'totalTickets'))}} <span class="gold">GOLD</span> {{else}} {{i18n "title-lottery-ticket-num"}} N°{{num}} {{/if}}</span>
+                            <ul>
+                                {{#combination}}
+                                <li class="filled-ball" data-num='{{ball}}'>
+                                    {{ball}}
+                                </li>
+                                {{/combination}}
+                                {{^combination}}
+                                <li class="unfilled">
+                                    {{i18n "title-lottery-ticket-unfilled"}}
+                                </li>
+                                {{/combination}}
+                            </ul>
+                        </li>
+                        {{/tickets}}
+                    </ul>
+                    
+                    <div class="logo"><i class="i-lotzon"></i></div>
+
+                    {{#if win}}
+                    <div class="ghd-text ghd-won won">
+                        <div class="grid-container">
+                            {{#each win}}
+                            <div class="width-50">
+                                <span>{{i18n 'title-lottery-won' currency}}:</span>
+                                <strong>{{number prize}}</strong>
+                            </div>
+                            {{/each}}
+                        </div>
+                    </div>
+
+                    {{else}}
+                    <div class="ghd-text ghd-fale won">{{i18n 'title-lottery-not-won'}}</div>
+                    {{/if}}
+
+                    {{else}}
+                    <div class="ghd-text won">{{i18n 'title-lottery-not-play'}}</div>
+                    {{/if}}
+                </div>
+
+            </section>
+
+        </div>
+
+        <div class="container-center won">
+            <a class="btn btn-flat" data-id="{{@key}}" href="/lottery/{{ id }}">{{i18n 'title-lottery-look-results'}}</a>
+        </div> 
+    </div>
+</div>
+<!-- END PROCESS BLOCK -->

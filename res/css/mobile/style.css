@@ -1170,11 +1170,11 @@ header {
 .content-top > * {
   min-height: 0 !important; }
 
-#lottery-process {
+#lottery-process, #popup-lottery-process {
   height: 100% !important;
   max-height: 100% !important; }
 
-#lottery-process.lottery-won {
+#lottery-process.lottery-won, #popup-lottery-process.lottery-won {
   background-size: cover !important; }
 
 #lottery-view {
@@ -1851,18 +1851,18 @@ header {
     #lottery .content-box-content .gh-date {
       margin-bottom: 15px;
       display: block; }
-  #lottery-process {
+  #lottery-process, #popup-lottery-process {
     max-width: 100%;
     height: 634px; }
-    #lottery-process.lottery-won {
+    #lottery-process.lottery-won, #popup-lottery-process.lottery-won {
       background: url(../img/600.png) center center no-repeat; }
-    #lottery-process .container {
+    #lottery-process .container, #popup-lottery-process .container {
       max-width: 410px;
       margin: 0 auto;
       min-width: 0; }
-      #lottery-process .container > div {
+      #lottery-process .container > div, #popup-lottery-process .container > div {
         height: 73px; }
-        #lottery-process .container > div a {
+        #lottery-process .container > div a, #popup-lottery-process .container > div a {
           top: 27px; }
   .balls-end-game .g-oc_li {
     width: 62px;
@@ -1949,17 +1949,17 @@ header {
 @media (min-width: 480px) and (min-width: 600px) {
   .lottery-amimation-box {
     margin-top: 30px; }
-  #lottery-process {
+  #lottery-process, #popup-lottery-process {
     height: 658px; }
-    #lottery-process.lottery-won {
+  #lottery-process.lottery-won, #popup-lottery-process.lottery-won {
       background: url(../img/768.png) center center no-repeat; }
-    #lottery-process .container {
+  #lottery-process .container, #popup-lottery-process .container {
       max-width: 498px;
       margin: 0 auto;
       min-width: 0; }
-      #lottery-process .container > div {
+  #lottery-process .container > div, #popup-lottery-process .container > div {
         height: 73px; }
-        #lottery-process .container > div a {
+  #lottery-process .container > div a, #popup-lottery-process .container > div a {
           top: 27px; }
   .balls-end-game .g-oc_li {
     width: 72px;
@@ -2620,16 +2620,16 @@ header {
     padding: 10px 30px 0; }
     .matches-inf-wrapper.carousel .matches-inf {
       width: 47.5%; }
-  #lottery-process {
+  #lottery-process, #popup-lottery-process {
     height: 680px; }
-    #lottery-process .container {
+  #lottery-process .container, #popup-lottery-process .container {
       max-width: 520px;
       margin: 0 auto;
       min-width: 0;
       padding: 0; }
-      #lottery-process .container > div {
+  #lottery-process .container > div, #popup-lottery-process .container > div {
         height: 73px; }
-        #lottery-process .container > div a {
+  #lottery-process .container > div a, #popup-lottery-process .container > div a {
           top: 27px; }
   .ghd-tickets {
     padding: 0 24px; }
@@ -2767,8 +2767,8 @@ header {
     padding-left: 23px; } }
 
 @media (min-width: 768px) and (min-width: 769px) {
-  #lottery-process.lottery-won {
-    background: url(../img/1024.png) center center no-repeat; } }
+  #lottery-process.lottery-won, #popup-lottery-process.lottery-won {
+    background: url(../img/1024.png) center center no-repeat; }}
 
 @media (min-width: 768px) {
   .cabinet-game-history .content-box-item-content {

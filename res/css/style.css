@@ -123,7 +123,7 @@ a {
   z-index: 1010;
   background: rgba(0, 0, 0, 0.6); }
 
-#logout div {
+#logout div, #popup-logout div, #popup-captha div {
   margin: 0 auto;
   width: 460px;
   height: auto;
@@ -133,7 +133,7 @@ a {
   top: 20%;
   left: 50%;
   padding: 50px 60px; }
-  #logout div button {
+#logout div button, #popup-logout div button {
     width: 158px;
     height: 48px;
     border: 1px solid #000;
@@ -142,11 +142,11 @@ a {
     text-align: center;
     margin-top: 30px;
     cursor: pointer; }
-    #logout div button:hover {
+#logout div button:hover, #popup-logout div button:hover {
       color: #ffe400; }
-  #logout div p {
+#logout div p, #popup-logout div p, #popup-captcha div p {
     font: 18px/19px "handbookpro-regular"; }
-  #logout div.i-x-slim {
+#logout div.i-x-slim, #popup-logout div.i-x-slim {
     width: 30px;
     height: 30px;
     background: none;
@@ -6163,9 +6163,9 @@ form.loading > * {
     .badges-container > div div[id^="badges-message"] .contain-img {
       padding-left: 50px; }
 
-#lottery-animation-process {
+#lottery-animation-process, #popup-lottery {
   text-align: center !important; }
-  #lottery-animation-process:before {
+#lottery-animation-process:before, #popup-lottery:before {
     content: '';
     display: inline-block;
     vertical-align: middle;
@@ -6177,7 +6177,7 @@ form.loading > * {
     width: 0%;
     height: 100%; }
 
-#lottery-process {
+#lottery-process, #popup-lottery-process {
   float: none !important;
   position: relative !important;
   display: inline-block !important;
@@ -6565,15 +6565,15 @@ form.loading > * {
     .ticket-tabs li:hover .ticket-number-sm {
       background: #4c4c4c; }
 
-#lottery-process {
+#lottery-process, #popup-lottery-process {
   position: absolute;
   margin: 0 auto;
   box-sizing: border-box;
   background-color: #B6CFD3;
   width: 100%; }
-  #lottery-process .won {
+#lottery-process .won, #popup-lottery-process .won {
     display: none; }
-    #lottery-process .won.close {
+#lottery-process .won.close, #popup-lottery-process .won.close {
       position: absolute;
       height: 25px;
       width: 25px;
@@ -6581,29 +6581,29 @@ form.loading > * {
       top: 20px;
       background: url(../css/img/sprite.png);
       background-position: -98px -190px; }
-  #lottery-process .container-center {
+#lottery-process .container-center, #popup-lottery-process .container-center {
     margin-top: 35px;
     display: none; }
-    #lottery-process .container-center .btn {
+#lottery-process .container-center .btn,  #popup-lottery-process .container-center .btn {
       display: inline-block;
       font: 14px handbookpro-regular;
       line-height: 28px; }
-  #lottery-process.lottery-won {
+#lottery-process.lottery-won, #popup-lottery-process.lottery-won {
     background: url(img/320.png) center center no-repeat;
     background-size: cover; }
-  #lottery-process .container {
+#lottery-process .container, #popup-lottery-process .container {
     max-width: 298px;
     margin: 0 auto;
     min-width: 0;
     height: auto; }
-    #lottery-process .container .ghd-won {
+#lottery-process .container .ghd-won,    #popup-lottery-process .container .ghd-won {
       display: none; }
-    #lottery-process .container .ghd-fale {
+#lottery-process .container .ghd-fale, #popup-lottery-process .container .ghd-fale {
       display: none; }
-    #lottery-process .container > div {
+#lottery-process .container > div, #popup-lottery-process .container > div {
       text-align: center;
       height: 63px; }
-      #lottery-process .container > div a {
+#lottery-process .container > div a, #popup-lottery-process .container > div a {
         line-height: 63px;
         display: inline-block;
         float: none;
@@ -6996,7 +6996,7 @@ form.loading > * {
   color: #4a4a4a; }
 
 @media (min-width: 321px) {
-  #lottery-process.lottery-won {
+  #lottery-process.lottery-won, #popup-lottery-process.lottery-won {
     background: url(img/480.png) center center no-repeat; } }
 
 @media (min-width: 480px) {
