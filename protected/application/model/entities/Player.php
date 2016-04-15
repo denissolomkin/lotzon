@@ -1209,6 +1209,7 @@ class Player extends Entity
                         'country'    => $this->applyPrivacy('Country'),
                         'city'       => $this->applyPrivacy('City'),
                     ),
+                    'friends'  => \FriendsModel::instance()->getStatusCount($this->getId(), 1),
                     /*
                     'social'     => $this->getSocial()
                     */
