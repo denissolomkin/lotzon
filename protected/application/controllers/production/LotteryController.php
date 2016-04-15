@@ -211,6 +211,8 @@ class LotteryController extends \AjaxController
     public function lotteryInfoAction($lotteryId)
     {
 
+        $type = $this->request()->get('type', false);
+
         $player = new \Player;
         $player_country = $player->setId($this->session->get(Player::IDENTITY)->getId())->fetch()->getCountry();
 
@@ -259,6 +261,16 @@ class LotteryController extends \AjaxController
                     'matches'  => ($lotteryId>=495?0:null),
                 );
             }
+
+            if ($type != "mine") {
+                $response['res']['lottery'][$lotteryId]['nextId'] =  \LotteriesModel::instance()->getDependentLotteryId($lotteryId,'next');
+                $response['res']['lottery'][$lotteryId]['prevId'] =  \LotteriesModel::instance()->getDependentLotteryId($lotteryId,'prev');
+            } else {
+                $response['res']['lottery'][$lotteryId]['nextId'] =  \LotteriesModel::instance()->getDependentLotteryId($lotteryId,'next', $player->getId());
+                $response['res']['lottery'][$lotteryId]['prevId'] =  \LotteriesModel::instance()->getDependentLotteryId($lotteryId,'prev', $player->getId());
+            }
+
+
 
         } catch (\ModelException $e) {
             $this->ajaxResponseInternalError();
