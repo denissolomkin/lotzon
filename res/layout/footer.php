@@ -60,7 +60,7 @@
                     'users/0/messages',
                     'support/rules',
                     'support/faq',
-                    'logout'
+                    'popup/logout'
                 ]
             },
             balance: ['balance/cashout', 'balance/convert', 'reports/transactions', 'reports/payments']

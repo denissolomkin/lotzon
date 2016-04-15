@@ -331,7 +331,7 @@
 
             R.push({
                 json: json,
-                href: 'lottery-animation-process',
+                href: 'popup-lottery',
                 after: Lottery.runAnimation
             })
         },
@@ -344,7 +344,7 @@
                 count = counter / 2;
                 
             if (readyBalls.length === Tickets.requiredBalls) {
-                $("#lottery-process").addClass('lottery-won');
+                $("#popup-lottery-process").addClass('lottery-won');
                 D.log('Lottery.runAnimation: clearInterval', 'func');
                 window.clearInterval(intervalAnimation);
             }
@@ -378,7 +378,7 @@
                         counter = 400;
                         ball = parseInt($('.goc_li-nb', li).first().text());
                         window.setTimeout(function () {
-                            $("#lottery-process").find('li [data-num="' + ball + '"]').addClass('won_ball')
+                            $("#popup-lottery-process").find('li [data-num="' + ball + '"]').addClass('won_ball')
                         }, 1000);
                     }
 
@@ -390,11 +390,11 @@
 
                             $(".goc_li-sh, .goc_li-sh2").css('display', 'none');
 
-                            if ($("#lottery-process li.won_ball").length) {
-                                $("#lottery-process").addClass('lottery-won');
+                            if ($("#popup-lottery-process li.won_ball").length) {
+                                $("#popup-lottery-process").addClass('lottery-won');
                             }
 
-                            $('#lottery-process .won').css('display', 'block');
+                            $('#popup-lottery-process .won').css('display', 'block');
 
                         }, 2000);
 
