@@ -98,50 +98,86 @@ class LotteryController extends \AjaxController
     public function buyGoldTicketAction()
     {
         $price    = $this->request()->post('price');
+        $currency = $this->request()->post('currency', 'money');
 
         $player = new Player;
         $player->setId($this->session->get(Player::IDENTITY)->getId())->fetch();
-        $country = (
-        CountriesModel::instance()->isCountry($player->getCountry())
-            ? $this->session->get(Player::IDENTITY)->getCountry()
-            : CountriesModel::instance()->defaultCountry());
-
-        $goldPrice = SettingsModel::instance()->getSettings('goldPrice')->getValue($country);
-
-        if ($goldPrice != $price) {
-            $this->ajaxResponseNoCache(array("message"=>"PRICE_NOT_SAME"),403);
-        }
 
         if (($player->getGoldTicket()>0)or(\TicketsModel::instance()->getUnplayedTickets($player->getId())[8]!==false)) {
             $this->ajaxResponseNoCache(array("message"=>"ALREADY_BOUGHT"),400);
         }
 
-        try {
-            \TicketsModel::instance()->beginTransaction();
-            $money = \PlayersModel::instance()->getBalance($player, true)['Money'];
-            if ($money<$goldPrice) {
-                throw new \Exception();
+        if ($currency!='points') {
+            $country = (
+            CountriesModel::instance()->isCountry($player->getCountry())
+                ? $this->session->get(Player::IDENTITY)->getCountry()
+                : CountriesModel::instance()->defaultCountry());
+
+            $goldPrice = SettingsModel::instance()->getSettings('goldPrice')->getValue($country);
+
+            if ($goldPrice != $price) {
+                $this->ajaxResponseNoCache(array("message" => "PRICE_NOT_SAME"), 403);
             }
-            \PlayersModel::instance()->updateBalance($player, 'Money', (0-$goldPrice));
-            \PlayersModel::instance()->updateGoldTicket($player,1);
 
-            $transaction = new \Transaction;
-            $transaction->setPlayerId($player->getId())->setCurrency('MONEY')->setSum(0-$goldPrice)->setDescription('Покупка золотого билета')->setBalance(\PlayersModel::instance()->getBalance($player, true)['Money'])->create();
+            try {
+                \TicketsModel::instance()->beginTransaction();
+                $money = \PlayersModel::instance()->getBalance($player, true)['Money'];
+                if ($money < $goldPrice) {
+                    throw new \Exception();
+                }
+                \PlayersModel::instance()->updateBalance($player, 'Money', (0 - $goldPrice));
+                \PlayersModel::instance()->updateGoldTicket($player, 1);
 
-            \TicketsModel::instance()->commit();
-        } catch (\Exception $e) {
-            \TicketsModel::instance()->rollBack();
-            $res = array(
-                "message" => "MONEY_NO_ENOUGH",
-                "tickets" => array(
-                    "filledTickets" => \TicketsModel::instance()->getUnplayedTickets($player->getId())
-                )
-            );
-            $this->ajaxResponseNoCache($res, 402);
-        }
-        catch (EntityException $e) {
-            \TicketsModel::instance()->rollBack();
-            $this->ajaxResponseInternalError();
+                $transaction = new \Transaction;
+                $transaction->setPlayerId($player->getId())->setCurrency('MONEY')->setSum(0 - $goldPrice)->setDescription('Покупка золотого билета')->setBalance(\PlayersModel::instance()->getBalance($player, true)['Money'])->create();
+
+                \TicketsModel::instance()->commit();
+            } catch (\Exception $e) {
+                \TicketsModel::instance()->rollBack();
+                $res = array(
+                    "message" => "MONEY_NO_ENOUGH",
+                    "tickets" => array(
+                        "filledTickets" => \TicketsModel::instance()->getUnplayedTickets($player->getId())
+                    )
+                );
+                $this->ajaxResponseNoCache($res, 402);
+            } catch (EntityException $e) {
+                \TicketsModel::instance()->rollBack();
+                $this->ajaxResponseInternalError();
+            }
+        } else {
+            $goldPrice = SettingsModel::instance()->getSettings('goldPrice')->getValue('POINTS');
+
+            if ($goldPrice != $price) {
+                $this->ajaxResponseNoCache(array("message" => "PRICE_NOT_SAME"), 403);
+            }
+
+            try {
+                \TicketsModel::instance()->beginTransaction();
+                $money = \PlayersModel::instance()->getBalance($player, true)['Points'];
+                if ($money < $goldPrice) {
+                    throw new \Exception();
+                }
+                \PlayersModel::instance()->updateBalance($player, 'Points', (0 - $goldPrice));
+                \PlayersModel::instance()->updateGoldTicket($player, 1);
+
+                $transaction = new \Transaction;
+                $transaction->setPlayerId($player->getId())->setCurrency('POINT')->setSum(0 - $goldPrice)->setDescription('Покупка золотого билета')->setBalance(\PlayersModel::instance()->getBalance($player, true)['Points'])->create();
+
+                \TicketsModel::instance()->commit();
+            } catch (\Exception $e) {
+                \TicketsModel::instance()->rollBack();
+                $res = array(
+                    "message" => "POINTS_NO_ENOUGH",
+                    "tickets" => array(
+                        "filledTickets" => \TicketsModel::instance()->getUnplayedTickets($player->getId())
+                    )
+                );
+                $this->ajaxResponseNoCache($res, 402);
+            } catch (EntityException $e) {
+                \TicketsModel::instance()->rollBack();
+                $this->ajaxResponseInternalError();
+            }
         }
 
         $player->fetch();
@@ -151,9 +187,10 @@ class LotteryController extends \AjaxController
             ),
             "player" => array(
                 "balance" => array(
-                    "money" => $player->getMoney(),
-                )
-            )
+                    "money"  => $player->getMoney(),
+                    "points" => $player->getPoints(),
+                ),
+            ),
         );
 
         $this->ajaxResponseNoCache($res);

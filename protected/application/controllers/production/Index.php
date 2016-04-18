@@ -295,24 +295,28 @@ class Index extends \SlimController\SlimController
         );
 
         $lottery = array(
-
-            "lastLotteryId" => $lottery->getId(),
-            "timeToLottery" => LotterySettingsModel::instance()->loadSettings()->getNearestGame() + strtotime('00:00:00', time()) - time(),
-            "selectedTab"   => null,
-            "ticketConditions"  => array(
+            "lastLotteryId"    => $lottery->getId(),
+            "timeToLottery"    => LotterySettingsModel::instance()->loadSettings()->getNearestGame() + strtotime('00:00:00', time()) - time(),
+            "selectedTab"      => null,
+            "ticketConditions" => array(
                 4 => (int)\SettingsModel::instance()->getSettings('ticketConditions')->getValue('CONDITION_4_TICKET'),
                 5 => (int)\SettingsModel::instance()->getSettings('ticketConditions')->getValue('CONDITION_5_TICKET'),
                 6 => (int)\SettingsModel::instance()->getSettings('ticketConditions')->getValue('CONDITION_6_TICKET'),
             ),
-            "totalBalls"    => \LotterySettings::TOTAL_BALLS,
-            "requiredBalls" => \LotterySettings::REQUIRED_BALLS,
-            "totalTickets"  => \LotterySettings::TOTAL_TICKETS,
-            "filledTickets" => \TicketsModel::instance()->getUnplayedTickets($player->getId()),
-            "priceGold"     => SettingsModel::instance()->getSettings('goldPrice')->getValue($this->country),
-            "prizes"        => array(
+            "totalBalls"       => \LotterySettings::TOTAL_BALLS,
+            "requiredBalls"    => \LotterySettings::REQUIRED_BALLS,
+            "totalTickets"     => \LotterySettings::TOTAL_TICKETS,
+            "filledTickets"    => \TicketsModel::instance()->getUnplayedTickets($player->getId()),
+            "priceGold"        => SettingsModel::instance()->getSettings('goldPrice')->getValue($this->country),
+            "priceGoldTicket"  => array(
+                "money"  => SettingsModel::instance()->getSettings('goldPrice')->getValue($this->country),
+                "points" => SettingsModel::instance()->getSettings('goldPrice')->getValue('POINTS'),
+            ),
+            "prizes"           => array(
                 "default" => LotterySettingsModel::instance()->loadSettings()->getPrizes($this->country),
-                "gold"    => LotterySettingsModel::instance()->loadSettings()->getGoldPrizes($this->country)
-            ));
+                "gold"    => LotterySettingsModel::instance()->loadSettings()->getGoldPrizes($this->country),
+            ),
+        );
 
         if (!$this->session->has('MomentLastDate'))
             $this->session->set('MomentLastDate', time());
