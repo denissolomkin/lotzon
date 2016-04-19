@@ -39,9 +39,12 @@ class Index extends \SlimController\SlimController
         $player->setEmail($m)->setHash($vh);
         try {
             $player->loadPreregistration();
+            if ($player->getSocialName() != '') {
+                $player->isSocialUsed();
+            }
             try {
-                $geoReader =  new Reader(PATH_MMDB_FILE);
-                $country = $geoReader->country(Common::getUserIp())->country;
+                $geoReader = new Reader(PATH_MMDB_FILE);
+                $country   = $geoReader->country(Common::getUserIp())->country;
                 $player->setCountry($country->isoCode);
             } catch (\Exception $e) {
                 $player->setCountry(CountriesModel::instance()->defaultCountry());
@@ -50,8 +53,22 @@ class Index extends \SlimController\SlimController
             $player->setLang(CountriesModel::instance()->getCountry($player->getCountry())->getLang());
             $player->setValid(true)
                 ->setDates(time(), 'Login')
-                ->setComplete(false) //todo: remove when set default=false in database
+                ->setComplete(false)//todo: remove when set default=false in database
                 ->create();
+
+            if ($player->getSocialId()) {
+                $player->updateSocial();
+            }
+            if (!$player->isSocialUsed() && SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_social_registration')) {
+                $player->addPoints(
+                    SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_social_registration'),
+                    StaticTextsModel::instance()->setLang($player->getLang())->getText('bonus_social_registration') . $player->getSocialName());
+            }
+            if (SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_registration')) {
+                $player->addPoints(
+                    SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_registration'),
+                    StaticTextsModel::instance()->setLang($player->getLang())->getText('bonus_registration'));
+            }
 
             $player->payInvite()
                 ->payReferal()
