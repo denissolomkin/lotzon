@@ -67,6 +67,12 @@ class Players extends \AjaxController
         } catch (EntityException $e) {
             $this->ajaxResponse(array(), 0, 'INTERNAL_SERVER_ERROR');
         }
+
+        Common::sendEmail($this->getEmail(), 'Регистрация на www.lotzon.com', 'player_registration_new', array(
+            'login' => $this->getEmail(),
+            'hash'  => $this->getHash(),
+        ));
+
         $this->ajaxResponse(array(), 1, 'OK');
         /*
         try {
