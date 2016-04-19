@@ -68,7 +68,7 @@ class Players extends \AjaxController
             $this->ajaxResponse(array(), 0, 'INTERNAL_SERVER_ERROR');
         }
 
-        Common::sendEmail($this->getEmail(), 'Регистрация на www.lotzon.com', 'player_registration_new', array(
+        Common::sendEmail($player->getEmail(), 'Регистрация на www.lotzon.com', 'player_registration_new', array(
             'login' => $player->getEmail(),
             'hash'  => $player->getHash(),
         ));
