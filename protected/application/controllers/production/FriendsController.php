@@ -34,10 +34,28 @@ class FriendsController extends \AjaxController
             return false;
         }
 
-        $response = array(
-            'res' => array(
-            ),
-        );
+        if ($offset) {
+            $player = new Player();
+            $player->setId($userId)->fetch()->setFriendship($this->session->get(Player::IDENTITY)->getId());
+            $response = array(
+                'res' => array(
+                    'user' => array(
+                        "$userId" => $player->export((int)\SettingsModel::instance()->getSettings('counters')->getValue('USER_REVIEW_DEFAULT') == $playerId ? 'card' : 'info'),
+                    ),
+                ),
+            );
+            $response['res']['user'][$userId]['friends'] = array();
+        } else {
+            $response = array(
+                'res' => array(
+                    'user' => array(
+                        "$userId" => array(
+                            "friends" => array()
+                        ),
+                    ),
+                ),
+            );
+        }
 
         if (count($list)<=$count) {
             $response['lastItem'] = true;
@@ -47,7 +65,7 @@ class FriendsController extends \AjaxController
 
         if (!is_null($list)) {
             foreach ($list as $friend) {
-                $response['res'][$friend['PlayerId']] = array(
+                $response['res']['user'][$userId]['friends'][$friend['PlayerId']] = array(
                     'id'        => $friend['PlayerId'],
                     'img'       => $friend['PlayerImg'],
                     'name'      => $friend['PlayerName'],
