@@ -69,8 +69,8 @@ class Players extends \AjaxController
         }
 
         Common::sendEmail($this->getEmail(), 'Регистрация на www.lotzon.com', 'player_registration_new', array(
-            'login' => $this->getEmail(),
-            'hash'  => $this->getHash(),
+            'login' => $player->getEmail(),
+            'hash'  => $player->getHash(),
         ));
 
         $this->ajaxResponse(array(), 1, 'OK');
