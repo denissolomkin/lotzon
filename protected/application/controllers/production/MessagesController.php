@@ -135,6 +135,7 @@ class MessagesController extends \AjaxController
     public function createAction()
     {
         $this->validateRequest();
+        $this->activateCaptcha();
 
         $playerId   = $this->session->get(Player::IDENTITY)->getId();
         $text       = $this->request()->post('text');

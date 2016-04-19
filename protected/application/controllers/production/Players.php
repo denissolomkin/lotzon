@@ -199,7 +199,7 @@ class Players extends \AjaxController
                 $this->player->initCounters();
                 $this->session->set(Player::IDENTITY, $this->player);
             } else {
-                $this->ajaxResponseBadRequest('VALIDATION_FAILED');
+                $this->ajaxResponseInternalError('VALIDATION_FAILED');
             }
 
         } catch (\ModelException $e) {

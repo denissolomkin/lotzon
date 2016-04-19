@@ -31,6 +31,8 @@ class LotteryController extends \AjaxController
 
     public function createTicketAction()
     {
+        $this->activateCaptcha();
+
         $ticket = new LotteryTicket();
         $ticket->setPlayerId($this->player->getId());
         $ticket->setCombination($this->request()->post('combination'));
