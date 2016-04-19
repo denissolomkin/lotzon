@@ -35,6 +35,16 @@ class FriendsController extends \AjaxController
         }
 
         if ($offset) {
+            $response = array(
+                'res' => array(
+                    'user' => array(
+                        "$userId" => array(
+                            "friends" => array()
+                        ),
+                    ),
+                ),
+            );
+        } else {
             $player = new Player();
             $player->setId($userId)->fetch()->setFriendship($this->session->get(Player::IDENTITY)->getId());
             $response = array(
@@ -45,16 +55,6 @@ class FriendsController extends \AjaxController
                 ),
             );
             $response['res']['user'][$userId]['friends'] = array();
-        } else {
-            $response = array(
-                'res' => array(
-                    'user' => array(
-                        "$userId" => array(
-                            "friends" => array()
-                        ),
-                    ),
-                ),
-            );
         }
 
         if (count($list)<=$count) {
