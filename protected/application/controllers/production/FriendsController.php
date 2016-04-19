@@ -50,7 +50,7 @@ class FriendsController extends \AjaxController
             $response = array(
                 'res' => array(
                     'user' => array(
-                        "$userId" => $player->export((int)\SettingsModel::instance()->getSettings('counters')->getValue('USER_REVIEW_DEFAULT') == $playerId ? 'card' : 'info'),
+                        "$userId" => $player->export((int)\SettingsModel::instance()->getSettings('counters')->getValue('USER_REVIEW_DEFAULT') == $userId ? 'card' : 'info'),
                     ),
                 ),
             );
