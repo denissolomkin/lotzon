@@ -173,6 +173,43 @@ class Players extends \AjaxController
 
     }
 
+    public function captchaAction()
+    {
+
+        $this->authorizedOnly(true);
+        $this->validateRequest();
+
+        $key = $this->request()->post('key', null);
+
+        if (empty($key)) {
+            $this->ajaxResponseBadRequest('EMPTY_KEY');
+        }
+
+        try {
+
+            try {
+                $recaptcha = new \ReCaptcha\ReCaptcha(\SettingsModel::instance()->getSettings('counters')->getValue('CAPTCHA_SERVER'));
+                $resp = $recaptcha->verify($key);
+            } catch (\Exception $e) {
+                $this->ajaxResponseInternalError('VERIFICATION_FAILED');
+            }
+
+            if ($resp->isSuccess()) {
+                \CaptchaModel::instance()->update($this->player);
+                $this->player->initCounters();
+                $this->session->set(Player::IDENTITY, $this->player);
+            } else {
+                $this->ajaxResponseBadRequest('VALIDATION_FAILED');
+            }
+
+        } catch (\ModelException $e) {
+            $this->ajaxResponseInternalError();
+        }
+
+        $this->ajaxResponseNoCache(array('message' => $key));
+
+    }
+
     public function saveAvatarAction()
     {
         if (!$this->session->get(Player::IDENTITY)) {

@@ -91,16 +91,15 @@ class AjaxController extends \SlimController\SlimController
     protected function activateCaptcha()
     {
 
-        die('1');
-        $captchaSettings = \SettingsModel::instance()->getSettings('captcha')->getValue();
+        $captcha = \SettingsModel::instance()->getSettings('captcha')->getValue();
 
-        if(isset($captchaSettings['Enabled']) && $captchaSettings['Enabled']) {
+        if(isset($captcha['Enabled']) && $captcha['Enabled']) {
 
-            $time = $this->player->getCaptchaTime();
+            $time = $this->player->getCounters('CaptchaTime');
 
-            if (isset($captchaSettings['Settings']) && is_array($captchaSettings['Settings'])) {
-                foreach ($captchaSettings['Settings'] as $term) {
-                    if ((!$term['Min'] || $time > $term['Min']) AND (!$term['Max'] || $time <= $term['Max'])) {
+            if (isset($captcha['Settings']) && is_array($captcha['Settings'])) {
+                foreach ($captcha['Settings'] as $term) {
+                    if ((!strlen($term['Min']) || $time > $term['Min']) AND (!strlen($term['Max']) || $time <= $term['Max'])) {
                         if ($term['Rand'] && !rand(0, $term['Rand'] - 1)) {
                             \CaptchaModel::instance()->create($this->player);
                             $this->ajaxResponseLocked();

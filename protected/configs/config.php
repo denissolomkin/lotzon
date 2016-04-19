@@ -333,7 +333,7 @@ Config::instance()->publicResources = array(
     '/stats/promo/' => 'controllers\production\Index:stats',
     /**
      * Authentication
-     */       /*  */
+     */
     '/players/register/' => array(
         'post'  => 'controllers\production\Players:register',
     ),
@@ -345,6 +345,12 @@ Config::instance()->publicResources = array(
     ),
     '/players/logout/' => 'controllers\production\AuthController:logout',
     '/auth/logout/' => 'controllers\production\AuthController:logout',
+    /**
+     * Captcha
+     */
+    '/players/captcha/' => array(
+        'post'  => 'controllers\production\Players:captcha',
+    ),
     /**
      * Socials
      */

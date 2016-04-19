@@ -250,7 +250,7 @@
 
                     },
                     error   : function (data) {
-                        D.error.call(options, [data && (data.message || data.responseJSON && data.responseJSON.message || data.statusText) || 'OBJECT NOT FOUND', options.href]);
+                        D.error.call(options, [data && (data.message || data.responseJSON && data.responseJSON.message || data.statusText) || 'OBJECT NOT FOUND', options.href, data.status]);
                     },
                     timeout : R.timeout.ajax
                 });
@@ -346,7 +346,7 @@
 
                     },
                     error   : function (data) {
-                        D.error.call(options, [data && (data.message || data.responseJSON && data.responseJSON.message || data.statusText) || 'TEMPLATE NOT FOUND', options.href]);
+                        D.error.call(options, [data && (data.message || data.responseJSON && data.responseJSON.message || data.statusText) || 'TEMPLATE NOT FOUND', options.href, data.status]);
                     },
                     timeout : R.timeout.template
                 });

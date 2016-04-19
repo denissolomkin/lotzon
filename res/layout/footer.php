@@ -69,6 +69,10 @@
 
 </script>
 
+<?php if($config['captchaKey']): ?>
+<script src='https://www.google.com/recaptcha/api.js?hl=<?php echo str_replace('ua','uk', strtolower($player['language']['current']));?>&render=explicit'></script>
+<?php endif; ?>
+
 <?php if($config['googleAnalytics']): ?>
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

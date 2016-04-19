@@ -14,7 +14,7 @@ class MessagesController extends \AjaxController
         self::$messagesPerPage = (int)SettingsModel::instance()->getSettings('counters')->getValue('MESSAGES_PER_PAGE') ? : 10;
 
         parent::init();
-        $this->authorizedOnly();
+        $this->authorizedOnly(true);
         $this->validateCaptcha();
     }
 

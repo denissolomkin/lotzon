@@ -18,6 +18,7 @@ class PingController extends \AjaxController
         $this->validateRequest();
         $this->authorizedOnly(true);
         $this->validateCaptcha();
+        $this->activateCaptcha();
     }
 
     public function indexAction()

@@ -14,8 +14,8 @@
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th>Среднее время >, мин</th>
-                    <th>Среднее время <=, мин</th>
+                    <th>Среднее время >, сек</th>
+                    <th>Среднее время <=, сек</th>
                     <th>Вероятность</th>
                     <th></th>
                 </tr>
@@ -41,30 +41,10 @@
             <tr>
                 <th>Период</th>
                 <th>Количество</th>
-                <th>Среднее время на заполнение</th>
+                <th>Среднее время на заполнение, сек</th>
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>Today</td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>Yesterday</td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>Last 7 days</td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>Last 30 days</td>
-                <td></td>
-                <td></td>
-            </tr>
             </tbody>
         </table>
     </div>
@@ -91,8 +71,8 @@
         $('table:eq(1) tbody').append(
             '<tr>' +
             '<td>'+data['Period']+'</td>' +
-            '<td>'+data['Count']+'</td>' +
-            '<td>'+data['Time']+'</td>' +
+            '<td>'+data['Cnt']+'</td>' +
+            '<td>'+Math.round(data['Time'])+'</td>' +
             '</tr>'
         );
     }

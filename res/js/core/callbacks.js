@@ -193,6 +193,7 @@
             "reports-referrals": Content.initDaterange,
 
             "support-faq": Support.init,
+            "popup-captcha": Content.captcha.init,
 
 
         },
@@ -215,7 +216,9 @@
             "communication-notifications": Comments.renderNotifications,
 
             "users-requests-view": Profile.after.request,
-            "games-slots-view": Games.slots.play
+            "games-slots-view": Games.slots.play,
+
+            "players-captcha": Content.captcha.success,
 
         },
 

@@ -19,6 +19,25 @@
 
         },
 
+        captcha: {
+            init: function () {
+                grecaptcha.render('popup-captcha-render', {
+                    'sitekey': Config.captchaKey,
+                    'callback': function (key) {
+                        Form.post({
+                            action: 'players/captcha',
+                            data: {key: key}
+                        })
+                    }
+                });
+            },
+
+            success: function () {
+                DOM.remove(DOM.byId('popup-captcha'));
+                Player.ping();
+            }
+        },
+
         badge: {
 
             close: function () {
