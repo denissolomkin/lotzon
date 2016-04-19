@@ -445,6 +445,44 @@ class Players extends \AjaxController
         return true;
     }
 
+    public function completeAction()
+    {
+        $this->validateRequest();
+        $this->authorizedOnly();
+
+        $newPass    = $this->request()->post('newPass', '');
+        $repeatPass = $this->request()->post('repeatPass', '');
+
+        $player = new Player;
+        $player->setId($this->session->get(Player::IDENTITY)->getId())->fetch();
+
+        try {
+            if (($newPass != '') && ($repeatPass != '')) {
+                    if ($newPass == $repeatPass) {
+                        $player->changePassword($newPass);
+                    } else {
+                        $this->ajaxResponseBadRequest("passwords-do-not-match");
+                    }
+            }
+        } catch (EntityException $e) {
+            $this->ajaxResponseNoCache(array("message" => $e->getMessage()), $e->getCode());
+            return false;
+        }
+
+        $res = array(
+            "player"  => array(
+                "is" => array(
+                    "complete" => $player->isComplete(),
+                )
+            )
+        );
+
+        $this->ajaxResponseNoCache($res);
+
+        return true;
+
+    }
+
     public function settingsAction()
     {
 

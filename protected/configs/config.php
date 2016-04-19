@@ -705,6 +705,9 @@ Config::instance()->publicResources = array(
     '/profile/edit' => array(
         'put' => 'controllers\production\Players:edit'
     ),
+    '/profile/complete' => array(
+        'put' => 'controllers\production\Players:complete'
+    ),
     '/language/:lang' => 'controllers\production\Players:changeLanguage',
     /**
      * Friends
