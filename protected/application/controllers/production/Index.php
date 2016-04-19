@@ -58,11 +58,11 @@ class Index extends \SlimController\SlimController
 
             if ($player->getSocialId()) {
                 $player->updateSocial();
-            }
-            if (!$player->isSocialUsed() && SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_social_registration')) {
-                $player->addPoints(
-                    SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_social_registration'),
-                    StaticTextsModel::instance()->setLang($player->getLang())->getText('bonus_social_registration') . $player->getSocialName());
+                if (SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_social_registration')) {
+                    $player->addPoints(
+                        SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_social_registration'),
+                        StaticTextsModel::instance()->setLang($player->getLang())->getText('bonus_social_registration') . $player->getSocialName());
+                }
             }
             if (SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_registration')) {
                 $player->addPoints(
