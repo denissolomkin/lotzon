@@ -30,19 +30,51 @@ class Index extends \SlimController\SlimController
         $this->session = new Session();
     }
 
+    public function finishRegistration($vh, $m)
+    {
+        $loggedIn = false;
+
+        // create player
+        $player = new Player();
+        $player->setEmail($m)->setHash($vh);
+        try {
+            $player->loadPreregistration();
+            try {
+                $geoReader =  new Reader(PATH_MMDB_FILE);
+                $country = $geoReader->country(Common::getUserIp())->country;
+                $player->setCountry($country->isoCode);
+            } catch (\Exception $e) {
+                $player->setCountry(CountriesModel::instance()->defaultCountry());
+            }
+
+            $player->setLang(CountriesModel::instance()->getCountry($player->getCountry())->getLang());
+            $player->setValid(true)
+                ->setDates(time(), 'Login')
+                ->setComplete(false) //todo: remove when set default=false in database
+                ->create();
+
+            $player->payInvite()
+                ->payReferal()
+                ->markOnline();
+            $loggedIn = true;
+        } catch (ModelException $e) {
+            // do nothing just show promo page
+        }
+
+        if ($loggedIn === true) {
+            $this->session->set(Player::IDENTITY, $player);
+        }
+
+        $this->redirect(strstr($_SERVER['HTTP_REFERER'], 'lotzon.com') ? $_SERVER['HTTP_REFERER'] : '/');
+    }
+
+
     public function indexAction($page = 'home')
     {
         // validate registration
         if ($vh = $this->request()->get('vh')) {
             $m = $this->request()->get('m');
-            // create player
-            $player = new Player();
-            $player->setEmail($m)->setHash($vh);
-            try {
-                $player->loadPreregistration();
-            } catch (ModelException $e) {
-                // do nothing just show promo page
-            }
+            $this->finishRegistration($vh, $m);
         }
         // validate invite
         if ($hash = $this->request()->get('ivh')) {
