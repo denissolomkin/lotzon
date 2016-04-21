@@ -140,21 +140,37 @@ class MessagesController extends \AjaxController
         $text       = $this->request()->post('text');
         $toPlayerId = $this->request()->post('recipient_id', NULL);
         $image      = $this->request()->post('image', "");
+        $admins     = array();
 
-        $toPlayer = new Player();
-        $toPlayer
-            ->setId($toPlayerId)
-            ->setFriendship($playerId)
-            ->initPrivacy();
-
-        if(!$toPlayer->applyPrivacy('Message')){
-            $this->ajaxResponseForbidden('USER_DENIED_MESSAGE');
-        }
+        if(\SettingsModel::instance()->getSettings('counters')->getValue('USER_REVIEW_DEFAULT'))
+            array_push($admins, \SettingsModel::instance()->getSettings('counters')->getValue('USER_REVIEW_DEFAULT'));
+        if(\SettingsModel::instance()->getSettings('counters')->getValue('USER_ORDERS_DEFAULT'))
+            array_push($admins, \SettingsModel::instance()->getSettings('counters')->getValue('USER_ORDERS_DEFAULT'));
 
         $obj = new Message;
         $obj->setPlayerId($playerId)
             ->setToPlayerId($toPlayerId)
             ->setText(htmlspecialchars(strip_tags($text)));
+
+        if (empty($admins) OR (!in_array($playerId, $admins) AND (!in_array($toPlayerId, $admins)))) {
+
+            $toPlayer = new Player();
+            $toPlayer
+                ->setId($toPlayerId)
+                ->setFriendship($playerId)
+                ->initPrivacy();
+
+            if (!$toPlayer->applyPrivacy('Message')) {
+                $this->ajaxResponseForbidden('USER_DENIED_MESSAGE');
+            }
+
+            foreach (array('www', 'http', '@', '.ru') as $needle) {
+                if (stristr($obj->getText(), $needle)) {
+                    $obj->setApproval(0);
+                    break;
+                }
+            }
+        }
 
         if ($image!="") {
             \Common::saveImageMultiResolution('',PATH_FILESTORAGE.'messages/',$image, array(array(600),1),PATH_FILESTORAGE.'temp/'.$image);
@@ -164,23 +180,6 @@ class MessagesController extends \AjaxController
         $obj->setImage($image);
 
         try {
-
-            $admins = array();
-
-            if(\SettingsModel::instance()->getSettings('counters')->getValue('USER_REVIEW_DEFAULT'))
-                array_push($admins, \SettingsModel::instance()->getSettings('counters')->getValue('USER_REVIEW_DEFAULT'));
-            if(\SettingsModel::instance()->getSettings('counters')->getValue('USER_ORDERS_DEFAULT'))
-                array_push($admins, \SettingsModel::instance()->getSettings('counters')->getValue('USER_ORDERS_DEFAULT'));
-
-            if (empty($admins) OR (!in_array($obj->getPlayerId(), $admins) AND (!in_array($obj->getToPlayerId(), $admins)))) {
-                foreach (array('www', 'http', '@', '.ru') as $needle) {
-                    if (stristr($obj->getText(), $needle)) {
-                        $obj->setApproval(0);
-                        break;
-                    }
-                }
-            }
-
             $obj->create();
         } catch (\EntityException $e) {
             $this->ajaxResponseInternalError($e->getMessage());
