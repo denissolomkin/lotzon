@@ -745,6 +745,41 @@ class Users extends PrivateArea
         $this->redirect('/private');
     }
 
+    public function logoutAction($playerId, $status = 0)
+    {
+        if ($this->request()->isAjax()) {
+
+            $response = array(
+                'status'  => 1,
+                'message' => 'OK',
+                'data'    => array(
+                    'status' => $status
+                ),
+            );
+
+            try {
+
+                $player = new Player;
+                $player
+                    ->setId($playerId)
+                    ->fetch();
+
+                if($status)
+                    \LogoutModel::instance()->create($player);
+                else
+                    \LogoutModel::instance()->delete($player);
+
+            } catch (ModelException $e) {
+                $response['status'] = 0;
+                $response['message'] = $e->getMessage();
+            }
+
+            die(json_encode($response));
+        }
+
+        $this->redirect('/private');
+    }
+
     public function avatarAction($id){
 
             $response = array(

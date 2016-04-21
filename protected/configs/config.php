@@ -171,6 +171,7 @@ Config::instance()->privateResources =  array(
     '/private/users/delete/:playerId' => 'controllers\admin\Users:delete',
     '/private/users/:playerId/ban/:status' => 'controllers\admin\Users:ban',
     '/private/users/:playerId/bot/:status' => 'controllers\admin\Users:bot',
+    '/private/users/:playerId/logout/:status' => 'controllers\admin\Users:logout',
     '/private/users/:playerId/avatar' => 'controllers\admin\Users:avatar',
     '/private/users/logs/:playerId' => 'controllers\admin\Users:logs',
     '/private/users/reviews/:playerId' => 'controllers\admin\Users:reviews',

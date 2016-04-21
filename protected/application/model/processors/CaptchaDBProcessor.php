@@ -106,7 +106,23 @@ class CaptchaDBProcessor implements IProcessor
 
     public function getList()
     {
+    }
 
+    public function getTimes()
+    {
+        $sql = "SELECT CaptchaTime Time, COUNT(*) Cnt  FROM `PlayerCounters` WHERE 1
+                GROUP BY CaptchaTime";
+
+        try {
+
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute();
+
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+        return $sth->fetchAll();
     }
 
     public function getStat()

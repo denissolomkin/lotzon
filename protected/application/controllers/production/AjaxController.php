@@ -69,8 +69,21 @@ class AjaxController extends \SlimController\SlimController
         if (!$this->request()->isAjax()) {
             $this->session->set('page', $this->request()->getResourceUri());
             $this->redirect('/');
-        } else
+        } else {
             return true;
+        }
+    }
+
+    protected function validateLogout()
+    {
+
+        if (\LogoutModel::instance()->fetch($this->session->get(Player::IDENTITY))) {
+            session_destroy();
+            $this->ajaxResponseUnauthorized();
+            return false;
+        }
+
+        return true;
     }
 
     protected function validateCaptcha()
@@ -79,7 +92,7 @@ class AjaxController extends \SlimController\SlimController
         $captcha = \SettingsModel::instance()->getSettings('captcha')->getValue();
 
         if(isset($captcha['Enabled']) && $captcha['Enabled']) {
-            if (isset($this->player) && \CaptchaModel::instance()->fetch($this->player)) {
+            if (\CaptchaModel::instance()->fetch($this->session->get(Player::IDENTITY))) {
                 $this->ajaxResponseLocked();
                 return false;
             }
@@ -102,15 +115,14 @@ class AjaxController extends \SlimController\SlimController
                     if ((!strlen($term['Min']) || $time > $term['Min']) AND (!strlen($term['Max']) || $time <= $term['Max'])) {
                         if ($term['Rand'] && !rand(0, $term['Rand'] - 1)) {
                             \CaptchaModel::instance()->create($this->player);
-                            $this->ajaxResponseLocked();
-                            return false;
+                            return true;
                         }
                     }
                 }
             }
         }
 
-        return true;
+        return false;
     }
 
     public function ajaxResponseCode(array $data, $code = 200)

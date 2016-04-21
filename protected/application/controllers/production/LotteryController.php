@@ -31,8 +31,6 @@ class LotteryController extends \AjaxController
 
     public function createTicketAction()
     {
-        $this->activateCaptcha();
-
         $ticket = new LotteryTicket();
         $ticket->setPlayerId($this->player->getId());
         $ticket->setCombination($this->request()->post('combination'));
@@ -91,8 +89,9 @@ class LotteryController extends \AjaxController
         }
 
         $res = array(
-            "tickets" => array(
-                "filledTickets" => \TicketsModel::instance()->getUnplayedTickets($ticket->getPlayerId())
+            'captcha' => $this->activateCaptcha(),
+            'tickets' => array(
+                'filledTickets' => \TicketsModel::instance()->getUnplayedTickets($ticket->getPlayerId())
             )
         );
 

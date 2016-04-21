@@ -17,6 +17,7 @@ class PingController extends \AjaxController
         parent::init();
         $this->validateRequest();
         $this->authorizedOnly(true);
+        $this->validateLogout();
         $this->validateCaptcha();
     }
 

@@ -266,6 +266,8 @@ class ChanceController extends \AjaxController
                         "money"  => $this->player->getMoney()
                     ));
 
+                $response['captcha'] = $this->activateCaptcha();
+
             } else {
                 $this->player->writeLog(array('action' => 'CHEAT', 'desc' => $key, 'status' => 'danger'));
                 $this->ajaxResponseBadRequest('CHEAT_GAME');

@@ -20,6 +20,12 @@
         },
 
         captcha: {
+
+            render: function () {
+                if(!DOM.byId('popup-captcha') && window['grecaptcha'])
+                    R.push('popup/captcha');
+            },
+
             init: function () {
                 grecaptcha.render('popup-captcha-render', {
                     'sitekey': Config.captchaKey,

@@ -1468,6 +1468,48 @@ $('.ban-trigger').on('click', function() {
 
 });
 
+$('.options').hover(
+    function(){
+        $('button', this).not('.cog').css('display', 'inline-block');
+        $('button.cog', this).css('display', 'none');
+        $(this).parent().children('button').css('display', 'none');
+    },
+    function(){
+        $('button', this).not('.cog').css('display', 'none');
+        $('button.cog', this).css('display', 'inline-block');
+        $(this).parent().children('button').css('display', 'inline-block');
+    }
+);
+/* LOGOUT USER BLOCK */
+$('.logout-trigger').on('click', function() {
+
+    var that = $(this),
+        plid = that.data('id'),
+        status = that.hasClass("btn-success") ? 0 : 1;
+
+    $.ajax({
+        url: "/private/users/" + plid + "/logout/" + status,
+        method: 'POST',
+        async: true,
+        dataType: 'json',
+        success: function(data) {
+            if (data.status == 1) {
+                if (data.data.status == 1) {
+                    that.removeClass('btn-danger').addClass('btn-success');
+                } else {
+                    that.removeClass('btn-success').addClass('btn-danger');
+                }
+            } else {
+                alert(data.message);
+            }
+        },
+        error: function() {
+            alert('Unexpected server error');
+        }
+    });
+
+});
+
 /* UPLOAD AVATAR */
 uploadAvatar = function() {
 

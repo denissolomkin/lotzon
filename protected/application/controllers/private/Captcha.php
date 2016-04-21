@@ -22,6 +22,7 @@ class Captcha extends PrivateArea
     {
         $list = SettingsModel::instance()->getSettings($this->activeMenu)->getValue();
         $stats = \CaptchaModel::instance()->getStat();
+        $times = \CaptchaModel::instance()->getTimes();
 
         $this->render('admin/'.$this->activeMenu, array(
             'title'      => 'Captcha',
@@ -29,6 +30,7 @@ class Captcha extends PrivateArea
             'activeMenu' => $this->activeMenu,
             'list'       => $list,
             'stats'      => $stats,
+            'times'      => $times,
         ));
     }
 

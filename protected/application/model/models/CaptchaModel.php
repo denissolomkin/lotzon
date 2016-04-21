@@ -21,6 +21,11 @@ class CaptchaModel extends Model
         return $this->getProcessor()->getList();
     }
 
+    public function getTimes()
+    {
+        return $this->getProcessor()->getTimes();
+    }
+
     public function getStat()
     {
         return $this->getProcessor()->getStat();

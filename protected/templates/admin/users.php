@@ -1,4 +1,3 @@
-
 <div class="container-fluid users">
 
     <div class="row-fluid">
@@ -8,7 +7,8 @@
                 <button class="btn btn-md btn-info search-users"><i class="glyphicon glyphicon-search"></i></button>
             </div>
             <div class="right">
-                <!--button class="btn btn-md btn-info filter-trigger" data-id="0"><span class="glyphicon glyphicon-filter" aria-hidden="true"></span></button--><button class="btn btn-md btn-warning notices-trigger" data-id="0"><span class="glyphicon glyphicon-bell" aria-hidden="true"></span></button>
+                <!--button class="btn btn-md btn-info filter-trigger" data-id="0"><span class="glyphicon glyphicon-filter" aria-hidden="true"></span></button-->
+                <button class="btn btn-md btn-warning notices-trigger" data-id="0"><span class="glyphicon glyphicon-bell" aria-hidden="true"></span></button>
             </div><small><small>
             <div class="right" id="wsStatus" style="margin: 10px ;">
                 <div>
@@ -57,7 +57,7 @@
                 <th>Games <?=sortIcon('GamesPlayed', $currentSort, $pager, $search)?></th>
                 <th class="icon"><?=sortIcon('AdBlock', $currentSort, $pager, $search ,'')?></th>
                 <th class="icon"><?=sortIcon('Points', $currentSort, $pager, $search ,'diamond')?> <?=sortIcon('Money', $currentSort, $pager, $search ,'money')?></th>
-                <th width="100">Options</th>
+                <th width="150">Options</th>
             </thead>
             <tbody>
                 <? foreach ($list as $player) { ?>
@@ -191,7 +191,8 @@
                             <br>
                             <?=($player->getMoney()<0?'<b class="red">':'').$player->getMoney()?>&nbsp;<span><?=\CountriesModel::instance()->getCountry($player->getCountry())->loadCurrency()->getTitle('iso')?></span>
                         </td>
-                        <td><div class="right nobr">
+                        <td>
+                            <div class="right nobr">
 
                             <button class="btn btn-xs btn-<?=($player->getStats('Note')?'danger':'warning');?> notes-trigger" data-type="Note" data-id="<?=$player->getId()?>">
                                 <span class="glyphicon glyphicon-edit" aria-hidden="true"></span><?=$player->getStats('Note')>1?$player->getStats('Note'):'';?>
@@ -229,16 +230,20 @@
                                 <span class="glyphicon glyphicon-tag" aria-hidden="true"></span><?=($orders>1?$orders:'');?>
                             </button>
                             <? endif ?>
-                            <!--button class="btn btn-xs btn-warning transactions-trigger" data-id="<?=$player->getId()?>">T</button>
-                            <button class="btn btn-xs btn-warning stats-trigger" data-id="<?=$player->getId()?>">Р</button-->
                             <? if ($player->getStats('Log')>0): ?>
                             <button class="btn btn-xs btn-<?=($player->getStats('Log')>1?'danger':(($player->getStats('Log')==1 AND $player->getValid())?'success':'warning'))?> logs-trigger" data-id="<?=$player->getId()?>">
                                 <span class="glyphicon glyphicon-time" aria-hidden="true"></span><?=$player->getStats('Log')>1?$player->getStats('Log'):''?>
                             </button>
                              <? endif ?>
-                                <button class="btn btn-xs btn-danger ban-trigger" data-id="<?=$player->getId()?>"><span class="glyphicon glyphicon-lock" aria-hidden="true"></button>
-                                <button class="btn btn-xs btn-danger bot-trigger" data-id="<?=$player->getId()?>"><span class="fa fa-plug" aria-hidden="true"></button>
-                                <button class="btn btn-xs btn-danger delete-trigger" data-id="<?=$player->getId()?>"><span class="glyphicon glyphicon-trash" aria-hidden="true"></button>
+
+                                <div class="options">
+                                    <button class="btn btn-xs btn-danger cog"><span class="glyphicon glyphicon-cog" aria-hidden="true"></button>
+                                    <button class="btn btn-xs btn-danger logout-trigger" data-id="<?=$player->getId()?>"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></button>
+                                    <button class="btn btn-xs btn-danger ban-trigger" data-id="<?=$player->getId()?>"><span class="glyphicon glyphicon-lock" aria-hidden="true"></button>
+                                    <button class="btn btn-xs btn-danger bot-trigger" data-id="<?=$player->getId()?>"><span class="fa fa-plug" aria-hidden="true"></button>
+                                    <button class="btn btn-xs btn-danger delete-trigger" data-id="<?=$player->getId()?>"><span class="glyphicon glyphicon-trash" aria-hidden="true"></button>
+                                </div>
+
                             </div>
                         </td>
                     </tr>

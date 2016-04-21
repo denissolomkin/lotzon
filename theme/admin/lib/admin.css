@@ -214,8 +214,39 @@ min-height: 17px;
 
 .bot-trigger {display:none;}
 .avatar-trigger {cursor:pointer;}
-.info .bot-trigger , .danger .bot-trigger {display:inline-block;}
-.info .ban-trigger  {display: none;}
+
+.options {
+    display: inline-block;
+}
+/*
+
+.options:hover {
+    width: 100%;
+}
+
+.options:hover button{
+    display: inline-block;
+}
+.options:hover .cog{
+    display: none;
+}
+
+.options:hover ~ button {
+    display: none !important;
+}
+*/
+
+.options button{
+    display: none;
+}
+.options .cog{
+    display: inline-block;
+}
+
+tr:not(.danger, .info) .bot-trigger {display:none !important;}
+
+.info .options:hover .bot-trigger , .danger .options:hover .bot-trigger {display:inline-block;}
+.info .ban-trigger  {display: none !important;}
 
 .right {float:right;text-align: right;}
 .left {float:left;text-align: left;}

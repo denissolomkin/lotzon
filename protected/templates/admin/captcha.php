@@ -48,6 +48,19 @@
             </tbody>
         </table>
     </div>
+
+    <div class="row-fluid">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Среднее время</th>
+                <th>Количество</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <script>
@@ -55,7 +68,8 @@
     $(document).on('change input', 'form, form input', function(){$('form button[type="submit"]').addClass('btn-success');});
 
     var Settings = <?php echo json_encode(is_array($list['Settings'])?$list['Settings']:[]);?>,
-        Stats = <?php echo json_encode(is_array($stats)?$stats:[]);?>;
+        Stats = <?php echo json_encode(is_array($stats)?$stats:[]);?>,
+        Times = <?php echo json_encode(is_array($times)?$times:[]);?>;;
 
     for (var i in Settings)
         if(Settings.hasOwnProperty(i))
@@ -65,6 +79,9 @@
         if(Stats.hasOwnProperty(i))
             initStat(Stats[i]);
 
+    for (var i in Times)
+        if(Times.hasOwnProperty(i))
+            initTime(Times[i]);
 
     function initStat(data) {
 
@@ -73,6 +90,16 @@
             '<td>'+data['Period']+'</td>' +
             '<td>'+data['Cnt']+'</td>' +
             '<td>'+Math.round(data['Time'])+'</td>' +
+            '</tr>'
+        );
+    }
+
+    function initTime(data) {
+
+        $('table:eq(2) tbody').append(
+            '<tr>' +
+            '<td>'+data['Time']+'</td>' +
+            '<td>'+data['Cnt']+'</td>' +
             '</tr>'
         );
     }
