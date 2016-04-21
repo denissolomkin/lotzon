@@ -38,6 +38,13 @@
 
             },
 
+            settings: function(){
+
+                // events
+                Profile.do.privacyBoxes();
+
+            },
+
             // complete: function() {
 
             // }

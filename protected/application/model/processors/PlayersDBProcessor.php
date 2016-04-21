@@ -784,7 +784,7 @@ class PlayersDBProcessor implements IProcessor
 
         try {
             $sql = "UPDATE `PlayerPrivacy`
-                      SET `Name` = :nam, `Surname` = :snm, `Gender` = :gnr, `Birthday` = :bdy, `Age` = :age, `Zip` = :zip, `Address` = :adr, `City` = :cit, `Country` = :cnt
+                      SET `Name` = :nam, `Surname` = :snm, `Gender` = :gnr, `Birthday` = :bdy, `Age` = :age, `Zip` = :zip, `Address` = :adr, `City` = :cit, `Country` = :cnt, `Message` = :msg
                       WHERE `PlayerId` = :pid";
 
             DB::Connect()->prepare($sql)->execute(array(
@@ -797,6 +797,7 @@ class PlayersDBProcessor implements IProcessor
                 ':adr'  => $player->getPrivacy('Address'),
                 ':cit'  => $player->getPrivacy('City'),
                 ':cnt'  => $player->getPrivacy('Country'),
+                ':msg'  => $player->getPrivacy('Message'),
                 ':pid'  => $player->getId(),
             ));
         } catch (PDOException $e) {

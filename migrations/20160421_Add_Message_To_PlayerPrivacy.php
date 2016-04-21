@@ -1,0 +1,1 @@
+ALTER TABLE `PlayerPrivacy` ADD `Message` TINYINT(1) NOT NULL DEFAULT '2' AFTER `Country`;

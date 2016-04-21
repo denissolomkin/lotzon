@@ -247,6 +247,7 @@
                 "title-profile-new-password": "Новый пароль",
                 "title-profile-password-repeat":"Повтор пароля",
                 "title-profile-get-email": "Получать письма",
+                "title-profile-get-message": "Мне могут писать",
                 "title-profile-settings-change" :"изменить",
                 "title-profile-favorite-title":"Заполните любимую комбинацию",
                 "title-profile-favorite":"Любимая комбинация",
@@ -462,7 +463,8 @@
                 "MONEY_NO_ENOUGH": "На балансе недостаточно денег",
                 "POINTS_NOT_ENOUGH" : "На балансе недостаточно баллов",
                 "INSUFFICIENT_FUNDS": "На балансе недостаточно средств",
-                "INVALID_MIN_OUTPUT": "Сумма вывода должна быть больше минимально допустимой"
+                "INVALID_MIN_OUTPUT": "Сумма вывода должна быть больше минимально допустимой",
+                "USER_DENIED_MESSAGE": "Пользователь запретил отправку ему сообщений"
 
             }
 	}

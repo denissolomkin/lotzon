@@ -182,6 +182,7 @@
 
             "profile-edit": Profile.init.edit,
             "profile-billing": Profile.init.billing,
+            "profile-settings": Profile.init.settings,
             "profile-combination": Profile.do.openFavorite,
 
             "users-view-messages": Messages.after.markRead,
