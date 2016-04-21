@@ -91,6 +91,13 @@ hr {
         box-shadow: none;
     }
 }
+
+#balance-convert,
+#reports-payments,
+#balance-cashout,
+#reports-transactions,
+#reports-referrals,
+#profile-bonuses,
 #user-view,
 #prizes-exchange-goods-view,
 #users-view-message,
@@ -149,8 +156,8 @@ a {
     z-index: 1010;
     background: rgba(0, 0, 0, 0.6);
 }
-
-#logout {
+#popup-captcha,
+#popup-logout{
     & div {
         margin: 0 auto;
         width: 460px;
@@ -435,7 +442,6 @@ button {
 .calendar-range {
     width: 200px;
     height: 30px;
-    border-bottom: 1px solid #9b9b9b;
     cursor: pointer;
     position: relative;
     font-family: "fontello";
@@ -445,7 +451,6 @@ button {
     text-transform: none;
     line-height: 1em;
     &:before {
-        ;
         display: inline-block;
         position: absolute;
         top: 5px;
@@ -455,6 +460,10 @@ button {
         z-index: -1;
         font-size: 20px;
         color: #4a4a4a;
+    }
+    input[type="text"]{
+      font-size: 14px;
+      color: #4a4a4a;
     }
 }
 
@@ -879,7 +888,6 @@ input.input-radio:checked + label.input-radio:before {
         display: none!important;
     }
 }
-
 @media (min-width: 768px) {
     .small-visible {
         display: none!important;
@@ -1171,7 +1179,7 @@ input.input-radio:checked + label.input-radio:before {
             top: 4px;
             transition: all .2s linear;
             opacity: 1;
-
+            
             span{
                 color: #ff4242;
                 margin-left: 3px;
@@ -1284,7 +1292,6 @@ input.input-radio:checked + label.input-radio:before {
     }
 
     input:not([type='submit']):focus,
-    input:not([type='submit']):hover,
     input:not([type='submit']):active,
     textarea:focus,
     textarea:hover,

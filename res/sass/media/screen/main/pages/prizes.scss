@@ -21,7 +21,7 @@
 // for img 300px
 .ex-prize{
   position: relative;
-  padding-left: 300px;
+  padding-left: 320px;
   min-height: 300px;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -33,13 +33,13 @@
     width: 300px;
     height: 300px;
     position: absolute;
-    left: 0;
+    left: 20px;
     top: 0;
     text-align: center;
 
     // width: 50%;
     // float: left;
-    padding: 20px;
+    // padding: 20px;
     margin-right: 0;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -54,7 +54,7 @@
     }
     > div{
       width: 100%;
-      border: 20px solid transparent;
+      // border: 20px solid transparent;
       height: 100%;
       position: absolute;
       top: 0;

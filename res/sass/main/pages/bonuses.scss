@@ -1,12 +1,83 @@
-.cabinet-bonuses p {
-  font-size: 15.5px;
-  margin-bottom: 20px;
-}
+.cabinet-bonuses {
+  p {
+    font-size: 15.5px;
+    margin-bottom: 20px;
+  }
+  .title {
+    font-size:20px;
+    color:#000000;
+    text-align:left;
+    margin: 0 0 5px 0;
+  }
+  .button{
+    color: #000000;
+    border: 1px solid #000000;
+    transition: all .2s linear;
+    cursor: pointer;
+    display: inline-block;
+    min-width: 140px;
+    text-align: center;
+    line-height: 30px;
+    text-transform: uppercase;
+    font-size: 13px;
+    font-weight: normal;
+    &:hover {
+      background: #000000;
+      color: #ffffff;
+    }
+  }
+  .bonus-share-url-copy{
+    .strip{
+      position: relative;
+      padding: 0 180px 0 20px;
+      input{
+        width: 100%;
+      }
+      .button{
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        margin-top: -15px;
+      }
+    }
+  }
+  .bonus-share-email{
+    @extend .bonus-share-url-copy;
+  }
+  .show-banner,
+  .bonus-share-url-copy,
+  .bonus-share-post,
+  .bonus-share-email{
+    margin-bottom: 35px;
+  }
 
-.cabinet-bonuses .title {
-  font-size: 17px;
-  margin-bottom: 20px;
-  // font-weight: bold;
+  table{
+    font-weight: normal;
+    font-size:15.5px;
+    line-height:19px;
+    text-align:left;
+    width: 100%;
+    thead{
+      background: #f5f5f5;
+      tr{
+        th{
+          color: #333333;
+          text-shadow:1px 1px 1px rgba(255,255,255,0.49);
+          padding: 13px 0 13px 20px;
+          font-weight: normal;
+        }
+      }
+    }
+    tbody{
+      tr{
+        td{
+          padding: 13px 0 13px 20px;
+          border-bottom: 1px solid #ececec;
+          color:#4a4a4a;
+        }
+      }
+    }
+  }
 }
 
 // ----------------------------------- //
@@ -25,11 +96,6 @@
       display: inline-block;
       width: auto;
   }
-}
-
-.bonus-form .title {
-  margin-bottom: 10px;
-  font-size: 19px;
 }
 
 .bonus-form input {
@@ -53,97 +119,36 @@
 .bonus-share-banner-view .close {
   display: none;
   cursor: pointer;
-  font-size: 22px;
-  color: #fd6f6e;
-}
-// ----------------------------------- //
-
-
-.bonus-social-item {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  display: block;
-  float: left;
-  margin: 0 14px 10px 0;
-  background: url(img/sprite.png);
-  &:last-child {
-    margin-right: 0;
+  font-size: 18px;
+  color: #4a4a4a;
+  margin: 12px 20px 12px 0;
+  transition: all .2s linear;
+  &:hover {
+    color: #000000;
   }
+  
 }
-
-.bonus-social-item.soc-1 {
-  background-position: 0 -336px;
-}
-
-.bonus-social-item.soc-2 {
-  background-position: -47px -336px;
-}
-
-.bonus-social-item.soc-3 {
-  background-position: -95px -336px;
-}
-
-.bonus-social-item.soc-4 {
-  background-position: -144px -336px;
-}
-
-.bonus-social-item.soc-5 {
-  background-position: -192px -336px;
-}
-
-.bonus-social-item.soc-6 {
-  background-position: -240px -336px;
-}
-
-.bonus-social-item.soc-7 {
-  background-position: -288px -336px;
-}
-
-.bonus-social-item.soc-8 {
-  background-position: -336px -336px;
-}
-
-.bonus-social-item.soc-9 {
-  background-position: -385px -336px;
-}
-
-.bonus-social-item.soc-10 {
-  background-position: -433px -336px;
-}
-
-.bonus-social-item.soc-11 {
-  background-position: -481px -336px;
-}
-
-.bonus-social-item.soc-12 {
-  background-position: -529px -336px;
-}
-
-.bonus-social-item.soc-13 {
-  background-position: -578px -336px;
-}
-
-// ----------------------------------- //
 
 .bonus-share-url {
   margin-bottom: 50px;
 }
 
-.bonus-share-url-copy input,
+input[type="text"],input[type="email"],
 .bonus-share-url-copy-btn {
   border-radius: 2px;
   background: transparent;
-  color: black;
+  color: #000000;
   position: relative;
 }
 
 
-.bonus-share-url-copy input {
-  padding: 6px 10px;
-  margin-bottom: 20px;
+input[type="text"],input[type="email"] {
+  margin: 0;
   border: none;
+  height: inherit;
   min-width: 190px;
+  line-height: 45px;
+  padding: 0 4px;
 }
 
 .bonus-share-url-copy-btn {
@@ -157,26 +162,30 @@
 
 .bonus-banner-view-item {
   float: left;
-  margin: 0 20px 0 0;
+  margin: 0;
   position: relative;
   &.active {
     & > * {
-      color: #9b9b9b;
+      color: #4a4a4a;
+      background: #dfdfdf;
+    }
+  }
+  .bonus-banner-view-btn {
+    cursor: pointer;
+    color: #4a4a4a;
+    font-size: 15.5px;
+    text-decoration: none;
+    transition: all .2s linear;
+    line-height: 45px;
+    padding: 0 20px;
+    &:hover {
+      color: #000000;
     }
   }
 }
 
 
 
-.bonus-banner-view-btn {
-  cursor: pointer;
-  color: #4a90e2;
-  font-weight: bold;
-  font-size: 15.5px;
-  &:hover {
-    text-decoration: none;
-  }
-}
 .show-banner > div {
   display: none;
 }
@@ -216,10 +225,6 @@
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
     }
   }
-  & .title {
-    font-size: 21px;
-    margin-bottom: 30px;
-  }
   & p {
     line-height: 1.2;
     margin-bottom: 0;
@@ -227,19 +232,36 @@
 }
 
 .show-banner {
-  hr {
-    border-color: #f3efec;
-    color: #f3efec;
-    border-style: solid;
-    border-width: 1px;
-    border-top: none;
-    margin: 10px -30px 0;
+  padding: 0 20px;
+  margin-top: 20px;
+  
+  .copy-box{
+    margin-bottom: 10px;
+     .title{
+        float: left;
+        font-size: 15.5px;
+     }
+     .copy{
+        float: right;
+        color:#4a90e2;
+        cursor: pointer;
+     }
+  }
+  textarea {
+    padding: 10px;
+    width: 100%;
+    background: #ffffff;
+    border: 1px solid #dfdfdf;
+    
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
   }
 }
 
 .banner-slide {
-  margin-bottom: 10px;
-  margin-top: 20px;
+  margin: 10px 0;
   & img {
     display: block;
     height: auto;
@@ -258,6 +280,7 @@
 
 .banner-copy {
   position: relative;
+  margin-bottom: 30px;
   & input {
     padding: 7px 10px 7px 0;
     margin-bottom: 5px;
@@ -281,56 +304,105 @@
 }
 
 #profile-bonuses {
+  .in-box{
+    padding: 0 20px;
+  }
   & .strip {
-    margin-right: -30px;
-    margin-left: -30px;
-    padding-right: 30px;
-    padding-left: 30px;
-    height: 42px;
-    line-height: 42px;
-    background: #fafafa;
+    min-height: 45px;
+    // line-height: 45px;
+    background: #f5f5f5;
   }
   & .ae-social {
-    height: 42px;
+    padding-left: 20px;
     div {
-      height: 42px;
-      width: 37px;
-      &:before {
-        line-height: 42px;
-        font-size: 35px;
-        cursor: pointer;
+      height: auto;
+      width: auto;
+      cursor: pointer;
+      padding: 0 20px;
+      height: 30px;
+      margin: 7px 7px 7px 0;
+      opacity: 0.9;
+      transition: all .2s linear;
+      min-width: 150px;
+      text-align: center;
+      position: relative;
+      line-height: 0;
+
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      -ms-box-sizing: border-box;
+      box-sizing: border-box;
+      &:hover{
+        opacity: 1;
       }
+      &:before {
+        content: "";
+        display: inline-block;
+        vertical-align: middle;
+        width: 0;
+        position: relative;
+        height: 100%;
+        margin-left: -5px;
+      }
+      
+      > span{
+        font-size: 15.5px;
+        color: #ffffff;
+        font-weight: normal;
+        text-align: center;
+        line-height: normal;
+        vertical-align: middle;
+        display: inline-block;
+      }
+    }
+    .social-likes__widget_facebook,
+    .facebook{
+      background: #374c85;
+    }
+    .social-likes__widget_vkontakte,
+    .vkontakte{
+      background: #2a598f;
+    }
+    .social-likes__widget_odnoklassniki,
+    .odnoklassniki{
+      background: #ed812b;
     }
   }
   & .content-box-item {
-    padding-top: 20px;
-  }
-  & .content-box-item-content {
-    & p {
-      margin-bottom: 15px;
-    } 
+    padding: 20px 0 25px;
   }
   & .bold {
-    // font-weight: bold;
     font-size: 15.5px;
     color: #000;
   }
   & .info_block {
+    h3{
+      margin-bottom: 10px;
+    }
+    p > b{
+      font-weight: bold;
+    }
+    ul{
+      > li{
+        padding-left: 35px;
+        position: relative;
+        
+        > p{
+          >span:first-of-type {
+            position: absolute;
+            margin-left: -20px;
+          }
+        }
+      }
+    }
+    
     & p {
       color: #4a4a4a;
-      // margin-left: 30px;
       margin-bottom: 30px;
       &.bold {
         color: #000;
         margin-bottom: 10px;
-        // margin-left: 0;
       }
     }
   }
-}
-
-.bonus-share-banner .title {
-  height: 50px;
-  line-height: 85px;
-  text-align: left;
 }

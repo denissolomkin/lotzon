@@ -13,7 +13,7 @@
 }
 
 // popup inner auto height
-#lottery-animation-process {
+#popup-lottery {
     text-align: center;
     &:before {
         content: '';
@@ -29,7 +29,7 @@
     }
 }
 
-#lottery-process {
+#popup-lottery-process {
     float: none;
     position: relative;
     display: inline-block;
@@ -591,7 +591,7 @@
     }
 }
 
-#lottery-process {
+#popup-lottery-process {
     position: absolute;
     margin: 0 auto;
     box-sizing: border-box;
@@ -1151,7 +1151,7 @@
 
 // ------------------------------------------- //
 @media (min-width: 321px) {
-    #lottery-process {
+    #popup-lottery-process {
         &.lottery-won {
             background: url(img/480.png) center center no-repeat;
         }
@@ -1290,18 +1290,30 @@
         display: inline-block;
         vertical-align: middle;
     }
+    .gold-text{
+        font-size:25px;
+        color:#282828;
+        text-align:left;
+    }
     // @include translate(0, -50%);
     // top: 50%;
     & .btn-flat {
-        margin-top: 20px;
+        margin-bottom: 10px;
+        min-width: 190px;
+        text-align: center;
+        
     }
     span {
         font-size: 20px;
     }
-    form {
+    form,
+    .box {
         font-size: 20px;
         span {
-            font-size: 14px;
+            // font-size: 14px;
+            font-size:15.5px;
+            color:#222222;
+            text-transform: lowercase;
         }
     }
 }

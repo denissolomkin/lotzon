@@ -1,10 +1,14 @@
 // COMMUNICATION -> FRIENDS --------------------------------- //
 // 
 // 
+
 #users-requests-list{
     margin-top: 10px;
 }
-
+#users-chronicle-list{
+    margin-top: 10px;
+}
+#user-view-friends,
 #users {
 
     // table display
@@ -222,6 +226,7 @@
             display: block;
             height: 40px;
             padding: 4px;
+            line-height: 40px;
             border: none;
             font-size: 15.5px;
             background: transparent;

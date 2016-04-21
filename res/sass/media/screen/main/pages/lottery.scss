@@ -313,7 +313,7 @@
     }
 }
 
-#lottery-process {
+#popup-lottery-process {
     height: 768px;
     max-width: 1366px;
     & .container {
@@ -403,7 +403,7 @@
     padding-left: 23px;
 }
 
-#lottery-process.lottery-won {
+#popup-lottery-process.lottery-won {
     min-width: 1024px;
     & .balls-end-game .g-oc_li .goc_li-nb {
         position: static;
@@ -416,11 +416,11 @@
     }
 }
 
-#lottery-process.lottery-won {
+#popup-lottery-process.lottery-won {
     background: url(../img/1024.png) center center no-repeat;
 }
 
-#lottery-process {
+#popup-lottery-process {
     min-width: 1024px;
     height: 768px;
     & .container {
@@ -497,7 +497,7 @@
 }
 
 @media (min-width: 1025px) {
-    #lottery-process {
+    #popup-lottery-process {
         &.lottery-won {
             background: url(../img/1366.png) center center no-repeat;
         }
@@ -681,7 +681,7 @@
     .lottery-amimation-box {
         margin-top: 34px;
     }
-    #lottery-process {
+    #popup-lottery-process {
         width: 1366px;
     }
 }

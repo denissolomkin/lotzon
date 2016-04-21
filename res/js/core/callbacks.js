@@ -128,6 +128,7 @@
             // $(document).on('click', '.choice .change', Profile.do.cancelFavorite);
             $(document).on('click', '.bonus-banner-view-item', Bonuses.showBanner);
             $(document).on('click', '.bonus-share-banner-view .close', Bonuses.hideBanner);
+            $(document).on('click', '.copy[data-to]', Bonuses.bufferCopy);
 
             // $(document).on('click', '.banner-copy-btn', Bonuses.copyBanner);
             // $(document).on('click', '.banner-copy-btn a', Bonuses.downloadFile);

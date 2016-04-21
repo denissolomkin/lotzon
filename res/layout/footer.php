@@ -56,17 +56,24 @@
         menu = {
             navigation: {
                 'menu-main': ['blog', 'lottery', 'games', 'communication', 'users', 'prizes'],
-                'menu-profile': ['profile', 'profile/billing', 'profile/settings', 'reports/referrals', 'profile/bonuses'],
+                // 'menu-profile': ['profile', 'profile/billing', 'profile/settings', 'reports/referrals', 'profile/bonuses'],
                 'menu-more': [
                     'users/0/messages',
                     'support/rules',
                     'support/faq',
+                    'reports/referrals', 
+                    'profile/bonuses',
                     'popup/logout'
                 ]
             },
             balance: ['balance/cashout', 'balance/convert', 'reports/transactions', 'reports/payments']
         },
-        debugConf = <?php echo json_encode($debug, JSON_PRETTY_PRINT); ?>
+        debugConf = <?php echo json_encode($debug, JSON_PRETTY_PRINT); ?>;
+
+    config.banners = {
+        sizes: ['240x400','300x250','468x60','728x90'],
+        versions: ['Static','Anima']
+    };
 
 </script>
 

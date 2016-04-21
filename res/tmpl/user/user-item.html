@@ -1,8 +1,7 @@
 <div id="user-{{id}}">
     {{partial 'common-content-box-header-partial' (or title.nickname name) }}
-    <!-- <div class="content-box-header"><span class="back i-arrow-slim-left large-visible"></span><span class="back i-arrow-slim-left small-visible "></span>{{or title.nickname name}}</div> -->
 
-    <div class="content-box-content clearfix">
+    <div class="clearfix">
         <div class="content-box-item">
             <div class="ae-personal-inf">
                 <div class="ae-top">
@@ -25,7 +24,7 @@
                                 <p>static 600001 {{i18n "title-of-points"}}</p>
                             </div>
                         </div>
-                        <div class="ae-user-img pi-ph false">
+                        <div class="ae-user-img pi-ph false {{#if (player "isOnline" ping)}} online {{/if}}">
                             <img src="{{avatar img id}}"
                                  class="loading"
                                  onload="this.style.background = 'none'"
@@ -39,9 +38,12 @@
                         <li class="ae-personal-form-values ae-name-block">
                             <ul>
                                 <li class="user-actions">
-                                    <div class="uk-float-left">
-                                        <a href="/users/{{id}}/friends" class="send-msg uk-float-left">
-                                        static {{i18n "title-users-friends"}} 10412
+                                    <div class="content-box-tabs clearfix">
+                                        <a href="/user/{{id}}/main" class="send-msg uk-float-left">
+                                            {{i18n "title-users-main"}}
+                                        </a>
+                                        <a href="/user/{{id}}/friends" class="send-msg uk-float-left">
+                                            {{i18n "title-users-friends"}} {{#if (notlike friends 0 ) }} {{friends}} {{else}} {{i18n "title-no-friends"}} {{/if}}
                                         </a>
                                     </div>
                                         
@@ -67,85 +69,10 @@
                     </ul>
                 </div>
                 {{/if}}
-                <ul class="ae-personal-form">
-                    <li class="ae-personal-form-values">
-                        <ul>
-                            {{#if title.name}}
-                            <li><i>{{i18n "title-profile-name"}}</i>
-                                <div>{{title.name}}</div>
-                            </li>
-                            {{/if}}
-                            {{#if title.surname}}
-                            <li><i>{{i18n "title-profile-surname"}}</i>
-                                <div>{{title.surname}}</div>
-                            </li>
-                            {{/if}}
-                            {{#if (notlike null gender)}}
-                            <li>
-                                <i>{{i18n "title-profile-gender"}}</i>
-                                <div class="wrapper-margin-right">{{i18n "title-profile-gender" gender}}
-                                </div>
-                            </li>
-                            {{/if}}
-                            {{#if (notlike null age)}}
-                            <li>
-                                <i>{{i18n "title-profile-age"}}</i>
-                                <div class="wrapper-margin-right">{{age}}
-                                </div>
-                            </li>
-                            {{/if}}
-                            {{#if (notlike null birthday)}}
-                            <li>
-                                <i>{{i18n "title-profile-birthday"}}</i>
-                                <div class="wrapper-margin-right">{{day birthday 'd MMMM'}}
-                                </div>
-                            </li>
-                            {{/if}}
-                            {{#if location.country}}
-                            <li><i>{{i18n "title-profile-country"}}</i>
-                                <div class="select-wrapper">
-                                    {{location.country}}
-                                </div>
-                            </li>
-                            {{/if}}
-                            {{#if location.city}}
-                            <li><i>{{i18n "title-profile-city"}}</i>
-                                <div>{{location.city}}</div>
-                            </li>
-                            {{/if}}
 
-                            {{#if (notlike null zip)}}
-                            <li>
-                                <i>{{i18n "title-profile-zip"}}</i>
-                                <div class="wrapper-margin-right">{{zip}}
-                                </div>
-                            </li>
-                            {{/if}}
+                <div class="content-box-content">
+                </div>
 
-                            {{#if (notlike null address)}}
-                            <li>
-                                <i>{{i18n "title-profile-address"}}</i>
-                                <div class="wrapper-margin-right">{{address}}
-                                </div>
-                            </li>
-                            {{/if}}
-
-                            {{#if social.enabled}}
-                            <li class="ae-social">
-                                <i class="uk-float-left">{{i18n "title-profile-socials"}}</i>
-                                <div class="ae-social uk-float-left">
-                                    {{#each social.providers}}
-                                        {{#if .}}
-                                            <a href="{{social @key .}}" class="ae-social-item i-{{@key}} skip" title="" target="_blank"></a>
-                                        {{/if}}
-                                    {{/each}}
-                                </div>
-                            </li>
-                            {{/if}}
-                            <li class="empty"></li>
-                        </ul>
-                    </li>
-                </ul>
             </div>
         </div>
         <!-- .content-box-item -->

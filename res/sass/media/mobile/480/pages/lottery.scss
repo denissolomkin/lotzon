@@ -47,7 +47,7 @@
 	}
 }
 
-#lottery-process {
+#popup-lottery-process {
 	max-width: 100%;
 	height: 634px;
 	&.lottery-won {
@@ -187,7 +187,7 @@
 	.lottery-amimation-box {
 		margin-top: 30px
 	}
-	#lottery-process {
+	#popup-lottery-process {
 		height: 658px;
 		&.lottery-won {
       		background: url(../img/768.png) center center no-repeat;

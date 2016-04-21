@@ -260,14 +260,57 @@
 }
 
 #user-view {
+  .user-actions{
+    background: #f5f5f5;
+    padding-left: 0;
+    line-height: 0;
+  }
+  .content-box-tabs {
+    max-height: 45px;
+    
+    > a{
+      line-height: 45px;
+      font-size: 15.5px;
+      color: #4a4a4a;
+      text-transform: capitalize;
+      padding: 0 20px;
+      margin: 0;
+      &.active{
+        background: #dfdfdf;
+        color: #4a4a4a;
+      }
+    }
+
+  }
+
   .ae-user-img {
     width: 150px;
     height: 150px;
-    border-radius: 50%;
-    overflow: hidden;
     position: relative;
     top: -2px;
     margin-left: 15px;
+    img{
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      overflow: hidden;
+      position: relative;
+    }
+    &:after {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: #cfcfcf;
+        border: 2px solid #ffffff;
+    }
+    &.online:after {
+        background: #7ed320;
+    }
   }
   .img-avatar-name {
     position: absolute;
@@ -886,7 +929,15 @@
 }
 
 // --------------------------- //
-
+#balance-cashout{
+  .content-box-header{
+      .back{
+        > span{
+          display: none;
+        }
+      }
+  }
+}
 .ae-save-btn {
   display: block;
   margin: auto;
@@ -925,16 +976,25 @@
     }
   }
 }
-.cco-title div:first-of-type{
-  color:#4a4a4a;
-}
 
-.cco-title div {
-  float: left;
-}
 
-.cco-title > * {
-    margin-bottom: 20px;
+.cco-title {
+  padding: 21px 20px;
+  div {
+    float: left;
+    
+    &:first-of-type{
+      font-size:15.5px;
+      color:#000000;
+      text-align:center;
+    }
+  }
+  a{
+    float: right;
+  } 
+  > * {
+      // margin-bottom: 20px;
+  }
 }
 .cco-edit {
   margin-left: 18px;
@@ -949,16 +1009,16 @@
     position: relative;
     top: 2px;
     left: 5px;
-    color:#4a90e2;
+    color: #4a90e2;
     & > *:before {
-      color:#4a90e2;
+      color: #4a90e2;
     }
   }
 }
 
 div.rules-text {
-  color:#000000;
-  background:#fafafa;
+  color: #000000;
+  background: #fafafa;
   margin: 0 -20px;
   padding: 13px 20px;
   float: none;
@@ -969,11 +1029,10 @@ div.rules-text {
     }
   }
 }
+
 #profile-cachout .content-box-item {
   padding: 20px;
 }
-
-// -------------------------- //
 
 .cco-choose-method {
   margin-bottom: 40px;
@@ -981,49 +1040,46 @@ div.rules-text {
 
 .cco-methods {
   margin-bottom: 0;
-
-}
-
-.cco-method {
-    margin: 0 -20px;
-    padding: 0 20px;
-    border-top: 1px solid #eaeaea;
-    height: 45px;
-  & > * {
-    position: static;
-    top: -50%;
-    @include translate(0, 50%);
-  }
-  &:last-child {
-    border-bottom: 1px solid #eaeaea;
-  }
   label.input-radio {
-    width: 15px;
-    height: 15px;
+    cursor: pointer;
+  }
+  .cco-method {
+    padding: 12px 20px;
+    border-top: 1px solid #eaeaea;
+    
+    & > * {
+      position: static;
+    }
+
+    &:last-child {
+      border-bottom: 1px solid #eaeaea;
+    }
+    
+    label.input-radio {
+      width: 15px;
+      height: 15px;
+      display: inline-block;
+      top:3px;
+
+    }
+    
+    & input.input-radio:checked + label.input-radio:before {
+      content: "";
+      display: block;
+      width: 11px;
+      height: 11px;
+      position: absolute;
+      top: 1px;
+      left: 1px;
+      background: black;
+      border-radius: 50%;
+    }
+    
+  }
+  .cco-method > label {
+    cursor: pointer;
     display: inline-block;
-    top:3px;
-
   }
-  & input.input-radio:checked + label.input-radio:before {
-    content: "";
-    display: block;
-    width: 11px;
-    height: 11px;
-    position: absolute;
-    top: 1px;
-    left: 1px;
-    background: black;
-    border-radius: 50%;
-  }
-}
-
-.cco-method > label {
-  cursor: pointer;
-  display: inline-block;
-}
-
-.cco-methods label.input-radio {
-  cursor: pointer;
 }
 
 .cco-method-name {
@@ -1031,53 +1087,70 @@ div.rules-text {
   margin-bottom: 0;
   margin-right: 10px;
 }
-  .cco-method-name,
-  .cco-method-value {
-    display: inline-block;
-  }
+
+.cco-method-name,
+.cco-method-value {
+  display: inline-block;
+}
+
 // -------------------------- //
 
 .cco-enter-sum {
-  margin-bottom: 40px;
+
   & > div:first-of-type {
-      height: 45px;
       background:#fafafa;
-      margin: 0 -20px 25px;
-      padding: 0 20px;
-    & > * {
-      @include translate(0, 60%);
-      top: -50%;
+      padding: 0;
+      margin-bottom: 25px;
+      color: #9e9e9e;
+      & > * {
+        
+      }
+  }
+  .cco-bottom-message{
+    width: 100%;
+    margin-bottom: 25px;
+    text-align: center;
+    color: #000000;
+    .underline{
+      text-decoration: underline;
     }
   }
   & .cco-currency {
     text-transform: lowercase;
   }
+  .current-ballance {
+    font-weight: normal;
+    font-size:15.5px;
+    line-height:45px;
+    padding: 0 20px 0 0;
+  }
+  .cco-enter-sum-box {
+    
+    input{
+      border: none;
+      height: 45px;
+      font-size: 15.5px;
+      font-weight: normal;
+      width: 130px;
+      background: #e9e9e9;
+      vertical-align: middle;
+      text-align: left;
+      padding: 0px 5px 0px 20px;
+      
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      -ms-box-sizing: border-box;
+      box-sizing: border-box;
+      
+    }
+  }
 }
 
-.cco-enter-sum-box {
-  margin-bottom: 18px;
-}
 
 .cco-enter-sum .title {
   display: block;
   float: left;
   margin-right: 10px;
-}
-
-.cco-enter-sum input {
-  display: block;
-  width: 110px;
-  float: left;
-  border-width: 0 0 1px 0;
-  border-style: solid;
-  border-color: #cbc7c6;
-  background: transparent;
-  border-radius: 0;
-  position: relative;
-  bottom: 3px;
-  text-align: center;
-  font-weight: normal;
-  font-size: 18px;
 }
 
 .cco-currency {
@@ -1110,18 +1183,15 @@ div.rules-text {
 }
 // -------------------------- //
 
-@media (min-width: 600px) {
-
-  .cco-method-name,
-  .cco-method-value {
-    display: inline-block;
-  }
-  // ------------------- //
-  .cco-enter-sum-box {
-    margin-bottom: 0;
-    float: left;
-    margin-right: 30px;
-  }
+.cco-method-name,
+.cco-method-value {
+  display: inline-block;
+}
+// ------------------- //
+.cco-enter-sum-box {
+  margin-bottom: 0;
+  // float: left;
+  // margin-right: 30px;
 }
 
 // CABINET CASHOUT LIMITED ----------------------------- //
@@ -1290,166 +1360,55 @@ span.input-prefix {
   left: 150px;
 }
 
-// .btn-flat {
-//   display: block;
-//   margin: auto;
-//   width: 200px;
-//   border: 1px solid #e6e6e6;
-//   border-radius: 2px;
-//   color: #b4aeae;
-//   text-transform: uppercase;
-//   text-align: center;
-//   background: transparent;
-//   font-weight: bold;
-//   cursor: pointer;
-//   padding: 7px 0;
-//   margin-bottom: 20px;
-// }
-
-// --------------------------- //
-
 .cc-title {
-  margin-bottom: 20px;
-  font-size: 15.5px;
-  line-height: 18px;
-  color: #4a4a4a;
+  margin: 20px;
+  color: #000000;
 }
 
 .cc-form-top {
-  margin: 0 -20px 25px;
-  padding: 0 20px;
+  padding: 0;
   background:#fafafa;
   height:45px;
-}
-
-
-.cc-out {
-  & > * {
-    position: relative;
-    @include translate(0, 50%);
-    top: -50%;
-    display: inline-block;
-    position: relative;
-    bottom: 3px;
-  } 
-}
-
-.cc-income {
-  & > * {
-    position: relative;
-    @include translate(0, 50%);
-    top: -50%;
-    display: inline-block;
-    position: relative;
-    bottom: 3px;
-  } 
-}
-
-.cc-out .title,  .cc-income .title{
-  display: inline-block;
-  color:#000000;
-  font-size: 15.5px;
-  line-height: 25px;
-}
-.cc-out input {
-  display: inline-block;
-  width: 170px;
-  border-width: 0 0 1px;
-  border-style: solid;
-  border-color: #cbc7c4;
-  margin-top: 5px;
-  background: none;
-  position: static;
-  border-radius: 0;
-  & span {
-     line-height: 25px;
+  & > *{
+    float: left;
+  }
+  .cc-box {
+    background:#e9e9e9;
+    width:210px;
+    margin: 0 15px 0 0;
+    & > * {
+      position: relative;
+      display: inline-block;
+      position: relative;
+    } 
+    input {
+      display: inline-block;
+      // width: 170px;
+      margin-top: 5px;
+      background: none;
+      position: static;
+      border-radius: 0;
+      & span {
+         // line-height: 25px;
+      }
+    }
+    .cc-currency {
+      text-transform: lowercase;
+      // line-height: 25px;
+    }  
+  }
+  
+  .btn-flat{
+    float: right;
+    margin: 0 20px 0 0;
   }
 }
 
-.cc-income input {
-  display: inline-block;
-  width: 170px;
-  border-width: 0 0 1px;
-  border-style: solid;
-  border-color: #cbc7c4;
-  margin-top: 5px;
-  background: none;
-  position: static;
-  border-radius: 0;
-  & span {
-     line-height: 25px;
-  }
-}
-
-.cc-income .cc-currency, .cc-out .cc-currency {
-  text-transform: lowercase;
-}
-// .cc-income {
-//   & > * {
-//     position: relative;
-//     @include translate(0, 50%);
-//     top: -50%;
-//     display: inline-block;
-//     line-height: 25px;
-//     position: relative;
-//     bottom: 3px;
-//   }
-//   & span {
-//     display: inline-block;
-//     line-height: 18px;
-//     font-size: 15.5px;
-//     &.cc-sum{
-//       border: 1px solid;
-//       display: inline-block;
-//       width: 170px;
-//       border-width: 0 0 1px;
-//       border-style: solid;
-//       border-color: #cbc7c4;
-//       margin-top: 5px;
-//       background: none;
-//       min-height: 18px;
-//       position: static;
-//     }
-//   }
-//   .cc-currency {
-//     text-transform: lowercase;
-//     line-height: 25px;
-//   }
-
-// }
-.cc-out .cc-currency, .cc-income .cc-currency{
-  text-transform: lowercase;
-  line-height: 25px;
-}
 
 .cc-currency {
   text-transform: uppercase;
 }
 
-.cc-convert-btn {
-  display: block;
-  width: 100%;
-  background: transparent;
-  border: 1px solid #4a4a4a;
-  border-radius: 2px;
-  padding: 12px 0;
-  text-align: center;
-  text-transform: uppercase;
-  font-size: 14px;
-  font-weight: bold;
-  color: #4a4a4a;
-}
-
-// -------------------------- //
-
-@media (min-width: 600px) {
-  .cc-out {
-    float: left;
-  }
-  .cc-income {
-    float: right;
-  }
-}
 .s-mailing-text{
   .mailing-text{
     > span:not(.current){

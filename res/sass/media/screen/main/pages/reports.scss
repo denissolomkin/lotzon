@@ -16,7 +16,6 @@
 }
 
 .ph-header {
-    margin: 0 -20px 0;
     padding: 0 20px;
     height: 45px;
     line-height: 45px;
@@ -49,14 +48,6 @@
     width: 13%;
 }
 
-.r-header,
-.r-item {
-    margin-left: -20px;
-    margin-right: -20px;
-    padding-left: 20px;
-    padding-right: 20px;
-}
-
 // ------------------ //
 .r-header {
     display: block;
@@ -68,8 +59,6 @@
 
 // ------------------ //
 .r-item {
-    padding: 14px 20px;
-    line-height: 1.4;
     &:hover:before {
         top: 10px;
         right: 10px;
@@ -117,17 +106,48 @@
 .r-profit-text {
     width: 15%;
 }
-
-.cabinet-transaction-history .content-box-cat {
-    float: right;
-    margin: auto;
+#reports-transactions{
+    .content-box-item-top{
+        padding: 20px 10px;
+    }
+}
+.cabinet-transaction-history {
+    .calendar-range{
+        float: right;
+        &:before {
+            position: absolute;
+            z-index: 0;
+        }
+        
+    }
+    .content-box-cat {
+        float: left;
+        margin: auto;
+        
+        a {
+            display: table-cell;
+            padding: 0 10px;
+            margin-right: 5px;
+        }
+        input[type="radio"]{
+            position: absolute;
+            &:checked + label{
+                background: #4d4d4d;
+                color: #ffffff;
+            }    
+        }
+        label{
+            line-height: 30px;
+            padding: 0 20px;
+            height: 30px;
+            display: inline-block;
+            font-weight: normal;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+    }
 }
 
-.cabinet-transaction-history .content-box-cat a {
-    display: table-cell;
-    padding: 0 10px;
-    margin-right: 5px;
-}
 
 .cabinet-referrals {
     .content-box-cat {
@@ -137,14 +157,6 @@
 
 .cabinet-referrals .content-box-item-top {
     padding: 0 10px 0;
-}
-
-.th-item {
-    margin: 0 -20px;
-    padding: 13px 20px 0;
-    // cursor: pointer;
-    position: relative;
-    line-height: 1.4;
 }
 
 @media (min-width: 1200px) {
@@ -163,14 +175,12 @@
         width: 15%;
     }
     .ph-header {
-        margin: 0 -30px 0;
         padding: 0 30px;
         height: 45px;
         line-height: 45px;
         background: #FAFAFA;
     }
     .ph-item {
-        margin: 0 -30px;
         padding-left: 30px;
         padding-right: 30px;
     }
@@ -189,12 +199,5 @@
     }
     .cabinet-referrals .content-box-item-top {
         padding: 0 10px 0;
-    }
-    .th-item {
-        margin: 0 -30px;
-        padding: 13px 30px 0;
-        cursor: pointer;
-        position: relative;
-        line-height: 1.4;
     }
 }

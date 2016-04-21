@@ -63,13 +63,14 @@ $(function () {
          */
         'for': function (num, operator, num2) {
             var ret = [];
+            if(typeof operator === 'object') {
+                num = 0;
+                operator = '<';
+                num2 = num;
+            } else
+                num2 = typeof num2 !== 'object' ? num2 : operator;
 
             switch (operator) {
-                default: //" < "
-                    for (; num < num2; num++) {
-                        ret.push(num);
-                    }
-                    break;
                 case "<=":
                     for (; num <= num2; num++) {
                         ret.push(num);
@@ -85,8 +86,13 @@ $(function () {
                         ret.push(num);
                     }
                     break;
+                default: //" < "
+                    for (; num < num2; num++) {
+                        ret.push(num);
+                    }
+                    break;
             }
-            ;
+
             return ret;
         },
         'splitMode': function(str) {

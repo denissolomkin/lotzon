@@ -1,12 +1,12 @@
 <div id="lottery-view" class="content-box">
-    {{partial 'common-content-box-header-partial' (day date) }}
+    {{partial 'common-content-box-header-partial' (day date) "link" }}
 
     <div class="content-box-content clearfix">
         <div class="content-box-item" data-lotteryid="{{id}}">
             <div class="container clearfix">
                 <div class="ticket-nav">
                     {{#if prevId}}
-                    <a href="/lottery/{{prevId}}" class="prev i-arrow-slim-left"></a>
+                    <a href="/lottery/{{prevId}}{{#if type}}?type={{type}}{{/if}}" class="prev i-arrow-slim-left"></a>
                     {{/if}}
                     <div class="ticket-current-wrapper">
                         <span>{{i18n "title-lottery-ticket-current"}}</span>
@@ -21,7 +21,7 @@
                         </ul>
                     </div>
                     {{#if nextId}}
-                    <a href="/lottery/{{prevId}}" class="next i-arrow-slim-right"></a>
+                    <a href="/lottery/{{nextId}}{{#if type}}?type={{type}}{{/if}}" class="next i-arrow-slim-right"></a>
                     {{/if}}
                 </div>
                 <div id="lottery-view-tickets" class="ghd-tickets" style="min-height: 100px;">

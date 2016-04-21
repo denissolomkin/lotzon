@@ -90,7 +90,7 @@
   }
 }
 
-#lottery-process {
+#popup-lottery-process {
   height: 680px;
   & .container {
     max-width: 520px;
@@ -329,7 +329,7 @@
 }
 
 @media (min-width: 769px) {
-  #lottery-process {
+  #popup-lottery-process {
     &.lottery-won {
       background: url(../img/1024.png) center center no-repeat;
     }
