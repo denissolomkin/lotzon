@@ -1240,6 +1240,8 @@ class Player extends Entity
                         'name'       => $this->applyPrivacy('Name'),
                         'surname'    => $this->applyPrivacy('Surname'),
                     ),
+                    'money'    => $this->getMoney(),
+                    'points'   => $this->getPoints(),
                     'ping'     => $this->getDates('Ping'),
                     'gender'   => $this->applyPrivacy('Gender'),
                     'age'      => $this->applyPrivacy('Age'),
