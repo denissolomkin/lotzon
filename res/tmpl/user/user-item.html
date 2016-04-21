@@ -15,7 +15,16 @@
                                 <feGaussianBlur stdDeviation="8" in="SourceGraphic" />
                             </filter>
                         </svg>
-                        <div class="img-avatar-name">{{or title.nickname name}}</div>
+                        <div class="img-avatar-name">
+                            <div class="username">
+                            {{or title.nickname name}}
+                            </div>
+                            <div class="total-won">
+                                <p>{{i18n "title-of-won"}} :</p>
+                                <p>static 1212 {{i18n "title-of-money"}}</p>
+                                <p>static 600001 {{i18n "title-of-points"}}</p>
+                            </div>
+                        </div>
                         <div class="ae-user-img pi-ph false">
                             <img src="{{avatar img id}}"
                                  class="loading"
@@ -30,20 +39,28 @@
                         <li class="ae-personal-form-values ae-name-block">
                             <ul>
                                 <li class="user-actions">
-                                    <a href="/users/{{id}}/messages" class="send-msg uk-float-left">
-                                        {{i18n "button-users-write-message"}}
-                                    </a>
-                                    {{#if (notlike null isFriend)}}
-                                    <form action="/users/requests/{{id}}" method="post" class="uk-float-left add-friends {{#if (ne false isFriend)}}hidden{{/if}} ">
-                                        <button type="submit">{{i18n "button-user-friendship"}}</button>
-                                    </form>
-                                    <form action="/users/requests/{{id}}" method="delete" class="add-friends uk-float-right danger {{#if (ne 'request' isFriend)}}hidden{{/if}}">
-                                        <button type="submit" class="danger">{{i18n "button-user-remove-request"}}</button>
-                                    </form>
-                                    <form action="/users/friends/{{id}}" method="delete" class="del-friends uk-float-right danger {{#if (ne true isFriend)}}hidden{{/if}}">
-                                        <button type="submit" class="danger">{{i18n "button-user-remove-friend"}}</button>
-                                    </form>
-                                    {{/if}}
+                                    <div class="uk-float-left">
+                                        <a href="/users/{{id}}/friends" class="send-msg uk-float-left">
+                                        static {{i18n "title-users-friends"}} 10412
+                                        </a>
+                                    </div>
+                                        
+                                    <div class="uk-float-right">
+                                        <a href="/users/{{id}}/messages" class="send-msg uk-float-left">
+                                            {{i18n "button-users-write-message"}}
+                                        </a>
+                                        {{#if (notlike null isFriend)}}
+                                        <form action="/users/requests/{{id}}" method="post" class="uk-float-left add-friends {{#if (ne false isFriend)}}hidden{{/if}} ">
+                                            <button type="submit">{{i18n "button-user-friendship"}}</button>
+                                        </form>
+                                        <form action="/users/requests/{{id}}" method="delete" class="add-friends uk-float-right danger {{#if (ne 'request' isFriend)}}hidden{{/if}}">
+                                            <button type="submit" class="danger">{{i18n "button-user-remove-request"}}</button>
+                                        </form>
+                                        <form action="/users/friends/{{id}}" method="delete" class="del-friends uk-float-right danger {{#if (ne true isFriend)}}hidden{{/if}}">
+                                            <button type="submit" class="danger">{{i18n "button-user-remove-friend"}}</button>
+                                        </form>
+                                        {{/if}}
+                                    </div>
                                 </li>
                             </ul>
                         </li>

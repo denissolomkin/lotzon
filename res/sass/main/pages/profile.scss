@@ -273,10 +273,20 @@
     position: absolute;
     left: 185px;
     top: 20px;
-    font-size: 25px;
     color: #fff;
     font-weight: normal;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+
+    .username{
+      font-size: 25px;
+      margin-bottom: 10px;
+    }
+    
+    .total-won{
+      font-size:15.5px;
+      line-height:19px;
+      text-align:left;
+    }
   }
   .ae-user-img img {
     display: block;
@@ -340,6 +350,13 @@
 
 .ae-personal-form-values li {
   position: relative;
+  .required:after{
+    content: '*';
+    font-size:15.5px;
+    color:#ff4242;
+    margin-left: 3px;
+    // text-align:left;
+  }
   &.empty {
     height: 36px;
   }
@@ -347,6 +364,11 @@
     margin-bottom: 0;
     text-align: left;
     padding: 0 20px;
+    color: #000000;
+    min-height: 60px;
+    > p{
+      line-height: 60px;
+    }
   }
 }
 
@@ -370,6 +392,7 @@
   padding-bottom: 1px;
   font-size: 15.5px;
   margin-left: 3px;
+  max-height: 43px;
   &:focus {
     border-width: 0 0 2px;
     border-color: #bed8d9;
@@ -425,11 +448,12 @@
     border-top: 1px solid #eaeaea;
     height: 45px;
     line-height: 45px;
-    padding-right: 30px;
+    padding-right: 20px;
     position: relative;
-    // padding-left: 30px;
-    /* i -150px left */
     padding-left: 175px;
+    &:last-child{
+      border-bottom: 1px solid #eaeaea;
+    }
     & > * {
       line-height: 45px;
     }
@@ -572,7 +596,7 @@
 
   }
   & li.user-actions {
-    padding-left: 30px;
+    padding-left: 20px;
     > *{
         width: auto;
     }
@@ -602,7 +626,7 @@
       width: 90px;
       float: left;
       &[name="day"]{
-        width: 50px;
+        width: 55px;
         margin-left: 20px;
       }
       &[name="country"]{
@@ -711,10 +735,8 @@
 // --------------------------- //
 
 .ae-combination-box {
-  margin: 0 -30px;
-  padding: 20px 16px 16px 20px;
+  padding: 20px 15px 15px 20px;
   background: #fafafa;
-
 }
 
 .ae-combination-box li {
@@ -834,6 +856,7 @@
 }
 .ae-personal-inf .text-notice {
   margin-top: 25px;
+  color: #000000;
   p {
     margin-bottom: 25px;
   }
@@ -1161,26 +1184,26 @@ div.rules-text {
 }
 
 .ci-title {
-  font-size: 16px;
-  margin-bottom: 20px;
-  color:#4a4a4a;
+  font-size: 15.5px;
+  color: #000000;
+  line-height: 60px;
+  padding: 0 20px;
 }
+
 
 // --------------------------- //
 
 .ci-personal-form {
   position: relative;
   line-height: 50px;
-  margin: 0 -20px 30px;
-  font-size: 16px;
-  border-top: 1px solid #eaeaea;
+  margin: 0 0 30px;
+  font-size: 15.5px;
+  border-top: 1px solid #ececec;
 }
 
 .ci-personal-form-names {
-  color: #b4aeae;
-  font-size: 14px;
   z-index: 1;
-  padding-left: 20px;
+  color: #4a4a4a;
   & ul li > * {
     float: left;
   }
@@ -1189,7 +1212,6 @@ div.rules-text {
 .ci-personal-form-names li {
   height: 45px;
   line-height: 45px;
-  margin: 0 0 0 -20px;
   padding: 0 20px;
   border-bottom: 1px solid #eaeaea;
   box-sizing: border-box;
@@ -1202,14 +1224,21 @@ div.rules-text {
   position: relative;
 }
 .ci-personal-form-names li.error {
-  border-top: 1px solid #FF2619;
-  border-bottom: 1px solid #FF2619;
-  input.error {
-  color: #FF2619;
-    &:focus {
-      color: #000;
-    }
+
+  > .error{
+    display: block;
+    font-size:13px;
+    color:#ff4242;
+    float: right;
   }
+  // border-top: 1px solid #FF2619;
+  // border-bottom: 1px solid #FF2619;
+  // input.error {
+  // color: #FF2619;
+  //   &:focus {
+  //     color: #000;
+  //   }
+  // }
 }
 .ci-personal-form-values.error {
   width: 100%;
@@ -1235,16 +1264,20 @@ div.rules-text {
   font-size: 15.5px;
   border: none;
   border-radius: 0;
+  
   -webkit-box-shadow: none;
   -webkit-border-radius: 0px;
   -moz-border-radius: 0px;
   border-radius: 0px;
+  
   -webkit-appearance: none;
   font-weight: normal;
+  
   height: 45px;
   line-height: 45px;
   margin-left: 18px;
   min-width: 160px;
+  color: #4a4a4a;
   &.input-prefix {
     padding-left: 165px;
   }
@@ -1417,7 +1450,13 @@ span.input-prefix {
     float: right;
   }
 }
-
+.s-mailing-text{
+  .mailing-text{
+    > span:not(.current){
+      display: none;
+    }
+  } 
+}
 .s-pass {
   & ul {
     position: relative;
@@ -1479,17 +1518,20 @@ span.input-prefix {
 
 
 .settings {
+  .option-block{
+    border-top: 1px solid #f5f5f5;
+    &.last{
+      border-bottom: 1px solid #f5f5f5;
+    }
+  }
+
   &  .option {
       float: none;
       background: #fafafa;
       font-size: 15.5px 
   }
   & .strip {
-    border-top: 1px solid #f5f5f5;
-    margin-right: -30px;
-    margin-left: -30px;
-    padding-right: 30px;
-    padding-left: 30px;
+    padding: 0 20px;
     height: 45px;
     & .option {
       float: none;
@@ -1522,6 +1564,9 @@ span.input-prefix {
   }
   .title {
     float: left;
+    text-align: left;
+    color: #9e9e9e;
+    min-width: 200px;
   }
 
   .s-notice {
@@ -1539,7 +1584,7 @@ span.input-prefix {
       @include translate(0, -50%);
     }
   }
-  input, input+span, .ae-social, span {
+  input, input+span, .ae-social {
     margin-left: 20px;
     font-size: 15.5px;
   }
@@ -1577,6 +1622,12 @@ span.input-prefix {
     color: #ff4c4b;
 }
 #profile {
+  .content-box-item{
+    .content-box-item{
+      min-height: 0;
+      padding-bottom: 5px;
+    }
+  }
   & .ae-social-item {
     display: inline-block;
     text-decoration: none;
@@ -1733,6 +1784,11 @@ span.input-prefix {
 }
 .user-actions {
   background: #fafafa;
+  .uk-float-right {
+    a, button{ 
+      margin: 0 0 0 30px;
+    }
+  }
 }
 
 .user-actions a,  .user-actions button {
@@ -1740,7 +1796,7 @@ span.input-prefix {
   color: #4990e2;
   background: none;
   background-color: transparent;
-  font-weight: bold;
+  // font-weight: bold;
   font-size: 15.5px;
   opacity: 1;
   cursor: pointer;
@@ -1749,6 +1805,10 @@ span.input-prefix {
 .setting-title {
   height: 60px;
   line-height: 60px;
+  font-size: 15.5px;
+  color: #000000;
+  text-align: left;
+  padding: 0 20px;
 }
 .radio-text {
   margin-right: 15px;
@@ -1766,6 +1826,46 @@ span.input-prefix {
   }
 }
 #profile-settings {
+  .social-box{
+    text-align: left;
+    .social-item{
+      display: inline-block;
+      font-size:15.5px;
+      color:#4a4a4a;
+      margin: 0 20px 0 0;
+      line-height: 45px;
+      cursor: pointer;
+      
+      &:before {
+        margin: 0 10px 0 0;
+        font-size: 19px;
+      }
+      
+      &.disabled{}
+      &.enabled{
+        color: #ff4242;
+      }
+      &.i-Vkontakte-simple{
+        &:before {
+          color: #3a5b9e;
+        }
+      }
+      &.i-Facebook-simple{
+        &:before {
+          color: #3c5a96;
+        }
+      }
+      &.i-Odnoklassniki-simple{
+        &:before {
+          color: #ff9f00;
+        }
+      }
+
+    }
+  }
+
+
+
   & .content-box-item {
     padding-top: 0;
     min-height: 550px;

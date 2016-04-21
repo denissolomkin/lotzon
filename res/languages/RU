@@ -34,6 +34,7 @@
                 "title-lottery-not-play": "Вы не принимали участия в розыгрыше",
                 "title-lottery-look-results": "СМОТРЕТЬ ВСЕ РЕЗУЛЬТАТЫ",
                 "title-lottery-ticket-unactive": "не активен",
+                "title-lottery-ticket-undefined": "не заполнен",
 
                 "title-day-today": "Сегодня",
                 "title-day-yesterday": "Вчера",
@@ -106,6 +107,10 @@
                 "title-of-yellow": "желтых",
                 "title-of-miss": "промахов",
                 "title-of-advertising": "Реклама",
+
+                "title-of-Facebook": "Facebook",
+                "title-of-Vkontakte": "ВКонтакте",
+                "title-of-Odnoklassniki": "Однокласники",
 
                 "title-captcha-warning": "Для продолжения пройдите проверку:",
                 "title-logout-warning": "Hе упустите шанс сорвать Джекпот!",
@@ -222,10 +227,14 @@
                 "title-profile-month": "месяц",
                 "title-profile-year": "год",
 
+                "title-profile": "Личные данные",
                 "title-profile-privacy-nobody": "никто",
                 "title-profile-privacy-friends": "друзья",
                 "title-profile-privacy-all": "все",
                 "title-profile-socials": "Привязаные соцсети",
+                "title-profile-social-link": "Привязать соцсети",
+                "title-social-disconnect": "Отвязать",
+                "title-social-connect": "Привязать",
                 "title-profile-setting":"Регистрация",
                 "title-profile-account-delete":"удалить аккаунт",
                 "title-profile-delete-yes":"ДА",
@@ -236,8 +245,8 @@
                 "title-profile-new-password": "Новый пароль",
                 "title-profile-password-repeat":"Повтор пароля",
                 "title-profile-get-email": "Получать письма",
-                "title-profile-social-link": "Привязать соцсети",
                 "title-profile-settings-change" :"изменить",
+                "title-profile-favorite-title":"Заполните любимую комбинацию",
                 "title-profile-favorite":"Любимая комбинация",
                 "title-profile-billing": "Кошельки",
                 "title-profile-main": "Основные",
@@ -245,8 +254,9 @@
                 "title-profile-settings": "Настройки",
                 "title-profile-edit-title": "Заполните информацию и выберите параметры её отображения",
                 "title-profile-details": "Контактные данные",
-                "title-profile-edit": "Редактирование профиля",
                 "title-profile-choose": "выбрать",
+                "title-profile-email": "Email",
+                "title-profile-email-add": "Добавить дополнительный адрес електронной почты",
                 "title-profile-write-name": "напишите имя",
                 "title-profile-write-surname": "напишите фамилию",
                 "title-profile-write-nickname": "напишите никнейм",
@@ -289,7 +299,7 @@
                 "button-profile-cashout-request": "Ваш запрос отправлен на модерацию",
             
                 "message-input-correct-data": "<p>Вводите только свои актуальные данные.<br>Неправильные или неполные данные могут негативно отразится при обработке запроса на выводвыигрыша.</p><p>Привязывайте только реальные страницы соцсетей, это даст Вам ряд дополнительных возможностей.</p>",
-                "message-input-billing-information": "Введите данные для вывода денег и нажмите кнопку сохранить:",
+                "message-input-billing-information": "На указанные реквизиты будет возможен вывод денег",
 
                 "button-profile-edit": "Изменить данные",
 
@@ -331,10 +341,11 @@
                 "title-users-referrals-profit": "Доход (баллов)",
 
 
-                "title-billing-phone": "Мобильный телефон",
-                "title-billing-yandexmoney": "Яндекс Деньги",
+                "title-billing-phone": "Телефон",
+                "title-billing-yandexmoney": "Яндекс.Деньги",
                 "title-billing-webmoney": "WebMoney",
                 "title-billing-qiwi": "QIWI",
+                "title-billing-error": "Ошибка в заполнении",
 
                 "title-users-friends": "Друзья",
                 "title-users-chronicle": "Хроника",

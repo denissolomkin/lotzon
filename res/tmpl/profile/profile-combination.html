@@ -1,87 +1,36 @@
-<div id="profile-settings" class="content-box-item">
-    {{partial 'common-content-box-header-partial' (i18n "title-profile-settings") }}
-    
-    <div class="content-box-content clearfix">
-        <div class="content-box-item">
-            <form action="/profile/settings" method="put" class="settings clearfix">
-                <div class="option-block clearfix container-center">
-                    <div class="setting-title"> {{i18n "title-account-settings"}}</div>
-                </div>
-                <div class="option-block">
-                    <div class="s-pass clearfix strip">
-                        <div class="title">{{i18n "title-profile-password"}}</div>
-                        <div class="s-pass-text">
-                            <span class="uk-disabled">********</span>
-                        </div>
-                        <div class="uk-float-right show-option">
-                            <span class='change large-visible'>{{i18n "title-profile-settings-change"}}</span> <i class="i-pencil change small-visible"></i>
-                        </div>
-                        <div class="uk-float-right delete-reg hidden option">
-                            <div class="choice">
-                                <span class="change danger">{{i18n "button-cancel"}}</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="option clearfix strip hidden">
-                        <div class="title">{{i18n "title-profile-old-password"}}</div>
-                        <input type="text" name="oldPass" placeholder="{{i18n 'title-enter-old-password'}}" value="">
-                    </div>
-                    <div class="option clearfix strip hidden">
-                        <div class="title">{{i18n "title-profile-new-password"}}</div>
-                        <input type="text" name="newPass" class="new-pass" placeholder="{{i18n 'title-enter-new-password'}}" value="">
-                    </div>
-                    <div class="option clearfix strip hidden">
-                        <div class="title">{{i18n "title-profile-password-repeat"}}</div>
-                        <input type="text" name="repeatPass" class="repeat-pass" placeholder="{{i18n 'title-enter-repeat-password'}}" value="">
-                        <p class="s-notice option hidden-notice screen-notice">{{i18n "text-invalid-pass-repeat"}}</p>
-                    </div>
-                    <p class="s-notice option hidden-notice mobile-notice">{{i18n "text-invalid-pass-repeat"}}</p>
-                </div>
-                
-                <div class="option-block">
-                    <div class="s-email clearfix strip">
-                        <div class="title">{{i18n "title-profile-get-email"}}</div>
-                        <label class="radio-text">
-                            <input type="radio" name="email" value="1" {{#if (like 1 (player "settings.newsSubscribe"))}}checked{{/if}}>
-                            <span>{{i18n "title-button-yes"}}</span>
-                        </label>
-                        <label class="radio-text">
-                            <input type="radio" name="email" value="0" {{#if (like 0 (player "settings.newsSubscribe"))}}checked{{/if}}>
-                            <span>{{i18n "title-button-no"}}</span>
-                        </label>
-                    </div>
-                </div>
-                <div class="option-block clearfix">
-                    <div class="ae-combination clearfix strip">
-                        <div class="title">{{i18n "title-profile-favorite"}}</div>
-                        <div class="ae-current-combination clearfix">
-                            {{#each favorite}}
-                            <input readonly name="favorite[]" value="{{.}}">
-                            {{/each}}
-                        </div>
-                        <div class="uk-float-right show-option ">
-                            <span class='change large-visible change-favorite'>{{i18n "title-profile-settings-change"}}</span> <i class="i-pencil change change-favorite small-visible"></i>
-                        </div>
-                        <div class="uk-float-right delete-reg hidden option">
-                            <div class="choice danger">
-                                <span class="change large-visible danger">{{i18n "button-cancel"}}</span><i class="i-pencil change danger small-visible"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- <div class="ae-favorite-combination "> -->
-                    <ul class="ae-combination-box hidden clearfix option">
-                        {{#each (player "renderFavorite")}}
-                        <li{{#if (true .)}} class="selected" {{/if}}>{{@key}}</li>
-                        {{/each}}
-                    </ul>
-                </div>
-                <div class="container-center">
-                    <button name="submit" type="submit" class="btn-flat">{{i18n "button-save"}}</button>
-                </div>
-            </form>
+<div id="profile-combination" class="content-box-item">
+    <form action="/profile/combination" method="put" class="settings clearfix">
+        
+        <div class="option-block clearfix container-center">
+            <div class="setting-title"> {{i18n "title-profile-favorite-title"}}</div>
         </div>
-        <!-- .content-box-item -->
-    </div>
-    <!-- .content-box-content -->
+
+        <div class="option-block clearfix">
+            <div class="ae-combination clearfix strip hidden">
+                <div class="ae-current-combination clearfix">
+                    {{#each favorite}}
+                    <input type="hidden" readonly name="favorite[]" value="{{.}}">
+                    {{/each}}
+                </div>
+                <div class="uk-float-right show-option ">
+                    <span class='change large-visible change-favorite'>{{i18n "title-profile-settings-change"}}</span> <i class="i-pencil change change-favorite small-visible"></i>
+                </div>
+                <div class="uk-float-right delete-reg hidden option">
+                    <div class="choice danger">
+                        <span class="change large-visible danger">{{i18n "button-cancel"}}</span><i class="i-pencil change danger small-visible"></i>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="ae-favorite-combination "> -->
+            <ul class="ae-combination-box clearfix option">
+                {{#each (player "renderFavorite")}}
+                <li{{#if (true .)}} class="selected" {{/if}}>{{@key}}</li>
+                {{/each}}
+            </ul>
+        </div>
+        <div class="container-center">
+            <button name="submit" type="submit" class="btn-flat">{{i18n "button-save"}}</button>
+        </div>
+    </form>
 </div>
-<!-- .content-box -->
+<!-- .content-box-item -->

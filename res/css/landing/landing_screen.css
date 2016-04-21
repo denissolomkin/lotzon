@@ -95,9 +95,9 @@ ol,ul {
     font-style: italic;
 }
 
-.i-vk-simple:before { content: '\e800'; } /* '' */
+.i-Vkontakte-simple:before { content: '\e800'; } /* '' */
 .i-arrow-down:before { content: '\e801'; } /* '' */
-.i-fb-simple:before { content: '\e802'; } /* '' */
+.i-Facebook-simple:before { content: '\e802'; } /* '' */
 .i-arrow-left:before { content: '\e803'; } /* '' */
 .i-arrow-right:before { content: '\e804'; } /* '' */
 .i-arrow-slim-down:before { content: '\e805'; } /* '' */
@@ -149,7 +149,11 @@ ol,ul {
 .i-calendar:before { content: '\e833'; } /* '' */
 .i-check:before { content: '\e834'; } /* '' */
 .i-arrow-curve:before { content: '\e835'; } /* '' */
-.i-ok-simple:before { content: '\e836'; } /* '' */
+.i-Odnoklassniki-simple:before { content: '\e836'; } /* '' */
+.i-earth:before { content: '\e837'; } /* '' */
+.i-person3:before { content: '\e838'; } /* '' */
+.i-lock:before { content: '\e839'; } /* '' */
+.i-pencil2:before { content: '\e83a'; } /* '' */
 
 
 /*  body
@@ -366,28 +370,28 @@ social */
     text-align: center;
 }
 
-.landing .right-content .sl-bk .i-fb-simple{
+.landing .right-content .sl-bk .i-Facebook-simple{
     color: #374c85;
 }
-.landing .right-content .sl-bk .i-fb-simple:hover{
+.landing .right-content .sl-bk .i-Facebook-simple:hover{
     color: #ffffff;
     border-color: #374c85;
     background: #374c85;
 }
 
-.landing .right-content .sl-bk .i-vk-simple{
+.landing .right-content .sl-bk .i-Vkontakte-simple{
     color: #2a598f;
 }
-.landing .right-content .sl-bk .i-vk-simple:hover{
+.landing .right-content .sl-bk .i-Vkontakte-simple:hover{
     color: #ffffff;
     border-color: #2a598f;
     background: #2a598f;
 }
 
-.landing .right-content .sl-bk .i-ok-simple{
+.landing .right-content .sl-bk .i-Odnoklassniki-simple{
     color: #ed812b;
 }
-.landing .right-content .sl-bk .i-ok-simple:hover{
+.landing .right-content .sl-bk .i-Odnoklassniki-simple:hover{
     color: #ffffff;
     border-color: #ed812b;
     background: #ed812b;
@@ -411,29 +415,29 @@ social */
 .landing .popup .sl-bk a:before{
     display: none;
 }
-.landing .popup .sl-bk .i-fb-simple{
+.landing .popup .sl-bk .i-Facebook-simple{
     border-color: #374c85;
     background: #374c85;
 }
-.landing .popup .sl-bk .i-fb-simple:hover{
+.landing .popup .sl-bk .i-Facebook-simple:hover{
     opacity: 1;
     border-color: #374c85;
     background: #374c85;
 }
-.landing .popup .sl-bk .i-vk-simple{
+.landing .popup .sl-bk .i-Vkontakte-simple{
     border-color: #2a598f;
     background: #2a598f;
 }
-.landing .popup .sl-bk .i-vk-simple:hover{
+.landing .popup .sl-bk .i-Vkontakte-simple:hover{
     opacity: 1;
     border-color: #2a598f;
     background: #2a598f;
 }
-.landing .popup .sl-bk .i-ok-simple{
+.landing .popup .sl-bk .i-Odnoklassniki-simple{
     border-color: #ed812b;
     background: #ed812b;
 }
-.landing .popup .sl-bk .i-ok-simple:hover{
+.landing .popup .sl-bk .i-Odnoklassniki-simple:hover{
     opacity: 1;
     border-color: #ed812b;
     background: #ed812b;
@@ -639,9 +643,6 @@ CLOSE BUTTON */
 .landing .popup form{
     display: none;
 }
-.landing .popup form[name='social_register']{
-    /*display: block;*/
-}
 
 .landing .popup form[name='register']{
     display: block;
@@ -649,6 +650,7 @@ CLOSE BUTTON */
 .landing .popup form[name='register'] .ib-l{
     margin-top: 50px;
 }
+.landing .popup form .m_input_uncheck,
 .landing .popup form .m_input{
     text-align: center;
 }
@@ -673,17 +675,52 @@ CLOSE BUTTON */
 }
 
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-.landing .popup form[name='social_exist']{
+
+.landing .popup.social_register form{
+    display: none;
+}
+.landing .popup.social_register form[name='social_register']{
     display: block;
 }
+.landing .popup.social_register form[name='social_register'] .ib-l .text{
+    color:#000000;
+    text-align:center;
+    margin-top: 50px;
+}
+.landing .popup.social_register form[name='social_register'] .ib-l p{
+    text-align: center;
+    color:#4a4a4a;
+    line-height:19px;
+    margin: 10px 0 20px;
+}
+
+
+.landing .popup.unexpected_error form,
+.landing .popup.social_error form,
+.landing .popup.social_exist form{
+    display: none;
+}
+.landing .popup.unexpected_error .popup-inner,
+.landing .popup.social_error .popup-inner,
+.landing .popup.social_exist .popup-inner{
+    min-height: 0;
+}
+.landing .popup.unexpected_error form[name='unexpected_error'],
+.landing .popup.social_error form[name='social_error'],
+.landing .popup.social_exist form[name='social_exist']{
+    display: block;
+}
+
 .landing .popup form[name='social_exist'] .text{
     text-align: center;
     margin: 50px 0 20px;
 }
 
+.landing .popup form[name='unexpected_error'] .title,
 .landing .popup form[name='social_error'] .title{
     color: #f84e41;
 }
+.landing .popup form[name='unexpected_error'] .text,
 .landing .popup form[name='social_error'] .text{
     text-align: center;
     margin: 50px 0 20px;

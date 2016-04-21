@@ -1,150 +1,219 @@
 <div id="profile-settings" class="content-box-item">
-    {{partial 'common-content-box-header-partial' (i18n "title-profile-settings") }}
-    <!-- <div class="content-box-header"><span class="back i-arrow-slim-left large-visible"></span><span class="back i-arrow-slim-left small-visible "></span>{{i18n "title-profile-settings"}}</div> -->
-
-    <div class="content-box-content clearfix">
-        <div class="content-box-item">
-            <form action="/profile/settings" method="put" class="settings clearfix">
-                <div class="option-block clearfix container-center">
-                    <div class="setting-title"> {{i18n "title-account-settings"}}</div>
+    <form action="/profile/settings" method="put" class="settings clearfix">
+        <!-- Registration -->
+        <div class="option-block clearfix">
+            <div class="s-account_delete clearfix strip">
+                <div class="title">{{i18n "title-profile-setting"}}</div>
+                <div> {{#if (day registration)}}
+                    <span> {{day registration}} </span> {{else}}
+                    <span class="uk-disabled">день</span> {{/if}}
                 </div>
-                <!--
-                <div class="option-block clearfix">
-                <div class="s-account_delete clearfix strip">
-                    <div class="title">{{i18n "title-profile-setting"}}</div>
-                    <div> {{#if (day registration)}}
-                        <span> {{day registration}} </span> {{else}}
-                        <span class="uk-disabled">день</span> {{/if}}
-                    </div>
-                    <div class="uk-float-right delete-reg show-option">
-                        <span class='change'>{{i18n "title-profile-account-delete"}}</span>
-                    </div>
-                    <div class="uk-float-right delete-reg hidden option">
-                        <div class="choice">
-                            <label class="radio-text">
-                                <input type="radio" name="email" value="1" checked>
-                                <span class="danger">{{i18n "title-profile-delete-yes"}}</span>
-                            </label>
-                            <label class="radio-text">
-                                <input type="radio" name="email" value="2">
-                                <span class="change">{{i18n "title-profile-delete-no"}}</span>
-                            </label>
-                        </div>
-                    </div>
-                    </div>
-                    <div class=" s-notice hidden option">
-                        <p>{{i18n "text-registration-delete-notice"}}</p>
-                    </div>
-                </div>
-                -->
-                <!--
-                <div class="option-block clearfix">
-                    <div class="s-lang clearfix strip">
-                        <div class="title">{{i18n "title-profile-site-language"}}</div>
-                        {{#each language.available}}
+                <!-- <div class="uk-float-right delete-reg show-option">
+                    <span class='change'>{{i18n "title-profile-account-delete"}}</span>
+                </div> -->
+                <div class="uk-float-right delete-reg hidden option">
+                    <div class="choice">
                         <label class="radio-text">
-                            <input type="radio" name="site-lang" value="{{@key}}" {{#if (eq @key ../language.current)}} checked{{/if}}>
-                            <span>{{.}}</span>
-                        </label>
-                        {{/each}}
-                    </div>
-                </div>
-                -->
-                <div class="option-block">
-                    <div class="s-pass clearfix strip">
-                        <div class="title">{{i18n "title-profile-password"}}</div>
-                        <div class="s-pass-text">
-                            <span class="uk-disabled">********</span>
-                        </div>
-                        <div class="uk-float-right show-option">
-                            <span class='change large-visible'>{{i18n "title-profile-settings-change"}}</span> <i class="i-pencil change small-visible"></i>
-                        </div>
-                        <div class="uk-float-right delete-reg hidden option">
-                            <div class="choice">
-                                <span class="change danger">{{i18n "button-cancel"}}</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="option clearfix strip hidden">
-                        <div class="title">{{i18n "title-profile-old-password"}}</div>
-                        <input type="text" name="oldPass" placeholder="{{i18n 'title-enter-old-password'}}" value="">
-                    </div>
-                    <div class="option clearfix strip hidden">
-                        <div class="title">{{i18n "title-profile-new-password"}}</div>
-                        <input type="text" name="newPass" class="new-pass" placeholder="{{i18n 'title-enter-new-password'}}" value="">
-                    </div>
-                    <div class="option clearfix strip hidden">
-                        <div class="title">{{i18n "title-profile-password-repeat"}}</div>
-                        <input type="text" name="repeatPass" class="repeat-pass" placeholder="{{i18n 'title-enter-repeat-password'}}" value="">
-                        <p class="s-notice option hidden-notice screen-notice">{{i18n "text-invalid-pass-repeat"}}</p>
-                    </div>
-                    <p class="s-notice option hidden-notice mobile-notice">{{i18n "text-invalid-pass-repeat"}}</p>
-                </div>
-                <!--div class="option-block">
-                    <div class="tie-soc clearfix strip">
-                        <div class="title">{{i18n "title-profile-social-link"}} <a class="question" href="#"> (?) <span class="tooltip">
-                                    {{i18n 'text-social-bonus-link'}}
-                                </span></a></div>
-                        <div class="ae-social uk-float-left">
-                            <a href="#" class="ae-social-item i-Vkontakte" title="">
-                            </a>
-                            <a href="#" class="ae-social-item i-Facebook" title="">
-                            </a>
-                            <a href="#" class="ae-social-item i-Twitter">
-                            </a>
-                            <a href="#" class="ae-social-item i-Google">
-                            </a>
-                            <a href="#" class="ae-social-item i-Instagram">
-                            </a>
-                            <a href="#" class="ae-social-item i-Odnoklassniki">
-                            </a>
-                        </div>
-                    </div>
-                </div-->
-                <div class="option-block">
-                    <div class="s-email clearfix strip">
-                        <div class="title">{{i18n "title-profile-get-email"}}</div>
-                        <label class="radio-text">
-                            <input type="radio" name="email" value="1" {{#if (like 1 (player "settings.newsSubscribe"))}}checked{{/if}}>
-                            <span>{{i18n "title-button-yes"}}</span>
+                            <input type="radio" name="email" value="1" checked>
+                            <span class="danger">{{i18n "title-profile-delete-yes"}}</span>
                         </label>
                         <label class="radio-text">
-                            <input type="radio" name="email" value="0" {{#if (like 0 (player "settings.newsSubscribe"))}}checked{{/if}}>
-                            <span>{{i18n "title-button-no"}}</span>
+                            <input type="radio" name="email" value="2">
+                            <span class="change">{{i18n "title-profile-delete-no"}}</span>
                         </label>
                     </div>
                 </div>
-                <div class="option-block clearfix">
-                    <div class="ae-combination clearfix strip">
-                        <div class="title">{{i18n "title-profile-favorite"}}</div>
-                        <div class="ae-current-combination clearfix">
-                            {{#each favorite}}
-                            <input readonly name="favorite[]" value="{{.}}">
-                            {{/each}}
-                        </div>
-                        <div class="uk-float-right show-option ">
-                            <span class='change large-visible change-favorite'>{{i18n "title-profile-settings-change"}}</span> <i class="i-pencil change change-favorite small-visible"></i>
-                        </div>
-                        <div class="uk-float-right delete-reg hidden option">
-                            <div class="choice danger">
-                                <span class="change large-visible danger">{{i18n "button-cancel"}}</span><i class="i-pencil change danger small-visible"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- <div class="ae-favorite-combination "> -->
-                    <ul class="ae-combination-box hidden clearfix option">
-                        {{#each (player "renderFavorite")}}
-                        <li{{#if (true .)}} class="selected" {{/if}}>{{@key}}</li>
-                        {{/each}}
-                    </ul>
-                </div>
-                <div class="container-center">
-                    <button name="submit" type="submit" class="btn-flat">{{i18n "button-save"}}</button>
-                </div>
-            </form>
+            </div>
+            <div class=" s-notice hidden option">
+                <p>{{i18n "text-registration-delete-notice"}}</p>
+            </div>
         </div>
-        <!-- .content-box-item -->
-    </div>
-    <!-- .content-box-content -->
+        <!-- Password -->
+        <div class="option-block">
+            <div class="s-pass clearfix strip">
+                <div class="title">{{i18n "title-profile-password"}}</div>
+                <div class="s-pass-text">
+                    <span class="uk-disabled">********</span>
+                </div>
+                <div class="uk-float-right show-option">
+                    <span class='change large-visible'>{{i18n "title-profile-settings-change"}}</span> <i class="i-pencil change small-visible"></i>
+                </div>
+                <div class="uk-float-right delete-reg hidden option">
+                    <div class="choice">
+                        <span class="change danger">{{i18n "button-cancel"}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="option clearfix strip hidden">
+                <div class="title">{{i18n "title-profile-old-password"}}</div>
+                <input type="text" name="oldPass" placeholder="{{i18n 'title-enter-old-password'}}" value="">
+            </div>
+            <div class="option clearfix strip hidden">
+                <div class="title">{{i18n "title-profile-new-password"}}</div>
+                <input type="text" name="newPass" class="new-pass" placeholder="{{i18n 'title-enter-new-password'}}" value="">
+            </div>
+            <div class="option clearfix strip hidden">
+                <div class="title">{{i18n "title-profile-password-repeat"}}</div>
+                <input type="text" name="repeatPass" class="repeat-pass" placeholder="{{i18n 'title-enter-repeat-password'}}" value="">
+                <p class="s-notice option hidden-notice screen-notice">{{i18n "text-invalid-pass-repeat"}}</p>
+            </div>
+            <p class="s-notice option hidden-notice mobile-notice">{{i18n "text-invalid-pass-repeat"}}</p>
+        </div>
+        <!-- Email -->
+        <div class="option-block">
+            <div class="s-email clearfix strip">
+                <div class="title">{{i18n "title-profile-email"}}</div>
+                <div class="s-email-text">
+                    <span class="uk-disabled">{{#if email}}{{email}}{{/if}}</span>
+                </div>
+                <!-- <div class="uk-float-right show-option">
+                    <span class='change large-visible'>{{i18n "title-profile-settings-change"}}</span> <i class="i-pencil change small-visible"></i>
+                </div>
+                <div class="uk-float-right delete-reg hidden option">
+                    <div class="choice">
+                        <span class="change danger">{{i18n "button-cancel"}}</span>
+                    </div>
+                </div> -->
+            </div>
+            <div class="option clearfix strip hidden">
+                <div class="title">{{i18n "title-profile-email-add"}}</div>
+            </div>
+            <div class="option clearfix strip hidden">
+                <input type="text" name="" class="" placeholder="{{i18n 'title-password'}}" value="">
+                <div class="title">{{i18n "title-profile-new-password"}}</div>
+            </div>
+            <div class="option clearfix strip hidden">
+                <button>save</button><button>cancel</button>
+            </div>
+            <!-- <p class="s-notice option hidden-notice mobile-notice">{{i18n "text-invalid-pass-repeat"}}</p> -->
+        </div>
+        <!-- Language -->
+        <!-- <div class="option-block clearfix">
+            <div class="s-lang clearfix strip">
+                <div class="title">{{i18n "title-profile-site-language"}}</div>
+                <div class="s-lang-text">
+                    <span class="uk-disabled">Language >> </span>
+                </div>
+                <div class="uk-float-right show-option">
+                    <span class='change large-visible'>{{i18n "title-profile-settings-change"}}</span> <i class="i-pencil change small-visible"></i>
+                </div>
+                <div class="uk-float-right delete-reg hidden option">
+                    <div class="choice">
+                        <span class="change danger">{{i18n "button-cancel"}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="option clearfix strip hidden">
+                {{#each language.available}}
+                <label class="radio-text">
+                    <input type="radio" name="site-lang" value="{{@key}}" {{#if (eq @key ../language.current)}} checked{{/if}}>
+                    <span>{{.}}</span>
+                </label>
+                {{/each}}
+            </div>
+        </div> -->
+        <!-- Social -->
+        <div class="option-block">
+            <div class="s-social clearfix strip">
+                <div class="title">{{i18n "title-profile-social-link"}}</div>
+                <div class="s-social-text">
+                    {{#if social.enabled}}
+                    <div class="social-box">
+                        {{#each social.providers}} {{#if .}}
+                        <span  class="skip social-item" title="">
+                            {{i18n "title-of" @key }}
+                        </span>
+                        {{/if}} {{/each}}
+                    </div>
+                    {{/if}}  
+                </div>
+                <div class="uk-float-right show-option">
+                    <span class='change large-visible'>{{i18n "title-profile-settings-change"}}</span> <i class="i-pencil change small-visible"></i>
+                </div>
+                <div class="uk-float-right delete-reg hidden option">
+                    <div class="choice">
+                        <span class="change danger">{{i18n "button-cancel"}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="option clearfix strip hidden">
+                <div class="social-box">
+                
+                {{#if social.enabled}}
+                    {{#each social.providers}} {{#if .}}
+                    <span onclick="Form.delete({href:'/profile/social ',data:{provider:'{{@key}}'}})" class="skip social-item enabled i-{{@key}}-simple" title="">
+                        {{i18n "title-social-disconnect"}}
+                    </span>
+                    {{/if}} {{/each}}
+                {{/if}}
+
+                {{#if social.disabled}}
+                    {{#each social.providers}} {{#if .}} {{else}}
+                    <a href="/auth/{{@key}}?method=link" class="skip social-item disabled i-{{@key}}-simple" title="">
+                        {{i18n "title-social-connect"}}
+                    </a>
+                    {{/if}} {{/each}}
+                {{/if}} 
+
+                </div>
+            </div>
+        </div>
+        <!-- Mailing -->
+        <div class="option-block last">
+            <div class="s-mailing clearfix strip">
+                <div class="title">{{i18n "title-profile-get-email"}}</div>
+                <div class="s-mailing-text">
+                    <span class="uk-disabled mailing-text">
+                        <span class="{{#if (like 1 (player "settings.newsSubscribe"))}}current{{/if}}">{{i18n "title-button-yes"}}</span>
+                        <span class="{{#if (like 0 (player "settings.newsSubscribe"))}}current{{/if}}">{{i18n "title-button-no"}}</span>
+                    </span>
+                </div>
+                <div class="uk-float-right show-option">
+                    <span class='change large-visible'>{{i18n "title-profile-settings-change"}}</span> <i class="i-pencil change small-visible"></i>
+                </div>
+                <div class="uk-float-right delete-reg hidden option">
+                    <div class="choice">
+                        <span class="change danger">{{i18n "button-cancel"}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="option clearfix strip hidden">
+                <label class="radio-text">
+                    <input type="radio" name="email" value="1" {{#if (like 1 (player "settings.newsSubscribe"))}}checked{{/if}}>
+                    <span>{{i18n "title-button-yes"}}</span>
+                </label>
+                <label class="radio-text">
+                    <input type="radio" name="email" value="0" {{#if (like 0 (player "settings.newsSubscribe"))}}checked{{/if}}>
+                    <span>{{i18n "title-button-no"}}</span>
+                </label>
+            </div>
+        </div>
+        <!-- <div class="option-block clearfix">
+            <div class="ae-combination clearfix strip">
+                <div class="title">{{i18n "title-profile-favorite"}}</div>
+                <div class="ae-current-combination clearfix">
+                    {{#each favorite}}
+                    <input readonly name="favorite[]" value="{{.}}"> {{/each}}
+                </div>
+                <div class="uk-float-right show-option ">
+                    <span class='change large-visible change-favorite'>{{i18n "title-profile-settings-change"}}</span> <i class="i-pencil change change-favorite small-visible"></i>
+                </div>
+                <div class="uk-float-right delete-reg hidden option">
+                    <div class="choice danger">
+                        <span class="change large-visible danger">{{i18n "button-cancel"}}</span><i class="i-pencil change danger small-visible"></i>
+                    </div>
+                </div>
+            </div>
+            <ul class="ae-combination-box hidden clearfix option">
+                {{#each (player "renderFavorite")}}
+                <li{{#if (true .)}} class="selected" {{/if}}>{{@key}}</li>
+                    {{/each}}
+            </ul>
+        </div> -->
+
+        <!-- Submit -->
+        <div class="container-center">
+            <button name="submit" type="submit" class="btn-flat">{{i18n "button-save"}}</button>
+        </div>
+    </form>
 </div>
-<!-- .content-box -->

@@ -49,9 +49,9 @@ ol, ul {
   -moz-osx-font-smoothing: grayscale;
  
 }
-.i-vk-simple:before { content: '\e800'; } /* '' */
+.i-Vkontakte-simple:before { content: '\e800'; } /* '' */
 .i-arrow-down:before { content: '\e801'; } /* '' */
-.i-fb-simple:before { content: '\e802'; } /* '' */
+.i-Facebook-simple:before { content: '\e802'; } /* '' */
 .i-arrow-left:before { content: '\e803'; } /* '' */
 .i-arrow-right:before { content: '\e804'; } /* '' */
 .i-arrow-slim-down:before { content: '\e805'; } /* '' */
@@ -103,7 +103,11 @@ ol, ul {
 .i-calendar:before { content: '\e833'; } /* '' */
 .i-check:before { content: '\e834'; } /* '' */
 .i-arrow-curve:before { content: '\e835'; } /* '' */
-.i-ok-simple:before { content: '\e836'; } /* '' */
+.i-Odnoklassniki-simple:before { content: '\e836'; } /* '' */
+.i-earth:before { content: '\e837'; } /* '' */
+.i-person3:before { content: '\e838'; } /* '' */
+.i-lock:before { content: '\e839'; } /* '' */
+.i-pencil2:before { content: '\e83a'; } /* '' */
 
 @font-face {
   font-family: 'fontello';

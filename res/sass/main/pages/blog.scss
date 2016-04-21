@@ -93,12 +93,16 @@
             right: 20px;
         }
     }
-    & .message-form-smileys {
+    .message-form-wrapper{
+        padding: 10px 0 0 10px;
+    }
+
+    .message-form-smileys {
         margin-left: 0;
         float: left;
         top: -1px;
     }
-    & .message-form-wrapper {
+    .message-form-wrapper {
         button[type="submit"] {
             float: right;
             border: none;

@@ -124,8 +124,8 @@
             $(document).on('click', '.ae-combination-box li', Profile.do.selectFavorite);
             $(document).on('click', '.s-lang .radio-text', Profile.do.changeLanguage);
             $(document).on('click', '.change', Profile.do.openOption);
-            $(document).on('click', '.change-favorite', Profile.do.openFavorite);
-            $(document).on('click', '.choice .change', Profile.do.cancelFavorite);
+            // $(document).on('click', '.change-favorite', Profile.do.openFavorite);
+            // $(document).on('click', '.choice .change', Profile.do.cancelFavorite);
             $(document).on('click', '.bonus-banner-view-item', Bonuses.showBanner);
             $(document).on('click', '.bonus-share-banner-view .close', Bonuses.hideBanner);
 
@@ -181,6 +181,7 @@
 
             "profile-edit": Profile.init.edit,
             "profile-billing": Profile.init.billing,
+            "profile-combination": Profile.do.openFavorite,
 
             "users-view-messages": Messages.after.markRead,
 

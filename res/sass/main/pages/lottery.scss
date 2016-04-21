@@ -667,7 +667,6 @@
         line-height: 40px;
         color: #000;
         text-align: center;
-        letter-spacing: -2px;
         position: relative;
         overflow: hidden;
         z-index: 2;
@@ -1273,8 +1272,26 @@
     position: relative;
     font-weight: normal;
     color: #000000;
-    @include translate(0, -50%);
-    top: 50%;
+    height: 100%;
+    width: 100%;
+    text-align: left;
+    &:before {
+        content: "";
+        display: inline-block;
+        vertical-align: middle;
+        width: 0;
+        height: 100%;
+        position: relative;
+        margin-left: -5px;
+    }
+    
+    .condition-inner{
+        text-align: left;
+        display: inline-block;
+        vertical-align: middle;
+    }
+    // @include translate(0, -50%);
+    // top: 50%;
     & .btn-flat {
         margin-top: 20px;
     }

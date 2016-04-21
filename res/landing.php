@@ -101,9 +101,9 @@
                                     <input type="submit" class="sb_but default" value="Войти">
                                 </div>
                                 <div class="sl-bk">
-                                    <a href="./auth/Facebook?method=log-in" class="i-fb-simple"></a>
-                                    <a href="./auth/Vkontakte?method=log-in" class="i-vk-simple"></a>
-                                    <a href="./auth/Odnoklassniki?method=log-in" class="i-ok-simple"></a>
+                                    <a href="./auth/Facebook?method=log-in" class="i-Facebook-simple"></a>
+                                    <a href="./auth/Vkontakte?method=log-in" class="i-Vkontakte-simple"></a>
+                                    <a href="./auth/Odnoklassniki?method=log-in" class="i-Odnoklassniki-simple"></a>
                                 </div>
                             </div>
                         </form>
@@ -193,9 +193,9 @@
                                 <span>или через</span>
                             </div>
                             <div>
-                                <a href="./auth/Facebook?method=user<?=($ref?'&ref='.$ref:'')?>" class="i-fb-simple">Facebook</a>
-                                <a href="./auth/Vkontakte?method=user<?=($ref?'&ref='.$ref:'')?>" class="i-vk-simple">ВКонтакте</a>
-                                <a href="./auth/Odnoklassniki?method=user<?=($ref?'&ref='.$ref:'')?>" class="i-ok-simple">Одноклассники</a>
+                                <a href="./auth/Facebook?method=user<?=($ref?'&ref='.$ref:'')?>" class="i-Facebook-simple">Facebook</a>
+                                <a href="./auth/Vkontakte?method=user<?=($ref?'&ref='.$ref:'')?>" class="i-Vkontakte-simple">ВКонтакте</a>
+                                <a href="./auth/Odnoklassniki?method=user<?=($ref?'&ref='.$ref:'')?>" class="i-Odnoklassniki-simple">Одноклассники</a>
                             </div>
                         </div>
                         
@@ -232,15 +232,15 @@
                     <div class="ib-l">
                         <div class="text">Письмо для подтверждения регистрации будет выслано на email <span class="current-mail"></span></div>
                         <p>или</p>
-                        <input autocomplete="off" spellcheck="false" type="email" class="m_input" name="login" placeholder="Ваш email">
+                        <input autocomplete="off" spellcheck="false" type="email" class="m_input_uncheck" name="email" placeholder="выслать на другой email">
                         <div class="input-text">
                             <div class="alert">Этот email уже зарегистрирован</div>
                             <div class="hidden-text" id="reg-succ-txt">Информация для завершения регистрации выслана на Ваш email.</div>
-                            <div class="text">Напишите ваш email, на него будет выслано письмо для завершения регистрации</div>
+                            <!-- <div class="text">Напишите ваш email, на него будет выслано письмо для завершения регистрации</div> -->
                         </div>
                     </div>
                     <div class="s-b">
-                        <input type="submit" disabled="" class="sb_but gold disabled" value="Продолжить">
+                        <input type="submit" class="sb_but gold" value="Продолжить">
                     </div>
                 </div>
                 
@@ -257,8 +257,19 @@
                 </div>
                 
             </form>
+            <!-- Social unexpected_error -->
+            <form name="unexpected_error">
+                
+                <div class="title box-inner">ПРОИЗОШЛА ОШИБКА</div>
+                <div class="box-inner">
+                    <div class="ib-l">
+                        <div class="text">Повторите попытку позже.</div>
+                    </div>
+                </div>
+                
+            </form>
             <!-- Social exist -->
-            <form name="social_exist" data-ref="<?=$ref?>">
+            <form name="social_exist">
                 
                 <div class="title box-inner">АККАУНТ УЖЕ ЗАРЕГИСТРИРОВАН</div>
                 <div class="box-inner">
@@ -266,7 +277,7 @@
                         <div class="text">Соцсеть через которую Вы хотите зарегистрироватся уже есть в нашей базе. <br><br>Нажмите кнопку «продолжить» для входа в аккаунт</div>
                     </div>
                     <div class="s-b">
-                        <input type="submit" disabled="" class="sb_but gold disabled" value="Продолжить">
+                        <input type="submit" class="sb_but gold" value="Продолжить">
                     </div>
                 </div>
                 
@@ -753,8 +764,13 @@
         case 428:
             // при регистрации соц.сеть не выдала email
             // $error['message'] - сообщение NEED_EMAIL
+            // var_dump($error);
             ?>
-
+                <script>
+                    // alert(428);
+                    $('.popup').addClass('social');
+                    landing.popup.open();
+                </script>                            
             <?php
             break;
         case 409:
@@ -762,17 +778,48 @@
             // $error['message'] - сообщение USER_ALREADY_EXISTS
             // $socialName   - имя социальной сети ("Vkontakte", "Facebook", "Odnoklassniki")
             ?>
+                <script>
+                    // alert(409);
+                    var name = "<?php echo $socialName; ?>";
+                    if(name){
+                        $('.popup').addClass('social_exist');
+                        landing.popup.open();
 
+                        $('form[name="social_exist"]').submit(function(event){
+                            window.location.href = "./auth/"+name+"?method=log-in";
+                            return false;
+                        });
+                    }
+                </script>                
+            <?php
+            break;
+        case 423:
+            // выполнялся вход через соц.сеть, но пользователя для такой соц.сети не существует
+            // доступ заблокирован
+            // $error['message'] - сообщение ACCESS_DENIED
+            ?>
+                <script>
+                    // alert(423);
+                    $('.popup').addClass('social_error');
+                    landing.popup.open();
+                </script>                
             <?php
             break;
         case 404:
-        case 423:
             // выполнялся вход через соц.сеть, но пользователя для такой соц.сети не существует
             // $error['message'] - сообщение USER_NOT_FOUND
             // либо доступ заблокирован
             // $error['message'] - сообщение ACCESS_DENIED
             ?>
-
+                <script>
+                    // alert(404+", "+423 );
+                    
+                    var error = '<?php echo $error['message']; ?>';
+                    if (error){
+                        document.querySelector('#login-block-form .alert').innerHTML = error;
+                        landing.formError( $('#login-block-form') );
+                    }
+                </script>                
             <?php
             break;
         case 400:
@@ -781,7 +828,11 @@
             // $error['message'] - сообщение BAD_REQUEST
             // $error['message'] - сообщение INTERNAL_SERVER_ERROR
             ?>
-
+                <script>
+                    // alert(400+','+500);
+                    $('.popup').addClass('unexpected_error');
+                    landing.popup.open();
+                </script>                
             <?php
             break;
         default:
@@ -789,7 +840,17 @@
                 // регистрация через соц.сеть ок! нужен теперь email или подтверждение того, что вернула соц.сеть
                 // $socialIdentity->getSocialEmail() - email который выдала соц.сеть
                 ?>
+                <script>
+                    var curmail = "<?php echo $socialIdentity->getSocialEmail();?>";
+                    if(curmail){
+                        // alert('$socialIdentity '+curmail);
+                        $('.popup form[name="social_register"] .current-mail').html(curmail);
+                        $('.popup form[name="social_register"] input[type="email"]').attr('data-current', curmail);
 
+                        $('.popup').addClass('social_register');
+                        landing.popup.open();
+                    }
+                </script>                
                 <?php
             }
     }
