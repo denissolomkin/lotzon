@@ -713,11 +713,17 @@ Config::instance()->publicResources = array(
     '/profile/settings' => array(
         'put' => 'controllers\production\Players:settings'
     ),
+    '/profile/combination' => array(
+        'put' => 'controllers\production\Players:combination'
+    ),
     '/profile/avatar' => array(
         'post' => 'controllers\production\Players:avatar'
     ),
     '/profile/edit' => array(
         'put' => 'controllers\production\Players:edit'
+    ),
+    '/profile/complete' => array(
+        'put' => 'controllers\production\Players:complete'
     ),
     '/language/:lang' => 'controllers\production\Players:changeLanguage',
     /**
@@ -751,6 +757,9 @@ Config::instance()->publicResources = array(
     ),
     '/user/:userId' => array(
         'get' => 'controllers\production\Players:userInfo'
+    ),
+    '/user/:userId/friends' => array(
+        'get' => 'controllers\production\FriendsController:userFriends'
     ),
     '/:page/' => 'controllers\production\Index:index',
     '/(.*)/' => 'controllers\production\Index:index',

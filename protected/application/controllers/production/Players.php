@@ -20,19 +20,60 @@ class Players extends \AjaxController
     {
         $this->validateRequest();
 
-        $agreed = $this->request()->post('agree', false);
+        //$agreed = $this->request()->post('agree', false);
         $email = $this->request()->post('email', null);
 
         if (empty($email)) {
             $this->ajaxResponse(array(), 0, 'EMPTY_EMAIL');
-        } else if (!$agreed) {
-            $this->ajaxResponse(array(), 0, 'AGREE_WITH_RULES');
+        //} else if (!$agreed) {
+        //    $this->ajaxResponse(array(), 0, 'AGREE_WITH_RULES');
         } else if (!in_array($_SERVER['HTTP_HOST'], array('stag.lotzon.com', 'lotzon2.com', 'new.lotzon.com', 'lotzon.test', 'lotzon.com', 'testbed.lotzon.com', '192.168.1.253', '192.168.56.101', 'lotzon')))
             $this->ajaxResponse(array(), 0, 'ACCESS_DENIED');
 
         $player = new Player();
         $player->setEmail($email);
 
+        $userNotFound = false;
+        try {
+            $player->fetch();
+        } catch (EntityException $e) {
+            if ($e->getCode() == 404) {
+                $userNotFound = true;
+            }
+        }
+
+        if ($userNotFound === false) {
+            $this->ajaxResponse(array(), 0, 'EMAIL_ALREADY_USED');
+        }
+
+        try {
+            $player->setIp(Common::getUserIp())
+                ->setDates(time(), 'Registration')
+                ->setHash(md5(uniqid()));
+            if ($ref = $this->request()->get('ref')) {
+                $player->setReferalId((int)$ref);
+            }
+
+            if ($this->session->has('SOCIAL_IDENTITY')) {
+                $social = $this->session->get('SOCIAL_IDENTITY');
+                $this->session->remove('SOCIAL_IDENTITY');
+
+                $player->setSocialId($social->getSocialId())
+                    ->setSocialName($social->getSocialName())
+                    ->setSocialEmail($social->getSocialEmail());
+            }
+            \PlayersModel::instance()->savePreregistration($player);
+        } catch (EntityException $e) {
+            $this->ajaxResponse(array(), 0, 'INTERNAL_SERVER_ERROR');
+        }
+
+        Common::sendEmail($player->getEmail(), 'Регистрация на www.lotzon.com', 'player_registration_new', array(
+            'login' => $player->getEmail(),
+            'hash'  => $player->getHash(),
+        ));
+
+        $this->ajaxResponse(array(), 1, 'OK');
+        /*
         try {
             $geoReader = new Reader(PATH_MMDB_FILE);
             $country = $geoReader->country(Common::getUserIp())->country;
@@ -103,6 +144,7 @@ class Players extends \AjaxController
         $this->ajaxResponse(array(
             'id' => $player->getId(),
         ));
+        */
 
     }
 
@@ -111,8 +153,8 @@ class Players extends \AjaxController
 
         $this->validateRequest();
 
-        $email = $this->request()->post('email', null);
-        $password = $this->request()->post('password', null);
+        $email      = $this->request()->post('email', null);
+        $password   = $this->request()->post('password', null);
         $rememberMe = $this->request()->post('remember', false);
 
         if (empty($email)) {
@@ -132,6 +174,7 @@ class Players extends \AjaxController
         try {
             $player->login($password)->markOnline();
 
+            /*
             if ($this->session->has('SOCIAL_IDENTITY')) {
                 $social = $this->session->get('SOCIAL_IDENTITY');
 
@@ -159,6 +202,7 @@ class Players extends \AjaxController
 
                 $this->session->remove('SOCIAL_IDENTITY');
             }
+            */
 
             if ($rememberMe) {
                 $player->enableAutologin();
@@ -392,20 +436,16 @@ class Players extends \AjaxController
         return true;
     }
 
-    public function settingsAction()
+    public function combinationAction()
     {
-
         $this->validateRequest();
         $this->authorizedOnly();
 
         $favorite   = $this->request()->post('favorite');
-        $subscribe  = $this->request()->post('email');
-        $oldPass    = $this->request()->post('oldPass', '');
-        $newPass    = $this->request()->post('newPass', '');
-        $repeatPass = $this->request()->post('repeatPass', '');
 
         $player = new Player;
         $player->setId($this->session->get(Player::IDENTITY)->getId())->fetch();
+
 
         $fav = array();
         foreach ($favorite as $number) {
@@ -415,7 +455,77 @@ class Players extends \AjaxController
         }
 
         try {
-            $player->updateNewsSubscribe($subscribe == 1 ? true : false)->setFavoriteCombination($fav)->update();
+            $player->setFavoriteCombination($fav)->update();
+        } catch (EntityException $e) {
+            $this->ajaxResponseNoCache(array("message" => $e->getMessage()), $e->getCode());
+            return false;
+        }
+
+        $res = array(
+            "player"  => array(
+                "favorite" => $player->getFavoriteCombination(),
+            )
+        );
+
+        $this->ajaxResponseNoCache($res);
+
+        return true;
+    }
+
+    public function completeAction()
+    {
+        $this->validateRequest();
+        $this->authorizedOnly();
+
+        $newPass    = $this->request()->post('newPass', '');
+        $repeatPass = $this->request()->post('repeatPass', '');
+
+        $player = new Player;
+        $player->setId($this->session->get(Player::IDENTITY)->getId())->fetch();
+
+        try {
+            if (($newPass != '') && ($repeatPass != '')) {
+                    if ($newPass == $repeatPass) {
+                        $player->changePassword($newPass);
+                    } else {
+                        $this->ajaxResponseBadRequest("passwords-do-not-match");
+                    }
+            }
+        } catch (EntityException $e) {
+            $this->ajaxResponseNoCache(array("message" => $e->getMessage()), $e->getCode());
+            return false;
+        }
+
+        $res = array(
+            "player"  => array(
+                "is" => array(
+                    "complete" => $player->isComplete(),
+                )
+            )
+        );
+
+        $this->ajaxResponseNoCache($res);
+
+        return true;
+
+    }
+
+    public function settingsAction()
+    {
+
+        $this->validateRequest();
+        $this->authorizedOnly();
+
+        $subscribe  = $this->request()->post('email');
+        $oldPass    = $this->request()->post('oldPass', '');
+        $newPass    = $this->request()->post('newPass', '');
+        $repeatPass = $this->request()->post('repeatPass', '');
+
+        $player = new Player;
+        $player->setId($this->session->get(Player::IDENTITY)->getId())->fetch();
+
+        try {
+            $player->updateNewsSubscribe($subscribe == 1 ? true : false)->update();
             if (($oldPass != '') && ($newPass != '') && ($repeatPass != '')) {
                 if ($player->getPassword() === $player->compilePassword($oldPass)) {
                     if ($newPass == $repeatPass) {
@@ -437,7 +547,6 @@ class Players extends \AjaxController
                 "settings" => array(
                     "newsSubscribe" => $player->getNewsSubscribe()
                 ),
-                "favorite" => $player->getFavoriteCombination(),
             )
         );
 

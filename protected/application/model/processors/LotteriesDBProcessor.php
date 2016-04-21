@@ -224,29 +224,47 @@ class LotteriesDBProcessor implements IProcessor
         return $lottery;
     }
 
-    public function getDependentLottery($lotteryId, $dependancy) 
+    public function getDependentLotteryId($lotteryId, $dependency, $playerId = false)
     {
-        $sql = "SELECT * FROM `Lotteries` WHERE `Id` " . ($dependancy == 'next' ? '<' : '>') . " :lotid AND `WinnersCount` > 0 ORDER BY `Id` " . ($dependancy == 'next' ? 'DESC' : 'ASC') . " LIMIT 1";
-        
+        if ($playerId == false) {
+            $sql = "SELECT l.Id FROM
+                  `Lotteries` l
+                WHERE
+                  l.`Id` " . ($dependency == 'next' ? '<' : '>') . " :lotid
+                ORDER BY
+                  l.`Id` " . ($dependency == 'next' ? 'DESC' : 'ASC') . " LIMIT 1";
+            $sql_arr = array(
+                ':lotid' => $lotteryId,
+            );
+        } else {
+            $sql = "SELECT l.Id FROM
+                  `Lotteries` l
+                JOIN LotteryTicketsArchive la
+                  ON la.LotteryId = l.Id
+                WHERE
+                  l.`Id` " . ($dependency == 'next' ? '<' : '>') . " :lotid
+                AND
+                  la.`PlayerId` = :plid
+                ORDER BY
+                  l.`Id` " . ($dependency == 'next' ? 'DESC' : 'ASC') . " LIMIT 1";
+            $sql_arr = array(
+                ':lotid' => $lotteryId,
+                ':plid'  => $playerId,
+            );
+        }
         try {
             $sth = DB::Connect()->prepare($sql);
-            $sth->execute(array(
-                ':lotid' => $lotteryId,
-            ));
+            $sth->execute($sql_arr);
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query", 500);
         }
 
-        $lotteryData = $sth->fetch();   
-
-        if (!$lotteryData) {
-            throw new ModelException("LOTTERY_NOT_FOUND", 404);
-            
+        if (!$sth->rowCount()) {
+            return null;
         }
-        $lottery = new Lottery();
-        $lottery->formatFrom('DB', $lotteryData);
 
-        return $lottery;
+        return $sth->fetchColumn(0);
+
     }
 
     public function getWinnersCount()

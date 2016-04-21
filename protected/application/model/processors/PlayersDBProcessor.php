@@ -4,6 +4,58 @@ Application::import(PATH_INTERFACES . 'IProcessor.php');
 
 class PlayersDBProcessor implements IProcessor
 {
+    public function savePreregistration(Entity $player)
+    {
+        $sql = "INSERT INTO `PlayersPreregistration` (`Email`, `Ip`, `Hash`, `ReferalId`, `SocialId`, `SocialName`, `SocialEmail`, `DateRegistration`)
+                VALUES (:email, :ip, :hash, :rid, :socialid, :socialname, :socialemail, :dr)";
+
+        try {
+            DB::Connect()->prepare($sql)->execute(array(
+                ':email'       => $player->getEmail(),
+                ':ip'          => $player->getIp(),
+                ':hash'        => $player->getHash(),
+                ':rid'         => $player->getReferalId(),
+                ':socialemail' => $player->getSocialEmail(),
+                ':socialid'    => $player->getSocialId(),
+                ':socialname'  => $player->getSocialName(),
+                ':dr'          => (int)$player->getDates('Registration'),
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+        return $player;
+    }
+
+    public function loadPreregistration(Entity $player)
+    {
+        $sql = "SELECT * FROM `PlayersPreregistration`
+            WHERE `Email` = :email
+              AND `Hash` = :hash";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':email' => $player->getEmail(),
+                ':hash'  => $player->getHash(),
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+        if (!$sth->rowCount()) {
+            throw new ModelException("Player not found", 404);
+        } elseif ($sth->rowCount() > 1) {
+            throw new ModelException("Found more than one player", 400);
+        }
+
+        $data = $sth->fetch();
+
+        $player->formatFrom('Preregistration', $data);
+
+        return $player;
+    }
+
     public function create(Entity $player)
     {
         $sql = "INSERT INTO `Players` (`Email`, `Password`, `Salt`, `Country`, `City`, `Zip`, `Address`, `Lang`, `Visible`, `Ip`, `Hash`, `Complete`, `Valid`, `Name`, `Surname`, `AdditionalData`, `ReferalId`, `Agent`, `Referer`)
@@ -1404,19 +1456,25 @@ class PlayersDBProcessor implements IProcessor
         return $player;
     }
 
-    public function validateHash($hash)
+    public function validateHash($hash, $email)
     {
-        $sql = "UPDATE `Players` SET `Valid` = 1 WHERE `Hash` = :hash";
+        $sql = "SELECT * FROM `PlayersPreregistration` WHERE `Email` = :email AND `Hash` = :hash";
 
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
                 ':hash'  => $hash,
+                ':email' => $email,
             ));
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query", 500);
         }
 
+        if (!$sth->rowCount()) {
+            return false;
+        }
+
+        return true;
     }
 
     public function updateInvite(Entity $player) {

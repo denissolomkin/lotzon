@@ -166,17 +166,7 @@
     </div>
 
     <!-- POPUP -->
-    <?php 
-        echo "<h1>Hi!!!</h1>";
-        
-        if($socialIdentity){   
-        echo "<pre>";
-            var_dump($socialIdentity);
-        echo "</pre>";
-        }
-        echo var_dump($error);
-    ?>
-    <div class="popup <?php if($socialIdentity) echo 'social'; ?>" id="login-block" style="display: none;">
+    <div class="popup" id="login-block" style="display: none;">
         <div class="popup-inner">
             <i class="popup-close i-x-slim"></i>
             
@@ -757,6 +747,53 @@
     		<!-- /Yandex.Metrika counter -->
     	<?php endif; ?>
 	<?php endif; ?>
+
+    <?php
+    switch ($error['code']) {
+        case 428:
+            // при регистрации соц.сеть не выдала email
+            // $error['message'] - сообщение NEED_EMAIL
+            ?>
+
+            <?php
+            break;
+        case 409:
+            // попытка зарегистрироваться через соц.сеть, на которую уже зарегистирован аккаунт
+            // $error['message'] - сообщение USER_ALREADY_EXISTS
+            // $socialName   - имя социальной сети ("Vkontakte", "Facebook", "Odnoklassniki")
+            ?>
+
+            <?php
+            break;
+        case 404:
+        case 423:
+            // выполнялся вход через соц.сеть, но пользователя для такой соц.сети не существует
+            // $error['message'] - сообщение USER_NOT_FOUND
+            // либо доступ заблокирован
+            // $error['message'] - сообщение ACCESS_DENIED
+            ?>
+
+            <?php
+            break;
+        case 400:
+        case 500:
+            // ошибки в запросе, либо на сервере
+            // $error['message'] - сообщение BAD_REQUEST
+            // $error['message'] - сообщение INTERNAL_SERVER_ERROR
+            ?>
+
+            <?php
+            break;
+        default:
+            if ($socialIdentity) {
+                // регистрация через соц.сеть ок! нужен теперь email или подтверждение того, что вернула соц.сеть
+                // $socialIdentity->getSocialEmail() - email который выдала соц.сеть
+                ?>
+
+                <?php
+            }
+    }
+    ?>
 
 </body>
 </html>

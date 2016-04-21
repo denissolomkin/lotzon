@@ -832,7 +832,7 @@ class Player extends Entity
         $psw=$this->generatePassword();
         $this->setPassword($this->compilePassword($psw))
             ->setAgent($_SERVER['HTTP_USER_AGENT'])
-            ->setDates(time(), 'Registration')
+            //->setDates(time(), 'Registration')
             ->setReferer($session->get('REFERER'));
 
         parent::create();
@@ -840,11 +840,13 @@ class Player extends Entity
         $this->updateIp(Common::getUserIp())
             ->writeLog(array('action'=>'PLAYER_CREATED', 'desc'=>$this->hidePassword($psw), 'status'=>'success'));
 
+        /*
         Common::sendEmail($this->getEmail(), 'Регистрация на www.lotzon.com', 'player_registration', array(
             'login' => $this->getEmail(),
             'password'  => $this->getGeneratedPassword(),
             'hash'  => $this->getHash(),
         ));
+        */
 
         return $this;
     }
@@ -1139,6 +1141,19 @@ class Player extends Entity
             }
         }
 
+        if ($from == 'Preregistration') {
+            $this->setEmail($data['Email'])
+                ->setIp($data['Ip'])
+                ->setHash($data['Hash'])
+                ->setReferalId($data['ReferalId']);
+            $this->setDates($data['DateRegistration'], 'Registration');
+            if ($data['SocialName']) {
+                $this->setSocialEmail($data['SocialEmail'])
+                    ->setSocialId($data['SocialId'])
+                    ->setSocialName($data['SocialName']);
+            }
+        }
+
         return $this;
     }
 
@@ -1186,6 +1201,11 @@ class Player extends Entity
         }
     }
 
+    public function loadPreregistration() {
+        $model = $this->getModelClass();
+        return $model::instance()->loadPreregistration($this);
+    }
+
     public function export($to)
     {
         switch ($to) {
@@ -1230,6 +1250,7 @@ class Player extends Entity
                         'country'    => $this->applyPrivacy('Country'),
                         'city'       => $this->applyPrivacy('City'),
                     ),
+                    'friends'  => \FriendsModel::instance()->getStatusCount($this->getId(), 1),
                     /*
                     'social'     => $this->getSocial()
                     */

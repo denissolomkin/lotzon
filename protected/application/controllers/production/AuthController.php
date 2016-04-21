@@ -26,14 +26,14 @@ class AuthController extends \SlimController\SlimController {
 
     }
 
-    public function register($profile, $provider) {
+    public function register($profile, $provider)
+    {
 
         $player = new Player();
         $player->setEmail($this->session->get(Player::IDENTITY) ? $this->session->get(Player::IDENTITY)->getEmail() : $profile->email)
             ->setSocialId($profile->identifier)
             ->setSocialName($provider)
             ->setSocialEmail($profile->email);
-        $loggedIn     = false;
         $userNotFound = false;
         try {
             $player->fetch();
@@ -45,9 +45,30 @@ class AuthController extends \SlimController\SlimController {
 
         if ($userNotFound === false) {
             $this->session->set('ERROR', StaticTextsModel::instance()->setLang($player->getLang())->getText('USER_ALREADY_EXISTS'));
+            $this->session->set('ERROR_CODE', 409);
+            $this->session->set('SOCIAL_NAME', $provider);
             $this->redirect('/');
         }
 
+        try {
+            $player->setIp(Common::getUserIp())
+                ->setDates(time(), 'Registration');
+            if ($ref = $this->request()->get('ref')) {
+                $player->setReferalId((int)$ref);
+            }
+        } catch (EntityException $e) {
+            $this->session->set('ERROR', $e->getMessage());
+            $this->session->set('ERROR_CODE', 400);
+        }
+
+        $this->session->set('SOCIAL_IDENTITY', $player);
+
+        if(!$profile->email) {
+            $this->session->set('ERROR', StaticTextsModel::instance()->setLang($player->getLang())->getText('NEED_EMAIL'));
+            $this->session->set('ERROR_CODE', 428);
+        }
+
+        /*
         try {
             $geoReader =  new Reader(PATH_MMDB_FILE);
             $country = $geoReader->country(Common::getUserIp())->country;
@@ -107,6 +128,7 @@ class AuthController extends \SlimController\SlimController {
 
         } catch (EntityException $e) {
             $this->session->set('ERROR', $e->getMessage());
+            $this->session->set('ERROR_CODE', 400);
             // do nothing
         }
 
@@ -114,6 +136,8 @@ class AuthController extends \SlimController\SlimController {
             $this->session->set(Player::IDENTITY, $player);
 
         }
+
+        */
 
         $this->redirect(strstr($_SERVER['HTTP_REFERER'], 'lotzon.com') ? $_SERVER['HTTP_REFERER'] : '/');
 
@@ -199,6 +223,7 @@ class AuthController extends \SlimController\SlimController {
 
                 if ($player->getBan()) {
                     $this->session->set('ERROR', StaticTextsModel::instance()->setLang($player->getLang())->getText('ACCESS_DENIED'));
+                    $this->session->set('ERROR_CODE', 423);
                     $this->redirect('/');
                 }
 
@@ -249,11 +274,14 @@ class AuthController extends \SlimController\SlimController {
 
                 // fetch more than one player
                 if ($e->getCode() == 400) {
-                    $this->session->set('ERROR', StaticTextsModel::instance()->setLang($player->getLang())->getText('SOCIAL_USED'));
+                    $this->session->set('ERROR', StaticTextsModel::instance()->setLang($player->getLang())->getText('BAD_REQUEST'));
+                    $this->session->set('ERROR_CODE', 400);
                 } else if ($e->getCode() == 500) {
-                    $this->session->set('ERROR', $e->getMessage());
+                    $this->session->set('ERROR', StaticTextsModel::instance()->setLang($player->getLang())->getText('INTERNAL_SERVER_ERROR'));
+                    $this->session->set('ERROR_CODE', 500);
                 } else if ($e->getCode() == 404) {
                     $this->session->set('ERROR', StaticTextsModel::instance()->setLang($player->getLang())->getText('USER_NOT_FOUND'));
+                    $this->session->set('ERROR_CODE', 404);
                 }
             }
 
@@ -262,6 +290,57 @@ class AuthController extends \SlimController\SlimController {
 
             }
 
+            $this->redirect(strstr($_SERVER['HTTP_REFERER'], 'lotzon.com') ? $_SERVER['HTTP_REFERER'] : '/');
+        } elseif ($profile->method == 'link') {
+            $player = new Player();
+            $player->setEmail($this->session->get(Player::IDENTITY)?$this->session->get(Player::IDENTITY)->getEmail():$profile->email)
+                ->setSocialId($profile->identifier)
+                ->setSocialName($provider)
+                ->setSocialEmail($profile->email);
+            $loggedIn = false;
+            try {
+                $player->fetch()->initDates();
+                if($player->getBan()){
+                    $this->session->set('ERROR', StaticTextsModel::instance()->setLang($player->getLang())->getText('ACCESS_DENIED'));
+                    $this->redirect('/');
+                }
+                if(!$player->getName() AND $profile->firstName)
+                    $player->setName($profile->firstName);
+                if(!$player->getSurname() AND $profile->lastName)
+                    $player->setSurname($profile->lastName);
+                if(!$player->getValid() AND $profile->email AND $player->getEmail()==$profile->email)
+                    $player->setValid(true);
+                if(!$this->session->has(Player::IDENTITY)){
+                    $this->session->set('QuickGameLastDate',($player->getDates('Login') < strtotime(date("Y-m-d")) ? $player->getDates('Login') : time()));
+                    $player->setDates(time(), 'Login');
+                }
+                // try to catch avatar
+                if ($profile->photoURL AND !$player->getAvatar())
+                    $player->uploadAvatar($profile->photoURL);
+                if(!array_key_exists($provider, $player->getAdditionalData()) AND !$player->isSocialUsed() && SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_social_profile'))
+                    $player->addPoints(
+                        SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_social_profile'),
+                        StaticTextsModel::instance()->setLang($player->getLang())->getText('bonus_social_profile').$provider);
+                if(!$_COOKIE[Player::PLAYERID_COOKIE] OR $_COOKIE[Player::PLAYERID_COOKIE] != $player->getId() OR $_COOKIE[Player::PLAYERID_COOKIE] != $player->getCookieId() OR !$player->getCookieId())
+                    $player->updateCookieId($_COOKIE[Player::PLAYERID_COOKIE]?:$player->getId());
+                if(!$_COOKIE[Player::PLAYERID_COOKIE])
+                    setcookie(Player::PLAYERID_COOKIE, $player->getId(), time() + Player::AUTOLOGIN_COOKIE_TTL, '/');
+                $player->updateSocial()
+                    ->setAdditionalData(array($provider=>array_filter(get_object_vars($profile))))
+                    ->setCookieId($_COOKIE[Player::PLAYERID_COOKIE]?:$player->getId())
+                    ->setLastIp(Common::getUserIp())
+                    ->updateIp(Common::getUserIp())
+                    ->payReferal()
+                    ->setAgent($_SERVER['HTTP_USER_AGENT'])
+                    ->update()
+                    ->writeLogin();
+                $loggedIn = true;
+            } catch (EntityException $e) {
+
+            }
+            if ($loggedIn === true) {
+                $this->session->set(Player::IDENTITY, $player);
+            }
             $this->redirect(strstr($_SERVER['HTTP_REFERER'], 'lotzon.com') ? $_SERVER['HTTP_REFERER'] : '/');
         } else {
             $this->register($profile, $provider);
