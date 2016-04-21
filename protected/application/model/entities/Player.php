@@ -22,7 +22,7 @@ class Player extends Entity
         'dates'=>array('Moment','QuickGame','ChanceGame','AdBlockLast','AdBlocked','WSocket','TeaserClick','Ping','Login','Notice','Registration'),
         'stats'=>array('WhoMore','SeaBattle','Notice','Note','AdBlock','Log','Ip','MyReferal','Referal','MyInviter','Inviter','ShopOrder','MoneyOrder','Review','Message','CookieId','Mult'),
         'counters'=>array('CaptchaCount','CaptchaTime'),
-        'privacy'=>array('Name','Surname','Gender','Birthday','Age','Zip','Address') // list of variables, which can be modify by player
+        'privacy'=>array('Name','Surname','Gender','Birthday','Age','Zip','Address','Message') // list of variables, which can be modify by player
     );
 
     protected $_id         = 0;
@@ -1177,7 +1177,7 @@ class Player extends Entity
         switch (true) {
             case $this->getPrivacy($field) == 2:
             case $this->getPrivacy($field) == 1 && $this->getFriend():
-                return $this->{'get' . $field}();
+                return isset($this->{'_' . $field}) ? $this->{'get' . $field}() : true;
                 break;
 
             default:

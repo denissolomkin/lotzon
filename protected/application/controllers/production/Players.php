@@ -403,6 +403,7 @@ class Players extends \AjaxController
         $oldPass    = $this->request()->post('oldPass', '');
         $newPass    = $this->request()->post('newPass', '');
         $repeatPass = $this->request()->post('repeatPass', '');
+        $privacy    = $this->request()->post('privacy', array());
 
         $player = new Player;
         $player->setId($this->session->get(Player::IDENTITY)->getId())->fetch();
@@ -415,7 +416,17 @@ class Players extends \AjaxController
         }
 
         try {
-            $player->updateNewsSubscribe($subscribe == 1 ? true : false)->setFavoriteCombination($fav)->update();
+
+            $player
+                ->updateNewsSubscribe($subscribe == 1 ? true : false)
+                ->setFavoriteCombination($fav)
+                ->update();
+
+            $player
+                ->initPrivacy()      // init all from DB
+                ->initPrivacy($privacy) // update from POST
+                ->updatePrivacy();
+
             if (($oldPass != '') && ($newPass != '') && ($repeatPass != '')) {
                 if ($player->getPassword() === $player->compilePassword($oldPass)) {
                     if ($newPass == $repeatPass) {
@@ -427,6 +438,9 @@ class Players extends \AjaxController
                     $this->ajaxResponseBadRequest("password-incorrect");
                 }
             }
+
+            $this->session->set(Player::IDENTITY, $player); // update entity in session
+
         } catch (EntityException $e) {
             $this->ajaxResponseNoCache(array("message" => $e->getMessage()), $e->getCode());
             return false;
@@ -438,6 +452,7 @@ class Players extends \AjaxController
                     "newsSubscribe" => $player->getNewsSubscribe()
                 ),
                 "favorite" => $player->getFavoriteCombination(),
+                "privacy"  => $player->getPrivacy(),
             )
         );
 
@@ -485,7 +500,8 @@ class Players extends \AjaxController
                 ->initPrivacy($privacy) // update from POST
                 ->updatePrivacy();
 
-            $this->session->set(Player::IDENTITY, $player);
+            $this->session->set(Player::IDENTITY, $player); // update entity in session
+
         } catch (EntityException $e) {
             $this->ajaxResponseNoCache(array("message" => $e->getMessage()), $e->getCode());
             return false;

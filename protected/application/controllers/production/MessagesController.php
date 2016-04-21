@@ -141,6 +141,16 @@ class MessagesController extends \AjaxController
         $toPlayerId = $this->request()->post('recipient_id', NULL);
         $image      = $this->request()->post('image', "");
 
+        $toPlayer = new Player();
+        $toPlayer
+            ->setId($toPlayerId)
+            ->setFriendship($playerId)
+            ->initPrivacy();
+
+        if(!$toPlayer->applyPrivacy('Message')){
+            $this->ajaxResponseForbidden('USER_DENIED_MESSAGE');
+        }
+
         $obj = new Message;
         $obj->setPlayerId($playerId)
             ->setToPlayerId($toPlayerId)
