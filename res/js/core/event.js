@@ -5,6 +5,7 @@
         detect: null,
         body: null,
         handlers: {},
+        skip: ['skip', 'chosen-single'],
 
         init: function () {
             this.body = document.querySelector("body");
@@ -48,7 +49,7 @@
 
         checkNode: function (str, current, target) {
 
-            if (current.classList && current.classList.contains('skip'))
+            if (current.classList && Tools.compareArrays(current.classList, this.skip))
                 return false;
 
             var check = false,
