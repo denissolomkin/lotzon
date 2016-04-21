@@ -120,8 +120,8 @@
                 options.json = Player;
             }
 
-            /* disable JSON for header and support menu */
-            else if (options.template.search(/-/) === -1 || options.template.search(/support/) !== -1) {
+            /* disable JSON for header, popup and support menu */
+            else if (!options.json && (options.template.search(/-/) === -1 || options.template.search(/support/) !== -1 || options.template.search(/popup/) !== -1)) {
                 options.json = {};
             }
 
@@ -133,6 +133,14 @@
             /* replace JSON to self for "/list" items */
             else if (options.href.indexOf('list') !== -1) {
                 options.href = options.href.replace(/\/list/g, '').replace(/\-list/g, '');
+            }
+
+            /* transport search line to query */
+            else if(options.href.indexOf('?') !== -1) {
+                var search = options.href.split('?');
+                options.href = search[0];
+                options.query = options.query || {};
+                Object.deepExtend(options.query, JSON.parse('{"' + decodeURI(search[1].replace(/&/g, "\",\"").replace(/=/g, "\":\"")) + '"}'));
             }
 
             /* rewrite JSON to user model when "/users" templates */
@@ -242,7 +250,7 @@
 
                     },
                     error   : function (data) {
-                        D.error.call(options, [data && (data.message || data.responseJSON && data.responseJSON.message || data.statusText) || 'OBJECT NOT FOUND', options.href]);
+                        D.error.call(options, [data && (data.message || data.responseJSON && data.responseJSON.message || data.statusText) || 'OBJECT NOT FOUND', options.href, data.status]);
                     },
                     timeout : R.timeout.ajax
                 });
@@ -338,7 +346,7 @@
 
                     },
                     error   : function (data) {
-                        D.error.call(options, [data && (data.message || data.responseJSON && data.responseJSON.message || data.statusText) || 'TEMPLATE NOT FOUND', options.href]);
+                        D.error.call(options, [data && (data.message || data.responseJSON && data.responseJSON.message || data.statusText) || 'TEMPLATE NOT FOUND', options.href, data.status]);
                     },
                     timeout : R.timeout.template
                 });

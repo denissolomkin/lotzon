@@ -12,6 +12,7 @@ class Message extends Entity
     protected $_image       = '';
     protected $_date        = 0;
     protected $_status      = 0;
+    protected $_approval    = 1;
 
     public function init()
     {

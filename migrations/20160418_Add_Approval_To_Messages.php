@@ -1,0 +1,1 @@
+ALTER TABLE `Messages` ADD `Approval` TINYINT(1) NOT NULL DEFAULT '1' AFTER `Status`, ADD INDEX (`Approval`) ;

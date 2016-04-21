@@ -10,6 +10,7 @@ class Admin extends Entity
         'users'=>array('name'=>'Пользователи','icon'=>'user'),
         'reviews'=>array('name'=>'Отзывы','icon'=>'thumbs-o-up'),
         'monetisation'=>array('name'=>'Запросы','icon'=>'tag'),
+        'messages'=>array('name'=>'Спам','icon'=>'inbox'),
         'admins'=>array('name'=>'Админы','icon'=>'user-secret','css'=>'pull-right'),
 
         'Страны'=>array('icon'=>'globe',
@@ -27,19 +28,20 @@ class Admin extends Entity
                 'rights'=>array('icon'=>'shield','name'=>'Права доступа'),
                 'bonuses'=>array('icon'=>'diamond','name'=>'Бонусы'),
                 'counters'=>array('icon'=>'dashboard','name'=>'Счетчики'),
+                'captcha'=>array('icon'=>'lock','name'=>'Captcha'),
                 'whitelist'=>array('icon'=>'users','name'=>'Whitelist'),
                 'moderators'=>array('icon'=>'gavel','name'=>'Модераторы'),
             )),
 
         'Контент'=>array('icon'=>'th-list',
             'pages'=>array(
-                'banners'=>array('icon'=>'code','name'=>'Старые баннеры'),
-                'ad'=>array('icon'=>'youtube-play','name'=>'Новые баннеры'),
+                /*'banners'=>array('icon'=>'code','name'=>'Старые баннеры'),*/
+                'ad'=>array('icon'=>'youtube-play','name'=>'Реклама'),
                 'images'=>array('icon'=>'image','name'=>'Изображения'),
                 /*'comments'=>array('icon'=>'comment','name'=>'Комментарии'),
                 'news'=>array('icon'=>'calendar','name'=>'Новости'),*/
                 'shop'=>array('icon'=>'shopping-cart','name'=>'Товары'),
-                'partners'=>array('icon'=>'suitcase','name'=>'Партнеры'),
+                /*'partners'=>array('icon'=>'suitcase','name'=>'Партнеры'),*/
                 'maillist'=>array('icon'=>'envelope','name'=>'email рассылка'),
                 'linkredirect'=>array('icon'=>'refresh','name'=>'Link Redirect'),
                 'blogs'=>array('icon'=>'calendar','name'=>'Блог'),

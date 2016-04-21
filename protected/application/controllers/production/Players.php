@@ -3,7 +3,6 @@
 namespace controllers\production;
 use \Application, \Player, \EntityException, \CountriesModel, \SettingsModel, \StaticTextsModel, \WideImage, \EmailInvites, \EmailInvite, \LanguagesModel, \Common, \NoticesModel, \GamesSettingsModel, \GameSettingsModel, \ChanceGamesModel;
 use \GeoIp2\Database\Reader;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 Application::import(PATH_APPLICATION . 'model/entities/Player.php');
 Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');
@@ -174,13 +173,41 @@ class Players extends \AjaxController
 
     }
 
-    public function logoutAction()
+    public function captchaAction()
     {
 
-        if($this->session->has(Player::IDENTITY))
-            $this->session->get(Player::IDENTITY)->disableAutologin();
-        session_destroy();
-        $this->redirect('/');
+        $this->authorizedOnly(true);
+        $this->validateRequest();
+
+        $key = $this->request()->post('key', null);
+
+        if (empty($key)) {
+            $this->ajaxResponseBadRequest('EMPTY_KEY');
+        }
+
+        try {
+
+            try {
+                $recaptcha = new \ReCaptcha\ReCaptcha(\SettingsModel::instance()->getSettings('counters')->getValue('CAPTCHA_SERVER'));
+                $resp = $recaptcha->verify($key);
+            } catch (\Exception $e) {
+                $this->ajaxResponseInternalError('VERIFICATION_FAILED');
+            }
+
+            if ($resp->isSuccess()) {
+                \CaptchaModel::instance()->update($this->player);
+                $this->player->initCounters();
+                $this->session->set(Player::IDENTITY, $this->player);
+            } else {
+                $this->ajaxResponseInternalError('VALIDATION_FAILED');
+            }
+
+        } catch (\ModelException $e) {
+            $this->ajaxResponseInternalError();
+        }
+
+        $this->ajaxResponseNoCache(array('message' => $key));
+
     }
 
     public function saveAvatarAction()

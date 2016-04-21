@@ -53,6 +53,18 @@ class PlayersDBProcessor implements IProcessor
             throw new ModelException("Error processing storage query", 500);
         }
 
+        /* INSERT INTO COUNTERS TABLE */
+
+        $sql = "INSERT INTO `PlayerCounters` (`PlayerId`) VALUES (:id)";
+
+        try {
+            DB::Connect()->prepare($sql)->execute(array(
+                ':id'       => (int)$player->getId()
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
         /* INSERT INTO PRIVACY TABLE */
 
         $sql = "INSERT INTO `PlayerPrivacy` (`PlayerId`) VALUES (:id)";
@@ -572,7 +584,7 @@ class PlayersDBProcessor implements IProcessor
         return $res->fetchColumn(0);
     }
 
-    public function initCounters(Player $player)
+    public function initStats(Player $player)
     {
 
         $sql = "SELECT COUNT(Id) FROM `Players` WHERE (LastIp=:lip AND LastIp!='') OR (Ip=:lip AND Ip!='') OR (LastIp=:ip AND LastIp!='') OR (Ip=:ip AND Ip!='')";
@@ -595,16 +607,16 @@ class PlayersDBProcessor implements IProcessor
                 WHERE `Players`.Id = :id";
 
         $sql = "SELECT
-                (SELECT COUNT(Id) FROM `Players` WHERE (LastIp=:lip AND LastIp!='') OR (Ip=:lip AND Ip!='') OR (LastIp=:ip AND LastIp!='') OR (Ip=:ip AND Ip!='')) AS CounterIp,
+                (SELECT COUNT(Id) FROM `Players` WHERE (LastIp=:lip AND LastIp!='') OR (Ip=:lip AND Ip!='') OR (LastIp=:ip AND LastIp!='') OR (Ip=:ip AND Ip!='')) AS StatIp,
                 (SELECT COUNT(Id) FROM `PlayerNotes`    WHERE `PlayerId` = `Players`.`Id`) Note,
                 (SELECT COUNT(Id) FROM `PlayerNotices`  WHERE `PlayerId` = `Players`.`Id`) Notice,
-                (SELECT COUNT(Id) FROM `PlayerNotices`  WHERE `PlayerId` = `Players`.`Id` AND Type='AdBlock') CounterAdBlock,
+                (SELECT COUNT(Id) FROM `PlayerNotices`  WHERE `PlayerId` = `Players`.`Id` AND Type='AdBlock') StatAdBlock,
                 (SELECT COUNT(Id) FROM `PlayerLogs`     WHERE `PlayerId` = `Players`.`Id`) Log,
                 (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`InviterId` = `Players`.`Id`) MyInviter,
                 (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`InviterId` = `Players`.`InviterId` AND p.`InviterId`>0) Inviter,
                 (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`ReferalId` = `Players`.`Id`) MyReferal,
                 (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`ReferalId` = `Players`.`ReferalId`) Referal,
-                (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`CookieId` = `Players`.`CookieId` AND `Players`.`CookieId`>0) CounterCookieId,
+                (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`CookieId` = `Players`.`CookieId` AND `Players`.`CookieId`>0) StatCookieId,
                 (SELECT count(Id)  FROM `Players` p      WHERE p.`Phone` = `Players`.`Phone` OR p.Qiwi=`Players`.Qiwi OR `p`.WebMoney = `Players`.WebMoney OR `p`.YandexMoney= `Players`.YandexMoney) as Mult,
                 (SELECT COUNT(Id) FROM `ShopOrders`     WHERE `PlayerId` = `Players`.`Id`) ShopOrder,
                 (SELECT COUNT(Id) FROM `MoneyOrders`    WHERE `PlayerId` = `Players`.`Id` AND `Type`!='points') MoneyOrder,
@@ -621,8 +633,8 @@ class PlayersDBProcessor implements IProcessor
                 (SELECT COUNT(Id) FROM `PlayerNotes`    WHERE `PlayerId` = `Players`.`Id`) Note,
                 (SELECT COUNT(Id) FROM `PlayerNotices`  WHERE `PlayerId` = `Players`.`Id`) Notice,
                 (SELECT COUNT(Id) FROM `PlayerNotices`  WHERE `PlayerId` = `Players`.`Id` AND Type='AdBlock') AdBlock,
-                (SELECT COUNT(DISTINCT(i.PlayerId))) CounterIp,
-                (SELECT COUNT(DISTINCT(c.PlayerId))) CounterCookieId,
+                (SELECT COUNT(DISTINCT(i.PlayerId))) StatIp,
+                (SELECT COUNT(DISTINCT(c.PlayerId))) StatCookieId,
                 (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`InviterId` = `Players`.`Id`) MyInviter,
                 (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`InviterId` = `Players`.`InviterId` AND p.`InviterId`>0) Inviter,
                 (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`ReferalId` = `Players`.`Id`) MyReferal,
@@ -670,6 +682,26 @@ class PlayersDBProcessor implements IProcessor
                 ':id'    => $player->getId(),
             ));
             return $sth->fetch();
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+    }
+
+    public function initCounters(Player $player)
+    {
+
+        $sql = "SELECT * FROM `PlayerCounters` WHERE PlayerId = :id";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':id'    => $player->getId(),
+            ));
+
+            $data = $sth->fetch();
+            unset($data['PlayerId']);
+            return $data;
+
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query", 500);
         }
@@ -854,8 +886,8 @@ class PlayersDBProcessor implements IProcessor
                 (SELECT COUNT(Id) FROM `PlayerNotes`    WHERE `PlayerId` = `Players`.`Id`) Note,
                 (SELECT COUNT(Id) FROM `PlayerNotices`  WHERE `PlayerId` = `Players`.`Id`) Notice,
                 (SELECT COUNT(Id) FROM `PlayerNotices`  WHERE `PlayerId` = `Players`.`Id` AND Type='AdBlock') AdBlock,
-                (SELECT COUNT(DISTINCT(i.PlayerId))) CounterIp,
-                (SELECT COUNT(DISTINCT(c.PlayerId))) CounterCookieId,
+                (SELECT COUNT(DISTINCT(i.PlayerId))) StatIp,
+                (SELECT COUNT(DISTINCT(c.PlayerId))) StatCookieId,
                 (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`InviterId` = `Players`.`Id`) MyInviter,
                 (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`InviterId` = `Players`.`InviterId` AND p.`InviterId`>0) Inviter,
                 (SELECT COUNT(Id) FROM `Players` p      WHERE  p.`ReferalId` = `Players`.`Id`) MyReferal,

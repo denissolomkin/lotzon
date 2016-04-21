@@ -2,9 +2,8 @@
 
 namespace controllers\production;
 
-use \Application, \Player, \Banner, \LotterySettings;
+use \Application, \Banner, \LotterySettings;
 use \GamesPublishedModel, \CountriesModel, \GameConstructorChance;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 Application::import(PATH_APPLICATION . 'model/entities/Player.php');
 Application::import(PATH_APPLICATION . 'model/entities/Banner.php');
@@ -18,7 +17,8 @@ class ChanceController extends \AjaxController
     {
         parent::init();
         $this->validateRequest();
-        $this->authorizedOnly();
+        $this->authorizedOnly(true);
+        $this->validateCaptcha();
     }
 
     public function listAction($key)
@@ -27,8 +27,6 @@ class ChanceController extends \AjaxController
         if (!$key) {
             $this->ajaxResponseBadRequest('EMPTY_GAMES_KEY');
         }
-
-        $lang = $this->session->get(Player::IDENTITY)->getLang();
 
         try {
             if (!($publishedGames = GamesPublishedModel::instance()->getList()[$key])) {
@@ -51,7 +49,7 @@ class ChanceController extends \AjaxController
             if (!isset($response['res']['games'][$game->getType()]))
                 $response['res']['games'][$game->getType()] = array();
 
-            $game->setLang($lang);
+            $game->setLang($this->player->getLang());
             $response['res']['games'][$game->getType()][] = $game->export('list');
         }
 
@@ -80,12 +78,10 @@ class ChanceController extends \AjaxController
             $this->ajaxResponse(array(), 0, 'GAME_LIST_EMPTY');
         }
 
-        $lang = $this->session->get(Player::IDENTITY)->getLang();
-
         if ($game = $publishedGames->getLoadedGames()[array_search($id, $publishedGames->getGames())]) {
 
             $game
-                ->setLang($lang)
+                ->setLang($this->player->getLang())
                 ->loadPrizes();
 
             $response = array(
@@ -122,9 +118,6 @@ class ChanceController extends \AjaxController
 
         /* validate errors */
         switch (true) {
-            case !($player = $this->session->get(Player::IDENTITY)):
-                $error = 'PLAYER_NOT_FOUND';
-                break;
 
             case !$id:
                 $error = 'GAME_LIST_EMPTY';
@@ -158,14 +151,15 @@ class ChanceController extends \AjaxController
                 ->setId($gameConstructor->getId())
                 ->fetch();
 
-            $game->setUserId($player->getId())
+            $game->setUserId($this->player->getId())
                 ->setTimeout($publishedGames->getOptions('timeout'))
                 ->setTime(time())
-                ->setLang($player->getLang())
+                ->setLang($this->player->getLang())
                 ->setUid(uniqid())
+                ->setKey($key)
                 ->loadPrizes();
 
-            $balance = $player->getBalance();
+            $balance = $this->player->getBalance();
 
             if ($game->getOptions('p')) {
 
@@ -173,13 +167,17 @@ class ChanceController extends \AjaxController
                     $this->ajaxResponseBadRequest('INSUFFICIENT_FUNDS');
 
                 else {
-                    $player->addPoints(
+
+                    $desc = array(
+                        'id'    => $game->getId(),
+                        'uid'   => $game->getUid(),
+                        'type'  => $game->getKey(),
+                        'title' => $game->getTitle($this->player->getLang())
+                    );
+
+                    $this->player->addPoints(
                         $game->getOptions('p') * -1,
-                        array(
-                            'id' => $game->getUid(),
-                            'object' => $key,
-                            'title' => $game->getTitle($player->getLang())
-                        )
+                        $desc
                     );
                 }
             }
@@ -190,7 +188,7 @@ class ChanceController extends \AjaxController
             /* todo */
             $game->saveGame();
 
-            $balance = $player->getBalance();
+            $balance = $this->player->getBalance();
             $response['player'] = array(
                 "balance" => array(
                     "points" => $balance['Points'],
@@ -201,7 +199,6 @@ class ChanceController extends \AjaxController
             if (!$game->isOver()) {
                 while (!$this->session->has($key))
                     $this->session->set($key, $game);
-
             }
 
         } else {
@@ -213,7 +210,7 @@ class ChanceController extends \AjaxController
             ->setDevice('desktop')
             ->setLocation('chance')
             ->setPage($game->getId())
-            ->setCountry($player->getCountry())
+            ->setCountry($this->player->getCountry())
             ->setTemplate('chance')
             ->setKey($key=='Moment'?'moment':'random')
             ->random()
@@ -226,9 +223,6 @@ class ChanceController extends \AjaxController
     {
 
         switch (true) {
-            case !($player = $this->session->get(Player::IDENTITY)):
-                $error = 'PLAYER_NOT_FOUND';
-                break;
 
             case !$this->session->has($key):
                 $error = 'GAME_NOT_FOUND';
@@ -263,17 +257,19 @@ class ChanceController extends \AjaxController
             $this->session->remove($key);
             $this->session->remove($key . 'Important');
 
-            if ($player->checkDate($key)) {
+            if ($this->player->checkDate($key)) {
 
-                $this->playerAward($player, $game);
+                $this->playerAward($game);
                 $response['player'] = array(
                     "balance" => array(
-                        "points" => $player->getPoints(),
-                        "money"  => $player->getMoney()
+                        "points" => $this->player->getPoints(),
+                        "money"  => $this->player->getMoney()
                     ));
 
+                $response['captcha'] = $this->activateCaptcha();
+
             } else {
-                $player->writeLog(array('action' => 'CHEAT', 'desc' => $key, 'status' => 'danger'));
+                $this->player->writeLog(array('action' => 'CHEAT', 'desc' => $key, 'status' => 'danger'));
                 $this->ajaxResponseBadRequest('CHEAT_GAME');
             }
 
@@ -285,32 +281,35 @@ class ChanceController extends \AjaxController
         $this->ajaxResponseNoCache($response);
     }
 
-    private function playerAward($player, $game)
+    private function playerAward($game)
     {
 
         foreach ($game->getGamePrizes() as $currency => $sum) {
+
             if ($sum) {
+
+                $desc = array(
+                    'id'    => $game->getId(),
+                    'uid'   => $game->getUid(),
+                    'type'  => $game->getKey(),
+                    'title' => "Выигрыш " . $game->getTitle($this->player->getLang())
+                );
+
                 switch ($currency) {
 
                     case LotterySettings::CURRENCY_MONEY:
-                        $sum *= CountriesModel::instance()->getCountry($player->getCountry())->loadCurrency()->getCoefficient();
-                        $player->addMoney(
+                        $sum *= CountriesModel::instance()->getCountry($this->player->getCountry())->loadCurrency()->getCoefficient();
+                        $this->player->addMoney(
                             $sum,
-                            array(
-                                'id' => $game->getUid(),
-                                'object' => 'Chance',
-                                'title' => "Выигрыш " . $game->getTitle($player->getLang())
-                            ));
+                            $desc
+                        );
                         break;
 
                     case LotterySettings::CURRENCY_POINT:
-                        $player->addPoints(
+                        $this->player->addPoints(
                             $sum,
-                            array(
-                                'id' => $game->getUid(),
-                                'object' => 'Chance',
-                                'title' => "Выигрыш " . $game->getTitle($player->getLang())
-                            ));
+                            $desc
+                        );
                         break;
                 }
             }

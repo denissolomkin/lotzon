@@ -143,6 +143,11 @@ Config::instance()->privateResources =  array(
     '/private/monetisation' => 'controllers\admin\Monetisation:index',
     '/private/monetisation/status/:id' => 'controllers\admin\Monetisation:status',
 
+    '/private/messages/' => 'controllers\admin\Messages:index',
+    '/private/messages/list/:playerId/:toPlayerId' => 'controllers\admin\Messages:list',
+    '/private/messages/approve/:id' => 'controllers\admin\Messages:approve',
+    '/private/messages/delete/:id' => 'controllers\admin\Messages:delete',
+
     '/private/users'        => 'controllers\admin\Users:index',
     '/private/users/profile/:playerId' => array(
         'get' => 'controllers\admin\Users:profile',
@@ -166,6 +171,7 @@ Config::instance()->privateResources =  array(
     '/private/users/delete/:playerId' => 'controllers\admin\Users:delete',
     '/private/users/:playerId/ban/:status' => 'controllers\admin\Users:ban',
     '/private/users/:playerId/bot/:status' => 'controllers\admin\Users:bot',
+    '/private/users/:playerId/logout/:status' => 'controllers\admin\Users:logout',
     '/private/users/:playerId/avatar' => 'controllers\admin\Users:avatar',
     '/private/users/logs/:playerId' => 'controllers\admin\Users:logs',
     '/private/users/reviews/:playerId' => 'controllers\admin\Users:reviews',
@@ -181,6 +187,10 @@ Config::instance()->privateResources =  array(
         'post' => 'controllers\admin\Users:addTransaction'
     ),
     '/private/users/transactions/:playerId' => 'controllers\admin\Users:transactions',
+    '/private/captcha/'      => array(
+        'get' => 'controllers\admin\Captcha:index',
+        'post' => 'controllers\admin\Captcha:save',
+    ),
     '/private/banners/'      => array(
         'get' => 'controllers\admin\Banners:index',
         'post' => 'controllers\admin\Banners:save',
@@ -324,7 +334,7 @@ Config::instance()->publicResources = array(
     '/stats/promo/' => 'controllers\production\Index:stats',
     /**
      * Authentication
-     */       /*  */
+     */
     '/players/register/' => array(
         'post'  => 'controllers\production\Players:register',
     ),
@@ -334,7 +344,14 @@ Config::instance()->publicResources = array(
     '/players/login/' => array(
         'post'  => 'controllers\production\Players:login',
     ),
-    '/players/logout/' => 'controllers\production\Players:logout',
+    '/players/logout/' => 'controllers\production\AuthController:logout',
+    '/auth/logout/' => 'controllers\production\AuthController:logout',
+    /**
+     * Captcha
+     */
+    '/players/captcha/' => array(
+        'post'  => 'controllers\production\Players:captcha',
+    ),
     /**
      * Socials
      */

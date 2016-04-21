@@ -64,14 +64,20 @@
                     break;
 
                 case "tmpl":
-                    return url.replace(/-\d+/g, '-view');
+                    return this.parse(url, 'href').replace(/-\d+/g, '-view');
+                    break;
+
+                case "href":
+                    return url.indexOf('?') !== -1
+                        ? url.slice(0, url.indexOf('?'))
+                        : url;
                     break;
 
                 case "undo":
                 default:
                     return typeof url == 'object'
                         ? url
-                        : url.replace(document.location.origin, "").replace(/^\//, "").replace(/\/|=/g, '-');
+                        : url.replace(document.location.origin, "").replace(/^\//, "").replace(/\//g, '-');//.replace(/\/|=/g, '-');
                     break;
             }
 

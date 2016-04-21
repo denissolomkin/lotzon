@@ -8,6 +8,7 @@ class Transaction extends Entity
     protected $_sum = 0;
     protected $_balance = 0;
     protected $_objectId = null;
+    protected $_objectUid = null;
     protected $_objectType = null;
     protected $_description = '';
     protected $_date = 0;

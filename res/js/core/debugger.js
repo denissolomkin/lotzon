@@ -155,8 +155,10 @@
 
 
             if(typeof message === 'object') {
-
-                if (message[0] === 'Unauthorized') {
+                if (message[2] && message[2] == 423 && window['grecaptcha']) {
+                    Content.captcha.render();
+                    return false;
+                } else if (message[0] === 'Unauthorized' || message[2] == 401) {
                     location.reload();
                     return false;
                 } else {

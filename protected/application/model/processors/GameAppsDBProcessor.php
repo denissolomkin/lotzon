@@ -232,7 +232,7 @@ class GameAppsDBProcessor implements IProcessor
                 if ($win == 0)
                     continue;
 
-                $sql_transactions_players[] = '(?,?,?,?,?,?,?,?)';
+                $sql_transactions_players[] = '(?,?,?,?,?,?,?,?,?)';
 
                 /* update balance after game */
                 $sql = "UPDATE Players SET " . $currency . " = " . $currency . ($win < 0 ? '' : '+') . ($win) . " WHERE Id=" . $player['pid'];
@@ -268,6 +268,7 @@ class GameAppsDBProcessor implements IProcessor
                     $win,
                     (isset($balance) ? $balance[$currency] : null),
                     'OnlineGame',
+                    $app->getId(),
                     $app->getUid(),
                     $app->getTitle($player['lang']),
                     $app->getTime()
@@ -287,7 +288,7 @@ class GameAppsDBProcessor implements IProcessor
 
         if ($app->getPrice() && count($sql_transactions_players)) {
             try {
-                $sql = "INSERT INTO `Transactions` (`PlayerId`, `Currency`, `Sum`, `Balance`, `ObjectType`, `ObjectId`, `Description`, `Date`) VALUES " . implode(",", $sql_transactions_players);
+                $sql = "INSERT INTO `Transactions` (`PlayerId`, `Currency`, `Sum`, `Balance`, `ObjectType`, `ObjectId`,  `ObjectUid`, `Description`, `Date`) VALUES " . implode(",", $sql_transactions_players);
                 DB::Connect()
                     ->prepare($sql)
                     ->execute($sql_transactions);

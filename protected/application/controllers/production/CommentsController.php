@@ -1,7 +1,6 @@
 <?php
 namespace controllers\production;
 use \Application, \Player, \SettingsModel, \CommentsModel, \Comment;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');
 
@@ -19,6 +18,7 @@ class CommentsController extends \AjaxController
         parent::init();
         $this->validateRequest();
         $this->authorizedOnly();
+        $this->validateCaptcha();
     }
 
     public function itemAction($commentId)

@@ -15,7 +15,7 @@ class GamesController extends \AjaxController
     {
         parent::init();
         $this->validateRequest();
-        $this->authorizedOnly();
+        $this->authorizedOnly(true);
     }
 
     public function listAction($key = NULL)
@@ -27,7 +27,6 @@ class GamesController extends \AjaxController
             $key = ucfirst($key) . ($key !== 'moment' ? 'Game' : '');
         }
 
-        $lang     = $this->session->get(Player::IDENTITY)->getLang();
         $response = array(
             'res' => array(
                 'games' => array()
@@ -53,7 +52,7 @@ class GamesController extends \AjaxController
                     if (!$game->isEnabled())
                         continue;
 
-                    $game->setLang($lang);
+                    $game->setLang($this->player->getLang());
                     $stat = $game->export('list');
 
                     if ($key == 'OnlineGame') {
@@ -133,7 +132,7 @@ class GamesController extends \AjaxController
                 )
             );
 
-            $game->setLang($this->session->get(Player::IDENTITY)->getLang());
+            $game->setLang($this->player->getLang());
 
             $response['res']['games'][$game->getType()][$game->getId()] = $game->export('item');
 
@@ -141,10 +140,10 @@ class GamesController extends \AjaxController
 
                 $gamePlayer = new \GamePlayer();
                 $gamePlayer
-                    ->setId($this->session->get(Player::IDENTITY)->getId())
+                    ->setId($this->player->getId())
                     ->fetch();
                 $gamePlayer
-                    ->formatFrom('player', $this->session->get(Player::IDENTITY));
+                    ->formatFrom('player', $this->player);
 
                 if (!$gamePlayer->getApp('Uid'))
                     $gamePlayer

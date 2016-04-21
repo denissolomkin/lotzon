@@ -61,7 +61,7 @@
                     'users/0/messages',
                     'support/rules',
                     'support/faq',
-                    'logout'
+                    'popup/logout'
                 ]
             },
             balance: ['balance/cashout', 'balance/convert', 'reports/transactions', 'reports/payments']
@@ -69,6 +69,10 @@
         debugConf = <?php echo json_encode($debug, JSON_PRETTY_PRINT); ?>
 
 </script>
+
+<?php if($config['captchaKey']): ?>
+<script src='https://www.google.com/recaptcha/api.js?hl=<?php echo str_replace('ua','uk', strtolower($player['language']['current']));?>&render=explicit'></script>
+<?php endif; ?>
 
 <?php if($config['googleAnalytics']): ?>
 <script>

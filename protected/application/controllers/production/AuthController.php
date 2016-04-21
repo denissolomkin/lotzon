@@ -118,6 +118,15 @@ class AuthController extends \SlimController\SlimController {
         $this->redirect(strstr($_SERVER['HTTP_REFERER'], 'lotzon.com') ? $_SERVER['HTTP_REFERER'] : '/');
 
     }
+    
+    public function logoutAction()
+    {
+
+        if($this->session->has(Player::IDENTITY))
+            $this->session->get(Player::IDENTITY)->disableAutologin();
+        session_destroy();
+        $this->redirect('/');
+    }
 
     public function authAction($provider)
     {
@@ -230,6 +239,8 @@ class AuthController extends \SlimController\SlimController {
                     ->payReferal()
                     ->setAgent($_SERVER['HTTP_USER_AGENT'])
                     ->update()
+                    ->initPrivacy()
+                    ->initCounters()
                     ->writeLogin();
 
                 $loggedIn = true;

@@ -747,16 +747,16 @@ input.comment-reply-btn {
       .ticket-box.gold .ticket-items .ticket-tabs {
         background: none; }
 
-#lottery-process {
+#lottery-process, #popup-lottery-process {
   height: 768px;
   max-width: 1366px; }
-  #lottery-process .container {
+#lottery-process .container, #popup-lottery-process .container {
     max-width: 686px;
     margin: 0 auto;
     min-width: 0; }
-    #lottery-process .container > div {
+#lottery-process .container > div, #popup-lottery-process .container > div {
       height: 73px; }
-      #lottery-process .container > div a {
+#lottery-process .container > div a, #popup-lottery-process .container > div a {
         top: 27px; }
 
 .ghd-tickets {
@@ -816,27 +816,40 @@ input.comment-reply-btn {
 .content-box.tickets .title {
   padding-left: 23px; }
 
+<<<<<<< HEAD
 #lottery-process.lottery-won {
+=======
+#lottery .content-box-content .gh-date {
+  margin-bottom: 15px;
+  display: block;
+  line-height: 30px;
+  float: left; }
+
+#lottery .content-box-content .gh-inf {
+  font-size: 15.5px; }
+
+#lottery-process.lottery-won, #popup-lottery-process.lottery-won {
+>>>>>>> LOT-22
   min-width: 1024px; }
-  #lottery-process.lottery-won .balls-end-game .g-oc_li .goc_li-nb {
+#lottery-process.lottery-won .balls-end-game .g-oc_li .goc_li-nb, #popup-lottery-process.lottery-won .balls-end-game .g-oc_li .goc_li-nb {
     position: static; }
 
 .ghd-won .grid-container {
   max-width: 100%; }
 
-#lottery-process.lottery-won {
+#lottery-process.lottery-won, #popup-lottery-process.lottery-won {
   background: url(../img/1024.png) center center no-repeat; }
 
-#lottery-process {
+#lottery-process, #popup-lottery-process {
   min-width: 1024px;
   height: 768px; }
-  #lottery-process .container {
+#lottery-process .container, #popup-lottery-process .container {
     max-width: 700px;
     margin: 0 auto;
     min-width: 0; }
-    #lottery-process .container > div {
+#lottery-process .container > div, #popup-lottery-process .container > div {
       height: 73px; }
-      #lottery-process .container > div a {
+#lottery-process .container > div a, #popup-lottery-process .container > div a {
         top: 27px; }
 
 .balls-end-game .g-oc_li {
@@ -884,7 +897,7 @@ input.comment-reply-btn {
       margin-right: 0; }
 
 @media (min-width: 1025px) {
-  #lottery-process.lottery-won {
+  #lottery-process.lottery-won,  #popup-lottery-process.lottery-won {
     background: url(../img/1366.png) center center no-repeat; } }
 
 @media (max-width: 1200px) {
@@ -1282,6 +1295,225 @@ input.comment-reply-btn {
   line-height: 1.4; }
 
 @media (min-width: 1200px) {
+<<<<<<< HEAD
+=======
+  .container {
+    width: 1080px; }
+  .content {
+    width: 765px;
+    margin-top: 0; }
+  .content-box-tab {
+    padding: 0 30px; }
+  .content-box-item {
+    padding: 30px; }
+  .content-box-item-top {
+    padding: 20px 30px 0; }
+  .sidebar {
+    display: block;
+    float: right;
+    width: 315px;
+    padding-left: 15px; }
+  .notification-window {
+    left: 10%;
+    width: 270px; }
+  .js-detect {
+    opacity: 1; }
+  .header-left {
+    width: 770px; }
+  .header-logo {
+    /*margin-right: 65px;*/ }
+  .text-result {
+    position: relative;
+    float: right; }
+  .menu-main a {
+    padding: 0 19px; }
+  .is-countdown {
+    width: 200px; }
+  .menu-main a span {
+    right: 10px; }
+  .content-box-item.home-blog {
+    padding: 20px; }
+  .post-item-title {
+    font-size: 10px; }
+  .communication .content-box-tab {
+    padding: 0 30px; }
+  .communication .content-box-tab.back-tab {
+    padding: 0 60px 0 30px; }
+  .cm-top {
+    padding: 0 30px; }
+  .message {
+    padding-right: 30px; }
+  .message-name {
+    width: 18%;
+    margin-right: 1%; }
+  .message-text {
+    width: 80%; }
+  #users-view-messages .message-form hr {
+    margin: 5px -30px 5px; }
+  #users-view-message .message-form hr {
+    margin: 5px -20px 5px; }
+  #users-view-message .content-box-item {
+    padding: 40px 20px 0; }
+  /*.games-chance {
+  padding: 30px 30px 0;
+}
+
+.game {
+  margin-right: 33px;
+}
+
+.game:nth-child(4n+4) {
+  margin-right: 0;
+}*/
+  .ticket-items {
+    margin: 5px 0 7px;
+    padding-left: 0;
+    height: 416px;
+    background: #a7d1d5; }
+  .ticket-tabs li {
+    margin-right: 15px; }
+  .ticket-item {
+    padding: 37px 40px 6px 42px !important; }
+  .ticket-numbers {
+    margin-right: -30px !important;
+    height: 305px; }
+  .ticket-box {
+    margin-top: 38px; }
+  .ticket-done {
+    margin-right: 5px; }
+  .matches-inf-wrapper {
+    margin-bottom: 40px; }
+  .gh-header {
+    margin: 0 -30px 20px;
+    padding: 0 30px; }
+  .gh-inf.gh-combination {
+    margin-right: 120px; }
+  .raiting-item {
+    width: 350px;
+    margin-right: 40px; }
+  .balls-result {
+    width: 57%; }
+  .text-result {
+    width: 43%; }
+  .ticket-number-result {
+    margin-right: 20px; }
+  .ticket-number-result span {
+    display: inline; }
+  .ball-number-result {
+    width: 40px;
+    height: 40px; }
+  .text-result span {
+    display: block; }
+  .text-result-top {
+    margin-left: 0px; }
+  .ticket-tabs {
+    top: -42px;
+    padding: 0 0 14px; }
+    .ticket-tabs li {
+      width: 80px;
+      margin-right: 8px; }
+      .ticket-tabs li.active {
+        top: 3px; }
+      .ticket-tabs li:hover {
+        -webkit-transform: translate(0, -6px);
+        -moz-transform: translate(0, -8px);
+        -o-transform: translate(0, -8px);
+        -moz-transition: all 0.1s ease-in-out;
+        -o-transition: all 0.1s ease-in-out;
+        -webkit-transition: all 0.1s ease-in-out;
+        transition: all 0.1s ease-in-out; }
+  .ticket-item .ticket-numbers li {
+    margin: 0 29px 21px 0 !important; }
+  .lottery-grid .title {
+    padding: 16px 0 16px 30px; }
+  .matches-inf .lottery-grid .ul-striped li {
+    padding: 6px 30px 13px; }
+  .cabinet-game-history .content-box-cat > span:first-child label {
+    padding: 5px 10px 5px 40px; }
+  .cabinet-game-history .content-box-cat > span:first-child label:before {
+    left: 10px; }
+  .gh-item {
+    padding: 10px 10px 10px 25px;
+    margin: 0; }
+  #lottery .content-box-item-content .gh-item {
+    padding: 10px 10px 10px 25px;
+    margin: 0;
+    position: relative; }
+  #lottery .type-mine .gh-item:before {
+    left: -5px; }
+  .content-box-content .gh-item:before {
+    left: -5px; }
+  .cabinet-game-history .content-box-item-content {
+    padding: 10px 10px 0 20px; }
+  .matches-inf-wrapper.carousel .matches-inf {
+    width: 48%; }
+  .ticket-btn.add-ticket {
+    width: 178px;
+    padding: 0; }
+    .ticket-btn.add-ticket.loading {
+      color: #4c4c4c;
+      position: relative;
+      opacity: 0.8;
+      cursor: default;
+      background: #ffe400;
+      background-repeat: no-repeat;
+      background-position: 0;
+      background: url(../img/sprite.png) -430px -292px;
+      -webkit-animation: AnimationBlue 8s infinite linear;
+      -moz-animation: AnimationBlue 8s  infinite linear;
+      animation: AnimationBlue 8s  infinite linear; }
+  @-webkit-keyframes AnimationBlue {
+    0% {
+      background-position: -535px -292px; }
+    50% {
+      background-position: -482px -292px; }
+    100% {
+      background-position: -430 -292px; } }
+  @-moz-keyframes AnimationBlue {
+    0% {
+      background-position: -535px -292px; }
+    50% {
+      background-position: -482px -292px; }
+    100% {
+      background-position: -430 -292px; } }
+  @keyframes AnimationBlue {
+    0% {
+      background-position: -535px -292px; }
+    50% {
+      background-position: -482px -292px; }
+    100% {
+      background-position: -430 -292px; } }
+  .lottery-amimation-box {
+    margin-top: 34px; }
+  #lottery-view .ghd-game-inf .title {
+    margin: 0 -30px 15px; }
+  #lottery-process, #popup-lottery-process {
+    width: 1366px; }
+  .prizes-for-points {
+    padding-left: 30px;
+    padding-right: 30px; }
+  .prize {
+    width: 245px;
+    padding-right: 25px; }
+  .prize:nth-child(3n+3) {
+    margin-right: 0; }
+  .ex-prize-not-filled {
+    margin: 0 -30px; }
+  #prizes-exchange .content-box-item-content {
+    padding: 0; }
+  .cabinet .content-box-tab.cabinet-balance-tab {
+    width: 275px;
+    padding: 0 30px 0 30px; }
+  .c-user-inf {
+    margin: 0 30px 0 0; }
+  .c-user-personal-inf {
+    width: 510px; }
+  .ae-inf {
+    width: 510px;
+    padding: 20px 40px; }
+  .cabinet-cashout-block {
+    margin: 30px 30px 40px; }
+>>>>>>> LOT-22
   .ph-won,
   .ph-won-text {
     width: 35%;

@@ -55,6 +55,9 @@
                 if (init.statuses)
                     Content.updateStatuses(init.statuses);
 
+                if (init.captcha)
+                    Content.captcha.render();
+
                 if (init.tickets)
                     Tickets.init(init.tickets);
 

@@ -1,7 +1,6 @@
 <?php
 namespace controllers\production;
-use \Application, \Player, \SettingsModel, \Banner;
-use Symfony\Component\HttpFoundation\Session\Session;
+use \Application, \Banner;
 
 Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');
 
@@ -12,13 +11,12 @@ class BannersController extends \AjaxController
     {
         parent::init();
         $this->validateRequest();
-        $this->authorizedOnly();
+        $this->authorizedOnly(true);
     }
 
     public function indexAction($device, $location, $page = null)
     {
 
-        $player = $this->session->get(Player::IDENTITY);
         $page = $page ?: $this->request()->get('page');
 
         try {
@@ -29,7 +27,7 @@ class BannersController extends \AjaxController
                 ->setDevice($device)
                 ->setLocation($location)
                 ->setPage($page)
-                ->setCountry($player->getCountry())
+                ->setCountry($this->player->getCountry())
                 ->setTemplate($device)
                 /*->setGroup(ucfirst($device).ucfirst($location))
                 ->setKey($device)*/

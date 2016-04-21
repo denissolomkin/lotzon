@@ -5,6 +5,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 class AjaxController extends \SlimController\SlimController
 {
     protected $session;
+    protected $player;
 
     public function __construct(\Slim\Slim &$app)
     {
@@ -28,25 +29,100 @@ class AjaxController extends \SlimController\SlimController
         die(json_encode($response));
     }
 
-    protected function authorizedOnly()
+    protected function authorizedOnly($initPlayer = false)
     {
+
         if (!$this->session->get(Player::IDENTITY) instanceof Player) {
             $this->ajaxResponseUnauthorized();
             return false;
+
+        } else if ($initPlayer){
+            $this->player = $this->session->get(Player::IDENTITY);
         }
 
-        // $this->session->get(Player::IDENTITY)->markOnline();
+        /* todo delete
+        patch for old Player Entity in Memcache sessions
+        delete after week from April 18 or after drop Memcache
+        */
+        try {
+
+            $this->session->get(Player::IDENTITY)->initStats(array());
+
+        } catch (\Exception $e) {
+            $this->session->get(Player::IDENTITY)->fetch();
+            $playerId = $this->session->get(Player::IDENTITY)->getId();
+            $this->player = new Player();
+            $this->player
+                ->setId($playerId)
+                ->fetch()
+                ->initPrivacy()
+                ->initCounters();
+            $this->session->set(Player::IDENTITY, $this->player);
+        }
 
         return true;
     }
 
     protected function validateRequest()
     {
+
         if (!$this->request()->isAjax()) {
             $this->session->set('page', $this->request()->getResourceUri());
             $this->redirect('/');
-        } else
+        } else {
             return true;
+        }
+    }
+
+    protected function validateLogout()
+    {
+
+        if (\LogoutModel::instance()->fetch($this->session->get(Player::IDENTITY))) {
+            session_destroy();
+            $this->ajaxResponseUnauthorized();
+            return false;
+        }
+
+        return true;
+    }
+
+    protected function validateCaptcha()
+    {
+
+        $captcha = \SettingsModel::instance()->getSettings('captcha')->getValue();
+
+        if(isset($captcha['Enabled']) && $captcha['Enabled']) {
+            if (\CaptchaModel::instance()->fetch($this->session->get(Player::IDENTITY))) {
+                $this->ajaxResponseLocked();
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    protected function activateCaptcha()
+    {
+
+        $captcha = \SettingsModel::instance()->getSettings('captcha')->getValue();
+
+        if(isset($captcha['Enabled']) && $captcha['Enabled']) {
+
+            $time = $this->player->getCounters('CaptchaTime');
+
+            if (isset($captcha['Settings']) && is_array($captcha['Settings'])) {
+                foreach ($captcha['Settings'] as $term) {
+                    if ((!strlen($term['Min']) || $time > $term['Min']) AND (!strlen($term['Max']) || $time <= $term['Max'])) {
+                        if ($term['Rand'] && !rand(0, $term['Rand'] - 1)) {
+                            \CaptchaModel::instance()->create($this->player);
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 
     public function ajaxResponseCode(array $data, $code = 200)
@@ -67,7 +143,7 @@ class AjaxController extends \SlimController\SlimController
 
     public function ajaxResponseUnauthorized()
     {
-        $this->ajaxResponseCode(array(), 401);
+        $this->ajaxResponseNoCache(array(), 401);
     }
 
     public function ajaxResponseInternalError($message = NULL)
@@ -78,7 +154,7 @@ class AjaxController extends \SlimController\SlimController
             );
         } else
             $response = array();
-        $this->ajaxResponseCode($response, 500);
+        $this->ajaxResponseNoCache($response, 500);
     }
 
     public function ajaxResponseBadRequest($message = NULL)
@@ -89,7 +165,7 @@ class AjaxController extends \SlimController\SlimController
             );
         } else
             $response = array();
-        $this->ajaxResponseCode($response, 400);
+        $this->ajaxResponseNoCache($response, 400);
     }
 
     public function ajaxResponseForbidden($message = NULL)
@@ -100,7 +176,7 @@ class AjaxController extends \SlimController\SlimController
             );
         } else
             $response = array();
-        $this->ajaxResponseCode($response, 403);
+        $this->ajaxResponseNoCache($response, 403);
     }
 
     public function ajaxResponseNotFound($message = NULL)
@@ -111,6 +187,17 @@ class AjaxController extends \SlimController\SlimController
             );
         } else
             $response = array();
-        $this->ajaxResponseCode($response, 404);
+        $this->ajaxResponseNoCache($response, 404);
+    }
+
+    public function ajaxResponseLocked($message = NULL)
+    {
+        if ($message) {
+            $response = array(
+                'message' => $message
+            );
+        } else
+            $response = array();
+        $this->ajaxResponseNoCache($response, 423);
     }
 }

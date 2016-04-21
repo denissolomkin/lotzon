@@ -83,6 +83,7 @@
                                 <? if ($key=='users') : ?><span class="label label-warning"><?=PlayersModel::instance()->getProcessor()->getPlayersCount()?></span> <? endif ?>
                                 <? if ($key=='reviews') : ?><span class="label label-warning"><span id="count-comments"><?=ReviewsModel::instance()->getProcessor()->getCount(array('status'=>0,'module'=>'comments'))?></span> / <span id="count-blog"><?=ReviewsModel::instance()->getProcessor()->getCount(array('status'=>0,'module'=>'blog'))?></span></span> <? endif ?>
                                 <? if ($key=='monetisation') : ?><span class="label label-warning"><?=ShopOrdersModel::instance()->getProcessor()->getOrdersToProcessCount()?> / <?=MoneyOrderModel::instance()->getProcessor()->getOrdersToProcessCount()?></span> <? endif ?>
+                                <? if ($key=='messages') : ?><span class="label label-warning" id="count-spam"><?=MessagesModel::instance()->getProcessor()->getMessagesToApproveCount()?></span> <? endif ?>
                             </a></li>
                 <? } ?>
                 <? endforeach ?>

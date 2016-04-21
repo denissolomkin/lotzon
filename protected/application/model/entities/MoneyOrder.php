@@ -124,7 +124,7 @@ class MoneyOrder extends Entity
 
     public function setPlayer(Player $player) 
     {
-        $player->initDates()->initCounters();
+        $player->initStats()->initCounters()->initDates();
         $this->_player = $player;
 
         return $this;

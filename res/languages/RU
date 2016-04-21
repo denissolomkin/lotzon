@@ -51,6 +51,7 @@
                 "menu-profile-settings": "Настройки",
                 "menu-profile-password": "Сменить пароль",
                 "menu-profile-bonuses": "Бонусы",
+                "menu-popup-logout": "Выход",
                 "menu-logout": "Выход",
 
                 "menu-users-0-messages": "Обратная связь",
@@ -106,6 +107,7 @@
                 "title-of-miss": "промахов",
                 "title-of-advertising": "Реклама",
 
+                "title-captcha-warning": "Для продолжения пройдите проверку:",
                 "title-logout-warning": "Hе упустите шанс сорвать Джекпот!",
                 "button-logout": "Выйти",
                 "button-cancel-logout": "Остаться",

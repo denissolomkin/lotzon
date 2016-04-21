@@ -18,6 +18,7 @@ class FlashController extends \AjaxController
         parent::init();
         $this->validateRequest();
         $this->authorizedOnly();
+        $this->validateCaptcha();
     }
 
     public function listAction()

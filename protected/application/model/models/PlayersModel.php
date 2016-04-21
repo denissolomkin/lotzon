@@ -119,6 +119,11 @@ class PlayersModel extends Model
         return $this->getProcessor()->checkWebMoney($player);
     }
 
+    public function initStats(Entity $player)
+    {
+        return $this->getProcessor()->initStats($player);
+    }
+
     public function initCounters(Entity $player)
     {
         return $this->getProcessor()->initCounters($player);

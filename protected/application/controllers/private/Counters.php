@@ -69,6 +69,10 @@ class Counters extends PrivateArea
                 'YANDEX_METRIKA'=>'Yandex.Metrika',
                 'GOOGLE_ANALYTICS'=>'Google Analytics',
 
+                '<span class="fa fa-lock"></span> CAPTCHA',
+                'CAPTCHA_CLIENT'=>'Client-side Key (Public)',
+                'CAPTCHA_SERVER'=>'Server-side Key (Private)',
+
             );
 
         $this->render('admin/'.$this->activeMenu, array(
