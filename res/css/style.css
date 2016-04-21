@@ -217,16 +217,9 @@ a {
     cursor: pointer; }
 #logout div button:hover, #popup-logout div button:hover {
       color: #ffe400; }
-<<<<<<< HEAD
-  #logout div p {
-    font-size: 18px;
-    line-height: 19px; }
-  #logout div.i-x-slim {
-=======
 #logout div p, #popup-logout div p, #popup-captcha div p {
     font: 18px/19px "handbookpro-regular"; }
 #logout div.i-x-slim, #popup-logout div.i-x-slim {
->>>>>>> LOT-22
     width: 30px;
     height: 30px;
     background: none;
@@ -6742,7 +6735,6 @@ form.loading > * {
     .badges-container > div div[id^="badges-message"] .contain-img {
       padding-left: 50px; }
 
-<<<<<<< HEAD
 #banner-desctop-lottery {
   padding: 10px;
   margin: 10px 0 40px 0;
@@ -6753,14 +6745,9 @@ form.loading > * {
     background: #444444;
     min-height: 80px; }
 
-#lottery-animation-process {
-  text-align: center; }
-  #lottery-animation-process:before {
-=======
 #lottery-animation-process, #popup-lottery {
   text-align: center !important; }
 #lottery-animation-process:before, #popup-lottery:before {
->>>>>>> LOT-22
     content: '';
     display: inline-block;
     vertical-align: middle;
@@ -6772,8 +6759,7 @@ form.loading > * {
     width: 0%;
     height: 100%; }
 
-<<<<<<< HEAD
-#lottery-process {
+#lottery-process, #popup-lottery-process {
   float: none;
   position: relative;
   display: inline-block;
@@ -6784,19 +6770,6 @@ form.loading > * {
   padding-bottom: 20px;
   text-align: left;
   max-width: 100%; }
-=======
-#lottery-process, #popup-lottery-process {
-  float: none !important;
-  position: relative !important;
-  display: inline-block !important;
-  vertical-align: middle !important;
-  height: auto !important;
-  max-height: 100% !important;
-  overflow: auto !important;
-  padding-bottom: 20px !important;
-  text-align: left !important;
-  max-width: 100% !important; }
->>>>>>> LOT-22
 
 #lottery-history {
   box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);

@@ -816,9 +816,6 @@ input.comment-reply-btn {
 .content-box.tickets .title {
   padding-left: 23px; }
 
-<<<<<<< HEAD
-#lottery-process.lottery-won {
-=======
 #lottery .content-box-content .gh-date {
   margin-bottom: 15px;
   display: block;
@@ -829,7 +826,6 @@ input.comment-reply-btn {
   font-size: 15.5px; }
 
 #lottery-process.lottery-won, #popup-lottery-process.lottery-won {
->>>>>>> LOT-22
   min-width: 1024px; }
 #lottery-process.lottery-won .balls-end-game .g-oc_li .goc_li-nb, #popup-lottery-process.lottery-won .balls-end-game .g-oc_li .goc_li-nb {
     position: static; }
@@ -1295,8 +1291,6 @@ input.comment-reply-btn {
   line-height: 1.4; }
 
 @media (min-width: 1200px) {
-<<<<<<< HEAD
-=======
   .container {
     width: 1080px; }
   .content {
@@ -1513,7 +1507,7 @@ input.comment-reply-btn {
     padding: 20px 40px; }
   .cabinet-cashout-block {
     margin: 30px 30px 40px; }
->>>>>>> LOT-22
+
   .ph-won,
   .ph-won-text {
     width: 35%;
