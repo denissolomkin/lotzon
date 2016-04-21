@@ -463,7 +463,7 @@ class Player extends Entity
     public function initStats($data=null)
     {
 
-        if(!$data) {
+        if(!isset($data)) {
             $model = $this->getModelClass();
 
             try {
