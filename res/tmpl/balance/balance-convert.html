@@ -11,13 +11,11 @@
                 <form action="/balance/convert" method="post">
                     <div class="cc-form-top clearfix">
                         <div class="cc-out cc-box">
-                            <div class="title">{{i18n "title-profile-put-currency"}}</div>
-                            <span class="cc-currency">{{currency.iso}}</span>
+                            <span class="title">{{i18n "title-profile-put-currency"}} <span class="cc-currency">{{currency.iso}}</span></span>
                             <input class="cc-sum float required" type="text" name="sum" value="" placeholder="{{i18n "title-profile-cashout-summ"}}" />
                         </div>
                         <div class="cc-income cc-box">
-                            <span class="title">{{i18n "title-profile-get-points"}}</span>
-                            <span class="cc-currency">{{i18n "title-of-points"}}</span>
+                            <span class="title">{{i18n "title-profile-get-points"}} <span class="cc-currency">{{i18n "title-of-points"}}</span></span>
                             <input class="cc-sum" type="text" disabled="disabled" value="" placeholder="0" / >
                         </div>
                         <button name="submit" type="submit" class="btn-flat">{{i18n "button-profile-get-points"}}</button>

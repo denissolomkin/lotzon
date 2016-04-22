@@ -54,7 +54,6 @@
     }
     > div{
       width: 100%;
-      // border: 20px solid transparent;
       height: 100%;
       position: absolute;
       top: 0;
@@ -63,7 +62,6 @@
       -moz-box-sizing: border-box;
       -ms-box-sizing: border-box;
       box-sizing: border-box;
-      
     }
 }
 
@@ -74,13 +72,12 @@
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     -ms-box-sizing: border-box;
-    box-sizing: border-box;
-    
+    box-sizing: border-box;   
 }
 
 .personal-data-inf-header {
     padding: 0 20px;
-    margin: 0 0 10px;
+    // margin: 0 0 10px;
 }
 .personal-data-edit {
     right: 20px;

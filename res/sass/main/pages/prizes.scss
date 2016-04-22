@@ -1,3 +1,11 @@
+#prizes{
+  .content-box-header{
+    span > span {
+      display: none;
+    }
+  }
+}
+
 // PRIZES FOT POINTS ------------------- //
 // Categories ------------------ //
 .prizes-for-points.content-box-item.with-cat {

@@ -202,7 +202,6 @@
         },
 
         show: function f(el, parent) {
-
             if (el && typeof el === 'object' && "nodeType" in el) {
                 el.style.display = "block";
             } else

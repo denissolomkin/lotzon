@@ -1,10 +1,6 @@
-<div id="user-{{id}}-friends" class="content-box">
-	{{#each this}}
-		{{@key}}: <br>
-	{{/each}}
+<div id="users-{{id}}-friends" class="content-box">
     {{partial 'common-content-box-header-partial' (or title.nickname name) }}
-
-    <div class="clearfix">
+    <div class="clearfix user-view-box">
         <div class="content-box-content">
             <div class="ae-personal-inf">
                 <div class="ae-top">
@@ -23,8 +19,8 @@
                             </div>
                             <div class="total-won">
                                 <p>{{i18n "title-of-won"}} :</p>
-                                <p>static 1212 {{i18n "title-of-money"}}</p>
-                                <p>static 600001 {{i18n "title-of-points"}}</p>
+                                <p>{{money}} {{i18n "title-of-money"}}</p>
+                                <p>{{points}} {{i18n "title-of-points"}}</p>
                             </div>
                         </div>
                         <div class="ae-user-img pi-ph false {{#if (player "isOnline" ping)}} online {{/if}}">
@@ -41,14 +37,14 @@
                         <li class="ae-personal-form-values ae-name-block">
                             <ul>
                                 <li class="user-actions">
-                                    <!-- <div class="content-box-tabs clearfix"> -->
-                                    <a href="/user/{{id}}/main" class="send-msg uk-float-left">
+                                    <div class="fake-tabs clearfix">
+                                    <a href="/user/{{id}}" class="send-msg uk-float-left">
                                         {{i18n "title-users-main"}}
                                     </a>
-                                    <a href="/user/{{id}}/friends" class="send-msg uk-float-left active">
+                                    <a href="/users/{{id}}/friends" class="send-msg uk-float-left active">
                                         {{i18n "title-users-friends"}} {{#if (notlike friends 0 ) }} {{friends}} {{else}} {{i18n "title-no-friends"}} {{/if}}
                                     </a>
-                                    <!-- </div> -->
+                                    </div>
                                         
                                     <div class="uk-float-right">
                                         <a href="/users/{{id}}/messages" class="send-msg uk-float-left">
@@ -72,12 +68,9 @@
                     </ul>
                 </div>
                 {{/if}}
-
-                <!-- <div class="content-box-content">
-                </div> -->
-				<div id="user-view-friends" class="content-box-content">
-					<form action="/user/665/friends/list" method="get" class="render-list-form">
-				    {{partial 'user-wiev-friends-container' this}}
+				<div id="users-view-friends" class="content-box-content">
+					<form action="/users/{{id}}/friends/list" method="get" class="render-list-form">
+				    {{partial 'users-view-friends-container' this}}
 					</form>
 				</div>
 

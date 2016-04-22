@@ -14,7 +14,7 @@
                 
                 // chosen
                 $('select:not([name="country"])').chosen({
-                    disable_search:true
+                    // disable_search: true
                 });
                         
                 R.push({
@@ -87,7 +87,7 @@
             },
 
             complete: function() {
-                console.debug(this);
+                // console.debug(this);
 
                 var form    = $(this),
                     name    = form.find('[name="nickname"]').val(),
@@ -110,8 +110,6 @@
             },
 
             checkPass:function() {
-
-                // console.debug('!!!!!!!!!>>> ',$(this).val() );
                 
                 var cpf = {
                     scorePassword: function(pass) {
@@ -356,7 +354,23 @@
                     }
 
                 });
+            },
+
+            isComplete: function(options){
+                console.debug(options);
+                
+                if(options.json.player.is.complete){
+                    $("#profile-popup").remove();
+                    R.push('profile-popup-faq');
+                }else{
+                    alert('что-то пошло не так, перезагружаемся');
+                }
+            },
+
+            closePopupFAQ: function(){
+                $("#profile-popup-faq").remove();
             }
+
         },
 
         after: {

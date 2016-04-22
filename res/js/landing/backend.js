@@ -479,6 +479,28 @@ function resendPassword(email, successFunction, failFunction, errorFunction)
        }
     });
 }
+function resendEmail(email, successFunction, failFunction, errorFunction)
+{
+    $.ajax({
+        url: "/players/resendEmail",
+        method: 'POST',
+        data: {
+            email: email
+        },
+        async: true,
+        dataType: 'json',
+        success: function(data) {
+            if (data.status == 1) {
+                successFunction.call($(this), data);
+            } else {
+                failFunction.call($(this), data);
+            }
+        },
+        error: function() {
+            errorFunction.call($(this), data);
+       }
+    });
+}
 
 function getTransactions(offset, currency, successFunction, failFunction, errorFunction) {
     $.ajax({
