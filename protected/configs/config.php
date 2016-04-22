@@ -707,6 +707,9 @@ Config::instance()->publicResources = array(
     /**
      * Profile
      */
+    '/profile' => array(
+        'get' => 'controllers\production\Players:profile'
+    ),
     '/profile/billing' => array(
         'put' => 'controllers\production\Players:billing'
     ),

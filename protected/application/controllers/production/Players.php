@@ -366,6 +366,26 @@ class Players extends \AjaxController
     }
 
     /**
+     * Своя визитка пользователя
+     *
+     * @param $playerId
+     *
+     * @throws EntityException
+     */
+    public function profileAction()
+    {
+
+        $this->validateRequest();
+        $this->authorizedOnly();
+
+        $response = array(
+            'res' => $this->session->get(Player::IDENTITY)->export('card')
+        );
+        $this->ajaxResponseNoCache($response);
+        return true;
+    }
+
+    /**
      * Малая визитка пользователя
      *
      * @param $playerId
@@ -379,12 +399,12 @@ class Players extends \AjaxController
         $this->authorizedOnly();
 
         $player = new Player();
-        $player->setId($playerId?:(int)\SettingsModel::instance()->getSettings('counters')->getValue('USER_REVIEW_DEFAULT'))->fetch();
+        $player->setId($playerId ?: (int)\SettingsModel::instance()->getSettings('counters')->getValue('USER_REVIEW_DEFAULT'))->fetch();
 
         $response = array(
             'res' => array(
                 'users' => array(
-                    "$playerId" => $player->export('card')
+                    $playerId => $player->export('card')
                 )
             )
         );
