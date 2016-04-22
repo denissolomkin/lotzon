@@ -477,6 +477,7 @@ class Players extends \AjaxController
         $this->validateRequest();
         $this->authorizedOnly();
 
+        $nickname = $this->request()->post('nickname');
         $newPass    = $this->request()->post('newPass', '');
         $repeatPass = $this->request()->post('repeatPass', '');
 
@@ -484,6 +485,7 @@ class Players extends \AjaxController
         $player->setId($this->session->get(Player::IDENTITY)->getId())->fetch();
 
         try {
+            $player->setNicname($nickname)->update();
             if (($newPass != '') && ($repeatPass != '')) {
                     if ($newPass == $repeatPass) {
                         $player->changePassword($newPass);
@@ -498,6 +500,9 @@ class Players extends \AjaxController
 
         $res = array(
             "player"  => array(
+                "title"    => array(
+                    "nickname"   => $player->getNicname(),
+                ),
                 "is" => array(
                     "complete" => $player->isComplete(),
                 )
