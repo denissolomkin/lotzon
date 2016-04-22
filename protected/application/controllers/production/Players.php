@@ -336,6 +336,27 @@ class Players extends \AjaxController
 
     }
 
+
+    public function resendEmailAction()
+    {
+        $this->validateRequest();
+
+        $email = $this->request()->post('email', null);
+
+        $player = new Player();
+        $player->setEmail($email);
+        try {
+            $player->loadPreregistration();
+            Common::sendEmail($player->getEmail(), 'Регистрация на www.lotzon.com', 'player_registration_new', array(
+                'login' => $player->getEmail(),
+                'hash'  => $player->getHash(),
+            ));
+            $this->ajaxResponse(array(), 1, 'OK');
+        } catch (EntityException $e) {
+            $this->ajaxResponse(array(), 0, 'USER_NOT_FOUND');
+        }
+    }
+
     public function resendPasswordAction()
     {
 
@@ -477,6 +498,7 @@ class Players extends \AjaxController
         $this->validateRequest();
         $this->authorizedOnly();
 
+        $nickname = $this->request()->post('nickname');
         $newPass    = $this->request()->post('newPass', '');
         $repeatPass = $this->request()->post('repeatPass', '');
 
@@ -484,6 +506,7 @@ class Players extends \AjaxController
         $player->setId($this->session->get(Player::IDENTITY)->getId())->fetch();
 
         try {
+            $player->setNicname($nickname)->update();
             if (($newPass != '') && ($repeatPass != '')) {
                     if ($newPass == $repeatPass) {
                         $player->changePassword($newPass);
@@ -498,6 +521,9 @@ class Players extends \AjaxController
 
         $res = array(
             "player"  => array(
+                "title"    => array(
+                    "nickname"   => $player->getNicname(),
+                ),
                 "is" => array(
                     "complete" => $player->isComplete(),
                 )

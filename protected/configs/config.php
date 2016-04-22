@@ -341,6 +341,9 @@ Config::instance()->publicResources = array(
     '/players/resendPassword/' => array(
         'post'  => 'controllers\production\Players:resendPassword',
     ),
+    '/players/resendEmail/' => array(
+        'post'  => 'controllers\production\Players:resendEmail',
+    ),
     '/players/login/' => array(
         'post'  => 'controllers\production\Players:login',
     ),
@@ -758,7 +761,7 @@ Config::instance()->publicResources = array(
     '/user/:userId' => array(
         'get' => 'controllers\production\Players:userInfo'
     ),
-    '/user/:userId/friends' => array(
+    '/users/:userId/friends' => array(
         'get' => 'controllers\production\FriendsController:userFriends'
     ),
     '/:page/' => 'controllers\production\Index:index',
