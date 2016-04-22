@@ -758,7 +758,7 @@ Config::instance()->publicResources = array(
     '/user/:userId' => array(
         'get' => 'controllers\production\Players:userInfo'
     ),
-    '/user/:userId/friends' => array(
+    '/users/:userId/friends' => array(
         'get' => 'controllers\production\FriendsController:userFriends'
     ),
     '/:page/' => 'controllers\production\Index:index',

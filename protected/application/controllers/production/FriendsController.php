@@ -29,36 +29,18 @@ class FriendsController extends \AjaxController
         $count  = $this->request()->get('count', self::$friendsPerPage);
 
         try {
-            $list = \FriendsModel::instance()->getList($userId, $count+1, $offset, 1);
+            $list = \FriendsModel::instance()->getList($userId, $count + 1, $offset, 1);
         } catch (\PDOException $e) {
             $this->ajaxResponseInternalError();
+
             return false;
         }
 
-        if ($offset) {
-            $response = array(
-                'res' => array(
-                    'user' => array(
-                        "$userId" => array(
-                            "friends" => array()
-                        ),
-                    ),
-                ),
-            );
-        } else {
-            $player = new Player();
-            $player->setId($userId)->fetch()->setFriendship($this->session->get(Player::IDENTITY)->getId());
-            $response = array(
-                'res' => array(
-                    'user' => array(
-                        "$userId" => $player->export((int)\SettingsModel::instance()->getSettings('counters')->getValue('USER_REVIEW_DEFAULT') == $userId ? 'card' : 'info'),
-                    ),
-                ),
-            );
-            $response['res']['user'][$userId]['friends'] = array();
-        }
+        $response = array(
+            'res' => array(),
+        );
 
-        if (count($list)<=$count) {
+        if (count($list) <= $count) {
             $response['lastItem'] = true;
         } else {
             array_pop($list);
@@ -66,7 +48,7 @@ class FriendsController extends \AjaxController
 
         if (!is_null($list)) {
             foreach ($list as $friend) {
-                $response['res']['user'][$userId]['friends'][$friend['PlayerId']] = array(
+                $response['res'][$friend['PlayerId']] = array(
                     'id'        => $friend['PlayerId'],
                     'img'       => $friend['PlayerImg'],
                     'name'      => $friend['PlayerName'],
@@ -79,6 +61,7 @@ class FriendsController extends \AjaxController
         }
 
         $this->ajaxResponseNoCache($response);
+
         return true;
     }
 
