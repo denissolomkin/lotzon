@@ -91,7 +91,7 @@ hr {
         box-shadow: none;
     }
 }
-
+.content-box.support,
 #balance-convert,
 #reports-payments,
 #balance-cashout,
@@ -156,15 +156,18 @@ a {
     z-index: 1010;
     background: rgba(0, 0, 0, 0.6);
 }
+
+
+
 #popup-captcha,
 #popup-logout{
-    & div {
+    > div {
         margin: 0 auto;
         width: 460px;
         height: auto;
         position: absolute;
         margin-left: -230px;
-        background-color: #ffe400;
+        background-color: #ffffff;
         top: 20%;
         left: 50%;
         padding: 50px 60px;
@@ -179,7 +182,7 @@ a {
             margin-top: 30px;
             cursor: pointer;
             &:hover {
-                color: #ffe400;
+                color: #ffffff;
             }
         }
         & p {
@@ -245,8 +248,6 @@ a {
     width: 20px;
     height: 20px;
     margin-top: -10px;
-    // background: url(img/sprite.png) -80px -50px;
-    // content: "";
     z-index: 1;
 }
 
@@ -1098,7 +1099,9 @@ input.input-radio:checked + label.input-radio:before {
 /* compleet registration popup 
 ********************************/
 
-#profile-popup {
+
+#popup-profile-faq,
+#popup-profile {
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.6);
@@ -1244,6 +1247,7 @@ input.input-radio:checked + label.input-radio:before {
     }
 
     // buttons
+    a,
     [type='submit'],
     button {
         -webkit-appearance: none;
@@ -1328,6 +1332,35 @@ input.input-radio:checked + label.input-radio:before {
         font-family: 'Handbook';
     }
     
+}
+#popup-profile-faq{
+    .inner{
+        position: relative;
+    }
+    .box-inner{
+        .title{
+            margin: 50px 0 35px;
+            color: #000000;
+            text-align: center;
+        }
+        p{
+            text-align: center;
+        }
+    }
+    button{
+        position: absolute;
+        bottom: 50px;
+        left: 0;
+        margin: 0 55px;
+        max-width: 280px;
+        opacity: 1;
+        cursor: pointer;
+        &:hover{
+            color: #f8e71c;
+            background: #000000;
+            border: 1px solid #000000;   
+        }
+    }
 }
 /* end **********************
 compleet registration popup */

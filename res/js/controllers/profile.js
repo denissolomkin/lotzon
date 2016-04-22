@@ -14,7 +14,7 @@
                 
                 // chosen
                 $('select:not([name="country"])').chosen({
-                    disable_search:true
+                    // disable_search: true
                 });
                         
                 R.push({
@@ -85,10 +85,15 @@
                     $('.hidden-notice').css('display', 'block');
                 } else $('.hidden-notice').css('display', 'none');
             },
-
-            complete: function() {
+            error: function(options){
+                // some code......
                 console.debug(this);
+                console.debug(options);
+                return false;
 
+            },
+            complete: function(options) {
+                // return true;
                 var form    = $(this),
                     name    = form.find('[name="nickname"]').val(),
                     pass    = form.find('[name="newPass"]').val(),
@@ -110,8 +115,6 @@
             },
 
             checkPass:function() {
-
-                // console.debug('!!!!!!!!!>>> ',$(this).val() );
                 
                 var cpf = {
                     scorePassword: function(pass) {
@@ -356,7 +359,23 @@
                     }
 
                 });
+            },
+
+            isComplete: function(options){
+                console.debug(options);
+                
+                if(options.json.player.is.complete){
+                    $("#popup-profile").remove();
+                    R.push('popup-profile-faq');
+                }else{
+                    alert('что-то пошло не так, перезагружаемся');
+                }
+            },
+
+            closePopupFAQ: function(){
+                $("#popup-profile-faq").remove();
             }
+
         },
 
         after: {

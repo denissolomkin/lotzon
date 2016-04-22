@@ -120,7 +120,6 @@
             $(document).on('change', 'form input.repeat-pass', Profile.validate.passwordRepeat);
             $(document).on('change', '.cc-out .cc-sum', Profile.validate.convert);
             $(document).on('keypress keyup keydown', 'form .checkPass', Profile.validate.checkPass);
-
             $(document).on('click', '.ae-combination-box li', Profile.do.selectFavorite);
             $(document).on('click', '.s-lang .radio-text', Profile.do.changeLanguage);
             $(document).on('click', '.change', Profile.do.openOption);
@@ -129,6 +128,8 @@
             $(document).on('click', '.bonus-banner-view-item', Bonuses.showBanner);
             $(document).on('click', '.bonus-share-banner-view .close', Bonuses.hideBanner);
             $(document).on('click', '.copy[data-to]', Bonuses.bufferCopy);
+            /* profile is complete*/
+            $(document).on('click', '#popup-profile-faq button', Profile.do.closePopupFAQ);
 
             // $(document).on('click', '.banner-copy-btn', Bonuses.copyBanner);
             // $(document).on('click', '.banner-copy-btn a', Bonuses.downloadFile);
@@ -224,13 +225,15 @@
 
             "players-captcha": Content.captcha.success,
 
+
         },
 
         "error": {
 
             "lottery-gold": Ticket.error.gold,
             "prizes-exchange-goods": Prize.error.exchange,
-            "lottery-ticket": Ticket.update
+            "lottery-ticket": Ticket.update,
+            "profile-complete": Profile.validate.error
 
         },
 
@@ -240,6 +243,7 @@
             // "profile-complete": Profile.update.complete,
             "profile-settings": Profile.update.settings,
             "profile-billing": Profile.update.billing,
+            "profile-complete": Profile.do.isComplete
 
         },
 
@@ -267,7 +271,6 @@
         },
 
         "submit": {
-
             "communication-comments":  Comments.submit,
             "communication-messages":  Comments.submit,
             "blog-post-view-comments": Comments.submit,

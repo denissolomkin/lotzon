@@ -167,14 +167,16 @@
                             form.json = data.responseJSON || data;
                             Cache.init(form.json);
 
+                            if (Callbacks['error'][form.callback]) {
+                                D.log(['C.error.callback']);
+                                if (!Callbacks['error'][form.callback].call(that, form))
+                                    return;
+                            }
+
                             console.log(data);
                             Form.stop.call(that);
                             D.error.call(that, [data && (data.message || data.responseJSON && data.responseJSON.message || data.statusText) || 'NOT FOUND', form.action, data.status]);
 
-                            if (Callbacks['error'][form.callback]) {
-                                D.log(['C.error.callback']);
-                                Callbacks['error'][form.callback].call(that, form);
-                            }
                         }
                     })
                 }

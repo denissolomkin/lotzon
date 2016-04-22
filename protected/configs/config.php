@@ -710,6 +710,9 @@ Config::instance()->publicResources = array(
     /**
      * Profile
      */
+    '/profile' => array(
+        'get' => 'controllers\production\Players:profile'
+    ),
     '/profile/billing' => array(
         'put' => 'controllers\production\Players:billing'
     ),
@@ -792,7 +795,7 @@ Config::instance()->hybridAuth = array(
             "keys" => array ( "id" => "1117952512", "secret" => "D721378D1D8978B3F0918327", "key"=>"CBALJDKDEBABABABA" ),
             'scope' => 'email'
         ),
-
+/*
         "Google" => array (
             "enabled" => true,
             "keys" => array ( "id" => "355196749921-66tdkn697420i6rbji3decd394ru8dsv.apps.googleusercontent.com", "secret" => "WkXAp8ky-R7zuEx565Bwdnji" ),
@@ -803,6 +806,7 @@ Config::instance()->hybridAuth = array(
             "enabled" => true,
             "keys" => array ( "key" => "q8MuZoLMf02gd5lcDIcntWgsq", "secret" => "hO5NPBiiiJqrDIk57jJzLZYH65R24phFi0lxISWvKiUqL6Rsx8" )
         ),
+*/
 
     )
 );

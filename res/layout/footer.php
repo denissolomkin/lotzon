@@ -58,11 +58,11 @@
                 'menu-main': ['blog', 'lottery', 'games', 'communication', 'users', 'prizes'],
                 // 'menu-profile': ['profile', 'profile/billing', 'profile/settings', 'reports/referrals', 'profile/bonuses'],
                 'menu-more': [
+                    'reports/referrals', 
+                    'profile/bonuses',
                     'users/0/messages',
                     'support/rules',
                     'support/faq',
-                    'reports/referrals', 
-                    'profile/bonuses',
                     'popup/logout'
                 ]
             },

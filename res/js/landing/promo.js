@@ -157,7 +157,7 @@ var landing = {
                 });
 
                 $('form[name="email-send"] a.resend').on('click', function() {
-                    resendPassword(email, function() {
+                    resendEmail(email, function() {
                         // some callback
                     }, function(data) {
                         // some error

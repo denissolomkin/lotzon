@@ -105,7 +105,7 @@
 
             <div class="form-group">
                 <label class="control-label">Текст</label>
-                <div id="text"></div>          
+                <textarea id="text"></textarea>
             </div>
             <div class="form-group">
                 <label class="control-label">Включено</label>
@@ -123,6 +123,7 @@
 </div>
 
 <script src="/theme/admin/lib/jquery.damnUploader.min.js"></script>
+<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
 
 <script>
     var currentEdit = {
@@ -134,32 +135,47 @@
         similar: []
     };
 
+
     $(document).ready(function() {
-        $('#text').summernote({
+        tinymce.init({
+            selector:'#text',
+            height: 500,
+            paste_data_images: true,
+            menu: [],
+            plugins: [
+                'advlist autolink lists link image charmap print preview anchor',
+                'searchreplace visualblocks code fullscreen',
+                'insertdatetime media table contextmenu paste code'
+            ],
+            toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image removeformat',
+        });
+
+        /* $('#text').summernote({
             height: 200,
         });
-        $('#text').code('');
+        $('#text').code('');*/
     });
 
     $('.save').on('click', function() {
         var text = $('#text').code();
+        var text = tinyMCE.activeEditor.getContent();
 
         currentEdit.text = text;
         currentEdit.enable = $('input[name="enable"]').prop("checked");
         currentEdit.similar = $('select[name="similar[]"]').val();
+        currentEdit.title = $('input[name="title"]').val();
 
         $("#errorForm").hide();
         $(this).find('.glyphicon').remove();
 
-        if (!$('input[name="title"]').val()) {
+        if (!currentEdit.title) {
             showError('Title can\'t be empty');
-
             return false;
         }
-        currentEdit.title = $('input[name="title"]').val();
+
+
         if (!currentEdit.text) {
             showError('Text can\'t be empty');
-
             return false;
         }
 
@@ -224,7 +240,8 @@
         $('#addForm').find('select[name="similar[]"]').val(currentEdit.similar);
 
         $('#addForm').find('input[name="title"]').val(currentEdit.title);
-        $('#text').code(currentEdit.text);
+        /*$('#text').code(currentEdit.text);*/
+        tinyMCE.activeEditor.setContent(currentEdit.text);
 
         $('img#image').attr('data-image',"/filestorage/blog/320/"+currentEdit.img);
         $('img#image').attr('src',"/filestorage/blog/320/"+currentEdit.img);

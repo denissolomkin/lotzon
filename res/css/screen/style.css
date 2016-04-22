@@ -1060,8 +1060,7 @@ input.comment-reply-btn {
   box-sizing: border-box; }
 
 .personal-data-inf-header {
-  padding: 0 20px;
-  margin: 0 0 10px; }
+  padding: 0 20px; }
 
 .personal-data-edit {
   right: 20px; }
@@ -1115,9 +1114,6 @@ input.comment-reply-btn {
 
 .ae-personal-form-values > li {
   padding: 0 20px; }
-
-.settings .title {
-  min-width: 150px; }
 
 .ae-social i {
   min-width: 154px; }

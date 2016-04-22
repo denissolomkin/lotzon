@@ -1,6 +1,11 @@
-.support {
+.content-box.support {
     font-weight: normal;
-
+    .content-box-header{
+        color: #4a4a4a;
+    }
+    .content-box-content{
+        margin: 20px;
+    }
      h1 {
         font-size: 15.5px;
         color: #4a90e2;

@@ -1,18 +1,18 @@
-<div id="profile-popup" class="pop-box content-main">
+<div id="popup-profile" class="pop-box content-main">
     <div class="inner">
         <div class="title box-inner">
-            ЗАВЕРШЕНИЕ РЕГИСТРАЦИИ
+            {{i18n "title-popup-profile-complete"}}
         </div>
         <form action="/profile/complete" method="put" class="clearfix box-inner" name="profile">
 
             <div class="ae-user-img pi-ph true">
-                <img src="{{avatar img id}}" alt="">
+                <img src="{{avatar (player "img") (player "id")}}" alt="">
             </div>
         
             <div class="inputs">
 
                 <div class="option">
-                    <input name="nickname" type="text" value="{{title.nickname}}" required="required">
+                    <input name="nickname" type="text" value="{{player "title.nickname"}}" required="required">
                     <label>{{i18n 'title-profile-write-nickname'}}</label>
                 </div>
                 <div class="option">
