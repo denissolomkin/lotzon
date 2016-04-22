@@ -115,7 +115,7 @@
                 Player.ping();
                 Player.updateBalance();
 
-                !Player.is.complete && R.push('profile-popup');
+                !Player.is.complete && R.push('popup-profile');
             }
 
         },

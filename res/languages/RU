@@ -210,9 +210,11 @@
                 "title-reports-payments-order-prize":"Приз",
 
 
-                "title-profile-popup-welcome": "ДОБРО ПОЖАЛОВАТЬ!",
-                "title-profile-popup-faq-title": "СРАЗУ ХОТИ ОТВЕТИТЬ НА САМЫЕ ПОПУЛЯРНЫЕ ВОПРОСЫ",
-                "title-profile-popup-faq-text": "<p>- Минимальная сумма для вывода денег <br>10 рублей</p><br><p>- Деньги и призы выводятся в течении <br>7-ми рабочих дней</p>",
+                "title-popup-profile-complete": "ЗАВЕРШЕНИЕ РЕГИСТРАЦИИ",
+                "title-popup-profile-welcome": "ДОБРО ПОЖАЛОВАТЬ!",
+                "title-popup-profile-faq-title": "СРАЗУ ХОТИ ОТВЕТИТЬ НА САМЫЕ ПОПУЛЯРНЫЕ ВОПРОСЫ",
+                "title-popup-profile-faq-text-first": "- Минимальная сумма для вывода денег",
+                "title-popup-profile-faq-text-last": "- Деньги и призы выводятся в течении <br>7-ми рабочих дней",
 
                 "title-profile-name": "Имя",
                 "title-profile-surname": "Фамилия",

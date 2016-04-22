@@ -85,10 +85,15 @@
                     $('.hidden-notice').css('display', 'block');
                 } else $('.hidden-notice').css('display', 'none');
             },
+            error: function(options){
+                // some code......
+                console.debug(this);
+                console.debug(options);
+                return false;
 
-            complete: function() {
-                // console.debug(this);
-
+            },
+            complete: function(options) {
+                // return true;
                 var form    = $(this),
                     name    = form.find('[name="nickname"]').val(),
                     pass    = form.find('[name="newPass"]').val(),
@@ -360,15 +365,15 @@
                 console.debug(options);
                 
                 if(options.json.player.is.complete){
-                    $("#profile-popup").remove();
-                    R.push('profile-popup-faq');
+                    $("#popup-profile").remove();
+                    R.push('popup-profile-faq');
                 }else{
                     alert('что-то пошло не так, перезагружаемся');
                 }
             },
 
             closePopupFAQ: function(){
-                $("#profile-popup-faq").remove();
+                $("#popup-profile-faq").remove();
             }
 
         },

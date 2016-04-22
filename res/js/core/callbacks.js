@@ -129,7 +129,7 @@
             $(document).on('click', '.bonus-share-banner-view .close', Bonuses.hideBanner);
             $(document).on('click', '.copy[data-to]', Bonuses.bufferCopy);
             /* profile is complete*/
-            $(document).on('click', '#profile-popup-faq button', Profile.do.closePopupFAQ);
+            $(document).on('click', '#popup-profile-faq button', Profile.do.closePopupFAQ);
 
             // $(document).on('click', '.banner-copy-btn', Bonuses.copyBanner);
             // $(document).on('click', '.banner-copy-btn a', Bonuses.downloadFile);
@@ -232,7 +232,8 @@
 
             "lottery-gold": Ticket.error.gold,
             "prizes-exchange-goods": Prize.error.exchange,
-            "lottery-ticket": Ticket.update
+            "lottery-ticket": Ticket.update,
+            "profile-complete": Profile.validate.error
 
         },
 

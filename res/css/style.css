@@ -1517,8 +1517,8 @@ input.input-radio:checked + label.input-radio:before {
 
 /* compleet registration popup 
 ********************************/
-#profile-popup-faq,
-#profile-popup {
+#popup-profile-faq,
+#popup-profile {
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.6);
@@ -1528,8 +1528,8 @@ input.input-radio:checked + label.input-radio:before {
   left: 0;
   overflow-y: auto;
   z-index: 1000; }
-  #profile-popup-faq:before,
-  #profile-popup:before {
+  #popup-profile-faq:before,
+  #popup-profile:before {
     content: '';
     display: inline-block;
     vertical-align: middle;
@@ -1537,8 +1537,8 @@ input.input-radio:checked + label.input-radio:before {
     height: 100%;
     position: relative;
     margin-left: -5px; }
-  #profile-popup-faq .inner,
-  #profile-popup .inner {
+  #popup-profile-faq .inner,
+  #popup-profile .inner {
     width: 390px;
     text-align: left;
     position: relative;
@@ -1548,12 +1548,12 @@ input.input-radio:checked + label.input-radio:before {
     box-sizing: border-box;
     min-height: 647px;
     background: #ffffff; }
-  #profile-popup-faq .box-inner,
-  #profile-popup .box-inner {
+  #popup-profile-faq .box-inner,
+  #popup-profile .box-inner {
     padding: 0 55px;
     box-sizing: border-box; }
-  #profile-popup-faq .box-inner.title,
-  #profile-popup .box-inner.title {
+  #popup-profile-faq .box-inner.title,
+  #popup-profile .box-inner.title {
     text-transform: uppercase;
     display: inline-block;
     width: 100%;
@@ -1563,28 +1563,28 @@ input.input-radio:checked + label.input-radio:before {
     padding-bottom: 50px;
     border-bottom: 1px solid #ececec;
     position: relative; }
-  #profile-popup-faq .option,
-  #profile-popup .option {
+  #popup-profile-faq .option,
+  #popup-profile .option {
     position: relative;
     margin-bottom: 40px; }
-    #profile-popup-faq .option .alert, #profile-popup-faq .option .checkPass-alert,
-    #profile-popup .option .alert,
-    #profile-popup .option .checkPass-alert {
+    #popup-profile-faq .option .alert, #popup-profile-faq .option .checkPass-alert,
+    #popup-profile .option .alert,
+    #popup-profile .option .checkPass-alert {
       display: none;
       font-size: 13px;
       color: #ff4242;
       text-align: center; }
-    #profile-popup-faq .option .checkPass-alert,
-    #profile-popup .option .checkPass-alert {
+    #popup-profile-faq .option .checkPass-alert,
+    #popup-profile .option .checkPass-alert {
       display: block; }
-      #profile-popup-faq .option .checkPass-alert.gold,
-      #profile-popup .option .checkPass-alert.gold {
+      #popup-profile-faq .option .checkPass-alert.gold,
+      #popup-profile .option .checkPass-alert.gold {
         color: gold; }
-      #profile-popup-faq .option .checkPass-alert.green,
-      #profile-popup .option .checkPass-alert.green {
+      #popup-profile-faq .option .checkPass-alert.green,
+      #popup-profile .option .checkPass-alert.green {
         color: green; }
-    #profile-popup-faq .option label,
-    #profile-popup .option label {
+    #popup-profile-faq .option label,
+    #popup-profile .option label {
       text-align: center;
       color: #B4B4B4;
       width: 100%;
@@ -1594,22 +1594,22 @@ input.input-radio:checked + label.input-radio:before {
       top: 4px;
       transition: all .2s linear;
       opacity: 1; }
-      #profile-popup-faq .option label span,
-      #profile-popup .option label span {
+      #popup-profile-faq .option label span,
+      #popup-profile .option label span {
         color: #ff4242;
         margin-left: 3px; }
-    #profile-popup-faq .option input,
-    #profile-popup .option input {
+    #popup-profile-faq .option input,
+    #popup-profile .option input {
       position: relative;
       z-index: 10; }
-      #profile-popup-faq .option input:valid + label,
-      #profile-popup .option input:valid + label {
+      #popup-profile-faq .option input:valid + label,
+      #popup-profile .option input:valid + label {
         opacity: 0; }
-      #profile-popup-faq .option input:focus + label,
-      #profile-popup .option input:focus + label {
+      #popup-profile-faq .option input:focus + label,
+      #popup-profile .option input:focus + label {
         opacity: 0; }
-  #profile-popup-faq .ae-user-img,
-  #profile-popup .ae-user-img {
+  #popup-profile-faq .ae-user-img,
+  #popup-profile .ae-user-img {
     width: 150px;
     height: 150px;
     border-radius: 50%;
@@ -1617,13 +1617,13 @@ input.input-radio:checked + label.input-radio:before {
     position: relative;
     margin: 20px auto;
     cursor: pointer; }
-    #profile-popup-faq .ae-user-img img,
-    #profile-popup .ae-user-img img {
+    #popup-profile-faq .ae-user-img img,
+    #popup-profile .ae-user-img img {
       width: 150px;
       height: 150px;
       border-radius: 50%; }
-    #profile-popup-faq .ae-user-img:after,
-    #profile-popup .ae-user-img:after {
+    #popup-profile-faq .ae-user-img:after,
+    #popup-profile .ae-user-img:after {
       top: 0;
       left: 0;
       content: "";
@@ -1633,21 +1633,21 @@ input.input-radio:checked + label.input-radio:before {
       height: 150px;
       width: 150px;
       background: url(img/photo.png) center; }
-  #profile-popup-faq form.success [type='submit'],
-  #profile-popup form.success [type='submit'] {
+  #popup-profile-faq form.success [type='submit'],
+  #popup-profile form.success [type='submit'] {
     opacity: 1;
     cursor: pointer; }
-    #profile-popup-faq form.success [type='submit']:hover,
-    #profile-popup form.success [type='submit']:hover {
+    #popup-profile-faq form.success [type='submit']:hover,
+    #popup-profile form.success [type='submit']:hover {
       color: #f8e71c;
       background: #000000;
       border: 1px solid #000000; }
-  #profile-popup-faq a,
-  #profile-popup-faq [type='submit'],
-  #profile-popup-faq button,
-  #profile-popup a,
-  #profile-popup [type='submit'],
-  #profile-popup button {
+  #popup-profile-faq a,
+  #popup-profile-faq [type='submit'],
+  #popup-profile-faq button,
+  #popup-profile a,
+  #popup-profile [type='submit'],
+  #popup-profile button {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -1665,55 +1665,55 @@ input.input-radio:checked + label.input-radio:before {
     margin-top: 20px;
     opacity: 0.6;
     cursor: default; }
-  #profile-popup-faq ::-webkit-input-placeholder,
-  #profile-popup ::-webkit-input-placeholder {
+  #popup-profile-faq ::-webkit-input-placeholder,
+  #popup-profile ::-webkit-input-placeholder {
     -webkit-text-fill-color: #B4B4B4;
     color: #B4B4B4; }
-  #profile-popup-faq :-moz-placeholder,
-  #profile-popup :-moz-placeholder {
+  #popup-profile-faq :-moz-placeholder,
+  #popup-profile :-moz-placeholder {
     color: #B4B4B4; }
-  #profile-popup-faq ::-moz-placeholder,
-  #profile-popup ::-moz-placeholder {
+  #popup-profile-faq ::-moz-placeholder,
+  #popup-profile ::-moz-placeholder {
     color: #B4B4B4; }
-  #profile-popup-faq :-ms-input-placeholder,
-  #profile-popup :-ms-input-placeholder {
+  #popup-profile-faq :-ms-input-placeholder,
+  #popup-profile :-ms-input-placeholder {
     color: #B4B4B4; }
-  #profile-popup-faq input:not([type='submit']):focus,
-  #profile-popup-faq input:not([type='submit']):active,
-  #profile-popup-faq textarea:focus,
-  #profile-popup-faq textarea:hover,
-  #profile-popup-faq textarea:active,
-  #profile-popup-faq select:focus,
-  #profile-popup-faq select:hover,
-  #profile-popup-faq select:active,
-  #profile-popup-faq input:not([type='submit']):-webkit-autofill,
-  #profile-popup-faq textarea:-webkit-autofill,
-  #profile-popup-faq select:-webkit-autofill,
-  #profile-popup input:not([type='submit']):focus,
-  #profile-popup input:not([type='submit']):active,
-  #profile-popup textarea:focus,
-  #profile-popup textarea:hover,
-  #profile-popup textarea:active,
-  #profile-popup select:focus,
-  #profile-popup select:hover,
-  #profile-popup select:active,
-  #profile-popup input:not([type='submit']):-webkit-autofill,
-  #profile-popup textarea:-webkit-autofill,
-  #profile-popup select:-webkit-autofill {
+  #popup-profile-faq input:not([type='submit']):focus,
+  #popup-profile-faq input:not([type='submit']):active,
+  #popup-profile-faq textarea:focus,
+  #popup-profile-faq textarea:hover,
+  #popup-profile-faq textarea:active,
+  #popup-profile-faq select:focus,
+  #popup-profile-faq select:hover,
+  #popup-profile-faq select:active,
+  #popup-profile-faq input:not([type='submit']):-webkit-autofill,
+  #popup-profile-faq textarea:-webkit-autofill,
+  #popup-profile-faq select:-webkit-autofill,
+  #popup-profile input:not([type='submit']):focus,
+  #popup-profile input:not([type='submit']):active,
+  #popup-profile textarea:focus,
+  #popup-profile textarea:hover,
+  #popup-profile textarea:active,
+  #popup-profile select:focus,
+  #popup-profile select:hover,
+  #popup-profile select:active,
+  #popup-profile input:not([type='submit']):-webkit-autofill,
+  #popup-profile textarea:-webkit-autofill,
+  #popup-profile select:-webkit-autofill {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
     -webkit-box-shadow: inset 0 0 0 100px #ffffff !important;
     outline: none; }
-  #profile-popup-faq input:not([type='submit']):-webkit-autofill,
-  #profile-popup-faq textarea:-webkit-autofill,
-  #profile-popup-faq select:-webkit-autofill,
-  #profile-popup input:not([type='submit']):-webkit-autofill,
-  #profile-popup textarea:-webkit-autofill,
-  #profile-popup select:-webkit-autofill {
+  #popup-profile-faq input:not([type='submit']):-webkit-autofill,
+  #popup-profile-faq textarea:-webkit-autofill,
+  #popup-profile-faq select:-webkit-autofill,
+  #popup-profile input:not([type='submit']):-webkit-autofill,
+  #popup-profile textarea:-webkit-autofill,
+  #popup-profile select:-webkit-autofill {
     -webkit-text-fill-color: #222222; }
-  #profile-popup-faq input:not([type='submit']),
-  #profile-popup input:not([type='submit']) {
+  #popup-profile-faq input:not([type='submit']),
+  #popup-profile input:not([type='submit']) {
     text-align: center;
     width: 100%;
     font-size: 15.5px;
@@ -1725,18 +1725,18 @@ input.input-radio:checked + label.input-radio:before {
     border-bottom: 1px solid rgba(0, 0, 0, 0.4);
     font-family: 'Handbook'; }
 
-#profile-popup-faq .inner {
+#popup-profile-faq .inner {
   position: relative; }
 
-#profile-popup-faq .box-inner .title {
+#popup-profile-faq .box-inner .title {
   margin: 50px 0 35px;
   color: #000000;
   text-align: center; }
 
-#profile-popup-faq .box-inner p {
+#popup-profile-faq .box-inner p {
   text-align: center; }
 
-#profile-popup-faq button {
+#popup-profile-faq button {
   position: absolute;
   bottom: 50px;
   left: 0;
@@ -1744,7 +1744,7 @@ input.input-radio:checked + label.input-radio:before {
   max-width: 280px;
   opacity: 1;
   cursor: pointer; }
-  #profile-popup-faq button:hover {
+  #popup-profile-faq button:hover {
     color: #f8e71c;
     background: #000000;
     border: 1px solid #000000; }
