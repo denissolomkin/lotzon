@@ -1228,6 +1228,9 @@ class Player extends Entity
                     'img'  => $this->getAvatar(),
                     'name' => $this->getNicname(),
                     'ping' => $this->getDates('Ping'),
+                    'money'    => $this->getMoney(),
+                    'points'   => $this->getPoints(),
+                    'friends'  => \FriendsModel::instance()->getStatusCount($this->getId(), 1),
                 );
                 break;
             case 'info':
