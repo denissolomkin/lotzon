@@ -1192,7 +1192,7 @@ class Player extends Entity
         switch (true) {
             case $this->getPrivacy($field) == 2:
             case $this->getPrivacy($field) == 1 && $this->getFriend():
-                return isset($this->{'_' . $field}) ? $this->{'get' . $field}() : true;
+                return isset($this->{'_' . strtolower($field)}) ? $this->{'get' . $field}() : true;
                 break;
 
             default:
