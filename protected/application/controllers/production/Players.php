@@ -336,6 +336,27 @@ class Players extends \AjaxController
 
     }
 
+
+    public function resendEmailAction()
+    {
+        $this->validateRequest();
+
+        $email = $this->request()->post('email', null);
+
+        $player = new Player();
+        $player->setEmail($email);
+        try {
+            $player->loadPreregistration();
+            Common::sendEmail($player->getEmail(), 'Регистрация на www.lotzon.com', 'player_registration_new', array(
+                'login' => $player->getEmail(),
+                'hash'  => $player->getHash(),
+            ));
+            $this->ajaxResponse(array(), 1, 'OK');
+        } catch (EntityException $e) {
+            $this->ajaxResponse(array(), 0, 'USER_NOT_FOUND');
+        }
+    }
+
     public function resendPasswordAction()
     {
 

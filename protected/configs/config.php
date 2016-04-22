@@ -341,6 +341,9 @@ Config::instance()->publicResources = array(
     '/players/resendPassword/' => array(
         'post'  => 'controllers\production\Players:resendPassword',
     ),
+    '/players/resendEmail/' => array(
+        'post'  => 'controllers\production\Players:resendEmail',
+    ),
     '/players/login/' => array(
         'post'  => 'controllers\production\Players:login',
     ),

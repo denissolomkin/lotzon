@@ -36,9 +36,12 @@ class Index extends \SlimController\SlimController
 
         // create player
         $player = new Player();
-        $player->setEmail($m)->setHash($vh);
+        $player->setEmail($m);
         try {
             $player->loadPreregistration();
+            if ($player->getHash() != $vh) {
+                throw new \ModelException("Player not found", 404);
+            }
             if ($player->getSocialName() != '') {
                 $player->isSocialUsed();
             }
@@ -74,7 +77,7 @@ class Index extends \SlimController\SlimController
                 ->payReferal()
                 ->markOnline();
             $loggedIn = true;
-        } catch (ModelException $e) {
+        } catch (\ModelException $e) {
             // do nothing just show promo page
         }
 
