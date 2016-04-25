@@ -90,7 +90,7 @@ class FriendsController extends \AjaxController
         $playerId = $this->session->get(Player::IDENTITY)->getId();
 
         try {
-            $list = \FriendsModel::instance()->getList($playerId, $count, $offset, 1, $match);
+            $list = \FriendsModel::instance()->getList($playerId, $count+1, $offset, 1, $match);
         } catch (\PDOException $e) {
             $this->ajaxResponseInternalError();
             return false;
@@ -100,6 +100,12 @@ class FriendsController extends \AjaxController
             'res' => array(
             ),
         );
+
+        if (count($list)<=$count) {
+            $response['lastItem'] = true;
+        } else {
+            array_pop($list);
+        }
 
         if (!is_null($list)) {
             foreach ($list as $friend) {
