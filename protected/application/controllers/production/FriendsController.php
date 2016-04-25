@@ -69,11 +69,28 @@ class FriendsController extends \AjaxController
     {
         $offset = $this->request()->get('offset');
         $count  = $this->request()->get('count', self::$friendsPerPage);
+        $match  = $this->request()->get('match', NULL);
+
+        if ($match!==NULL) {
+            $match = trim(strip_tags($match));
+
+            if (mb_strlen($match, 'utf-8') == 0) {
+                $this->ajaxResponseNoCache(array('res' => array()));
+
+                return false;
+            }
+
+            if (mb_strlen($match, 'utf-8') < 3) {
+                $this->ajaxResponseNoCache(array("message" => "Request too short",), 400);
+
+                return false;
+            }
+        }
 
         $playerId = $this->session->get(Player::IDENTITY)->getId();
 
         try {
-            $list = \FriendsModel::instance()->getList($playerId, $count, $offset, 1);
+            $list = \FriendsModel::instance()->getList($playerId, $count, $offset, 1, $match);
         } catch (\PDOException $e) {
             $this->ajaxResponseInternalError();
             return false;
