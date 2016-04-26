@@ -57,7 +57,8 @@ class Index extends \SlimController\SlimController
             $player->setValid(true)
                 ->setDates(time(), 'Login')
                 ->setComplete(false)//todo: remove when set default=false in database
-                ->create();
+                ->create()
+                ->deletePreregistration();
 
             if ($player->getSocialId()) {
                 $player->updateSocial();
