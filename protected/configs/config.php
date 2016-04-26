@@ -602,7 +602,7 @@ Config::instance()->publicResources = array(
         'post'   => 'controllers\production\MessagesController:markRead'
     ),
     '/image' => array(
-        'post'   => 'controllers\production\MessagesController:image',
+        'post'   => 'controllers\production\ImagesController:message',
         'delete' => 'controllers\production\MessagesController:imageDelete'
     ),
     /**
@@ -723,7 +723,7 @@ Config::instance()->publicResources = array(
         'put' => 'controllers\production\Players:combination'
     ),
     '/profile/avatar' => array(
-        'post' => 'controllers\production\Players:avatar'
+        'post' => 'controllers\production\ImagesController:avatar'
     ),
     '/profile/edit' => array(
         'put' => 'controllers\production\Players:edit'

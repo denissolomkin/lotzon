@@ -14,11 +14,11 @@ class Players extends \AjaxController
     public function init()
     {
         parent::init();
+        $this->validateRequest();
     }
 
     public function registerAction()
     {
-        $this->validateRequest();
 
         //$agreed = $this->request()->post('agree', false);
         $email = $this->request()->post('email', null);
@@ -151,8 +151,6 @@ class Players extends \AjaxController
     public function loginAction()
     {
 
-        $this->validateRequest();
-
         $email      = $this->request()->post('email', null);
         $password   = $this->request()->post('password', null);
         $rememberMe = $this->request()->post('remember', false);
@@ -221,7 +219,6 @@ class Players extends \AjaxController
     {
 
         $this->authorizedOnly(true);
-        $this->validateRequest();
 
         $key = $this->request()->post('key', null);
 
@@ -254,45 +251,26 @@ class Players extends \AjaxController
 
     }
 
-    public function saveAvatarAction()
-    {
-        if (!$this->session->get(Player::IDENTITY)) {
-            $this->ajaxResponse(array(), 0, 'FRAUD');
-        }
-        else
-            try {
-                $imageName = $this->session->get(Player::IDENTITY)->uploadAvatar();
-                $data = array(
-                    'imageName' => $imageName,
-                    'imageWebPath' => '/filestorage/avatars/' . (ceil($this->session->get(Player::IDENTITY)->getId() / 100)) . '/' . $imageName,
-                );
-                $this->ajaxResponse($data);
-            } catch (\Exception $e) {
-                $this->ajaxResponse(array(), 0, 'INVALID');
-            }
-    }
-
     public function removeAvatarAction()
     {
-        if ($this->session->get(Player::IDENTITY)->getAvatar()) {
-            @unlink(PATH_FILESTORAGE . 'avatars/' . (ceil($this->session->get(Player::IDENTITY)->getId() / 100)) . '/' . $this->session->get(Player::IDENTITY)->getAvatar());
+        $this->authorizedOnly(true);
+
+        if ($this->player->getAvatar()) {
+            @unlink(PATH_FILESTORAGE . 'avatars/' . (ceil($this->player->getId() / 100)) . '/' . $this->player->getAvatar());
         }
-        $this->session->get(Player::IDENTITY)->setAvatar("")->saveAvatar();
+        $this->player->setAvatar("")->saveAvatar();
         $this->ajaxResponse(array());
     }
 
     public function changeLanguageAction($lang)
     {
 
-        $this->validateRequest();
-        $this->authorizedOnly();
+        $this->authorizedOnly(true);
 
         if(!($lang=substr($lang,0,2)) || !(LanguagesModel::instance()->isLang($lang))) {
             $this->ajaxResponse(array(), 0, 'LANGUAGE_ERROR');
-        } else if (!$this->session->get(Player::IDENTITY) || !$player=$this->session->get(Player::IDENTITY)) {
-            $this->ajaxResponse(array(), 0, 'FRAUD');
         } else {
-            $player->setLang($lang)->update();
+            $this->player->setLang($lang)->update();
             $this->ajaxResponse(array(), 1, 'READY');
         }
     }
@@ -301,20 +279,17 @@ class Players extends \AjaxController
     public function disableSocialAction($provider = null)
     {
 
-        $this->validateRequest();
-        $this->authorizedOnly();
+        $this->authorizedOnly(true);
 
         if (!($provider = $provider ?: $this->request()->delete('provider'))) {
             $this->ajaxResponseBadRequest('EMPTY_PROVIDER');
         }
 
-        $player = $this->session->get(Player::IDENTITY);
-
         try {
-            $player->setSocialName($provider)->disableSocial();
+            $this->player->setSocialName($provider)->disableSocial();
             $this->ajaxResponseNoCache(array(
                 'player' => array(
-                    'social' => $player->getSocial()
+                    'social' => $this->player->getSocial()
                 )));
         } catch (\Exception $e) {
             $this->ajaxResponse(array(), 0, 'INVALID');
@@ -325,7 +300,6 @@ class Players extends \AjaxController
     public function troubleAction($trouble)
     {
 
-        $this->validateRequest();
         $this->authorizedOnly();
 
         try {
@@ -339,7 +313,6 @@ class Players extends \AjaxController
 
     public function resendEmailAction()
     {
-        $this->validateRequest();
 
         $email = $this->request()->post('email', null);
 
@@ -359,8 +332,6 @@ class Players extends \AjaxController
 
     public function resendPasswordAction()
     {
-
-        $this->validateRequest();
 
         $email = $this->request()->post('email');
         $player = new Player();
@@ -394,7 +365,6 @@ class Players extends \AjaxController
     public function socialPostAction($provider)
     {
 
-        $this->validateRequest();
         $this->authorizedOnly();
 
         $this->ajaxResponse(array(
@@ -412,7 +382,6 @@ class Players extends \AjaxController
     public function userInfoAction($playerId)
     {
 
-        $this->validateRequest();
         $this->authorizedOnly();
 
         $player = new Player();
@@ -421,7 +390,7 @@ class Players extends \AjaxController
         $response = array(
             'res' => array(
                 'user' => array(
-                    "$playerId" => $player->export((int)\SettingsModel::instance()->getSettings('counters')->getValue('USER_REVIEW_DEFAULT') == $playerId?'card':'info')
+                    $playerId => $player->export((int)\SettingsModel::instance()->getSettings('counters')->getValue('USER_REVIEW_DEFAULT') == $playerId?'card':'info')
                 )
             )
         );
@@ -440,7 +409,6 @@ class Players extends \AjaxController
     public function profileAction()
     {
 
-        $this->validateRequest();
         $this->authorizedOnly();
 
         $response = array(
@@ -460,7 +428,6 @@ class Players extends \AjaxController
     public function cardAction($playerId)
     {
 
-        $this->validateRequest();
         $this->authorizedOnly();
 
         $player = new Player();
@@ -479,32 +446,28 @@ class Players extends \AjaxController
 
     public function combinationAction()
     {
-        $this->validateRequest();
-        $this->authorizedOnly();
 
-        $favorite   = $this->request()->post('favorite');
+        $this->authorizedOnly(true);
 
-        $player = new Player;
-        $player->setId($this->session->get(Player::IDENTITY)->getId())->fetch();
-
+        $favorite = $this->request()->post('favorite');
 
         $fav = array();
         foreach ($favorite as $number) {
-            if ($number!='') {
+            if ($number != '') {
                 $fav[] = $number;
             }
         }
 
         try {
-            $player->setFavoriteCombination($fav)->update();
+            $this->player->setFavoriteCombination($fav)->update();
         } catch (EntityException $e) {
             $this->ajaxResponseNoCache(array("message" => $e->getMessage()), $e->getCode());
             return false;
         }
 
         $res = array(
-            "player"  => array(
-                "favorite" => $player->getFavoriteCombination(),
+            "player" => array(
+                "favorite" => $this->player->getFavoriteCombination(),
             )
         );
 
@@ -515,21 +478,18 @@ class Players extends \AjaxController
 
     public function completeAction()
     {
-        $this->validateRequest();
-        $this->authorizedOnly();
+
+        $this->authorizedOnly(true);
 
         $nickname = $this->request()->post('nickname');
         $newPass    = $this->request()->post('newPass', '');
         $repeatPass = $this->request()->post('repeatPass', '');
 
-        $player = new Player;
-        $player->setId($this->session->get(Player::IDENTITY)->getId())->fetch();
-
         try {
-            $player->setNicname($nickname)->update();
+            $this->player->setNicname($nickname)->update();
             if (($newPass != '') && ($repeatPass != '')) {
                     if ($newPass == $repeatPass) {
-                        $player->changePassword($newPass);
+                        $this->player->changePassword($newPass);
                     } else {
                         $this->ajaxResponseBadRequest("passwords-do-not-match");
                     }
@@ -542,10 +502,10 @@ class Players extends \AjaxController
         $res = array(
             "player"  => array(
                 "title"    => array(
-                    "nickname"   => $player->getNicname(),
+                    "nickname"   => $this->player->getNicname(),
                 ),
                 "is" => array(
-                    "complete" => $player->isComplete(),
+                    "complete" => $this->player->isComplete(),
                 )
             )
         );
@@ -559,7 +519,6 @@ class Players extends \AjaxController
     public function settingsAction()
     {
 
-        $this->validateRequest();
         $this->authorizedOnly();
 
         $subscribe  = $this->request()->post('email');
@@ -615,7 +574,6 @@ class Players extends \AjaxController
     public function editAction()
     {
 
-        $this->validateRequest();
         $this->authorizedOnly();
 
         $player = new Player();
@@ -682,31 +640,9 @@ class Players extends \AjaxController
         return true;
     }
 
-    public function avatarAction()
-    {
-
-        $this->authorizedOnly();
-
-        try {
-            $imageName = $this->session->get(Player::IDENTITY)->uploadAvatar();
-        } catch (\Exception $e) {
-            $this->ajaxResponseInternalError($e->getMessage());
-        }
-        $res = array(
-            "player"  => array(
-                "img" => $imageName,
-            )
-        );
-
-        $this->ajaxResponseNoCache($res);
-
-        return true;
-    }
-
     public function billingAction()
     {
 
-        $this->validateRequest();
         $this->authorizedOnly();
 
         $player = new Player;
@@ -756,7 +692,6 @@ class Players extends \AjaxController
     public function searchAction()
     {
 
-        $this->validateRequest();
         $this->authorizedOnly();
 
         $search = $this->request()->get('name');

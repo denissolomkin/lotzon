@@ -1,7 +1,6 @@
 <?php
 namespace controllers\production;
 use \Application, \Player, \SettingsModel, \MessagesModel, \Message;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');
 
@@ -14,13 +13,14 @@ class MessagesController extends \AjaxController
         self::$messagesPerPage = (int)SettingsModel::instance()->getSettings('counters')->getValue('MESSAGES_PER_PAGE') ? : 10;
 
         parent::init();
+
+        $this->validateRequest();
         $this->authorizedOnly(true);
         $this->validateCaptcha();
     }
 
     public function indexAction()
     {
-        $this->validateRequest();
 
         $playerId = $this->session->get(Player::IDENTITY)->getId();
         $count    = $this->request()->get('count', self::$messagesPerPage);
@@ -70,7 +70,6 @@ class MessagesController extends \AjaxController
 
     public function listAction($userId)
     {
-        $this->validateRequest();
 
         $playerId = $this->session->get(Player::IDENTITY)->getId();
         $count    = $this->request()->get('count', self::$messagesPerPage);
@@ -114,7 +113,6 @@ class MessagesController extends \AjaxController
 
     public function markReadAction($userId)
     {
-        $this->validateRequest();
 
         $response = array();
         $playerId = $this->session->get(Player::IDENTITY)->getId();
@@ -134,7 +132,6 @@ class MessagesController extends \AjaxController
 
     public function createAction()
     {
-        $this->validateRequest();
 
         $playerId   = $this->session->get(Player::IDENTITY)->getId();
         $text       = $this->request()->post('text');
@@ -230,28 +227,8 @@ class MessagesController extends \AjaxController
         return true;
     }
 
-    public function imageAction()
-    {
-
-        try {
-            $imageName = uniqid() . ".png";
-            \Common::saveImageMultiResolution('image',PATH_FILESTORAGE.'temp/', $imageName);
-        } catch (\Exception $e) {
-            $this->ajaxResponseInternalError();
-        }
-
-        $res = array(
-            "imageName" => $imageName,
-        );
-
-        $this->ajaxResponseNoCache($res);
-
-        return true;
-    }
-
     public function imageDeleteAction()
     {
-        $this->validateRequest();
 
         $image = $this->request()->delete('image', null);
 
@@ -266,7 +243,6 @@ class MessagesController extends \AjaxController
         }
 
         $this->ajaxResponseNoCache(array());
-
         return true;
     }
 
