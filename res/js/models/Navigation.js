@@ -61,7 +61,7 @@
                 'json': Player
             });
 
-            if(Device.mobile) {
+            if(Device.isMobile() ) {
 
                 // Navigation menu mobile
                 R.push({
@@ -83,7 +83,13 @@
                 // Navigation menu desktop
                 R.push({
                     'template': 'menu-navigation',
-                    'json': this.navigation
+                    'json': this.navigation,
+                    'after': function(){
+                        // screen only!!!!!!!!!!
+                        // alert(12321323123132);
+                        $("#menu-navigation .menu-more").addClass('menu-item').attr('data-id','fuck!!!');
+                        // screen only!!!!!!!!!! end
+                    }
                 });
             }
         },
@@ -114,6 +120,7 @@
                 Content.updateBanners();
                 Player.ping();
                 Player.updateBalance();
+                
 
                 !Player.is.complete && R.push('popup-profile');
             }
@@ -184,6 +191,7 @@
             switch: function () {
                 D.log('Navigation.menu.switch', 'menu');
                 if (Device.isMobile()) {
+                    // alert("navigation.js mobile");
                     $(I.menuMore).removeClass('menu-item');
                     $(I.menuProfile).removeClass('menu-item');
                     $(I.menuLogout).removeClass('menu-item');

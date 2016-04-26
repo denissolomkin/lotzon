@@ -159,7 +159,7 @@ ol,ul {
 /*  body
     [1080 x 740]
  */
-html:before{
+.landing:before{
     content: "";
     background: url('../img/imgpsh_fullsize.jpg') no-repeat right bottom;
     background-size: cover;
@@ -167,6 +167,8 @@ html:before{
     height: 100%;
     width: 100%;
     position: fixed;
+    top: 0;
+    left: 0;
     
 }
 .landing {
@@ -195,6 +197,10 @@ html:before{
     top: 0;
     left: 0;
     width: 100%;
+    padding: 0 20px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 .landing .header .wrapper {
@@ -276,7 +282,7 @@ positioning content */
     width: 100%;
     margin: auto;
     
-    padding: 40px 0 240px 0;
+    padding: 40px 20px 240px 20px;
     min-height: 100%;
     box-sizing: border-box;
     position: relative;
@@ -1534,7 +1540,8 @@ The shadow behind the image .mfp-figure {
 
 @media screen and (max-width: 800px) and (orientation: landscape),
 screen and (max-height: 300px) {
-    * * Remove all paddings around the image on small screen .mfp-img-mobile .mfp-image-holder {
+    /*Remove all paddings around the image on small screen */
+    .mfp-img-mobile .mfp-image-holder {
         padding-left: 0;
         padding-right: 0;
     }
