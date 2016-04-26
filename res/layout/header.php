@@ -15,7 +15,7 @@
         <meta name="keywords" content="<?php echo $seo['kw'];?>" />
 
         <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700,400italic,700italic&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="/res/css/style.css">
+        <link rel="stylesheet" href="/res/css/style.css?v2">
         <?php //if (isset($isMobile)) {
             //if ($isMobile) { ?>
                 <!-- <link rel="stylesheet" href="/res/css/mobile/style.css"> -->
@@ -24,7 +24,7 @@
             <?php // }
         //} ?>
         <!-- screen only -->
-        <link rel="stylesheet" href="/res/css/screen/style.css">
+        <link rel="stylesheet" href="/res/css/screen/style.css?v2">
 
         <link rel="stylesheet" href="/res/css/animate.css">
         <link rel="stylesheet" href="/res/css/slots.css" type="text/css">
