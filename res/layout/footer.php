@@ -30,13 +30,13 @@
     <!-- END Popup msgs -->
 
     <!-- zhaloba -->
-    <div id="zhgi">
+    <!-- <div id="zhgi">
         <div class="arrow"><i class="i-arrow-slim-left"></i></div>
         <div class="content">
             <p>ЗАМЕТИЛИ ОШИБКУ?</p>
             <a href="/users/0/messages">напишите нам</a>
         </div>
-    </div>
+    </div> -->
     <!-- zhaloba -->
     
     <!-- .container -->

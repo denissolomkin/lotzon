@@ -385,7 +385,7 @@ class Players extends \AjaxController
         $this->authorizedOnly();
 
         $player = new Player();
-        $player->setId($playerId)->fetch()->setFriendship($this->session->get(Player::IDENTITY)->getId());
+        $player->setId($playerId)->fetch()->setFriendship($this->session->get(Player::IDENTITY)->getId())->initDates();
 
         $response = array(
             'res' => array(
@@ -431,7 +431,7 @@ class Players extends \AjaxController
         $this->authorizedOnly();
 
         $player = new Player();
-        $player->setId($playerId ?: (int)\SettingsModel::instance()->getSettings('counters')->getValue('USER_REVIEW_DEFAULT'))->fetch();
+        $player->setId($playerId ?: (int)\SettingsModel::instance()->getSettings('counters')->getValue('USER_REVIEW_DEFAULT'))->fetch()->initDates();
 
         $response = array(
             'res' => array(
