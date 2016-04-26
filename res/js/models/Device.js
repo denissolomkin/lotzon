@@ -12,10 +12,10 @@
             Object.deepExtend(this, init);
             this.jsdetect = document.querySelector('.js-detect');
             this.gototop = document.querySelector('.go-to-top');
-            if(this.mobile){
-                this.setWidth();
-                window.addEventListener('resize', Device.setWidth, true);
-            }
+            // if(this.mobile){
+            //     this.setWidth();
+            //     window.addEventListener('resize', Device.setWidth, true);
+            // }
         },
 
         setWidth: function(){
@@ -114,7 +114,9 @@
         },
 
         isMobile: function () {
-            return Device.get() < 0.8;
+            // screen only!!! >>>>>>>>>
+            return false;
+            // return Device.get() < 0.8;
         },
 
         switchGoTop: function () {

@@ -1,8 +1,13 @@
-.support {
-    font-family: handbookpro-regular;
-
+.content-box.support {
+    font-weight: normal;
+    .content-box-header{
+        color: #4a4a4a;
+    }
+    .content-box-content{
+        margin: 20px;
+    }
      h1 {
-        font-size: 15px;
+        font-size: 15.5px;
         color: #4a90e2;
         line-height: 18px;
         text-transform: uppercase;
@@ -10,7 +15,7 @@
         margin: 0 0 10px 0;
     }
      p {
-        font-size: 15px;
+        font-size: 15.5px;
         color: #4a4a4a;
         letter-spacing: 0.1px;
         line-height: 18px;

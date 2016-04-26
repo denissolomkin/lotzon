@@ -1,6 +1,5 @@
 <div id="reports-transactions" class="content-box">
-
-    <div class="content-box-header"><span class="back i-arrow-left large-visible"></span><span class="back i-arrow-slim-left small-visible "></span>{{i18n "title-reports-transactions"}}</div>
+    {{partial 'common-content-box-header-partial' (i18n "title-reports-transactions") }}
 
     <div class="content-box-content clearfix">
 
@@ -9,7 +8,7 @@
 
                 <div class="content-box-item-top clearfix">
                     <div class="calendar-range i-calendar">
-                        <input type="text" name="daterange" class="daterange" value="">
+                        <input type="text" name="daterange" class="daterange" value="" placeholder="{{i18n "title-of-range"}}" readonly="readonly">
                     </div>
 
                     <div class="content-box-cat">

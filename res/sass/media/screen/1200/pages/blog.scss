@@ -1,12 +1,12 @@
-// BLOG ------------------------------- //
+// @media (min-width: 1200px) {
+// 	// BLOG ------------------------------- //
+// 	.content-box-item {
+// 		&.home-blog {
+// 			padding: 20px;
+// 		}
+// 	}
 
-
-.content-box-item {
-	&.home-blog {
-		padding: 20px;
-	}
-}
-
-.post-item-title {
-	font-size: 10px;
-}
+// 	.post-item-title {
+// 		font-size: 10px;
+// 	}
+// }

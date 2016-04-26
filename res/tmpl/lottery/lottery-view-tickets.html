@@ -1,50 +1,66 @@
 ﻿<div id="lottery-view-tickets" class="ghd-tickets">
-
     {{#if tickets}}
-
-        <ul>
-            {{#tickets}}
-            <li class="clearfix">
-
-                {{#if (eq num (lottery 'totalTickets'))}}
-                 <span class="gold">GOLD</span>
-                {{else}}
-                 <span>{{i18n "title-lottery-ticket-num"}} N°{{num}} </span>
-                {{/if}}
-
-                <ul>
-                    {{#combination}}
-                    <li class="filled-ball{{#win}} won_ball{{/win}}" data-num='{{ball}}'>
-                        {{ball}}
-                    </li>
-                    {{/combination}}
-                    {{^combination}}
-                    <li class="unfilled">
-                        {{i18n "title-lottery-ticket-unactive"}}
-                    </li>
-                    {{/combination}}
-                </ul>
-            </li>
-            {{/tickets}}
-        </ul>
-
-        {{#if win}}
-        <div class="ghd-text ghd-won">
-            <div class="grid-container">
-                {{#each win}}
-                <div class="width-50">
-                    <span>{{i18n 'title-lottery-won' currency}}:</span>
-                    <strong>{{number prize}}</strong>
-                </div>
-                {{/each}}
+    <ul>
+        {{#tickets}}
+        <li class="clearfix">
+            {{#if (eq num (lottery 'totalTickets'))}}
+            <span class="gold">GOLD</span> {{else}}
+            <span>{{i18n "title-lottery-ticket-num"}} N°{{num}} </span> {{/if}}
+            <ul>
+                {{#combination}}
+                <li class="filled-ball{{#win}} won_ball{{/win}}" data-num='{{ball}}'>
+                    {{ball}}
+                </li>
+                {{/combination}} {{^combination}}
+                <li class="unfilled">
+                    {{i18n "title-lottery-ticket-unactive"}}
+                </li>
+                {{/combination}}
+            </ul>
+        </li>
+        {{/tickets}}
+    </ul>
+    <div class="ghd-text ghd-won">
+        <div class="grid-container">
+            <div>
+                <span>{{i18n 'title-lottery-won-POINT'}}</span>
+                <strong>{{number win.POINT.prize}}</strong>
+            </div>
+            <div>
+                <span>{{i18n 'title-lottery-won-MONEY'}}</span>
+                <strong>{{number win.MONEY.prize}}</strong>
             </div>
         </div>
-        {{else}}
-            <div class="ghd-text ghd-fale">{{i18n "title-lottery-not-won"}}</div>
-        {{/if}}
-
+    </div>
     {{else}}
-        <div class="ghd-won">{{i18n "title-lottery-not-play"}}</div>
+    <!-- <div class="ghd-won">{{i18n "title-lottery-not-play"}}</div> -->
+    <ul>
+        {{#each (for 1 "<=" (lottery 'totalTickets' ) ) as |value key|}} 
+        <li class="clearfix">
+            {{#if (eq this 8)}} 
+                <span class="gold">GOLD</span>
+            {{else}}
+                <span>{{i18n "title-lottery-ticket-num"}} N°{{this}} </span>
+            {{/if}}
+            <ul>
+                <li class="unfilled">
+                    {{i18n "title-lottery-ticket-undefined"}}
+                </li>
+            </ul>
+        </li>
+        {{/each}}
+    </ul>
+    <div class="ghd-text ghd-won">
+        <div class="grid-container">
+            <div>
+                <span>{{i18n 'title-lottery-won-POINT'}}</span>
+                <strong>0</strong>
+            </div>
+            <div>
+                <span>{{i18n 'title-lottery-won-MONEY'}}</span>
+                <strong>0</strong>
+            </div>
+        </div>
+    </div>
     {{/if}}
-
 </div>

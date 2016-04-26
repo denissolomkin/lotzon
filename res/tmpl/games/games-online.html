@@ -10,7 +10,7 @@
                     <div class="game-info">
                         <div class="game-name">{{ title }}</div>
                         <div class="game-fund">
-                            <span class="fund_title">{{i18n "title-games-prize-fund"}}</span>
+                            <span class="fund_title">{{{i18n "title-games-view-prize-fund"}}}</span>
                             <div class="fund_points">{{ number (or fund.POINT 0) }} <span>{{i18n "title-of-points"}}</span></div>
                             <div class="fund_money">{{ number (currency 'MONEY' fund.MONEY ) }} <span>{{currency}}</span></div>
                         </div>

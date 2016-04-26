@@ -1,0 +1,36 @@
+<div id="profile-combination" class="content-box-item">
+    <form action="/profile/combination" method="put" class="settings clearfix">
+        
+        <div class="option-block clearfix container-center">
+            <div class="setting-title"> {{i18n "title-profile-favorite-title"}}</div>
+        </div>
+
+        <div class="option-block clearfix">
+            <div class="ae-combination clearfix strip hidden">
+                <div class="ae-current-combination clearfix">
+                    {{#each favorite}}
+                    <input type="hidden" readonly name="favorite[]" value="{{.}}">
+                    {{/each}}
+                </div>
+                <div class="uk-float-right show-option ">
+                    <span class='change large-visible change-favorite'>{{i18n "title-profile-settings-change"}}</span> <i class="i-pencil change change-favorite small-visible"></i>
+                </div>
+                <div class="uk-float-right delete-reg hidden option">
+                    <div class="choice danger">
+                        <span class="change large-visible danger">{{i18n "button-cancel"}}</span><i class="i-pencil change danger small-visible"></i>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="ae-favorite-combination "> -->
+            <ul class="ae-combination-box clearfix option">
+                {{#each (player "renderFavorite")}}
+                <li{{#if (true .)}} class="selected" {{/if}}>{{@key}}</li>
+                {{/each}}
+            </ul>
+        </div>
+        <div class="container-center">
+            <button name="submit" type="submit" class="btn-flat">{{i18n "button-save"}}</button>
+        </div>
+    </form>
+</div>
+<!-- .content-box-item -->

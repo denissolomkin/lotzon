@@ -2,22 +2,15 @@
     <div class="cm-top">
         <a href="/communication/messages/new" class="new-message btn-flat">{{i18n "button-message-new"}}</a>
         <a href="/users/0/messages" class="write-admin">{{i18n "button-message-admin"}}</a>
-        <hr>
     </div>
-
-
     <form action="/communication/messages/list" method="get" class="render-list-form">
         <input type="hidden" name="order" value="DESC">
         <input type="hidden" name="limit" value="{{limit 'communication-messages'}}">
-
         <div class="render-list" id="communication-messages-list">
             {{partial 'communication-messages-list' this}}
         </div>
-
         <div class="container-center">
             <button name="submit" type="submit" class="btn-flat infinite-scrolling">{{i18n "button-load-more"}}</button>
         </div>
-
     </form>
-
 </div>

@@ -56,7 +56,6 @@
 
 .pushy {
     width: 400px;
-    /*padding-left: 30px;*/
 }
 
 .pushy-left {
@@ -69,88 +68,6 @@
 .wrapper-push, .push-push {
     @include translate3d(-400px, 0, 0);
 }
-/*
-#menu-navigation-mobile {
-    font: 15px / 45px Handbook-bold;
-    & .menu-balance-inf  {
-        font-size: 17px;
-        height: 49px;
-        line-height: 49px;
-        margin-bottom: 0;
-        & > div {
-            float: left;
-            width: auto;
-            margin-right: 20px;
-            height: 49px;
-            & > span {
-                font-size:  15px;
-                font-weight: bold;
-            }
-            &:first-of-type {
-              &:before {
-                top: 13px;
-              }
-            } 
-        }   
-    }
-    & .menu-main {
-       padding-bottom: 0;
-        &:after {
-            display: none;
-        } 
-        & li {
-            padding: 0;
-            line-height: 1;  
-            margin: 15px 0 10px;   
-            & a {
-                text-transform: none;
-                padding: 0;
-            } 
-        }
-    }
-    & .menu-more  {
-        // padding-bottom: 10px;
-        padding-top: 0;
-        & li {
-            padding: 0;
-            line-height: 1;   
-            margin: 15px 0 10px;   
-            & a {
-                padding: 0;
-            }
-            &:last-child {
-                & a {
-                    margin-top: 0;       
-                }
-            }
-        }
-    }
-    & .menu-profile  {
-        // padding: 0 0 10px;
-        min-width: 0;
-        padding: 0;
-        & li {
-            padding: 0;
-            line-height: 1;   
-            margin: 15px 0 10px; 
-            & a {
-                padding: 0;
-            }
-            &:last-child {
-                & a {
-                    margin-top: 0;       
-                }
-            }
-        }
-    }
-    & hr {
-        margin: 0 0 0 -30px;
-        border: none;
-        border-bottom: 1px solid #cbc7c6;
-    }
-
-}   */
-
 .menu-balance-btn {
     display: none;
 }

@@ -1,56 +1,4 @@
 // GAMES <<CHANCE>> -------------------- //
-
-/*title of games view*/
-.title-wrap {
-    position: relative;
-    width: 100%;
-    padding: 5px 0;
-    margin-bottom: 20px;
-}
-
-.back-button {
-    position: absolute;
-    left: 0px;
-    top: -7px;
-    font-size: 35px;
-    color: #6ba4e7;
-    padding: 0;
-    height: auto;
-    vertical-align: middle;
-
-    &:before{
-            content: '';
-            height: 100%;
-            width: 0;
-            display: inline-block;
-            vertical-align: middle;
-        }
-    &:hover {
-        i {
-            color: #343434;
-        }
-    }
-    i {
-        transition: color .2s ease-in; 
-        position: relative;
-        left: -10px;
-        display: inline-block;
-        vertical-align: middle;
-    }
-}
-.game-title {
-    text-align: center;
-    /*font-weight: bold;*/
-    text-transform: uppercase;
-    color: #343434;
-    font-size: 20px;
-    font-family: Handbookpro-regular;
-}
-
-
-/* END
-title of games view*/
-
 div > .games-previews {
     padding: 0;
 }
@@ -58,21 +6,20 @@ div > .games-previews {
 .games-previews {
     overflow-y: hidden;
     .flex-box {
-        font-family: handbookpro-regular;
-        padding: 0 20px;
+        font-weight: normal;
+        padding: 20px 20px 0;
         .fixr {
-            margin-left: -55px;
+            margin: 0 0 0 -17px;
             position: relative;
+            font-size: 0;
         }
         a {
             display: inline-block;
             height: 320px;
-            width: 200px;
-            border-radius: 5px;
+            width: 180px;
             overflow: hidden;
             position: relative;
-            margin: 20px 0;
-            margin-left: 54px;
+            margin: 0 0 30px 17px;
         }
         a:active,
         a:hover {
@@ -86,7 +33,11 @@ div > .games-previews {
             left: 0;
             overflow: hidden;
             img {
-                width: 100%;
+                min-width: 100%;
+                min-height: 100%;
+                position: absolute;
+                left: 50%;
+                transform: translate(-50%,0%);
             }
         }
         .game-info {
@@ -99,36 +50,31 @@ div > .games-previews {
             box-sizing: border-box;
             text-align: center;
             overflow: hidden;
-            
+            color: #000000;
+            font-size: 15.5px;
+            font-weight: normal;
         }
         .game-name {
-            font-family: Handbook-bold;
-            font-size: 15.5px;
             text-transform: uppercase;
             line-height: 1;
-            margin: 5px 0;
+            margin: 5px 0 0;
             min-height: 32px;
-
         }
         .fund_title {
-            font-family: Handbook-bold;
-            color: #605b5c;
-            font-size: 14px;
-            line-height: 2;
+            color: #4a4a4a;
+            line-height: 1;
+            margin-bottom: 15px;
+            display: inline-block;
+            text-transform: none;
+            white-space: nowrap;
         }
-        .game-fund>div {
-            font-family: Handbook-bold;
+        .game-fund {
             text-transform: uppercase;
-            font-size: 24px;
-        }
-        .game-fund>div>span {
-            font-size: 14px;
-            color: #2f2f2f;
+            min-height: 85px;
         }
         .players {
-            font-family: Handbook-bold;
+            color: #4a4a4a;
             padding-top: 20px;
-            font-size: 14px;
         }
         .game-button {
             position: relative;
@@ -139,6 +85,7 @@ div > .games-previews {
             border-top: 1px solid rgba(255, 255, 255, 0.3);
             text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.3);
             text-transform: uppercase;
+            color: #000000;
         }
     }
 }
@@ -156,6 +103,23 @@ div > .games-previews {
         }
     }
 }
+
+@media  all and ( min-width: 1200px) {
+    .games-previews{
+        .flex-box{
+            padding-top: 20px;
+            .fixr{
+                margin: 0 -20px 0 -35px;
+                a{
+                    width: 200px;
+                    margin: 0 0 30px 35px;
+
+                }
+            }
+        }
+    }
+}
+
 
 //colors
 $web_orange: orange;
@@ -188,8 +152,6 @@ $color_coral_red_approx: #ff4242;
 $color_lima_approx: #7ed321;
 
 //fonts
-$hbRegular: handbookpro-regular;
-$hbBold: Handbook-bold;
 $font_2: FontAwesome;
 
 //urls
@@ -261,7 +223,7 @@ footer.unvisible {
         span{
             display: inline-block;
             vertical-align: middle;
-            font-family:$hbRegular;
+            font-weight: normal;
             font-size:13px;
             color:#000000;
             // height: 41px;
@@ -537,8 +499,8 @@ footer.unvisible {
                     text-align: left;
                     padding: 20px 0 0 20px;
 
-                    font-family:$hbRegular;
-                    font-size:15px;
+                    font-weight: normal;
+                    font-size: 15.5px;
                     line-height:18px;
                     word-wrap: normal;
                     white-space: nowrap;
@@ -640,7 +602,7 @@ footer.unvisible {
                     vertical-align: middle;
                     padding: 20px 10px;
 
-                    font-size:15px;
+                    font-size: 15.5px;
                     color:#4a4a4a;
                     letter-spacing:0.2px;
                     line-height:36px;
@@ -708,7 +670,7 @@ footer.unvisible {
                         display: inline-block;
                     }
                     .title{
-                        font-size:15px;
+                        font-size: 15.5px;
                         color:#4a4a4a;
                         line-height:18px;
                         text-align:center;
@@ -750,7 +712,7 @@ footer.unvisible {
                         span{
                             width: 60px;
                             float: right;
-                            font-size:15px;
+                            font-size: 15.5px;
                             line-height:18px;
                             word-spacing: 300em;
                         }
@@ -790,7 +752,7 @@ footer.unvisible {
                                 font-size: 0.9em;
                             }
                             span {
-                                font-family: $hbBold;
+                                font-weight: bold;
                                 font-size: 1.1em;
                             }
                         }
@@ -849,8 +811,8 @@ footer.unvisible {
                 .place{
                     padding-top: 20px;
                     text-align: center;
-                    font-family:$hbRegular;
-                    font-size:15px;
+                    font-weight: normal;
+                    font-size: 15.5px;
                     color:#4a4a4a;
                     line-height:18px;
                     text-align:center;
@@ -1131,7 +1093,8 @@ footer.unvisible {
                         padding: 2px;
                         position: absolute;
                         border-radius: 3px;
-                        font: 14px/1 "handbookpro-regular";
+                        font-size: 14px;
+                        line-height: 1;
                     }
                     .tm {
                         color: $white;
@@ -1184,7 +1147,7 @@ footer.unvisible {
                     border-radius: 5px;
                     padding: 5px;
                     font-size: 22px;
-                    font: 22px/1 "handbookpro-regular";
+                    line-height: 1;
                     width: 140%;
                     margin-left: -20%;
                     box-sizing: border-box;
@@ -1193,7 +1156,8 @@ footer.unvisible {
                     white-space: nowrap;
                 }
                 .tm {
-                    font: 32px/1 "handbookpro-regular";
+                    font-size: 32px;
+                    line-height: 1;
                     padding: 4px;
                     position: absolute;
                     width: 50px;

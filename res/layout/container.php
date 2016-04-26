@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container clearfix">
     <main class="content clearfix">
 
         <div id="banner-tablet-top" class="banner-1">

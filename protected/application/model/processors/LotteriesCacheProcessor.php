@@ -39,31 +39,6 @@ class LotteriesCacheProcessor extends BaseCacheProcessor
 
     }
 
-    public function getDependentLottery($lotteryId, $dependancy)
-    {
-
-        $lottery = null;
-        $list = $this->getPublishedLotteriesList();
-        $max = reset($list)->getId();
-
-        do {
-
-            $dependancy == 'next' ? ++$lotteryId : --$lotteryId;
-
-            if($lotteryId <= 0){
-                $lottery = reset($list);
-            } elseif($lotteryId >= $max) {
-                $lottery = end($list);
-            } elseif(isset($list[$lotteryId])) {
-                $lottery = $list[$lotteryId];
-            }
-
-        } while(!$lottery);
-
-        return $lottery;
-
-    }
-
     public function getWinnersCount()
     {
 

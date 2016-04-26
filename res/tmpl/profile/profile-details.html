@@ -1,5 +1,6 @@
 <div id="profile-details" class="content-box">
-    <div class="content-box-header"><span class="back i-arrow-left large-visible"></span><span class="back i-arrow-slim-left small-visible "></span>{{i18n "title-profile-details"}}</div>
+    {{partial 'common-content-box-header-partial' (i18n "title-profile-details") }}
+    <!-- <div class="content-box-header"><span class="back i-arrow-slim-left large-visible"></span><span class="back i-arrow-slim-left small-visible "></span>{{i18n "title-profile-details"}}</div> -->
 
     <div class="content-box-content clearfix">
         <div class="content-box-item cabinet-account">
@@ -65,7 +66,7 @@
                                 </td>
                             </tr>
                         </table>
-                        <a href="/profile/edit" class="personal-inf-edit-btn">{{i18n "button-profile-edit"}}</a>
+                        <a href="/profile" class="personal-inf-edit-btn">{{i18n "button-profile-edit"}}</a>
                     </div>
                 </div>
 

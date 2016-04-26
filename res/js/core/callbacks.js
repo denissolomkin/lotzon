@@ -98,6 +98,8 @@
             $(document).on('input', ".enter-friend-name", Messages.do.searchUser);
             $(document).on('click', ".nm-change", Messages.do.clearUser);
 
+            /* friends */
+            $(document).on('keyup', ".friends-search-input", Friends.do.searchUser);
 
             /* form */
             $(document).on('submit', 'form:not(.render-list-form)', Form.do.submit);
@@ -119,14 +121,19 @@
             $(document).on('click', '.pi-ph.true', Profile.do.updateAvatar);
             $(document).on('change', 'form input.repeat-pass', Profile.validate.passwordRepeat);
             $(document).on('change', '.cc-out .cc-sum', Profile.validate.convert);
-
+            $(document).on('keypress keyup keydown', 'form .checkPass', Profile.validate.checkPass);
             $(document).on('click', '.ae-combination-box li', Profile.do.selectFavorite);
             $(document).on('click', '.s-lang .radio-text', Profile.do.changeLanguage);
             $(document).on('click', '.change', Profile.do.openOption);
-            $(document).on('click', '.change-favorite', Profile.do.openFavorite);
-            $(document).on('click', '.choice .change', Profile.do.cancelFavorite);
+            // $(document).on('click', '#profile-billing input', Profile.do.billingFull);
+            
+            // $(document).on('click', '.change-favorite', Profile.do.openFavorite);
+            // $(document).on('click', '.choice .change', Profile.do.cancelFavorite);
             $(document).on('click', '.bonus-banner-view-item', Bonuses.showBanner);
             $(document).on('click', '.bonus-share-banner-view .close', Bonuses.hideBanner);
+            $(document).on('click', '.copy[data-to]', Bonuses.bufferCopy);
+            /* profile is complete*/
+            $(document).on('click', '#popup-profile-faq button', Profile.do.closePopupFAQ);
 
             // $(document).on('click', '.banner-copy-btn', Bonuses.copyBanner);
             // $(document).on('click', '.banner-copy-btn a', Bonuses.downloadFile);
@@ -180,6 +187,8 @@
 
             "profile-edit": Profile.init.edit,
             "profile-billing": Profile.init.billing,
+            "profile-settings": Profile.init.settings,
+            "profile-combination": Profile.do.openFavorite,
 
             "users-view-messages": Messages.after.markRead,
 
@@ -220,21 +229,24 @@
 
             "players-captcha": Content.captcha.success,
 
+
         },
 
         "error": {
 
             "lottery-gold": Ticket.error.gold,
             "prizes-exchange-goods": Prize.error.exchange,
-            "lottery-ticket": Ticket.update
+            "lottery-ticket": Ticket.update,
+            "profile-complete": Profile.validate.error
 
         },
 
         "put": { // update
-
             "profile-edit": Profile.update.details,
+            // "profile-complete": Profile.update.complete,
             "profile-settings": Profile.update.settings,
             "profile-billing": Profile.update.billing,
+            "profile-complete": Profile.do.isComplete
 
         },
 
@@ -251,7 +263,7 @@
             "lottery-ticket": Ticket.validate,
             "profile-convert": Profile.validate.convert,
             "profile-cashout": Profile.validate.cashout,
-
+            "profile-complete": Profile.validate.complete,
             "balance-convert": Balance.validate.convert,
             "balance-cashout": Balance.validate.cashout,
 
@@ -262,10 +274,10 @@
         },
 
         "submit": {
-
             "communication-comments":  Comments.submit,
             "communication-messages":  Comments.submit,
-            "blog-post-view-comments": Comments.submit
+            "blog-post-view-comments": Comments.submit,
+            "communication-comments-view-complain": Comments.complain
         }
 
     };

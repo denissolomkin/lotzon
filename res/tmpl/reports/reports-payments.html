@@ -1,6 +1,5 @@
-﻿<div id="reports-payments" class="content-box">
-
-    <div class="content-box-header"><span class="back i-arrow-left large-visible"></span><span class="back i-arrow-slim-left small-visible "></span>{{i18n "title-reports-payments"}}</div>
+<div id="reports-payments" class="content-box">
+    {{partial 'common-content-box-header-partial' (i18n "title-reports-payments") }}
 
     <div class="content-box-content clearfix">
         <div class="content-box-item cabinet-payments-history">
@@ -8,7 +7,7 @@
             <div class="content-box-item-content">
 
                 <p class="ph-notice">
-                    <span>{{i18n "title-attention"}} </span>{{i18n "message-order-process-week"}}
+                    {{{i18n "message-order-process-week"}}}
                 </p>
 
                 <div class="ph-header clearfix">

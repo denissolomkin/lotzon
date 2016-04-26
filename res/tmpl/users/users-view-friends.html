@@ -1,0 +1,82 @@
+<div id="users-{{id}}-friends" class="content-box big-box">
+    {{partial 'common-content-box-header-partial' (or title.nickname name) }}
+    <div class="clearfix user-view-box">
+        <div class="content-box-content">
+            <div class="ae-personal-inf">
+                <div class="ae-top">
+                    <div class="overflow-hid">
+                        <div></div>
+                        <div class="avatar-bg" style="background: url('{{avatar img id}}') no-repeat 50%; background-size: cover;" filter="url(/res/filter.svg#blur)">
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" height="0">
+                            <filter height="116%" width="116%" y="-8%" x="-8%" id="Blur">
+                                <feGaussianBlur stdDeviation="8" in="SourceGraphic" />
+                            </filter>
+                        </svg>
+                        <div class="img-avatar-name">
+                            <div class="username">
+                            {{or title.nickname name}}
+                            </div>
+                            <div class="total-won">
+                                <p>{{i18n "title-of-won"}} :</p>
+                                <p>{{money}} {{i18n "title-of-money"}}</p>
+                                <p>{{points}} {{i18n "title-of-points"}}</p>
+                            </div>
+                        </div>
+                        <div class="ae-user-img pi-ph false {{#if (player "isOnline" ping)}} online {{/if}}">
+                            <img src="{{avatar img id}}"
+                                 class="loading"
+                                 onload="this.style.background = 'none'"
+                                 onerror="Player.getAvatar.call(this)">
+                        </div>
+                    </div>
+                </div>
+                {{#if (ne id (player "id"))}}
+                <div>
+                    <ul class="ae-personal-form">
+                        <li class="ae-personal-form-values ae-name-block">
+                            <ul>
+                                <li class="user-actions">
+                                    <div class="fake-tabs clearfix">
+                                    <a href="/user/{{id}}" class="uk-float-left">
+                                        {{i18n "title-users-main"}}
+                                    </a>
+                                    <a href="/users/{{id}}/friends" class="uk-float-left active">
+                                        {{i18n "title-users-friends"}} {{#if (notlike friends 0 ) }} {{friends}} {{else}} {{i18n "title-no-friends"}} {{/if}}
+                                    </a>
+                                    </div>
+                                        
+                                    <div class="uk-float-right">
+                                        <a href="/users/{{id}}/messages" class="uk-float-left">
+                                            {{i18n "button-users-write-message"}}
+                                        </a>
+                                        {{#if (notlike null isFriend)}}
+                                        <form action="/users/requests/{{id}}" method="post" class="uk-float-left add-friends {{#if (ne false isFriend)}}hidden{{/if}} ">
+                                            <button type="submit">{{i18n "button-user-friendship"}}</button>
+                                        </form>
+                                        <form action="/users/requests/{{id}}" method="delete" class="add-friends uk-float-right danger {{#if (ne 'request' isFriend)}}hidden{{/if}}">
+                                            <button type="submit" class="danger">{{i18n "button-user-remove-request"}}</button>
+                                        </form>
+                                        <form action="/users/friends/{{id}}" method="delete" class="del-friends uk-float-right danger {{#if (ne true isFriend)}}hidden{{/if}}">
+                                            <button type="submit" class="danger">{{i18n "button-user-remove-friend"}}</button>
+                                        </form>
+                                        {{/if}}
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                {{/if}}
+				<div id="users-view-friends" class="content-box-content">
+					<form action="/users/{{id}}/friends/list" method="get" class="render-list-form">
+				    {{partial 'users-view-friends-container'}}
+					</form>
+				</div>
+
+            </div>
+        </div>
+        <!-- .content-box-item -->
+    </div>
+    <!-- .content-box-content -->
+</div>

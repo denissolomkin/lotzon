@@ -90,7 +90,7 @@
   }
 }
 
-#lottery-process {
+#popup-lottery-process {
   height: 680px;
   & .container {
     max-width: 520px;
@@ -114,11 +114,11 @@
     height: 72px;
     margin-right: 17px;
     float: left;
-    font: 25px  Handbook-bold;
+    font-size: 25px;
     line-height: 70px;
     color: #000;
     text-align: center;
-    letter-spacing: -2px;
+     
     position: relative;
     overflow: hidden;
     &:last-of-type {
@@ -130,7 +130,7 @@
       height: 70px;
       border-radius: 50%;
       text-align: center;
-      letter-spacing: -2px;
+       
       position: absolute;
       left: 0;
       top: -73px;
@@ -329,7 +329,7 @@
 }
 
 @media (min-width: 769px) {
-  #lottery-process {
+  #popup-lottery-process {
     &.lottery-won {
       background: url(../img/1024.png) center center no-repeat;
     }

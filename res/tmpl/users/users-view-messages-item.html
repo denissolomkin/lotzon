@@ -1,5 +1,10 @@
 <!-- user messages list -->
 <div id="users-{{#if (like (player 'id') user.id)}}{{recipient_id}}{{else}}{{user.id}}{{/if}}-messages-{{id}}" data-id="{{id}}" class="message">
+    <div class="message-info">
+        <div class="message-name">{{user.name}}</div>
+        <div class="message-date">{{day date 'calendar'}} {{i18n 'title-message-at'}} {{day date 'HH:MM'}}</div>
+        <div class="message-status {{#if (notlike author_id user.id)}} {{#if isUserRead}} message-read i-check {{/if}}{{/if}}" ></div>
+    </div>
     <a href="/user/{{user.id}}">
         <div class="message-top">
             <div data-user-id="{{user.id}}" class="message-img user-status {{#if (player "isOnline" user.ping)}} online {{/if}}">
@@ -8,7 +13,6 @@
                      onload="this.style.background = 'none'"
                      onerror="Player.getAvatar.call(this)">
             </div>
-            <div class="message-name">{{user.name}}</div>
         </div>
     </a>
     <div class="message-text">

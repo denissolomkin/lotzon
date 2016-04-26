@@ -1,0 +1,36 @@
+<div id="popup-profile" class="pop-box content-main">
+    <div class="inner">
+        <div class="title box-inner">
+            {{i18n "title-popup-profile-complete"}}
+        </div>
+        <form action="/profile/complete" method="put" class="clearfix box-inner" name="profile">
+
+            <div class="ae-user-img pi-ph true">
+                <img src="{{avatar (player "img") (player "id")}}" alt="">
+            </div>
+        
+            <div class="inputs">
+
+                <div class="option">
+                    <input name="nickname" type="text" value="{{player "title.nickname"}}" required="required">
+                    <label>{{i18n 'title-profile-write-nickname'}}</label>
+                </div>
+                <div class="option">
+                    <input type="text" name="newPass" class="new-pass checkPass" value="" required="required">
+                    <label>{{i18n 'придумайте пароль для входа'}}<span>*</span></label>
+                    <div class="checkPass-alert"></div>
+                </div>
+                <div class="option">
+                    <input type="text" name="repeatPass" class="repeat-pass" value="" required="required">
+                    <label>{{i18n 'повтор пароля'}}<span>*</span></label>
+                    <div class="alert">пароли не совпадают</div>
+                </div>
+
+            </div>
+        
+            <div class="container-center text-notice">
+                <button name="submit" type="submit" class="btn-flat">{{i18n "button-save"}}</button>
+            </div>
+        </form>
+    </div>
+</div>

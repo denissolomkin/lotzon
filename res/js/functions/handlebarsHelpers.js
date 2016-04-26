@@ -63,13 +63,14 @@ $(function () {
          */
         'for': function (num, operator, num2) {
             var ret = [];
+            if(typeof operator === 'object') {
+                num = 0;
+                operator = '<';
+                num2 = num;
+            } else
+                num2 = typeof num2 !== 'object' ? num2 : operator;
 
             switch (operator) {
-                default: //" < "
-                    for (; num < num2; num++) {
-                        ret.push(num);
-                    }
-                    break;
                 case "<=":
                     for (; num <= num2; num++) {
                         ret.push(num);
@@ -85,8 +86,13 @@ $(function () {
                         ret.push(num);
                     }
                     break;
+                default: //" < "
+                    for (; num < num2; num++) {
+                        ret.push(num);
+                    }
+                    break;
             }
-            ;
+
             return ret;
         },
         'splitMode': function(str) {
@@ -177,16 +183,31 @@ $(function () {
             + (count ? '' : ' style="display:none;"')
             + '>' + count + '</span>';
         },
+        'solvency': function(val, str){
+            if (str === "money"){
+                return parseFloat(Player.balance.money) >= parseFloat(val) ? true : false;
+            }else{
+                return parseFloat(Player.balance.points) >= parseFloat(val) ? true : false;
+            }
+            return false;
+        },
+        'currentPrivacy': function(key){
+            var rules = ['nobody', 'friends', 'all'];
+            var privacy = Player.getPrivacy(key) || 2;
+            var html  = i18n("title-profile-privacy-" + rules[privacy]);
+            return html;
+        },
         'privacyHTML': function(key, def){
 
             var rules = ['nobody', 'friends', 'all'],
+                icons = ['i-lock', 'i-person3', 'i-earth'],
                 lock = typeof def === 'number' ? def : false,
-                html = '<select' + (lock !== false ? ' disabled' : '') + ' class="profile-privacy' + (lock !== false ? ' default' : '') + '" name="privacy[' + key + ']">';
-
+                html = '<div class="buttons-group '+(lock !== false ? ' disabled' : '')+'">';
+                
             for (var i = 0; i < rules.length; i++)
-                html += '<option value="' + i + '" ' + (i == lock || i == Player.getPrivacy(key) ? 'selected="selected"' : '') + ' >' + i18n("title-profile-privacy-" + rules[i]) + '</option>';
+                html += '<div class="button"><input type="radio" ' + (lock !== false ? ' disabled' : '') +  ' id="profile-privacy-'+key+'-'+i+'" class="profile-privacy" name="privacy[' + key + ']" value="' + i + '"' + (i == lock || i == Player.getPrivacy(key) ? 'checked="checked"' : '') + '> <label for="profile-privacy-'+key+'-'+i+'"><i class="'+icons[i]+'"></i><span>' + i18n("title-profile-privacy-" + rules[i]) + '</span></label></div>';
 
-            html += '</select>';
+            html += '</div>';
             return html;
         },
         'avatar': Player.getAvatar,

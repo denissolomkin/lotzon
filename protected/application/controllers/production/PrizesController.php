@@ -42,10 +42,15 @@ class PrizesController extends \AjaxController
             $list_goods = $list[$category]->getItems();
         }
 
+        $from_first = 0;
         $items = array();
-        foreach (array_slice($list_goods,$offset) as $item) {
+        foreach ($list_goods as $item) {
             $countries = $item->getCountries();
             if (is_array($countries) and !in_array($player_countries,$countries)) {
+                continue;
+            }
+            $from_first++;
+            if ($from_first<=$offset) {
                 continue;
             }
             $items[$item->getId()] = $item->exportTo('list');

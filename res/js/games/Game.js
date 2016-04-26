@@ -550,7 +550,7 @@
                 } else if (Player.id != App.current) {
                     //    $("#report-popup").find(".txt").text(getText('NOT_YOUR_MOVE'));
                     //    $("#report-popup").show().fadeIn(200);
-                } else if (compare(cell.classList, ['m', 'o', 'b'])) {
+                } else if (Tools.compareArrays(cell.classList, ['m', 'o', 'b'])) {
                     //    $("#report-popup").find(".txt").text(getText('CELL_IS_PLAYED'));
                     //    $("#report-popup").show().fadeIn(200);
                 } else {

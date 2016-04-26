@@ -29,12 +29,72 @@ class Index extends \SlimController\SlimController
     {
         $this->session = new Session();
     }
-    
+
+    public function finishRegistration($vh, $m)
+    {
+        $loggedIn = false;
+
+        // create player
+        $player = new Player();
+        $player->setEmail($m);
+        try {
+            $player->loadPreregistration();
+            if ($player->getHash() != $vh) {
+                throw new \ModelException("Player not found", 404);
+            }
+            if ($player->getSocialName() != '') {
+                $player->isSocialUsed();
+            }
+            try {
+                $geoReader = new Reader(PATH_MMDB_FILE);
+                $country   = $geoReader->country(Common::getUserIp())->country;
+                $player->setCountry($country->isoCode);
+            } catch (\Exception $e) {
+                $player->setCountry(CountriesModel::instance()->defaultCountry());
+            }
+
+            $player->setLang(CountriesModel::instance()->getCountry($player->getCountry())->getLang());
+            $player->setValid(true)
+                ->setDates(time(), 'Login')
+                ->setComplete(false)//todo: remove when set default=false in database
+                ->create();
+
+            if ($player->getSocialId()) {
+                $player->updateSocial();
+                if (SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_social_registration')) {
+                    $player->addPoints(
+                        SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_social_registration'),
+                        StaticTextsModel::instance()->setLang($player->getLang())->getText('bonus_social_registration') . $player->getSocialName());
+                }
+            }
+            if (SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_registration')) {
+                $player->addPoints(
+                    SettingsModel::instance()->getSettings('bonuses')->getValue('bonus_registration'),
+                    StaticTextsModel::instance()->setLang($player->getLang())->getText('bonus_registration'));
+            }
+
+            $player->payInvite()
+                ->payReferal()
+                ->markOnline();
+            $loggedIn = true;
+        } catch (\ModelException $e) {
+            // do nothing just show promo page
+        }
+
+        if ($loggedIn === true) {
+            $this->session->set(Player::IDENTITY, $player);
+        }
+
+        $this->redirect(strstr($_SERVER['HTTP_REFERER'], 'lotzon.com') ? $_SERVER['HTTP_REFERER'] : '/');
+    }
+
+
     public function indexAction($page = 'home')
     {
         // validate registration
         if ($vh = $this->request()->get('vh')) {
-            PlayersModel::instance()->validateHash($vh);
+            $m = $this->request()->get('m');
+            $this->finishRegistration($vh, $m);
         }
         // validate invite
         if ($hash = $this->request()->get('ivh')) {
@@ -289,24 +349,28 @@ class Index extends \SlimController\SlimController
         );
 
         $lottery = array(
-
-            "lastLotteryId" => $lottery->getId(),
-            "timeToLottery" => LotterySettingsModel::instance()->loadSettings()->getNearestGame() + strtotime('00:00:00', time()) - time(),
-            "selectedTab"   => null,
-            "ticketConditions"  => array(
+            "lastLotteryId"    => $lottery->getId(),
+            "timeToLottery"    => LotterySettingsModel::instance()->loadSettings()->getNearestGame() + strtotime('00:00:00', time()) - time(),
+            "selectedTab"      => null,
+            "ticketConditions" => array(
                 4 => (int)\SettingsModel::instance()->getSettings('ticketConditions')->getValue('CONDITION_4_TICKET'),
                 5 => (int)\SettingsModel::instance()->getSettings('ticketConditions')->getValue('CONDITION_5_TICKET'),
                 6 => (int)\SettingsModel::instance()->getSettings('ticketConditions')->getValue('CONDITION_6_TICKET'),
             ),
-            "totalBalls"    => \LotterySettings::TOTAL_BALLS,
-            "requiredBalls" => \LotterySettings::REQUIRED_BALLS,
-            "totalTickets"  => \LotterySettings::TOTAL_TICKETS,
-            "filledTickets" => \TicketsModel::instance()->getUnplayedTickets($player->getId()),
-            "priceGold"     => SettingsModel::instance()->getSettings('goldPrice')->getValue($this->country),
-            "prizes"        => array(
+            "totalBalls"       => \LotterySettings::TOTAL_BALLS,
+            "requiredBalls"    => \LotterySettings::REQUIRED_BALLS,
+            "totalTickets"     => \LotterySettings::TOTAL_TICKETS,
+            "filledTickets"    => \TicketsModel::instance()->getUnplayedTickets($player->getId()),
+            "priceGold"        => SettingsModel::instance()->getSettings('goldPrice')->getValue($this->country),
+            "priceGoldTicket"  => array(
+                "money"  => SettingsModel::instance()->getSettings('goldPrice')->getValue($this->country),
+                "points" => SettingsModel::instance()->getSettings('goldPrice')->getValue('POINTS'),
+            ),
+            "prizes"           => array(
                 "default" => LotterySettingsModel::instance()->loadSettings()->getPrizes($this->country),
-                "gold"    => LotterySettingsModel::instance()->loadSettings()->getGoldPrizes($this->country)
-            ));
+                "gold"    => LotterySettingsModel::instance()->loadSettings()->getGoldPrizes($this->country),
+            ),
+        );
 
         if (!$this->session->has('MomentLastDate'))
             $this->session->set('MomentLastDate', time());
@@ -356,10 +420,16 @@ class Index extends \SlimController\SlimController
             "currency" => CountriesModel::instance()->getCountry($this->country)->loadCurrency()->getSettings()
         );
 
+        $error = array();
         if ($this->session->has('ERROR') OR $_SESSION['ERROR']) {
-            $error = $this->session->get('ERROR') ?: $_SESSION['ERROR'];
+            $error['message'] = $this->session->get('ERROR') ?: $_SESSION['ERROR'];
             $this->session->remove('ERROR');
             unset($_SESSION['ERROR']);
+        }
+        if ($this->session->has('ERROR_CODE') OR $_SESSION['ERROR_CODE']) {
+            $error['code'] = $this->session->get('ERROR_CODE') ?: $_SESSION['ERROR_CODE'];
+            $this->session->remove('ERROR_CODE');
+            unset($_SESSION['ERROR_CODE']);
         }
 
         $referer         = parse_url($_SERVER['HTTP_REFERER']);
@@ -385,19 +455,24 @@ class Index extends \SlimController\SlimController
                 $this->session->set('SOCIAL_IDENTITY_DISABLED', 1);
             }
         }
+        if ($this->session->has('SOCIAL_NAME')) {
+            $socialName = $this->session->get('SOCIAL_NAME');
+            $this->session->remove('SOCIAL_NAME');
+        }
 
         $this->render('../../res/landing.php', array(
-            'layout'    => false,
-            'slider'    => $slider,
-            'player'    => $player,
-            'metrika'   => $metrika,
-            'isMobile'  => $detect->isMobile(),
-            'seo'       => SEOModel::instance()->getSEOSettings(),
+            'layout'          => false,
+            'slider'          => $slider,
+            'player'          => $player,
+            'metrika'         => $metrika,
+            'isMobile'        => $detect->isMobile(),
+            'seo'             => SEOModel::instance()->getSEOSettings(),
             'showLoginScreen' => !empty($_COOKIE['showLoginScreen']),
             'showEmail'       => $this->request()->get('m', false),
             'socialIdentity'  => $socialIdentity,
-            'ref'       => $this->ref,
-            'error'     => $error,
+            'ref'             => $this->ref,
+            'error'           => $error,
+            'socialName'      => $socialName,
         ));
 
     }

@@ -141,8 +141,6 @@ $color_coral_red_approx: #ff4242;
 $color_lima_approx: #7ed321;
 
 //fonts
-$hbRegular: handbookpro-regular;
-$hbBold: Handbook-bold;
 $font_2: Simple-Line-Icons;
 
 //urls
@@ -181,7 +179,7 @@ $url_3: url(../img/games/lotzonBg.png);
                             }
 
                             span {
-                                font-family: $hbBold;
+                                font-weight: bold;
                                 font-size: 1.4em;
                             }
                         }
@@ -297,7 +295,8 @@ $url_3: url(../img/games/lotzonBg.png);
             padding: 2px;
             position: absolute;
             border-radius: 3px;
-            font: 8px/1 "handbookpro-regular";
+            font-size: 8px;
+            line-height: 1;
             margin: 0 auto;
             text-align: center;
         }
@@ -841,7 +840,7 @@ $url_3: url(../img/games/lotzonBg.png);
                                     font-size: 0.9em;
                                 }
                                 span {
-                                    font-family: $hbBold;
+                                    font-weight: bold;
                                     font-size: 1.1em;
                                 }
                             }

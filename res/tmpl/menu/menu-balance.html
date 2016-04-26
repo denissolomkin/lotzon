@@ -1,14 +1,23 @@
 <div id="menu-balance" class="balance banner ad">
     <div class="balance-btn menu-btn-item">
+
+        <!-- <div class="title">{{{i18n "menu-title-player-balance"}}}</div> -->
+        <div class="title"><img src="/res/css/img/moneta.svg"></div>
+        
         <div>
-            <span class="cabinet-balance-count"><i class="i-purse"></i>
-                <span class="holder-money"></span>
+            <span class="cabinet-balance-count">
+                <span class="holder-money">{{balance.money}}</span>
                 <span>{{player "getCurrency"}}</span>
             </span>
             <span class="cabinet-balance-count">
                 <span class="holder-points"></span>
                 <span>{{i18n "title-of-points"}}</span>
             </span>
+        </div>
+
+        <div class="arrows">
+            <i class="i-arrow-slim-down"></i>
+            <i class="i-arrow-slim-top"></i>
         </div>
     </div>
 

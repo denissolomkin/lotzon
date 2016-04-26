@@ -85,6 +85,7 @@
 
             D.log('Menu.switch','func');
             if (Device.isMobile()) {
+                // alert("menu.js mobile");
                 $(I.menuMore).removeClass('menu-item');
                 $(I.menuProfile).removeClass('menu-item');
                 $(I.balanceBtn).hide();

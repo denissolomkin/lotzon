@@ -187,7 +187,6 @@
         do: {
 
             validate: function (event) {
-
                 var form = this;
 
                 while (form.nodeName !== 'FORM')

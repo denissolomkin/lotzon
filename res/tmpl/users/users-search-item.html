@@ -1,14 +1,32 @@
-<div data-id="{{id}}" class="c-friend clearfix">
-    <a href="/user/{{id}}">
-        <div class="c-friend-img">
-            <img src="{{avatar img id 100}}"
-                 class="loading"
-                 onload="this.style.background = 'none'"
-                 onerror="Player.getAvatar.call(this)">
+<div data-id="{{id}}" class="make-table c-friend clearfix">
+    <div class="make-row">
+        
+        <div class="make-column user-info">
+            <a href="/user/{{id}}">
+                <div class="c-friend-img">
+                    <img src="{{avatar img id 100}}"
+                         class="loading"
+                         onload="this.style.background = 'none'"
+                         onerror="Player.getAvatar.call(this)">
+                </div>
+                <div class="c-friend-name">{{ name }}</div>
+            </a>
         </div>
-        <div class="c-friend-description">
-            <div class="c-friend-name">{{ name }}</div>
-            <a href="#" class="c-friend-pal">{{i18n "button-users-friendship"}}</a>
+        <div class="make-column c-friend-description">
+            <div class="c-friend-inf">
+                <div class="lotteries-do">{{i18n "title-of-lotteries"}}: {{ lotteries }}</div>
+                
+                <div class="won">
+                    <span>{{i18n "title-of-won"}}</span>
+                    <div>{{ money }} {{i18n "title-of-money"}}</div>
+                    <div>{{ points }} {{i18n "title-of-points"}}</div>
+                </div>
+            </div>
         </div>
-    </a>
+        <div class="make-column c-friend-actions">
+            <a href="/users/{{ id }}/messages" class="c-friend-msg">{{i18n "button-users-friendship"}}</a>
+            <a href="/users/{{ id }}/messages" class="c-friend-msg">{{i18n "button-users-write-message"}}</a>
+        </div>
+
+    </div>
 </div>

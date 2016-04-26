@@ -1,12 +1,22 @@
 <div id="reports-referrals" class="content-box">
-
-    <div class="content-box-header"><span class="back i-arrow-left large-visible"></span><span class="back i-arrow-slim-left small-visible "></span>{{i18n "title-reports-referrals"}}</div>
+    {{partial 'common-content-box-header-partial' (i18n "title-reports-referrals") }}
 
     <div class="content-box-content clearfix">
 
         <div class="content-box-item with-cat cabinet-referrals">
             <form class="render-list-form" action="/reports/referrals/list" method="get">
 
+                <div class="title clearfix in-box">
+                    <span>{{i18n "title-bonuses-unique-link"}}  </span> <a href="/profile/bonuses"> {{i18n "title-bonuses-new-users"}}</a>
+                </div>
+                
+                <div class="bonus-share-url-copy clearfix">
+                    <div class="strip clearfix">
+                        <input id="ref-link" type="text" readonly name="unick-name" value="https://lotzon.com/?ref={{player "id"}}">
+                        <div data-to="ref-link" class="copy button" data-after="{{i18n "title-bonuses-link-copy-ready"}}">{{i18n "title-bonuses-link-copy"}}</div>
+                    </div>
+                </div>
+                
                 <div class="content-box-item-top">
                     <div class="report-top-wrapper clearfix">
                         <div class="position-relative uk-float-left">
@@ -25,8 +35,7 @@
                         <div class="r-header-item r-nickname-text">{{i18n "title-users-referrals-nickname"}}</div>
                         <div class="r-header-item r-subreferrals-text">{{i18n "title-users-referrals-subreferrals"}}</div>
                         <div class="r-header-item r-active-text">{{i18n "title-users-referrals-activity"}}</div>
-                        <div class="r-header-item r-profit-text">{{i18n "title-users-referrals-profit"}}
-                        </div>
+                        <div class="r-header-item r-profit-text">{{i18n "title-users-referrals-profit"}}</div>
                     </div>
 
                     {{partial "reports-referrals-container" this}}

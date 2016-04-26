@@ -1,31 +1,34 @@
-﻿<div id="communication-messages-{{id}}" talk-id="{{talk_id}}" class="message{{#if isUnread}} message-unread{{/if}}">
-    {{#if isUnread}}
-    <div class="mark-read" data-id="{{user.id}}">
-        <div class="service-pop-up">{{i18n "title-mark-as-read"}}</div>
-    </div>
-    {{/if}}
+﻿<div id="communication-messages-{{id}}" talk-id="{{talk_id}}" class="message{{#if isUnread}} message-unread{{/if}} {{#if (notlike author_id user.id)}} by-author{{/if}}">
     <a href="/user/{{user.id}}">
         <div data-user-id="{{user.id}}" class="message-img user-status {{#if (player "isOnline" user.ping)}} online {{/if}}">
             <div class="service-pop-up">{{i18n "title-mark-online"}}</div>
             <img src="{{avatar user.img user.id 50}}" class="loading" onload="this.style.background = 'none'" onerror="Player.getAvatar.call(this)">
         </div>
-        <div class="message-name">{{user.name}}</div>
-        <div class="message-date">{{day date 'calendar'}} {{i18n 'title-message-at'}} {{day date 'HH:MM'}}</div>
+        <div class="message-info-wrap">
+            <div class="message-name">{{user.name}}</div>
+            <div class="message-date">{{day date 'calendar'}} {{i18n 'title-message-at'}} {{day date 'HH:MM'}}</div>
+        </div>
     </a>
     <a href="/users/{{user.id}}/messages">
+        {{#if isUnread}}
+        <div class="mark-read" data-id="{{user.id}}">
+            <div class="service-pop-up">{{i18n "title-mark-as-read"}}</div>
+        </div>
+        {{/if}}
         <div class="message-text">
-            {{#if img}}
-            <div>
-                <div data-href="/filestorage/messages/600/{{this.img}}" style="background-image: url('/filestorage/messages/600/{{this.img}}'); background-size: cover; background-position: center;" class="get-full-picture">
+            <div class="text-row-wrap {{#if (notlike author_id user.id)}} {{#if isUserRead}} message-read i-check {{else}}message-answer i-arrow-curve{{/if}}{{/if}}">
+                {{#if img}}
+                <div class="img-preview">
+                    <div data-href="/filestorage/messages/600/{{this.img}}" style="background-image: url('/filestorage/messages/600/{{this.img}}'); background-size: cover; background-position: center;" class="get-full-picture">
+                    </div>
                 </div>
-            </div>
-            {{/if}}
-            <div class="{{#if (notlike author_id user.id)}}message-answer{{#if isUserRead}} message-read{{/if}}{{/if}}">
-                <p>
-                    {{{getSmile text}}}
-                </p>
+                {{/if}}
+                <div>
+                    <p>
+                        {{{getSmile text}}}
+                    </p>
+                </div>
             </div>
         </div>
     </a>
-    <hr>
 </div>

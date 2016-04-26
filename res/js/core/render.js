@@ -426,7 +426,7 @@
                     if (render.id == node.id) {
 
                         if (!render.classList.contains('pop-box')) {
-                            if (compare(render.classList, ['content-box', 'content-box-item', 'content-main'])) {
+                            if (Tools.compareArrays(render.classList, ['content-box', 'content-box-item', 'content-main'])) {
                                 //such as blog-post-view, games-online & games-chance
                                 !onTop && DOM.hide(node.parentNode && node.parentNode.children, 'pop-box');
                             }
@@ -442,16 +442,16 @@
 
                     } else {
 
-                        if (compare(render.classList, ['content-main'])) {
+                        if (Tools.compareArrays(render.classList, ['content-main'])) {
                             //such as games & blog & lottery
                             node = document.getElementById('content');
                         }
 
-                        if (compare(render.classList, ['content-box'])) {
+                        if (Tools.compareArrays(render.classList, ['content-box'])) {
                             //such as view
                             node = document.getElementById('content');
                             render.classList.add('slideInRight');
-                        } else if (compare(render.classList, ['content-box-item'])) {
+                        } else if (Tools.compareArrays(render.classList, ['content-box-item'])) {
                             // for content-box-item
                             node = node.getElementsByClassName('content-box-content')[0];
                         }
@@ -460,7 +460,7 @@
                             node = document.getElementById('content');
 
                         if (!render.classList.contains('pop-box')) {
-                            if (compare(render.classList, ['content-box-item', 'content-main'])) {
+                            if (Tools.compareArrays(render.classList, ['content-box-item', 'content-main'])) {
                                 //such as games-online & games-chance
                                 !onTop && DOM.hide(node.children, 'pop-box');
                             } else if (node.id == 'content') {

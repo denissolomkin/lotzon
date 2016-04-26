@@ -7,7 +7,7 @@
             <div class="go-to-top"></div>
         </a>
         <!-- Logo -->
-        <div class="footer-logo"></div>
+        <div class="footer-logo i-lotzon"></div>
 
         <!-- Social icons -->
         <div class="footer-social-icons">
@@ -20,6 +20,7 @@
     <!-- Popup msgs '.show - show  .timer - hide close button'-->
     <div id="popup-message" class="">
         <div class="inner">
+
             <i class="i-x-slim" onclick="document.getElementById('popup-message').removeAttribute('class')"></i>
             <div class="body">
                 <!-- msg -->
@@ -27,7 +28,7 @@
         </div>
     </div>
     <!-- END Popup msgs -->
-    
+
     <!-- zhaloba -->
     <div id="zhgi">
         <div class="arrow"><i class="i-arrow-slim-left"></i></div>
@@ -55,8 +56,10 @@
         menu = {
             navigation: {
                 'menu-main': ['blog', 'lottery', 'games', 'communication', 'users', 'prizes'],
-                'menu-profile': ['profile/edit', 'profile/billing', 'profile/settings', 'reports/referrals', 'profile/bonuses'],
+                // 'menu-profile': ['profile', 'profile/billing', 'profile/settings', 'reports/referrals', 'profile/bonuses'],
                 'menu-more': [
+                    'reports/referrals', 
+                    'profile/bonuses',
                     'users/0/messages',
                     'support/rules',
                     'support/faq',
@@ -65,7 +68,12 @@
             },
             balance: ['balance/cashout', 'balance/convert', 'reports/transactions', 'reports/payments']
         },
-        debugConf = <?php echo json_encode($debug, JSON_PRETTY_PRINT); ?>
+        debugConf = <?php echo json_encode($debug, JSON_PRETTY_PRINT); ?>;
+
+    config.banners = {
+        sizes: ['240x400','300x250','468x60','728x90'],
+        versions: ['Static','Anima']
+    };
 
 </script>
 

@@ -1,32 +1,18 @@
-$(function(){
+var landing = {
+    step: '',
 
-    if (-1 < window.location.href.indexOf('/support/rules')) {
-        $('.login-popup .lp-b').css('transform','translate(-560px, 0)');
-        $('.login-popup, .rules-bk').css('display' , 'block');
-    }
+    init: function() {
 
+        // init events
+        this.events();
 
-
-    var dHeight = $(window).height();
-    $('.display-slide').height(dHeight);
-    $(window).on('resize', function(){
-        var dHeight = $(window).height();
-        $('.display-slide').height(dHeight);
-    });
-    $('.to-slide').on('click', function(e){
-        var toSlide = $(e.currentTarget).attr('data-slide');
-        var point = $('#slide'+toSlide).offset().top;
-        $('html, body').animate({scrollTop : point},900, 'easeInOutQuint');
-    });
-    $('.go-play').on('click', function(){
-        if (!$('#cl-check').hasClass('login')) {
-            $('#login-block .tb_a-r').click();
-            $('#cl-check').removeAttr('class').addClass('b-m registration');
+        // if bad social data
+        if ($('.landing .popup.social').length) {
+            $('html').css({ 'overflow': 'hidden' });
+            $('#login-block').fadeIn(200);
         }
-        
-        $('#login-block').fadeIn(200);
-    });
 
+        // >>> init video popup
         $('.popup-youtube, .popup-vimeo, .popup-gmaps').magnificPopup({
             disableOn: 700,
             type: 'iframe',
@@ -36,224 +22,244 @@ $(function(){
             fixedContentPos: true
         });
 
-    $('#lb-close').on('click', function(){
-        $('#login-block').fadeOut(200);
-    });
-    $('#login-block').click(function(event) {
-        if ($(event.target).closest("#cl-check").length){
-            $('#reg-succ-txt, #pass-rec-txt').addClass('hidden');
-            if($(event.target).hasClass('tb_a-l') && !$(event.target).closest('#cl-check').hasClass('login')){
-                $('#cl-check').removeAttr('class').addClass('b-m login');
-            }else if($(event.target).hasClass('tb_a-r') && !$(event.target).closest('#cl-check').hasClass('registration')){
-                $('#reg-form').removeClass('hidden');
-                $('#cl-check').removeAttr('class').addClass('b-m registration');
-            }else if($(event.target).hasClass('r-p')){
-                $('#cl-check').toggleClass('login rec-pass');
-            }else if($(event.target).hasClass('rs-sw')){
-                $('.login-popup .lp-b').css('transform','translate(-560px, 0)');
-                $('.rules-bk').css('display' , 'block');
-            }else if($(event.target).hasClass('rs-sw')){
+    },
+    popup:{
+        open:function(popup){
+            popup = popup || '#login-block';
+            $('html').css({ 'overflow': 'hidden' });
+            $(popup).fadeIn(200);            
+            
+            console.debug('>>> popup open', popup);
+        },
+        close:function(popup){
+            popup = popup || '#login-block';
+            $('html').css({ 'overflow': 'auto' });
+            $(popup).fadeOut(200);
 
-            }else if($(event.target).hasClass('rb-cs-bt')) {
-                $('.login-popup .lp-b, .rules-bk').removeAttr('style');
-            }else if($(event.target).hasClass('rb-cs-bt')) {
-                $('.login-popup .lp-b, .rules-bk').removeAttr('style');
+            console.debug('>>> popup close',popup);
+        },
+    },
+    events: function() {
+
+        // >>> popup open
+        $('.go-play').on('click', function() {
+            landing.popup.open();
+        });
+
+        // >>> close popup
+        $('.popup-close').on('click', function() {
+            $('.popup').attr('class', 'popup');
+            $('.popup form').attr('style', '');
+            landing.popup.close();
+        });
+
+        // >>> close info-popup
+        $('.close-box i').on('click', function() {
+            landing.popup.close('.info-popup');
+        });
+
+        // >>> info-popup open
+        $('.header .popup-msg, .popup .rs-sw').on('click', function() {
+
+            // console.debug($(this).attr('class'));
+
+            $('.info-popup .box').hide(0);
+
+            if ($(this).hasClass('popup-msg')) {
+                $('.info-popup .box.about').show(0);
+            } else {
+                $('.info-popup .box.license').show(0);
             }
-        }else{
-            $('#login-block').fadeOut(200);
-        }
-    });
 
+            landing.popup.open('.info-popup');
+        });
 
+        // >>> toggle recover-pass
+        $('.login-box #rec-pass, .password-recovery-box .back').on('click', function() {
 
-    $('.login-popup .m_input,.mail-popup .m_input').on('keyup', function(){
-        var val = $.trim($(this).val().length);
-        if(val > 0){
-            $(this).closest('form').find('.sb_but').removeClass('disabled').prop('disabled', false);
-        }else{
-            $(this).closest('form').find('.sb_but').addClass('disabled').prop('disabled', true);
-        }
-    });
+            //restore form|msg
+            $('#pass-rec-form-success').hide();
+            $('form[name="rec-pass"]').show();
 
-    $('.login-popup form,.mail-popup .m_input').on('mousemove', function(){
-        //var val = $.trim($(this).find('input').val().length);
-        $(this).find('.m_input').each(function(){
+            $('.password-recovery-box').toggle();
+            $('.login-box').toggle();
+
+        });
+
+        // >>> check empty EMAIL input !! old class
+        $('.landing .m_input').on('keyup mousemove', function() {
+            console.debug('>>> !! email length ', $.trim($(this).val().length));
             var val = $.trim($(this).val().length);
-            if(val > 0){
+            if (val > 0) {
                 $(this).closest('form').find('.sb_but').removeClass('disabled').prop('disabled', false);
-            }else{
+            } else {
                 $(this).closest('form').find('.sb_but').addClass('disabled').prop('disabled', true);
             }
         });
-    });
-
-    $('form[name="rec-pass"]').submit(function(event){
-        var email = $(this).find('input[name="login"]').val();
-        resendPassword(email, function() {
-            $('form[name="rec-pass"]').find('input[name="login"]').val('');
-            $('#pass-rec-txt').removeClass('hidden');
-            $('#cl-check').removeAttr('class').addClass('b-m rec-txt');
-        },function(data){
-            $("#cl-check").addClass('error');
-            $('#pass-rec-form .e-t').text(data.message);
-        }, function(){});
-        event.preventDefault();
-    });
-
-    $('#login-block .m_input,.mail-popup .m_input').on('focus', function(){
-        $(this).parent().addClass('focus');
-    });
-    $('#login-block .m_input,.mail-popup .m_input').on('blur', function(){
-        $(this).parent().removeClass('focus');
-    });
 
 
+        // >>> restore password
+        $('form[name="rec-pass"]').submit(function(event) {
+            var form = $(this);
+            var email = $(this).find('input[name="login"]').val();
 
-    // Contact form functional //
-    $('#cf-ab').on('click', function(){
-        if(!$(this).hasClass('ct-on')){
-            $(this).addClass('ct-on');
-            $('.fb-p-b').css('left',5000);
-            setTimeout(function(){
-                $('.fb-p-b, .fb-f-b').addClass('ct-on');
-                setTimeout(function(){
-                    $('.fb-f-b').css('left',0);
-                }, 50);
-            }, 200);
-        }else{
-            $(this).removeClass('ct-on');
-            $('.fb-f-b').css('left',-5000);
-            setTimeout(function(){
-                $('.fb-p-b, .fb-f-b').removeClass('ct-on');
-                setTimeout(function(){
-                    $('.fb-p-b').css('left',0);
-                }, 50);
-            }, 200);
-        }
+            resendPassword(email, function() {
+
+                form.find('input[name="login"]').val('');
+                // form.attr('class', 'success');
+
+                form.hide();
+                $('#pass-rec-form-success').show();
+
+                setTimeout(function() {
+                    form.show();
+                    $('#pass-rec-form-success').hide();
+                    $('.password-recovery-box').hide();
+                    $('.login-box').show();
+                }, 5000);
 
 
-    });
+            }, function(data) {
 
-    $('#cti').val('');
-    $('#cti').on('keyup', function(){
-        $(this).height($(this).get(0).scrollHeight);
-        var $this = $(this);
-        $this.height(1);
-        $this.height(this.scrollHeight);
-    });
+                landing.formError(form);
+                form.find('.alert').text(data.message);
 
-    // registration handler
-    $('#login-block form[name="register"]').on('submit', function(e) {
-        var form = $(this);
-        var email = form.find('input[name="login"]').val();
-        var rulesAgree = 1;//form.find('#rulcheck').prop('checked') ? 1 : 0;
-        var ref = $(this).data('ref');
-        registerPlayer({'email':email, 'agree':1, 'ref':ref}, function(data){
-            $('#login-block form[name="register"]').find('input[name="login"]').val('');
-            $("#reg-succ-txt").removeClass('hidden');
-            $("#reg-form").removeClass('error').addClass('hidden');
-        }, function(data){
-            $("#reg-form").addClass('error');
-            form.find('.e-t').text(data.message);
-        }, function(data) {});
-        return false;
-    });
+            });
 
+            event.preventDefault();
+        });
 
-    $('.mail-popup .ib-l .m_input[name="login"]').on('click', function(e) {
+        // >>> registration handler
+        $('form[name="register"]').on('submit', function(e) {
+            console.debug('>>> registration handler');
 
-        $('.mail-popup form[name="login"]').hide();
-        $('.mail-popup form[name="mail"]').fadeIn(200);
-        $('.mail-popup form[name="mail"]').find('input[name="login"]').focus();
+            var form = $(this);
+            var email = form.find('input[name="login"]').val();
+            var rulesAgree = 1; //form.find('#rulcheck').prop('checked') ? 1 : 0;
+            var ref = $(this).data('ref');
 
-    })
+            registerPlayer({ 'email': email, 'agree': 1, 'ref': ref }, function(data) {
+                console.debug('register success!!');
 
+                form.find('input[name="login"]').val(''); // resset value
+                form.attr('class', 'success');
 
-    // mail confirm login handler
-    $('.mail-popup form[name="login"]').on('submit', function(e) {
-        var form = $(this);
+                // >>>> переписать на нормальный код ...как только время будет
+                // go to next step // вывод окна с переотправки пароля
+                form.hide();
+                var compleetForm = $('form[name="email-send"]');
+                compleetForm.show();
+                compleetForm.find('.current-mail').text(email);
 
-        var email = form.find('input[name="login"]').val();
-        var pwd   = form.find('input[name="password"]').val();
-        loginPlayer({'email':email, 'password':pwd}, function(data){
-            document.location.href = "/";
-        }, function(data){
-            form.find('.e-t').text(data.message);
-        }, function(data) {});
+                $('form[name="email-send"] .back').on('click', function() {
+                    $('form[name="email-send"]').hide();
+                    $('form[name="register"]').show();
+                });
 
-        return false;
-    })
+                $('form[name="email-send"] a.resend').on('click', function() {
+                    resendEmail(email, function() {
+                        // some callback
+                    }, function(data) {
+                        // some error
+                    });
+                });
 
-    // mail confirm handler
-    $('.mail-popup form[name="mail"]').on('submit', function(e) {
-        var form = $(this);
-        var email = form.find('input[name="login"]').val();
-        var rulesAgree = 1;//form.find('#rulcheck').prop('checked') ? 1 : 0;
-        var ref = $(this).data('ref');
-        registerPlayer({'email':email, 'agree':1, 'ref':ref}, function(data){
-            document.location.href = "/";
-        }, function(data){
-            if(data.message=='PROFILE_EXISTS_NEED_LOGIN'){
-                $('.mail-popup form[name="login"]').addClass('error');
-                $('.mail-popup form[name="mail"]').hide();
-                $('.mail-popup t-b.switch').show();
-                $('.mail-popup form[name="login"]').fadeIn(200);
-                $('.mail-popup form[name="login"]').find('input[name="login"]').val(email)
-                $('.mail-popup form[name="login"]').find('.e-t').text('Данный email уже зарегистрирован, для привязки к нему введите Ваш пароль на Lotzon');
-            }
-            else{
-                $('.mail-popup form[name="mail"]').addClass('error');
-                form.find('.e-t').text(data.message);
-            }
-        }, function(data) {});
-        return false;
-    });
+            }, function(data) {
+                console.debug('register error!!');
 
-    $('#rulcheck').on('change', function(){
-        if($(this).prop('checked')){
-            $("#reg-form").removeClass('rul-error');
-            $("#reg-form .sl-bk").removeClass('disabled');
-        }else{
-            $("#reg-form .sl-bk").addClass('disabled');
-        }
-    });
+                landing.formError(form);
+                form.find('.alert').text(data.message);
 
-    $("#reg-form .sl-bk a").on('click', function(){
-        var rulesAgree = 1;//$('#reg-form').find('#rulcheck').prop('checked') ? 1 : 0;
-        if(rulesAgree == 0){
-            $("#reg-form").addClass('rul-error');
-        }
-    });
+            });
 
-    // login handler
-    $('#login-block form[name="login"]').on('submit', function(e) {
-        var form = $(this);
-        var email = form.find('input[name="login"]').val();
-        var pwd   = form.find('input[name="password"]').val();
-        var remember = form.find("#remcheck:checked").length ? 1 : 0;        
-        loginPlayer({'email':email, 'password':pwd, 'remember':remember}, function(data){
-            document.location.href = "/";
-        }, function(data){
-            $("#login-form").addClass('error');
-            form.find('.e-t').text(data.message);
-        }, function(data) {});
+            return false;
+        });
 
-        return false;
-    })
+        // >>> social registration handler
+        $('form[name="social_register"]').on('submit', function(e) {
+            // console.debug('>>> social registration handler');
 
-    $('form[name="feed-back-form"]').on('submit', function(e) {
-        e.preventDefault();
+            var form = $(this);
+            var email = form.find('input[name="email"]').val() || form.find('input[name="email"]').attr('data-current');
+            var rulesAgree = 1; //form.find('#rulcheck').prop('checked') ? 1 : 0;
+            var ref = $(this).data('ref');
+            // alert(email);
+            registerPlayer({ 'email': email, 'agree': 1, 'ref': ref }, function(data) {
+                console.debug('register success!!');
 
-        var post = {
-            email: $(this).find('input[name="mail"]').val(),
-            text: $(this).find('textarea').val(),
-        }
+                form.find('input[name="login"]').val(''); // resset value
+                form.attr('class', 'success');
 
-        sendPartnersFeedback(post, function(data) {
-            $('#cf-ab').click();
-        }, function(data) {
-            alert(data.message);
+                // >>>> переписать на нормальный код ...как только время будет
+                // go to next step // вывод окна с переотправки пароля
+                form.hide();
+                var compleetForm = $('form[name="email-send"]');
+                compleetForm.show();
+                compleetForm.find('.current-mail').text(email);
+
+                $('form[name="email-send"] .back').on('click', function() {
+                    $('form[name="email-send"]').hide();
+                    $('form[name="register"]').show();
+                });
+
+                $('form[name="email-send"] a.resend').on('click', function() {
+                    resendPassword(email, function() {
+                        // some callback
+                    }, function(data) {
+                        // some error
+                    });
+                });
+
+            }, function(data) {
+                console.debug('register error!!');
+
+                landing.formError(form);
+                form.find('.alert').text(data.message);
+
+            });
+
+            return false;
+        });
+
+        // >>> login handler
+        $('form[name="login"]').on('submit', function(e) {
+            var form = $(this);
+            var email = form.find('input[name="login"]').val();
+            var pwd = form.find('input[name="password"]').val();
+            var remember = form.find("#remcheck:checked").length ? 1 : 0;
+
+            loginPlayer({ 'email': email, 'password': pwd, 'remember': remember }, function(data) {
+
+                form.attr('class', 'success');
+                document.location.href = "/";
+
+            }, function(data) {
+
+                landing.formError(form);
+                form.find('.alert').text(data.message);
+
+            });
+
+            return false;
         })
+    },
+    formError: function(form) {
+
+        if (form) {
+            form.addClass('error');
+
+            setTimeout(function() {
+                form.removeClass('error');
+            }, 3000);
+
+            return true;
+        }
+
+        console.log('>> form not found')
         return false;
-    });
+    }
+}
+
+$(function() {
+    landing.init();
 });

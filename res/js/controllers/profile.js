@@ -9,9 +9,19 @@
         init: {
             edit: function() {
 
+                // events
+                Profile.do.privacyBoxes();
+                
+                // chosen
+                $('select:not([name="country"])').chosen({
+                    // disable_search: true
+                });
+                        
                 R.push({
-                    template:'profile-edit-countries',
-                    href: '/res/countries/'  + Player.language.current
+                    template: 'profile-edit-countries',
+                    href: '/res/countries/' + Player.language.current,
+                    after: function(){
+                    }
                 });
 
             },
@@ -27,6 +37,17 @@
                 $('input[type="text"][name="billing[webmoney]"]').inputmask('a999999999999');
 
             },
+
+            settings: function(){
+
+                // events
+                Profile.do.privacyBoxes();
+
+            },
+
+            // complete: function() {
+
+            // }
 
         },
 
@@ -63,6 +84,106 @@
                 if ($('.new-pass').val() != $('.repeat-pass').val()) {
                     $('.hidden-notice').css('display', 'block');
                 } else $('.hidden-notice').css('display', 'none');
+            },
+            error: function(options){
+                // some code......
+                console.debug(this);
+                console.debug(options);
+                return false;
+
+            },
+            complete: function(options) {
+                // return true;
+                var form    = $(this),
+                    name    = form.find('[name="nickname"]').val(),
+                    pass    = form.find('[name="newPass"]').val(),
+                    cPass   = form.find('[name="repeatPass"]').val(),
+                    valid   = true;
+
+                    if(pass !== cPass){
+                        // alert('no')
+                        valid = false;   
+                        form.find('[name="repeatPass"]').siblings('.alert').fadeIn(200);
+                    }
+                    if(name.length ){}
+
+                    setTimeout(function(){
+                        form.find('.alert').fadeOut(200);
+                    }, 4000);
+
+                return valid;
+            },
+
+            checkPass:function() {
+                
+                var cpf = {
+                    scorePassword: function(pass) {
+                        var score = 0;
+                        if (!pass)
+                            return score;
+
+                        // award every unique letter until 5 repetitions
+                        var letters = new Object();
+                        for (var i = 0; i < pass.length; i++) {
+                            letters[pass[i]] = (letters[pass[i]] || 0) + 1;
+                            score += 5.0 / letters[pass[i]];
+                        }
+
+                        // bonus points for mixing it up
+                        var variations = {
+                            digits: /\d/.test(pass),
+                            lower: /[a-z]/.test(pass),
+                            upper: /[A-Z]/.test(pass),
+                            nonWords: /\W/.test(pass),
+                        }
+
+                        variationCount = 0;
+                        for (var check in variations) {
+                            variationCount += (variations[check] == true) ? 1 : 0;
+                        }
+                        score += (variationCount - 1) * 10;
+
+                        return parseInt(score);
+                    },
+
+                    checkPassStrength: function(pass) {
+                        var score = cpf.scorePassword(pass);
+                        if (score > 1000)
+                            return "Пожалуйста уберите животное от клавиатуры!";
+                        if (score > 200)
+                            return "Вы сами его хоть запомните?";
+                        if (score > 100)
+                            return "Крут";
+                        if (score > 60)
+                            return "Норм";
+                        if (score > 40)
+                            return "Так себе";
+                        if (score >= 10)
+                            return "Слабый";
+                        return "";
+                    }
+                }
+
+                var pass    = $(this).val();
+                var form    = $(this).closest('form');
+                var alertTo = form.find('.checkPass-alert');
+
+                alertTo.text( cpf.checkPassStrength(pass) );
+                
+                //clear classes                
+                form.removeClass('success');
+                alertTo.attr('class', 'checkPass-alert');
+
+                if(cpf.scorePassword(pass) > 60){
+                    alertTo.addClass('green');
+                }
+                if(cpf.scorePassword(pass) > 40){
+                    alertTo.addClass('gold');
+                    form.addClass('success');
+                }
+
+                // console.debug(cpf.scorePassword(pass));
+
             }
         },
 
@@ -103,20 +224,20 @@
                         var url = Player.getAvatar();
 
                         image.attr('src', url);
-                        $('.avatar-bg').css({'background' : 'url(' + url + ')  no-repeat 50%', 'background-size' : 'cover'});
+                        $('.avatar-bg').css({ 'background': 'url(' + url + ')  no-repeat 50%', 'background-size': 'cover' });
 
                         holder.addClass('true');
                         holder.append(image);
 
-                       /* $('form[name="profile"]').find('.pi-ph.true').off('click').on('click', function(e) {
-                            e.stopPropagation();
+                        /* $('form[name="profile"]').find('.pi-ph.true').off('click').on('click', function(e) {
+                             e.stopPropagation();
 
-                            removePlayerAvatar(function(data) {
-                                $('form[name="profile"]').find('.pi-ph').find('img').remove();
-                                $('form[name="profile"]').find('.pi-ph').removeClass('true');
-                            }, function() {}, function() {});
-                        });
-                        */
+                             removePlayerAvatar(function(data) {
+                                 $('form[name="profile"]').find('.pi-ph').find('img').remove();
+                                 $('form[name="profile"]').find('.pi-ph').removeClass('true');
+                             }, function() {}, function() {});
+                         });
+                         */
                     };
 
                     e.uploadItem.progressCallback = function(perc) {}
@@ -138,7 +259,6 @@
                     console.log("second");
                     $(this).closest('.option-block').find('.hidden-notice').css('display', 'none');
                 }
-
             },
 
             openFavorite: function() {
@@ -169,7 +289,6 @@
                 if ($('.ae-combination-box li.selected').length == 6) {
                     $('.ae-combination-box li:not(.selected)').addClass('unavailable');
                 }
-
             },
 
             selectFavorite: function() {
@@ -214,19 +333,47 @@
                 $('.ae-combination-box li:not(.selected)').removeClass('unavailable');
             },
 
-            checkCalendar : function(e) {
+            checkCalendar: function(e) {
 
                 console.log(e);
 
                 var placeholder = $('div.placeholder');
 
                 if ($(this).val() != "") {
-                    placeholder.css('display','none');
-                      console.log(placeholder.css('display'));
+                    placeholder.css('display', 'none');
+                    console.log(placeholder.css('display'));
+                } else {
+                    placeholder.css('display', 'block');
                 }
-                else {
-                    placeholder.css('display','block');
+            },
+
+            privacyBoxes: function() {
+                $('.privacy-box').click(function(e){
+                    
+                    // no action for disabled
+                    if($(this).find('.buttons-group.disabled').length ) return;
+                 
+                    if( (e.target.tagName.toLowerCase() == 'i' &&  $(e.target).hasClass('open-privacy') ) || (e.target.tagName.toLowerCase() == 'input') ){
+                        $(this).toggleClass('active');  
+                        // console.error( e.target.tagName.toLowerCase());
+                    }
+
+                });
+            },
+
+            isComplete: function(options){
+                console.debug(options);
+                
+                if(options.json.player.is.complete){
+                    $("#popup-profile").remove();
+                    R.push('popup-profile-faq');
+                }else{
+                    alert('что-то пошло не так, перезагружаемся');
                 }
+            },
+
+            closePopupFAQ: function(){
+                $("#popup-profile-faq").remove();
             }
 
         },

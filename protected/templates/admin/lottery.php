@@ -78,6 +78,10 @@
                     <input type="text" class="form-control input-md" value="<?=(int)\SettingsModel::instance()->getSettings('ticketConditions')->getValue('CONDITION_4_TICKET')?>" name="condition4">
                 </div>
             </div>
+            <div class="col-md-4 pull-right">
+                Цена Gold-билета в баллах
+                <input type="text" class="form-control input-md" value="<?=@$goldPrice['POINTS']?>" name="goldPricePoints">
+            </div>
             <div class="row">
                 <div class="col-md-6 pull-left">
                     Количество рефералов для 5го билета
@@ -402,6 +406,7 @@ $ajaxedSettings['goldPrizes'] = (object)$ajaxedSettings['goldPrizes'];
         gameSettings.countryCoefficients[country] = $('input[name="coof"]').val();
         gameSettings.countryRates[country] = $('input[name="rate"]').val();
         gameSettings.goldPrice[country] = $('input[name="goldPrice"]').val();
+        gameSettings.goldPrice['POINTS'] = $('input[name="goldPricePoints"]').val();
 
         gameSettings.condition4 = $('input[name="condition4"]').val();
         gameSettings.condition5 = $('input[name="condition5"]').val();

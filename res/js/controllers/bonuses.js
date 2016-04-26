@@ -22,8 +22,7 @@
 
     /* ========================================================= */
     /* ========================================================= */
-
-
+    
     Bonuses = {
         init: function (data) {
             $('.ae-social').socialLikes({
@@ -35,6 +34,26 @@
                     media: 'https://lotzon.com/res/img/lotzon_soc.png'
                 }
             });
+        },
+        bufferCopy: function(e) {
+
+            var el = $(e.target);
+            var target = $("#"+el.attr('data-to'));
+            var name = '';
+            var txt = el.text();
+            console.debug(target);
+            if(target){
+                name = target.attr('name');
+                target.select();
+                document.execCommand('copy');
+            
+                el.text( el.attr('data-after') ).addClass('ready');
+                setTimeout(function(){
+                    el.text( txt ).removeClass('ready');
+                }, 4000)
+            }else{
+                alert("Не получилось скопировать, попробуйте вручную..");
+            }
         },
         showBanner: function () {  
             $('.bonus-banner-view-item').removeClass('active');

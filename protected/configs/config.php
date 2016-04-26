@@ -341,6 +341,9 @@ Config::instance()->publicResources = array(
     '/players/resendPassword/' => array(
         'post'  => 'controllers\production\Players:resendPassword',
     ),
+    '/players/resendEmail/' => array(
+        'post'  => 'controllers\production\Players:resendEmail',
+    ),
     '/players/login/' => array(
         'post'  => 'controllers\production\Players:login',
     ),
@@ -599,7 +602,7 @@ Config::instance()->publicResources = array(
         'post'   => 'controllers\production\MessagesController:markRead'
     ),
     '/image' => array(
-        'post'   => 'controllers\production\MessagesController:image',
+        'post'   => 'controllers\production\ImagesController:message',
         'delete' => 'controllers\production\MessagesController:imageDelete'
     ),
     /**
@@ -716,11 +719,17 @@ Config::instance()->publicResources = array(
     '/profile/settings' => array(
         'put' => 'controllers\production\Players:settings'
     ),
+    '/profile/combination' => array(
+        'put' => 'controllers\production\Players:combination'
+    ),
     '/profile/avatar' => array(
-        'post' => 'controllers\production\Players:avatar'
+        'post' => 'controllers\production\ImagesController:avatar'
     ),
     '/profile/edit' => array(
         'put' => 'controllers\production\Players:edit'
+    ),
+    '/profile/complete' => array(
+        'put' => 'controllers\production\Players:complete'
     ),
     '/language/:lang' => 'controllers\production\Players:changeLanguage',
     /**
@@ -755,6 +764,9 @@ Config::instance()->publicResources = array(
     '/user/:userId' => array(
         'get' => 'controllers\production\Players:userInfo'
     ),
+    '/users/:userId/friends' => array(
+        'get' => 'controllers\production\FriendsController:userFriends'
+    ),
     '/:page/' => 'controllers\production\Index:index',
     '/(.*)/' => 'controllers\production\Index:index',
 );
@@ -783,7 +795,7 @@ Config::instance()->hybridAuth = array(
             "keys" => array ( "id" => "1117952512", "secret" => "D721378D1D8978B3F0918327", "key"=>"CBALJDKDEBABABABA" ),
             'scope' => 'email'
         ),
-
+/*
         "Google" => array (
             "enabled" => true,
             "keys" => array ( "id" => "355196749921-66tdkn697420i6rbji3decd394ru8dsv.apps.googleusercontent.com", "secret" => "WkXAp8ky-R7zuEx565Bwdnji" ),
@@ -794,6 +806,7 @@ Config::instance()->hybridAuth = array(
             "enabled" => true,
             "keys" => array ( "key" => "q8MuZoLMf02gd5lcDIcntWgsq", "secret" => "hO5NPBiiiJqrDIk57jJzLZYH65R24phFi0lxISWvKiUqL6Rsx8" )
         ),
+*/
 
     )
 );

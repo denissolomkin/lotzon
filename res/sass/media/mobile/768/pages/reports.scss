@@ -1,10 +1,8 @@
 .ph-header {
-  margin: 0 -20px 20px;
   padding: 0 20px;
 }
 
 .ph-item {
-  margin: 0 -20px;
   padding-left: 20px;
   padding-right: 20px;
 }
@@ -31,21 +29,10 @@
 
 .ph-header {
   display: block;
-  margin: 0 -20px 0;
   padding: 0 20px;
   height: 45px;
   line-height: 45px;
   background: #FAFAFA;
-}
-
-// ------------------ //
-
-.r-header,
-.r-item {
-  margin-left: -20px;
-  margin-right: -20px;
-  padding-left: 20px;
-  padding-right: 20px;
 }
 
 // ------------------ //
@@ -75,10 +62,6 @@
   width: 15%;
 }
 
-.th-item {
-  margin: 0 -20px;
-  padding: 13px 20px 0;
-}
 #reports-transactions .content-box-item-top {
   left: 0;
 }

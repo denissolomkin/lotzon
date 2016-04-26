@@ -1,195 +1,168 @@
 <div id="profile-bonuses" class="content-box">
-
-    <div class="content-box-header"><span class="back i-arrow-left large-visible"></span><span class="back i-arrow-slim-left small-visible "></span>{{i18n "title-bonuses"}}</div>
-
+    {{partial 'common-content-box-header-partial' (i18n "title-bonuses") }}
     <div class="content-box-content clearfix">
         <div class="content-box-item cabinet-bonuses">
-
             <div class="content-box-item-content">
-                <p class="bold">
+                <p class="bold in-box">
                     {{i18n "text-bonuses-description"}}
                 </p>
-
-                <form action="" class="bonus-form clearfix">
-
-                    <div class="bonus-share-url-copy clearfix">
-                        <label> {{i18n "title-bonuses-unique-link"}} </label>
-                        <input type="text" readonly style="cursor: text;" name="unick-name" value="https://lotzon.com/?ref={{id}}">
-                    </div>
-
-                <div class="bonus-share-post">
-                    <p class="title">{{i18n "title-bonuses-share-post"}} </p>
+                <div class="bonus-share-url-copy clearfix">
+                    <label class="in-box title"> {{i18n "title-bonuses-unique-link"}} </label>
                     <div class="strip clearfix">
-                        <div class="ae-social uk-float-left">
-                            <div class="ae-social-item i-Vkontakte vkontakte" title=""></div>
-                            <div href="#" class="ae-social-item i-Facebook facebook" title=""></div>
-                            <div href="#" class="ae-social-item i-Twitter twitter"></div>
-                            <div href="#" class="ae-social-item i-Google plusone"></div>
-                            <div href="#" class="ae-social-item i-Odnoklassniki odnoklassniki"></div>
+                        <input id="ref-link" type="text" readonly name="unick-name"
+                               value="https://lotzon.com/?ref={{id}}">
+                        <div data-to="ref-link" class="copy button" data-after="{{i18n "title-bonuses-link-copy-ready"}}">
+                            {{i18n "title-bonuses-link-copy"}}
                         </div>
-                    </div>
-                </div>
-               
-                    
-                <div class="bonus-share-banner">
-                    <p class="title">{{i18n "title-bonuses-link-banner"}}</p>
-
-                    <div class="bonus-share-banner-view strip clearfix">
-                        <div class="bonus-banner-view-item" id='240x400'>
-                            <div class="bonus-banner-view-size bonus-banner-view-btn">240 x 400</div>
-                        </div>
-                        <div class="bonus-banner-view-item" id='300x250'>
-                            <div class="bonus-banner-view-size bonus-banner-view-btn">300 x 250</div>
-                        </div>
-                        <div class="bonus-banner-view-item" id='468x60'>
-                            <div class="bonus-banner-view-size bonus-banner-view-btn">468 x 60</div>
-                        </div>
-                        <div class="bonus-banner-view-item" id='728x90'>
-                            <div class="bonus-banner-view-size bonus-banner-view-btn">728 x 90</div>
-                        </div>
-                        <div class="close i-x-slim uk-float-right"></div>
-                    </div>
-                </div>
-                <div class="show-banner">
-                    <div class="240x400">
-                        <div class="banner-slide clearfix">
-                            <img class="large-visible" src="/filestorage/banners/Banner-Anima-240x400-v.1.3.gif" alt="">
-                            <img class="small-visible" src="/filestorage/banners/Banner-Anima-240x400-v.1.3.gif" alt="">
-                        </div>
-                        <div class="banner-copy clearfix">
-                            <span class="title ">{{i18n "title-bonuses-code-banner"}}:</span> <a href='/filestorage/banners/Banner-Anima-240x400-v.1.3.gif'  class="popup-banner-download skip" download> {{i18n "title-bonuses-download-banner"}}</a>
-                            <input type="text" value='<a href="https://lotzon.com/?ref={{id}}" target="_blank"><img src="https://lotzon.com/filestorage/banners/Banner-Anima-240x400-v.1.3.gif"></a>' disabled="disabled">
-                        </div>
-                        <hr>
-                        <div class="banner-slide clearfix">
-                            <img class="large-visible" src="/filestorage/banners/Banner-Static-240x400-v.1.2.gif" alt="">
-                            <img class="small-visible" src="/filestorage/banners/Banner-Static-240x400-v.1.2.gif" alt="">
-                        </div>
-                        <div class="banner-copy clearfix">
-                            <span class="title">{{i18n "title-bonuses-code-banner"}}:</span>
-                            <a href='/filestorage/banners/Banner-Static-240x400-v.1.2.gif' class="popup-banner-download skip" download>{{i18n "title-bonuses-download-banner"}}</a>
-                            <input type="text" value='<a href="https://lotzon.com/?ref={{id}}" target="_blank"><img src="https://lotzon.com/filestorage/banners/Banner-Static-240x400-v.1.2.gif"></a>' disabled="disabled">
-                        </div>  
-                        <hr>
-                    </div>      
-
-                </div>
-                <div class="show-banner">
-                    <div class="300x250">
-                        <div class="banner-slide clearfix">
-                            <img class="large-visible" src="/filestorage/banners/Banner-Anima-300x250-v.1.3.gif" alt="">
-                            <img class="small-visible" src="/filestorage/banners/Banner-Anima-300x250-v.1.3.gif" alt="">
-                        </div>
-                        <div class="banner-copy clearfix">
-                            <span class="title">{{i18n "title-bonuses-code-banner"}}:</span><a href="/filestorage/banners/Banner-Anima-300x250-v.1.3.gif" class="popup-banner-download skip" download>{{i18n "title-bonuses-download-banner"}}</a>
-                            <input type="text" value='<a href="https://lotzon.com/?ref={{id}}" target="_blank"><img src="https://lotzon.com/filestorage/banners/Banner-Anima-300x250-v.1.3.gif"></a>' disabled="disabled">
-                        </div>
-                        <hr>
-                        <div class="banner-slide clearfix">
-                            <img class="large-visible" src="/filestorage/banners/Banner-Static-300x250-v.1.2.gif" alt="">
-                            <img class="small-visible" src="/filestorage/banners/Banner-Static-300x250-v.1.2.gif" alt="">
-                        </div>
-                        <div class="banner-copy clearfix">
-                            <span class="title">{{i18n "title-bonuses-code-banner"}}:</span>
-                            <a href="/filestorage/banners/Banner-Static-300x250-v.1.2.gif" class="popup-banner-download skip" download>{{i18n "title-bonuses-download-banner"}}</a>
-                            <input type="text" value='<a href="https://lotzon.com/?ref={{id}}" target="_blank"><img src="https://lotzon.com/filestorage/banners/Banner-Static-300x250-v.1.2.gif"></a>' disabled="disabled">
-                        </div>  
-                        <hr>
-                    </div>      
-                </div>
-                <div class="show-banner">
-                    <div class="468x60">
-                        <div class="banner-slide clearfix">
-                            <img class="large-visible" src="/filestorage/banners/Banner-Anima-468x60-v.1.3.gif" alt="">
-                            <img class="small-visible" src="/filestorage/banners/Banner-Anima-468x60-v.1.3.gif" alt="">
-                        </div>
-                        <div class="banner-copy clearfix">
-                            <span class="title">{{i18n "title-bonuses-code-banner"}}:</span><a href="/filestorage/banners/Banner-Anima-468x60-v.1.3.gif" class="popup-banner-download skip" download>{{i18n "title-bonuses-download-banner"}}</a>
-                            <input type="text" value='<a href="https://lotzon.com/?ref={{id}}" target="_blank"><img src="https://lotzon.com/filestorage/banners/Banner-Anima-468x60-v.1.3.gif"></a>' disabled="disabled">
-                        </div>
-                        <hr>
-                        <div class="banner-slide clearfix">
-                            <img class="large-visible" src="/filestorage/banners/Banner-Static-468x60-v.1.2.gif" alt="">
-                            <img class="small-visible" src="/filestorage/banners/Banner-Static-468x60-v.1.2.gif" alt="">
-                        </div>
-                        <div class="banner-copy clearfix">
-                            <span class="title">{{i18n "title-bonuses-code-banner"}}:</span>
-                            <a href="/filestorage/banners/Banner-Static-468x60-v.1.2.gif" class="popup-banner-download skip" download>{{i18n "title-bonuses-download-banner"}}</a>
-                            <input type="text" value='<a href="https://lotzon.com/?ref={{id}}" target="_blank"><img src="https://lotzon.com/filestorage/banners/Banner-Static-468x60-v.1.2.gif"></a>' disabled="disabled">
-                        </div>  
-                        <hr>
-                    </div>      
-                </div>
-                <div class="show-banner">
-                    <div class="728x90">
-                        <div class="banner-slide clearfix">
-                            <img class="large-visible" src="/filestorage/banners/Banner-Anima-728x90-v.1.3.gif" alt="">
-                            <img class="small-visible" src="/filestorage/banners/Banner-Anima-728x90-v.1.3.gif" alt="">
-                        </div>
-                        <div class="banner-copy clearfix">
-                            <span class="title">{{i18n "title-bonuses-code-banner"}}:</span><a href="/filestorage/banners/Banner-Anima-728x90-v.1.3.gif" class="popup-banner-download skip" download>{{i18n "title-bonuses-download-banner"}}</a>
-                            <input type="text" value='<a href="https://lotzon.com/?ref={{id}}" target="_blank"><img src="https://lotzon.com/filestorage/banners/Banner-Anima-728x90-v.1.3.gif"></a>' disabled="disabled">
-                        </div>
-                        <hr>
-                        <div class="banner-slide clearfix">
-                            <img class="large-visible" src="/filestorage/banners/Banner-Static-728x90-v.1.2.gif" alt="">
-                            <img class="small-visible" src="/filestorage/banners/Banner-Static-728x90-v.1.2.gif" alt="">
-                        </div>
-                        <div class="banner-copy clearfix">
-                            <span class="title">{{i18n "title-bonuses-code-banner"}}:</span>
-                            <a href="/filestorage/banners/Banner-Static-728x90-v.1.2.gif" class="popup-banner-download skip" download>{{i18n "title-bonuses-download-banner"}}</a>
-                            <input type="text" value='<a href="https://lotzon.com/?ref={{id}}" target="_blank"><img src="https://lotzon.com/filestorage/banners/Banner-Static-728x90-v.1.2.gif"></a>' disabled="disabled">
-                        </div>  
-                        <hr>
-                    </div>      
                 </div>
             </div>
-            </form>
-            <div class="info_block">
-            <h3>{{i18n "title-bonuses-how-works"}}</h3>
-            {{{i18n "text-bonuses-how-works"}}}
+            <div class="bonus-share-email clearfix">
+                <form action="/invites/email" method="post">
+                    <label class="in-box title"> {{i18n "title-bonuses-email-send"}} </label>
+                    <div class="strip clearfix">
+                        <input id="bonus-email-send" type="email" name="email" value="" placeholder="{{i18n "title-profile-write-email"}}">
+                        <button type="submit" data-to="bonus-email-send" class="send button" data-after="{{i18n "title-bonuses-email-send-button-ready"}}">
+                            {{i18n "title-bonuses-email-send-button"}}
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="bonus-share-post">
+                <p class="title in-box">{{i18n "title-bonuses-share-post"}} </p>
+                <div class="strip clearfix">
+                    <div class="ae-social uk-float-left">
+                        <div href="#" class="ae-social-item facebook" title="">{{i18n "title-of-Facebook"}}</div>
+                        <div class="ae-social-item vkontakte" title="">{{i18n "title-of-Vkontakte"}}</div>
+                        <div href="#" class="ae-social-item odnoklassniki">{{i18n "title-of-Odnoklassniki"}}</div>
+                        <!-- <div href="#" class="ae-social-item i-Twitter twitter"></div>
+                    <div href="#" class="ae-social-item i-Google plusone"></div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="bonus-share-banner">
+                <p class="title in-box">{{i18n "title-bonuses-link-banner"}}</p>
+                <div class="bonus-share-banner-view strip clearfix">
 
-            <h3>{{i18n "title-bonuses-count"}}</h3>
-            {{{i18n "text-bonuses-count"}}}
+                    {{#each (config "banners.sizes")}}
+                    <div class="bonus-banner-view-item" id='{{.}}'>
+                        <div class="bonus-banner-view-size bonus-banner-view-btn">{{.}}</div>
+                    </div>
+                    {{/each}}
 
-            <h3>{{i18n "title-bonuses-new-users"}}</h3>
-            {{{i18n "text-bonuses-new-users"}}}
+                    <!--div class="bonus-banner-view-item" id='240x400'>
+                        <div class="bonus-banner-view-size bonus-banner-view-btn">240 x 400</div>
+                    </div>
+                    <div class="bonus-banner-view-item" id='300x250'>
+                        <div class="bonus-banner-view-size bonus-banner-view-btn">300 x 250</div>
+                    </div>
+                    <div class="bonus-banner-view-item" id='468x60'>
+                        <div class="bonus-banner-view-size bonus-banner-view-btn">468 x 60</div>
+                    </div>
+                    <div class="bonus-banner-view-item" id='728x90'>
+                        <div class="bonus-banner-view-size bonus-banner-view-btn">728 x 90</div>
+                    </div-->
+
+                    <div class="close i-x-slim uk-float-right"></div>
+                </div>
             </div>
 
+            {{#each (config "banners.sizes")}}
 
+            <div class="show-banner">
 
-            <!-- POPUP BANNER -->
-<!--             <div class="popup-banner">
-                <div class="title">Баннер 468x60</div>
-                <div class="banner-slide clearfix">
-                    <img src="/filestorage/banners/240х400_open.jpg" alt="">
-                    <a href="#" class="popup-banner-download">скачать</a>
+                <div class="{{.}}">
+
+                {{#each (config "banners.versions")}}
+
+                    <div class="copy-box clearfix">
+                        <span class="title">{{i18n "title-bonuses-code-banner"}}:</span>
+                        <div class="copy" data-to="b{{../.}}v{{.}}" data-after="{{i18n "title-bonuses-link-copy-ready"}}">
+                            {{i18n "title-bonuses-link-copy"}}
+                        </div>
+                    </div>
+
+                    <textarea id="b{{../.}}v{{.}}" cols="2" readonly="readonly">
+<a href="https://lotzon.com/?ref={{../../id}}" target="_blank">
+    <img src="https://lotzon.com/filestorage/banners/Banner-{{.}}-{{../.}}.gif">
+</a></textarea>
+                    <div class="banner-slide clearfix">
+                        <img class="large-visible" src="/filestorage/banners/Banner-{{.}}-{{../.}}.gif" alt="">
+                        <img class="small-visible" src="/filestorage/banners/Banner-{{.}}-{{../.}}.gif" alt="">
+                    </div>
+                    <div class="banner-copy clearfix">
+                        <a href='/filestorage/banners/Banner-{{.}}-{{../.}}.gif' class="button popup-banner-download skip" download>
+                            {{i18n "title-bonuses-download-banner"}}
+                        </a>
+                    </div>
+
+                {{/each}}
+
                 </div>
-                <div class="banner-copy clearfix">
+            </div>
 
-                    <input type="text" value='<a href="http://lotzon.com/tpl/filestorage/banners/banners/banner-468x60.gif?ref=234679" target="_blank">'>
-                    <div class="banner-copy-btn">копировать ссылку</div>
-                </div>
-                <div class="banner-slide clearfix">
-                    <img src="/filestorage/banners/240х400_open2.jpg" alt="">
-                    <a href="#" class="popup-banner-download">скачать</a>
-                </div>
-                <div class="banner-copy clearfix">
-                    <input type="text" value="http://lotzon.com/tpl/filestorage/banners/banners/banner-468x60.gif?ref=234679">
+            {{/each}}
 
-                    <div class="banner-copy-btn">копировать ссылку</div>
-                </div>
-                <p>
-                    Разместите этот код в месте желаемого отображения банера или скачайте его и закачайте на свой сайт.
-                </p>
-
-                <div class="close"></div>
-            </div> -->
-            <!-- end of POPUP BANNER -->
-
-
-        </div>
-        <!-- .content-box-item -->
-    </div>
-    <!-- .content-box-content -->
-</div><!-- .content-box -->
+<!-- <div>
+    <p class="title in-box">{{i18n "title-bonuses-top-users"}} STATIC!!!</p>
+    <table class="top-users">
+        <thead>
+        <tr>
+            <th>{{i18n "title-bonuses-thead-count"}}</th>
+            <th>{{i18n "title-bonuses-thead-nickname"}}</th>
+            <th>{{i18n "title-bonuses-thead-refs"}}</th>
+            <th>{{i18n "title-bonuses-thead-active"}}</th>
+            <th>{{i18n "title-bonuses-thead-won"}}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>1</td>
+            <td>Nathan Alvarez</td>
+            <td>9999</td>
+            <td>8888</td>
+            <td>43 256</td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>Julie Gray</td>
+            <td>9999</td>
+            <td>8888</td>
+            <td>43 256</td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>Matthew Scott</td>
+            <td>9999</td>
+            <td>8888</td>
+            <td>43 256</td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>Zaratustra</td>
+            <td>9999</td>
+            <td>8888</td>
+            <td>43 256</td>
+        </tr>
+        <tr>
+            <td>189787</td>
+            <td>Zanzibar</td>
+            <td>5</td>
+            <td>0</td>
+            <td>-325</td>
+        </tr>
+        </tbody>
+    </table>
+</div> -->
+</div>
+<div id="info-block-anchor" class="info_block in-box">
+    <h3 class="title">{{i18n "title-bonuses-how-works"}}</h3> {{{i18n "text-bonuses-how-works"}}}
+    <!-- <h3 class="title">{{i18n "title-bonuses-how-much-points"}}</h3> {{{i18n "text-bonuses-how-much-points"}}} -->
+    <h3 class="title">{{i18n "title-bonuses-count"}}</h3> {{{i18n "text-bonuses-count"}}}
+    <h3 class="title">{{i18n "title-bonuses-new-users"}}</h3> {{{i18n "text-bonuses-new-users"}}}
+</div>
+</div>
+<!-- .content-box-item -->
+</div>
+<!-- .content-box-content -->
+</div>
+<!-- .content-box -->

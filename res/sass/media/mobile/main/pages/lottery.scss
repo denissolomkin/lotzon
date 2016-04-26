@@ -1,11 +1,11 @@
 .content-top > *{
 	min-height: 0 !important;
 }
-#lottery-process{
+#popup-lottery-process{
 	height: 100% !important;
 	max-height: 100% !important;
 }
-#lottery-process.lottery-won{
+#popup-lottery-process.lottery-won{
 	background-size: cover !important;
 }
 
@@ -13,20 +13,6 @@
 	background: url(../img/bg-win.png);
 	& .content-box {
 		background: none;
-	}
-	& .content-box-header {
-		background: none;
-		padding-left: 0;
-		font-size: 20px;
-    	font-weight: bold;
-		& span {
-			float: left;
-			position: relative;
-			left: 50px;
-			top: 2px;
-			font-size: 15.5px;
-			font-weight: normal;
-		}
 	}
 	& .content-box-item {
 		padding-top: 10px;
@@ -44,7 +30,7 @@
 				font-size: 30px;
 				line-height: 40px;
 				margin-right: 10px;
-				font: 15.5px Handbook-bold;
+				font-size: 15.5px ;
 				&:last-child {
 					margin-right: 0;
 				}
@@ -81,7 +67,8 @@
 		}
 	}
 	& .ghd-won {
-		font: 15.5px / 1 handbookpro-regular;
+		font-size: 15.5px;
+		line-height: 1;
 		& .grid-container {
 			max-width: 290px;
 		}
@@ -141,13 +128,6 @@
 			}
 		}
 	}
-}
-
-#lottery-view .content-box-header span {
-	display: none;
-}
-#lottery-view .content-box-header span.back {
-	display: inline-block;
 }
 .cabinet-game-history .content-box-item-content {
   min-height: 482px;

@@ -1,6 +1,7 @@
 (function () {
 
     Tools = {
+
         getArrayKeys: function (obj) {
             var keys = [];
             for (key in obj) {
@@ -9,7 +10,18 @@
                 }
             }
             return keys;
+        },
+
+        compareArrays: function (array1, array2) {
+            var check = false;
+            if (!array1 || !array2)
+                return check;
+            for (var i = 0; i < array1.length && !check; i++) {
+                check = array2.indexOf(array1[i]) !== -1;
+            }
+            return check;
         }
+
     };
 
     extend = function (Child, Parent) {
@@ -79,21 +91,6 @@
                 }
             })();
         }
-    };
-
-    compare = function(array1, array2){
-
-        var check = false;
-
-        if(!array1 || !array2)
-            return check;
-
-        for( var i = 0; i < array1.length && !check ; i++ ) {
-            check = array2.indexOf(array1[i]) !== -1;
-        }
-
-        return check;
-
     };
 
     visible = function (el, parent) {

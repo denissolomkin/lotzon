@@ -11,9 +11,27 @@
                         return !$(this).data('daterangepicker')
                     })
                     .daterangepicker({
-                        autoUpdateInput: false
+                        "autoUpdateInput": false,
+                        "alwaysShowCalendars": true,
+                        "buttonClasses": "btn-flat",
+                        "opens": "left",
+                        "locale": {
+                            "applyLabel": i18n("button-apply"),
+                            "cancelLabel": i18n("button-cancel"),
+                            "customRangeLabel": i18n("button-custom"),
+                        },
+                        "ranges": {
+                        
+                            [i18n("title-of-today")]: [moment(), moment()],
+                            [i18n("title-of-yesterday")]: [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                            [i18n("title-of-last-7-days")]: [moment().subtract(6, 'days'), moment()],
+                            [i18n("title-of-last-30-days")]: [moment().subtract(29, 'days'), moment()],
+                            [i18n("title-of-this-month")]: [moment().startOf('month'), moment().endOf('month')]
+                        
+                        },
                     }).on('apply.daterangepicker', function(ev, picker) {
                         $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY')).change();
+
                     }).length)
                 Content.enableForm();
 
@@ -167,7 +185,6 @@
 
             try {
                 if (event && event.type === 'change') {
-
                     R.push({
                         href : form.action.replace('list', 'container'),
                         json : {},

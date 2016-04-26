@@ -1,17 +1,28 @@
 <div id="lottery-ticket-item" class="ticket-item clearfix">
     <div class="condition">
-
-        {{i18n "message-lottery-ticket-8"}}
-
-        <form action="/lottery/gold" method="post">
-            <input type="hidden" value="{{this.priceGold}}" name="price">
+    <div class="condition-inner">
+        <p class="gold-text">
+        {{{i18n "message-lottery-ticket-8"}}}
+        </p>
+        <div class="box">
             <br>
-            {{i18n "title-lottery-ticket-gold-price"}} {{this.priceGold}} {{player "getCurrency"}}
+            {{i18n "title-lottery-ticket-gold-price"}} {{this.priceGoldTicket.money}} {{player "getCurrency"}} {{i18n "title-or"}} {{this.priceGoldTicket.points}} {{i18n "title-of-points"}}
             <br>
-            <small style="font-size: 13px;">{{i18n "title-lottery-ticket-gold-last"}} </small>
+            <span>{{i18n "title-lottery-ticket-gold-price-last"}}</span>
             <br>
-            <button name="submit" type="submit" class="btn-flat">{{i18n "button-lottery-ticket-gold-buy"}}</button>
-        </form>
+            <br>
+            <form action="/lottery/gold" method="post">
+                <input type="hidden" value="money" name="currency">
+                <input type="hidden" value="{{this.priceGoldTicket.money}}" name="price">
+                <button name="submit" type="submit" class="btn-flat">{{i18n "button-lottery-ticket-gold-buy-for"}} {{this.priceGoldTicket.money}} {{player "getCurrency"}}</button>
+            </form>
+            <form action="/lottery/gold" method="post">
+                <input type="hidden" value="points" name="currency">
+                <input type="hidden" value="{{this.priceGoldTicket.points}}" name="price">
+                <button name="submit" type="submit" class="btn-flat">{{i18n "button-lottery-ticket-gold-buy-for"}} {{this.priceGoldTicket.points}} {{i18n "title-of-points"}}</button>
+            </form>
+        </div>
 
+    </div>
     </div>
 </div>
