@@ -50,7 +50,7 @@ class Players extends \AjaxController
             $player->setIp(Common::getUserIp())
                 ->setDates(time(), 'Registration')
                 ->setHash(md5(uniqid()));
-            if ($ref = $this->request()->get('ref')) {
+            if ($ref = $this->request()->post('ref')) {
                 $player->setReferalId((int)$ref);
             }
 
