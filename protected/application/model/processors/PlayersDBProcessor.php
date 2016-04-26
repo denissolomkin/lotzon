@@ -54,6 +54,25 @@ class PlayersDBProcessor implements IProcessor
         return $player;
     }
 
+    public function getNewNicnameFromEmail($email)
+    {
+        $login     = explode("@", $email)[0];
+        $sql       = "SELECT `Id` FROM `Players` WHERE `Nicname`=:nicname";
+        $increment = 0;
+        do {
+            try {
+                $sth = DB::Connect()->prepare($sql);
+                $sth->execute(array(
+                    ':nicname' => ($increment==0?$login:$login.'_'.$increment),
+                ));
+            } catch (PDOException $e) {
+                throw new ModelException("Error processing storage query", 500);
+            }
+            $increment++;
+        } while ($sth->rowCount());
+        return ($increment==1?$login:$login.'_'.($increment-1));
+    }
+
     public function create(Entity $player)
     {
         $sql = "INSERT INTO `Players` (`Email`, `Password`, `Salt`, `Country`, `City`, `Zip`, `Address`, `Lang`, `Visible`, `Ip`, `Hash`, `Complete`, `Valid`, `Name`, `Surname`, `AdditionalData`, `ReferalId`, `Agent`, `Referer`)
@@ -133,14 +152,15 @@ class PlayersDBProcessor implements IProcessor
             $player->setCookieId($_COOKIE[Player::PLAYERID_COOKIE]?:$player->getId())
                 ->updateCookieId($player->getCookieId())
                 ->updateIp($player->getIp())
-                ->setNicname('Участник ' . $player->getId());
+                ->setNicname($this->getNewNicnameFromEmail($player->getEmail()));
 
             if(!$_COOKIE[Player::PLAYERID_COOKIE])
                 setcookie(Player::PLAYERID_COOKIE, $player->getCookieId(), time() + Player::AUTOLOGIN_COOKIE_TTL, '/');
 
-            DB::Connect()->prepare("UPDATE `Players` SET `CookieId`=:ccid, `Nicname` = CONCAT('Участник ', `Id`) WHERE `Id` = :id")->execute(array(
-                ':id' => $player->getId(),
-                ':ccid' => $player->getCookieId(),
+            DB::Connect()->prepare("UPDATE `Players` SET `CookieId`=:ccid, `Nicname`=:nicname WHERE `Id` = :id")->execute(array(
+                ':id'      => $player->getId(),
+                ':nicname' => $player->getNicname(),
+                ':ccid'    => $player->getCookieId(),
             ));
 
         } catch (PDOException $e){}

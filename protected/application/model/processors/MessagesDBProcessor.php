@@ -69,12 +69,17 @@ class MessagesDBProcessor implements IProcessor
         $sql = "SELECT
                     `Messages`.*,
                     `Players`.`Avatar` PlayerImg,
-                    `Players`.`Nicname` PlayerName
+                    `Players`.`Nicname` PlayerName,
+                    `PlayerPing`.`Ping` PlayerPing
                 FROM `Messages`
                 LEFT JOIN
                     `Players`
                   ON
                     `Players`.`Id` = `Messages`.`PlayerId`
+                LEFT JOIN
+                    `PlayerPing`
+                  ON
+                    `Players`.`Id` = `PlayerPing`.`PlayerId`
                 WHERE
                     `Messages`.`Id` = :id
                 LIMIT 1";
