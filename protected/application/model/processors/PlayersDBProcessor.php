@@ -744,7 +744,7 @@ class PlayersDBProcessor implements IProcessor
     public function initDates(Player $player)
     {
 
-        $sql = "SELECT * FROM `PlayerDates` WHERE PlayerId = :id";
+        $sql = "SELECT pd.*, pp.Ping FROM `PlayerDates` as pd LEFT JOIN `PlayerPing` as pp ON pp.PlayerId = pd.PlayerId WHERE pd.PlayerId = :id";
 
         try {
             $sth = DB::Connect()->prepare($sql);
