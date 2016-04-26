@@ -136,7 +136,8 @@ hr {
     .content-box-header .back:hover {
       opacity: 0.5; }
 
-.content-main, .content-box.big-box,
+.content-main, #games-chance-view,
+.content-box.big-box,
 .content-box.support,
 #balance-convert,
 #reports-payments,
@@ -150,8 +151,10 @@ hr {
 #communication-messages-new {
   box-shadow: 1px 2px 2px 0px rgba(0, 0, 0, 0.4);
   margin-bottom: 3px; }
-  .content-main#blog, #blog.content-box.big-box,
-  #blog.content-box.support, .content-main#lottery, #lottery.content-box.big-box,
+  .content-main#blog,
+  #blog.content-box.big-box,
+  #blog.content-box.support, .content-main#lottery,
+  #lottery.content-box.big-box,
   #lottery.content-box.support {
     box-shadow: none; }
 
@@ -6145,33 +6148,32 @@ STYLES */
   #users-view-messages .modal-message {
     display: none !important; }
 
-#users-view-messages-form .content-box-header .back span {
-  display: none; }
-
-#users-view-messages-form .content-box-header span:not(.back) {
-  font-size: 15.5px; }
-
-#users-view-messages-form .message {
-  display: block;
-  position: relative;
-  padding: 20px 0 20px 90px;
-  border-bottom: 1px solid #ececec;
-  min-height: 90px; }
-  #users-view-messages-form .message > .message-info {
-    width: 100%; }
-    #users-view-messages-form .message > .message-info > * {
-      display: inline-block;
-      margin: 0 7px 0 0; }
-    #users-view-messages-form .message > .message-info .message-status {
-      font-size: 10px;
-      width: 15px; }
-  #users-view-messages-form .message > a {
-    position: absolute;
-    left: 20px;
-    top: 20px; }
-  #users-view-messages-form .message > .message-text {
-    width: 100%;
-    padding: 7px 20px 0 0; }
+#users-view-messages-form {
+  padding-bottom: 25px; }
+  #users-view-messages-form .content-box-header .back span {
+    display: none; }
+  #users-view-messages-form .content-box-header span:not(.back) {
+    font-size: 15.5px; }
+  #users-view-messages-form .message {
+    display: block;
+    position: relative;
+    padding: 25px 0 0px 90px;
+    min-height: 50px; }
+    #users-view-messages-form .message > .message-info {
+      width: 100%; }
+      #users-view-messages-form .message > .message-info > * {
+        display: inline-block;
+        margin: 0 7px 0 0; }
+      #users-view-messages-form .message > .message-info .message-status {
+        font-size: 10px;
+        width: 15px; }
+    #users-view-messages-form .message > a {
+      position: absolute;
+      left: 20px;
+      top: 25px; }
+    #users-view-messages-form .message > .message-text {
+      width: 100%;
+      padding: 7px 20px 0 0; }
 
 .addressee {
   background: #f5f5f5;
@@ -6898,18 +6900,9 @@ form.loading > * {
     min-height: 80px; }
 
 #popup-lottery {
-  text-align: center; }
-  #popup-lottery:before {
-    content: '';
-    display: inline-block;
-    vertical-align: middle;
-    position: relative;
-    padding: 0;
-    margin: 0;
-    margin-left: -5px;
-    line-height: 0;
-    width: 0%;
-    height: 100%; }
+  display: flex;
+  justify-content: center;
+  align-items: center; }
 
 #popup-lottery-process {
   float: none;
@@ -7336,11 +7329,8 @@ form.loading > * {
       background: #4c4c4c; }
 
 #popup-lottery-process {
-  position: absolute;
-  margin: 0 auto;
   box-sizing: border-box;
-  background-color: #B6CFD3;
-  width: 100%; }
+  background-color: #B6CFD3; }
   #popup-lottery-process .won {
     display: none; }
     #popup-lottery-process .won.close {
@@ -9081,7 +9071,9 @@ form.loading > * {
     border-width: 0 0 2px;
     border-color: #bed8d9;
     padding-bottom: 0; }
-  .ae-personal-form-values input.error {
+  .ae-personal-form-values input.alert, .ae-personal-form-values #popup-profile-faq .option input.checkPass-alert, #popup-profile-faq .option .ae-personal-form-values input.checkPass-alert, .ae-personal-form-values
+  #popup-profile .option input.checkPass-alert,
+  #popup-profile .option .ae-personal-form-values input.checkPass-alert {
     padding-bottom: 0;
     color: #ff4242; }
   .ae-personal-form-values input.error + .error-msg {
@@ -9684,9 +9676,9 @@ span.input-prefix {
     float: left; }
   .cc-form-top .cc-box {
     background: #e9e9e9;
-    width: 210px;
-    margin: 0 15px 0 0;
-    padding: 0 20px; }
+    width: 215px;
+    margin: 0 10px 0 0;
+    padding: 0 15px; }
     .cc-form-top .cc-box:after {
       content: "";
       display: block;
@@ -9701,11 +9693,11 @@ span.input-prefix {
       float: left;
       letter-spacing: 0.2px; }
     .cc-form-top .cc-box.cc-out > input {
-      width: 90px; }
+      width: 105px; }
     .cc-form-top .cc-box input {
       display: inline-block;
       min-width: 0;
-      width: 60px;
+      width: 75px;
       background: none;
       position: static;
       border-radius: 0; }
@@ -10112,6 +10104,9 @@ span.input-prefix {
   display: inline-block;
   color: #4990e2;
   position: relative; }
+
+#profile-billing .text-notice {
+  padding: 0 20px; }
 
 #profile-billing .content-box-item {
   padding: 16px 20px 20px; }
@@ -12593,8 +12588,7 @@ footer.unvisible {
 
 #games-chance-view {
   color: #4a4a4a;
-  font-size: 16px;
-  padding: 20px 20px 20px 20px; }
+  font-size: 16px; }
   #games-chance-view .prizes {
     display: inline-block;
     vertical-align: top;
@@ -12739,6 +12733,10 @@ footer.unvisible {
     display: none;
     width: 0;
     height: 0; }
+  #games-chance-view #games-chance-view-chance .description {
+    padding: 20px 20px 0 20px; }
+  #games-chance-view #games-chance-view-chance .colls-wrapper {
+    padding: 0 20px 20px 20px; }
 
 #games-chance-view-cells * > .inner {
   background: transparent;

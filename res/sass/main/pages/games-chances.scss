@@ -16,7 +16,7 @@ $black_15: rgba(0,0,0,0.15);
 #games-chance-view {
     color: $color_gravel_approx;
     font-size: 16px;
-    padding: 20px 20px 20px 20px;
+    // padding: 20px 20px 20px 20px;
     .prizes {
         display: inline-block;
         vertical-align: top;
@@ -214,6 +214,14 @@ $black_15: rgba(0,0,0,0.15);
         display: none;
         width: 0;
         height: 0;
+    }
+    #games-chance-view-chance{
+        .description{
+            padding: 20px 20px 0 20px;
+        }
+        .colls-wrapper{
+            padding: 0 20px 20px 20px;
+        }
     }
 }
 #games-chance-view-cells {

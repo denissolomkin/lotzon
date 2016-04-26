@@ -16,18 +16,20 @@
 
         <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700,400italic,700italic&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="/res/css/style.css">
-        <?php if (isset($isMobile)) {
-            if ($isMobile) { ?>
-                <link rel="stylesheet" href="/res/css/mobile/style.css">
-            <?php } else { ?>
-                <link rel="stylesheet" href="/res/css/screen/style.css">
-            <?php }
-        } ?>
+        <?php //if (isset($isMobile)) {
+            //if ($isMobile) { ?>
+                <!-- <link rel="stylesheet" href="/res/css/mobile/style.css"> -->
+            <?php // } else { ?>
+                <!-- <link rel="stylesheet" href="/res/css/screen/style.css"> -->
+            <?php // }
+        //} ?>
+        <!-- screen only -->
+        <link rel="stylesheet" href="/res/css/screen/style.css">
+
         <link rel="stylesheet" href="/res/css/animate.css">
         <link rel="stylesheet" href="/res/css/slots.css" type="text/css">
         <link rel="stylesheet" href="/res/css/social-likes_birman.css">
         <link rel="stylesheet" href="/res/css/denis.css">
-
 
         <?php $antiblock_short_urls = array('http://bit.ly/1a7HKts','http://is.gd/vqQzAN','http://tr.im/44bh2','http://tr.im/44bh4','http://ow.ly/lZZNF'); ?>
         <?php $antiblock_message = str_replace("\r\n", "\n", 'Please disable your ad blocker!

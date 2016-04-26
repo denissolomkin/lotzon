@@ -8,42 +8,59 @@
                         <li class="clearfix">
                             <div class="billing-title">{{i18n "title-billing-phone"}}</div>
                             <div class="ci-personal-form-values">
-                                <input class="inputmask" type="tel" name="billing[phone]" placeholder="{{i18n 'title-enter-billing-phone'}}" value="{{billing.phone}}" {{#if billing.phone}}disabled="disabled"{{/if}}>
+                                <input class="inputmask" type="tel" name="billing[phone]" placeholder="{{i18n 'title-enter-billing-phone'}}" value="{{billing.phone}}" {{#if billing.phone}}readonly="readonly"{{/if}}>
                             </div>
-                            <div class="error hidden">
+                            <div class="alert hidden">
                                 {{i18n "title-billing-error"}}
+                            </div>
+                            <div class="alert touch hidden">
+                                {{i18n "button-message-admin"}}
                             </div>
                         </li>
                         <li class="clearfix">
                             <div class="billing-title">{{i18n "title-billing-webmoney"}}</div>
                             <div class="ci-personal-form-values">
-                                <input class="inputmask" type="text" name="billing[webmoney]" placeholder="{{i18n 'title-enter-billing-webmoney'}}" value="{{billing.webmoney}}" {{#if billing.webmoney}}disabled="disabled"{{/if}}>
+                                <input class="inputmask" type="text" name="billing[webmoney]" placeholder="{{i18n 'title-enter-billing-webmoney'}}" value="{{billing.webmoney}}" {{#if billing.webmoney}}readonly="readonly"{{/if}}>
                             </div>
-                            <div class="error hidden">
+                            <div class="alert hidden">
                                 {{i18n "title-billing-error"}}
+                            </div>
+                            <div class="alert touch hidden">
+                                {{i18n "button-message-admin"}}
                             </div>
                         </li>
                         <li class="clearfix">
                             <div class="billing-title">{{i18n "title-billing-qiwi"}}</div>
                             <div class="ci-personal-form-values">
-                                <input class="inputmask" type="tel" name="billing[qiwi]" placeholder="{{i18n 'title-enter-billing-qiwi'}}" value="{{billing.qiwi}}" {{#if billing.qiwi}}disabled="disabled"{{/if}}>
+                                <input class="inputmask" type="tel" name="billing[qiwi]" placeholder="{{i18n 'title-enter-billing-qiwi'}}" value="{{billing.qiwi}}" {{#if billing.qiwi}}readonly="readonly"{{/if}}>
                             </div>
-                            <div class="error hidden">
+                            <div class="alert hidden">
                                 {{i18n "title-billing-error"}}
+                            </div>
+                            <div class="alert touch hidden">
+                                {{i18n "button-message-admin"}}
+                                
                             </div>
                         </li>
                         <li class="clearfix">
                             <div class="billing-title">{{i18n "title-billing-yandexmoney"}}</div>
                             <div class="ci-personal-form-values">
-                                <input class="inputmask" type="text" name="billing[yandex]" placeholder="{{i18n 'title-enter-billing-yandex'}}" value="{{billing.yandex}}" {{#if billing.yandex}}disabled="disabled"{{/if}}>
+                                <input class="inputmask" type="text" name="billing[yandex]" placeholder="{{i18n 'title-enter-billing-yandex'}}" value="{{billing.yandex}}" {{#if billing.yandex}}readonly="readonly"{{/if}}>
                             </div>
-                            <div class="error hidden">
+                            <div class="alert hidden">
                                 {{i18n "title-billing-error"}}
+                            </div>
+                            <div class="alert touch hidden">
+                                {{i18n "button-message-admin"}}
+                                
                             </div>
                         </li>
                     </ul>
                 </li>
             </ul>
+            <div class="container-center text-notice">
+                <p>{{i18n "text-billing-notice"}}</p>
+            </div>
             <div class="container-center">
                 <button name="submit" type="submit" class="btn-flat">{{i18n "button-save"}}</button>
                 <!-- <span class="back danger">Отмена</span> -->

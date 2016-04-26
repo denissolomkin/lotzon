@@ -733,7 +733,6 @@ input.comment-reply-btn {
         background: none; }
 
 #popup-lottery-process {
-  height: 768px;
   max-width: 1366px; }
   #popup-lottery-process .container {
     max-width: 686px;
@@ -810,17 +809,14 @@ input.comment-reply-btn {
 #popup-lottery-process.lottery-won {
   background: url(../img/1024.png) center center no-repeat; }
 
-#popup-lottery-process {
-  min-width: 1024px;
-  height: 768px; }
-  #popup-lottery-process .container {
-    max-width: 700px;
-    margin: 0 auto;
-    min-width: 0; }
-    #popup-lottery-process .container > div {
-      height: 73px; }
-      #popup-lottery-process .container > div a {
-        top: 27px; }
+#popup-lottery-process .container {
+  max-width: 700px;
+  margin: 0 auto;
+  min-width: 0; }
+  #popup-lottery-process .container > div {
+    height: 73px; }
+    #popup-lottery-process .container > div a {
+      top: 27px; }
 
 .balls-end-game .g-oc_li {
   width: 104px;

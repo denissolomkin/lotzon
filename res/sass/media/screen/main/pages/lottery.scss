@@ -314,7 +314,7 @@
 }
 
 #popup-lottery-process {
-    height: 768px;
+    // height: 768px;
     max-width: 1366px;
     & .container {
         max-width: 686px;
@@ -390,26 +390,21 @@
         }
     }
 }
-
 .lottery-amimation-box {
     margin-top: 37px;
 }
-
 .matches-inf .lottery-grid .ul-striped li {
     padding: 6px 23px 13px;
 }
-
 .content-box.tickets .title {
     padding-left: 23px;
 }
-
 #popup-lottery-process.lottery-won {
     min-width: 1024px;
     & .balls-end-game .g-oc_li .goc_li-nb {
         position: static;
     }
 }
-
 .ghd-won {
     & .grid-container {
         max-width: 100%;
@@ -421,8 +416,8 @@
 }
 
 #popup-lottery-process {
-    min-width: 1024px;
-    height: 768px;
+    // min-width: 1024px;
+    // height: 768px;
     & .container {
         max-width: 700px;
         margin: 0 auto;

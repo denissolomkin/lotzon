@@ -10,11 +10,11 @@
     <link href="/res/img/favicones/favicon.png.ico?v=666" rel="shortcut icon">
 
     <link rel="stylesheet" href="/res/css/landing/landing_screen.css">
-    <?php if (isset($isMobile)) { if($isMobile) { ?>
+    <?php // if (isset($isMobile)) { if($isMobile) { ?>
         <!-- <link rel="stylesheet" href="/res/css/landing/landing_mobile.css"> -->
-    <?php } else { ?>
+    <?php // } else { ?>
         <!-- <link rel="stylesheet" href="/res/css/landing/landing_screen.css"> -->
-    <?php } } ?>
+    <?php //} } ?>
 	<script src="/res/js/libs/jquery-2.1.4.min.js"></script>
 	<script src="/res/js/landing/jquery.magnific-popup.min.js"></script>
     <script> player = <?php echo json_encode($player, JSON_PRETTY_PRINT);?>;</script>

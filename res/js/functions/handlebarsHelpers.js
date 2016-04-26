@@ -193,7 +193,8 @@ $(function () {
         },
         'currentPrivacy': function(key){
             var rules = ['nobody', 'friends', 'all'];
-            var html  = i18n("title-profile-privacy-" + rules[Player.getPrivacy(key)]);
+            var privacy = Player.getPrivacy(key) || 2;
+            var html  = i18n("title-profile-privacy-" + rules[privacy]);
             return html;
         },
         'privacyHTML': function(key, def){

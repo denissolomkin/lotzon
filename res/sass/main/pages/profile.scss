@@ -31,7 +31,6 @@
           opacity: 0;
         }
         .buttons-group{
-          // max-width: 600px;
           .button{
             input:checked {
               + label{
@@ -52,9 +51,6 @@
         > i{
           opacity: 1;
         }
-        // label i{
-        //   color: #4a4a4a;
-        // }
       }
       > i{
         display: inline-block;
@@ -73,11 +69,9 @@
       .buttons-group{
         display: inline-block;
         text-align: left;
-        // max-width: 45px;
 
         // on disabled
         &.disabled{
-          // background-color: transparent;
           .button{
               label{
                 background-color: transparent;
@@ -586,13 +580,18 @@
     border-color: #bed8d9;
     padding-bottom: 0;
   }
-  &.error {
+  &.alert {
     padding-bottom: 0;
     color: #ff4242;
   }
   &.error + .error-msg {
     display: block;
   }
+
+  // &:disabled:hover + div{
+  //   display: block;
+  // }
+  
 }
 
 
@@ -1406,15 +1405,14 @@ span.input-prefix {
   }
   .cc-box {
     background:#e9e9e9;
-    width:210px;
-    margin: 0 15px 0 0;
-    padding: 0 20px;
+    width:215px;
+    margin: 0 10px 0 0;
+    padding: 0 15px;
     &:after {
       content: "";
       display: block;
       clear: both;
     }
-    
     .title{
       margin: 0 15px 0 0;
       color: #000000;
@@ -1427,12 +1425,12 @@ span.input-prefix {
       letter-spacing:0.2px;
     } 
     &.cc-out > input{
-      width: 90px;
+      width: 105px;
     }
     input {
       display: inline-block;
       min-width: 0;
-      width: 60px;
+      width: 75px;
       background: none;
       position: static;
       border-radius: 0;
@@ -1944,11 +1942,16 @@ span.input-prefix {
 }
 
 
-#profile-billing  .content-box-item {
-  padding: 16px 20px 20px;
-  & .back.danger {
-    position: static;
-    margin-left: 30px;
+#profile-billing  {
+  .text-notice{
+    padding: 0 20px;
+  }
+  .content-box-item {
+    padding: 16px 20px 20px;
+    & .back.danger {
+      position: static;
+      margin-left: 30px;
+    }
   }
 }
 

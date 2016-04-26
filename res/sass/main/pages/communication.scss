@@ -304,6 +304,7 @@ STYLES */
 }
 
 #users-view-messages-form{
+    padding-bottom: 25px;
     .content-box-header {
         .back {
             span {
@@ -317,9 +318,8 @@ STYLES */
     .message {
         display: block;
         position: relative;
-        padding: 20px 0 20px 90px;
-        border-bottom: 1px solid $color-separator;
-        min-height: 90px;
+        padding: 25px 0 0px 90px;
+        min-height: 50px;
         > .message-info {
             width: 100%;
             > * {
@@ -334,7 +334,7 @@ STYLES */
         > a {
             position: absolute;
             left: 20px;
-            top: 20px;
+            top: 25px;
         }
         > .message-text {
             width: 100%;
