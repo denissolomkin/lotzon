@@ -1036,6 +1036,9 @@ class Player extends Entity
             ->setPassword($this->compilePassword($password))
             ->setComplete(1);
 
+        $this->updateIp(Common::getUserIp())
+            ->writeLog(array('action'=>'CHANGE_PASSWORD', 'desc'=>$this->hidePassword($password), 'status'=>'success'));
+
         $model = $this->getModelClass();
 
         try {
