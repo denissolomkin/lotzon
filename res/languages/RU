@@ -119,7 +119,7 @@
                 "button-cancel-logout": "Остаться",
 
                 "title-users-of-friends": "Друзей",
-                "title-no-friends": "пока нет",
+                "title-no-friends": "(пока нет)",
                 "placeholder-search-from-friends": "Поиск среди друзей",
 
                 "title-prizes-draw": "Розыгрыш призов",
@@ -252,8 +252,8 @@
                 "title-profile-old-password": "Старый пароль",
                 "title-profile-new-password": "Новый пароль",
                 "title-profile-password-repeat":"Повтор пароля",
-                "title-profile-get-email": "Получать письма",
-                "title-profile-get-message": "Мне могут писать",
+                "title-profile-get-email": "Получать новости Lotzon",
+                "title-profile-get-message": "Получать личные сообщения",
                 "title-profile-settings-change" :"изменить",
                 "title-profile-favorite-title":"Заполните любимую комбинацию",
                 "title-profile-favorite":"Любимая комбинация",
@@ -291,6 +291,15 @@
                 "title-button-yes": "да",
                 "title-button-no": "нет",
                 "button-cancel":"отмена",
+                "button-apply":"подтвердить",
+                "button-custom":"диапазон",
+
+                "title-of-range":"Выберите период",
+                "title-of-today":"Сегодня",
+                "title-of-yesterday":"Вчера",
+                "title-of-last-7-days":"За 7 дней",
+                "title-of-last-30-days":"за 30 дней",
+                "title-of-this-month":"Этот месяц",
 
                 "title-enter-old-password": "введите старый пароль",
                 "title-enter-new-password": "введите новый пароль",

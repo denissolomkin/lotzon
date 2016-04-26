@@ -30,7 +30,6 @@ body {
     position: static;
 }
 
-
 /* END
 sticky footer*/
 
@@ -43,6 +42,8 @@ hr {
     border: none;
     border-bottom: 1px solid #ECECEC;
 }
+
+
 // from common-content-box-header-partial.html
 .content-box-header {
     font-size: 21px;
@@ -53,6 +54,12 @@ hr {
     background: #a7d1d5;
     height: 50px;
     line-height: 50px;
+
+    span.count{
+        top: 2px;
+        right: 2px;
+    }
+
     > span:not(.back){
         font-size: 15.5px;
     }
@@ -91,6 +98,8 @@ hr {
         box-shadow: none;
     }
 }
+
+.content-box.big-box,
 .content-box.support,
 #balance-convert,
 #reports-payments,
@@ -277,6 +286,12 @@ button {
     text-transform: uppercase;
     background: none;
     transition: all 0.2s linear;
+    min-width: 140px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+    
     &:hover {
         color: #fff;
         background: #000;
@@ -444,8 +459,6 @@ button {
     width: 200px;
     height: 30px;
     cursor: pointer;
-    position: relative;
-    font-family: "fontello";
     display: inline-block;
     text-align: center;
     font-variant: normal;
@@ -454,8 +467,8 @@ button {
     &:before {
         display: inline-block;
         position: absolute;
-        top: 5px;
-        right: 5px;
+        top: 25px;
+        right: 15px;
         width: 20px;
         height: 20px;
         z-index: -1;
@@ -476,9 +489,11 @@ button {
     border: none;
     line-height: 30px;
     cursor: pointer;
-    padding-left: 25px;
+    padding-left: 0;
     font-size: 14px;
     font-weight: normal;
+    text-align: right;
+    padding-right: 40px;
 }
 
 // Input Radio ----------------------- //
@@ -833,20 +848,20 @@ input.input-radio:checked + label.input-radio:before {
 }
 
 //***********************************Daterangepicker
-.daterangepicker.dropdown-menu {
-    padding-bottom: 55px;
-    .ranges {
-        position: absolute;
-        bottom: 10px;
-    }
-}
+// .daterangepicker.dropdown-menu {
+//     padding-bottom: 55px;
+//     .ranges {
+//         position: absolute;
+//         bottom: 10px;
+//     }
+// }
 
-.daterangepicker.dropdown-menu.single {
-    width: 260px;
-    & i {
-        min-width: 0;
-    }
-}
+// .daterangepicker.dropdown-menu.single {
+//     width: 260px;
+//     & i {
+//         min-width: 0;
+//     }
+// }
 
 .tooltip {
     display: none;

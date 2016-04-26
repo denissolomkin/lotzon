@@ -388,7 +388,7 @@
   .img-avatar-name {
     position: absolute;
     left: 185px;
-    top: 20px;
+    top: 11px;
     font-size: 25px;
     color: #fff;
     font-weight: normal;
@@ -419,7 +419,6 @@
       line-height: 45px;
       font-size: 15.5px;
       color: #4a4a4a;
-      text-transform: capitalize;
       padding: 0 20px;
       margin: 0;
       &.active{
@@ -462,7 +461,7 @@
   .img-avatar-name {
     position: absolute;
     left: 185px;
-    top: 20px;
+    top: 11px;
     color: #fff;
     font-weight: normal;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
@@ -1053,6 +1052,10 @@ div.rules-text {
   margin-bottom: 0;
   label.input-radio {
     cursor: pointer;
+    transition: all .2s linear;
+    &.fail{
+      border: 1px solid red;
+    }
   }
   .cco-method {
     padding: 12px 20px;
@@ -1152,7 +1155,24 @@ div.rules-text {
       -moz-box-sizing: border-box;
       -ms-box-sizing: border-box;
       box-sizing: border-box;
-      
+      transition: all .2s linear;
+      &.fail{
+        
+        &::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+            color:    #ff0000;
+        }
+        &:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+           color:    #ff0000;
+           opacity:  1;
+        }
+        &::-moz-placeholder { /* Mozilla Firefox 19+ */
+           color:    #ff0000;
+           opacity:  1;
+        }
+        &:-ms-input-placeholder { /* Internet Explorer 10-11 */
+           color:    #ff0000;
+        }
+      }
     }
   }
 }
@@ -1646,10 +1666,10 @@ span.input-prefix {
       position: relative;
       cursor: pointer;
     }
-    & .daterangepicker.dropdown-menu.opensright:before {
-      right: auto;
-      left: 2px;
-    }
+    // & .daterangepicker.dropdown-menu.opensright:before {
+    //   right: auto;
+    //   left: 2px;
+    // }
   }
   & .wrapper-calendar {
     z-index: 10;
@@ -1675,9 +1695,9 @@ span.input-prefix {
       color: #000;
     }
   }
-  & .daterangepicker.dropdown-menu {
-    left: 20px;
-  }
+  // & .daterangepicker.dropdown-menu {
+  //   left: 20px;
+  // }
 }
 .ae-personal-form-values input::-webkit-input-placeholder {color:#a3a5a4;}
 .ae-personal-form-values input::-moz-placeholder          {color:#a3a5a4;}
@@ -1773,6 +1793,9 @@ span.input-prefix {
   .uk-float-right {
     a, button{ 
       margin: 0 0 0 30px;
+      &:hover{
+        text-decoration: underline;
+      }
     }
   }
 }
@@ -1823,7 +1846,7 @@ span.input-prefix {
       cursor: pointer;
       
       &:before {
-        margin: 0 10px 0 0;
+        margin: 0;
         font-size: 19px;
       }
       
@@ -1862,6 +1885,36 @@ span.input-prefix {
       color: #fff;
     }
   }
+  // privacy radio
+  .option-block{
+    .buttons-group{
+      &:after {
+        content: "";
+        display: block;
+        clear: both;
+      }
+      > *{
+        float: left;
+      }
+      i{
+        display: none;
+      }
+    }
+    .option{
+      .buttons-group{
+        span{
+          margin: 0 15px;
+        }
+        input{
+    
+          &:checked + label span{
+            color: #000000;
+          }
+        }
+      }
+    }
+  }
+  // end privacy radio
   & .radio-text {
     margin-right: 15px;
     & input {
@@ -1913,9 +1966,9 @@ span.input-prefix {
   top: 1px;
 }
 
-#profile .daterangepicker.opensright:after {
-  display: none;
-}
+// #profile .daterangepicker.opensright:after {
+//   display: none;
+// }
 
 .current-ballance {
   opacity:0.5;

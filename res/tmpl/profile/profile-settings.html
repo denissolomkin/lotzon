@@ -159,13 +159,22 @@
             </div>
         </div>
         <div class="option-block">
-            <div class="s-email clearfix strip">
+            <div class="clearfix strip">
                 <div class="title">{{i18n "title-profile-get-message"}}</div>
-
-                <div class="privacy-box">
-                    {{{privacyHTML 'Message'}}}
-                    <i class="i-pencil2 open-privacy"></i>
+                <div class="privacy-out">
+                    {{{currentPrivacy 'Message'}}}
                 </div>
+                <div class="uk-float-right show-option">
+                    <span class='change large-visible'>{{i18n "title-profile-settings-change"}}</span> <i class="i-pencil change small-visible"></i>
+                </div>
+                <div class="uk-float-right delete-reg hidden option">
+                    <div class="choice">
+                        <span class="change danger">{{i18n "button-cancel"}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="option clearfix strip hidden radio-text">
+                {{{privacyHTML 'Message'}}}
             </div>
         </div>
         <!-- Mailing -->

@@ -47,9 +47,9 @@
                 target.select();
                 document.execCommand('copy');
             
-                el.text( el.attr('data-after') );
+                el.text( el.attr('data-after') ).addClass('ready');
                 setTimeout(function(){
-                    el.text( txt );
+                    el.text( txt ).removeClass('ready');
                 }, 4000)
             }else{
                 alert("Не получилось скопировать, попробуйте вручную..");

@@ -37,15 +37,15 @@
                             <ul>
                                 <li class="user-actions">
                                     <div class="fake-tabs clearfix">
-                                        <a href="/user/{{id}}" class="send-msg uk-float-left active">
+                                        <a href="/user/{{id}}" class=" uk-float-left active">
                                             {{i18n "title-users-main"}}
                                         </a>
-                                        <a href="/users/{{id}}/friends" class="send-msg uk-float-left">
+                                        <a href="/users/{{id}}/friends" class=" uk-float-left">
                                             {{i18n "title-users-friends"}} {{#if (notlike friends 0 ) }} {{friends}} {{else}} {{i18n "title-no-friends"}} {{/if}}
                                         </a>
                                     </div>
                                     <div class="uk-float-right">
-                                        <a href="/users/{{id}}/messages" class="send-msg uk-float-left">
+                                        <a href="/users/{{id}}/messages" class="uk-float-left">
                                             {{i18n "button-users-write-message"}}
                                         </a> {{#if (notlike null isFriend)}}
                                         <form action="/users/requests/{{id}}" method="post" class="uk-float-left add-friends {{#if (ne false isFriend)}}hidden{{/if}} ">

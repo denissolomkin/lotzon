@@ -273,33 +273,33 @@
   }
 }
 
- .daterangepicker.dropdown-menu {
-  top: 30px;
-  right: 5px;
-  left: auto;
-  width: 490px;
-  background: #F2EFED;
-  &.opensright {
-    &:before {
-      right: 2px;
-      left: auto;
-      border-bottom: 7px solid #F2EFED;
-      border-bottom-color: #F2EFED;
-    }
-  }
-  & .btn-flat {
-    margin-right: 15px;
-  }
-  & input:-webkit-autofill {
-    background-color: transparent;
-  }
-  & textarea:-webkit-autofill  {
-    background-color: transparent;
-  }
-  & select:-webkit-autofill  {
-    background-color: transparent;
-  }
-}
+//  .daterangepicker.dropdown-menu {
+//   top: 30px;
+//   right: 5px;
+//   left: auto;
+//   width: 490px;
+//   background: #F2EFED;
+//   &.opensright {
+//     &:before {
+//       right: 2px;
+//       left: auto;
+//       border-bottom: 7px solid #F2EFED;
+//       border-bottom-color: #F2EFED;
+//     }
+//   }
+//   & .btn-flat {
+//     margin-right: 15px;
+//   }
+//   & input:-webkit-autofill {
+//     background-color: transparent;
+//   }
+//   & textarea:-webkit-autofill  {
+//     background-color: transparent;
+//   }
+//   & select:-webkit-autofill  {
+//     background-color: transparent;
+//   }
+// }
 
 .th-item {
   padding: 0;
@@ -361,20 +361,20 @@
 }
 
 #reports-transactions {
-  & .daterangepicker.dropdown-menu {
-    right: auto;
-    left: 5px;
-    top: 35px;
-  }
-  & .daterangepicker .calendar th, .daterangepicker .calendar td {
-    font-size: 15.5px;
-  }
-  & .daterangepicker.dropdown-menu.opensright:before {
-    right: auto;
-    left: 5px;
-    top: 35px;
-  }
-  & .daterangepicker.opensright:after  {
-    display: none;
-  }
+  // & .daterangepicker.dropdown-menu {
+  //   right: auto;
+  //   left: 5px;
+  //   top: 35px;
+  // }
+  // & .daterangepicker .calendar th, .daterangepicker .calendar td {
+  //   font-size: 15.5px;
+  // }
+  // & .daterangepicker.dropdown-menu.opensright:before {
+  //   right: auto;
+  //   left: 5px;
+  //   top: 35px;
+  // }
+  // & .daterangepicker.opensright:after  {
+  //   display: none;
+  // }
 }

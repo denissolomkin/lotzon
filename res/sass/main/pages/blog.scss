@@ -64,7 +64,7 @@
         & .title {
             font-weight: normal;
             font-weight: normal;
-            font-size: 25px;
+            font-size: 30px;
             color: #000000;
             margin: 20px 0 15px;
         }
@@ -90,7 +90,7 @@
     .post-comments{
         .comment-like{
             top: 3px;
-            right: 20px;
+            right: 1px;
         }
     }
     .message-form-wrapper{
@@ -196,10 +196,12 @@
         margin-right: 30px;
     }
     .post-item-title {
-        font-weight: bold;
-        font-size: 20px;
-        line-height: 23px;
-        margin-bottom: 19px;
+        font-size: 30px;
+        line-height: 1;
+        margin-bottom: 15px;
+        font-weight: normal;
+        color: #000000;
+        text-align: left;
     }
     .content-box-item {
         padding: 20px;
@@ -405,40 +407,47 @@
     padding: 20px 0 30px;
     line-height: 1.5;
     font-weight: normal !important;
-    font-size: 15.5px;
+    font-size: 18.5px;
     *{
         font-family: 'Handbook' !important;
         font-weight: normal !important;
-        color: #4a4a4a !important;
+        color: #222222 !important;
         line-height:1.4 !important;
+        
     }
     h1{
         font-family: 'Handbook' !important;
         font-weight: bold !important;
-        font-size:22px !important;
+        font-size:30px !important;
         margin-bottom: 20px;
     }
     h2{
         font-family: 'Handbook' !important;
         font-weight: bold !important;
-        font-size:20px !important;
+        font-size:25px !important;
         margin-bottom: 20px;
     }
     h3{
         font-family: 'Handbook' !important;
         font-weight: bold !important;
-        font-size:18px !important;
+        font-size:22px !important;
         margin-bottom: 20px;
     }
     h4{
         font-family: 'Handbook' !important;
         font-weight: bold !important;
-        font-size:16px !important;
+        font-size:20px !important;
         margin-bottom: 20px;
     }
     p{
         font-family: 'Handbook' !important;
-        font-size: 15.5px;
+        font-size: 18.5px !important;
+        margin-bottom: 10px;
+    }
+    em{
+        font-family: 'Handbook' !important;
+        font-size: 18.5px;
+        font-style: italic;
         margin-bottom: 10px;
     }
     a{
@@ -447,6 +456,7 @@
         cursor: pointer;
         opacity: 0.9;
         transition: all .2s linear;
+        display: inline;
         &:hover{
             opacity: 1;
         }
@@ -462,7 +472,7 @@
         padding: 7px;
         > li{
             list-style: disc outside;
-            font-size: 15.5px;
+            font-size: 18.5px !important;
             margin-bottom: 10px;
             margin-left: 10px;
             padding-left: 20px;

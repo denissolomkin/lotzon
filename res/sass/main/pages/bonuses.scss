@@ -1,3 +1,4 @@
+
 .cabinet-bonuses {
   p {
     font-size: 15.5px;
@@ -9,6 +10,7 @@
     text-align:left;
     margin: 0 0 5px 0;
   }
+  // copy buttones
   .button{
     color: #000000;
     border: 1px solid #000000;
@@ -21,10 +23,20 @@
     text-transform: uppercase;
     font-size: 13px;
     font-weight: normal;
+    opacity: 1;
+    background: transparent;
     &:hover {
       background: #000000;
       color: #ffffff;
     }
+  }
+  [data-to="ref-link"]{  
+      &.ready:hover,
+      &.ready{
+          border: none;
+          background: none;
+          color: #4a4a4a;
+      }
   }
   .bonus-share-url-copy{
     .strip{
@@ -57,6 +69,7 @@
     line-height:19px;
     text-align:left;
     width: 100%;
+    margin-bottom: 35px;
     thead{
       background: #f5f5f5;
       tr{

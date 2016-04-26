@@ -24,10 +24,30 @@
 
             cashout: function() {
 
+
                 var $input_money = $(Profile.moneyCashout),
                     input_money = Player.checkMoney($input_money.val());
 
                 $input_money.val(input_money);
+                // input-radio
+                if(!$('[action="/balance/cashout"] input.input-radio:checked').length){
+                    $('[action="/balance/cashout"] label.input-radio').addClass('fail');
+                    setTimeout(function(){
+                        $('[action="/balance/cashout"] label.input-radio').removeClass('fail');
+                        
+                    },4000)
+                }
+                
+                if(!$('[action="/balance/cashout"] input[name="sum"]').val()){
+                    $('[action="/balance/cashout"] input[name="sum"]').addClass('fail');
+                    setTimeout(function(){
+                        $('[action="/balance/cashout"] input[name="sum"]').removeClass('fail');
+                        
+                    },4000)
+                }
+
+                // console.error($(Profile.moneyCashout), this);
+
 
                 return true || input_money >= parseFloat(Config.minMoneyOutput);
 

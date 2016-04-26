@@ -1,6 +1,5 @@
 <div id="users-friends" class="content-box-item c-friends">
 
-    <form action="/users/friends/list" method="get" class="render-list-form">
 
         <div class="content-box-item-top users-filter">
             <div class="friends-count">{{i18n "title-users-of-friends"}} (<span>{{player "getCount" "friends"}}</span>)</div>
@@ -9,8 +8,8 @@
             </div>
         </div>
 
+    <form action="/users/friends/list" method="get" class="render-list-form">
         {{partial 'users-friends-container' this}}
-
     </form>
 
 </div>

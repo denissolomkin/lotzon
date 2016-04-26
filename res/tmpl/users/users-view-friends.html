@@ -1,4 +1,4 @@
-<div id="users-{{id}}-friends" class="content-box">
+<div id="users-{{id}}-friends" class="content-box big-box">
     {{partial 'common-content-box-header-partial' (or title.nickname name) }}
     <div class="clearfix user-view-box">
         <div class="content-box-content">
@@ -38,16 +38,16 @@
                             <ul>
                                 <li class="user-actions">
                                     <div class="fake-tabs clearfix">
-                                    <a href="/user/{{id}}" class="send-msg uk-float-left">
+                                    <a href="/user/{{id}}" class="uk-float-left">
                                         {{i18n "title-users-main"}}
                                     </a>
-                                    <a href="/users/{{id}}/friends" class="send-msg uk-float-left active">
+                                    <a href="/users/{{id}}/friends" class="uk-float-left active">
                                         {{i18n "title-users-friends"}} {{#if (notlike friends 0 ) }} {{friends}} {{else}} {{i18n "title-no-friends"}} {{/if}}
                                     </a>
                                     </div>
                                         
                                     <div class="uk-float-right">
-                                        <a href="/users/{{id}}/messages" class="send-msg uk-float-left">
+                                        <a href="/users/{{id}}/messages" class="uk-float-left">
                                             {{i18n "button-users-write-message"}}
                                         </a>
                                         {{#if (notlike null isFriend)}}

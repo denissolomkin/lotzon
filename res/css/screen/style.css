@@ -461,14 +461,6 @@ main.content {
   .menu-main a span {
     right: 10px; } }
 
-#blog-posts .post-item-title {
-  line-height: 1;
-  margin-bottom: 15px;
-  font-weight: normal;
-  font-size: 20px;
-  color: #000000;
-  text-align: left; }
-
 @media (max-width: 479px) {
   #blog-post-view .comment-content {
     padding-left: 70px; }

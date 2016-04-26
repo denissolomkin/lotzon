@@ -98,6 +98,8 @@
             $(document).on('input', ".enter-friend-name", Messages.do.searchUser);
             $(document).on('click', ".nm-change", Messages.do.clearUser);
 
+            /* friends */
+            $(document).on('keyup', ".friends-search-input", Friends.do.searchUser);
 
             /* form */
             $(document).on('submit', 'form:not(.render-list-form)', Form.do.submit);
@@ -238,7 +240,6 @@
         },
 
         "put": { // update
-
             "profile-edit": Profile.update.details,
             // "profile-complete": Profile.update.complete,
             "profile-settings": Profile.update.settings,

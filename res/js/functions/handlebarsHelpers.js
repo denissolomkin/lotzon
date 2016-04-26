@@ -191,18 +191,11 @@ $(function () {
             }
             return false;
         },
-        // 'privacyHTML': function(key, def){
-
-        //     var rules = ['nobody', 'friends', 'all'],
-        //         lock = typeof def === 'number' ? def : false,
-        //         html = '<select' + (lock !== false ? ' disabled' : '') + ' class="profile-privacy' + (lock !== false ? ' default' : '') + '" name="privacy[' + key + ']">';
-
-        //     for (var i = 0; i < rules.length; i++)
-        //         html += '<option value="' + i + '" ' + (i == lock || i == Player.getPrivacy(key) ? 'selected="selected"' : '') + ' >' + i18n("title-profile-privacy-" + rules[i]) + '</option>';
-
-        //     html += '</select>';
-        //     return html;
-        // },
+        'currentPrivacy': function(key){
+            var rules = ['nobody', 'friends', 'all'];
+            var html  = i18n("title-profile-privacy-" + rules[Player.getPrivacy(key)]);
+            return html;
+        },
         'privacyHTML': function(key, def){
 
             var rules = ['nobody', 'friends', 'all'],
