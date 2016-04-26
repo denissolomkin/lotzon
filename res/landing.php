@@ -9,7 +9,7 @@
     <meta content="/res/img/favicones/favicon.png_128x128.png?v=666" itemprop="image">
     <link href="/res/img/favicones/favicon.png.ico?v=666" rel="shortcut icon">
 
-    <link rel="stylesheet" href="/res/css/landing/landing_screen.css">
+    <link rel="stylesheet" href="/res/css/landing/landing_screen.css?v2">
     <?php // if (isset($isMobile)) { if($isMobile) { ?>
         <!-- <link rel="stylesheet" href="/res/css/landing/landing_mobile.css"> -->
     <?php // } else { ?>
