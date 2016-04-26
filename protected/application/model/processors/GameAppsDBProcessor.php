@@ -526,9 +526,7 @@ class GameAppsDBProcessor implements IProcessor
                   FROM `OnlineGamesTop`
                   WHERE `Month` = :month
                         AND `Start` <= :time
-                        AND `End` >= :time
-                        AND `Period` > 0
-                        AND `LastUpdate` < :now - Period*60)
+                        AND `End` >= :time)
                 ";
 
         try {
