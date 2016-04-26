@@ -114,46 +114,46 @@ span.count{
 
 @font-face {
     font-family: 'Handbook';
-    src: url(../css/fonts/pfhandbookpro-regular-webfont.woff) format('woff'), url(../css/fonts/pfhandbookpro-regular-webfont.ttf)  format('truetype'),
-        url(../css/fonts/pfhandbookpro-regular-webfont.eot) format('eot'), url(../css/fonts/pfhandbookpro-regular-webfont.svg) format('svg');
+    src: url(../css/fonts/pfhandbookpro-regular-webfont.woff?v2) format('woff'), url(../css/fonts/pfhandbookpro-regular-webfont.ttf?v2)  format('truetype'),
+        url(../css/fonts/pfhandbookpro-regular-webfont.eot?v2) format('eot'), url(../css/fonts/pfhandbookpro-regular-webfont.svg?v2) format('svg');
     font-weight: normal;
 }
 
 @font-face {
     font-family: 'Handbook';
-    src: url('fonts/handbookBold/pfhandbookpro-bold-webfont.eot');
-    src: url('fonts/handbookBold/pfhandbookpro-bold-webfont.eot?#iefix') format('embedded-opentype'),
-        url('fonts/handbookBold/pfhandbookpro-bold-webfont.woff') format('woff'),
-        url('fonts/handbookBold/pfhandbookpro-bold-webfont.ttf') format('truetype'),
-        url('fonts/handbookBold/pfhandbookpro-bold-webfont.svg#Handbook-bold') format('svg');
+    src: url('fonts/handbookBold/pfhandbookpro-bold-webfont.eot?v2');
+    src: url('fonts/handbookBold/pfhandbookpro-bold-webfont.eot?v2#iefix') format('embedded-opentype'),
+        url('fonts/handbookBold/pfhandbookpro-bold-webfont.woff?v2') format('woff'),
+        url('fonts/handbookBold/pfhandbookpro-bold-webfont.ttf?v2') format('truetype'),
+        url('fonts/handbookBold/pfhandbookpro-bold-webfont.svg?v2#Handbook-bold') format('svg');
     font-weight: bold;
 }
 
 @font-face {
     font-family: 'Handbook';
-    src: url('fonts/handbookMedium/pfhandbookpro-medium-webfont.eot');
-    src: url('fonts/handbookMedium/pfhandbookpro-medium-webfont.eot?#iefix') format('embedded-opentype'),
-        url('fonts/handbookMedium/pfhandbookpro-medium-webfont.woff') format('woff'),
-        url('fonts/handbookMedium/pfhandbookpro-medium-webfont.ttf') format('truetype'),
-        url('fonts/handbookMedium/pfhandbookpro-medium-webfont.svg#Handbook-medium') format('svg');
+    src: url('fonts/handbookMedium/pfhandbookpro-medium-webfont.eot?v2');
+    src: url('fonts/handbookMedium/pfhandbookpro-medium-webfont.eot?v2#iefix') format('embedded-opentype'),
+        url('fonts/handbookMedium/pfhandbookpro-medium-webfont.woff?v2') format('woff'),
+        url('fonts/handbookMedium/pfhandbookpro-medium-webfont.ttf?v2') format('truetype'),
+        url('fonts/handbookMedium/pfhandbookpro-medium-webfont.svg?v2#Handbook-medium') format('svg');
     font-weight: 500;
 }
 
 @font-face {
     font-family: 'Handbook';
-    src: url('fonts/handbookItalic/pfhandbookpro-italic-webfont.eot');
-    src: url('fonts/handbookItalic/pfhandbookpro-italic-webfont.eot?#iefix') format('embedded-opentype'),
-        url('fonts/handbookItalic/pfhandbookpro-italic-webfont.woff') format('woff'),
-        url('fonts/handbookItalic/pfhandbookpro-italic-webfont.ttf') format('truetype'),
-        url('fonts/handbookItalic/pfhandbookpro-italic-webfont.svg#Handbook-italic') format('svg');
+    src: url('fonts/handbookItalic/pfhandbookpro-italic-webfont.eot?v2');
+    src: url('fonts/handbookItalic/pfhandbookpro-italic-webfont.eot?v2#iefix') format('embedded-opentype'),
+        url('fonts/handbookItalic/pfhandbookpro-italic-webfont.woff?v2') format('woff'),
+        url('fonts/handbookItalic/pfhandbookpro-italic-webfont.ttf?v2') format('truetype'),
+        url('fonts/handbookItalic/pfhandbookpro-italic-webfont.svg?v2#Handbook-italic') format('svg');
     font-style: italic;
 }
 
 
 @font-face {
   font-family: 'FontAwesome';
-  src: url('../fonts/font-awesome/fontawesome-webfont.eot?v=4.5.0');
-  src: url('fonts/font-awesome/fontawesome-webfont.eot?#iefix&v=4.5.0') format('embedded-opentype'), url('fonts/font-awesome/fontawesome-webfont.woff2?v=4.5.0') format('woff2'), url('fonts/font-awesome/fontawesome-webfont.woff?v=4.5.0') format('woff'), url('fonts/font-awesome/fontawesome-webfont.ttf?v=4.5.0') format('truetype'), url('fonts/font-awesome/fontawesome-webfont.svg?v=4.5.0#fontawesomeregular') format('svg');
+  src: url('../fonts/font-awesome/fontawesome-webfont.eot?v=4.5.1');
+  src: url('fonts/font-awesome/fontawesome-webfont.eot?#iefix&v=4.5.1') format('embedded-opentype'), url('fonts/font-awesome/fontawesome-webfont.woff2?v=4.5.1') format('woff2'), url('fonts/font-awesome/fontawesome-webfont.woff?v=4.5.1') format('woff'), url('fonts/font-awesome/fontawesome-webfont.ttf?v=4.5.1') format('truetype'), url('fonts/font-awesome/fontawesome-webfont.svg?v=4.5.1#fontawesomeregular') format('svg');
   font-weight: normal;
   font-style: normal;
 }
