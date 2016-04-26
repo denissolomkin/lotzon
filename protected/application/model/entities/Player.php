@@ -1206,6 +1206,11 @@ class Player extends Entity
         return $model::instance()->loadPreregistration($this);
     }
 
+    public function deletePreregistration() {
+        $model = $this->getModelClass();
+        return $model::instance()->deletePreregistration($this);
+    }
+
     public function export($to)
     {
         switch ($to) {
