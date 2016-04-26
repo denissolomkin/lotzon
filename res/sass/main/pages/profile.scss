@@ -367,16 +367,20 @@
     top: -2px;
     margin-left: 15px;
     cursor: pointer;
-    &:after {
+    &:before {
       top: 0;
       left: 0;
-      content: "";
       display: inline-block;
       position: absolute;
       z-index: 40;
       height: 150px;
       width: 150px;
-      background: url(img/photo.png) center;
+      
+      font-size: 50px;
+      line-height: 150px;
+      opacity: 0.59;
+      color: #FFFFFF;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.72);
     }
   }
   .img-avatar-name {

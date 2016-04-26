@@ -87,7 +87,7 @@ var landing = {
         });
 
         // >>> check empty EMAIL input !! old class
-        $('.landing .m_input').on('keyup mousemove', function() {
+        $('.landing .m_input').on('keyup', function() {
             console.debug('>>> !! email length ', $.trim($(this).val().length));
             var val = $.trim($(this).val().length);
             if (val > 0) {
