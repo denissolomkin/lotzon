@@ -520,6 +520,29 @@ class GameAppsDBProcessor implements IProcessor
             throw new ModelException("Error processing storage query: ".$e->getMessage(), 500);
         }
 
+        $sql = "REPLACE INTO `PlayerPing`
+                  (PlayerId, Ping)
+                  (SELECT PlayerId, :now2 + PlayerId%60
+                  FROM `OnlineGamesTop`
+                  WHERE `Month` = :month
+                        AND `Start` <= :time
+                        AND `End` >= :time
+                        AND `Period` > 0
+                        AND `LastUpdate` < :now - Period*60)
+                ";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(
+                array(
+                    ':now2' => $now,
+                    ':month' => $month,
+                    ':time' => $time,
+                    ':now' => $now,
+                ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query: ".$e->getMessage(), 500);
+        }
     }
 
     public function deleteGameTop($id)
