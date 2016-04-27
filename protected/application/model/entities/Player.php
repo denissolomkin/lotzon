@@ -1036,6 +1036,9 @@ class Player extends Entity
             ->setPassword($this->compilePassword($password))
             ->setComplete(1);
 
+        $this->updateIp(Common::getUserIp())
+            ->writeLog(array('action'=>'CHANGE_PASSWORD', 'desc'=>$this->hidePassword($password), 'status'=>'success'));
+
         $model = $this->getModelClass();
 
         try {
@@ -1204,6 +1207,11 @@ class Player extends Entity
     public function loadPreregistration() {
         $model = $this->getModelClass();
         return $model::instance()->loadPreregistration($this);
+    }
+
+    public function deletePreregistration() {
+        $model = $this->getModelClass();
+        return $model::instance()->deletePreregistration($this);
     }
 
     public function export($to)

@@ -54,6 +54,23 @@ class PlayersDBProcessor implements IProcessor
         return $player;
     }
 
+    public function deletePreregistration(Entity $player)
+    {
+        $sql = "DELETE FROM `PlayersPreregistration`
+            WHERE `Email` = :email";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':email' => $player->getEmail(),
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+        return $player;
+    }
+
     public function getNewNicnameFromEmail($email)
     {
         $login     = explode("@", $email)[0];
