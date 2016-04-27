@@ -178,6 +178,24 @@ footer.unvisible {
     display: none;
 }
 
+.canExit{
+    .exit {
+        position: absolute;
+        top: 0;
+        left: 0;
+        margin: 15px;
+        padding: 10px;
+        cursor: pointer;
+        color: #000000;
+        &:hover {
+        }
+        span {
+            // display: none;
+        }
+    }
+}
+
+
 //SeaBattle WhoMore ....... styles
 #games-online-field {
     // timer
@@ -1114,20 +1132,6 @@ footer.unvisible {
             .col3 {
                 width: 33.3333%;
                 padding-left: 13%;
-            }
-            .exit {
-                position: absolute;
-                top: 0;
-                left: 0;
-                margin: 15px;
-                padding: 10px;
-                cursor: pointer;
-                color: #000000;
-                &:hover {
-                }
-                span {
-                    // display: none;
-                }
             }
             .gm-pr .pr-ph-bk {
                 width: auto;

@@ -452,6 +452,21 @@
             return balls;
         },
 
+        getOnline: function (data) {
+            switch (this.isOnline(data)) {
+                case true:
+                    return 'online';
+                    break;
+                case false:
+                    return 'offline';
+                    break;
+                case null:
+                default:
+                    return null;
+                    break;
+            }
+        },
+
         isOnline: function (data) {
 
             var ping = typeof data === 'object' ? data.hasOwnProperty('ping') && data.ping : data,

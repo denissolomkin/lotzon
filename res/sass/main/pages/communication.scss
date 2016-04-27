@@ -317,6 +317,12 @@ STYLES */
 
 #users-view-messages-form{
     padding-bottom: 25px;
+
+    .message-img{
+        &:after{
+            display: none;
+        }
+    }
     .content-box-header {
         .back {
             span {
