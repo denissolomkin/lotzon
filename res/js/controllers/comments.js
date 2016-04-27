@@ -510,7 +510,11 @@
             return form;
         },
 
-        complain: function (form) {
+        complain: function () {
+            
+            $(this).closest("form").submit();
+            
+            // return true;
         }
 
     }

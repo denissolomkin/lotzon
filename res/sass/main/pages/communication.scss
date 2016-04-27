@@ -201,6 +201,18 @@ STYLES */
                 vertical-align: middle;
                 position: relative;
                 line-height: 0;
+                &.part{
+                    // background: #000;
+                    position: relative !important;
+                    width: 20px;
+                    padding: 10px;
+                    .mark-read{
+                        cursor: pointer;
+                        top: 10px;
+                        right: 5px;
+                        position: absolute;
+                    }
+                }
             }
         }
         .message {
@@ -222,12 +234,12 @@ STYLES */
                         opacity: 1;
                     }
                 }
-                .mark-read {
-                    display: block;
-                    position: absolute;
-                    top: 10px;
-                    right: 10px;
-                }
+                // .mark-read {
+                //     display: block;
+                //     position: absolute;
+                //     top: 10px;
+                //     right: 10px;
+                // }
             }
             &.by-author{
                 > a {

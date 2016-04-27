@@ -150,6 +150,7 @@
 
             /* messages */
             $(document).on('click', '.get-full-picture', Comments.getFullPicture);
+            $(document).on('change', 'form.comment-complain input[type=radio]', Comments.complain);
 
             /* support */
             $(document).on('click', '.support h1', Support.do.collapse);
@@ -229,7 +230,6 @@
 
             "players-captcha": Content.captcha.success,
 
-
         },
 
         "error": {
@@ -277,7 +277,6 @@
             "communication-comments":  Comments.submit,
             "communication-messages":  Comments.submit,
             "blog-post-view-comments": Comments.submit,
-            "communication-comments-view-complain": Comments.complain
         }
 
     };

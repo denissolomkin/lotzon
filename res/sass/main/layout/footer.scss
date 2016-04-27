@@ -6,6 +6,8 @@
     .container {
         background: #ffe700;
         padding: 0;
+        position: relative;
+        z-index: 10;
     }
     .footer-logo {
       float: left;

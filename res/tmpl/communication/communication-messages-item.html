@@ -10,11 +10,6 @@
         </div>
     </a>
     <a href="/users/{{user.id}}/messages">
-        {{#if isUnread}}
-        <div class="mark-read" data-id="{{user.id}}">
-            <div class="service-pop-up">{{i18n "title-mark-as-read"}}</div>
-        </div>
-        {{/if}}
         <div class="message-text">
             <div class="text-row-wrap {{#if (notlike author_id user.id)}} {{#if isUserRead}} message-read i-check {{else}}message-answer i-arrow-curve{{/if}}{{/if}}">
                 {{#if img}}
@@ -31,4 +26,11 @@
             </div>
         </div>
     </a>
+    <div class="part">
+    {{#if isUnread}}
+        <div class="mark-read" data-id="{{user.id}}">
+            <div class="service-pop-up">{{i18n "title-mark-as-read"}}</div>
+        </div>
+    {{/if}}
+    </div>
 </div>

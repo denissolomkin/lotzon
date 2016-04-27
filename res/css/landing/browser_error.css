@@ -1,0 +1,105 @@
+
+@font-face {
+    font-family: 'Handbook';
+    src: url(../fonts/pfhandbookpro-regular-webfont.woff) format('woff'), url(../fonts/pfhandbookpro-regular-webfont.ttf) format('truetype'), url(../fonts/pfhandbookpro-regular-webfont.eot) format('eot'), url(../fonts/pfhandbookpro-regular-webfont.svg) format('svg');
+    font-weight: normal;
+}
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section {
+    display: block;
+}
+
+html,body {
+    height: 100%;
+}
+
+body {
+    line-height: 1;
+}
+
+ol,ul {
+    list-style: none;
+}
+
+body *{
+	font-family: "Handbook";
+	font-weight: normal;
+
+}
+.wrapper{
+	background:#f5f5f5;
+	color: #000000;
+	width: 100%;
+	height: 100%;
+	vertical-align: middle;
+	text-align: center;
+}
+.wrapper:before{
+	content: '';
+	display: inline-block;
+	vertical-align: middle;
+	width: 0;
+	height: 100%;
+	position: relative;
+	margin-left: -5px;
+}
+.inner{
+	max-width: 525px;
+	width: 100%;
+	display: inline-block;
+	vertical-align: middle;
+	padding: 20px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+.logo{
+	background: url('../../img/browser_error/logo.png') no-repeat;
+	width: 249px;
+	height: 60px;
+	margin: 0 auto 40px auto;
+}
+.title{
+	font-size:30px;
+	color:#000000;
+	letter-spacing:0.44px;
+	text-align:left;
+}
+.text{
+	padding-top: 20px;
+	font-size:18.5px;
+	color:#222222;
+	letter-spacing:0.21px;
+	line-height:22px;
+	text-align:left;
+}
+.browsers{
+	width: 100%;
+	text-align: center;
+	margin-top: 30px;
+}
+.browsers > a{
+	width: 50px;
+	height: 50px;
+	display: inline-block;
+	margin: 0 15px;
+	transition: all .2s ease-in-out;
+
+}
+.browsers > a:hover{
+	opacity: .7;
+}
+.chrome{
+	background: url('../../img/browser_error/chrome.png') no-repeat;
+}
+.opera{
+	background: url('../../img/browser_error/opera.png') no-repeat;
+}
+.firefox{
+	background: url('../../img/browser_error/firefox.png') no-repeat;
+}

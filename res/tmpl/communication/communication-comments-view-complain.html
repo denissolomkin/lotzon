@@ -5,27 +5,27 @@
         
         <div class="buttons-group">
             <div class="button">
-                <input id="complain-obscene" type="radio" name="complain" value="obscene" onclick="document.getElementById('communication-comments-{{id}}-complain').submit();">
+                <input id="complain-obscene" type="radio" name="complain" value="obscene" >
                 <label for="complain-obscene">{{i18n "title-complain-obscene"}}</label>
             </div>
             <div class="button">
-                <input id="complain-abuse" type="radio" name="complain" value="abuse" onclick="document.getElementById('communication-comments-{{id}}-complain').submit();">
+                <input id="complain-abuse" type="radio" name="complain" value="abuse">
                 <label for="complain-abuse">{{i18n "title-complain-abuse"}}</label>
             </div>
             <div class="button">
-                <input id="complain-spam" type="radio" name="complain" value="spam" onclick="document.getElementById('communication-comments-{{id}}-complain').submit();">
+                <input id="complain-spam" type="radio" name="complain" value="spam">
                 <label for="complain-spam">{{i18n "title-complain-spam"}}</label>
             </div>
             <div class="button">
-                <input id="complain-duplicate" type="radio" name="complain" value="duplicate" onclick="document.getElementById('communication-comments-{{id}}-complain').submit();">
+                <input id="complain-duplicate" type="radio" name="complain" value="duplicate">
                 <label for="complain-duplicate">{{i18n "title-complain-duplicate"}}</label>
             </div>
             <div class="button">
-                <input id="complain-other" type="radio" name="complain" value="other" onclick="document.getElementById('communication-comments-{{id}}-complain').submit();">
+                <input id="complain-other" type="radio" name="complain" value="other">
                 <label for="complain-other">{{i18n "title-complain-other"}}</label>
             </div>
         </div>
-        <!-- <button type="submit"> {{i18n "button-send"}} </button> -->
+    
         <button class="cancel" type="button" onclick="document.getElementById('communication-comments-{{id}}-complain').remove();"> {{i18n "button-cancel"}}</button>
 
     </div>

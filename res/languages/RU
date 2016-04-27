@@ -65,15 +65,8 @@
 
                 "menu-title-player-balance": "ВАШ<br>СЧЕТ",
 
-                "button-balance-cashout": "Вывести",
-                "button-balance-convert": "Конвертировать",
-                "button-balance-transactions": "История транзакций",
-                "button-balance-payments": "История выплат",
-
                 "menu-balance-cashout": "Вывести",
                 "menu-balance-convert": "Конвертировать",
-                "menu-profile-cashout": "Вывести",
-                "menu-profile-convert": "Конвертировать",
                 "menu-reports-transactions": "История транзакций",
                 "menu-reports-payments": "История выплат",
 
@@ -252,8 +245,11 @@
                 "title-profile-old-password": "Старый пароль",
                 "title-profile-new-password": "Новый пароль",
                 "title-profile-password-repeat":"Повтор пароля",
+
+                "title-profile-social-link": "Привязать соцсети",
                 "title-profile-get-email": "Получать новости Lotzon",
                 "title-profile-get-message": "Получать личные сообщения",
+
                 "title-profile-settings-change" :"изменить",
                 "title-profile-favorite-title":"Заполните любимую комбинацию",
                 "title-profile-favorite":"Любимая комбинация",
@@ -400,7 +396,7 @@
                 "title-complain-other": "Другое",
 
                 "message-cashout-success": "Поздравляем, деньги успешно выведены и будут зачислены в течение 7 рабочих дней",
-                "message-order-process-week": "<span class='underline'>Внимание!</span> Заявки на вывод денег обрабатываются в течении 7-ми рабочих дней.дней.",
+                "message-order-process-week": "<span class='underline'>Внимание!</span> Заявки на вывод денег обрабатываются в течении 7-ми рабочих дней.",
                 "message-comments-write-comment": "Напишите комментарий",
                 "message-users-write-message" : "Напишите сообщение",
                 "message-comment-sent-success": "Комментарий отправлен на модерацию",
