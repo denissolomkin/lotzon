@@ -170,6 +170,11 @@ class Index extends \SlimController\SlimController
     protected function game($page)
     {
         $detect   = new MobileDetect;
+        if ($detect->version('IE')!==false) {
+            $this->render('../../res/browser_error.php', array());
+            return false;
+        }
+
         $isMobile = $detect->isMobile();
         $counters = \SettingsModel::instance()->getSettings('counters');
 
