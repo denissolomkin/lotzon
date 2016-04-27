@@ -171,7 +171,7 @@ class Index extends \SlimController\SlimController
     {
         $detect   = new MobileDetect;
         if ($detect->version('IE')!==false) {
-            $this->render('../../res/browser_error.php', array());
+            $this->render('../../res/browser_error.php', array('layout' => false,));
             return false;
         }
 
