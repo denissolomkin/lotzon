@@ -7,7 +7,7 @@
     <link rel="icon" href="/res/img/favicones/favicon.png_128x128.png?v=666" type="image/png" />
     <meta content="/res/img/favicones/favicon.png_128x128.png?v=666" itemprop="image">
     <link href="/res/img/favicones/favicon.png.ico?v=666" rel="shortcut icon">
-    <link rel="stylesheet" href="css/landing/browser_error.css">
+    <link rel="stylesheet" href="/res/css/landing/browser_error.css">
 </head>
 
 <body>
