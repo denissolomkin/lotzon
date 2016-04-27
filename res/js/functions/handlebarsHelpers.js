@@ -1,20 +1,23 @@
 $(function () {
 
     var prepareHelper = function (fn, options, arguments, model) {
-        options = typeof options === 'string' ? options : null;
 
-        if (arguments.length > 2) {
-            var args = [];
-            for (var i = 1; i <= arguments.length; i++)
-                typeof arguments[i] === 'string' && args.push('"' + arguments[i] + '"');
-            options = args.join(', ');
-        }
+            options = typeof options !== 'string'
+                ? (arguments.length == 3 ? JSON.stringify(options) : null )
+                : options;
 
-        var response = eval(model + "." + fn.toString());
-        D.log(model + '.' + fn + (options ? '(' + options + ')' : ''), 'handlebars');
+            if (arguments.length > 2 && !options) {
+                var args = [];
+                for (var i = 1; i <= arguments.length; i++)
+                    typeof arguments[i] === 'string' && args.push('"' + arguments[i] + '"');
+                options = args.join(', ');
+            }
 
-        return typeof response === 'function' ? eval(model + "." + fn + "(" + (options ? options : '') + ")") : response;
+            var response = eval(model + "." + fn.toString());
+            D.log(model + '.' + fn + (options ? '(' + options + ')' : ''), 'handlebars');
+            return typeof response === 'function' ? eval(model + "." + fn + "(" + (options ? options : '') + ")") : response;
         },
+
         isEmpty = function(element) {
             return (!element || (typeof element === 'string' && element == '' ));
         };
