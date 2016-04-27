@@ -235,10 +235,23 @@ class GameAppsDBProcessor implements IProcessor
                 $sql_transactions_players[] = '(?,?,?,?,?,?,?,?,?)';
 
                 /* update balance after game */
-                $sql = "UPDATE Players SET " . $currency . " = " . $currency . ($win < 0 ? '' : '+') . ($win) . " WHERE Id=" . $player['pid'];
+                $sql = "UPDATE Players p
+                        LEFT JOIN `OnlineGamesTop` t
+                          ON t.`Month` = :month AND t.GameId = :gid AND t.PlayerId = p.Id AND t.Currency = :cur
+                        SET p." . $currency . " = p." . $currency . " + :win,
+                            t.Rating = t.Rating + IF(:win < 0, 1, 26)
+                        WHERE p.Id = :id";
 
                 try {
-                    DB::Connect()->query($sql);
+                    $sth = DB::Connect()->prepare($sql);
+                    $sth->execute(array(
+                        ':id'    => $player['pid'],
+                        ':month' => $month,
+                        ':win'   => $win,
+                        ':cur'   => $app->getCurrency(),
+                        ':gid'   => $app->getId()
+                    ));
+                    $sth = null;
                 } catch (\Exception $e) {
                     echo '[ERROR] ' . $e->getMessage();
                 }
