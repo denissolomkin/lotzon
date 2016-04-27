@@ -497,15 +497,29 @@ class GameAppsDBProcessor implements IProcessor
         $month = mktime(0, 0, 0, date("n"), 1);
         $time  = strtotime(date("H:i"), 0);
         $now   = time();
+        $rand  = rand(1,2);
 
-        $sql = "UPDATE `OnlineGamesTop`
-                  SET Rating = Rating + IF( RAND() < 0.5,1,26 ), `LastUpdate` = :now
-                  WHERE `Month` = :month
-                        AND `Increment` >= ROUND(RAND() * 100)
-                        AND `Start` <= :time
-                        AND `End` >= :time
-                        AND `Period` > 0
-                        AND `LastUpdate` < :now - Period*60
+        $sql = "UPDATE `OnlineGamesTop` t
+                LEFT JOIN `Players` p ON p.Id = t.PlayerId
+                  SET
+                  t.`Rating` = t.Rating + IF( :rand = 1,26,1 ),
+                  t.`LastUpdate` = :now,
+                  p.`Money` = p.`Money` +
+                    IF(
+                      t.`Currency` = 'MONEY',
+                      IF( :rand = 1, 0.22, -0.25 ) *
+                        IFNULL(
+                          (SELECT MUICurrency.Coefficient FROM MUICountries LEFT JOIN MUICurrency ON MUICurrency.Id = MUICountries.Currency WHERE MUICountries.Code = p.Country),
+                          (SELECT MUICurrency.Coefficient FROM MUICountries LEFT JOIN MUICurrency ON MUICurrency.Id = MUICountries.Currency LIMIT 1)
+                        ),
+                      0),
+                  p.`Points` = p.`Points` + IF( t.`Currency` = 'POINT', IF( :rand = 1, 22.5, -25 ), 0)
+                  WHERE t.`Month` = :month
+                        AND t.`Increment` >= ROUND(RAND() * 100)
+                        AND t.`Start` <= :time
+                        AND t.`End` >= :time
+                        AND t.`Period` > 0
+                        AND t.`LastUpdate` < :now - Period*60
                 ";
 
         try {
@@ -515,6 +529,7 @@ class GameAppsDBProcessor implements IProcessor
                     ':month' => $month,
                     ':time' => $time,
                     ':now' => $now,
+                    ':rand' => $rand,
                 ));
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query: ".$e->getMessage(), 500);
@@ -522,7 +537,7 @@ class GameAppsDBProcessor implements IProcessor
 
         $sql = "REPLACE INTO `PlayerPing`
                   (PlayerId, Ping)
-                  (SELECT PlayerId, :now2 + PlayerId%60
+                  (SELECT PlayerId, :now + PlayerId%60
                   FROM `OnlineGamesTop`
                   WHERE `Month` = :month
                         AND `Start` <= :time
@@ -533,7 +548,6 @@ class GameAppsDBProcessor implements IProcessor
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(
                 array(
-                    ':now2' => $now,
                     ':month' => $month,
                     ':time' => $time,
                     ':now' => $now,
