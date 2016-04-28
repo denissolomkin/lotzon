@@ -3,19 +3,20 @@ $(function () {
     var prepareHelper = function (fn, options, arguments, model) {
 
             options = typeof options !== 'string'
-                ? (arguments.length == 3 ? JSON.stringify(options) : null )
+                ? (arguments.length == 3 ? JSON.stringify(options) : '' )
                 : options;
 
-            if (arguments.length > 2 && !options) {
+            if (arguments.length > 3) {
                 var args = [];
-                for (var i = 1; i <= arguments.length; i++)
+                for (var i = 2; i <= arguments.length; i++)
                     typeof arguments[i] === 'string' && args.push('"' + arguments[i] + '"');
-                options = args.join(', ');
+                options += args.join(', ');
             }
 
             var response = eval(model + "." + fn.toString());
+
             D.log(model + '.' + fn + (options ? '(' + options + ')' : ''), 'handlebars');
-            return typeof response === 'function' ? eval(model + "." + fn + "(" + (options ? options : '') + ")") : response;
+            return typeof response === 'function' ? response(options) : response;
         },
 
         isEmpty = function(element) {

@@ -453,7 +453,7 @@
         },
 
         getOnline: function (data) {
-            switch (this.isOnline(data)) {
+            switch (Player.isOnline(data)) {
                 case true:
                     return 'online';
                     break;
