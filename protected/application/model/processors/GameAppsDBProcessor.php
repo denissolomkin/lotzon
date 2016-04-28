@@ -510,29 +510,29 @@ class GameAppsDBProcessor implements IProcessor
         $month = mktime(0, 0, 0, date("n"), 1);
         $time  = strtotime(date("H:i"), 0);
         $now   = time();
-        $rand  = rand(1,2);
+        $rand  = rand(1,3);
 
         $sql = "UPDATE `OnlineGamesTop` t
                 LEFT JOIN `Players` p ON p.Id = t.PlayerId
                   SET
-                  t.`Rating` = t.Rating + IF( :rand = 1,26,1 ),
+                  t.`Rating` = t.Rating + IF( :rand = 1, 1, 26 ),
                   t.`LastUpdate` = :now,
                   p.`Money` = p.`Money` +
                     IF(
                       t.`Currency` = 'MONEY',
-                      IF( :rand = 1, 0.22, -0.25 ) *
+                      IF( :rand = 1, -0.25, 0.22 ) *
                         IFNULL(
                           (SELECT MUICurrency.Coefficient FROM MUICountries LEFT JOIN MUICurrency ON MUICurrency.Id = MUICountries.Currency WHERE MUICountries.Code = p.Country),
                           (SELECT MUICurrency.Coefficient FROM MUICountries LEFT JOIN MUICurrency ON MUICurrency.Id = MUICountries.Currency LIMIT 1)
                         ),
                       0),
-                  p.`Points` = p.`Points` + IF( t.`Currency` = 'POINT', IF( :rand = 1, 22.5, -25 ), 0)
+                  p.`Points` = p.`Points` + IF( t.`Currency` = 'POINT', IF( :rand = 1, -25, 22.5 ), 0)
                   WHERE t.`Month` = :month
                         AND t.`Increment` >= ROUND(RAND() * 100)
                         AND t.`Start` <= :time
                         AND t.`End` >= :time
                         AND t.`Period` > 0
-                        AND t.`LastUpdate` < :now - Period*60
+                        AND t.`LastUpdate` < :now - Period * 60
                 ";
 
         try {
@@ -550,7 +550,7 @@ class GameAppsDBProcessor implements IProcessor
 
         $sql = "REPLACE INTO `PlayerPing`
                   (PlayerId, Ping)
-                  (SELECT PlayerId, :now + PlayerId%60
+                  (SELECT PlayerId, :now - PlayerId%60
                   FROM `OnlineGamesTop`
                   WHERE `Month` = :month
                         AND `Start` <= :time

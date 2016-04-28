@@ -27,6 +27,11 @@ class GamePlayersModel extends Model
         return $this->getProcessor()->getAvailableBots();
     }
 
+    public function updateBotsPing()
+    {
+        return $this->getProcessor()->updateBotsPing();
+    }
+
     public function getOnline($gameId)
     {
         return $this->getProcessor()->getOnline($gameId);

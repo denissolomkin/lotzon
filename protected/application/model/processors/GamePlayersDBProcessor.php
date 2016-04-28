@@ -62,6 +62,32 @@ class GamePlayersDBProcessor implements IProcessor
 
     }
 
+    public function updateBotsPing()
+    {
+
+        $sql = "REPLACE INTO `PlayerPing`
+                  (PlayerId, Ping)
+                  (SELECT id, :now - id%60
+                  FROM `GamesTmpBots`
+                  WHERE `GamesTmpBots`.utc = :utc)
+                ";
+
+        try {
+
+            $res = DB::Connect()->prepare($sql);
+            $res->execute(array(
+                ':utc' => ceil((date('G') + 1)
+                    / (24 / (\SettingsModel::instance()->getSettings('counters')->getValue('BOT_TIMEZONES')?:1)) ),
+                ':now' => time()
+            ));
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            throw new ModelException("Error processing storage query: ". $e->getMessage(), 500);
+        }
+
+        return true;
+    }
+
     public function getAvailableBots()
     {
         $sql = "SELECT `GamesTmpBots`.id, `GamesTmpBots`.name, `GamesTmpBots`.avatar, `GamesTmpBots`.country, `GamesTmpBots`.lang

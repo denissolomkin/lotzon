@@ -16,8 +16,7 @@ $(function () {
             var response = eval(model + "." + fn.toString());
 
             D.log(model + '.' + fn + (options ? '(' + options + ')' : ''), 'handlebars');
-
-            return typeof response === 'function' ? response(eval(options)) : response;
+            return typeof response === 'function' ? response(options && eval("("+options+")")) : response;
         },
 
         isEmpty = function(element) {
