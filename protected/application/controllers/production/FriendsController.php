@@ -161,6 +161,7 @@ class FriendsController extends \AjaxController
                         'id'   => $friend['PlayerId'],
                         'img'  => $friend['PlayerImg'],
                         'name' => $friend['PlayerName'],
+                        'ping' => $friend['PlayerPing'],
                     ),
                     'date'   => $friend['ModifyDate'],
                     'status' => $friend['Status'],
