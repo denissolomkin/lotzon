@@ -6,7 +6,7 @@
                 <input type="hidden" name="recipient_id" value="{{ id }}">
                 <div class="nm-selected">
                     <div class="nm-friend">
-                        <div data-user-id="{{id}}" class="nm-friend-img user-status {{#if (player "isOnline" ping)}} online {{/if}}">
+                        <div data-user-id="{{id}}" class="nm-friend-img user-status st-indicator {{player "getOnline" . }}">
                             <img src="{{avatar img id 100}}"
                                  class="loading"
                                  onload="this.style.background = 'none'"

@@ -122,34 +122,6 @@ STYLES */
     vertical-align: middle;
     position: relative;
     margin: 0 10px 0 0;
-    &:after {
-        content: "";
-        display: block;
-        width: 11px;
-        height: 11px;
-        border: 1px solid #ffffff;
-        border-radius: 50%;
-        background: $color-offline;
-        top: 0;
-        right: 0;
-        position: absolute;
-    }
-    &.online {
-        &:after {
-            background: $color-online;
-        }
-        &:hover {
-            // .service-pop-up {
-            //     display: block;
-            //     left: 100%;
-            //     top: 50%;
-            //     width: auto;
-            //     transform: translate(0, -50%);
-            //     margin: 0 0 0 10px;
-            //     padding: 5px;
-            // }
-        }
-    }
     img {
         width: 50px;
         height: 50px;
@@ -397,27 +369,16 @@ STYLES */
                 -ms-box-sizing: content-box;
                 box-sizing: content-box;
             }
-            &:after {
-                    content: "";
-                    display: block;
-                    width: 9px;
-                    height: 9px;
-                    border: 1px solid #ffffff;
-                    border-radius: 50%;
-                    background: $color-offline;
-                    top: 0;
-                    right: 0;
-                    position: absolute;
+            &.offline:after {     
+                width: 9px;
+                height: 9px;
+                border: 1px solid #ffffff;
             }
             
-            &.online {
-                &:after {
-                    background: $color-online;
-                }
-                
-                img {
-                    // border: 3px solid $color-online;
-                }
+            &.online:after {
+                width: 9px;
+                height: 9px;
+                border: 1px solid #ffffff;
             }
         }
         .nm-friend-name {

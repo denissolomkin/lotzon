@@ -7,7 +7,7 @@
     </div>
     <a href="/user/{{user.id}}">
         <div class="message-top">
-            <div data-user-id="{{user.id}}" class="message-img user-status {{player "getOnline" user}}">
+            <div data-user-id="{{user.id}}" class="message-img user-status st-indicator {{player "getOnline" user}}">
                 <img src="{{avatar user.img user.id 50}}"
                      class="loading"
                      onload="this.style.background = 'none'"

@@ -24,7 +24,7 @@
                                 <p>{{points}} {{i18n "title-of-points"}}</p>
                             </div>
                         </div>
-                        <div class="ae-user-img pi-ph false {{#if (player "isOnline" ping)}} online {{/if}}">
+                        <div class="ae-user-img pi-ph false st-indicator {{player "getOnline" . }}">
                             <img src="{{avatar img id}}" class="loading" onload="this.style.background = 'none'" onerror="Player.getAvatar.call(this)">
                         </div>
                     </div>

@@ -37,6 +37,7 @@
 .prize {
     margin-bottom: 30px;
     position: relative;
+    border: 1px solid #e1e1e1;
     &:hover {
         cursor: pointer;
     }
@@ -44,8 +45,7 @@
         color: #ffe700;
         background: black;
     }
-    & > a {
-        border: 1px solid #e1e1e1;
+    & > * {
     }
 }
 

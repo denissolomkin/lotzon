@@ -28,23 +28,6 @@ $color-online: #7ed321;
                 height: auto;
                 border-radius: 50%;
             }
-            &:after {
-                content: "";
-                display: block;
-                width: 11px;
-                height: 11px;
-                border: 1px solid #ffffff;
-                border-radius: 50%;
-                background: $color-offline;
-                top: 0;
-                right: 0;
-                position: absolute;
-            }
-            &.online {
-                &:after {
-                    background: $color-online;
-                }
-            }
         }
     }
 }
@@ -415,23 +398,14 @@ form.loading > * {
                 -ms-box-sizing: content-box;
                 box-sizing: content-box;
         }
-        &:after {
-                content: "";
-                display: block;
+        &.offline:after {
                 width: 9px;
-                height: 9px;
-                border: 1px solid #ffffff;
-                border-radius: 50%;
-                background: $color-offline;
-                top: 0;
-                right: 0;
-                position: absolute;
+                height: 9px;    
         }
         
-        &.online {
-            &:after {
-                background: $color-online;
-            }
+        &.online:after {
+                width: 9px;
+                height: 9px;           
         }
     }
 

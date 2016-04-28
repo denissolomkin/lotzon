@@ -6,6 +6,7 @@ body {
     > .wrapper {
         height: auto !important;
         min-height: 100%;
+        position: relative;
         /* equal to footer height */
         margin-bottom: -50px;
         &:after {
@@ -40,6 +41,31 @@ hr {
     border-bottom: 1px solid #ECECEC;
 }
 
+// STATUSES
+.st-indicator.offline:after {
+    content: "";
+    display: block;
+    width: 11px;
+    height: 11px;
+    border: 1px solid #ffffff;
+    border-radius: 50%;
+    top: 0;
+    right: 0;
+    position: absolute;
+    background: #dfdfdf;
+}
+.st-indicator.online:after {
+    background: #7ed321;
+    content: "";
+    display: block;
+    width: 11px;
+    height: 11px;
+    border: 1px solid #ffffff;
+    border-radius: 50%;
+    top: 0;
+    right: 0;
+    position: absolute;
+}
 
 // from common-content-box-header-partial.html
 .content-box-header {
@@ -53,8 +79,8 @@ hr {
     line-height: 50px;
 
     span.count{
-        top: 2px;
-        right: 2px;
+        // top: 2px;
+        // right: 2px;
     }
 
     > span:not(.back){
@@ -740,6 +766,25 @@ input.input-radio:checked + label.input-radio:before {
 }
 
 // BANNERS -------------------------------- //
+
+.t-box{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
+    a{
+        display: block !important;
+        width: 100% !important;
+        height: 100% !important;
+        position: absolute;
+        background-repeat: no-repeat;
+        background-position: top center;
+        background-origin: content-box;
+
+    }
+}
 .banner-1,
 .banner-2,
 .banner-3,

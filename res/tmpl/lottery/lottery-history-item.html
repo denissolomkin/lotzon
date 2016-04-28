@@ -1,6 +1,6 @@
 <div data-id="{{this.id}}" id="lottery-history-{{this.id}}" class="gh-item clearfix">
     <a href="/lottery/{{ this.id }}{{#if (ne type "all")}}?type={{ this.type }}{{/if}}">
-        <div class="gh-inf gh-date">
+        <div class="gh-inf gh-date {{this.type}}">
             <span class="gh-inf-name">{{i18n "title-lottery-history-win-combinaion"}} </span>{{day this.date "DD.MM.YYYY"}}
         </div>
 

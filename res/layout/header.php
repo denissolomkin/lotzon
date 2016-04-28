@@ -83,6 +83,11 @@ Por favor, desactive el bloqueador de anuncios!'); ?>
     </head>
 
     <body>
+
+        <div class="t-box">
+            <a target="_blank" style="background-image: url(/res/img/000.jpg);" href="http://lotzon.com/lnk/5721c2aedf0de"></a>
+        </div>
+
         <div id="menu-navigation-mobile" class="menu-mobile pushy pushy-left">
         </div>
         <div class="site-overlay"></div>

@@ -312,19 +312,15 @@
         }
         & .c-user-img {
             position: relative;
-            &:after {
-                content: "";
-                display: block;
-                position: absolute;
-                top: 0;
-                right: 0;
+            &.offline:after {
                 width: 10px;
                 height: 10px;
-                border-radius: 50%;
-                background: #cfcfcf;
+                border: none;
             }
             &.online:after {
-                background: #7ed320;
+                width: 10px;
+                height: 10px;
+                border: none;
             }
         }
         & .c-social {
@@ -340,20 +336,18 @@
         height: 100px;
         position: relative;
         margin: 0 10px 0 0;
-        &:after {
-            content: "";
-            display: block;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: #cfcfcf;
-            position: absolute;
-            top: 0;
-            right: 0;
-        }
     }
-    .c-friend.online .c-friend-img:after {
-        background: #7ed320;
+    .c-friend .c-friend-img.offline:after {
+        width: 10px;
+        height: 10px;
+        border: none;
+        display: block !important;
+    }
+    .c-friend .c-friend-img.online:after {
+        width: 10px;
+        height: 10px;
+        border: none;
+        display: block !important;
     }
     .c-friend-img img {
         display: block;

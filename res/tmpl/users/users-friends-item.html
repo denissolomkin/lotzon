@@ -1,8 +1,8 @@
-﻿<div id="users-friends-{{id}}" data-id="{{id}}" class="make-table c-friend{{#if (player "isOnline" ping)}} online {{/if}} clearfix">
+﻿<div id="users-friends-{{id}}" data-id="{{id}}" class="make-table c-friend clearfix">
     <div class="make-row">
         <div class="make-column user-info">
             <a href="/user/{{ id }}">
-                <div class="c-friend-img">
+                <div class="c-friend-img st-indicator {{player "getOnline" . }}">
                     <img src="{{avatar img id 100}}" class="loading" onload="this.style.background = 'none'" onerror="Player.getAvatar.call(this)">
                 </div>
                 <div class="c-friend-name">{{ name }}</div>

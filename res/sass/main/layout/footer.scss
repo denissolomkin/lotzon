@@ -66,3 +66,24 @@
     display: none;
     opacity: 0.2;
 }
+
+.notification-window {
+  left: 10%;
+  width: 270px;
+}
+
+// JS DETECT ------------------- //
+.js-detect {
+  opacity: 0.8;
+}
+
+@media (min-width: 1200px) {
+    .notification-window {
+        left: 10%;
+        width: 270px;
+    }
+    // JS DETECT ------------------- //
+    .js-detect {
+        opacity: 1;
+    }
+}
