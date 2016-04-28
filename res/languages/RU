@@ -397,6 +397,7 @@
                 "title-complain-duplicate": "Дубль",
                 "title-complain-other": "Другое",
 
+                "message-convert-success": "Поздравляем, баллы успешно начислены на Ваш счет",
                 "message-cashout-success": "Поздравляем, деньги успешно выведены и будут зачислены в течение 7 рабочих дней",
                 "message-order-process-week": "<span class='underline'>Внимание!</span> Заявки на вывод денег обрабатываются в течении 7-ми рабочих дней.",
                 "message-comments-write-comment": "Напишите комментарий",

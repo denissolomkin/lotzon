@@ -469,8 +469,10 @@
 
         isOnline: function (data) {
 
-            var ping = typeof data === 'object' ? data.hasOwnProperty('ping') && data.ping : data,
-                playerId = typeof data === 'object' && data.hasOwnProperty('id') && data.id;
+            if(!data) return null;
+
+            var ping = data && typeof data === 'object' ? data.hasOwnProperty('ping') && data.ping : data,
+                playerId = data && typeof data === 'object' && data.hasOwnProperty('id') && data.id;
 
             return (playerId && playerId == this.id) || !ping
                 ? null

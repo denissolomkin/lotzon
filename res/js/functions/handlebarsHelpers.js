@@ -4,7 +4,7 @@ $(function () {
 
             options = typeof options !== 'string'
                 ? (arguments.length == 3 ? JSON.stringify(options) : '' )
-                : options;
+                : '"'+options+'"';
 
             if (arguments.length > 3) {
                 var args = [];
@@ -16,7 +16,8 @@ $(function () {
             var response = eval(model + "." + fn.toString());
 
             D.log(model + '.' + fn + (options ? '(' + options + ')' : ''), 'handlebars');
-            return typeof response === 'function' ? response(options) : response;
+
+            return typeof response === 'function' ? response(eval(options)) : response;
         },
 
         isEmpty = function(element) {

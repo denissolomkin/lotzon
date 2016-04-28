@@ -7,9 +7,9 @@
         <div class="ph-inf-name">{{i18n "title-reports-payments-order-prize"}}</div>
         <div class="ph-inf-value">
             {{#if (eq 'shop' this.type)}}
-            {{prize}}
+                {{prize}}
             {{else}}
-            {{player "formatCurrency" prize 'iso'}}
+                {{or sum prize}} {{player "formatCurrency" 'iso'}}
             {{/if}}
         </div>
     </div>

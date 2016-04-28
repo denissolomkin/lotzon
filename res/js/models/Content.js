@@ -4,6 +4,13 @@
 
         initDaterange: function () {
 
+            var ranges = {};
+            ranges[i18n("title-of-today")] = [moment(), moment()];
+            ranges[i18n("title-of-yesterday")] = [moment().subtract(1, 'days'), moment().subtract(1, 'days')];
+            ranges[i18n("title-of-last-7-days")] = [moment().subtract(6, 'days'), moment()];
+            ranges[i18n("title-of-last-30-days")] = [moment().subtract(29, 'days'), moment()];
+            ranges[i18n("title-of-this-month")] = [moment().startOf('month'), moment().endOf('month')];
+
             D.log('Reports.init');
             if ($('.daterange')
                     .filter(':visible')
@@ -20,16 +27,8 @@
                             "cancelLabel": i18n("button-cancel"),
                             "customRangeLabel": i18n("button-custom"),
                         },
-                        "ranges": {
-                        
-                            [i18n("title-of-today")]: [moment(), moment()],
-                            [i18n("title-of-yesterday")]: [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                            [i18n("title-of-last-7-days")]: [moment().subtract(6, 'days'), moment()],
-                            [i18n("title-of-last-30-days")]: [moment().subtract(29, 'days'), moment()],
-                            [i18n("title-of-this-month")]: [moment().startOf('month'), moment().endOf('month')]
-                        
-                        },
-                    }).on('apply.daterangepicker', function(ev, picker) {
+                        "ranges": ranges
+                    }).on('apply.daterangepicker', function (ev, picker) {
                         $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY')).change();
 
                     }).length)
