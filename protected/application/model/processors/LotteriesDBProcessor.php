@@ -224,6 +224,48 @@ class LotteriesDBProcessor implements IProcessor
         return $lottery;
     }
 
+    public function isPlayerPlayedLotteries($lotteriesId, $playerId)
+    {
+        if (!is_array($lotteriesId)) {
+            throw new ModelException('Bad request', 403);
+        }
+
+        if ($lotteriesId == array()) {
+            return array();
+        }
+
+        $inQuery = implode(',', array_fill(0, count($lotteriesId), '?'));
+
+        $sql = "SELECT DISTINCT
+                    l.id id
+                FROM
+                  `Lotteries` l
+                JOIN LotteryTicketsArchive la
+                  ON la.LotteryId = l.Id
+                WHERE
+                  l.id IN (".$inQuery.")
+                AND
+                  la.PlayerId=?";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            foreach ($lotteriesId as $k => $id) {
+                $sth->bindValue(($k + 1), $id);
+            }
+            $sth->bindParam($k + 2,$playerId);
+            $sth->execute();
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+        $lotteries = array();
+        foreach ($sth->fetchAll() as $lottery) {
+            $lotteries[] = $lottery['id'];
+        }
+
+        return $lotteries;
+    }
+
     public function getDependentLotteryId($lotteryId, $dependency, $playerId = false)
     {
         if ($playerId == false) {

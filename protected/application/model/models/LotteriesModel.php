@@ -72,4 +72,9 @@ class LotteriesModel extends Model
     {
         return $this->getProcessor()->recache();
     }
+
+    public function isPlayerPlayedLotteries($lotteriesId, $playerId)
+    {
+        return $this->getProcessor()->isPlayerPlayedLotteries($lotteriesId, $playerId);
+    }
 }

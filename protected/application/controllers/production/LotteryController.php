@@ -220,16 +220,13 @@ class LotteryController extends \AjaxController
 
         try {
             if ($type != "mine") {
-                $response['cache'] = 'local';
-                $list              = \LotteriesModel::instance()->getPublishedLotteriesList($count + 1, $offset);
-                $lotteryType       = "all";
+                $list = \LotteriesModel::instance()->getPublishedLotteriesList($count + 1, $offset);
             } else {
-                $response['cache'] = 'session';
-                $list              = \LotteriesModel::instance()->getPlayerPlayedLotteries($playerId, $count + 1, $offset);
-                $lotteryType       = "mine";
+                $list = \LotteriesModel::instance()->getPlayerPlayedLotteries($playerId, $count + 1, $offset);
             }
         } catch (\PDOException $e) {
             $this->ajaxResponseInternalError();
+
             return false;
         }
 
@@ -239,9 +236,21 @@ class LotteryController extends \AjaxController
             array_pop($list);
         }
 
-        foreach ($list as $id=>$lottery) {
-            $response['res']['lottery']['history'][$id]         = $lottery->exportTo('list');
-            $response['res']['lottery']['history'][$id]['type'] = $lotteryType;
+        if ($type == "mine") {
+            foreach ($list as $id => $lottery) {
+                $response['res']['lottery']['history'][$id]         = $lottery->exportTo('list');
+                $response['res']['lottery']['history'][$id]['type'] = "mine";
+            }
+        } else {
+            $mine =  \LotteriesModel::instance()->isPlayerPlayedLotteries(array_keys($list), $playerId);
+            foreach ($list as $id => $lottery) {
+                $response['res']['lottery']['history'][$id]         = $lottery->exportTo('list');
+                if (in_array($id,$mine)) {
+                    $response['res']['lottery']['history'][$id]['type'] = "mine";
+                } else {
+                    $response['res']['lottery']['history'][$id]['type'] = "all";
+                }
+            }
         }
 
         $this->ajaxResponseNoCache($response);
