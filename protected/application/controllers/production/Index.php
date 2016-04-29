@@ -2,9 +2,8 @@
 
 namespace controllers\production;
 
-use \LotterySettingsModel, \SettingsModel, \StaticTextsModel, \Player, \PlayersModel, \ShopModel;
-use Ratchet\Wamp\Exception;
-use \TicketsModel, \LotteriesModel, \Session2, \CountriesModel, \SEOModel, \Admin, \LanguagesModel, \NoticesModel, \ReviewsModel, \CommentsModel, \EmailInvites, \Common;
+use \LotterySettingsModel, \SettingsModel, \StaticTextsModel, \Player, \PlayersModel;
+use \TicketsModel, \LotteriesModel, \CountriesModel, \SEOModel, \LanguagesModel, \CommentsModel, \EmailInvites, \Common;
 use GeoIp2\Database\Reader;
 use Symfony\Component\HttpFoundation\Session\Session;
 use \Detection\MobileDetect;
@@ -217,73 +216,75 @@ class Index extends \SlimController\SlimController
 
 
         $playerObj = array(
-            "id"       => $player->getId(),
-            "img"      => $player->getAvatar(),
-            "email"    => $player->getEmail(),
-            "gender"   => $player->getGender(),
-            "moderator"=> in_array($player->getId(), (array) SettingsModel::instance()->getSettings('moderators')->getValue()),
-            "is" => array(
-                "complete" => $player->isComplete(),
-                "valid"    => $player->isValid(),
-                "moderator"=> in_array($player->getId(), (array) SettingsModel::instance()->getSettings('moderators')->getValue()),
+            'id'       => $player->getId(),
+            'img'      => $player->getAvatar(),
+            'email'    => $player->getEmail(),
+            'gender'   => $player->getGender(),
+            'is' => array(
+                'complete' => $player->isComplete(),
+                'valid'    => $player->isValid(),
+                'moderator'=> in_array($player->getId(), (array) SettingsModel::instance()->getSettings('moderators')->getValue()),
             ),
-            "privacy"  => $player->getPrivacy(),
-            "title"    => array(
-                "name"       => $player->getName(),
-                "surname"    => $player->getSurname(),
-                "patronymic" => $player->getSecondName(),
-                "nickname"   => $player->getNicname(),
+            'dates'    => array(
+                'registration' => $player->getDates('Registration')
             ),
-            "language" => array(
-                "current"   => $player->getLang(),
-                "available" => array(
-                    "RU" => "Русский",
-                    "EN" => "English",
-                    "UA" => "Украiнська"
+            'privacy'  => $player->getPrivacy(),
+            'title'    => array(
+                'name'       => $player->getName(),
+                'surname'    => $player->getSurname(),
+                'patronymic' => $player->getSecondName(),
+                'nickname'   => $player->getNicname(),
+            ),
+            'language' => array(
+                'current'   => $player->getLang(),
+                'available' => array(
+                    'RU' => 'Русский',
+                    'EN' => 'English',
+                    'UA' => 'Украiнська'
                 )
             ),
-            "birthday" => $player->getBirthday(),
-            "count"    => array(
-                "lotteries"     => $player->getGamesPlayed(),
-                "friends" => \FriendsModel::instance()->getStatusCount($player->getId(), 1),
-                "menu" => array(
-                    "users" => array(
-                        "requests" => \FriendsModel::instance()->getStatusCount($player->getId(), 0, true),
+            'birthday' => $player->getBirthday(),
+            'count'    => array(
+                'lotteries'     => $player->getGamesPlayed(),
+                'friends' => \FriendsModel::instance()->getStatusCount($player->getId(), 1),
+                'menu' => array(
+                    'users' => array(
+                        'requests' => \FriendsModel::instance()->getStatusCount($player->getId(), 0, true),
                     ),
-                    "communication" => array(
-                        "notifications" => array(
-                            "server" => \CommentsModel::instance()->getNotificationsCount($player->getId()),
-                            "local" => 0
+                    'communication' => array(
+                        'notifications' => array(
+                            'server' => \CommentsModel::instance()->getNotificationsCount($player->getId()),
+                            'local' => 0
                         ),
-                        "messages"      => \MessagesModel::instance()->getStatusCount($player->getId(), 0)
+                        'messages'      => \MessagesModel::instance()->getStatusCount($player->getId(), 0)
                     )
                 ),
             ),
-            "favorite" => $player->getFavoriteCombination(),
-            "location" => array(
-                "country" => $player->getCountry(),
-                "city"    => $player->getCity(),
-                "zip"     => $player->getZip(),
-                "address" => $player->getAddress(),
+            'favorite' => $player->getFavoriteCombination(),
+            'location' => array(
+                'country' => $player->getCountry(),
+                'city'    => $player->getCity(),
+                'zip'     => $player->getZip(),
+                'address' => $player->getAddress(),
             ),
-            "balance"  => array(
-                "points" => $player->getPoints(),
-                "money"  => $player->getMoney(),
-                "lotzon" => 1500
+            'balance'  => array(
+                'points' => $player->getPoints(),
+                'money'  => $player->getMoney(),
+                'lotzon' => 1500
             ),
-            "currency" => CountriesModel::instance()->getCountry($this->country)->loadCurrency()->getSettings(),
-            "billing"  => array(
+            'currency' => CountriesModel::instance()->getCountry($this->country)->loadCurrency()->getSettings(),
+            'billing'  => array(
                 'webmoney'      => $player->getAccounts('WebMoney') ? $player->getAccounts('WebMoney')[0] : null,
                 'yandex'        => $player->getAccounts('YandexMoney') ? $player->getAccounts('YandexMoney')[0] : null,
                 'qiwi'          => $player->getAccounts('Qiwi') ? $player->getAccounts('Qiwi')[0] : null,
                 'phone'         => $player->getAccounts('Phone') ? $player->getAccounts('Phone')[0] : null,
             ),
-            "accounts" => $player->getAccounts(),
-            "social"   => $player->getSocial(),
-            "settings" => array(
-                "newsSubscribe" => $player->getNewsSubscribe()
+            'accounts' => $player->getAccounts(),
+            'social'   => $player->getSocial(),
+            'settings' => array(
+                'newsSubscribe' => $player->getNewsSubscribe()
             ),
-            "games"    => array(
+            'games'    => array(
                 'chance' => $this->session->has('ChanceGame') ? $this->session->get('ChanceGame')->getId() : false,
                 'random' => $this->session->has('QuickGame'),
                 'moment' => $this->session->has('Moment'),
@@ -292,7 +293,7 @@ class Index extends \SlimController\SlimController
                     'Uid' => $gamePlayer->getApp('Uid')
                 ),
             ),
-            "referral" => array(
+            'referral' => array(
                 'total'  => PlayersModel::instance()->getReferralsCount($player->getId()),
                 'profit' => $player->getReferralsProfit()
             )
@@ -303,37 +304,37 @@ class Index extends \SlimController\SlimController
 
         /* todo delete slider */
         $slider = array(
-            "sum"     => (LotteriesModel::instance()->getMoneyTotalWin() + $counters->getValue('MONEY_ADD')) * CountriesModel::instance()->getCountry($this->country)->loadCurrency()->getCoefficient(),
-            "winners" => LotteriesModel::instance()->getWinnersCount() + $counters->getValue('WINNERS_ADD'),
-            "jackpot" => LotterySettingsModel::instance()->loadSettings()->getPrizes($this->country)[6]['sum'],
-            "players" => PlayersModel::instance()->getMaxId(),
-            "timer"   => LotterySettingsModel::instance()->loadSettings()->getNearestGame() + strtotime('00:00:00', time()) - time(),
-            "lottery" => array(
-                "id"    => $lottery->getId(),
-                "date"  => $lottery->getDate(),
-                "balls" => $lottery->getCombination()
+            'sum'     => (LotteriesModel::instance()->getMoneyTotalWin() + $counters->getValue('MONEY_ADD')) * CountriesModel::instance()->getCountry($this->country)->loadCurrency()->getCoefficient(),
+            'winners' => LotteriesModel::instance()->getWinnersCount() + $counters->getValue('WINNERS_ADD'),
+            'jackpot' => LotterySettingsModel::instance()->loadSettings()->getPrizes($this->country)[6]['sum'],
+            'players' => PlayersModel::instance()->getMaxId(),
+            'timer'   => LotterySettingsModel::instance()->loadSettings()->getNearestGame() + strtotime('00:00:00', time()) - time(),
+            'lottery' => array(
+                'id'    => $lottery->getId(),
+                'date'  => $lottery->getDate(),
+                'balls' => $lottery->getCombination()
             )
         );
 
         $config = array(
-            "timeout"            => array(
-                "ping"   => (int)$counters->getValue('PLAYER_TIMEOUT'),
-                "online" => (int)$counters->getValue('PLAYER_TIMEOUT')
+            'timeout'            => array(
+                'ping'   => (int)$counters->getValue('PLAYER_TIMEOUT'),
+                'online' => (int)$counters->getValue('PLAYER_TIMEOUT')
             ),
-            "adminId"            => (int)$counters->getValue('USER_REVIEW_DEFAULT'),
-            "minMoneyOutput"          => (int)$counters->getValue('MIN_MONEY_OUTPUT'),
-            "tempFilestorage"    => '/filestorage/temp',
-            "filestorage"        => '/filestorage',
-            "websocketUrl"       => 'ws' . (\Config::instance()->SSLEnabled ? 's' : '') . '://' . $_SERVER['SERVER_NAME'] . ':' . \Config::instance()->wsPort,
-            "websocketEmulation" => false,
-            "page"               => $page,
-            "limits"             => array(
-                "lottery-history" => (int)$counters->getValue('LOTTERIES_PER_PAGE'),
-                "communication-comments" => (int)$counters->getValue('COMMENTS_PER_PAGE'),
-                "communication-messages" => (int)$counters->getValue('MESSAGES_PER_PAGE'),
-                "communication-notifications" => (int)$counters->getValue('NOTIFICATIONS_PER_PAGE'),
-                "users-friends" => (int)$counters->getValue('FRIENDS_PER_PAGE'),
-                "blog-posts" => (int)$counters->getValue('POSTS_PER_PAGE'),
+            'adminId'            => (int)$counters->getValue('USER_REVIEW_DEFAULT'),
+            'minMoneyOutput'          => (int)$counters->getValue('MIN_MONEY_OUTPUT'),
+            'tempFilestorage'    => '/filestorage/temp',
+            'filestorage'        => '/filestorage',
+            'websocketUrl'       => 'ws' . (\Config::instance()->SSLEnabled ? 's' : '') . '://' . $_SERVER['SERVER_NAME'] . ':' . \Config::instance()->wsPort,
+            'websocketEmulation' => false,
+            'page'               => $page,
+            'limits'             => array(
+                'lottery-history' => (int)$counters->getValue('LOTTERIES_PER_PAGE'),
+                'communication-comments' => (int)$counters->getValue('COMMENTS_PER_PAGE'),
+                'communication-messages' => (int)$counters->getValue('MESSAGES_PER_PAGE'),
+                'communication-notifications' => (int)$counters->getValue('NOTIFICATIONS_PER_PAGE'),
+                'users-friends' => (int)$counters->getValue('FRIENDS_PER_PAGE'),
+                'blog-posts' => (int)$counters->getValue('POSTS_PER_PAGE'),
             ),
             'yandexMetrika' => (int)$counters->getValue('YANDEX_METRIKA'),
             'googleAnalytics' => $counters->getValue('GOOGLE_ANALYTICS'),
@@ -341,44 +342,44 @@ class Index extends \SlimController\SlimController
         );
 
         $debug = array(
-            "config" => array(
-                "dev"     => \Config::instance()->dev ?: false,
-                "stat"    => false,
-                "alert"   => false,
-                "render"  => false,
-                "cache"   => false,
-                "i18n"    => false,
-                "func"    => true,
-                "info"    => true,
-                "warn"    => true,
-                "error"   => true,
-                "log"     => true,
-                "clean"   => true,
+            'config' => array(
+                'dev'     => \Config::instance()->dev ?: false,
+                'stat'    => false,
+                'alert'   => false,
+                'render'  => false,
+                'cache'   => false,
+                'i18n'    => false,
+                'func'    => true,
+                'info'    => true,
+                'warn'    => true,
+                'error'   => true,
+                'log'     => true,
+                'clean'   => true,
                 'content' => true
             )
         );
 
         $lottery = array(
-            "lastLotteryId"    => $lottery->getId(),
-            "timeToLottery"    => LotterySettingsModel::instance()->loadSettings()->getNearestGame() + strtotime('00:00:00', time()) - time(),
-            "selectedTab"      => null,
-            "ticketConditions" => array(
+            'lastLotteryId'    => $lottery->getId(),
+            'timeToLottery'    => LotterySettingsModel::instance()->loadSettings()->getNearestGame() + strtotime('00:00:00', time()) - time(),
+            'selectedTab'      => null,
+            'ticketConditions' => array(
                 4 => (int)\SettingsModel::instance()->getSettings('ticketConditions')->getValue('CONDITION_4_TICKET'),
                 5 => (int)\SettingsModel::instance()->getSettings('ticketConditions')->getValue('CONDITION_5_TICKET'),
                 6 => (int)\SettingsModel::instance()->getSettings('ticketConditions')->getValue('CONDITION_6_TICKET'),
             ),
-            "totalBalls"       => \LotterySettings::TOTAL_BALLS,
-            "requiredBalls"    => \LotterySettings::REQUIRED_BALLS,
-            "totalTickets"     => \LotterySettings::TOTAL_TICKETS,
-            "filledTickets"    => \TicketsModel::instance()->getUnplayedTickets($player->getId()),
-            "priceGold"        => SettingsModel::instance()->getSettings('goldPrice')->getValue($this->country),
-            "priceGoldTicket"  => array(
-                "money"  => SettingsModel::instance()->getSettings('goldPrice')->getValue($this->country),
-                "points" => SettingsModel::instance()->getSettings('goldPrice')->getValue('POINTS'),
+            'totalBalls'       => \LotterySettings::TOTAL_BALLS,
+            'requiredBalls'    => \LotterySettings::REQUIRED_BALLS,
+            'totalTickets'     => \LotterySettings::TOTAL_TICKETS,
+            'filledTickets'    => \TicketsModel::instance()->getUnplayedTickets($player->getId()),
+            'priceGold'        => SettingsModel::instance()->getSettings('goldPrice')->getValue($this->country),
+            'priceGoldTicket'  => array(
+                'money'  => SettingsModel::instance()->getSettings('goldPrice')->getValue($this->country),
+                'points' => SettingsModel::instance()->getSettings('goldPrice')->getValue('POINTS'),
             ),
-            "prizes"           => array(
-                "default" => LotterySettingsModel::instance()->loadSettings()->getPrizes($this->country),
-                "gold"    => LotterySettingsModel::instance()->loadSettings()->getGoldPrizes($this->country),
+            'prizes'           => array(
+                'default' => LotterySettingsModel::instance()->loadSettings()->getPrizes($this->country),
+                'gold'    => LotterySettingsModel::instance()->loadSettings()->getGoldPrizes($this->country),
             ),
         );
 
