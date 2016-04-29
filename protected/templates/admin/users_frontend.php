@@ -719,8 +719,14 @@ $('.orders-trigger').on('click', function() {
 
                 tdata = '';
                 $(data.data.ShopOrders).each(function(id, tr) {
-                    tdata += '<tr data-toggle="tooltip" data-placement="auto" title="'+(tr.admin)+'"  class="'+(tr.status==0?'warning':tr.status==1?'success':'danger')+'"><td>'+tr.date+'</td><td>'+tr.playername+'</td><td>'+(tr.number>0?tr.number:'')+'</td><td>'+tr.item+'<br>'+tr.price+'</td><td>ФИО: '+tr.name+'<br>Телефон: '+tr.phone+'<br>Адрес: '+tr.address+'</td>'
-                    tdata += '</tr>'
+                    tdata +=
+                        '<tr data-toggle="tooltip" data-placement="auto" title="'+(tr.admin)+'"  class="'+(tr.status==0?'warning':tr.status==1?'success':'danger')+'">' +
+                        '<td>'+tr.date+'</td>' +
+                        '<td>'+tr.playername+'</td>' +
+                        '<td>'+(tr.number>0?tr.number:'')+'</td>' +
+                        '<td>'+tr.item+'<br>'+tr.price+' баллов</td>' +
+                        '<td>ФИО: '+tr.name+'<br>Телефон: '+tr.phone+'<br>Адрес: '+tr.address+'</td>' +
+                        '</tr>'
 
                 });
                 $("#orders-holder").find('.shop tbody').html(tdata);

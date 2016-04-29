@@ -123,6 +123,7 @@ class ShopItemOrder extends Entity
                  ->setDateProcessed($data['DateProcessed'])
                  ->setStatus($data['Status'])
                  ->setNumber($data['Number'])
+                 ->setSum($data['Sum'])
                  ->setAdminName($data['AdminName'])
                  ->setAdminId($data['AdminId'])
                  ->setName($data['Name'])
