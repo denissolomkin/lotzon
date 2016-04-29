@@ -37,15 +37,15 @@
             <div class="wrapper-inner">
                 <!-- Information -->
                 <div class="left-content">
-                    <h1 class="landing-title">Джекпот 3 000 000 <?php echo $player['currency']['iso'];?></h1>
+                    <h1 class="landing-title">Джекпот <?php echo number_format($slider['jackpot'], 0, ' ', ' '); ?>  <?php echo $player['currency']['iso'];?></h1>
                     <p class="lending-text">
-                        Участие не требует финансовых вложений. <br>
+                        Мы не азартная игра, так-как участие полностью бесплатное!<br><br>
                         У каждого участника есть возможность выиграть деньги или <br>
                         ценные призы, участвовать в конкурсах, общаться, заводить <br>
                         новые знакомства. <br>
                     </p>
-                    <p class="landing_middle"><?php echo $slider['players'] ?> <span>зарегистрированных</span></p>
-                    <p class="landing_large"><?php echo $slider['sum'] ?> <span><?php echo $player['currency']['iso'];?> уже выплачено</span></p>
+                    <p class="landing_middle"><?php echo number_format($slider['players'], 0, ' ', ' '); ?> <span>зарегистрированных</span></p>
+                    <p class="landing_large"><? echo number_format($slider['sum'], 0, ' ', ' '); ?> <span><?php echo $player['currency']['iso'];?> уже выплачено</span></p>
                 </div>
                 <!-- LogIn -->
                 <div class="right-content">

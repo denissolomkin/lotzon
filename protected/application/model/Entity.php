@@ -239,6 +239,45 @@ abstract class Entity
     {
 
     }
+
+    public function beginTransaction()
+    {
+        $model = $this->getModelClass();
+
+        try {
+            $model::instance()->beginTransaction();
+        } catch (ModelException $e) {
+            throw new EntityException('INTERNAL_ERROR', 500);
+        }
+
+        return $this;
+    }
+
+    public function commit()
+    {
+        $model = $this->getModelClass();
+
+        try {
+            $model::instance()->commit();
+        } catch (ModelException $e) {
+            throw new EntityException('INTERNAL_ERROR', 500);
+        }
+
+        return $this;
+    }
+
+    public function rollBack()
+    {
+        $model = $this->getModelClass();
+
+        try {
+            $model::instance()->rollBack();
+        } catch (ModelException $e) {
+            throw new EntityException('INTERNAL_ERROR', 500);
+        }
+
+        return $this;
+    }
 }
 
 class EntityException extends ApplicationException

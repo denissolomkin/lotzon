@@ -181,7 +181,7 @@ class Reviews extends PrivateArea
                 $reviews[] = $review;
             }
 
-            DB::Connect()->beginTransaction();
+            $review->beginTransaction();
             foreach ($reviews as $review) {
                 try {
 
@@ -190,13 +190,13 @@ class Reviews extends PrivateArea
 
                     $review->create();
                 } catch (EntityException $e) {
-                    DB::Connect()->rollback();
+                    $review->rollBack();
                     $response['status'] = 0;
                     $response['message'] = $e->getMessage();
                     die(json_encode($response));
                 }
             }
-            DB::Connect()->commit();
+            $review->commit();
             die(json_encode($response));
         }
 

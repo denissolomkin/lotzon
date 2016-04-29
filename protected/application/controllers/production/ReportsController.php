@@ -1,7 +1,6 @@
 <?php
 namespace controllers\production;
-use \Application, \Player, \SettingsModel;
-use Symfony\Component\HttpFoundation\Session\Session;
+use \Application, \MoneyOrder, \SettingsModel;
 
 Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');
 
@@ -13,17 +12,18 @@ class ReportsController extends \AjaxController
     public function init()
     {
         self::$reportsPerPage = (int)SettingsModel::instance()->getSettings('counters')->getValue('REPORTS_PER_PAGE') ? : 20;
-
         parent::init();
+
         $this->validateRequest();
-        $this->authorizedOnly();
+        $this->authorizedOnly(true);
+        $this->validateLogout();
         $this->validateCaptcha();
     }
 
     public function transactionsAction()
     {
 
-        $playerId = $this->session->get(Player::IDENTITY)->getId();
+        $playerId = $this->player->getId();
         $currency = $this->request()->get('currency', 'money');
         $dateFrom = $this->request()->get('daterangepicker_start', NULL);
         $dateTo   = $this->request()->get('daterangepicker_end', NULL);
@@ -91,7 +91,7 @@ class ReportsController extends \AjaxController
     public function paymentsAction()
     {
 
-        $playerId = $this->session->get(Player::IDENTITY)->getId();
+        $playerId = $this->player->getId();
         $offset   = $this->request()->get('offset', NULL);
 
         if($offset!==NULL) {
@@ -124,14 +124,16 @@ class ReportsController extends \AjaxController
 
         foreach ($list as $order) {
             switch ($order['status']) {
-                case 1:
+                case MoneyOrder::STATUS_PROCESSED:
                     $status = 'paid';
                     break;
-                case
-                    2:$status = 'denied';
+                case MoneyOrder::STATUS_DENIED:
+                    $status = 'denied';
                     break;
+                case MoneyOrder::STATUS_ORDERED:
                 default:
                     $status = 'processed';
+                    break;
             }
             $order['status'] = $status;
             $response['res']['reports']['payments'][] = $order;
@@ -144,7 +146,7 @@ class ReportsController extends \AjaxController
     public function referralsAction()
     {
 
-        $playerId = $this->session->get(Player::IDENTITY)->getId();
+        $playerId = $this->player->getId();
         $offset   = $this->request()->get('offset', NULL);
 
         $limit  = self::$reportsPerPage+1;

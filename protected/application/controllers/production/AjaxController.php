@@ -46,7 +46,7 @@ class AjaxController extends \SlimController\SlimController
         */
         try {
 
-            $this->session->get(Player::IDENTITY)->initStats(array());
+            $this->session->get(Player::IDENTITY)->getAccounts();
 
         } catch (\Exception $e) {
             $this->session->get(Player::IDENTITY)->fetch();
@@ -55,8 +55,10 @@ class AjaxController extends \SlimController\SlimController
             $this->player
                 ->setId($playerId)
                 ->fetch()
+                ->initDates()
                 ->initPrivacy()
-                ->initCounters();
+                ->initCounters()
+                ->initAccounts();
             $this->session->set(Player::IDENTITY, $this->player);
         }
 

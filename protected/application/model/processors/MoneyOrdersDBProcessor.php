@@ -1,24 +1,26 @@
 <?php
-Application::import(PATH_INTERFACES . 'IProcessor.php');
+Application::import(PATH_APPLICATION . 'model/DBProcessor.php');
 
-class MoneyOrdersDBProcessor implements IProcessor
+class MoneyOrdersDBProcessor extends DBProcessor
 {
     public function create(Entity $order) 
     {
         $order->setDateOrdered(time());
-        $sql = "INSERT INTO `MoneyOrders` (`PlayerId`, `DateOrdered`, `Type`, `Number`, `Sum`, `ItemId`, `Status`, `Data`) VALUES
-                                         (:plid, :do, :type, :num, :sum, :item, :status, :data)";
+        $sql = "INSERT INTO `MoneyOrders` (`PlayerId`, `DateOrdered`, `Type`, `Currency`, `Number`, `Sum`, `Equivalent`, `ItemId`, `Status`, `Data`) VALUES
+                                         (:plid, :do, :type, :cur, :num, :sum, :eq, :item, :status, :data)";
 
         try {
             $sth = DB::Connect()->prepare($sql)->execute(array(
-                ':plid' => $order->getPlayer()->getId(),
-                ':do'   => $order->getDateOrdered(),
-                ':type' => $order->getType(),
-                ':num' => $order->getNumber(),
-                ':sum' => $order->getSum(),
-                ':item' => $order->getItem() ? $order->getItem()->getId() : null,
+                ':plid'     => $order->getPlayer()->getId(),
+                ':do'       => $order->getDateOrdered(),
+                ':type'     => $order->getType(),
+                ':cur'      => $order->getCurrency(),
+                ':num'      => $order->getNumber(),
+                ':sum'      => $order->getSum(),
+                ':eq'       => $order->getEquivalent(),
+                ':item'     => $order->getItem() ? $order->getItem()->getId() : null,
                 ':status'   => $order->getStatus(),
-                ':data'  => is_array($order->getData()) ? serialize($order->getData()) : serialize(array()),
+                ':data'     => is_array($order->getData()) ? serialize($order->getData()) : serialize(array()),
             ));
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query " . $e->getMessage(), 500);
@@ -31,11 +33,11 @@ class MoneyOrdersDBProcessor implements IProcessor
 
     public function update(Entity $order) 
     {
-        $sql = "UPDATE `MoneyOrders` SET `Status` = :status, `UserId` = :userid, `DateProcessed` = :dp WHERE `Id` = :id";
+        $sql = "UPDATE `MoneyOrders` SET `Status` = :status, `AdminId` = :adminid, `DateProcessed` = :dp WHERE `Id` = :id";
         try {
             $sth = DB::Connect()->prepare($sql)->execute(array(
                 ':status' => $order->getStatus(),
-                ':userid' => $order->getUserId(),
+                ':adminid' => $order->getAdminId(),
                 ':dp'  => $order->getDateProcessed(),
                 ':id'   => $order->getId(),
             ));
@@ -53,7 +55,7 @@ class MoneyOrdersDBProcessor implements IProcessor
 
     public function fetch(Entity $order) 
     {
-        $sql = "SELECT * FROM `MoneyOrders` WHERE `Id` = :id ORDER BY `DateOrdered` DESC";
+        $sql = "SELECT * FROM `MoneyOrders` WHERE `Id` = :id ORDER BY `DateOrdered` DESC LIMIT 1";
 
         try {
             $sth = DB::Connect()->prepare($sql);
@@ -99,9 +101,9 @@ class MoneyOrdersDBProcessor implements IProcessor
         $where[]="`Type` != 'points'";
         $sql = "SELECT ((SELECT COUNT(DISTINCT(PlayerId)) FROM `ShopOrders` o WHERE  o.`Number`=`MoneyOrders`.`Number` AND o.`PlayerId`!=`MoneyOrders`.`PlayerId`)
                         +(SELECT COUNT(DISTINCT(PlayerId)) FROM `MoneyOrders` o WHERE  o.`Number`=`MoneyOrders`.`Number` AND o.`PlayerId`!=`MoneyOrders`.`PlayerId`)) Count,
-                `Admins`.`Login` UserName, `MoneyOrders`.*
+                `Admins`.`Login` AdminName, `MoneyOrders`.*
                 FROM `MoneyOrders`
-                LEFT JOIN `Admins` ON `Admins`.`Id` = `UserId`
+                LEFT JOIN `Admins` ON `Admins`.`Id` = `AdminId`
                 WHERE ".implode(' AND ',$where).$order;
 
         if ($limit) {
@@ -171,34 +173,4 @@ class MoneyOrdersDBProcessor implements IProcessor
 
         return $counters;
     }
-
-    public function beginTransaction()
-    {
-        try {
-            DB::Connect()->beginTransaction();
-        } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query", 500);    
-        }
-        return true;
-    }
-
-    public function commit()
-    {
-        try {
-            DB::Connect()->commit();
-        } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query", 500);    
-        }
-        return true;
-    }
-
-    public function rollBack()
-    {
-        try {
-            DB::Connect()->rollBack();
-        } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query", 500);    
-        }
-        return true;
-    }    
 }

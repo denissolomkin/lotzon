@@ -179,6 +179,7 @@
 
     });
 
+    /*
     $('.approve').on('click', function() {
         location.href = '/private/monetisation/approve/' + $(this).data('id') + '?moneyStatus=<?=$moneyStatus?>&shopStatus=<?=$shopStatus?>&money=' + ($(this).hasClass('money') ? 1 : 0);
     });
@@ -191,6 +192,7 @@
     $('.delete').on('click', function() {
         location.href = '/private/monetisation/delete/' + $(this).data('id') + '?moneyStatus=<?=$moneyStatus?>&shopStatus=<?=$shopStatus?>&money=' + ($(this).hasClass('money') ? 1 : 0);
     });
+    */
 </script>
 
 <? if($frontend) require_once($frontend.'_frontend.php') ?>

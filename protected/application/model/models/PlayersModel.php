@@ -10,7 +10,6 @@ class PlayersModel extends Model
 {
     public function init()
     {
-        //$this->setProcessor(Config::instance()->cacheEnabled ? new PlayersCacheProcessor() : new PlayersDBProcessor());
         $this->setProcessor(new PlayersDBProcessor());
     }
 
@@ -99,26 +98,6 @@ class PlayersModel extends Model
         return $this->getProcessor()->checkNickname($player);
     }
 
-    public function checkQiwi(Entity $player)
-    {
-        return $this->getProcessor()->checkQiwi($player);
-    }
-
-    public function checkPhone(Entity $player)
-    {
-        return $this->getProcessor()->checkPhone($player);
-    }
-
-    public function checkYandexMoney(Entity $player)
-    {
-        return $this->getProcessor()->checkYandexMoney($player);
-    }
-
-    public function checkWebMoney(Entity $player)
-    {
-        return $this->getProcessor()->checkWebMoney($player);
-    }
-
     public function initStats(Entity $player)
     {
         return $this->getProcessor()->initStats($player);
@@ -132,6 +111,16 @@ class PlayersModel extends Model
     public function initDates(Entity $player)
     {
         return $this->getProcessor()->initDates($player);
+    }
+
+    public function loadAccounts(Entity $player)
+    {
+        return $this->getProcessor()->loadAccounts($player);
+    }
+
+    public function updateAccounts(Entity $player)
+    {
+        return $this->getProcessor()->updateAccounts($player);
     }
 
     public function loadPrivacy(Entity $player)

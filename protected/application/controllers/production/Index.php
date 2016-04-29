@@ -198,7 +198,8 @@ class Index extends \SlimController\SlimController
         delete after week from April 18 or after drop Memcache
         */
         try {
-            $player->initStats();
+
+            $player->getAccounts();
 
         } catch (\Exception $e) {
             $this->session->get(Player::IDENTITY)->fetch();
@@ -207,8 +208,10 @@ class Index extends \SlimController\SlimController
             $player
                 ->setId($playerId)
                 ->fetch()
+                ->initDates()
                 ->initPrivacy()
-                ->initCounters();
+                ->initCounters()
+                ->initAccounts();
             $this->session->set(Player::IDENTITY, $player);
         }
 
@@ -270,11 +273,12 @@ class Index extends \SlimController\SlimController
             ),
             "currency" => CountriesModel::instance()->getCountry($this->country)->loadCurrency()->getSettings(),
             "billing"  => array(
-                "webmoney"    => $player->getWebMoney(),
-                "yandex"      => $player->getYandexMoney(),
-                "qiwi"        => $player->getQiwi(),
-                "phone"       => $player->getPhone()
+                'webmoney'      => $player->getAccounts('WebMoney') ? $player->getAccounts('WebMoney')[0] : null,
+                'yandex'        => $player->getAccounts('YandexMoney') ? $player->getAccounts('YandexMoney')[0] : null,
+                'qiwi'          => $player->getAccounts('Qiwi') ? $player->getAccounts('Qiwi')[0] : null,
+                'phone'         => $player->getAccounts('Phone') ? $player->getAccounts('Phone')[0] : null,
             ),
+            "accounts" => $player->getAccounts(),
             "social"   => $player->getSocial(),
             "settings" => array(
                 "newsSubscribe" => $player->getNewsSubscribe()
@@ -408,7 +412,8 @@ class Index extends \SlimController\SlimController
 
         $slider = array(
             "sum"     => round((LotteriesModel::instance()->getMoneyTotalWin() + SettingsModel::instance()->getSettings('counters')->getValue('MONEY_ADD')) * CountriesModel::instance()->getCountry($this->country)->loadCurrency()->getCoefficient()),
-            "players" => PlayersModel::instance()->getMaxId()
+            "players" => PlayersModel::instance()->getMaxId(),
+            "jackpot" => LotterySettingsModel::instance()->loadSettings()->getGoldPrizes($this->country)[6]['sum']
         );
 
         $player = array(

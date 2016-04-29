@@ -90,7 +90,9 @@ vertical-align: middle;}
 }
 
 #profile-holder .modal-body .input-group{
-    width:70%;float: right;
+    width:70%;
+    float: right;
+    text-align: center;
 }
 #profile-holder .modal-footer {
     clear: both;
@@ -99,6 +101,16 @@ vertical-align: middle;}
     width:100px;
 }
 
+#profile-holder .modal-body div.input-group-addon {
+    padding: 0px;
+}
+#profile-holder .modal-body div.input-group-addon select{
+    margin: -1px 0;
+    color: #6f6f6f;
+    background-color: #eeeeee;
+    border: 1px solid #cccccc;
+    border-width: 1px 0px;
+}
 #force p {
     padding: 15px;
 }

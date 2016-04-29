@@ -1,69 +1,44 @@
 <?php
 
-Application::import(PATH_INTERFACES . 'IProcessor.php');
+Application::import(PATH_APPLICATION . 'DBProcessor.php');
 
-class ShopDBProcessor
+class ShopDBProcessor extends DBProcessor
 {
-    public function createCategory(ShopCategory $category)
+
+    public function fetch(Entity $item)
     {
-        $sql = "INSERT INTO `ShopCategories` (`Title`,`Order`) VALUES (:title, :order)";
+        $sql = "SELECT `si`.*, `sc`.*, `si`.`Id` as `ItemId`, `sc`.`Id` AS `CategoryId`, `sc`.`Title` AS `CategoryTitle`, `si`.`Title` AS `ItemTitle` FROM `ShopItems` AS `si`
+                LEFT JOIN `ShopCategories` AS `sc` ON `si`.`CategoryId` = `sc`.`Id`
+                WHERE `si`.`Id` = :id";
 
         try {
-            $sth = DB::Connect()->prepare($sql)->execute(array(
-                ':title' => $category->getName(),
-                ':order' => $category->getOrder()
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':id'   => (int)$item->getId(),
             ));
         } catch (PDOException $e) {
             throw new ModelException("Unable to proccess storage query", 500);
         }
+        if ($row = $sth->fetch()) {
+            $catObj = new ShopCategory();
+            $catObj->setId($row['CategoryId']);
+            $catObj->setName($row['CategoryTitle']);
 
-        $category->setId(DB::Connect()->lastInsertId());
+            $item->setId($row['ItemId'])
+                ->setTitle($row['ItemTitle'])
+                ->setPrice($row['Price'])
+                ->setQuantity($row['Quantity'])
+                ->setCountries(unserialize($row['Countries']))
+                ->setImage($row['Image'])
+                ->setCategory($catObj);
 
-        return $category;
-    }   
-
-    public function updateCategory(ShopCategory $category) 
-    {
-        $sql = "UPDATE `ShopCategories` SET `Title` = :title, `Order` = :order WHERE `Id` = :id";
-        try {
-            $sth = DB::Connect()->prepare($sql)->execute(array(
-                ':title' => $category->getName(),
-                ':order' => $category->getOrder(),
-                ':id'    => $category->getId(),
-            ));
-        } catch (PDOException $e) {
-            throw new ModelException("Unable to proccess storage query", 500);
-        }        
-
-        return $category;
-    }
-
-    public function deleteCategory(ShopCategory $category)
-    {
-        $queries = array(
-            'DELETE FROM `ShopItems` WHERE `CategoryId` = :category',
-            'DELETE FROM `ShopCategories` WHERE `Id` = :category',
-        );
-
-        DB::Connect()->beginTransaction();
-        try {
-
-            foreach ($queries as $query) {
-                DB::Connect()->prepare($query)->execute(array(
-                    ':category' => $category->getId(),
-                ));
-            }
-
-            DB::Connect()->commit();
-        } catch (PDOException $e) {
-            DB::Connect()->rollback();
-            throw new ModelException("Unable to proccess storage query", 500);   
+        } else {
+            throw new ModelException("ITEM_NOT_FOUND", 404);
         }
-
-        return true;
+        return $item;
     }
 
-    public function createItem(ShopItem $item) 
+    public function create(Entity $item)
     {
         $sql = "INSERT INTO `ShopItems` (`Title`, `Price`, `Quantity`, `Visible`, `Image`, `CategoryId`, `Countries`) VALUES (:title, :price, :quantity, :visible, :image, :category, :countries)";
 
@@ -86,7 +61,7 @@ class ShopDBProcessor
         return $item;
     }
 
-    public function updateItem(ShopItem $item) 
+    public function update(Entity $item)
     {
         $sql = "UPDATE `ShopItems` SET `Title` = :title, `Price` = :price, `Quantity` = :quantity, `Countries` = :countries WHERE `Id` = :id";
 
@@ -105,7 +80,7 @@ class ShopDBProcessor
         return $item;
     }
 
-    public function deleteItem(ShopItem $item) 
+    public function delete(Entity $item)
     {
         $sql = "DELETE FROM `ShopItems` WHERE `Id` = :id";
 
@@ -115,6 +90,61 @@ class ShopDBProcessor
             ));
         } catch (PDOException $e) {
             throw new ModelException("Unable to proccess storage query", 500);       
+        }
+
+        return true;
+    }
+    public function createCategory(ShopCategory $category)
+    {
+        $sql = "INSERT INTO `ShopCategories` (`Title`,`Order`) VALUES (:title, :order)";
+
+        try {
+            $sth = DB::Connect()->prepare($sql)->execute(array(
+                ':title' => $category->getName(),
+                ':order' => $category->getOrder()
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Unable to proccess storage query", 500);
+        }
+
+        $category->setId(DB::Connect()->lastInsertId());
+
+        return $category;
+    }
+
+    public function updateCategory(ShopCategory $category)
+    {
+        $sql = "UPDATE `ShopCategories` SET `Title` = :title, `Order` = :order WHERE `Id` = :id";
+        try {
+            $sth = DB::Connect()->prepare($sql)->execute(array(
+                ':title' => $category->getName(),
+                ':order' => $category->getOrder(),
+                ':id'    => $category->getId(),
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Unable to proccess storage query", 500);
+        }
+
+        return $category;
+    }
+
+    public function deleteCategory(ShopCategory $category)
+    {
+        $queries = array(
+            'DELETE FROM `ShopItems` WHERE `CategoryId` = :category',
+            'DELETE FROM `ShopCategories` WHERE `Id` = :category',
+        );
+
+        try {
+
+            foreach ($queries as $query) {
+                DB::Connect()->prepare($query)->execute(array(
+                    ':category' => $category->getId(),
+                ));
+            }
+
+        } catch (PDOException $e) {
+            throw new ModelException("Unable to proccess storage query", 500);
         }
 
         return true;
@@ -165,40 +195,6 @@ class ShopDBProcessor
 
         return $categories;
     }
-
-    public function fetchItem($item)
-    {
-        $sql = "SELECT `si`.*, `sc`.*, `si`.`Id` as `ItemId`, `sc`.`Id` AS `CategoryId`, `sc`.`Title` AS `CategoryTitle`, `si`.`Title` AS `ItemTitle` FROM `ShopItems` AS `si` 
-                LEFT JOIN `ShopCategories` AS `sc` ON `si`.`CategoryId` = `sc`.`Id`
-                WHERE `si`.`Id` = :id";
-
-        try {
-            $sth = DB::Connect()->prepare($sql);
-            $sth->execute(array(
-                ':id'   => (int)$item->getId(),
-            ));
-        } catch (PDOException $e) {
-            throw new ModelException("Unable to proccess storage query", 500);
-        }
-        if ($row = $sth->fetch()) {
-            $catObj = new ShopCategory();
-            $catObj->setId($row['CategoryId']);
-            $catObj->setName($row['CategoryTitle']);
-
-            $item->setId($row['ItemId'])
-                 ->setTitle($row['ItemTitle'])
-                 ->setPrice($row['Price'])
-                 ->setQuantity($row['Quantity'])
-                 ->setCountries(unserialize($row['Countries']))
-                 ->setImage($row['Image'])
-                 ->setCategory($catObj);
-
-        } else {
-            throw new ModelException("ITEM_NOT_FOUND", 404);
-        }
-        return $item;
-    }
-
 
     public function getAllItems($excludeQuantibleItems = true)
     {   

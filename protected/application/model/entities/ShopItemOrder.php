@@ -5,120 +5,39 @@ class ShopItemOrder extends Entity
 {
     const STATUS_ORDERED = 0;
     const STATUS_PROCESSED = 1;
+    const STATUS_DENIED = 2;
 
-    private $_id       = 0;
-    private $_item     = null;
-    private $_player   = null;
-    private $_number   = null;
-    private $_userid   = 0;
-    private $_count   = 0;
-    private $_username   = '';
-    private $_dateOrdered    = '';
-    private $_dateProcessed  = '';
-    private $_adminProcessed = '';
-    private $_status   = self::STATUS_ORDERED;
+    const FOR_UPDATE = true;
 
+    protected $_id      = 0;
+    protected $_item    = null;
+    protected $_status  = self::STATUS_ORDERED;
+    protected $_player  = null;
 
-    private $_name       = '';
-    private $_surname    = '';
-    private $_secondName = '';
-    private $_phone      = '';
+    protected $_adminId   = 0;
+    protected $_adminName = '';
+    protected $_count     = 0;
 
-    private $_region     = '';
-    private $_city       = '';
-    private $_addr       = '';
+    protected $_dateOrdered   = '';
+    protected $_dateProcessed = '';
 
-    private $_chanceGameId = 0;
+    protected $_name       = '';
+    protected $_surname    = '';
+    protected $_secondName = '';
+    protected $_phone      = '';
+    protected $_region     = '';
+    protected $_city       = '';
+    protected $_address    = '';
+
+    protected $_number  = null;
+    protected $_sum = null;
+    protected $_equivalent = null;
+
+    protected $_chanceGameId = 0;
 
     public function init() 
     {
         $this->setModelClass('ShopOrdersModel');
-    }
-
-    public function setId($id)
-    {
-        $this->_id = $id;
-
-        return $this;
-    }
-
-    public function getId()
-    {
-        return $this->_id;
-    }
-
-    public function setCount($count)
-    {
-        $this->_count = $count;
-
-        return $this;
-    }
-
-    public function getCount()
-    {
-        return $this->_count;
-    }
-
-
-
-    public function setUserId($userid)
-    {
-        $this->_userid = $userid;
-
-        return $this;
-    }
-
-    public function getUserId()
-    {
-        return $this->_userid;
-    }
-
-    public function setUserName($username)
-    {
-        $this->_username = $username;
-
-        return $this;
-    }
-
-    public function getUserName()
-    {
-        return $this->_username;
-    }
-
-    public function setNumber($number)
-    {
-        $this->_number = $number;
-
-        return $this;
-    }
-
-    public function getNumber()
-    {
-        return $this->_number;
-    }
-
-    public function setChanceGameId($chanceGameId)
-    {
-        $this->_chanceGameId = $chanceGameId;
-
-        return $this;
-    }
-
-    public function getChanceGameId()
-    {
-        return $this->_chanceGameId;
-    }
-
-    public function setItem(ShopItem $item) 
-    {
-        $this->_item = $item;
-
-        return $this;
-    }
-
-    public function getItem()
-    {
-        return $this->_item;
     }
 
     public function setPlayer(Player $player) 
@@ -128,131 +47,6 @@ class ShopItemOrder extends Entity
 
         return $this;
     }
-
-    public function getPlayer()
-    {
-        return $this->_player;
-    }
-
-    public function setDateOrdered($dateOrdered)
-    {
-        $this->_dateOrdered = $dateOrdered;
-
-        return $this;
-    }
-
-    public function getDateOrdered()
-    {
-        return $this->_dateOrdered;
-    }
-
-    public function setDateProcessed($dateProcessed)
-    {
-        $this->_dateProcessed = $dateProcessed;
-
-        return $this;
-    }
-
-    public function getDateProcessed()
-    {
-        return $this->_dateProcessed;
-    }
-
-    public function setStatus($status)
-    {
-        $this->_status = $status;
-
-        return $this;
-    }
-
-    public function getStatus()
-    {
-        return $this->_status;
-    }
-
-    public function setName($name)
-    {
-        $this->_name = $name;
-
-        return $this;
-    }
-
-    public function getName()
-    {
-        return $this->_name;
-    }
-
-    public function setSurname($surname)
-    {
-        $this->_surname = $surname;
-
-        return $this;
-    }
-
-    public function getSurname()
-    {
-        return $this->_surname;
-    }
-
-    public function setSecondName($secondName)
-    {
-        $this->_secondName = $secondName;
-
-        return $this;
-    }
-
-    public function getSecondName()
-    {
-        return $this->_secondName;
-    }
-
-    public function setPhone($phone)
-    {
-        $this->_phone = $phone;
-
-        return $this;
-    }
-
-    public function getPhone()
-    {
-        return $this->_phone;
-    } 
-
-    public function setRegion($region)
-    {
-        $this->_region = $region;
-
-        return $this;
-    }
-
-    public function getRegion()
-    {
-        return $this->_region;
-    } 
-
-    public function setCity($city)
-    {
-        $this->_city = $city;
-
-        return $this;
-    }
-
-    public function getCity()
-    {
-        return $this->_city;
-    } 
-
-    public function setAddress($addr)
-    {
-        $this->_addr = $addr;
-
-        return $this;
-    }
-
-    public function getAddress()
-    {
-        return $this->_addr;
-    } 
 
     public function validate($action, $params = array()) 
     {
@@ -284,7 +78,7 @@ class ShopItemOrder extends Entity
                 if (!$this->getAddress()) {
                     throw new EntityException("ORDER_INVALID_ADDRESS", 400);
                 }
-                if (!$this->getChanceGameId() && $this->getPlayer()->getBalance()['Points'] < $this->getItem()->getPrice()) {
+                if (!$this->getChanceGameId() && $this->getPlayer()->getBalance(self::FOR_UPDATE)['Points'] < $this->getSum()) {
                     throw new EntityException("POINTS_NOT_ENOUGH", 400);
                 }
 
@@ -317,7 +111,7 @@ class ShopItemOrder extends Entity
             $item = new ShopItem();
             $item->setId($data['ItemId']);
 
-            if($data['PlayerId']){
+            if($data['PlayerId']) {
                 $player = new Player();
                 $player->setId($data['PlayerId']);
                 $this->setPlayer($player->fetch())
@@ -329,8 +123,8 @@ class ShopItemOrder extends Entity
                  ->setDateProcessed($data['DateProcessed'])
                  ->setStatus($data['Status'])
                  ->setNumber($data['Number'])
-                 ->setUserName($data['UserName'])
-                 ->setUserId($data['UserId'])
+                 ->setAdminName($data['AdminName'])
+                 ->setAdminId($data['AdminId'])
                  ->setName($data['Name'])
                  ->setSurname($data['Surname'])
                  ->setSecondName($data['SecondName'])

@@ -26,6 +26,7 @@ class LotteryController extends \AjaxController
 
         $this->validateRequest();
         $this->authorizedOnly(true);
+        $this->validateLogout();
         $this->validateCaptcha();
     }
 
@@ -75,16 +76,16 @@ class LotteryController extends \AjaxController
         }
 
         try {
-            \TicketsModel::instance()->beginTransaction();
+            $ticket->beginTransaction();
             if ($ticket->getIsGold()==true) {
                 $player = new Player;
                 $player->setId($ticket->getPlayerId())->fetch();
                 \PlayersModel::instance()->updateGoldTicket($player, -1);
             }
             $ticket->create();
-            \TicketsModel::instance()->commit();
+            $ticket->commit();
         } catch (EntityException $e) {
-            \TicketsModel::instance()->rollBack();
+            $ticket->rollBack();
             $this->ajaxResponseInternalError($e->getMessage());
         }
 
@@ -110,6 +111,8 @@ class LotteryController extends \AjaxController
             $this->ajaxResponseNoCache(array("message"=>"ALREADY_BOUGHT"),400);
         }
 
+        $ticket = new Ticket();
+
         if ($currency!='points') {
             $country = (
             CountriesModel::instance()->isCountry($player->getCountry())
@@ -123,7 +126,7 @@ class LotteryController extends \AjaxController
             }
 
             try {
-                \TicketsModel::instance()->beginTransaction();
+                $ticket->beginTransaction();
                 $money = \PlayersModel::instance()->getBalance($player, true)['Money'];
                 if ($money < $goldPrice) {
                     throw new \Exception();
@@ -134,9 +137,9 @@ class LotteryController extends \AjaxController
                 $transaction = new \Transaction;
                 $transaction->setPlayerId($player->getId())->setCurrency('MONEY')->setSum(0 - $goldPrice)->setDescription('Покупка золотого билета')->setBalance(\PlayersModel::instance()->getBalance($player, true)['Money'])->create();
 
-                \TicketsModel::instance()->commit();
+                $ticket->commit();
             } catch (\Exception $e) {
-                \TicketsModel::instance()->rollBack();
+                $ticket->rollBack();
                 $res = array(
                     "message" => "MONEY_NO_ENOUGH",
                     "tickets" => array(
@@ -145,7 +148,7 @@ class LotteryController extends \AjaxController
                 );
                 $this->ajaxResponseNoCache($res, 402);
             } catch (EntityException $e) {
-                \TicketsModel::instance()->rollBack();
+                $ticket->rollBack();
                 $this->ajaxResponseInternalError();
             }
         } else {
@@ -156,7 +159,7 @@ class LotteryController extends \AjaxController
             }
 
             try {
-                \TicketsModel::instance()->beginTransaction();
+                $ticket->beginTransaction();
                 $money = \PlayersModel::instance()->getBalance($player, true)['Points'];
                 if ($money < $goldPrice) {
                     throw new \Exception();
@@ -167,9 +170,9 @@ class LotteryController extends \AjaxController
                 $transaction = new \Transaction;
                 $transaction->setPlayerId($player->getId())->setCurrency('POINT')->setSum(0 - $goldPrice)->setDescription('Покупка золотого билета')->setBalance(\PlayersModel::instance()->getBalance($player, true)['Points'])->create();
 
-                \TicketsModel::instance()->commit();
+                $ticket->commit();
             } catch (\Exception $e) {
-                \TicketsModel::instance()->rollBack();
+                $ticket->rollBack();
                 $res = array(
                     "message" => "POINTS_NO_ENOUGH",
                     "tickets" => array(
@@ -178,7 +181,7 @@ class LotteryController extends \AjaxController
                 );
                 $this->ajaxResponseNoCache($res, 402);
             } catch (EntityException $e) {
-                \TicketsModel::instance()->rollBack();
+                $ticket->rollBack();
                 $this->ajaxResponseInternalError();
             }
         }

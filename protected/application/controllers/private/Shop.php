@@ -137,8 +137,11 @@ class Shop extends PrivateArea
             $item->setId($this->request()->post('categoryId'));
 
             try {
+                $item->beginTransaction();
                 $item->delete();
+                $item->commit();
             } catch (EntityException $e) {
+                $item->rollBack();
                 $response['status'] = 0;
                 $response['message'] = $e->getMessage();
             }

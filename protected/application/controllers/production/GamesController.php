@@ -16,6 +16,8 @@ class GamesController extends \AjaxController
         parent::init();
         $this->validateRequest();
         $this->authorizedOnly(true);
+        $this->validateLogout();
+        $this->validateCaptcha();
     }
 
     public function listAction($key = NULL)

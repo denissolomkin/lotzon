@@ -1,8 +1,8 @@
 <?php
 
-Application::import(PATH_INTERFACES . 'IProcessor.php');
+Application::import(PATH_APPLICATION . 'DBProcessor.php');
 
-class ReviewsDBProcessor implements IProcessor
+class ReviewsDBProcessor extends DBProcessor
 {
     public function create(Entity $review)
     {

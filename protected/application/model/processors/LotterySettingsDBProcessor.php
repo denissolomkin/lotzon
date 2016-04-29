@@ -64,7 +64,7 @@ class LotterySettingsDBProcessor
             DB::Connect()->query($goldPrizesSql);
             DB::Connect()->commit();
         } catch (PDOException $e) {
-            DB::Connect()->rollback();
+            DB::Connect()->rollBack();
 
             throw new ModelException($e->getMessage() . "Unable to process storage query", 500);
         }

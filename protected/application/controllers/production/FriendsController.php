@@ -20,6 +20,7 @@ class FriendsController extends \AjaxController
         parent::init();
         $this->validateRequest();
         $this->authorizedOnly();
+        $this->validateLogout();
         $this->validateCaptcha();
     }
 

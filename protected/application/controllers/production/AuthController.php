@@ -266,6 +266,7 @@ class AuthController extends \SlimController\SlimController {
                     ->update()
                     ->initPrivacy()
                     ->initCounters()
+                    ->initAccounts()
                     ->writeLogin();
 
                 $loggedIn = true;

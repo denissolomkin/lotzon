@@ -214,13 +214,13 @@ class Users extends PrivateArea
                         'id' => $order->getId(),
                         'status' => $order->getStatus(),
                         'number' => $order->getPhone(),
-                        'username' => ($order->getUserName()?$order->getUserName().': ':'').($order->getDateProcessed()?date('d.m.Y H:i:s', $order->getDateProcessed()):''),
+                        'admin' => ($order->getAdminName()?$order->getAdminName().': ':'').($order->getDateProcessed()?date('d.m.Y H:i:s', $order->getDateProcessed()):''),
                         'playername' => ($order->getPlayer()?$order->getPlayer()->getNicname().'<br>'.$order->getPlayer()->getSurname().' '.$order->getPlayer()->getName().' '.$order->getPlayer()->getSecondName():''),
                         'item' => $order->getItem()->getTitle(),
                         'name' => $order->getSurname().' '.$order->getName.' '.$order->getSecondName(),
                         'phone' => $order->getPhone(),
                         'address' => ($order->getRegion() ? $order->getRegion() . ' обл.,' : '').' г. '.$order->getCity().', '.$order->getAddress(),
-                        'price'     => ($order->getChanceGameId() ? 'Выиграл в шанс' : $order->getItem()->getPrice()),
+                        'price' => ($order->getChanceGameId() ? 'Выиграл в шанс' : $order->getSum()),
                         'date' => date('d.m.Y H:i:s', $order->getDateOrdered()),
                     );
                 }
@@ -235,7 +235,7 @@ class Users extends PrivateArea
                         'id' => $order->getId(),
                         'status' => $order->getStatus(),
                         'number' => $order->getNumber(),
-                        'username' => ($order->getUserName()?$order->getUserName().': ':'').($order->getDateProcessed()?date('d.m.Y H:i:s', $order->getDateProcessed()):''),
+                        'admin' => ($order->getAdminName()?$order->getAdminName().': ':'').($order->getDateProcessed()?date('d.m.Y H:i:s', $order->getDateProcessed()):''),
                         'playername' => ($order->getPlayer()?$order->getPlayer()->getNicname().'<br>'.$order->getPlayer()->getSurname().' '.$order->getPlayer()->getName().' '.$order->getPlayer()->getSecondName():null),
                         'type' => $order->getType(),
                         'data' => (implode('</br>',$dataOrder)),
@@ -262,7 +262,7 @@ class Users extends PrivateArea
                 'data'    => array(),
             );
             $player = new Player;
-            $player->setId($playerId)->fetch();
+            $player->setId($playerId)->fetch()->initAccounts();
             try {
                 $response['data'] = array(
                     'Avatar' => $player->getAvatar(),
@@ -271,10 +271,7 @@ class Users extends PrivateArea
                     'Name' => $player->getName(),
                     'Surname' => $player->getSurname(),
                     'Birthday' => $player->getBirthday()?date('d.m.Y', $player->getBirthday()):'',
-                    'Phone' => $player->getPhone()?:'',
-                    'Qiwi' => $player->getQiwi()?:'',
-                    'YandexMoney' => $player->getYandexMoney()?:'',
-                    'WebMoney' => $player->getWebMoney()?:'',
+                    'Accounts' => $player->getAccounts(),
                     'Country' => $player->getCountry(),
                     'Lang' => $player->getLang(),
                     'Utc' => $player->getUtc()?:'',
@@ -299,6 +296,8 @@ class Users extends PrivateArea
                 'data'    => array(),
             );
 
+            $accounts = array_filter($this->request()->post('Accounts', array()),function($account){ return $account['AccountId']; });
+
             $player = new Player;
             $player->setId($playerId)->fetch();
             try {
@@ -307,10 +306,9 @@ class Users extends PrivateArea
                     throw new EntityException("INVALID_DATE_FORMAT", 400);
                 }
 
-                $player->setPhone($this->request()->post('phone'));
-                $player->setQiwi($this->request()->post('qiwi'));
-                $player->setWebMoney($this->request()->post('webmoney'));
-                $player->setYandexMoney($this->request()->post('yandexmoney'));
+                $player
+                    ->initAccounts($accounts)
+                    ->updateAccounts();
 
                 if($this->request()->post('bd'))
                     $player->setBirthday(strtotime($this->request()->post('bd')));
@@ -495,7 +493,7 @@ class Users extends PrivateArea
                 foreach ($response['data']['notes'] as &$note) {
                     $note = array(
                         'id' => $note->getId(),
-                        'user' => $note->getUserName(),
+                        'admin' => $note->getAdminName(),
                         'date' => date('d.m.Y H:i:s', $note->getDate()),
                         'text' => $note->getText(),
                     );
@@ -544,7 +542,7 @@ class Users extends PrivateArea
             try {
                 $note = new Note();
                 $note->setPlayerId($playerId)
-                    ->setUserId(Session2::connect()->get(Admin::SESSION_VAR)->getId())
+                    ->setAdminId(Session2::connect()->get(Admin::SESSION_VAR)->getId())
                     ->setText($this->request()->post('text'))
                     ->create();
             } catch (EntityException $e) {
@@ -575,7 +573,7 @@ class Users extends PrivateArea
                     $notice = array(
                         'id' => $notice->getId(),
                         'title' => $notice->getTitle(),
-                        'username' => ($notice->getUserName()?:''),
+                        'admin' => ($notice->getAdminName()?:''),
                         'text' => $notice->getText(),
                         'country' => $notice->getCountry(),
                         'minLotteries' => ($notice->getMinLotteries()?:null),
@@ -625,7 +623,7 @@ class Users extends PrivateArea
 
                     $notice = new Notice();
                     $notice->setPlayerId($playerId)
-                        ->setUserId(Session2::connect()->get(Admin::SESSION_VAR)->getId())
+                        ->setAdminId(Session2::connect()->get(Admin::SESSION_VAR)->getId())
                         ->setText($this->request()->post('text'))
                         ->setTitle($this->request()->post('title'))
                         ->setType($this->request()->post('type'))

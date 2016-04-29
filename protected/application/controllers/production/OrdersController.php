@@ -1,7 +1,6 @@
 <?php
 namespace controllers\production;
-use \Application, \Player, \EntityException, \MoneyOrder, \ShopItem, \ShopItemOrder,\ChanceGamesModel, \ModelException;
-use Symfony\Component\HttpFoundation\Session\Session;
+use \Application, \EntityException, \MoneyOrder, \CountriesModel, \Player;
 
 Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');
 
@@ -11,20 +10,17 @@ class OrdersController extends \AjaxController
     {
         parent::init();
         $this->validateRequest();
-        $this->authorizedOnly();
+        $this->authorizedOnly(true);
+        $this->validateLogout();
         $this->validateCaptcha();
     }
 
     public function convertAction()
     {
-        $sum = $this->request()->post('sum');
+        $this->player->fetch();
 
-        $player = new Player;
-        $player->setId($this->session->get(Player::IDENTITY)->getId());
-
-        $order = new MoneyOrder();
-        $order->setPlayer($this->session->get(Player::IDENTITY))
-            ->setType('points');
+        $sum  = $this->request()->post('sum');
+        $currency = CountriesModel::instance()->getCountry($this->player->getCountry())->loadCurrency();
 
         $data = array(
             "summ" => array(
@@ -33,39 +29,42 @@ class OrdersController extends \AjaxController
             )
         );
 
-        $order->setData($data);
+        $order = new MoneyOrder();
+        $order->setPlayer($this->player)
+            ->setType('points')
+            ->setText('Конвертация денег')
+            ->setData($data)
+            ->setCurrency($currency->getCode())
+            ->setSum($sum)
+            ->setEquivalent($sum / $currency->getCoefficient())
+            ->setStatus(1);
+
         try {
+
             $order->beginTransaction();
-            $money = \PlayersModel::instance()->getBalance($player, true)['Money'];
-            if ($money<$sum) {
-                throw new \Exception();
-            }
             $order->create();
-            $sum = $order->getData()['summ']['value'];
-            $order->getPlayer()->addMoney(-1*$sum, $order->getText());
+            $this->player
+                ->addMoney(-1 * $sum, $order->getText())
+                ->addPoints((int)(round($sum, 2) * $currency->getRate()), "Обмен денег на баллы");
+            $this->session->set(Player::IDENTITY, $this->player);
             $order->commit();
+
         } catch(EntityException $e) {
+
             $order->rollBack();
             $res = array(
                 "message" => $e->getMessage(),
                 "res"     => array()
             );
             $this->ajaxResponseNoCache($res, 402);
-        } catch (\Exception $e) {
-            \TicketsModel::instance()->rollBack();
-            $res = array(
-                "message" => "MONEY_NO_ENOUGH",
-                "res"     => array()
-            );
-            $this->ajaxResponseNoCache($res, 402);
         }
 
-        $player->fetch();
         $res = array(
+            "message" => "message-convert-success",
             "player" => array(
                 "balance" => array(
-                    "money"  => $player->getMoney(),
-                    "points" => $player->getPoints(),
+                    "money"  => $this->player->getMoney(),
+                    "points" => $this->player->getPoints(),
                 )
             )
         );
@@ -75,35 +74,57 @@ class OrdersController extends \AjaxController
 
     public function cashoutAction()
     {
+
+        $this->player
+            ->fetch()
+            ->initAccounts();
+
         $sum    = $this->request()->post('sum');
         $method = $this->request()->post('method');
-
-        $player = new Player;
-        $player->setId($this->session->get(Player::IDENTITY)->getId())->fetch();
-
-        $order = new MoneyOrder();
-        $order->setPlayer($this->session->get(Player::IDENTITY))
-            ->setType($method);
+        $number = $this->request()->post('number', false);
 
         switch ($method) {
             case \MoneyOrder::GATEWAY_PHONE:
-                $number = $player->getPhone();
+                $accountName = 'Phone';
                 break;
+
             case \MoneyOrder::GATEWAY_QIWI:
-                $number = $player->getQiwi();
                 $this->ajaxResponseBadRequest("SELECT_OTHER_METHOD");
+                $accountName = 'Qiwi';
                 break;
+
             case \MoneyOrder::GATEWAY_WEBMONEY:
-                $number = $player->getWebMoney();
+                $accountName = 'WebMoney';
                 break;
+
             case \MoneyOrder::GATEWAY_YANDEX:
-                $number = $player->getYandexMoney();
+                $accountName = 'YandexMoney';
                 break;
+
             default:
                 $this->ajaxResponseBadRequest("INVALID_PAYMENT_GATEWAY");
+                break;
         }
 
+        switch (true) {
 
+            case !$this->player->getAccounts($accountName):
+                $this->ajaxResponseBadRequest("FIRST_FILL_ACCOUNT");
+                break;
+
+            case $number && !in_array($number, $this->player->getAccounts($accountName)):
+                $this->ajaxResponseBadRequest("INVALID_ACCOUNT_NUMBER");
+                break;
+
+            case !$number && $this->player->getAccounts($accountName):
+                $number = $this->player->getAccounts($accountName)[0];
+                break;
+
+            default:
+                break;
+        }
+
+        $currency = CountriesModel::instance()->getCountry($this->player->getCountry())->loadCurrency();
         $data = array(
             $method => array(
                 "title" => $method,
@@ -115,41 +136,41 @@ class OrdersController extends \AjaxController
             )
         );
 
-        $order->setData($data);
+        $order = new MoneyOrder();
+        $order->setPlayer($this->player)
+            ->setType($method)
+            ->setData($data)
+            ->setCurrency($currency->getCode())
+            ->setSum($sum)
+            ->setEquivalent($sum / $currency->getCoefficient())
+            ->setNumber(preg_replace("/\D/","", $number));
+
         try {
+
             $order->beginTransaction();
-            $money = \PlayersModel::instance()->getBalance($player, true)['Money'];
-            if ($money<$sum) {
-                throw new \Exception();
-            }
             $order->create();
-            $sum = $order->getData()['summ']['value'];
-            $order->getPlayer()->addMoney(-1*$sum, $order->getText());
+            $this->player->addMoney(-1 * $sum, $order->getText());
+            $this->session->set(Player::IDENTITY, $this->player);
             $order->commit();
+
         } catch(EntityException $e) {
+
             $order->rollBack();
             $res = array(
                 "message" => $e->getMessage(),
                 "res"     => array()
             );
+
             $this->ajaxResponseNoCache($res, 402);
-        } catch (\Exception $e) {
-            \TicketsModel::instance()->rollBack();
-            $res = array(
-                "message" => "MONEY_NO_ENOUGH",
-                "res"     => array()
-            );
-            $this->ajaxResponseNoCache($res, 402);
+
         }
 
-
-        $player->fetch();
         $res = array(
             "message" => "message-cashout-success",
             "player"  => array(
                 "balance" => array(
-                    "money"  => $player->getMoney(),
-                    "points" => $player->getPoints(),
+                    "money"  => $this->player->getMoney(),
+                    "points" => $this->player->getPoints(),
                 )
             )
         );

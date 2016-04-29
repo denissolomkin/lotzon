@@ -55,13 +55,13 @@ class ReportsDBProcessor implements IProcessor
     public function getMoneyOrders($dateFrom=null, $dateTo=null, $args=null)
     {
         $sql = "
-        SELECT CONCAT(YEAR(FROM_UNIXTIME(DateOrdered)),' ', MONTHNAME(FROM_UNIXTIME(DateOrdered))) Date, Type, COUNT( * ) `Quantity`, SUM(Sum) Sum
+        SELECT CONCAT(YEAR(FROM_UNIXTIME(DateOrdered)),' ', MONTHNAME(FROM_UNIXTIME(DateOrdered))) Date, Type, COUNT( * ) `Quantity`, SUM(Equivalent) Sum
         FROM  `MoneyOrders`
         WHERE `DateOrdered` > :from
         AND   `DateOrdered` < :to
         AND Type!='points'
         ".(is_numeric($args['Status'])?"AND `Status` = {$args['Status']}":'')."
-        ".(is_numeric($args['AdminID'])?"AND `UserID` = {$args['AdminID']}":'')."
+        ".(is_numeric($args['AdminID'])?"AND `AdminID` = {$args['AdminID']}":'')."
         GROUP BY Date, Type
         ORDER BY DateOrdered";
 
@@ -85,7 +85,7 @@ class ReportsDBProcessor implements IProcessor
         WHERE  `DateOrdered` > :from
         AND    `DateOrdered` < :to
         ".(is_numeric($args['Status'])?"AND `Status` = {$args['Status']}":'')."
-        ".(is_numeric($args['AdminID'])?"AND `UserID` = {$args['AdminID']}":'')."
+        ".(is_numeric($args['AdminID'])?"AND `AdminID` = {$args['AdminID']}":'')."
         GROUP BY Date, ItemId
         ORDER BY DateOrdered";
 

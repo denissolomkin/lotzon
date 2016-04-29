@@ -22,7 +22,8 @@ class Player extends Entity
         'dates'=>array('Moment','QuickGame','ChanceGame','AdBlockLast','AdBlocked','WSocket','TeaserClick','Ping','Login','Notice','Registration'),
         'stats'=>array('WhoMore','SeaBattle','Notice','Note','AdBlock','Log','Ip','MyReferal','Referal','MyInviter','Inviter','ShopOrder','MoneyOrder','Review','Message','CookieId','Mult'),
         'counters'=>array('CaptchaCount','CaptchaTime'),
-        'privacy'=>array('Name','Surname','Gender','Birthday','Age','Zip','Address','Message') // list of variables, which can be modify by player
+        'privacy'=>array('Name','Surname','Gender','Birthday','Age','Zip','Address','Message'), // list of variables, which can be modify by player
+        'accounts'=>array('WebMoney','YandexMoney','Qiwi','Phone'),
     );
 
     protected $_id         = 0;
@@ -51,11 +52,6 @@ class Player extends Entity
     protected $_agent      = '';
     protected $_referer    = '';
 
-    protected $_phone       = null;
-    protected $_yandexMoney = null;
-    protected $_qiwi        = null;
-    protected $_webMoney    = null;
-
     protected $_favoriteCombination = array();
     protected $_visible             = false;
     protected $_valid           = 0;
@@ -64,12 +60,11 @@ class Player extends Entity
     protected $_bot             = false;
     protected $_admin           = false;
     protected $_utc             = null;
-    protected $_captchaTime     = 0;
-    protected $_captchaCount    = 0;
 
     protected $_privacy        = array();
     protected $_dates          = array();
     protected $_counters       = array();
+    protected $_accounts       = array();
     protected $_country        = '';
     protected $_lang           = '';
 
@@ -105,11 +100,6 @@ class Player extends Entity
     public function init()
     {
         $this->setModelClass('PlayersModel');
-    }
-
-    public function getNicName()
-    {
-        return $this->_nicname;
     }
 
     public function setLang($lang)
@@ -166,9 +156,10 @@ class Player extends Entity
         return $check;
     }
 
-    public function getAge() {
+    public function getAge()
+    {
 
-        if($this->getBirthday()) {
+        if ($this->getBirthday()) {
             $birthday = new DateTime();
             $birthday->setTimestamp($this->getBirthday());
             $now = new DateTime();
@@ -364,36 +355,43 @@ class Player extends Entity
                 $this->setNicname(trim(htmlspecialchars(strip_tags($this->getNicname()))));
                 $this->checkNickname();
 
-                if ($this->getPhone()){
-                    if(!preg_match('/^[+0-9\- ()]*$/', $this->getPhone()))
-                        throw new EntityException("INVALID_PHONE_FORMAT", 400);
-                    //$this->checkPhone();
-                }
-
-                if ($this->getYandexMoney()){
-                    if(!preg_match('/^41001[0-9]{7,10}$/', $this->getYandexMoney()))
-                        throw new EntityException("INVALID_YANDEXMONEY_FORMAT", 400);
-                    //$this->checkYandexMoney();
-                }
-
-                if ($this->getWebMoney()){
-                    if(!preg_match('/^[RZUBE][0-9]{12}$/', $this->getWebMoney()))
-                        throw new EntityException("INVALID_WEBMONEY_FORMAT", 400);
-                    //$this->checkWebMoney();
-                }
-
-                if ($this->getQiwi()){
-                    if(!preg_match('/^[+0-9\- ()]*$/', $this->getQiwi()))
-                        throw new EntityException("INVALID_QIWI_FORMAT", 400);
-                    //$this->checkQiwi();
-                }
-
                 $this->setName(trim(htmlspecialchars(strip_tags($this->getName()))));
                 $this->setSurname(trim(htmlspecialchars(strip_tags($this->getSurname()))));
                 $this->setSecondName(trim(htmlspecialchars(strip_tags($this->getSecondName()))));
 
             break;
+            case 'accounts' :
+                foreach($params as $account) {
+                    switch ($account['AccountName']) {
 
+                        case 'Phone':
+                            if (!preg_match('/^[0-9]*$/', $account['AccountId']))
+                                throw new EntityException("INVALID_PHONE_FORMAT", 400);
+                            break;
+
+                        case 'YandexMoney':
+                            if (!preg_match('/^41001[0-9]{7,10}$/', $account['AccountId']))
+                                throw new EntityException("INVALID_YANDEXMONEY_FORMAT", 400);
+                            break;
+
+                        case 'Qiwi':
+                            if (!preg_match('/^[0-9]*$/', $account['AccountId']))
+                                throw new EntityException("INVALID_QIWI_FORMAT", 400);
+                            break;
+
+                        case 'WebMoney':
+                            if (!preg_match('/^[RZUBE][0-9]{12}$/', $account['AccountId']))
+                                throw new EntityException("INVALID_WEBMONEY_FORMAT", 400);
+                            break;
+
+                        default:
+                            if (!in_array($params['AccountName'], self::$MASK['accounts']))
+                                throw new EntityException("INVALID_ACCOUNT_NAME", 400);
+                            break;
+                    }
+                }
+
+                break;
             default:
                 # code...
             break;
@@ -489,7 +487,7 @@ class Player extends Entity
     public function initCounters($data=null)
     {
 
-        if(!$data) {
+        if(!isset($data)) {
             $model = $this->getModelClass();
 
             try {
@@ -506,6 +504,55 @@ class Player extends Entity
                 $counters[$key] = $data[$key];
 
         $this->setCounters($counters);
+
+        return $this;
+    }
+
+    public function initAccounts($data=null)
+    {
+
+        if(!isset($data)) {
+
+            $model = $this->getModelClass();
+            try {
+                $data = $model::instance()->loadAccounts($this);
+            } catch (ModelException $e) {
+                throw new EntityException($e->getMessage(), $e->getCode());
+            }
+
+        } else {
+            $this->validate('accounts', $data);
+        }
+
+        $accounts = array();
+
+        foreach (self::$MASK['accounts'] as $accountName) {
+            $accounts[$accountName] = null;
+        }
+
+        foreach ($data as $account) {
+            if (in_array($account['AccountName'], self::$MASK['accounts'])) {
+                if (!isset($accounts[$account['AccountName']])) {
+                    $accounts[$account['AccountName']] = array();
+                }
+                $accounts[$account['AccountName']][] = $account['AccountId'];
+            }
+        }
+
+        $this->setAccounts($accounts)->validate('accounts');
+
+        return $this;
+    }
+
+    public function updateAccounts()
+    {
+        $model = $this->getModelClass();
+
+        try {
+            $model::instance()->updateAccounts($this);
+        } catch (ModelException $e) {
+            throw new EntityException('INTERNAL_ERROR', 500);
+        }
 
         return $this;
     }
@@ -614,74 +661,6 @@ class Player extends Entity
         } catch (ModelException $e) {
             if ($e->getCode() == 403) {
                 throw new EntityException("NICKNAME_BUSY", 400);
-            }
-            throw new EntityException($e->getMessage(), $e->getCode());
-
-        }
-
-        return true;
-    }
-
-    protected function checkPhone()
-    {
-        $model = $this->getModelClass();
-
-        try {
-            $model::instance()->checkPhone($this);
-        } catch (ModelException $e) {
-            if ($e->getCode() == 403) {
-                throw new EntityException("PHONE_BUSY", 400);
-            }
-            throw new EntityException($e->getMessage(), $e->getCode());
-
-        }
-
-        return true;
-    }
-
-    protected function checkQiwi()
-    {
-        $model = $this->getModelClass();
-
-        try {
-            $model::instance()->checkQiwi($this);
-        } catch (ModelException $e) {
-            if ($e->getCode() == 403) {
-                throw new EntityException("QIWI_BUSY", 400);
-            }
-            throw new EntityException($e->getMessage(), $e->getCode());
-
-        }
-
-        return true;
-    }
-
-    protected function checkWebMoney()
-    {
-        $model = $this->getModelClass();
-
-        try {
-            $model::instance()->checkWebMoney($this);
-        } catch (ModelException $e) {
-            if ($e->getCode() == 403) {
-                throw new EntityException("WEBMONEY_BUSY", 400);
-            }
-            throw new EntityException($e->getMessage(), $e->getCode());
-
-        }
-
-        return true;
-    }
-
-    protected function checkYandexMoney()
-    {
-        $model = $this->getModelClass();
-
-        try {
-            $model::instance()->checkYandexMoney($this);
-        } catch (ModelException $e) {
-            if ($e->getCode() == 403) {
-                throw new EntityException("YANDEXMONEY_BUSY", 400);
             }
             throw new EntityException($e->getMessage(), $e->getCode());
 
@@ -823,7 +802,13 @@ class Player extends Entity
     public function isSocialUsed()
     {
         $model = $this->getModelClass();
-        return $model::instance()->isSocialUsed($this);
+
+        try {
+            return $model::instance()->isSocialUsed($this);
+        } catch (ModelException $e) {
+            throw new EntityException('INTERNAL_ERROR', 500);
+        }
+
     }
 
     public function create()
@@ -964,7 +949,8 @@ class Player extends Entity
             ->updateLogin()
             ->writeLogin()
             ->initPrivacy()
-            ->initCounters();
+            ->initCounters()
+            ->initAccounts();
 
         $session->set(Player::IDENTITY, $this);
 
@@ -1053,7 +1039,6 @@ class Player extends Entity
     public function updateNotice()
     {
         $this->setDates(time(), 'Notice');
-
         $model = $this->getModelClass();
 
         try {
@@ -1078,83 +1063,76 @@ class Player extends Entity
 
     public function formatFrom($from, $data)
     {
-        if ($from == 'DB') {
-            $this->setId($data['Id'])
-                 ->setBan($data['Ban'])
-                 ->setBot($data['Bot'])
-                 ->setUtc($data['UTC'])
-                 ->setCaptchaTime($data['CaptchaTime'])
-                 ->setCaptchaCount($data['CaptchaCount'])
-                 ->setEmail($data['Email'])
-                 ->setPassword($data['Password'])
-                 ->setSalt($data['Salt'])
-                 ->setNicname($data['Nicname'])
-                 ->setName($data['Name'])
-                 ->setSurname($data['Surname'])
-                 ->setSecondName($data['SecondName'])
-                 ->setPhone($data['Phone'])
-                 ->setQiwi($data['Qiwi'])
-                 ->setYandexMoney($data['YandexMoney'])
-                 ->setWebMoney($data['WebMoney'])
-                 ->setBirthday($data['Birthday'])
-                 ->setCountry($data['Country'])
-                 ->setCity($data['City'])
-                 ->setZip($data['Zip'])
-                 ->setAddress($data['Address'])
-                 ->setLang($data['Lang'])
-                 ->setAvatar($data['Avatar'])
-                 ->setAgent($data['Agent'])
-                 ->setGender($data['Gender'])
-                 ->setReferer($data['Referer'])
-                 ->setVisible((boolean)$data['Visible'])
-                 ->setFavoriteCombination(!empty($data['Favorite']) ? @unserialize($data['Favorite']) : array())
-                 ->setPoints($data['Points'])
-                 ->setMoney($data['Money'])
-                 ->setGamesPlayed($data['GamesPlayed'])
-                 ->setCookieId($data['CookieId'])
-                 ->setIp($data['Ip'])
-                 ->setLastIp($data['LastIp'])
-                 ->setHash($data['Hash'])
-                 ->setValid($data['Valid'])
-                 ->setComplete($data['Complete'])
-                 ->setInviterId($data['InviterId'])
-                 ->setReferalId($data['ReferalId'])
-                 ->setReferalPaid($data['ReferalPaid'])
-                 ->setReferralsProfit($data['ReferralsProfit'])
-                 ->setReferralPay($data['ReferralPay'])
-                 ->setNewsSubscribe($data['NewsSubscribe'])
-                 ->setAdmin(\Session2::connect()->has(\Admin::SESSION_VAR))
-                 ->setAdditionalData(!empty($data['AdditionalData']) ? @unserialize($data['AdditionalData']) : null)
-                 ->setGoldTicket($data['GoldTicket']);
+        switch ($from) {
 
-            if (isset($data['CaptchaCount'])) {
-                $this->initCounters($data);
-            }
+            case 'DB':
+                $this->setId($data['Id'])
+                    ->setBan($data['Ban'])
+                    ->setBot($data['Bot'])
+                    ->setUtc($data['UTC'])
+                    ->setEmail($data['Email'])
+                    ->setPassword($data['Password'])
+                    ->setSalt($data['Salt'])
+                    ->setNicname($data['Nicname'])
+                    ->setName($data['Name'])
+                    ->setSurname($data['Surname'])
+                    ->setSecondName($data['SecondName'])
+                    ->setBirthday($data['Birthday'])
+                    ->setCountry($data['Country'])
+                    ->setCity($data['City'])
+                    ->setZip($data['Zip'])
+                    ->setAddress($data['Address'])
+                    ->setLang($data['Lang'])
+                    ->setAvatar($data['Avatar'])
+                    ->setAgent($data['Agent'])
+                    ->setGender($data['Gender'])
+                    ->setReferer($data['Referer'])
+                    ->setVisible((boolean)$data['Visible'])
+                    ->setFavoriteCombination(!empty($data['Favorite']) ? @unserialize($data['Favorite']) : array())
+                    ->setPoints($data['Points'])
+                    ->setMoney($data['Money'])
+                    ->setGamesPlayed($data['GamesPlayed'])
+                    ->setCookieId($data['CookieId'])
+                    ->setIp($data['Ip'])
+                    ->setLastIp($data['LastIp'])
+                    ->setHash($data['Hash'])
+                    ->setValid($data['Valid'])
+                    ->setComplete($data['Complete'])
+                    ->setInviterId($data['InviterId'])
+                    ->setReferalId($data['ReferalId'])
+                    ->setReferalPaid($data['ReferalPaid'])
+                    ->setReferralsProfit($data['ReferralsProfit'])
+                    ->setReferralPay($data['ReferralPay'])
+                    ->setNewsSubscribe($data['NewsSubscribe'])
+                    ->setAdmin(\Session2::connect()->has(\Admin::SESSION_VAR))
+                    ->setAdditionalData(!empty($data['AdditionalData']) ? @unserialize($data['AdditionalData']) : null)
+                    ->setGoldTicket($data['GoldTicket']);
 
-            if (isset($data['TicketsFilled'])) {
-                $this->setTicketsFilled($data['TicketsFilled']);
-            }
+                if (isset($data['TicketsFilled'])) {
+                    $this->setTicketsFilled($data['TicketsFilled']);
+                }
 
-            if (isset($data['Registration'])) {
-                $this->initDates($data);
-            }
+                if (isset($data['Registration'])) {
+                    $this->initDates($data);
+                }
 
-            if (isset($data['MyReferal'])) {
-                $this->initStats($data);
-            }
-        }
+                if (isset($data['MyReferal'])) {
+                    $this->initStats($data);
+                }
+                break;
 
-        if ($from == 'Preregistration') {
-            $this->setEmail($data['Email'])
-                ->setIp($data['Ip'])
-                ->setHash($data['Hash'])
-                ->setReferalId($data['ReferalId']);
-            $this->setDates($data['DateRegistration'], 'Registration');
-            if ($data['SocialName']) {
-                $this->setSocialEmail($data['SocialEmail'])
-                    ->setSocialId($data['SocialId'])
-                    ->setSocialName($data['SocialName']);
-            }
+            case 'Preregistration':
+                $this->setEmail($data['Email'])
+                    ->setIp($data['Ip'])
+                    ->setHash($data['Hash'])
+                    ->setReferalId($data['ReferalId']);
+                $this->setDates($data['DateRegistration'], 'Registration');
+                if ($data['SocialName']) {
+                    $this->setSocialEmail($data['SocialEmail'])
+                        ->setSocialId($data['SocialId'])
+                        ->setSocialName($data['SocialName']);
+                }
+                break;
         }
 
         return $this;
@@ -1195,7 +1173,7 @@ class Player extends Entity
         switch (true) {
             case $this->getPrivacy($field) == 2:
             case $this->getPrivacy($field) == 1 && $this->getFriend():
-                return isset($this->{'_' . strtolower($field)}) ? $this->{'get' . $field}() : true;
+                return property_exists($this, '_' . strtolower($field)) ? $this->{'get' . $field}() : true;
                 break;
 
             default:

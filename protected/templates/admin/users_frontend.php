@@ -712,7 +712,7 @@ $('.orders-trigger').on('click', function() {
 
                 var tdata = '';
                 $(data.data.MoneyOrders).each(function(id, tr) {
-                    tdata += '<tr data-toggle="tooltip" data-placement="auto" title="'+(tr.username)+'" class="'+(tr.status==0?'warning':tr.status==1?'success':'danger')+'"><td>'+tr.date+'</td><td'+(tr.playername?'>'+tr.playername+'</td><td>':' colspan=2>')+(tr.number>0?tr.number:'')+'</td><td><img src="../tpl/img/'+tr.type+'.png"></td><td>'+tr.data+'</td>'
+                    tdata += '<tr data-toggle="tooltip" data-placement="auto" title="'+(tr.admin)+'" class="'+(tr.status==0?'warning':tr.status==1?'success':'danger')+'"><td>'+tr.date+'</td><td'+(tr.playername?'>'+tr.playername+'</td><td>':' colspan=2>')+(tr.number>0?tr.number:'')+'</td><td><img src="../tpl/img/'+tr.type+'.png"></td><td>'+tr.data+'</td>'
                     tdata += '</td></tr>'
 
                 });
@@ -720,7 +720,7 @@ $('.orders-trigger').on('click', function() {
 
                 tdata = '';
                 $(data.data.ShopOrders).each(function(id, tr) {
-                    tdata += '<tr data-toggle="tooltip" data-placement="auto" title="'+(tr.username)+'"  class="'+(tr.status==0?'warning':tr.status==1?'success':'danger')+'"><td>'+tr.date+'</td><td>'+tr.playername+'</td><td>'+(tr.number>0?tr.number:'')+'</td><td>'+tr.item+'<br>'+tr.price+'</td><td>ФИО: '+tr.name+'<br>Телефон: '+tr.phone+'<br>Адрес: '+tr.address+'</td>'
+                    tdata += '<tr data-toggle="tooltip" data-placement="auto" title="'+(tr.admin)+'"  class="'+(tr.status==0?'warning':tr.status==1?'success':'danger')+'"><td>'+tr.date+'</td><td>'+tr.playername+'</td><td>'+(tr.number>0?tr.number:'')+'</td><td>'+tr.item+'<br>'+tr.price+'</td><td>ФИО: '+tr.name+'<br>Телефон: '+tr.phone+'<br>Адрес: '+tr.address+'</td>'
                     tdata += '</tr>'
 
                 });
@@ -913,7 +913,7 @@ $('.notes-trigger').on('click', function() {
             if (data.status == 1) {
                 var tdata = ''
                 $(data.data.notes).each(function(id, tr) {
-                    tdata += '<tr><td>'+tr.date+'</td><td>'+tr.user+'</td><td>'+tr.text+'</td>'
+                    tdata += '<tr><td>'+tr.date+'</td><td>'+tr.admin+'</td><td>'+tr.text+'</td>'
                     tdata += '<td><button class="btn btn-md btn-danger" onclick="removeNote('+tr.id+');"><i class="glyphicon glyphicon-remove"></i></td></tr>';
                 });
                 $("#notes-holder").find('tbody').html(tdata);
@@ -1088,7 +1088,7 @@ $("#add-notice select#notice-type").on('change', function() {
                 if (data.status == 1) {
                     var tdata = ''
                     $(data.data.notices).each(function(id, tr) {
-                        tdata += '<tr data-toggle="tooltip" data-placement="auto" title="'+(tr.username)+'"><td>'+tr.date+
+                        tdata += '<tr data-toggle="tooltip" data-placement="auto" title="'+(tr.admin)+'"><td>'+tr.date+
                             (tr.registeredFrom ?'<br><span class="label label-primary">от '+tr.registeredFrom+'</span>':'')+
                             (tr.registeredUntil ?'<br><span class="label label-primary">до '+tr.registeredUntil+'</span>':'')+
                             (tr.country ?'<br><span class="label label-primary">'+tr.country+'</span>':'')+
@@ -1220,7 +1220,13 @@ $('.profile-trigger').on('click', function() {
         dataType: 'json',
         success: function(data) {
             if (data.status == 1) {
-                user=data.data;
+                var user=data.data,
+                    accounts = []
+                    count = 0;
+
+                $.each(user.Accounts, function(accountName, accountIds) {
+                    accounts.push(accountName);
+                });
 
                 html='<img class="avatar-trigger" data-id="'+user.Id+'" src="'+(user.Avatar?'../filestorage/avatars/'+Math.ceil(user.Id / 100) + '/'+user.Avatar:'../tpl/img/but-upload-review.png')+'">' +
                 '<div>'+
@@ -1228,10 +1234,6 @@ $('.profile-trigger').on('click', function() {
                 '<div class="input-group"><span class="input-group-addon">Имя</span><input type="text" class="form-control" name="Name" placeholder="Имя" value="'+user.Name+'"></div>' +
                 '<div class="input-group"><span class="input-group-addon">Фамилия</span><input type="text" class="form-control" name="Surname" placeholder="Surname" value="'+user.Surname+'"></div>' +
                 '<div class="input-group"><span class="input-group-addon">День рождения</span><input type="text" class="form-control" name="bd" placeholder="День рождения" value="'+user.Birthday+'"></div>' +
-                '<div class="input-group"><span class="input-group-addon">Телефон</span><input type="text" class="form-control" name="phone" placeholder="Телефон" value="'+user.Phone+'"></div>' +
-                '<div class="input-group"><span class="input-group-addon">Qiwi</span><input type="text" class="form-control" name="qiwi" placeholder="Qiwi" value="'+user.Qiwi+'"></div>' +
-                '<div class="input-group"><span class="input-group-addon">WebMoney</span><input type="text" class="form-control" name="webmoney" placeholder="WebMoney" value="'+user.WebMoney+'"></div>' +
-                '<div class="input-group"><span class="input-group-addon">YandexMoney</span><input type="text" class="form-control" name="yandexmoney" placeholder="YandexMoney" value="'+user.YandexMoney+'"></div>' +
                 '<div class="input-group"><span class="input-group-addon">UTC</span><input type="text" class="form-control" name="Utc" placeholder="UTC" value="'+(user.Utc || '')+'"></div>' +
                 '<div class="input-group"><span class="input-group-addon">Страна</span>' +
                 '<select class="form-control" name="Country">';
@@ -1251,8 +1253,43 @@ $('.profile-trigger').on('click', function() {
                 });
 
                 html+='</select></div>' +
-                '<div class="input-group"><span class="input-group-addon">Пароль</span><input type="text" class="form-control col-md-12" name="Password" placeholder="Пароль" value=""></div>' +
-                '</div>';
+                '<div class="input-group"><span class="input-group-addon">Пароль</span><input type="text" class="form-control col-md-12" name="Password" placeholder="Пароль" value=""></div>';
+
+                html+='<div class="input-group"><label>Счета</label></div>';
+
+                    $.each(user.Accounts, function(accountName, accountIds){
+
+                        if(!accountIds)
+                            accountIds = [];
+
+                        accountIds.push(undefined)
+
+
+                        console.log(accountName, accountIds);
+                        $.each(accountIds, function(index, accountId) {
+
+                            html += '<div class="input-group">' +
+                                '<div class="input-group-addon"><select class="form-control" name="Accounts[' + count + '][AccountName]">';
+
+                            for (var i = 0; i < accounts.length; i++) {
+                                html += '<option value="' + accounts[i] + '"' + (accounts[i] == accountName ? ' selected="selected"' : '') + '>' + accounts[i] + '</option>'
+                            }
+
+                            html += '</select></div>' +
+                                '<input type="text" class="form-control"  name="Accounts[' + count + '][AccountId]" placeholder="Введите реквизиты" value="' + (accountId?accountId:'') + '">' +
+                                '</div>';
+
+                            count++;
+                        });
+                    });
+/*
+                    '<div class="input-group"><span class="input-group-addon">Телефон</span><input type="text" class="form-control" name="phone" placeholder="Телефон" value="'+user.Phone+'"></div>' +
+                    '<div class="input-group"><span class="input-group-addon">Qiwi</span><input type="text" class="form-control" name="qiwi" placeholder="Qiwi" value="'+user.Qiwi+'"></div>' +
+                    '<div class="input-group"><span class="input-group-addon">WebMoney</span><input type="text" class="form-control" name="webmoney" placeholder="WebMoney" value="'+user.WebMoney+'"></div>' +
+                    '<div class="input-group"><span class="input-group-addon">YandexMoney</span><input type="text" class="form-control" name="yandexmoney" placeholder="YandexMoney" value="'+user.YandexMoney+'"></div>' +
+*/
+
+                    html += '</div>';
 
 
                 $("#profile-holder").find('.modal-body').html(html);

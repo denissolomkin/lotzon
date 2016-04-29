@@ -6,14 +6,14 @@ class NoticesDBProcessor implements IProcessor
 {
     public function create(Entity $notice)
     {
-        $sql = "INSERT INTO `PlayerNotices` (`Id`, `PlayerId`, `UserId`, `Type`, `Date`, `Title`, `Text`, `Country`, `MinLotteries`, `RegisteredUntil`, `RegisteredFrom`)
-                VALUES (:id, :playerid, :userid, :type, :date, :title, :text, :country, :minlot, :reguntil, :regfrom)";
+        $sql = "INSERT INTO `PlayerNotices` (`Id`, `PlayerId`, `AdminId`, `Type`, `Date`, `Title`, `Text`, `Country`, `MinLotteries`, `RegisteredUntil`, `RegisteredFrom`)
+                VALUES (:id, :playerid, :adminid, :type, :date, :title, :text, :country, :minlot, :reguntil, :regfrom)";
 
         try {
             $sth = DB::Connect()->prepare($sql)->execute(array(
                 ':id'    => $notice->getId(),
                 ':playerid'  => $notice->getPlayerId(),
-                ':userid'  => $notice->getUserId(),
+                ':adminid'  => $notice->getAdminId(),
                 ':date'  => time(),
                 ':title'  => $notice->getTitle(),
                 ':type'  => $notice->getType(),
@@ -73,7 +73,7 @@ class NoticesDBProcessor implements IProcessor
 
     public function getList($playerId = null, $options=null, $limit = null, $offset = null)
     {
-        $sql = "SELECT `PlayerNotices`.*, `Admins`.Login UserName FROM `PlayerNotices` LEFT JOIN `Admins` ON UserId = `Admins`.Id WHERE ";
+        $sql = "SELECT `PlayerNotices`.*, `Admins`.Login AdminName FROM `PlayerNotices` LEFT JOIN `Admins` ON AdminId = `Admins`.Id WHERE ";
 
         $where[]=1;
 
@@ -153,7 +153,8 @@ class NoticesDBProcessor implements IProcessor
         return $sth->fetchColumn(0);
     }
 
-    public function getPlayerUnreadNotices(Player $player) {
+    public function getPlayerUnreadNotices(Player $player)
+    {
         $sql = "SELECT COUNT(*) FROM `PlayerNotices`
                 WHERE (`Date` >= :dn AND `Date` >= :dr )
                 AND (`MinLotteries` IS NULL OR `MinLotteries` <= :ml)

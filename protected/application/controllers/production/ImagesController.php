@@ -12,6 +12,7 @@ class ImagesController extends \AjaxController
         parent::init();
 
         $this->authorizedOnly(true);
+        $this->validateLogout();
         $this->validateCaptcha();
 
     }

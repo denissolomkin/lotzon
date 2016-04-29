@@ -16,6 +16,7 @@ class MessagesController extends \AjaxController
 
         $this->validateRequest();
         $this->authorizedOnly(true);
+        $this->validateLogout();
         $this->validateCaptcha();
     }
 

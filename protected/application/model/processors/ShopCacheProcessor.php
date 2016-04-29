@@ -35,22 +35,36 @@ class ShopCacheProcessor extends BaseCacheProcessor
         return true;
     }
 
-    public function createItem(ShopItem $item) {
-        $item = $this->getBackendProcessor()->createItem($item);
+    public function fetch(Entity $item)
+    {
+        $itemData = $this->getAllItems()[$item->getId()];
+
+        $item->setTitle($itemData->getTitle())
+            ->setPrice($itemData->getPrice())
+            ->setQuantity($itemData->getQuantity())
+            ->setCountries($itemData->getCountries())
+            ->setImage($itemData->getImage())
+            ->setCategory($itemData->getCategory());
+
+        return $item;
+    }
+
+    public function create(Entity $item) {
+        $item = $this->getBackendProcessor()->create($item);
 
         $this->recacheShop();
         return $item;
     }
 
-    public function deleteItem(ShopItem $item) {
-        $this->getBackendProcessor()->deleteItem($item);
+    public function delete(Entity $item) {
+        $this->getBackendProcessor()->delete($item);
 
         $this->recacheShop();
         return true;
     } 
     
-    public function updateItem(ShopItem $item) {
-        $item = $this->getBackendProcessor()->updateItem($item);
+    public function update(Entity $item) {
+        $item = $this->getBackendProcessor()->update($item);
 
         $this->recacheShop();
         return $item;
@@ -88,23 +102,20 @@ class ShopCacheProcessor extends BaseCacheProcessor
         return $items;
     }
 
-    public function fetchItem($item)
-    {
-        $itemData = $this->getAllItems()[$item->getId()];
-
-        $item->setTitle($itemData->getTitle())
-            ->setPrice($itemData->getPrice())
-            ->setQuantity($itemData->getQuantity())
-            ->setCountries($itemData->getCountries())
-            ->setImage($itemData->getImage())
-            ->setCategory($itemData->getCategory());
-
-        return $item;
-    }
-
     public function getAllItems($excludeQuantibleItems = true)
     {
-            return Cache::init()->get(self::ITEMS_KEY) ? : $this->recacheItems();
+
+        $items = Cache::init()->get(self::ITEMS_KEY) ? : $this->recacheItems();
+
+        /* TODO
+        Delete after first use
+        */
+        if(!$items || !current($items)->getId()) {
+            $this->recacheShop();
+            return $this->recacheItems();
+        }
+
+        return $items;
     }
 
     public function loadShop()

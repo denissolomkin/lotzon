@@ -6,14 +6,14 @@ class NotesDBProcessor implements IProcessor
 {
     public function create(Entity $note)
     {
-        $sql = "INSERT INTO `PlayerNotes` (`Id`, `PlayerId`, `Date`, `UserId`, `Text`) VALUES (:id, :playerid, :date, :userid, :text)";
+        $sql = "INSERT INTO `PlayerNotes` (`Id`, `PlayerId`, `Date`, `AdminId`, `Text`) VALUES (:id, :playerid, :date, :adminid, :text)";
 
         try {
             $sth = DB::Connect()->prepare($sql)->execute(array(
                 ':id'    => $note->getId(),
                 ':playerid'  => $note->getPlayerId(),
                 ':date'  => time(),
-                ':userid'  => $note->getUserId(),
+                ':adminid'  => $note->getAdminId(),
                 ':text'  => $note->getText(),
             ));
         } catch (PDOExeption $e) {
@@ -65,7 +65,7 @@ class NotesDBProcessor implements IProcessor
 
     public function getList($playerId = null, $date=null, $limit = null, $offset = null)
     {
-        $sql = "SELECT PlayerNotes.*, Admins.Login UserName FROM `PlayerNotes` LEFT JOIN Admins ON UserId = Admins.Id WHERE ";
+        $sql = "SELECT PlayerNotes.*, Admins.Login AdminName FROM `PlayerNotes` LEFT JOIN Admins ON AdminId = Admins.Id WHERE ";
 
         $where[]=1;
 

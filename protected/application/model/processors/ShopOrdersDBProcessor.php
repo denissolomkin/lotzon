@@ -1,13 +1,13 @@
 <?php
-Application::import(PATH_INTERFACES . 'IProcessor.php');
+Application::import(PATH_APPLICATION . 'DBProcessor.php');
 
-class ShopOrdersDBProcessor implements IProcessor
+class ShopOrdersDBProcessor extends DBProcessor
 {
     public function create(Entity $order) 
     {
         $order->setDateOrdered(time());
-        $sql = "INSERT INTO `ShopOrders` (`PlayerId`, `ItemId`, `Number`, `DateOrdered`, `Name`, `Surname`, `SecondName`, `Phone`, `Region`, `City`, `Address`, `ChanceGameId`) VALUES
-                                         (:plid, :aid, :num, :do, :name, :surname, :secname, :phone, :region, :city, :addr, :cgid)";
+        $sql = "INSERT INTO `ShopOrders` (`PlayerId`, `ItemId`, `Number`, `Sum`, `Equivalent`, `DateOrdered`, `Name`, `Surname`, `SecondName`, `Phone`, `Region`, `City`, `Address`, `ChanceGameId`) VALUES
+                                         (:plid, :aid, :num, :sum, :eq, :do, :name, :surname, :secname, :phone, :region, :city, :addr, :cgid)";
 
         try {
             $sth = DB::Connect()->prepare($sql)->execute(array(
@@ -18,6 +18,8 @@ class ShopOrdersDBProcessor implements IProcessor
                 ':name' => $order->getName(),
                 ':surname'  => $order->getSurname(),
                 ':secname'  => $order->getSecondName(),
+                ':sum'      => $order->getSum(),
+                ':eq'       => $order->getEquivalent(),
                 ':phone'    => $order->getPhone(),
                 ':region'   => $order->getRegion(),
                 ':city'     => $order->getCity(),
@@ -45,11 +47,11 @@ class ShopOrdersDBProcessor implements IProcessor
 
     public function update(Entity $order) 
     {
-        $sql = "UPDATE `ShopOrders` SET `Status` = :status, `UserId` = :userid, `DateProcessed` = :dp WHERE `Id` = :id";
+        $sql = "UPDATE `ShopOrders` SET `Status` = :status, `AdminId` = :adminid, `DateProcessed` = :dp WHERE `Id` = :id";
         try {
             $sth = DB::Connect()->prepare($sql)->execute(array(
                 ':status' => $order->getStatus(),
-                ':userid' => $order->getUserId(),
+                ':adminid' => $order->getAdminId(),
                 ':dp'  => $order->getDateProcessed(),
                 ':id'   => $order->getId(),
             ));
@@ -109,9 +111,9 @@ class ShopOrdersDBProcessor implements IProcessor
 
         $sql = "SELECT ((SELECT COUNT(DISTINCT(PlayerId)) FROM `ShopOrders` o WHERE  o.`Number`=`ShopOrders`.`Number` AND o.`PlayerId`!=`ShopOrders`.`PlayerId`)
                         +(SELECT COUNT(DISTINCT(PlayerId)) FROM `MoneyOrders` o WHERE  o.`Number`=`ShopOrders`.`Number` AND o.`PlayerId`!=`ShopOrders`.`PlayerId`)) Count,
-                `Admins`.`Login` UserName, `ShopOrders`.*
+                `Admins`.`Login` AdminName, `ShopOrders`.*
                 FROM `ShopOrders`
-                LEFT JOIN `Admins` ON `Admins`.`Id` = `UserId`
+                LEFT JOIN `Admins` ON `Admins`.`Id` = `AdminId`
                 WHERE ".implode('AND',$where).$order;
 
         if ($limit) {
@@ -170,6 +172,7 @@ class ShopOrdersDBProcessor implements IProcessor
                 'shop'           as type,
                 so.`Address`     as data,
                 si.`Title`       as prize,
+                NULL             as sum,
                 so.`Status`      as status
                 FROM `ShopOrders` as so
                 JOIN `ShopItems` as si
@@ -181,7 +184,8 @@ class ShopOrdersDBProcessor implements IProcessor
                 mo.`DateOrdered` as date,
                 mo.`Type`        as type,
                 mo.`Number`      as data,
-                mo.`Sum`         as prize,
+                mo.`Equivalent`  as prize,
+                mo.`Sum`         as sum,
                 mo.`Status`      as status
                 FROM `MoneyOrders` as mo
                 WHERE

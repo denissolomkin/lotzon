@@ -300,10 +300,10 @@ class Players extends \AjaxController
     public function troubleAction($trouble)
     {
 
-        $this->authorizedOnly();
+        $this->authorizedOnly(true);
 
         try {
-            $this->session->get(Player::IDENTITY)->reportTrouble($trouble);
+            $this->player->reportTrouble($trouble);
         } catch (\Exception $e) {
             $this->ajaxResponse(array(), 0, 'INVALID');
         }
@@ -382,10 +382,10 @@ class Players extends \AjaxController
     public function userInfoAction($playerId)
     {
 
-        $this->authorizedOnly();
+        $this->authorizedOnly(true);
 
         $player = new Player();
-        $player->setId($playerId)->fetch()->setFriendship($this->session->get(Player::IDENTITY)->getId())->initDates();
+        $player->setId($playerId)->fetch()->setFriendship($this->player->getId())->initDates();
 
         $response = array(
             'res' => array(
@@ -409,10 +409,10 @@ class Players extends \AjaxController
     public function profileAction()
     {
 
-        $this->authorizedOnly();
+        $this->authorizedOnly(true);
 
         $response = array(
-            'res' => $this->session->get(Player::IDENTITY)->export('card')
+            'res' => $this->player->export('card')
         );
         $this->ajaxResponseNoCache($response);
         return true;
@@ -460,6 +460,7 @@ class Players extends \AjaxController
 
         try {
             $this->player->setFavoriteCombination($fav)->update();
+            $this->session->set(Player::IDENTITY, $this->player);
         } catch (EntityException $e) {
             $this->ajaxResponseNoCache(array("message" => $e->getMessage()), $e->getCode());
             return false;
@@ -494,6 +495,7 @@ class Players extends \AjaxController
                         $this->ajaxResponseBadRequest("passwords-do-not-match");
                     }
             }
+            $this->session->set(Player::IDENTITY, $this->player);
         } catch (EntityException $e) {
             $this->ajaxResponseNoCache(array("message" => $e->getMessage()), $e->getCode());
             return false;
@@ -519,7 +521,7 @@ class Players extends \AjaxController
     public function settingsAction()
     {
 
-        $this->authorizedOnly();
+        $this->authorizedOnly(true);
 
         $subscribe  = $this->request()->post('email');
         $oldPass    = $this->request()->post('oldPass', '');
@@ -527,21 +529,20 @@ class Players extends \AjaxController
         $repeatPass = $this->request()->post('repeatPass', '');
         $privacy    = $this->request()->post('privacy', array());
 
-        $player = new Player;
-        $player->setId($this->session->get(Player::IDENTITY)->getId())->fetch();
+        $this->player->fetch();
 
         try {
-            $player->updateNewsSubscribe($subscribe == 1 ? true : false)->update();
+            $this->player->updateNewsSubscribe($subscribe == 1 ? true : false)->update();
 
-            $player
+            $this->player
                 ->initPrivacy()      // init all from DB
                 ->initPrivacy($privacy) // update from POST
                 ->updatePrivacy();
 
             if (($oldPass != '') && ($newPass != '') && ($repeatPass != '')) {
-                if ($player->getPassword() === $player->compilePassword($oldPass)) {
+                if ($this->player->getPassword() === $this->player->compilePassword($oldPass)) {
                     if ($newPass == $repeatPass) {
-                        $player->changePassword($newPass);
+                        $this->player->changePassword($newPass);
                     } else {
                         $this->ajaxResponseBadRequest("passwords-do-not-match");
                     }
@@ -550,7 +551,7 @@ class Players extends \AjaxController
                 }
             }
 
-            $this->session->set(Player::IDENTITY, $player); // update entity in session
+            $this->session->set(Player::IDENTITY, $this->player); // update entity in session
 
         } catch (EntityException $e) {
             $this->ajaxResponseNoCache(array("message" => $e->getMessage()), $e->getCode());
@@ -560,9 +561,9 @@ class Players extends \AjaxController
         $res = array(
             "player"  => array(
                 "settings" => array(
-                    "newsSubscribe" => $player->getNewsSubscribe()
+                    "newsSubscribe" => $this->player->getNewsSubscribe()
                 ),
-                "privacy"  => $player->getPrivacy(),
+                "privacy"  => $this->player->getPrivacy(),
             )
         );
 
@@ -640,48 +641,77 @@ class Players extends \AjaxController
         return true;
     }
 
-    public function billingAction()
+    public function accountsAction()
     {
 
-        $this->authorizedOnly();
+        $this->authorizedOnly(true);
 
-        $player = new Player;
-        $player->setId($this->session->get(Player::IDENTITY)->getId())->fetch();
-
-        $billing = $this->request()->put('billing', array());
+        $accounts = array_filter($this->request()->put('accounts', array()),function($account){ return $account['AccountId']; });
 
         try {
-            if (!$player->getPhone() && $billing['phone'])
-                $player->setPhone($billing['phone']);
-            if (!$player->getQiwi() && $billing['qiwi'])
-                $player->setQiwi($billing['qiwi']);
-            if (!$player->getWebMoney() && $billing['webmoney'])
-                $player->setWebMoney($billing['webmoney']);
-            if (!$player->getYandexMoney() && $billing['yandex'])
-                $player->setYandexMoney("41001".$billing['yandex']);
-            $player->update();
-            $this->session->set(Player::IDENTITY, $player);
+            $this->player
+                ->initAccounts($accounts)
+                ->updateAccounts();
+            
+            $this->session->set(Player::IDENTITY, $this->player);
 
         } catch (EntityException $e) {
             $this->ajaxResponseNoCache(array("message" => $e->getMessage()), $e->getCode());
-
-            return false;
         }
 
         $res = array(
             "player" => array(
-                "billing" => array(
-                    "webmoney" => $player->getWebMoney(),
-                    "yandex"   => $player->getYandexMoney(),
-                    "qiwi"     => $player->getQiwi(),
-                    "phone"    => $player->getPhone(),
-                ),
+                "accounts" => $this->player->getAccounts(),
             ),
         );
 
         $this->ajaxResponseNoCache($res);
+    }
 
-        return true;
+    public function billingAction()
+    {
+
+        $this->authorizedOnly(true);
+
+        $billing = $this->request()->put('billing', array());
+        $accounts = array();
+
+        if ($billing['phone'])
+            $accounts[] = array('AccountName' => 'Phone', 'AccountId' => $billing['phone']);
+
+        if ($billing['qiwi'])
+            $accounts[] = array('AccountName' => 'Qiwi', 'AccountId' => $billing['qiwi']);
+
+        if ($billing['webmoney'])
+            $accounts[] = array('AccountName' => 'WebMoney', 'AccountId' => $billing['webmoney']);
+
+        if ($billing['yandex'])
+            $accounts[] = array('AccountName' => 'YandexMoney', 'AccountId' => "41001".$billing['yandex']);
+
+        try {
+            $this->player
+                ->initAccounts($accounts)
+                ->updateAccounts();
+
+            $this->session->set(Player::IDENTITY, $this->player);
+
+        } catch (EntityException $e) {
+            $this->ajaxResponseNoCache(array("message" => $e->getMessage()), $e->getCode());
+        }
+
+        $res = array(
+            "player" => array(
+                "billing"  => array(
+                    'webmoney'      => $this->player->getAccounts('WebMoney') ? $this->player->getAccounts('WebMoney')[0] : null,
+                    'yandex'        => $this->player->getAccounts('YandexMoney') ? $this->player->getAccounts('YandexMoney')[0] : null,
+                    'qiwi'          => $this->player->getAccounts('Qiwi') ? $this->player->getAccounts('Qiwi')[0] : null,
+                    'phone'         => $this->player->getAccounts('Phone') ? $this->player->getAccounts('Phone')[0] : null,
+                ),
+                "accounts" => $this->player->getAccounts(),
+            ),
+        );
+
+        $this->ajaxResponseNoCache($res);
     }
 
     /**

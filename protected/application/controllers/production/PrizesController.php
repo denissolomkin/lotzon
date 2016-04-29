@@ -2,7 +2,7 @@
 
 namespace controllers\production;
 use \Application, \SettingsModel, \Player, \EntityException;
-use Symfony\Component\HttpFoundation\Session\Session;
+use \CountriesModel;
 
 Application::import(PATH_APPLICATION . 'model/entities/Player.php');
 Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');
@@ -14,10 +14,11 @@ class PrizesController extends \AjaxController
     public function init()
     {
         self::$prizesPerPage = (int)SettingsModel::instance()->getSettings('counters')->getValue('PRIZES_PER_PAGE') ? : 9;
-
         parent::init();
+
         $this->validateRequest();
-        $this->authorizedOnly();
+        $this->authorizedOnly(true);
+        $this->validateLogout();
         $this->validateCaptcha();
     }
 
@@ -27,9 +28,7 @@ class PrizesController extends \AjaxController
         $category = $this->request()->get('category',NULL);
 
         $list = \ShopModel::instance()->loadShop();
-
-        $player = new Player;
-        $player_countries = $player->setId($this->session->get(Player::IDENTITY)->getId())->fetch()->getCountry();
+        $country = $this->player->fetch()->getCountry();
 
         $categories = array();
         if ($category===NULL) {
@@ -46,7 +45,7 @@ class PrizesController extends \AjaxController
         $items = array();
         foreach ($list_goods as $item) {
             $countries = $item->getCountries();
-            if (is_array($countries) and !in_array($player_countries,$countries)) {
+            if (is_array($countries) and !in_array($country, $countries)) {
                 continue;
             }
             $from_first++;
@@ -76,10 +75,10 @@ class PrizesController extends \AjaxController
         return true;
     }
 
-    public function goodAction($itemId) {
+    public function goodAction($itemId)
+    {
 
-        $player = new Player;
-        $player_countries = $player->setId($this->session->get(Player::IDENTITY)->getId())->fetch()->getCountry();
+        $country = $this->player->fetch()->getCountry();
 
         try {
             $item = new \ShopItem();
@@ -88,7 +87,7 @@ class PrizesController extends \AjaxController
             $this->ajaxResponseInternalError();
         }
 
-        if (is_array($item->getCountries()) and !in_array($player_countries,$item->getCountries())) {
+        if (is_array($item->getCountries()) and !in_array($country, $item->getCountries())) {
             $this->ajaxResponseNotFound();
             return false;
         }
@@ -103,49 +102,61 @@ class PrizesController extends \AjaxController
     public function orderAction($itemId)
     {
         try {
+
             $item = new \ShopItem();
             $item->setId($itemId)->fetch();
             if ((($item->getQuantity()==0)and($item->getQuantity()!==NULL))or(!$item->isVisible())) {
                 throw new EntityException("INVALID_ITEM", 400);
             }
+
         } catch (EntityException $e) {
             $this->ajaxResponseNotFound();
             return false;
         }
 
-        $player = new Player;
-        $player->setId($this->session->get(Player::IDENTITY)->getId())->fetch();
+        $this->player
+            ->fetch()
+            ->initAccounts();
+
+        $currency = CountriesModel::instance()->getCountry($this->player->getCountry())->loadCurrency();
+        $phone = $this->player->getAccounts('Phone') ? $this->player->getAccounts('Phone')[0] : null;
 
         $order = new \ShopItemOrder();
-        $order->setPlayer($this->session->get(Player::IDENTITY))
+        $order->setPlayer($this->player)
             ->setItem($item)
-            ->setName($player->getName()!=''?$player->getName():' ')
-            ->setSurname($player->getSurname()!=''?$player->getSurname():' ')
-            ->setNumber($player->getPhone()!=null?$player->getPhone():' ')
-            ->setPhone($player->getPhone()!=null?$player->getPhone():' ')
-            ->setRegion($player->getZip()!=''?$player->getZip():' ')
-            ->setCity($player->getCity()!=''?$player->getCity():' ')
-            ->setAddress($player->getAddress()!=''?$player->getAddress():' ');
+            ->setSum($item->getPrice())
+            ->setEquivalent($item->getPrice() / ($currency->getRate() * $currency->getCoefficient()))
+            ->setName($this->player->getName()!=''?$this->player->getName():' ')
+            ->setSurname($this->player->getSurname()!=''?$this->player->getSurname():' ')
+            ->setNumber($phone)
+            ->setPhone($phone)
+            ->setRegion($this->player->getZip()!=''?$this->player->getZip():' ')
+            ->setCity($this->player->getCity()!=''?$this->player->getCity():' ')
+            ->setAddress($this->player->getAddress()!=''?$this->player->getAddress():' ');
 
         try {
+
+            $order->beginTransaction();
             $order->create();
-            $order->getPlayer()->addPoints(-1*$order->getItem()->getPrice(), $order->getItem()->getTitle());
+            $this->player->addPoints(-1*$order->getItem()->getPrice(), $order->getItem()->getTitle());
             if ($order->getItem()->getQuantity()) {
                 $order->getItem()->setQuantity($order->getItem()->getQuantity() - 1)->update();
             }
-        } catch(EntityException $e) {
-            $this->ajaxResponseNoCache(array("message" => $e->getMessage()), $e->getCode());
+            $this->session->set(Player::IDENTITY, $this->player);
+            $order->commit();
 
-            return false;
+        } catch(EntityException $e) {
+
+            $order->rollBack();
+            $this->ajaxResponseNoCache(array("message" => $e->getMessage()), $e->getCode());
         }
 
-        $player->fetch();
         $res = array(
-            "message" => "OK",
+            "message" => "message-order-success",
             "player"  => array(
                 "balance" => array(
-                    "money"  => $player->getMoney(),
-                    "points" => $player->getPoints(),
+                    "money"  => $this->player->getMoney(),
+                    "points" => $this->player->getPoints(),
                 )
             )
         );

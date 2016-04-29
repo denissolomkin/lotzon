@@ -100,17 +100,11 @@ class Monetisation extends PrivateArea
                     $order->setId($id)->fetch();
 
                     $order->setStatus($status)
-                        ->setUserId(Session2::connect()->get(Admin::SESSION_VAR)->getId())
+                        ->setAdminId(Session2::connect()->get(Admin::SESSION_VAR)->getId())
                         ->setDateProcessed(time());
+
                     try {
                         $order->update();
-                        // update item
-
-                        /* moved to OrderController
-                        if ($order->getItem()->getQuantity() AND $status=1) {
-                            $order->getItem()->setQuantity($order->getItem()->getQuantity() - 1)->update();
-                        }
-                        */
                     } catch (EntityException $e) {
 
                     }
@@ -120,7 +114,7 @@ class Monetisation extends PrivateArea
                     $order->setId($id)->fetch();
 
                     $order->setStatus($status)
-                        ->setUserId(Session2::connect()->get(Admin::SESSION_VAR)->getId())
+                        ->setAdminId(Session2::connect()->get(Admin::SESSION_VAR)->getId())
                         ->setDateProcessed(time());
 
                     try {
@@ -141,69 +135,5 @@ class Monetisation extends PrivateArea
 
 
         $this->redirect('/private');
-    }
-
-
-    public function processAction($id)
-    {
-        if (!$this->request()->get('money')) {
-            $order = new ShopItemOrder();
-            $order->setId($id)->fetch();
-
-            $order->setStatus(0)
-                ->setDateProcessed(0);
-
-            try {
-                $order->update();
-                // update item
-            } catch (EntityException $e) {
-
-            }
-
-        } else {
-            $order = new MoneyOrder();
-            $order->setId($id)->fetch();
-
-            $order->setStatus(0)
-                ->setDateProcessed(0);
-
-            try {
-                $order->update();
-            } catch (EntityException $e) {
-
-            }
-        }
-        $this->redirect('/private/monetisation');
-    }
-
-    public function declineAction($id)
-    {
-        if (!$this->request()->get('money')) {
-            $order = new ShopItemOrder();
-            $order->setId($id)->fetch();
-
-            $order->setStatus(2)
-                ->setDateProcessed(time());
-
-            try {
-                $order->update();
-            } catch (EntityException $e) {
-
-            }
-
-        } else {
-            $order = new MoneyOrder();
-            $order->setId($id)->fetch();
-
-            $order->setStatus(2)
-                ->setDateProcessed(time());
-
-            try {
-                $order->update();
-            } catch (EntityException $e) {
-
-            }
-        }
-        $this->redirect('/private/monetisation');
     }
 }

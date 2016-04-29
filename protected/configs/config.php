@@ -716,6 +716,9 @@ Config::instance()->publicResources = array(
     '/profile/billing' => array(
         'put' => 'controllers\production\Players:billing'
     ),
+    '/profile/accounts' => array(
+        'put' => 'controllers\production\Players:accounts'
+    ),
     '/profile/settings' => array(
         'put' => 'controllers\production\Players:settings'
     ),

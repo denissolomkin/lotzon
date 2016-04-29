@@ -3,46 +3,22 @@ Application::import(PATH_APPLICATION . 'model/Entity.php');
 
 class Notice extends Entity
 {
-    private $_id    = '';
-    private $_playerid = '';
-    private $_userid = '';
-    private $_username = '';
-    private $_text  = '';
-    private $_type  = '';
-    private $_title  = '';
-    private $_country  = null;
-    private $_minLotteries  = null;
-    private $_registeredFrom  = null;
-    private $_registeredUntil = null;
-    private $_date  = '';
+    protected $_id    = '';
+    protected $_playerId = '';
+    protected $_adminId = '';
+    protected $_adminName = '';
+    protected $_text  = '';
+    protected $_type  = '';
+    protected $_title  = '';
+    protected $_country  = null;
+    protected $_minLotteries  = null;
+    protected $_registeredFrom  = null;
+    protected $_registeredUntil = null;
+    protected $_date  = '';
     
     public function init()
     {
         $this->setModelClass('NoticesModel');
-    }
-
-    public function setId($id)
-    {
-        $this->_id = $id;
-
-        return $this;
-    }
-
-    public function getId()
-    {
-        return $this->_id;
-    }
-
-    public function setCountry($country)
-    {
-        $this->_country = $country;
-
-        return $this;
-    }
-
-    public function getCountry()
-    {
-        return $this->_country;
     }
 
     public function setRegisteredFrom($from)
@@ -55,11 +31,6 @@ class Notice extends Entity
         return $this;
     }
 
-    public function getRegisteredFrom()
-    {
-        return $this->_registeredFrom;
-    }
-
     public function setRegisteredUntil($to)
     {
         if(isset($to) && !is_numeric($to))
@@ -70,118 +41,20 @@ class Notice extends Entity
         return $this;
     }
 
-    public function getRegisteredUntil()
-    {
-        return $this->_registeredUntil;
-    }
-
-    public function setMinLotteries($int)
-    {
-        $this->_minLotteries = $int;
-
-        return $this;
-    }
-
-    public function getMinLotteries()
-    {
-        return $this->_minLotteries;
-    }
-
-    public function setText($text)
-    {
-        $this->_text = $text;
-
-        return $this;
-    }
-
-    public function getText()
-    {
-        return $this->_text;
-    }
-
-    public function setType($type)
-    {
-        $this->_type = $type;
-
-        return $this;
-    }
-
-    public function getType()
-    {
-        return $this->_type;
-    }
-
-    public function setUserId($userid) {
-        $this->_userid = $userid;
-
-        return $this;
-    }
-
-    public function getUserId()
-    {
-        return $this->_userid;
-    }
-
-    public function setUserName($user)
-    {
-        $this->_username = $user;
-
-        return $this;
-    }
-
-    public function getUserName()
-    {
-        return $this->_username;
-    }
-
-    public function setPlayerId($playerid) {
-        $this->_playerid = $playerid;
-
-        return $this;
-    }
-
-    public function getPlayerId()
-    {
-        return $this->_playerid;
-    }
-
-    public function setTitle($title)
-    {
-        $this->_title = $title;
-
-        return $this;
-    }
-
-    public function getTitle()
-    {
-        return $this->_title;
-    }
-
-    public function setDate($date) 
-    {
-        $this->_date = $date;
-
-        return $this;
-    }
-
-    public function getDate()
-    {
-        return $this->_date;
-    }
-
     public function formatFrom($from, $data) 
     {
         if ($from == 'DB') {
             $this->setId($data['Id'])
                  ->setPlayerId($data['PlayerId'])
                  ->setDate($data['Date'])
-                 ->setUserName($data['UserName'])
+                 ->setAdminName($data['AdminName'])
+                 ->setAdminId($data['AdminId'])
                  ->setTitle($data['Title'])
                  ->setText($data['Text'])
-                ->setCountry($data['Country'])
-                ->setMinLotteries($data['MinLotteries'])
-                ->setRegisteredUntil($data['RegisteredUntil'])
-                ->setRegisteredFrom($data['RegisteredFrom']);
+                 ->setCountry($data['Country'])
+                 ->setMinLotteries($data['MinLotteries'])
+                 ->setRegisteredUntil($data['RegisteredUntil'])
+                 ->setRegisteredFrom($data['RegisteredFrom']);
         }
 
         return $this;
