@@ -2,7 +2,7 @@
 
 namespace controllers\production;
 use \Application, \SettingsModel, \Player, \EntityException;
-use \CountriesModel;
+use \CountriesModel, \Banner;
 
 Application::import(PATH_APPLICATION . 'model/entities/Player.php');
 Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');
@@ -63,6 +63,19 @@ class PrizesController extends \AjaxController
             array_pop($items);
         } else {
             $response['lastItem'] = true;
+        }
+
+        if(count($items)) {
+            $banner = new Banner;
+            $keys = array_keys($items);
+            $items[$keys[array_rand($keys)]]['block'] = $banner
+                ->setTemplate('desktop')
+                ->setDevice('desktop')
+                ->setLocation('context')
+                ->setPage('prize')
+                ->setCountry($this->player->getCountry())
+                ->random()
+                ->render();
         }
 
         $response['res']['prizes']['exchange']['goods'] = $items;
