@@ -37,14 +37,14 @@ class ShopCacheProcessor extends BaseCacheProcessor
 
     public function fetch(Entity $item)
     {
-        $itemData = $this->getAllItems()[$item->getId()];
-
-        $item->setTitle($itemData->getTitle())
-            ->setPrice($itemData->getPrice())
-            ->setQuantity($itemData->getQuantity())
-            ->setCountries($itemData->getCountries())
-            ->setImage($itemData->getImage())
-            ->setCategory($itemData->getCategory());
+        if($itemData = $this->getAllItems()[$item->getId()]) {
+            $item->setTitle($itemData->getTitle())
+                ->setPrice($itemData->getPrice())
+                ->setQuantity($itemData->getQuantity())
+                ->setCountries($itemData->getCountries())
+                ->setImage($itemData->getImage())
+                ->setCategory($itemData->getCategory());
+        }
 
         return $item;
     }

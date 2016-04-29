@@ -726,7 +726,7 @@ class PlayersDBProcessor implements IProcessor
                 (SELECT COUNT(Id) FROM `MoneyOrders`    WHERE `PlayerId` = `Players`.`Id` AND `Type`!='points') MoneyOrder,
                 (SELECT COUNT(Id) FROM `PlayerReviews`  WHERE `PlayerId` = `Players`.`Id` ) Review,
                 (SELECT COUNT(Id) FROM `Messages`       WHERE `PlayerId` = `Players`.`Id` OR `ToPlayerId` = `Players`.`Id` ) Message,
-                (SELECT count(*)  FROM `Players` p      WHERE p.`Phone` = `Players`.`Phone` OR p.Qiwi=`Players`.Qiwi OR `p`.WebMoney = `Players`.WebMoney OR `p`.YandexMoney= `Players`.YandexMoney) as Mult,
+                (SELECT COUNT(DISTINCT(m.PlayerId)) FROM `PlayerAccounts` a LEFT JOIN `PlayerAccounts` m ON m.`AccountId` = a.`AccountId` WHERE a.PlayerId = `Players`.`Id`) Mult,
                 (SELECT AVG(Win)  FROM PlayerGames      WHERE PlayerId=`Players`.`Id` AND GameId=1 AND Price>0) WhoMore,
                 (SELECT AVG(Win)  FROM PlayerGames      WHERE PlayerId=`Players`.`Id` AND GameId=2 AND Price>0) SeaBattle,
                 (SELECT COUNT(Id) FROM `LotteryTickets` WHERE `LotteryId` = 0 AND `PlayerId` = `Players`.`Id`) AS TicketsFilled
@@ -1054,7 +1054,7 @@ class PlayersDBProcessor implements IProcessor
                 (SELECT COUNT(Id) FROM `MoneyOrders`    WHERE `PlayerId` = `Players`.`Id` AND `Type`!='points') MoneyOrder,
                 (SELECT COUNT(Id) FROM `PlayerReviews`  WHERE `PlayerId` = `Players`.`Id` ) Review,
                 (SELECT COUNT(Id) FROM `Messages`       WHERE `PlayerId` = `Players`.`Id` OR `ToPlayerId` = `Players`.`Id` ) Message,
-                (SELECT count(*)  FROM `Players` p      WHERE p.`Phone` = `Players`.`Phone` OR p.Qiwi=`Players`.Qiwi OR `p`.WebMoney = `Players`.WebMoney OR `p`.YandexMoney= `Players`.YandexMoney) as Mult,
+                (SELECT COUNT(DISTINCT(m.PlayerId)) FROM `PlayerAccounts` a LEFT JOIN `PlayerAccounts` m ON m.`AccountId` = a.`AccountId` WHERE a.PlayerId = `Players`.`Id`) Mult,
                 (SELECT AVG(Win)  FROM PlayerGames      WHERE PlayerId=`Players`.`Id` AND GameId=1 AND Price>0) WhoMore,
                 (SELECT AVG(Win)  FROM PlayerGames      WHERE PlayerId=`Players`.`Id` AND GameId=2 AND Price>0) SeaBattle,
                 (SELECT COUNT(Id) FROM `LotteryTickets` WHERE `LotteryId` = 0 AND `PlayerId` = `Players`.`Id`) AS TicketsFilled
@@ -1076,7 +1076,7 @@ class PlayersDBProcessor implements IProcessor
             $res = DB::Connect()->prepare($sql);
             $res->execute();
         } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query", 500);
+            throw new ModelException("Error processing storage query".$e->getMessage(), 500);
         }
         $players = array();
         foreach ($res->fetchAll() as $playerData) {
@@ -1089,11 +1089,13 @@ class PlayersDBProcessor implements IProcessor
 
     public function getMults($playerId)
     {
-        $sql = "SELECT p.Id, p.Nicname, p.Phone, p.Qiwi, p.WebMoney, p.YandexMoney
-                FROM `Players`
-                LEFT JOIN `Players` p ON p.`Phone` = `Players`.`Phone` OR p.Qiwi=`Players`.Qiwi OR `p`.WebMoney = `Players`.WebMoney OR `p`.YandexMoney= `Players`.YandexMoney
-                WHERE `Players`.Id = :pid
-                group by p.Id";
+
+        $sql = "SELECT p.Id, p.Nicname, m.AccountName, m.AccountId, m.Enabled
+                FROM `PlayerAccounts` a
+                LEFT JOIN `PlayerAccounts` m ON m.`AccountId` = a.`AccountId`
+                LEFT JOIN `Players` p ON m.`PlayerId` = p.`Id`
+                WHERE a.PlayerId = :pid
+                GROUP BY m.PlayerId, m.AccountName, m.AccountId";
 
         try {
             $res = DB::Connect()->prepare($sql);
@@ -1101,7 +1103,7 @@ class PlayersDBProcessor implements IProcessor
                 ':pid' => $playerId,
             ));
         } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query", 500);
+            throw new ModelException("Error processing storage query ".$e->getMessage(), 500);
         }
 
         $mults = array();
@@ -1281,36 +1283,6 @@ class PlayersDBProcessor implements IProcessor
 
         if ($sth->rowCount()) {
             throw new ModelException('NICKNAME_BUSY', 403);
-        }
-
-        return true;
-    }
-
-    public function countMults (Entity $player)
-    {
-        /* Todo
-        get info from new table PlayerAccounts
-        */
-
-        return false;
-
-        $sql = "SELECT count(*) FROM `Players` WHERE (`Phone` = :p OR Qiwi=:q OR WebMoney = :w OR YandexMoney= :y) AND `Id` != :id";
-
-        try {
-            $sth = DB::Connect()->prepare($sql);
-            $sth->execute(array(
-                ':p'  => $player->getPhone(),
-                ':q'  => $player->getQiwi(),
-                ':w'  => $player->getWebMoney(),
-                ':y'  => $player->getYandexMoney(),
-                ':id' => $player->getId(),
-            ));
-        } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query", 500);
-        }
-
-        if ($sth->rowCount()) {
-            throw new ModelException('PHONE_BUSY', 403);
         }
 
         return true;

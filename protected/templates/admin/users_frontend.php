@@ -123,10 +123,9 @@
                     <thead>
                     <th>Id</th>
                     <th>Player</th>
-                    <th>Phone</th>
-                    <th>Qiwi</th>
-                    <th>WebMoney</th>
-                    <th>YandexMoney</th>
+                    <th>AccountName</th>
+                    <th>AccountId</th>
+                    <th>Enabled</th>
                     </thead>
                     <tbody>
                     </tbody>
@@ -815,10 +814,9 @@ $('.mults-trigger').on('click', function() {
                     tdata += '<tr>' +
                     '<td>'+login.Id+'</td>' +
                     '<td>'+login.Nicname+'</td>' +
-                    '<td>'+(login.Phone?login.Phone:'')+'</td>' +
-                    '<td>'+(login.Qiwi?login.Qiwi:'')+'</td>' +
-                    '<td>'+(login.WebMoney?login.WebMoney:'')+'</td>' +
-                    '<td>'+(login.YandexMoney?login.YandexMoney:'')+'</td>' +
+                    '<td>'+(login.AccountName)+'</td>' +
+                    '<td>'+(login.AccountId)+'</td>' +
+                    '<td>'+(login.Enabled)+'</td>' +
                     '</tr>'
                 });
                 $("#mults-holder").find('tbody').html(tdata);
