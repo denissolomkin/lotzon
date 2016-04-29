@@ -63,7 +63,7 @@
                 Device.switchGoTop(event);
                 Navigation.menu.fix(event);
                 Content.infiniteScrolling(event);
-                Content.banner.scroll(event);
+                Banner.scroll(event);
             },
 
             goTop: function () {

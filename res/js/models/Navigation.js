@@ -117,10 +117,10 @@
                 }
 
                 Navigation.menu.switch();
-                Content.updateBanners();
+                Banner.update();
+                Banner.loadBranding();
                 Player.ping();
                 Player.updateBalance();
-                
 
                 !Player.is.complete && R.push('popup-profile');
             }

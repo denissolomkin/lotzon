@@ -110,7 +110,7 @@
                     after   : function () {
 
                         if (Tickets.selectedTab == Tickets.randomTicket)
-                            Content.banner.load('banner-desktop-context-ticket');
+                            Banner.load('banner-desktop-context-ticket');
 
                         Tickets.isGold()
                             ? document.querySelector('.ticket-box').classList.add('gold')

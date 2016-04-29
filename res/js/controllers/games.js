@@ -367,7 +367,7 @@ var Games = {
 
             Games.random.get(".minefield button:not(.played)", data.json.id); // data.json.id -- не используеться пока
             // set ad
-            Content.banner.moment(data);
+            Banner.moment(data);
         },
         
         get: function(elements, id) {

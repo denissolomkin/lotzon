@@ -85,62 +85,6 @@
             }
         },
 
-        banner: {
-
-            load: function f(href) {
-
-                if (typeof href == 'object')
-                    while (href.length)
-                        f(href.shift());
-                else
-                    Form.get({
-                        action: href,
-                        after: function (data) {
-                            $('#' + href).empty().append(data.json.res);
-                        },
-                        data: {
-                            href: window.location.pathname,
-                            page: /\w+/gi.test(document.location.pathname) && document.location.pathname.match(/\w+/gi)[0]
-                        }
-                    });
-            },
-
-            scroll: function(event) {
-
-                if (Device.isMobile())
-                    return;
-
-                var teaser = document.getElementById('banner-desktop-teaser'),
-                    height = document.getElementsByTagName('header')[0].getBoundingClientRect().height;
-
-                if (teaser) {
-                    if (document.getElementById('banner-desktop-right').getBoundingClientRect().bottom < height) {
-                        if (teaser.style.position !== 'fixed') {
-                            teaser.style.position = 'fixed';
-                            teaser.style.top = height + 'px';
-                        }
-                    } else if (teaser.style.position === 'fixed') {
-                        teaser.style.position = 'relative';
-                        teaser.style.top = '0px';
-                    }
-
-                }
-            },
-
-            moment: function (data) {
-
-                if (Device.isMobile())
-                    return;
-
-                if (data.json.hasOwnProperty('block') && data.json.block) {
-                    var node = data.hasOwnProperty('node') && data.node.getElementsByClassName('ad')[0];
-                    if (node) {
-                        $(node).empty().append(data.json.block);
-                    }
-                }
-            }
-        },
-
         enableForm: function () {
 
             D.log('Content.enableForm', 'content');
@@ -331,14 +275,6 @@
 
             return res;
 
-        },
-
-        updateBanners: function () {
-            if(window.location.pathname !== '/') {
-                Device.isMobile()
-                    ? Content.banner.load('banner-tablet-top')
-                    : Content.banner.load(['banner-desktop-right', 'banner-desktop-teaser', 'banner-desktop-top']);
-            }
         },
 
         after: {

@@ -99,7 +99,7 @@
                         $("html, body").animate({scrollTop: 0}, 'slow');
                         Navigation.menu.hide();
                         history && history.pushState(options.init, "Lotzon", url);
-                        Content.updateBanners();
+                        Banner.update();
 
                         Config.hasOwnProperty('yandexMetrika')
                         && Config.yandexMetrika
