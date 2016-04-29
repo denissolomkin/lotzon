@@ -2,8 +2,6 @@
 
 namespace controllers\production;
 use \Application, \SettingsModel, \Player, \EntityException, \LotteryTicket, \CountriesModel, \TicketsModel;
-use Ratchet\Wamp\Exception;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 Application::import(PATH_APPLICATION . 'model/entities/Player.php');
 Application::import(PATH_APPLICATION . 'model/entities/LotteryTicket.php');
@@ -111,7 +109,7 @@ class LotteryController extends \AjaxController
             $this->ajaxResponseNoCache(array("message"=>"ALREADY_BOUGHT"),400);
         }
 
-        $ticket = new Ticket();
+        $ticket = new LotteryTicket();
 
         if ($currency!='points') {
             $country = (
