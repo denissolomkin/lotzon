@@ -69,7 +69,9 @@
 
     var Settings = <?php echo json_encode(is_array($list['Settings'])?$list['Settings']:[]);?>,
         Stats = <?php echo json_encode(is_array($stats)?$stats:[]);?>,
-        Times = <?php echo json_encode(is_array($times)?$times:[]);?>;;
+        Times = <?php echo json_encode(is_array($times)?$times:[]);?>,
+        count = 0,
+        range = null;
 
     for (var i in Settings)
         if(Settings.hasOwnProperty(i))
@@ -80,8 +82,31 @@
             initStat(Stats[i]);
 
     for (var i in Times)
-        if(Times.hasOwnProperty(i))
-            initTime(Times[i]);
+        if(Times.hasOwnProperty(i)){
+            count += parseInt(Times[i]['Cnt']);
+            if(!range)
+                range = Times[i]['Time'];
+
+            if(count >= 200) {
+                range = (range != Times[i]['Time'] ? range+' - '+Times[i]['Time'] : range);
+                initTime({
+                    Time: range,
+                    Cnt: count
+                });
+                count = 0;
+                range = null;
+            }
+        }
+
+    if(count) {
+        range = (range != Times[i]['Time'] ? range+' - '+Times[i]['Time'] : range);
+        initTime({
+            Time: range,
+            Cnt: count
+        });
+        count = 0;
+        range = null;
+    }
 
     function initStat(data) {
 
