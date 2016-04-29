@@ -83,6 +83,9 @@ class Index extends \SlimController\SlimController
 
         if ($loggedIn === true) {
             $this->session->set(Player::IDENTITY, $player);
+            $player->setLastIp(Common::getUserIp())
+                ->setAgent($_SERVER['HTTP_USER_AGENT'])
+                ->writeLogin();
         }
 
         $this->redirect(strstr($_SERVER['HTTP_REFERER'], 'lotzon.com') ? $_SERVER['HTTP_REFERER'] : '/');
