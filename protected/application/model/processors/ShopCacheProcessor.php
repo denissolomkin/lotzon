@@ -104,17 +104,9 @@ class ShopCacheProcessor extends BaseCacheProcessor
 
     public function getAllItems($excludeQuantibleItems = true)
     {
-
+        $this->recacheShop();
+        
         $items = Cache::init()->get(self::ITEMS_KEY) ? : $this->recacheItems();
-
-        /* TODO
-        Delete after first use
-        */
-        if(!$items || !current($items)->getId()) {
-            $this->recacheShop();
-            return $this->recacheItems();
-        }
-
         return $items;
     }
 
