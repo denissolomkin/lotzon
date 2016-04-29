@@ -1,8 +1,6 @@
 <div id="blog-post-view" class="content-box">
     
     {{ partial 'common-content-box-header-partial' (i18n "menu-blog") }}
-
-    <!-- <div class="content-box-header"><span class="back i-arrow-slim-left large-visible "></span><span class="back i-arrow-slim-left small-visible "></span>{{i18n "menu-blog"}}</div> -->
     
     <div class="content-box-content clearfix">
         <div class="content-box-item post">
@@ -35,6 +33,18 @@
             </div>
 
             {{partial 'blog-post-view-similar' this}}
+
+            <!-- >>>>>>>>>>>addddddddddd !! -->
+            <!-- if add -->
+            {{#if block }}
+            <div class="addbox">
+                <a href="#">
+                    <img src="http://ngm.nationalgeographic.com/2013/08/sugar/img/06-candy-670.jpg" alt="">
+                </a>
+            </div>
+            {{/if}}
+            <!-- endif -->
+            
             {{partial 'blog-post-view-comments' this}}
 
         </div>

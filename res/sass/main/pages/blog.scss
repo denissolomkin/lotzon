@@ -36,7 +36,7 @@
 
     //communication messages
     .message-form-actions{
-        padding-left: 0;
+        // padding-left: 0;
     }
     .content-box-header {
         line-height: 30px;
@@ -98,9 +98,9 @@
     }
 
     .message-form-smileys {
-        margin-left: 0;
-        float: left;
-        top: -1px;
+        // margin-left: 0;
+        // float: left;
+        // top: -1px;
     }
     .message-form-wrapper {
         button[type="submit"] {
@@ -163,7 +163,7 @@
         }
     }
     & .input-file-wrapper {
-        display: none;
+        // display: none;
     }
 }
 

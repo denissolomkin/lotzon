@@ -32,6 +32,18 @@
                     <div class="game-button">{{i18n "button-games-details"}}</div>
                 </div>
             </a>
+            
+            <!-- >>>>>>>>>>>addddddddddd !! -->
+            <!-- if add -->
+            {{#if block }}
+            <div class="addbox">
+                <a href="#">
+                    <img src="http://ngm.nationalgeographic.com/2013/08/sugar/img/06-candy-670.jpg" alt="">
+                </a>
+            </div>
+            {{/if}}
+            <!-- endif -->
+
             {{/each}}
             {{^.}}No games :({{/.}}
         </div>

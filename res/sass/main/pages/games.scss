@@ -12,14 +12,14 @@ div > .games-previews {
             margin: 0 0 0 -17px;
             position: relative;
             font-size: 0;
-        }
-        a {
-            display: inline-block;
-            height: 320px;
-            width: 180px;
-            overflow: hidden;
-            position: relative;
-            margin: 0 0 30px 17px;
+            &> *{
+                display: inline-block;
+                height: 320px;
+                width: 180px;
+                overflow: hidden;
+                position: relative;
+                margin: 0 0 30px 17px;
+            }
         }
         a:active,
         a:hover {
@@ -110,10 +110,9 @@ div > .games-previews {
             padding-top: 20px;
             .fixr{
                 margin: 0 -20px 0 -35px;
-                a{
+                & > *{
                     width: 200px;
                     margin: 0 0 30px 35px;
-
                 }
             }
         }
