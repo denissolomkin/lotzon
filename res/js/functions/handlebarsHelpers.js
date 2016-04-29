@@ -25,8 +25,7 @@ $(function () {
         };
 
     Handlebars.registerHelper({
-        'tt': function(options){
-            console.debug(options,this);
+        'loadBlock': function(){
             return '<img src="" onerror="alert(1);console.debug(this);" />';
         },
         /**
