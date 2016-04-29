@@ -14,16 +14,11 @@
       display: inline-block;
       position: relative;
       vertical-align: middle;
-      height: 50px;
-      margin: 0 0 0 20px;
+      height: 30px;
+      width: 133px;
+      margin: 10px 0 10px 20px;
       overflow: hidden;
-      
-      &:before{
-        margin-left: 2px;
-        font-size: 86px;
-        line-height: 50px;
-        position: relative;
-      }
+      background-image: url("/res/img/LOGO.svg");
 
     }
     .footer-social-icons {

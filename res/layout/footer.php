@@ -7,7 +7,7 @@
             <div class="go-to-top"></div>
         </a>
         <!-- Logo -->
-        <div class="footer-logo i-lotzon"></div>
+        <div class="footer-logo"></div>
 
         <!-- Social icons -->
         <div class="footer-social-icons">
