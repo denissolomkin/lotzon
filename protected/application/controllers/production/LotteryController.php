@@ -133,7 +133,7 @@ class LotteryController extends \AjaxController
                 \PlayersModel::instance()->updateGoldTicket($player, 1);
 
                 $transaction = new \Transaction;
-                $transaction->setPlayerId($player->getId())->setCurrency('MONEY')->setSum(0 - $goldPrice)->setDescription('Покупка золотого билета')->setBalance(\PlayersModel::instance()->getBalance($player, true)['Money'])->create();
+                $transaction->setPlayerId($player->getId())->setCurrency('MONEY')->setSum(0 - $goldPrice)->setDescription('Покупка золотого билета')->setBalance(\PlayersModel::instance()->getBalance($player, true)['Money'])->setObjectType('Gold')->create();
 
                 $ticket->commit();
             } catch (\Exception $e) {
@@ -166,7 +166,7 @@ class LotteryController extends \AjaxController
                 \PlayersModel::instance()->updateGoldTicket($player, 1);
 
                 $transaction = new \Transaction;
-                $transaction->setPlayerId($player->getId())->setCurrency('POINT')->setSum(0 - $goldPrice)->setDescription('Покупка золотого билета')->setBalance(\PlayersModel::instance()->getBalance($player, true)['Points'])->create();
+                $transaction->setPlayerId($player->getId())->setCurrency('POINT')->setSum(0 - $goldPrice)->setDescription('Покупка золотого билета')->setBalance(\PlayersModel::instance()->getBalance($player, true)['Points'])->setObjectType('Gold')->create();
 
                 $ticket->commit();
             } catch (\Exception $e) {
