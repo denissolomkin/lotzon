@@ -720,6 +720,9 @@ input.input-radio:checked + label.input-radio:before {
     background-position: top center;
     background-origin: content-box; }
 
+.addbox {
+  overflow: hidden; }
+
 .banner-1,
 .banner-2,
 .banner-3,
@@ -5244,8 +5247,6 @@ span[class^="i-smile"].i-smile-wink:before {
   font-weight: normal;
   font-size: 15.5px;
   padding-bottom: 1px; }
-  #blog-post-view .message-form-actions {
-    padding-left: 0; }
   #blog-post-view .content-box-header {
     line-height: 30px;
     height: 30px;
@@ -5286,10 +5287,6 @@ span[class^="i-smile"].i-smile-wink:before {
     right: 1px; }
   #blog-post-view .message-form-wrapper {
     padding: 10px 0 0 10px; }
-  #blog-post-view .message-form-smileys {
-    margin-left: 0;
-    float: left;
-    top: -1px; }
   #blog-post-view .message-form-wrapper button[type="submit"] {
     float: right;
     border: none;
@@ -5329,8 +5326,6 @@ span[class^="i-smile"].i-smile-wink:before {
       display: inline-block; }
     #blog-post-view .post-inf .post-views-comments {
       display: inline-block; }
-  #blog-post-view .input-file-wrapper {
-    display: none; }
 
 .comment-reply .comment-reply-btn {
   display: none; }
@@ -10992,13 +10987,13 @@ div > .games-previews {
       margin: 0 0 0 -17px;
       position: relative;
       font-size: 0; }
-    .games-previews .flex-box a {
-      display: inline-block;
-      height: 320px;
-      width: 180px;
-      overflow: hidden;
-      position: relative;
-      margin: 0 0 30px 17px; }
+      .games-previews .flex-box .fixr > * {
+        display: inline-block;
+        height: 320px;
+        width: 180px;
+        overflow: hidden;
+        position: relative;
+        margin: 0 0 30px 17px; }
     .games-previews .flex-box a:active,
     .games-previews .flex-box a:hover {
       /*need animation*/ }
@@ -11069,7 +11064,7 @@ div > .games-previews {
     padding-top: 20px; }
     .games-previews .flex-box .fixr {
       margin: 0 -20px 0 -35px; }
-      .games-previews .flex-box .fixr a {
+      .games-previews .flex-box .fixr > * {
         width: 200px;
         margin: 0 0 30px 35px; } }
 

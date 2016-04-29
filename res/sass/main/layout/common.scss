@@ -767,6 +767,7 @@ input.input-radio:checked + label.input-radio:before {
 
 // BANNERS -------------------------------- //
 
+// 4 branding
 .t-box{
     position: fixed;
     top: 0;
@@ -785,6 +786,11 @@ input.input-radio:checked + label.input-radio:before {
 
     }
 }
+// 4 nth banners
+.addbox{
+    overflow: hidden;
+}
+// 4 banners
 .banner-1,
 .banner-2,
 .banner-3,
