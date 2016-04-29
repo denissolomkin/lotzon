@@ -5995,8 +5995,7 @@ input[type="text"], input[type="email"] {
   z-index: 10;
   cursor: pointer; }
   .get-full-picture:hover:after {
-    -webkit-transform: rotateY(360deg);
-    transform: rotateY(360deg); }
+    transform: scale(1.2, 1.2); }
   .get-full-picture img {
     max-width: 100%; }
   .get-full-picture:after {
@@ -6018,7 +6017,7 @@ input[type="text"], input[type="email"] {
     border: 3px solid #fff;
     border-radius: 50%;
     letter-spacing: 1px;
-    transition: all 1s ease-in-out .1s; }
+    transition: all 1s ease-in-out .3s; }
 
 #FullPictureWrapper {
   position: fixed;
@@ -7190,8 +7189,6 @@ form.loading > * {
 
 .ghd-won {
   margin-top: 25px; }
-  .ghd-won .grid-container > *:first-child {
-    margin-right: 50px; }
   .ghd-won .grid-container > * span {
     margin-right: 13px; }
   .ghd-won span {
@@ -7738,7 +7735,6 @@ form.loading > * {
     display: inline-block;
     box-sizing: border-box;
     line-height: 38px;
-    margin-right: 20px;
     min-width: 100px; }
     .ghd-tickets li span.gold {
       font-weight: bold;

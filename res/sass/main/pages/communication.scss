@@ -11,8 +11,9 @@
     z-index: 10;
     cursor: pointer;
     &:hover:after {
-        -webkit-transform: rotateY(360deg);
-        transform: rotateY(360deg);
+        // -webkit-transform: rotateY(360deg);
+        // transform: rotateY(360deg);
+        transform: scale(1.2,1.2);
     }
     img {
         max-width: 100%;
@@ -36,7 +37,7 @@
         border: 3px solid #fff;
         border-radius: 50%;
         letter-spacing: 1px;
-        transition: all 1s ease-in-out .1s;
+        transition: all 1s ease-in-out .3s;
     }
 }
 

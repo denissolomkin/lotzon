@@ -366,7 +366,7 @@
     & .grid-container {
         > *{
             &:first-child{
-                margin-right: 50px;
+                // margin-right: 50px;
             }
             span{
                 margin-right: 13px;
@@ -1098,7 +1098,7 @@
             display: inline-block;
             box-sizing: border-box;
             line-height: 38px;
-            margin-right: 20px;
+            // margin-right: 20px;
             min-width: 100px;
             &.gold {
                 font-weight: bold;

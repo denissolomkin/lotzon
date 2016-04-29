@@ -1,8 +1,11 @@
 <!doctype html>
 <html>
 <head>
-	<title>Lotzon</title>
-	<meta charset="utf-8">
+	<title><?=$seo['title'];?></title>
+    <meta name="description" content="<?=$seo['desc'];?>">
+    <meta name="keywords" content="<?=$seo['kw'];?>" />
+	
+    <meta charset="utf-8">
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
     
     <link rel="icon" href="/res/img/favicones/favicon.png_128x128.png?v=666" type="image/png"/>
