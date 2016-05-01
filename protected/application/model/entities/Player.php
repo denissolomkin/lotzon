@@ -174,9 +174,8 @@ class Player extends Entity
     {
         if(!$this->getIp()){
             $this->setIp($ip);
-        } elseif($ip!=$this->getIp()){
-            $this->_lastIp = $ip;
         }
+        $this->_lastIp = $ip;
         return $this;
     }
 
