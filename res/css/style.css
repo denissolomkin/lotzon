@@ -5567,6 +5567,13 @@ span[class^="i-smile"].i-smile-wink:before {
   .post-description span[style*='bold'] {
     font-family: 'Handbook' !important;
     font-weight: bold !important; }
+  .post-description ol {
+    padding: 7px; }
+    .post-description ol > li {
+      font-size: 18.5px !important;
+      margin-bottom: 10px;
+      margin-left: 10px;
+      padding-left: 20px; }
   .post-description ul {
     padding: 7px; }
     .post-description ul > li {
