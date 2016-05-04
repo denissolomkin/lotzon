@@ -52,7 +52,9 @@ class Ad extends PrivateArea
                 'lottery' => 'Лотерея',
                 'ticket' => 'Билет',
                 'prize' => 'Приз',
+                'blog' => 'Блог',
                 'post' => 'Статья',
+                'game' => 'Игра',
                 'comment' => 'Комментарий'
             ),
             'chance' => array()

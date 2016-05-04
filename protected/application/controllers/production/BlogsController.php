@@ -1,7 +1,6 @@
 <?php
 namespace controllers\production;
-use \Application, \Player, \SettingsModel, \BlogsModel, \Blog;
-use Symfony\Component\HttpFoundation\Session\Session;
+use \Application, \Banner, \SettingsModel, \BlogsModel, \Blog;
 
 Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');
 
@@ -14,7 +13,7 @@ class BlogsController extends \AjaxController
         self::$blogsPerPage = (int)SettingsModel::instance()->getSettings('counters')->getValue('BLOGS_PER_PAGE') ? : 10;
         parent::init();
         $this->validateRequest();
-        $this->authorizedOnly();
+        $this->authorizedOnly(true);
         $this->validateLogout();
         $this->validateCaptcha();
     }
@@ -22,6 +21,7 @@ class BlogsController extends \AjaxController
     public function postAction($id)
     {
 
+        $country  = $this->player->getCountry();
         try {
             $blog = new \Blog;
             $blog->setId($id)->fetch();
@@ -41,11 +41,21 @@ class BlogsController extends \AjaxController
             'res' => array(
                 'blog' => array(
                     'post' => array(
-                        "$id" => $blog->exportTo('item')
+                        $id => $blog->exportTo('item')
                     ),
                 ),
             ),
         );
+
+        $banner = new Banner;
+        $response['res']['blog']['post'][$id]['block'] = $banner
+            ->setTemplate('desktop')
+            ->setDevice('desktop')
+            ->setLocation('context')
+            ->setPage('post')
+            ->setCountry($country)
+            ->random()
+            ->render();
 
         $this->ajaxResponseNoCache($response);
         return true;
@@ -54,7 +64,8 @@ class BlogsController extends \AjaxController
     public function listAction()
     {
 
-        $lang     = $this->session->get(Player::IDENTITY)->getLang();
+        $lang     = $this->player->getLang();
+        $country  = $this->player->getCountry();
         $count    = $this->request()->get('count', self::$blogsPerPage);
         $beforeId = $this->request()->get('before_id', NULL);
         $afterId  = $this->request()->get('after_id', NULL);
@@ -85,6 +96,19 @@ class BlogsController extends \AjaxController
             $response['res']['blog']['posts'][$id] = $blog->exportTo('list');
         }
 
+        if(count($response['res']['blog']['posts'])) {
+            $banner = new Banner;
+            $keys = array_keys($response['res']['blog']['posts']);
+            $response['res']['blog']['posts'][$keys[array_rand($keys)]]['block'] = $banner
+                ->setTemplate('desktop')
+                ->setDevice('desktop')
+                ->setLocation('context')
+                ->setPage('blog')
+                ->setCountry($country)
+                ->random()
+                ->render();
+        }
+
         $this->ajaxResponseNoCache($response);
         return true;
     }
@@ -92,7 +116,7 @@ class BlogsController extends \AjaxController
     public function similarAction($blogId)
     {
 
-        $lang     = $this->session->get(Player::IDENTITY)->getLang();
+        $lang     = $this->player->getLang();
         $count    = $this->request()->get('count', self::$blogsPerPage);
         $beforeId = $this->request()->get('before_id', NULL);
         $afterId  = $this->request()->get('after_id', NULL);
