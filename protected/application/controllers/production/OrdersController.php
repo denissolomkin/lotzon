@@ -23,9 +23,9 @@ class OrdersController extends \AjaxController
         $currency = CountriesModel::instance()->getCountry($this->player->getCountry())->loadCurrency();
 
         $data = array(
-            "summ" => array(
-                "title" => "summ",
-                "value" => $sum
+            'summ' => array(
+                'title' => 'summ',
+                'value' => $sum
             )
         );
 
@@ -45,7 +45,7 @@ class OrdersController extends \AjaxController
             $order->create();
             $this->player
                 ->addMoney(-1 * $sum, $order->getText())
-                ->addPoints((int)(round($sum, 2) * $currency->getRate()), "Обмен денег на баллы");
+                ->addPoints((int)(round($sum, 2) * $currency->getRate()), 'Обмен денег на баллы');
             $this->session->set(Player::IDENTITY, $this->player);
             $order->commit();
 
@@ -53,18 +53,18 @@ class OrdersController extends \AjaxController
 
             $order->rollBack();
             $res = array(
-                "message" => $e->getMessage(),
-                "res"     => array()
+                'message' => $e->getMessage(),
+                'res'     => array()
             );
             $this->ajaxResponseNoCache($res, 402);
         }
 
         $res = array(
-            "message" => "message-convert-success",
-            "player" => array(
-                "balance" => array(
-                    "money"  => $this->player->getMoney(),
-                    "points" => $this->player->getPoints(),
+            'message' => 'message-convert-success',
+            'player' => array(
+                'balance' => array(
+                    'money'  => $this->player->getMoney(),
+                    'points' => $this->player->getPoints(),
                 )
             )
         );
@@ -85,11 +85,13 @@ class OrdersController extends \AjaxController
 
         switch ($method) {
             case \MoneyOrder::GATEWAY_PHONE:
+                if(!in_array($this->player,array('RU','UA')))
+                    $this->ajaxResponseBadRequest('COUNTRY_PHONE_UNAVAILABLE');
                 $accountName = 'Phone';
                 break;
 
             case \MoneyOrder::GATEWAY_QIWI:
-                $this->ajaxResponseBadRequest("SELECT_OTHER_METHOD");
+                $this->ajaxResponseBadRequest('SELECT_OTHER_METHOD');
                 $accountName = 'Qiwi';
                 break;
 
@@ -102,18 +104,18 @@ class OrdersController extends \AjaxController
                 break;
 
             default:
-                $this->ajaxResponseBadRequest("INVALID_PAYMENT_GATEWAY");
+                $this->ajaxResponseBadRequest('INVALID_PAYMENT_GATEWAY');
                 break;
         }
 
         switch (true) {
 
             case !$this->player->getAccounts($accountName):
-                $this->ajaxResponseBadRequest("FIRST_FILL_ACCOUNT");
+                $this->ajaxResponseBadRequest('FIRST_FILL_ACCOUNT');
                 break;
 
             case $number && !in_array($number, $this->player->getAccounts($accountName)):
-                $this->ajaxResponseBadRequest("INVALID_ACCOUNT_NUMBER");
+                $this->ajaxResponseBadRequest('INVALID_ACCOUNT_NUMBER');
                 break;
 
             case !$number && $this->player->getAccounts($accountName):
@@ -127,12 +129,12 @@ class OrdersController extends \AjaxController
         $currency = CountriesModel::instance()->getCountry($this->player->getCountry())->loadCurrency();
         $data = array(
             $method => array(
-                "title" => $method,
-                "value" => $number
+                'title' => $method,
+                'value' => $number
             ),
-            "summ" => array(
-                "title" => "Сумма",
-                "value" => $sum
+            'summ' => array(
+                'title' => 'Сумма',
+                'value' => $sum
             )
         );
 
@@ -143,7 +145,7 @@ class OrdersController extends \AjaxController
             ->setCurrency($currency->getCode())
             ->setSum($sum)
             ->setEquivalent($sum / $currency->getCoefficient())
-            ->setNumber(preg_replace("/\D/","", $number));
+            ->setNumber(preg_replace("/\D/",'', $number));
 
         try {
 
@@ -157,8 +159,8 @@ class OrdersController extends \AjaxController
 
             $order->rollBack();
             $res = array(
-                "message" => $e->getMessage(),
-                "res"     => array()
+                'message' => $e->getMessage(),
+                'res'     => array()
             );
 
             $this->ajaxResponseNoCache($res, 402);
@@ -166,11 +168,11 @@ class OrdersController extends \AjaxController
         }
 
         $res = array(
-            "message" => "message-cashout-success",
-            "player"  => array(
-                "balance" => array(
-                    "money"  => $this->player->getMoney(),
-                    "points" => $this->player->getPoints(),
+            'message' => 'message-cashout-success',
+            'player'  => array(
+                'balance' => array(
+                    'money'  => $this->player->getMoney(),
+                    'points' => $this->player->getPoints(),
                 )
             )
         );
