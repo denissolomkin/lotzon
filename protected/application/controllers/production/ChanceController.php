@@ -5,8 +5,6 @@ namespace controllers\production;
 use \Application, \Banner, \LotterySettings;
 use \GamesPublishedModel, \CountriesModel, \GameConstructorChance;
 
-Application::import(PATH_APPLICATION . 'model/entities/Player.php');
-Application::import(PATH_APPLICATION . 'model/entities/Banner.php');
 Application::import(PATH_APPLICATION . 'model/entities/GameConstructorChance.php');
 Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');
 
@@ -30,11 +28,13 @@ class ChanceController extends \AjaxController
         }
 
         try {
-            if (!($publishedGames = GamesPublishedModel::instance()->getList()[$key])) {
-                $this->ajaxResponseNotFound('NOT_PUBLISHED_GAMES');
-            }
+            $publishedGames = GamesPublishedModel::instance()->getList()[$key];
         } catch (\PDOException $e) {
             $this->ajaxResponseInternalError();
+        }
+
+        if (!$publishedGames) {
+            $this->ajaxResponseNotFound('NOT_PUBLISHED_GAMES');
         }
 
         $response = array(
@@ -53,6 +53,17 @@ class ChanceController extends \AjaxController
             $game->setLang($this->player->getLang());
             $response['res']['games'][$game->getType()][] = $game->export('list');
         }
+
+        $banner = new Banner;
+        $keys = array_keys($response['res']['games'][$game->getType()]);
+        $response['res']['games'][$game->getType()][$keys[array_rand($keys)]]['block'] = $banner
+            ->setTemplate('desktop')
+            ->setDevice('desktop')
+            ->setLocation('context')
+            ->setPage('game')
+            ->setCountry($this->player->getCountry())
+            ->random()
+            ->render();
 
         $this->ajaxResponseNoCache($response);
     }

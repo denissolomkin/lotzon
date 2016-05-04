@@ -2,10 +2,8 @@
 
 namespace controllers\production;
 
-use \Application, \Player, \GamesPublishedModel, \SettingsModel;
-use Symfony\Component\HttpFoundation\Session\Session;
+use \Application, \Banner, \GamesPublishedModel, \SettingsModel;
 
-Application::import(PATH_APPLICATION . 'model/entities/Player.php');
 Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');
 
 class GamesController extends \AjaxController
@@ -89,6 +87,17 @@ class GamesController extends \AjaxController
                 break;
 
         }
+
+        $banner = new Banner;
+        $keys = array_keys($response['res']['games'][$game->getType()]);
+        $response['res']['games'][$game->getType()][$keys[array_rand($keys)]]['block'] = $banner
+            ->setTemplate('desktop')
+            ->setDevice('desktop')
+            ->setLocation('context')
+            ->setPage('game')
+            ->setCountry($this->player->getCountry())
+            ->random()
+            ->render();
 
         $this->ajaxResponseNoCache($response);
     }
