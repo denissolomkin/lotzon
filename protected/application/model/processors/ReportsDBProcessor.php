@@ -208,27 +208,35 @@ SELECT CONCAT(YEAR(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date))) `Mo
     public function getTopOnlineGames($dateFrom=null, $dateTo=null, $args=null)
     {
 
-        $sql = "
-        SELECT Concat('#',p.Id) Id, p.Nicname Name, g.Currency, count(g.Id) Total, sum(g.Win) Win, (sum(g.Win)*25+count(g.Id)) Rating
-                                FROM `PlayerGames` g
-                                JOIN Players p On p.Id=g.PlayerId
-                                LEFT JOIN OnlineGames o ON o.Id = GameId
+        $sql = "(SELECT p.Id Id, p.Nicname Name, g.Currency, (sum(g.Win)*25+count(g.Id)) Rating, count(g.Id) Total, sum(g.Win) Win, 0 Top
+        FROM `PlayerGames` g
+        JOIN Players p On p.Id=g.PlayerId
+        WHERE g.`Month`>=:from AND g.`Month`<=:to AND g.`IsFee` = 1 AND g.`GameId` = :gid".
+            (isset($args['Currency']) && $args['Currency'] != '' ? " AND `Currency` = '{$args['Currency']}' " : '') .
+            " group by g.GameId, g.Currency, g.PlayerId)
 
-                                where g.`Date`>:from AND `Date`<:to AND g.Price>0
-                                AND `GameId` = ".
+            UNION ALL
 
-            (is_numeric($args['GameId'])?$args['GameId']:'1').
-            (isset($args['Currency']) && $args['Currency']!=''?" AND `Currency` = '{$args['Currency']}'":'').
+            (SELECT  p.Id Id, p.Nicname Name, t.Currency, t.Rating Rating, NULL Total, NULL Win, 1 Top
+            FROM `OnlineGamesTop` t
+            JOIN Players p On p.Id=t.PlayerId
+            WHERE t.`Month` >= :from AND t.`Month` <= :to
+            AND t.`GameId` = :gid" .
+            (isset($args['Currency']) && $args['Currency'] != '' ? " AND `Currency` = '{$args['Currency']}' " : '') . ")
 
-                                " group by Currency, g.GameId, g.PlayerId
-                                order by Currency, Rating DESC, Total DESC";
+            order by Currency, Rating DESC";
 
         try {
             $sth = DB::Connect()->prepare($sql);
-            $sth->execute(array(':from' => $dateFrom,':to' => $dateTo));
+            $sth->execute(array(
+                ':from' => $dateFrom,
+                ':to' => $dateTo,
+                ':gid' => is_numeric($args['GameId']) ? $args['GameId'] : 1
+            ));
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query {$e->getMessage()}", 500);
         }
+
         return $sth->fetchAll();
     }
 
