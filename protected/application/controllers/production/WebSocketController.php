@@ -691,24 +691,26 @@ class WebSocketController implements MessageComponentInterface
             }
 
             $balance = $player->getBalance();
-            $conn->send(json_encode(
+            $response =
                 array('path' => 'update',
-                      'res'  => array(
-                          'money'  => $balance['Money'],
-                          'points' => $balance['Points'],
-                          'audio'  => isset($gameConstructor) ? $gameConstructor->getAudio() : null,
-                          'key'    => isset($gameConstructor) ? $gameConstructor->getKey() : null
-                      ))));
+                    'res'  => array(
+                        'money'  => $balance['Money'],
+                        'points' => $balance['Points'],
+                        'audio'  => isset($gameConstructor) ? $gameConstructor->getAudio() : null,
+                        'key'    => isset($gameConstructor) ? $gameConstructor->getKey() : null
+                    ));
+
+            $conn->send(json_encode($response));
 
             if ($gamePlayer->getApp('Uid')) {
-                if ($gamePlayer->getApp('Name'))
+                if ($gamePlayer->getApp('Name')) {
                     $this->runGame(
                         $gamePlayer->getApp('Name'),
                         $gamePlayer->getApp('Uid'),
                         'startAction',
                         $gamePlayer->getId()
                     );
-                else {
+                } else {
                     $gamePlayer->setAppUid(null)
                         ->update();
                     echo $this->time(0, 'WARNING') . " у игрока {$player->getId()} отсутствует appName\n";
@@ -751,9 +753,7 @@ class WebSocketController implements MessageComponentInterface
 
     public function onMessage(ConnectionInterface $from, $msg)
     {
-
-        if ($player = $from->Session->get(Player::IDENTITY))
-            if ($player instanceof Player) {
+        if (($player = $from->Session->get(Player::IDENTITY)) && $player instanceof Player) {
 
                 $gamePlayer = new GamePlayer;
 

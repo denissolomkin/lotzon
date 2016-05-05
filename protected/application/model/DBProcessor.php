@@ -1,7 +1,6 @@
 <?php
-Application::import(PATH_INTERFACES . 'IProcessor.php');
 
-abstract class DBProcessor implements IProcessor
+abstract class DBProcessor
 {
     public function beginTransaction()
     {

@@ -37,85 +37,92 @@
 
 
 <div id="player-template" style="display:none">
-    <form method="post">
-        <input type="hidden" name="Id" value="">
-        <input type="hidden" name="Month" value="<?=$month?>">
-
-    <div class="form-group">
-        <div class="form-inline">
-            <div class="col-md-1">
-                <img src="">
-                <br>
-                <span class="name"></span>
-            </div>
-            <div class="col-md-11">
-
-                    <div class="row-fluid">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                            <input type="text" class="form-control" name="PlayerId" placeholder="Игрок" value="">
-                        </div>
-
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-star"></i></span>
-                            <input type="text" class="form-control" name="Rating" placeholder="Рейтинг" value="">
-                        </div>
-
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-gamepad"></i></span>
-                            <select class="form-control" name="GameId">
-                                <? foreach($onlineGames as $gid => $title):?>
-                                    <option value="<?=$gid?>"><?=$title?></option>
-                                <? endforeach; ?>
-                            </select>
-                        </div>
-
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-money"></i></span>
-                            <select class="form-control" name="Currency">
-                                    <option value="<?=\LotterySettings::CURRENCY_MONEY?>">Деньги</option>
-                                    <option value="<?=\LotterySettings::CURRENCY_POINT?>">Баллы</option>
-                            </select>
-                        </div>
-                        <button class="btn btn-danger remove-button"><span class="glyphicon glyphicon-remove"></span> Удалить</button>
-
+    <div class="row-fluid">
+        <form method="post">
+            <input type="hidden" name="Id" value="">
+            <input type="hidden" name="Month" value="<?= $month ?>">
+            <div class="form-group">
+                <div class="form-inline">
+                    <div class="col-md-1">
+                        <img src="">
                         <br>
+                        <span class="name"></span>
+                    </div>
+                    <div class="col-md-11">
 
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-sliders"></i></span>
-                            <select class="form-control" name="Increment">
-                                <option value="">Вероятность</option>
-                                <? for ($i = 0; $i <=100; $i+=10) :?>
-                                    <option value="<?=$i?>"><?=$i?>%</option>
-                                <? endfor; ?>
-                            </select>
-                        </div>
+                        <div class="row-fluid">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                <input type="text" class="form-control" name="PlayerId" placeholder="Игрок" value="">
+                            </div>
 
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-                            <input type="text" class="form-control" name="Period" placeholder="Периодичность" value="">
-                        </div>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-star"></i></span>
+                                <input type="text" class="form-control" name="Rating" placeholder="Рейтинг" value="">
+                            </div>
 
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-play"></i></span>
-                            <input type="text" class="form-control" name="Start" placeholder="С" value="">
-                        </div>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-gamepad"></i></span>
+                                <select class="form-control" name="GameId">
+                                    <? foreach ($onlineGames as $gid => $title): ?>
+                                        <option value="<?= $gid ?>"><?= $title ?></option>
+                                    <? endforeach; ?>
+                                </select>
+                            </div>
 
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-stop"></i></span>
-                            <input type="text" class="form-control" name="End" placeholder="До" value="">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-money"></i></span>
+                                <select class="form-control" name="Currency">
+                                    <option value="<?= \LotterySettings::CURRENCY_MONEY ?>">Деньги</option>
+                                    <option value="<?= \LotterySettings::CURRENCY_POINT ?>">Баллы</option>
+                                </select>
+                            </div>
+                            <button class="btn btn-danger remove-button"><span
+                                    class="glyphicon glyphicon-remove"></span> Удалить
+                            </button>
+
+                            <br>
+
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-sliders"></i></span>
+                                <select class="form-control" name="Increment">
+                                    <option value="">Вероятность</option>
+                                    <? for ($i = 0; $i <= 100; $i += 10) : ?>
+                                        <option value="<?= $i ?>"><?= $i ?>%</option>
+                                    <? endfor; ?>
+                                </select>
+                            </div>
+
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+                                <input type="text" class="form-control" name="Period" placeholder="Периодичность"
+                                       value="">
+                            </div>
+
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-play"></i></span>
+                                <input type="text" class="form-control" name="Start" placeholder="С" value="">
+                            </div>
+
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-stop"></i></span>
+                                <input type="text" class="form-control" name="End" placeholder="До" value="">
+                            </div>
+                            <button class="btn btn-success save-button"><span
+                                    class="glyphicon glyphicon-floppy-disk"></span> Сохранить
+                            </button>
                         </div>
-                <button class="btn btn-success save-button"><span class="glyphicon glyphicon-floppy-disk"></span> Сохранить</button>
+                    </div>
+                </div>
             </div>
-        </div>
+        </form>
     </div>
-    </form>
 </div>
 
 
 <script>
     var gameTop = eval(<?=json_encode($gameTop)?>),
-        template = $('#player-template'),
+        template = $('#player-template > div'),
         timezones = <?= $timezones?>,
         xhr;
 
@@ -136,14 +143,14 @@
     $(gameTop).each(function(id, player) {
 
         form = template.clone();
-        $('img',                form).attr('src','../filestorage/avatars/'+Math.ceil(player.PlayerId/100)+'/'+player.Avatar);
+        $('img',                form).attr('src','../filestorage/users/'+player.Avatar);
         $('.name',              form).text(player.Nicname);
         $('[name="Id"]',        form).val(player.Id);
         $('[name="PlayerId"]',  form).val(player.PlayerId);
         $('[name="Period"]',    form).val(player.Period);
         $('[name="GameId"]',    form).val(player.GameId).change();
         $('[name="Currency"]',  form).val(player.Currency).change();
-        $('[name="Rating"]',    form).val(player.Rating);
+        $('[name="Rating"]',    form).val(player.Rating).attr('disabled','disabled');
         $('[name="Increment"]', form).val(player.Increment).change();
         $('[name="Start"]',     form).val(player.Start);
         $('[name="End"]',       form).val(player.End);
@@ -216,14 +223,15 @@
 
         $.ajax({
             url: "/private/gametop/",
-            method: 'POST',
+            method: $('[name="Id"]', form).val()?'PUT':'POST',
             data: form.serialize(),
             async: true,
             dataType: 'json',
             success: function(data) {
                 button.find('.fa').last().remove();
                 if (data.status == 1) {
-                    $('[name="Id"]',form).val(data.data.Id);
+                    $('[name="Id"]', form).val(data.data.Id);
+                    $('[name="Rating"]', form).attr('disabled','disabled');
                     button.append($(' <i class="glyphicon glyphicon-ok"></i>').css('margin-left','5px')).removeClass('btn-warning');
                     window.setTimeout(function () {button.removeClass('btn-warning').find('i').last().fadeOut(200);},1000);
                 } else {

@@ -3,16 +3,19 @@
     // Cache Engine
     Cache = {
 
-        "default": {
+        "_isEnabled": null,
+        "_selectedLanguage": null,
+        "_default": {
             limit: 10,
             order: "ASC"
         },
-        "storage": {},
-        "compiledStorage": {},
-        "path2": {
+        "_path2": {
             "languages": '/res/languages/',
             "momentLocale": '/res/js/libs/moment-locale/'
         },
+
+        "storage": {},
+        "compiledStorage": {},
 
         "storages": {
             "templates": 'templatesStorage',
@@ -27,9 +30,6 @@
             }
         },
 
-        "isEnabled": null,
-        "selectedLanguage": null,
-
         /*
          * Common Cache engine
          * */
@@ -37,13 +37,18 @@
         /* check is localStorage enable */
         "detect": function () {
 
-            if (this.isEnabled === null)
-                this.isEnabled = typeof localStorage !== 'undefined';
-            D.log(['Cache.detect:', this.isEnabled], 'cache');
+            if (this.enabled() === null)
+                this._isEnabled = typeof localStorage !== 'undefined';
+            D.log(['Cache.detect:', this.enabled()], 'cache');
 
             return this;
         },
 
+        /* check is localStorage enable */
+        "enabled": function () {
+            return this._isEnabled;
+        },
+        
         /* point for enter to cache */
         "init": function (init, options) {
 
@@ -54,6 +59,9 @@
 
                 if (init.statuses)
                     Content.updateStatuses(init.statuses);
+
+                if (init.version)
+                    this.version(init.version);
 
                 if (init.captcha)
                     Content.captcha.render();
@@ -122,7 +130,7 @@
 
             switch (true) {
 
-                case !this.isEnabled:
+                case !this.enabled():
                     storage[this.storages.templates]
                         = storage[this.storages.languages]
                         = storage[this.storages.local]
@@ -134,7 +142,7 @@
                         = {};
                     break;
 
-                case this.isEnabled:
+                case this.enabled():
                     storage[this.storages.templates] = JSON.parse(localStorage.getItem(this.storages.templates)) || {};
                     storage[this.storages.languages] = JSON.parse(localStorage.getItem(this.storages.languages)) || {};
                     storage[this.storages.local] = JSON.parse(localStorage.getItem(this.storages.local)) || {};
@@ -155,12 +163,9 @@
         /* desc: clear only session data or all localStorage and Memory*/
         "drop": function (session) {
 
-            this.detect();
-
             D.log(['Cache.drop'], 'cache');
 
-            if (this.isEnabled) {
-
+            if (this.detect().enabled()) {
                 if (!session) {
                     localStorage.clear();
                 } else {
@@ -207,7 +212,7 @@
 
                 switch (true) {
 
-                    case !this.isEnabled:
+                    case !this.enabled():
                         break;
 
                     case cache === this.storages['session']:
@@ -252,7 +257,7 @@
 
             } catch (err) {
                 D.error('Cache сrach');
-                Cache.isEnabled = false;
+                this._isEnabled = false;
             }
 
             return this;
@@ -288,8 +293,8 @@
 
                 if (options.hasOwnProperty('query'))
                     this.model(U.parse(options.href), {
-                        limit: parseInt(options.query.limit) || this.default.limit,
-                        order: options.query.order || this.default.order
+                        limit: parseInt(options.query.limit) || this._default.limit,
+                        order: options.query.order || this._default.order
                     });
 
                 this.extend(options.json, storage)
@@ -418,8 +423,8 @@
                         keys = Object.keys(list),
                         model = this.model(U.parse(path.href || path));
 
-                    model.order = model.order || path.query && path.query.order || this.default.order;
-                    model.limit = model.limit || path.query && path.query.limit || this.default.limit;
+                    model.order = model.order || path.query && path.query.order || this._default.order;
+                    model.limit = model.limit || path.query && path.query.limit || this._default.limit;
 
                     cache = {};
 
@@ -801,20 +806,20 @@
         /* desc: load language dictionary */
         "localize": function () {
 
-            this.selectedLanguage = Player.language.current;
-            D.log(['Cache.localize:', this.selectedLanguage, this.storage[this.storages.languages].hasOwnProperty(this.selectedLanguage)], 'cache');
+            this._selectedLanguage = Player.language.current;
+            D.log(['Cache.localize:', this._selectedLanguage, this.storage[this.storages.languages].hasOwnProperty(this._selectedLanguage)], 'cache');
 
-            include(this.path2.momentLocale + this.selectedLanguage.toLowerCase() + '.js');
+            include(this._path2.momentLocale + this._selectedLanguage.toLowerCase() + '.js');
 
-            if (!this.language(this.selectedLanguage)) {
+            if (!this.language(this._selectedLanguage)) {
 
                 $.ajax({
-                    url: this.path2.languages + this.selectedLanguage,
+                    url: this._path2.languages + this._selectedLanguage + '?' + Config.siteVersion,
                     method: 'get',
                     dataType: 'json',
                     success: function (data) {
-                        D.log(['Cache.localize DONE:', Cache.selectedLanguage, data], 'cache');
-                        Cache.language(Cache.selectedLanguage, data);
+                        D.log(['Cache.localize DONE:', Cache._selectedLanguage, data], 'cache');
+                        Cache.language(Cache._selectedLanguage, data);
                         Cache.ready();
                     },
                     error: function (data) {
@@ -859,6 +864,15 @@
             D.log(['Cache.i18n:', key], 'i18n');
             key = key && key.replace(/\/|=/g, '-');
             return lang && lang[key] || key;
+        },
+
+
+        "version": function (version) {
+
+            if(Config.siteVersion != version) {
+                Config.siteVersion = version;
+                this.drop();
+            }
         }
     };
 

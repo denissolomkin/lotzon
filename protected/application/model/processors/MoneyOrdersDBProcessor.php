@@ -1,7 +1,8 @@
 <?php
 Application::import(PATH_APPLICATION . 'model/DBProcessor.php');
+Application::import(PATH_INTERFACES . 'IProcessor.php');
 
-class MoneyOrdersDBProcessor extends DBProcessor
+class MoneyOrdersDBProcessor extends DBProcessor implements IProcessor
 {
     public function create(Entity $order) 
     {

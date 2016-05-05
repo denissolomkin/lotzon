@@ -6,43 +6,50 @@
     <div class="row-fluid">
         <form role="form" action="/private/seo" method="POST">
           <div class="form-group">
-            <label for="title">Title</label>
-            <input type="text" class="form-control" id="title" name="title" placeholder="Page title" value="<?=$seo['title']?>">
+            <label for="Title">Title</label>
+            <input type="text" class="form-control" id="Title" name="Title" placeholder="Page title" value="<?=$seo['Title']?>">
           </div>
           <div class="form-group">
-            <label for="title">Description</label>
-            <textarea rows="3" class="form-control" name="description" placeholder="Description"><?=$seo['desc']?></textarea>
+            <label for="Description">Description</label>
+            <textarea rows="3" class="form-control" name="Description" placeholder="Description"><?=$seo['Description']?></textarea>
           </div>
           <div class="form-group">
-            <label for="kw">Keywords</label>
-            <input type="text" class="form-control" id="kw" name="kw" placeholder="Keywords" value="<?=$seo['kw']?>">
+            <label for="Keywords">Keywords</label>
+            <input type="text" class="form-control" id="Keywords" name="Keywords" placeholder="Keywords" value="<?=$seo['Keywords']?>">
           </div>
-            <div class="form-group">
-                <label for="pages">Формат сайта</label>
-                <select name="pages" class="form-control">
+            <!--div class="form-group">
+                <label for="Pages">Формат сайта</label>
+                <select name="Pages" class="form-control">
                     <option value="0">Одностраничный</option>
-                    <option value="1" <?=$seo['pages']?' selected':''?>>Многостраничный</option>
+                    <option value="1" <?=$seo['Pages']?' selected':''?>>Многостраничный</option>
                 </select>
             </div>
             <div class="form-group">
-                <label for="multilanguage">Мультиязычность</label>
-                <select name="multilanguage" class="form-control">
+                <label for="Multilanguage">Мультиязычность</label>
+                <select name="Multilanguage" class="form-control">
                     <option value="0">Отключена</option>
-                    <option value="1" <?=$seo['multilanguage']?' selected':''?>>Включена</option>
+                    <option value="1" <?=$seo['Multilanguage']?' selected':''?>>Включена</option>
                 </select>
             </div>
             <div class="form-group">
-                <label for="debug">Режим отладки</label>
-                <select name="debug" class="form-control">
+                <label for="Debug">Режим отладки</label>
+                <select name="Debug" class="form-control">
                     <option value="0">Отключен</option>
-                    <option value="1" <?=$seo['debug']?' selected':''?>>Включен</option>
+                    <option value="1" <?=$seo['Debug']?' selected':''?>>Включен</option>
                 </select>
-            </div>
+            </div-->
             <div class="form-group">
                 <label for="WebSocketReload">Сброс вебсокета</label>
                 <select name="WebSocketReload" class="form-control">
                     <option value="0">Нет</option>
                     <option value="1" <?=$seo['WebSocketReload']?' selected':''?>>Да</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="SiteVersionUpdate">Обновить версию сайта от <?=date('d.m.Y H:i',$seo['SiteVersion'])?></label>
+                <select name="SiteVersionUpdate" class="form-control">
+                    <option value="0">Нет</option>
+                    <option value="1">Да</option>
                 </select>
             </div>
           <button type="submit" class="btn btn-success">Сохранить</button>

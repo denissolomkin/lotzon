@@ -314,7 +314,7 @@
             } else {
 
                 var xhr = $.ajax({
-                    url     : U.generate(template, 'tmpl'),
+                    url     : U.generate(template, 'tmpl') + '?' + Config.siteVersion,
                     method  : 'get',
                     dataType: 'text',
                     success : function (data) {

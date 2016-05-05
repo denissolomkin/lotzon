@@ -1,8 +1,8 @@
 <?php
+Application::import(PATH_APPLICATION . 'model/DBProcessor.php');
+Application::import(PATH_INTERFACES . 'IProcessor.php');
 
-Application::import(PATH_APPLICATION . 'DBProcessor.php');
-
-class ShopDBProcessor extends DBProcessor
+class ShopDBProcessor extends DBProcessor implements IProcessor
 {
 
     public function fetch(Entity $item)

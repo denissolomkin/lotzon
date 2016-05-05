@@ -70,8 +70,7 @@ class GameTop extends \PrivateArea
 
     }
 
-
-    public function saveAction()
+    public function createAction()
     {
         if ($this->request()->isAjax()) {
             $response = array(
@@ -81,8 +80,31 @@ class GameTop extends \PrivateArea
             );
 
             try {
-                $response['data'] = GameAppsModel::instance()->saveGameTop($this->request()->post());
-            } catch (LotterySettingsException $e) {
+                $response['data'] = GameAppsModel::instance()->createGameTop($this->request()->post());
+            } catch (\ModelException $e) {
+                $response['status'] = 0;
+                $response['message'] = $e->getMessage();
+            }
+
+            die(json_encode($response));
+        }
+
+        $this->redirect('/private');
+
+    }
+
+    public function updateAction()
+    {
+        if ($this->request()->isAjax()) {
+            $response = array(
+                'status'  => 1,
+                'message' => 'OK',
+                'data'    => array(),
+            );
+
+            try {
+                $response['data'] = GameAppsModel::instance()->updateGameTop($this->request()->put());
+            } catch (\ModelException $e) {
                 $response['status'] = 0;
                 $response['message'] = $e->getMessage();
             }
@@ -106,7 +128,7 @@ class GameTop extends \PrivateArea
 
             try {
                 $response['data'] = GameAppsModel::instance()->deleteGameTop($id);
-            } catch (LotterySettingsException $e) {
+            } catch (\ModelException $e) {
                 $response['status'] = 0;
                 $response['message'] = $e->getMessage();
             }

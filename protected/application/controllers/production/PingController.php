@@ -245,6 +245,11 @@ class PingController extends \AjaxController
             }
         }
 
+        /**
+         * Site Version
+         */
+        $response['version'] = \SEOModel::instance()->getSEOSettings()['SiteVersion'];
+
         $this->ajaxResponseNoCache($response);
     }
 

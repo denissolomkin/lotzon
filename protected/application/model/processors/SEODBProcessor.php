@@ -4,19 +4,20 @@ class SEODBProcessor
 {
     public function updateSEO($seo)
     {
-        $sql = "REPLACE INTO `SEO` (`Identifier`, `Title`, `Description`, `Keywords`, `Pages`, `Debug`, `WebSocketReload`, `Multilanguage`)
-                VALUES (:id, :title, :desc, :kw, :pages, :dbg, :ws, :ml)";
+        $sql = "REPLACE INTO `SEO` (`Identifier`, `Title`, `Description`, `Keywords`, `Pages`, `Debug`, `WebSocketReload`, `SiteVersion`, `Multilanguage`)
+                VALUES (:id, :title, :desc, :kw, :pages, :dbg, :ws, :sv, :ml)";
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
-                ':id'    => $seo['id'],
-                ':title' => $seo['title'],
-                ':desc'  => $seo['desc'],
-                ':kw'    => $seo['kw'],
-                ':pages' => $seo['pages'],
-                ':dbg'   => $seo['debug'],
+                ':id'    => $seo['Identifier'],
+                ':title' => $seo['Title'],
+                ':desc'  => $seo['Description'],
+                ':kw'    => $seo['Keywords'],
+                ':pages' => $seo['Pages'],
+                ':dbg'   => $seo['Debug'],
                 ':ws'    => $seo['WebSocketReload'],
-                ':ml'    => $seo['multilanguage']
+                ':sv'    => $seo['SiteVersion'],
+                ':ml'    => $seo['Multilanguage']
             ));
         } catch (PDOException $e) {
             echo $e->getMessage();
@@ -35,28 +36,31 @@ class SEODBProcessor
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query", 500);
         }
+
         $seo = array(
-            'id'              => '',
-            'title'           => '',
-            'desc'            => '',
-            'kw'              => '',
-            'pages'           => '',
-            'debug'           => '',
+            'Identifier'      => '',
+            'Title'           => '',
+            'Description'     => '',
+            'Keywords'        => '',
+            'Pages'           => '',
+            'Debug'           => '',
             'WebSocketReload' => '',
-            'multilanguage'   => ''
+            'SiteVersion'     => '',
+            'Multilanguage'   => ''
         );
+
         if ($sth->rowCount()) {
             $row = $sth->fetch();
-
             $seo = array(
-                'id'              => $row['Identifier'],
-                'title'           => $row['Title'],
-                'desc'            => $row['Description'],
-                'kw'              => $row['Keywords'],
-                'pages'           => $row['Pages'],
-                'debug'           => $row['Debug'],
+                'Identifier'      => $row['Identifier'],
+                'Title'           => $row['Title'],
+                'Description'     => $row['Description'],
+                'Keywords'        => $row['Keywords'],
+                'Pages'           => $row['Pages'],
+                'Debug'           => $row['Debug'],
                 'WebSocketReload' => $row['WebSocketReload'],
-                'multilanguage'   => $row['Multilanguage'],
+                'SiteVersion'     => $row['SiteVersion'],
+                'Multilanguage'   => $row['Multilanguage'],
             );
         }
 

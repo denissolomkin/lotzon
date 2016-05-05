@@ -132,6 +132,8 @@ $dirs = array('libs', 'plugins', 'functions', 'controllers', 'games', 'models', 
 foreach ($dirs as $dir):
     if (!is_dir('./res/js/' . $dir . '/'))
         continue;
+    else
+        $addVersion = !in_array($dir,array('libs','plugins'));
     ?>
     <!-- <?php echo $dir; ?> -->
     <?php
@@ -139,7 +141,7 @@ foreach ($dirs as $dir):
     foreach ($files as $file):
         if ($file != "." && $file != ".." && strstr($file, '.js')):
             ?>
-            <script src="/res/js/<?php echo $dir . '/' . $file; ?>"></script>
+            <script src="/res/js/<?php echo $dir . '/' . $file . ($addVersion ? '?'.$version : ''); ?>"></script>
             <?php
         endif;
     endforeach;

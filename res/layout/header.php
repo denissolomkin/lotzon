@@ -10,21 +10,21 @@
         <meta content="/res/img/favicones/favicon.png_128x128.png?v=666" itemprop="image">
         <link href="/res/img/favicones/favicon.png.ico?v=666" rel="shortcut icon">
 
-        <title><?php echo $seo['title'];?></title>
-        <meta name="description" content="<?php echo $seo['desc'];?>">
-        <meta name="keywords" content="<?php echo $seo['kw'];?>" />
+        <title><?php echo $seo['Title'];?></title>
+        <meta name="description" content="<?php echo $seo['Description'];?>">
+        <meta name="keywords" content="<?php echo $seo['Keywords'];?>" />
 
         <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700,400italic,700italic&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="/res/css/style.css?v2">
+        <link rel="stylesheet" href="/res/css/style.css?<?php echo $version;?>">
         <?php //if (isset($isMobile)) {
             //if ($isMobile) { ?>
-                <!-- <link rel="stylesheet" href="/res/css/mobile/style.css"> -->
+                <!-- <link rel="stylesheet" href="/res/css/mobile/style.css?<?php echo $version;?>"> -->
             <?php // } else { ?>
-                <!-- <link rel="stylesheet" href="/res/css/screen/style.css"> -->
+                <!-- <link rel="stylesheet" href="/res/css/screen/style.css?<?php echo $version;?>"> -->
             <?php // }
         //} ?>
         <!-- screen only -->
-        <link rel="stylesheet" href="/res/css/screen/style.css?v2">
+        <link rel="stylesheet" href="/res/css/screen/style.css?<?php echo $version;?>">
 
         <link rel="stylesheet" href="/res/css/animate.css">
         <link rel="stylesheet" href="/res/css/slots.css" type="text/css">
@@ -116,7 +116,7 @@ Por favor, desactive el bloqueador de anuncios!'); ?>
                             <!-- end of MENU -->
 
                             <!-- MENU buttons -->
-                            <div id="menu-buttons" class="menu-btns"></div>
+                            <div id="menu-buttons"></div>
                             <!-- end of MENU buttons -->
 
 

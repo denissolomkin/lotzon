@@ -27,12 +27,6 @@ class GameAppsCacheProcessor extends BaseCacheProcessor implements IProcessor
 
     }
 
-    public function getPlayerRating($gameId = null, $playerId = null)
-    {
-        return $this->getBackendProcessor()->getPlayerRating($gameId, $playerId);
-
-    }
-
     public function getFund($gameId = null)
     {
         if (($fund = Cache::init()->get(self::FUND_CACHE_KEY)) === false) {

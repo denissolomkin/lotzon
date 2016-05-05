@@ -179,6 +179,7 @@ class Index extends \SlimController\SlimController
 
         $isMobile = $detect->isMobile();
         $counters = \SettingsModel::instance()->getSettings('counters');
+        $seo      = SEOModel::instance()->getSEOSettings();
 
         $this->session->set('isMobile', $isMobile);
         $player = $this->session->get(Player::IDENTITY)->fetch();
@@ -342,6 +343,7 @@ class Index extends \SlimController\SlimController
             'yandexMetrika' => (int)$counters->getValue('YANDEX_METRIKA'),
             'googleAnalytics' => $counters->getValue('GOOGLE_ANALYTICS'),
             'captchaKey' => $counters->getValue('CAPTCHA_CLIENT'),
+            'siteVersion' => $seo['SiteVersion'],
         );
 
         $debug = array(
@@ -404,7 +406,8 @@ class Index extends \SlimController\SlimController
             'slider'    => $slider,
             'config'    => $config,
             'isMobile'  => $isMobile,
-            'seo'       => SEOModel::instance()->getSEOSettings(),
+            'seo'       => $seo,
+            'version'   => $seo['SiteVersion']
         ));
 
     }

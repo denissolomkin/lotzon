@@ -1,8 +1,8 @@
 <?php
+Application::import(PATH_APPLICATION . 'model/DBProcessor.php');
+Application::import(PATH_INTERFACES . 'IProcessor.php');
 
-Application::import(PATH_APPLICATION . 'DBProcessor.php');
-
-class ReviewsDBProcessor extends DBProcessor
+class ReviewsDBProcessor extends DBProcessor implements IProcessor
 {
     public function create(Entity $review)
     {
@@ -10,7 +10,7 @@ class ReviewsDBProcessor extends DBProcessor
                 VALUES (:id, :parentid, :toplayerid, :playerid, :text, :date, :image, :ispromo, :status, :adminid, :modifydate, :module, :objectid)";
 
         try {
-            $sth = DB::Connect()->prepare($sql)->execute(array(
+            DB::Connect()->prepare($sql)->execute(array(
                 ':id'         => $review->getId(),
                 ':playerid'   => $review->getPlayerId(),
                 ':toplayerid' => $review->getToPlayerId(),
@@ -29,6 +29,7 @@ class ReviewsDBProcessor extends DBProcessor
             throw new ModelException("Unable to proccess storage query", 500);            
         }
 
+        $review->setId(DB::Connect()->lastInsertId());
         return $review;
     }
 

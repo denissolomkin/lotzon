@@ -1,9 +1,9 @@
 <!doctype html>
 <html>
 <head>
-	<title><?=$seo['title'];?></title>
-    <meta name="description" content="<?=$seo['desc'];?>">
-    <meta name="keywords" content="<?=$seo['kw'];?>" />
+	<title><?=$seo['Title'];?></title>
+    <meta name="description" content="<?=$seo['Description'];?>">
+    <meta name="keywords" content="<?=$seo['Keywords'];?>" />
 	
     <meta charset="utf-8">
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->

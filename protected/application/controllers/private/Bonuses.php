@@ -1,7 +1,7 @@
 <?php
 namespace controllers\admin;
 
-use \Application, \PrivateArea, \SettingsModel, \Session2, \SEOModel, \Admin;
+use \Application, \PrivateArea, \SettingsModel, \Session2, \Admin;
 
 Application::import(PATH_CONTROLLERS . 'private/PrivateArea.php');
 

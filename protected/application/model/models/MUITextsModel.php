@@ -44,7 +44,7 @@ class StaticTextsModel extends Model
             $text = call_user_func_array('sprintf', array_merge((array)(str_replace(array('{0}'),array('%s'),$text)), array_pad((array)$args,substr_count($text,'{0}'),0)));
         }
 
-        if(\Session2::connect()->get(\Admin::SESSION_VAR) && \SEOModel::instance()->getSEOSettings()['debug']){
+        if(\Session2::connect()->get(\Admin::SESSION_VAR) && \SEOModel::instance()->getSEOSettings()['Debug']){
             $text="<div class='debug text-trigger' data-key='{$key}'>{$text}</div>";
         }
 

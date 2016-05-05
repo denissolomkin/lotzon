@@ -238,7 +238,8 @@ Config::instance()->privateResources =  array(
     ),
     '/private/gametop/'      => array(
         'get' => 'controllers\admin\GameTop:index',
-        'post' => 'controllers\admin\GameTop:save',
+        'post' => 'controllers\admin\GameTop:create',
+        'put' => 'controllers\admin\GameTop:update',
     ),
     '/private/gametop/getPlayer/:playerId' => array(
         'get' => 'controllers\admin\GameTop:getPlayer'

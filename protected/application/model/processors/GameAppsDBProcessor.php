@@ -441,9 +441,9 @@ class GameAppsDBProcessor implements IProcessor
 
     /* OnlineGamesTop Table */
 
-    public function saveGameTop($data)
+    public function createGameTop($data)
     {
-        $sql = "REPLACE INTO `OnlineGamesTop`
+        $sql = "INSERT INTO `OnlineGamesTop`
                 (`Id`, `PlayerId`, `GameId`, `Month`, `Currency`, `Rating`, `Increment`, `Period`, `Start`, `End`)
                 VALUES
                 (:id, :pid, :gid, :mon, :cur, :rat, :inc, :per, :str, :end)";
@@ -456,6 +456,33 @@ class GameAppsDBProcessor implements IProcessor
                 ':mon'  => $data['Month'],
                 ':cur'  => $data['Currency'],
                 ':rat'  => $data['Rating'],
+                ':inc'  => $data['Increment'],
+                ':per'  => $data['Period'],
+                ':str'  => strtotime($data['Start'],0),
+                ':end'  => strtotime($data['End'],0),
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
+        }
+
+        $data['Id'] = DB::Connect()->lastInsertId();
+        return $data;
+    }
+
+    public function updateGameTop($data)
+    {
+        $sql = "REPLACE INTO `OnlineGamesTop`
+                (`Id`, `PlayerId`, `GameId`, `Month`, `Currency`, `Increment`, `Period`, `Start`, `End`)
+                VALUES
+                (:id, :pid, :gid, :mon, :cur, :inc, :per, :str, :end)";
+
+        try {
+            DB::Connect()->prepare($sql)->execute(array(
+                ':id'   => $data['Id'],
+                ':pid'  => $data['PlayerId'],
+                ':gid'  => $data['GameId'],
+                ':mon'  => $data['Month'],
+                ':cur'  => $data['Currency'],
                 ':inc'  => $data['Increment'],
                 ':per'  => $data['Period'],
                 ':str'  => strtotime($data['Start'],0),

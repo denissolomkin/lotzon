@@ -34,16 +34,18 @@ class SEO extends PrivateArea
     public function saveAction()
     {
         $seo = SEOModel::instance()->getSEOSettings();
-        if (empty($seo['id'])) {
-            $seo['id'] = self::DEFAULT_ID;
+
+        if (empty($seo['Identifier'])) {
+            $seo['Identifier'] = self::DEFAULT_ID;
         }
 
-        $seo['title'] = $this->request()->post('title');
-        $seo['desc'] = $this->request()->post('description');
-        $seo['kw'] = $this->request()->post('kw');
-        $seo['pages'] = $this->request()->post('pages');
-        $seo['debug'] = $this->request()->post('debug');
-        $seo['multilanguage'] = $this->request()->post('multilanguage');
+        if($this->request()->post('SiteVersionUpdate', false)) {
+            $seo['SiteVersion'] = time();
+        }
+
+        $seo['Title'] = $this->request()->post('Title');
+        $seo['Description'] = $this->request()->post('Description');
+        $seo['Keywords'] = $this->request()->post('Keywords');
         $seo['WebSocketReload'] = $this->request()->post('WebSocketReload');
 
         SEOModel::instance()->updateSEO($seo);

@@ -97,9 +97,14 @@ class GameAppsModel extends Model
         return $this->getProcessor()->getGameTop($month);
     }
 
-    public function saveGameTop($data = array())
+    public function createGameTop($data = array())
     {
-        return $this->getProcessor()->saveGameTop($data);
+        return $this->getProcessor()->createGameTop($data);
+    }
+
+    public function updateGameTop($data = array())
+    {
+        return $this->getProcessor()->updateGameTop($data);
     }
 
     public function deleteGameTop($id = null)

@@ -15,13 +15,13 @@ class SEOCacheProcessor extends BaseCacheProcessor
 
     public function getSEOSettings()
     {
-        if (($seo = Cache::init()->get(self::CACHE_KEY)) === false) {
+        if (($seo = Cache::init()->get(self::CACHE_KEY)) === false || !isset($seo['Pages'])) {
+            $seo = $this->recache();
+        }
 
-            $seo = $this->getBackendProcessor()->getSEOSettings();
-
-            if (!Cache::init()->set(self::CACHE_KEY, $seo)) {
-                throw new ModelException("Unable to cache storage data", 500);
-            }
+        /* todo delete after first use */
+        if (!isset($seo['Pages'])) {
+            $seo = $this->recache();
         }
 
         return $seo;
@@ -29,7 +29,15 @@ class SEOCacheProcessor extends BaseCacheProcessor
 
     public function updateSEO($seo)
     {
-        $seo = $this->getBackendProcessor()->updateSEO($seo);
+        $seo = $this->recache($seo);
+        return $seo;
+    }
+
+    public function recache($seo = null)
+    {
+        $seo = $seo
+            ? $this->getBackendProcessor()->updateSEO($seo)
+            : $this->getBackendProcessor()->getSEOSettings();
 
         if (!Cache::init()->set(self::CACHE_KEY, $seo)) {
             throw new ModelException("Unable to cache storage data", 500);
