@@ -233,7 +233,7 @@
             </form>
             
             <!-- Social registration -->
-            <form name="social_register">
+            <form name="social_register" data-ref="<?=$ref?>">
                 
                 <div class="title box-inner">EMAIL</div>
                 <div class="box-inner">

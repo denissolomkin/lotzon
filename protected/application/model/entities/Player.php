@@ -1213,8 +1213,8 @@ class Player extends Entity
                     'img'  => $this->getAvatar(),
                     'name' => $this->getNicname(),
                     'ping' => $this->getDates('Ping'),
-                    'money'    => $this->getMoney(),
-                    'points'   => $this->getPoints(),
+                    'money'    => ($this->getMoney()>=0?$this->getMoney():0),
+                    'points'   => ($this->getPoints()>=0?$this->getPoints():0),
                     'friends'  => \FriendsModel::instance()->getStatusCount($this->getId(), 1),
                 );
                 break;
@@ -1228,8 +1228,8 @@ class Player extends Entity
                         'name'       => $this->applyPrivacy('Name'),
                         'surname'    => $this->applyPrivacy('Surname'),
                     ),
-                    'money'    => $this->getMoney(),
-                    'points'   => $this->getPoints(),
+                    'money'    => ($this->getMoney()>=0?$this->getMoney():0),
+                    'points'   => ($this->getPoints()>=0?$this->getPoints():0),
                     'ping'     => $this->getDates('Ping'),
                     'gender'   => $this->applyPrivacy('Gender'),
                     'age'      => $this->applyPrivacy('Age'),

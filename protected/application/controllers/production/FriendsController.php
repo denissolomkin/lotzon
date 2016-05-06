@@ -54,8 +54,8 @@ class FriendsController extends \AjaxController
                     'img'       => $friend['PlayerImg'],
                     'name'      => $friend['PlayerName'],
                     'lotteries' => $friend['PlayerGamesPlayed'],
-                    'money'     => $friend['PlayerMoney'],
-                    'points'    => $friend['PlayerPoints'],
+                    'money'     => ($friend['PlayerMoney']>=0?$friend['PlayerMoney']:0),
+                    'points'    => ($friend['PlayerPoints']>=0?$friend['PlayerPoints']:0),
                     'ping'      => $friend['PlayerPing'],
                 );
             }
@@ -115,8 +115,8 @@ class FriendsController extends \AjaxController
                     'img'       => $friend['PlayerImg'],
                     'name'      => $friend['PlayerName'],
                     'lotteries' => $friend['PlayerGamesPlayed'],
-                    'money'     => $friend['PlayerMoney'],
-                    'points'    => $friend['PlayerPoints'],
+                    'money'     => ($friend['PlayerMoney']>=0?$friend['PlayerMoney']:0),
+                    'points'    => ($friend['PlayerPoints']>=0?$friend['PlayerPoints']:0),
                     'ping'      => $friend['PlayerPing'],
                 );
             }
