@@ -22,6 +22,7 @@ var slotMachine = {
     currency: 'points',
     isActive: !1,
     useMoney: !1,
+    isInit: !1, 
     soundEnabled: !0,
     step: {
         money: 0.1,
@@ -30,6 +31,10 @@ var slotMachine = {
     xFactor: 0.1,
     sounds: {},
     init: function () {
+
+        if(slotMachine.isInit) return;
+        // init once
+        slotMachine.isInit = !0; 
 
         $("#betSpinUp").click(function () {
             slotMachine.change_bet(1);
@@ -57,14 +62,14 @@ var slotMachine = {
                 url: "/res/audio/games/spinning.mp3"
             })
         ),
-            $("#Scores").click();
+        $("#Scores").click();
     },
     /**
      * @param {object} that
      * @returns {undefined}
      */
     change_currency: function (that) {
-        
+        // alert(!slotMachine.isActive);
         if (!slotMachine.isActive && that.id) {
             switch (that.id) {
                 case "Gold" :
@@ -125,6 +130,11 @@ var slotMachine = {
     spin: function (data) {
         if (slotMachine.isActive)
             return !1;
+        // alert(data.json.res.Win);
+        
+        if(data.json.res.Win){
+            $("#playerBalance").html(Player.fineNumbers(Player.balance[slotMachine.currency]*1 - data.json.res.Win*1));
+        }
 
         slotMachine.isActive = !0;
         slotMachine.show_won_state(!1),
@@ -211,8 +221,8 @@ var slotMachine = {
         var a = window.setInterval(function () {
             
             var t = !1;
-            if ((e < n.win && (e += step, $("#playerBalance").html(Player.fineNumbers(Player.balance[slotMachine.currency]*1+e*1)), t = !0)), !t) {
-                
+            if ((e < n.win && (e += step, $("#playerBalance").html(Player.fineNumbers(Player.balance[slotMachine.currency]*1 - n.win*1 + e*1)), t = !0)), !t) {
+                Player.updateBalance();
                 window.clearInterval(a);
                 // var init = {
                 //     balance:{}

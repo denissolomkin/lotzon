@@ -6906,8 +6906,6 @@ form.loading > * {
       cursor: pointer;
       -webkit-transform: translate(0, -50%);
       transform: translate(0, -50%);
-      -webkit-transition: all .15s linear;
-      transition: all .15s linear;
       z-index: 2; }
       .badges-container > div i.i-x-slim:hover {
         opacity: 1; }
