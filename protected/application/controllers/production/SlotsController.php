@@ -2,11 +2,9 @@
 
 namespace controllers\production;
 
-use \Application, \Player, \LotterySettings;
+use \Application, \LotterySettings;
 use \GamesPublishedModel, \GameConstructorSlots;
-use Symfony\Component\HttpFoundation\Session\Session;
 
-Application::import(PATH_APPLICATION . 'model/entities/Player.php');
 Application::import(PATH_APPLICATION . 'model/entities/GameConstructorSlots.php');
 Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');
 

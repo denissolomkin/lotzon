@@ -21,7 +21,7 @@ class SEO extends PrivateArea
     }
 
     public function indexAction()
-    {   
+    {
        $seo = SEOModel::instance()->getSEOSettings();
        $this->render('admin/seo', array(
             'title'      => 'Настройки SEO',

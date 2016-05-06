@@ -870,8 +870,13 @@
         "version": function (version) {
 
             if(Config.siteVersion != version) {
-                Config.siteVersion = version;
-                this.drop();
+                Content.badge.init({
+                    system: [{
+                        key    : 'update',
+                        title  : i18n('title-site-update'),
+                        message: i18n('text-please-update-page')
+                    }]
+                });
             }
         }
     };

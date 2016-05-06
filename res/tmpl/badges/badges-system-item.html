@@ -1,7 +1,7 @@
-<div id="badges-system-{{uid}}" class="badge" style="background: rgba(255, 0, 0, 0.82); color: white;">
+<div id="badges-system-{{or uid key}}" class="badge" style="background: rgba(255, 0, 0, 0.82); color: white;">
     {{badgesCountdown}}
     <section class="clearfix">
-        <div class="title">{{i18n 'title-error'}}</div>
+        <div class="title">{{or title (i18n 'title-error')}}</div>
         <div class="txt">{{{message}}}</div>
         <i class="i-x-slim" onclick="DOM.remove(DOM.up('.badge',this))"></i>
     </section>

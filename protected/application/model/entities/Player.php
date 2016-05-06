@@ -142,16 +142,14 @@ class Player extends Entity
     public function checkDate($key)
     {
         $model = $this->getModelClass();
-        $check = false;
 
         try {
-            $check = $model::instance()->checkDate($key, $this);
+            if(($check = $model::instance()->checkDate($key, $this))) {
+                $this->setDates(time(), $key);
+            }
         } catch (ModelException $e) {
             throw new EntityException('INTERNAL_ERROR', 500);
         }
-
-        if($check)
-            $this->setDates(time(), $key);
 
         return $check;
     }
@@ -273,10 +271,12 @@ class Player extends Entity
                 $social = $this->getAdditionalData($provider);
 
                 if (!$social || !$social['enabled']) {
-                    $socials['disabled'] = true;
+                    if(!$socials['disabled'])
+                        $socials['disabled'] = true;
                     $socials['providers'][$provider] = 0;
                 } else {
-                    $socials['enabled'] = true;
+                    if(!$socials['enabled'])
+                        $socials['enabled'] = true;
                     $socials['providers'][$provider] = $social['identifier'];
                 }
             }
