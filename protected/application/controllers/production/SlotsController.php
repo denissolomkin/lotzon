@@ -152,8 +152,10 @@ class SlotsController extends \AjaxController
 
             /* todo */
             $game->saveGame();
+            $this->playerAward($game);
 
             $balance = $this->player->getBalance();
+            $response['captcha'] = $this->activateCaptcha();
             $response['player'] = array(
                 "balance" => array(
                     "points" => $balance['Points'],
@@ -161,7 +163,6 @@ class SlotsController extends \AjaxController
                 )
             );
 
-            $this->playerAward($game);
 
         } else {
             $this->ajaxResponseBadRequest('GAME_NOT_ENABLED');
