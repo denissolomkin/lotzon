@@ -741,7 +741,8 @@ input.input-radio:checked + label.input-radio:before {
       padding: 0 !important; }
   .grid-container > * {
     margin: 0;
-    float: left; }
+    float: left;
+    min-width: 40%; }
   .grid-container .width-100 {
     width: 100%; }
   .grid-container .width-60 {
@@ -5261,6 +5262,8 @@ span[class^="i-smile"].i-smile-wink:before {
     margin: 0 0 15px -6px; }
   #blog-post-view .post {
     color: #4a4a4a; }
+    #blog-post-view .post .addbox {
+      margin-bottom: 30px; }
     #blog-post-view .post .title {
       font-weight: normal;
       font-weight: normal;
@@ -6215,7 +6218,8 @@ STYLES */
       top: 25px; }
     #users-view-messages-form .message > .message-text {
       width: 100%;
-      padding: 7px 20px 0 0; }
+      padding: 7px 20px 0 0;
+      cursor: initial; }
 
 .addressee {
   background: #f5f5f5;
@@ -6912,15 +6916,10 @@ form.loading > * {
     .badges-container > div div[id^="badges-message"] .contain-img {
       padding-left: 50px; }
 
-#banner-desctop-lottery {
+#banner-desktop-context-lottery > * {
   padding: 10px;
   margin: 10px 0 40px 0;
   border: 1px solid #DFDFDF; }
-  #banner-desctop-lottery:before {
-    content: '';
-    display: block;
-    background: #444444;
-    min-height: 80px; }
 
 #popup-lottery {
   display: flex;
@@ -8155,7 +8154,9 @@ form.loading > * {
           box-shadow: none; }
     #lottery-view .container .ticket-current-wrapper {
       display: inline-block;
-      height: 100%; }
+      height: 100%;
+      width: 460px;
+      text-align: left; }
       #lottery-view .container .ticket-current-wrapper:before {
         content: '';
         display: inline-block;
@@ -8169,8 +8170,7 @@ form.loading > * {
         font-size: 15.5px;
         display: inline-block;
         vertical-align: middle;
-        margin-right: 15px;
-        min-width: 100px;
+        width: 96px;
         box-sizing: border-box;
         text-align: left; }
       #lottery-view .container .ticket-current-wrapper .balls-end-game {

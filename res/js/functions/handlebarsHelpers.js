@@ -25,8 +25,8 @@ $(function () {
         };
 
     Handlebars.registerHelper({
-        'loadBlock': function(){
-            return '<img src="" onerror="alert(1);console.debug(this);" />';
+        'loadBlock': function(block){
+            return '<img src="" onerror="Banner.loadBlock(this);" />'+block;
         },
         /**
          * @description loop for(max > min; max--) return current counter

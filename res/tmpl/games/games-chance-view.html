@@ -22,16 +22,19 @@
                     <div>
                         {{#reverse prizes}}
                         <div class="type-{{t}}" data-current="{{reverseNum ../prizes.length-1 @index}}">
-                            {{#if n}}
-                            <span class="item">{{n}}</span>
-                            <span class="instruction">{{../field.c}} {{i18n "title-of-yellow"}} {{reverseNum ../prizes.length-1 @index}} {{i18n "title-of-miss"}} </span>
-                            <!--<img src="{{s}}" alt="">-->
+                            {{#if (matchStr t "money|points") }}
+                                <span class="item">{{currency t v}}</span>
+                                <span class="currency">{{currency t}} </span>
                             {{else}}
-                            <span class="item">{{currency t v}}</span>
-                            <span class="currency">{{currency t}} </span>
+                                {{#if n}}
+                                    <span class="item">{{n}}</span>
+                                {{else}}
+                                    <span class="item">{{v}}</span>
+                                {{/if}}
+                            {{/if}}
+
                             <br>
                             <span class="instruction">{{../field.c}} {{i18n "title-of-yellow"}} {{reverseNum ../prizes.length-1 @index}} {{i18n "title-of-miss"}} </span>
-                            {{/if}}
                         </div>
                         {{/reverse}}
                     </div>
@@ -44,11 +47,15 @@
                     <div>
                         {{#reverse prizes}}
                         <div class="type-{{t}}" data-current="{{reverseNum ../prizes.length-1 @index}}">
-                            {{#if n}}
-                            <span class="item">{{n}}</span>
+                            {{#if (matchStr t "money|points") }}
+                                <span class="item">{{currency t v}}</span>
+                                <span class="currency">{{currency t}} </span>
                             {{else}}
-                            <span class="item">{{currency t v}}</span>
-                            <span class="currency">{{currency t }} </span>
+                                {{#if n}}
+                                    <span class="item">{{n}}</span>
+                                {{else}}
+                                    <span class="item">{{v}}</span>
+                                {{/if}}
                             {{/if}}
                         </div>
                         {{/reverse}}

@@ -814,6 +814,7 @@ input.input-radio:checked + label.input-radio:before {
     & > * {
         margin: 0;
         float: left;
+        min-width: 40%;
     }
     & .width-100 {
         width: 100%;

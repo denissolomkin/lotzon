@@ -258,23 +258,24 @@
             return parseForms;
 
         },
-
+        // .render-list .reCount - пересчитывает детей без рек-блоков
         form4Ping: function () {
 
             var renderList = document.getElementById(U.parse(this.action)) || this.parentNode.querySelector(".render-list"),
                 key = U.parse(this.action).replace(/-list|-container/g, ''),
-                res = {};
+                res = {},
+                reCount = renderList && renderList.className.indexOf('reCount') !== -1 ? true : false;
+            
 
             res[key] = Object.filter({
                 'query'   : Object.filter($(this).serializeObject()),
-                'offset'  : renderList && renderList.childElementCount || null,
+                'offset'  : ( reCount ? renderList.parentNode.querySelectorAll('.render-list > div:not(.addbox)').length : renderList.childElementCount ) || null,
                 'timing'  : Cache.validate(key),
                 'first_id': renderList && renderList.firstElementChild && parseInt(renderList.firstElementChild.getAttribute('data-id')) || null,
                 'last_id' : renderList && renderList.lastElementChild && parseInt(renderList.lastElementChild.getAttribute('data-id')) || null
             });
-
+            
             return res;
-
         },
 
         after: {

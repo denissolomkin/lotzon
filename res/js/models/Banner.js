@@ -58,9 +58,20 @@
             Banner.load('banner-desktop-brand');
 
         },
+        loadBlock: function (target) {
+
+            if (Device.isMobile())
+                return;
+
+            var parent = $(target).parent();
+            $(target).remove();
+            var block = parent.html();
+            parent.html(block);
+
+
+        },
 
         moment: function (data) {
-
             if (Device.isMobile())
                 return;
 

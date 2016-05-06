@@ -1,15 +1,8 @@
 // banners
-#banner-desctop-lottery {
+#banner-desktop-context-lottery > *{
     padding: 10px;
     margin: 10px 0 40px 0;
     border: 1px solid #DFDFDF;
-    // delet before
-    &:before {
-        content: '';
-        display: block;
-        background: #444444;
-        min-height: 80px;
-    }
 }
 
 // popup inner auto height
@@ -1649,6 +1642,8 @@
         .ticket-current-wrapper {
             display: inline-block;
             height: 100%;
+            width: 460px;
+            text-align: left;
             &:before {
                 content: '';
                 display: inline-block;
@@ -1663,8 +1658,8 @@
                 font-size: 15.5px;
                 display: inline-block;
                 vertical-align: middle;
-                margin-right: 15px;
-                min-width: 100px;
+                // margin-right: 15px;
+                width: 96px;
                 box-sizing: border-box;
                 text-align: left;
             }

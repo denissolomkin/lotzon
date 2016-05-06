@@ -64,6 +64,7 @@ var slotMachine = {
      * @returns {undefined}
      */
     change_currency: function (that) {
+        
         if (!slotMachine.isActive && that.id) {
             switch (that.id) {
                 case "Gold" :
@@ -184,7 +185,6 @@ var slotMachine = {
     },
 
     _end_spin_after_payout: function (n) {
-
         //"undefined" != typeof n.credits && $("#playerBalance").html(Player.fineNumbers(n.credits)),
         //"undefined" != typeof n.dayWinnings && $("#dayWinnings").html(slotMachine.winningsFormatPrefix + slotMachine._format_winnings_number(n.dayWinnings)),
         //"undefined" != typeof n.lifetimeWinnings && $("#lifetimeWinnings").html(slotMachine.winningsFormatPrefix + slotMachine._format_winnings_number(n.lifetimeWinnings)),
@@ -194,7 +194,6 @@ var slotMachine = {
     },
 
     _increment_payout_counter: function (n) {
-
         n.win =  parseFloat(n.win);
         var e = 0,
             step = slotMachine.step[slotMachine.currency],
@@ -210,14 +209,17 @@ var slotMachine = {
         } catch (o) {console.log(o);}
 
         var a = window.setInterval(function () {
+            
             var t = !1;
-            if ((e < n.win && (e += step, $("#playerBalance").html(Player.fineNumbers(Player.balance[slotMachine.currency]+e)), t = !0)), !t) {
+            if ((e < n.win && (e += step, $("#playerBalance").html(Player.fineNumbers(Player.balance[slotMachine.currency]*1+e*1)), t = !0)), !t) {
+                
                 window.clearInterval(a);
-                var init = {
-                    balance:{}
-                };
-                init.balance[slotMachine.currency] = Player.balance[slotMachine.currency] + n.win;
-                Player.init(init);
+                // var init = {
+                //     balance:{}
+                // };
+                
+                // init.balance[slotMachine.currency] = Player.balance[slotMachine.currency]*1 + n.win*1;
+                // Player.init(init);
                 try {
                     slotMachine.sounds[i].stop()
                 } catch (s) {

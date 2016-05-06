@@ -16,12 +16,10 @@
                             </div>
                             <div id="Credits" class="slot-block-outer">
                                 <div class="slot-block-inner">
-                                    <select name="currency">
-                                        <option value="MONEY" selected>Money</option>
-                                        <option value="POINT">Points</option>
-                                    </select>
-                                    <div id="Gold" class="button">{{i18n "button-games-money"}}</div>
-                                    <div id="Scores" class="button active">{{i18n "button-games-points"}}</div>
+                                    <input type="radio" name="currency" value="MONEY" id="Gold">
+                                    <label for="Gold" class="button">{{i18n "button-games-money"}}</label>
+                                    <input type="radio" name="currency" value="POINT" id="Scores" class="active">
+                                    <label for="Scores" class="button">{{i18n "button-games-points"}}</label>
                                 </div>
                             </div>
                         </div>
@@ -55,15 +53,15 @@
                             <div class="slot-block-inner">
                                 <div class="info_box">
                                     <p class="score_desc">{{i18n "title-games-lastWin"}}</p>
-                                    <span id="lastWin">666</span>
+                                    <span id="lastWin"></span>
                                 </div>
                                 <div class="info_box">
                                     <p class="score_desc">{{i18n "title-games-credits"}}</p>
                                     <span id="playerBalance" class="holder-points"></span>
                                 </div>
                                 <div class="info_box">
-                                    <p class="score_desc">{{i18n "title-games-bet"}}</p>
-                                    <input id="bet" name="bet" readonly style="border:none;background: none;    color: #e64e13;font-weight: bold;font-size: 20px;">
+                                    <p class="score_desc">{{i18n "title-games-bet-once"}}</p>
+                                    <input id="bet" name="bet" readonly>
                                 </div>
                                 <div class="spin_change_container">
                                     <div id="betSpinUp"></div>

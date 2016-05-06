@@ -147,9 +147,9 @@ var Games = {
             if (!data.json)
                 return false;
 
-            console.debug(">>>",data);
+            // console.debug(">>>",data);
             // check if game not finished
-            // Games.chance.checkGame(data.json.id);
+            
             Games.chance.key = data.json.key;
 
             // make config
@@ -161,50 +161,6 @@ var Games = {
 
             return;
         },
-
-        checkGame: function(id){
-            // Form.post.call(this, {
-            //     href: '/games/chance/' + id,
-            //     after: function(data) {
-
-            //         // check game IDs
-            //         if(id != data.json.res.Id){
-            //             // reload tmpl
-            //             R.push({ href: 'games/chance/'+data.json.res.Id });
-            //             console.debug('---- reload tmpl -----');
-
-            //             return;
-            //         }
-
-
-            //         var fields = data.json.res.GameField;
-
-            //         if(Object.keys(fields).length > 0){
-
-            //             // update all cells to default state
-            //             Games.chance.reset();
-
-            //             // draw played cells
-            //             for(var i in fields){
-            //                 if(fields[i]){
-            //                     $('.minefield [data-cell="'+i+'"]').addClass('win played');
-            //                 }else{
-            //                     $('.minefield [data-cell="'+i+'"]').addClass('lose played');
-            //                 }
-            //             }
-
-            //             // update trigger 'game ready'
-            //             Games.chance.conf.play = !0;
-
-            //             // add class for css styles
-            //             $("#games-chance-view-chance").attr('class', 'game-started');
-
-            //         }
-
-            //     }
-            // });
-        },
-
         //chances view
         get: function(elements, id) {
 
@@ -223,9 +179,13 @@ var Games = {
                         if (data.json.error)
                             return;
                         
+
+                        console.debug(">> data.json.prize ",data.json.Prize);
                         // prize
                         if (data.json.Prize) {
                             $(that).addClass('win');
+                            // render prize 
+                            // $(that).html(Games.parts.makePrizeCell(data.json.Prize));
                         } else {
                             $(that).addClass('lose');
                         }
@@ -260,10 +220,7 @@ var Games = {
                     if(id != data.json.res.Id){
                         // reload tmpl
                         R.push({ href: 'games/chance/'+data.json.res.Id });
-                        console.debug('---- reload tmpl -----');
-
-
-                        // NEED CALLBACK ^ rpush
+                        // console.debug('---- reload tmpl -----');
                         
                         return;
                     }
@@ -316,6 +273,7 @@ var Games = {
         },
         
         prizesMoves: function(moves) {
+            // console.debug('>>>!! field.m - moves',Games.chance.conf.data.field.m, moves);
             var missCounter = Games.chance.conf.data.field.m - moves;
             //            data-current
             $("#games-chance-view-chance [data-current]").removeClass('current');
@@ -396,7 +354,7 @@ var Games = {
             if (data.json.Prize) {
                 $(element).addClass('win');
                 // render prize 
-                $(element).html(Games.random.makePrizeCell(data.json.Prize));
+                $(element).html(Games.parts.makePrizeCell(data.json.Prize));
             } else {
                 $(element).addClass('lose');
             }
@@ -413,30 +371,35 @@ var Games = {
             $(element).addClass('played');
         },
         
-        makePrizeCell: function(prize) {
-            var html = "<div class='flipFix'>"
-            switch (prize.t) {
-                case 'money':
-                    html += "<span>" + prize.v + "</span>";
-                    html += "<span>" + Player.getCurrency() + "</span>";
-                    break;
-                case 'points':
-                    html += "<span>" + prize.v + "</span>";
-                    html += "<span>" + Cache.i18n("title-of-points") + "</span>";
-                    break;
-                case 'item':
-                    html += "<span>" + prize.n + "</span>";
-                    break;
-            }
-            return html += "</div>";
-        },
+        // makePrizeCell: function(prize) {
+        //     var html = "<div class='flipFix'>"
+        //     switch (prize.t) {
+        //         case 'money':
+        //             html += "<span>" + prize.v + "</span>";
+        //             html += "<span>" + Player.getCurrency() + "</span>";
+        //             break;
+        //         case 'points':
+        //             html += "<span>" + prize.v + "</span>";
+        //             html += "<span>" + Cache.i18n("title-of-points") + "</span>";
+        //             break;
+        //         case 'item':
+        //             html += "<span>" + prize.n + "</span>";
+        //             break;
+        //         // hz
+        //         case 'math':
+        //             html += "<span>" + prize.v + "</span>";
+        //             break;
+
+        //     }
+        //     return html += "</div>";
+        // },
         
         end: function(data) {
             var fields = data.GameField;
             for (var i in fields) {
                 if (fields[i]) {
                     $(".moment-game-box").removeClass('game-started');
-                    $('.moment-game-box button[data-cell="' + i + '"]').html(Games.random.makePrizeCell(fields[i])).addClass('win');
+                    $('.moment-game-box button[data-cell="' + i + '"]').html(Games.parts.makePrizeCell(fields[i])).addClass('win');
                     Games.random.conf.play = !1;
                     Games.random.showMessage(data.GamePrizes);
                 }
@@ -464,5 +427,30 @@ var Games = {
             $(".moment-game-box .message").css({ "display": "none" }).html(msg).delay(2000).fadeIn(200);
 
         },
+    },
+
+    parts: {
+        makePrizeCell: function(prize) {
+            var html = "<div class='flipFix'>"
+            switch (prize.t) {
+                case 'money':
+                    html += "<span>" + prize.v + "</span>";
+                    html += "<span>" + Player.getCurrency() + "</span>";
+                    break;
+                case 'points':
+                    html += "<span>" + prize.v + "</span>";
+                    html += "<span>" + Cache.i18n("title-of-points") + "</span>";
+                    break;
+                case 'item':
+                    html += "<span>" + prize.n + "</span>";
+                    break;
+                // hz
+                case 'math':
+                    html += "<span>" + prize.v + "</span>";
+                    break;
+
+            }
+            return html += "</div>";
+        }
     }
 };
