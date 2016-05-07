@@ -85,7 +85,7 @@ class OrdersController extends \AjaxController
 
         switch ($method) {
             case \MoneyOrder::GATEWAY_PHONE:
-                if(!in_array($this->player,array('RU','UA')))
+                if (!in_array($this->player->getCountry(), array('RU', 'UA')))
                     $this->ajaxResponseBadRequest('COUNTRY_PHONE_UNAVAILABLE');
                 $accountName = 'Phone';
                 break;
