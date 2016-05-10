@@ -471,17 +471,15 @@ class GameAppsDBProcessor implements IProcessor
 
     public function updateGameTop($data)
     {
-        $sql = "REPLACE INTO `OnlineGamesTop`
-                (`Id`, `PlayerId`, `GameId`, `Month`, `Currency`, `Increment`, `Period`, `Start`, `End`)
-                VALUES
-                (:id, :pid, :gid, :mon, :cur, :inc, :per, :str, :end)";
+        $sql = "UPDATE `OnlineGamesTop`
+                SET `PlayerId` = :pid, `GameId` = :gid, `Currency` = :cur, `Increment` = :inc, `Period` = :per, `Start` = :str, `End` = :end
+                WHERE `Id` = :id";
 
         try {
             DB::Connect()->prepare($sql)->execute(array(
                 ':id'   => $data['Id'],
                 ':pid'  => $data['PlayerId'],
                 ':gid'  => $data['GameId'],
-                ':mon'  => $data['Month'],
                 ':cur'  => $data['Currency'],
                 ':inc'  => $data['Increment'],
                 ':per'  => $data['Period'],
@@ -542,7 +540,7 @@ class GameAppsDBProcessor implements IProcessor
         $sql = "UPDATE `OnlineGamesTop` t
                 LEFT JOIN `Players` p ON p.Id = t.PlayerId
                   SET
-                  t.`Rating` = t.Rating + IF( :rand = 1, 1, 26 ),
+                  t.`Rating` = IFNULL(t.Rating, 0) + IF( :rand = 1, 1, 26 ),
                   t.`LastUpdate` = :now,
                   p.`Money` = p.`Money` +
                     IF(
@@ -559,7 +557,7 @@ class GameAppsDBProcessor implements IProcessor
                         AND t.`Start` <= :time
                         AND t.`End` >= :time
                         AND t.`Period` > 0
-                        AND t.`LastUpdate` < :now - Period * 60
+                        AND t.`LastUpdate` <= :now - Period * 60
                 ";
 
         try {
