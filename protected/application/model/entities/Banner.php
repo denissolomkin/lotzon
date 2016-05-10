@@ -63,9 +63,12 @@ class Banner extends Entity
 
         if($this->isTitle()) {
             ob_start();
-            $template = $this->getTemplate();
-            if($this->getLocation() == 'context')
-                $template .= '-'.$this->getLocation().'-'.$this->getPage();
+            if(($template = $this->getTemplate())) {
+                if ($this->getLocation() == 'context')
+                    $template .= '-' . $this->getLocation() . '-' . $this->getPage();
+            } else {
+                $template = $this->getDevice();
+            }
             include_once(PATH_TEMPLATES . 'banner/' . $template . '.php');
             $response = ob_get_contents();
             ob_end_clean();

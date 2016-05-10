@@ -67,6 +67,7 @@ class BlogsController extends \AjaxController
         $lang     = $this->player->getLang();
         $country  = $this->player->getCountry();
         $count    = $this->request()->get('count', self::$blogsPerPage);
+        $offset   = $this->request()->get('offset', NULL);
         $beforeId = $this->request()->get('before_id', NULL);
         $afterId  = $this->request()->get('after_id', NULL);
 
@@ -97,13 +98,13 @@ class BlogsController extends \AjaxController
         }
 
         if(count($response['res']['blog']['posts'])) {
+            $increment = $offset ? ceil($offset/self::$blogsPerPage)+1:'';
             $banner = new Banner;
             $keys = array_keys($response['res']['blog']['posts']);
             $response['res']['blog']['posts'][$keys[array_rand($keys)]]['block'] = $banner
-                ->setTemplate('desktop')
                 ->setDevice('desktop')
                 ->setLocation('context')
-                ->setPage('blog')
+                ->setPage('blog'.$increment)
                 ->setCountry($country)
                 ->random()
                 ->render();

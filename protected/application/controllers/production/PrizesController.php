@@ -66,13 +66,13 @@ class PrizesController extends \AjaxController
         }
 
         if(count($items)) {
+            $increment = $offset ? ceil($offset/self::$prizesPerPage)+1:'';
             $banner = new Banner;
             $keys = array_keys($items);
             $items[$keys[array_rand($keys)]]['block'] = $banner
-                ->setTemplate('desktop')
                 ->setDevice('desktop')
                 ->setLocation('context')
-                ->setPage('prize')
+                ->setPage('prize'.$increment)
                 ->setCountry($this->player->getCountry())
                 ->random()
                 ->render();
