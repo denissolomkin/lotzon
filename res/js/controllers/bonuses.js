@@ -31,7 +31,7 @@
                 counters: false,
                 singleTitle: 'LOTZON. Выигрывает каждый!',
                 data: {
-                    media: 'https://lotzon.com/res/img/lotzon_soc.png'
+                    media: 'https://lotzon.com/res/img/lotzon_soc.jpg'
                 }
             });
         },

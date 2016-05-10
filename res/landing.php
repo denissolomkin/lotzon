@@ -21,7 +21,24 @@
 	<script src="/res/js/libs/jquery-2.1.4.min.js"></script>
 	<script src="/res/js/landing/jquery.magnific-popup.min.js"></script>
     <script> player = <?php echo json_encode($player, JSON_PRETTY_PRINT);?>;</script>
-	
+
+    <!-- Schema.org markup for Google+ -->
+    <meta itemprop="name" content="<?=$seo['Title'];?>">
+    <meta itemprop="description" content="LOTZON. Выигрывает каждый!">
+    <meta itemprop="image" content="https://lotzon.com/res/img/lotzon_soc.jpg?rnd=<?=rand()?>">
+
+    <!-- Twitter Card data -->
+    <meta name="twitter:card" content="https://lotzon.com/res/img/lotzon_soc.jpg?rnd=<?=rand()?>">
+    <meta name="twitter:title" content="<?=$seo['Title'];?>">
+    <meta name="twitter:description" content="LOTZON. Выигрывает каждый!">
+    <!-- Twitter summary card with large image must be at least 280x150px -->
+    <meta name="twitter:image:src" content="https://lotzon.com/res/img/lotzon_soc.jpg?rnd=<?=rand()?>">
+
+    <!-- Open Graph data -->
+    <meta property="og:title" content="<?=$seo['Title'];?>" />
+    <meta property="og:image" content="https://lotzon.com/res/img/lotzon_soc.jpg?rnd=<?=rand()?>" />
+    <meta property="og:description" content="LOTZON. Выигрывает каждый!" />
+
 </head>
 <body class="landing">
     <div class="header clearfix">
@@ -139,7 +156,7 @@
                 </div>
                 <div class="uinfo">
                     <div class="img">
-                        <img src="/res/css/img/3f6f3106a467a08b30b325def5526482.jpg">
+                        <img src="/res/css/img/3f6f3106a467a08b30b325def5526482.jpg?b">
                     </div>
                     <div class="name">Яна Иванова</div>
                 </div>
@@ -152,7 +169,7 @@
                 </div>
                 <div class="uinfo">
                     <div class="img">
-                        <img src="/res/css/img/df7f03ffb97e701b0abcc9d8d0e79d3f.jpg">
+                        <img src="/res/css/img/df7f03ffb97e701b0abcc9d8d0e79d3f.jpg?b">
                     </div>
                     <div class="name">Светлана Данилина</div>
                 </div>
@@ -165,7 +182,7 @@
                 </div>
                 <div class="uinfo">
                     <div class="img">
-                        <img src="/res/css/img/79f6fab49b8d430c8a3b530e22b81547.jpg">
+                        <img src="/res/css/img/79f6fab49b8d430c8a3b530e22b81547.jpg?b">
                     </div>
                     <div class="name">Олег Горбанетно</div>
                 </div>
