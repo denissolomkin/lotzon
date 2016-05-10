@@ -105,7 +105,7 @@ class TicketsModel extends Model
 
                 $player = new Player();
                 $player->setId($playerId)->fetch();
-                if ($player->getGoldTicket() > 0) {
+                if (($player->getGoldTicket() > 0)and(($player->getGoldTicketLottery() == \LotteriesModel::instance()->getLastPublishedLottery()->getId() + 1)or($player->getGoldTicketLottery() == 0))) {
                     return true;
                 }
                 $tickets = $this->getProcessor()->getUnplayedTickets($playerId);
