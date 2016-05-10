@@ -270,7 +270,7 @@ class GameAppsDBProcessor implements IProcessor
                     echo $this->time(0,'ERROR')." player #{$player['pid']} не найден в таблице Players при получении баланса\n";
                 }
 
-                if($balance = $sth->fetch()){
+                if($balance = $sth->fetch()) {
                     $playersBalance[$player['pid']] = $balance;
                 }
 

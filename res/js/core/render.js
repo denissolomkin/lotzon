@@ -153,7 +153,7 @@
                 return false;
             }
 
-            if(!DOM.visible('.on-top').length) {
+            if(!DOM.visible('.on-top').length || options.href.indexOf('popup') !== -1) {
 
                 if (options.target || options.state)
                     var page = document.getElementById(U.parse(U.parse(options.href), 'tmpl'));
@@ -594,12 +594,14 @@
 
                 case "complete":
 
-                    if (options.node) {
+                    if (options.hasOwnProperty('node') && options.node) {
                         DOM.remove('.modal-loading', options.node);
                     }
 
-                    console.log('R.rendering:', JSON.stringify(R.rendering));
-                    R.rendering.splice(R.rendering.indexOf(options.href), 1);
+                    if(options.hasOwnProperty('href')) {
+                        console.log('R.rendering:', JSON.stringify(R.rendering));
+                        R.rendering.splice(R.rendering.indexOf(options.href), 1);
+                    }
 
                     break;
 

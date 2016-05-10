@@ -194,7 +194,7 @@ class MessagesController extends \AjaxController
             'cache'   => array(
                 'communication-messages' => 'session',
             ),
-            'captcha' => $this->activateCaptcha(),
+            'captcha' => $this->player->activateCaptcha(),
             'res'     => array(
                 'users'         => array(
                     $toPlayerId => array(

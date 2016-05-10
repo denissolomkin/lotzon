@@ -153,7 +153,7 @@ class SlotsController extends \AjaxController
             $this->playerAward($game);
 
             $balance = $this->player->getBalance();
-            $response['captcha'] = $this->activateCaptcha();
+            $response['captcha'] = $this->player->activateCaptcha();
             $response['player'] = array(
                 "balance" => array(
                     "points" => $balance['Points'],

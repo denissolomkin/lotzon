@@ -153,22 +153,21 @@
 
         "error": function (message) {
 
-
             if(typeof message === 'object') {
                 if (message[2] && message[2] == 423 && window['grecaptcha']) {
+                    R.event('complete', this);
                     Content.captcha.render();
                     return false;
                 } else if (message[0] === 'Unauthorized' || message[2] == 401) {
                     location.reload();
                     return false;
                 } else {
+                    if (message[0] === 'error')
+                        return false;
                     message[0] = i18n(message[0]);
                     message = message.join('<br>');
                 }
             }
-
-            if (message === 'error')
-                return;
 
             D.log(message, 'error');
             D.isEnable("alert") && alert(message);

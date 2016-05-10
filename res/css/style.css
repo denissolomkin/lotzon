@@ -11430,7 +11430,7 @@ footer.unvisible {
       top: 0;
       left: 0;
       text-align: center;
-      z-index: 9999; }
+      z-index: 1000; }
       #games-online-field:not(.Durak) .mx .msg:before {
         content: '';
         height: 100%;

@@ -16,6 +16,11 @@ class CaptchaModel extends Model
         return __CLASS__;
     }
 
+    public function validate($playerId)
+    {
+        return $this->getProcessor()->validate($playerId);
+    }
+
     public function getList()
     {
         return $this->getProcessor()->getList();

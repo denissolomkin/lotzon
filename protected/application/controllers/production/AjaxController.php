@@ -40,13 +40,21 @@ class AjaxController extends \SlimController\SlimController
             $this->player = $this->session->get(Player::IDENTITY);
         }
 
-        /* todo delete
-        patch for old Player Entity in Memcache sessions
-        delete after week from April 18 or after drop Memcache
-        */
+        $this->validatePlayer();
+
+        return true;
+    }
+
+    protected function validatePlayer()
+    {
+
+        /*
+         * patch for old Player Entity in Memcache session
+         */
+
         try {
 
-            $this->session->get(Player::IDENTITY)->getAccounts();
+            $this->session->get(Player::IDENTITY)->getVersion();
 
         } catch (\Exception $e) {
             $this->session->get(Player::IDENTITY)->fetch();
@@ -61,8 +69,6 @@ class AjaxController extends \SlimController\SlimController
                 ->initAccounts();
             $this->session->set(Player::IDENTITY, $this->player);
         }
-
-        return true;
     }
 
     protected function validateRequest()
@@ -101,30 +107,6 @@ class AjaxController extends \SlimController\SlimController
         }
 
         return true;
-    }
-
-    protected function activateCaptcha()
-    {
-
-        $captcha = \SettingsModel::instance()->getSettings('captcha')->getValue();
-
-        if(isset($captcha['Enabled']) && $captcha['Enabled']) {
-
-            $time = $this->player->getCounters('CaptchaTime');
-
-            if (isset($captcha['Settings']) && is_array($captcha['Settings'])) {
-                foreach ($captcha['Settings'] as $term) {
-                    if ((!strlen($term['Min']) || $time > $term['Min']) AND (!strlen($term['Max']) || $time <= $term['Max'])) {
-                        if ($term['Rand'] && !rand(0, $term['Rand'] - 1)) {
-                            \CaptchaModel::instance()->create($this->player);
-                            return true;
-                        }
-                    }
-                }
-            }
-        }
-
-        return false;
     }
 
     public function ajaxResponseCode(array $data, $code = 200)

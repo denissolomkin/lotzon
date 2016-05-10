@@ -217,7 +217,6 @@
         setPlayersDetailes: function(players) {
 
             D.log('Game.setPlayersDetailes', 'game');
-            // console.debug(">>>", players);
             $.each(players, function(index, value) {
                 
                 value.avatar = index > 0 ? Player.getAvatar(value.avatar, value.pid, 100) : "/res/css/img/preloader.gif" ;
@@ -275,7 +274,6 @@
 
                 //проверка на игры кроме дурака, вывод нового сообщения о выиграше
                 if (document.querySelector('#games-online-field:not(.Durak) .mx')) {
-                    console.error(App.players[Player.id]);
                     Game.drawWinMessage(App.players[Player.id]);
                     return true;
                 }
@@ -337,11 +335,9 @@
             }
 
             for (index in messages) {
-                console.debug(">>",messages[index]);
                 playerMessage = document.querySelector('.mx .players .player' + index + ' .wt');
                 playerMessage.style.display = 'block';
                 playerMessage.innerHTML = messages[index];
-                console.error(playerMessage, messages[index]);
             }
         },
 
@@ -621,6 +617,9 @@
 
                 if (data.res.money)
                     Player.updateMoney(data.res.money);
+
+                if (data.res.captcha)
+                    Content.captcha.render();
 
                 if (data.res.modes)
                     Apps.modes[data.res.key] = data.res.modes;

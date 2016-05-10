@@ -88,7 +88,7 @@ class LotteryController extends \AjaxController
         }
 
         $res = array(
-            'captcha' => $this->activateCaptcha(),
+            'captcha' => $this->player->activateCaptcha(),
             'tickets' => array(
                 'filledTickets' => \TicketsModel::instance()->getUnplayedTickets($ticket->getPlayerId())
             )

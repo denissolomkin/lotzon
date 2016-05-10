@@ -390,12 +390,20 @@
     WebSocketAjaxResponse = function (data) {
 
         if (data.error) {
+            switch (data.error) {
 
-            if(!DOM.isNode(this))
-                D.error(data.error);
-            else
-                Form.stop.call(this)
-                    .message.call(this, data.error);
+                case 'UNFINISHED_CAPTCHA':
+                    Content.captcha.render();
+                    break;
+
+                default:
+                    if (!DOM.isNode(this)) {
+                        D.error(data.error);
+                    } else {
+                        Form.stop.call(this).message.call(this, data.error);
+                    }
+                    break;
+            }
 
         } else {
 

@@ -4,7 +4,7 @@ use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
 use Ratchet\Wamp\Exception;
 use \Cache, \DB, \Config, \Application;
-use \Player, \GamePlayer, \GamePlayersModel, \GameAppsModel;
+use \Player, \GamePlayer, \GamePlayersModel, \GameAppsModel, \CaptchaModel;
 use \GameConstructorModel, \GameConstructorOnline;
 
 
@@ -443,14 +443,23 @@ class WebSocketController implements MessageComponentInterface
                         if ($_player && $_player instanceof Player) {
 
                             if (!$_player->checkBalance($app->getCurrency(), $app->getPrice())) {
+
                                 #echo $this->time() . " " . "Игрок {$from->resourceId} - недостаточно средств для игры\n";
-                                return $_client->send(json_encode(array('error' => 'INSUFFICIENT_FUNDS')));
+                                $_client->send(json_encode(array('error' => 'INSUFFICIENT_FUNDS')));
+                                return false;
+
+                            } else if(CaptchaModel::instance()->validate($playerId)) {
+
+                                #echo $this->time(1) . " {$_player->getNicname()}" . " У игрока {$_player->getId()} непройденная captcha\n";
+                                $_client->send(json_encode(array('error' => 'UNFINISHED_CAPTCHA')));
+                                return false;
                             }
 
                         } else {
 
                             echo $this->time(0, 'ERROR') . " runGame: игрок #{$playerId} без Entity Player \n";
-                            return $_client->send(json_encode(array('error' => 'PLAYER_NOT_FOUND')));
+                            $_client->send(json_encode(array('error' => 'PLAYER_NOT_FOUND')));
+                            return false;
                         }
 
                     } else {
@@ -543,20 +552,20 @@ class WebSocketController implements MessageComponentInterface
             echo $this->time(1) . " {$app->getKey()} {$app->getUid()} приложение завершилось, записываем данные\n";
 
             $playersBalance = $app->saveResults();
-            if(is_array($playersBalance) && !empty($playersBalance)){
-                foreach($playersBalance as $playerId => $balance){
-                    if($_client = $this->clients($playerId)) {
+            if (is_array($playersBalance) && !empty($playersBalance)) {
+                $player = new Player();
+                foreach ($playersBalance as $playerId => $response) {
+                    if ($_client = $this->clients($playerId)) {
                         $_client->send(json_encode(
                             array('path' => 'update',
-                                'res' => array(
-                                    'money' => $balance['Money'],
-                                    'points' => $balance['Points']
-                                ))));
+                                  'res'  => array(
+                                      'money'   => $response['Money'],
+                                      'points'  => $response['Points'],
+                                      'captcha' => $player->setId($playerId)->initCounters()->activateCaptcha()
+                                  ))));
                     }
                 }
             }
-
-
         }
 
         if ((!$app->isOver() && !count($app->getClients())) ||
@@ -849,7 +858,10 @@ class WebSocketController implements MessageComponentInterface
 
                             if ($action) {
 
-                                // если любое действие, которое не совпадает с Uid запущенной у игрока игры
+                                /*****************************************************************************
+                                 * если любое действие, которое не совпадает с Uid запущенной у игрока игры
+                                 *****************************************************************************/
+
                                 if ($gamePlayer->getApp('Uid') && $gamePlayer->getApp('Uid') !== $appUid) {
 
                                     if ($this->apps($gamePlayer->getApp('Uid'))) {
@@ -877,8 +889,10 @@ class WebSocketController implements MessageComponentInterface
 
                                 }
 
+                                /*****************************************************************************
+                                 * нет запущенного приложения, пробуем создать новое или просто записаться в очередь
+                                 *****************************************************************************/
 
-                                // нет запущенного приложения, пробуем создать новое или просто записаться в очередь
                                 if (!$appUid) {
                                     #echo $this->time() . " " . "id приложения нет \n";
 
@@ -909,7 +923,21 @@ class WebSocketController implements MessageComponentInterface
 
                                         // list($currency, $price, $number) = explode("-", $appMode);
 
-                                        if ($player->checkBalance($appMode['currency'], $appMode['price'])) {
+                                        if (!$player->checkBalance($appMode['currency'], $appMode['price'])) {
+
+                                            echo $this->time(1) . " {$gamePlayer->getApp('Name')}" . " У игрока {$gamePlayer->getId()} недостаточно денег {$gamePlayer->getApp('Mode')}\n";
+                                            $from->send(json_encode(array('error' => 'INSUFFICIENT_FUNDS')));
+
+                                            return false;
+
+                                        } elseif(CaptchaModel::instance()->validate($gamePlayer->getId())) {
+
+                                            echo $this->time(1) . " {$gamePlayer->getApp('Name')}" . " У игрока {$gamePlayer->getId()} непройденная captcha\n";
+                                            $from->send(json_encode(array('error' => 'UNFINISHED_CAPTCHA')));
+
+                                            return false;
+
+                                        } else {
 
                                             if ($gamePlayer->getApp('Name') && $gamePlayer->getApp('Uid')
                                                 && ($app = $this->apps($gamePlayer->getApp('Uid'))) && !$app->isOver()
@@ -1003,12 +1031,6 @@ class WebSocketController implements MessageComponentInterface
 
                                             }
 
-                                        } else {
-
-                                            echo $this->time(1) . " {$gamePlayer->getApp('Name')}" . " У игрока {$gamePlayer->getId()} недостаточно денег {$gamePlayer->getApp('Mode')}\n";
-                                            $from->send(json_encode(array('error' => 'INSUFFICIENT_FUNDS')));
-
-                                            return false;
                                         }
 
                                     } else {
@@ -1016,8 +1038,10 @@ class WebSocketController implements MessageComponentInterface
                                         $from->send(json_encode(array('path' => 'quit')));
                                     }
 
-                                    // пробуем загрузить приложение, проверяем наличие
-                                    // если нет, сообщаем об ошибке
+                                    /*****************************************************************************
+                                     * пробуем загрузить приложение, проверяем наличие
+                                     * если нет, сообщаем об ошибке
+                                     *****************************************************************************/
 
                                 } elseif (!($app = $this->apps($appUid))) {
 
@@ -1037,7 +1061,10 @@ class WebSocketController implements MessageComponentInterface
                                         $from->send(json_encode(array('path' => 'quit')));
                                     }
 
-                                    // если есть, загружаем и удаляем игрока из стека
+                                    /*****************************************************************************
+                                     * если есть, загружаем и удаляем игрока из стека
+                                     *****************************************************************************/
+
                                 } else {
 
                                     if (!in_array($player->getId(), array_keys($app->getClients()))) {
@@ -1049,14 +1076,6 @@ class WebSocketController implements MessageComponentInterface
 
                                             return false;
 
-                                        } else if ($gamePlayer->getApp('Name') && $gamePlayer->getApp('Mode')) {
-
-                                            $gamePlayer
-                                                ->setAppMode(null)
-                                                ->update();
-
-                                            echo $this->time(1) . " {$gamePlayer->getApp('Name')}" . " Игрок {$player->getId()} запускает другую игру, пребывая в стеке {$gamePlayer->getApp('Mode')}\n";
-
                                         } else if (!$player->checkBalance($app->getCurrency(), $app->getPrice())) {
 
                                             echo $this->time(1) . " {$gamePlayer->getApp('Name')}" . " У игрока {$gamePlayer->getId()} недостаточно денег {$gamePlayer->getApp('Mode')}\n";
@@ -1064,6 +1083,19 @@ class WebSocketController implements MessageComponentInterface
 
                                             return false;
 
+                                        } else if(CaptchaModel::instance()->validate($gamePlayer->getId())) {
+
+                                            echo $this->time(1) . " {$gamePlayer->getApp('Name')}" . " У игрока {$gamePlayer->getId()} непройденная captcha\n";
+                                            $from->send(json_encode(array('error' => 'UNFINISHED_CAPTCHA')));
+
+                                            return false;
+                                        }
+
+                                        if ($gamePlayer->getApp('Name') && $gamePlayer->getApp('Mode')) {
+                                            $gamePlayer
+                                                ->setAppMode(null)
+                                                ->update();
+                                            echo $this->time(1) . " {$gamePlayer->getApp('Name')}" . " Игрок {$player->getId()} запускает другую игру, пребывая в стеке {$gamePlayer->getApp('Mode')}\n";
                                         }
 
                                         $gamePlayer

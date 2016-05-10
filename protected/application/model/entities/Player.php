@@ -96,10 +96,35 @@ class Player extends Entity
     protected $_stats = array();
 
     protected $_friend = null;
+    protected $_version = 1;
 
     public function init()
     {
         $this->setModelClass('PlayersModel');
+    }
+
+    public function activateCaptcha()
+    {
+
+        $captcha = \SettingsModel::instance()->getSettings('captcha')->getValue();
+
+        if (isset($captcha['Enabled']) && $captcha['Enabled']) {
+
+            $time = $this->getCounters('CaptchaTime');
+
+            if (isset($captcha['Settings']) && is_array($captcha['Settings'])) {
+                foreach ($captcha['Settings'] as $term) {
+                    if ((!strlen($term['Min']) || $time > $term['Min']) AND (!strlen($term['Max']) || $time <= $term['Max'])) {
+                        if ($term['Rand'] && !rand(0, $term['Rand'] - 1)) {
+                            \CaptchaModel::instance()->create($this);
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 
     public function setLang($lang)
@@ -461,6 +486,7 @@ class Player extends Entity
     {
 
         if(!isset($data)) {
+
             $model = $this->getModelClass();
 
             try {
@@ -487,6 +513,7 @@ class Player extends Entity
     {
 
         if(!isset($data)) {
+
             $model = $this->getModelClass();
 
             try {
@@ -513,6 +540,7 @@ class Player extends Entity
         if(!isset($data)) {
 
             $model = $this->getModelClass();
+
             try {
                 $data = $model::instance()->loadAccounts($this);
             } catch (ModelException $e) {
@@ -562,6 +590,7 @@ class Player extends Entity
         if (!$data) {
 
             $model = $this->getModelClass();
+
             try {
                 $this->setPrivacy($model::instance()->loadPrivacy($this));
             } catch (ModelException $e) {
@@ -582,6 +611,7 @@ class Player extends Entity
     {
 
         if(!$data) {
+
             $model = $this->getModelClass();
 
             try {
@@ -622,7 +652,9 @@ class Player extends Entity
         $model = $this->getModelClass();
 
         try {
+
             $model::instance()->updateLogin($this);
+
         } catch (ModelException $e) {
             throw new EntityException($e->getMessage(), $e->getCode());
 
@@ -656,7 +688,9 @@ class Player extends Entity
         $model = $this->getModelClass();
 
         try {
+
             $model::instance()->checkNickname($this);
+
         } catch (ModelException $e) {
             if ($e->getCode() == 403) {
                 throw new EntityException("NICKNAME_BUSY", 400);
@@ -701,7 +735,9 @@ class Player extends Entity
         $model = $this->getModelClass();
 
         try {
+
             $model::instance()->updatePrivacy($this);
+
         } catch (ModelException $e) {
             throw new EntityException('INTERNAL_ERROR', 500);
         }
@@ -872,7 +908,7 @@ class Player extends Entity
         return $this;
     }
 
-    public function addTransaction($currency, $quantity, $balance, $description = '')
+    protected function addTransaction($currency, $quantity, $balance, $description = '')
     {
 
         $transaction = new Transaction();

@@ -361,7 +361,7 @@ $(function () {
          * @return {bool}     
          */
         'matchStr':function(inStr, pattern){
-            console.debug('matchStr', inStr , pattern);
+            // console.debug('matchStr', inStr , pattern);
             pattern = new RegExp(pattern, "i");
             if(inStr.match( pattern )) return true;
             return false;

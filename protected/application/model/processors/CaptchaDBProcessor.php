@@ -7,13 +7,18 @@ class CaptchaDBProcessor implements IProcessor
 
     public function fetch(Entity $player)
     {
+        return $this->validate($player->getId());
+    }
+
+    public function validate($playerId)
+    {
 
         $sql = "SELECT `Date` FROM `PlayerTmpCaptcha` WHERE `PlayerId` = :pid";
 
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
-                ':pid' => $player->getId(),
+                ':pid' => $playerId,
             ));
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query", 500);

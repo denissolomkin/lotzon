@@ -202,7 +202,7 @@ class Index extends \SlimController\SlimController
         */
         try {
 
-            $player->getAccounts();
+            $player->getVersion();
 
         } catch (\Exception $e) {
             $this->session->get(Player::IDENTITY)->fetch();

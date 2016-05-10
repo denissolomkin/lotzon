@@ -48,7 +48,7 @@
         "enabled": function () {
             return this._isEnabled;
         },
-        
+
         /* point for enter to cache */
         "init": function (init, options) {
 
@@ -794,7 +794,6 @@
 
             }
 
-
             return this;
 
         },
@@ -870,15 +869,10 @@
         "version": function (version) {
 
             if(Config.siteVersion != version) {
-                Content.badge.init({
-                    system: [{
-                        key    : 'update',
-                        title  : i18n('title-site-update'),
-                        message: i18n('text-please-update-page')
-                    }]
-                });
+                U.isReloadPage = true;
             }
         }
+
     };
 
     i18n = function (key) {
