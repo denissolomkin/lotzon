@@ -21,7 +21,27 @@
 	<script src="/res/js/libs/jquery-2.1.4.min.js"></script>
 	<script src="/res/js/landing/jquery.magnific-popup.min.js"></script>
     <script> player = <?php echo json_encode($player, JSON_PRETTY_PRINT);?>;</script>
-	
+
+    <!-- Schema.org markup for Google+ -->
+    <meta itemprop="name" content="<?=$seo['Title'];?>">
+    <meta itemprop="description" content="LOTZON. Выигрывает каждый!">
+    <meta itemprop="image" content="http://lotzon.com/res/img/lotzon_soc.png?rnd=<?=rand()?>">
+
+    <!-- Twitter Card data -->
+    <meta name="twitter:card" content="http://lotzon.com/res/img/lotzon_soc.png?rnd=<?=rand()?>">
+    <meta name="twitter:title" content="<?=$seo['Title'];?>">
+    <meta name="twitter:description" content="LOTZON. Выигрывает каждый!">
+    <!-- Twitter summary card with large image must be at least 280x150px -->
+    <meta name="twitter:image:src" content="http://lotzon.com/res/img/lotzon_soc.png?rnd=<?=rand()?>">
+
+    <!-- Open Graph data -->
+    <meta property="og:title" content="<?=$seo['Title'];?>" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="http://www.lotzon.com/" />
+    <meta property="og:image" content="http://lotzon.com/res/img/lotzon_soc.png?rnd=<?=rand()?>" />
+    <meta property="og:description" content="LOTZON. Выигрывает каждый!" />
+    <meta property="article:modified_time" content="<?=date('c', time())?>" />
+
 </head>
 <body class="landing">
     <div class="header clearfix">
