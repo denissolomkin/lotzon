@@ -143,7 +143,7 @@
     $(gameTop).each(function(id, player) {
 
         form = template.clone();
-        $('img',                form).attr('src','../filestorage/users/'+player.Avatar);
+        $('img',                form).attr('src',(player.Avatar?'../filestorage/users/50/'+player.Avatar:'../tpl/img/default.jpg'));
         $('.name',              form).text(player.Nicname);
         $('[name="Id"]',        form).val(player.Id);
         $('[name="PlayerId"]',  form).val(player.PlayerId);
@@ -155,13 +155,14 @@
         $('[name="Start"]',     form).val(player.Start);
         $('[name="End"]',       form).val(player.End);
 
-        $('.players').append($(form).show());
+        $('.players').append($(form));
 
     });
 
     $('.add-button').on('click', function() {
         form = template.clone();
-        $('.players').append($(form).find('.save-button').addClass('btn-warning').parents('form').show());
+        $(form).find('.save-button').addClass('btn-warning').parents('form').show();
+        $('.players').append($(form));
 
     });
 
