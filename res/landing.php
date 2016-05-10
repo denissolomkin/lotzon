@@ -156,7 +156,7 @@
                 </div>
                 <div class="uinfo">
                     <div class="img">
-                        <img src="/res/css/img/3f6f3106a467a08b30b325def5526482.jpg">
+                        <img src="/res/css/img/3f6f3106a467a08b30b325def5526482.jpg?b">
                     </div>
                     <div class="name">Яна Иванова</div>
                 </div>
@@ -169,7 +169,7 @@
                 </div>
                 <div class="uinfo">
                     <div class="img">
-                        <img src="/res/css/img/df7f03ffb97e701b0abcc9d8d0e79d3f.jpg">
+                        <img src="/res/css/img/df7f03ffb97e701b0abcc9d8d0e79d3f.jpg?b">
                     </div>
                     <div class="name">Светлана Данилина</div>
                 </div>
@@ -182,7 +182,7 @@
                 </div>
                 <div class="uinfo">
                     <div class="img">
-                        <img src="/res/css/img/79f6fab49b8d430c8a3b530e22b81547.jpg">
+                        <img src="/res/css/img/79f6fab49b8d430c8a3b530e22b81547.jpg?b">
                     </div>
                     <div class="name">Олег Горбанетно</div>
                 </div>
