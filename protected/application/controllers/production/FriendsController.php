@@ -1,9 +1,8 @@
 <?php
 
 namespace controllers\production;
-use \Application, \Player, \EntityException, \CountriesModel, \SettingsModel, \StaticTextsModel, \WideImage, \EmailInvites, \EmailInvite, \LanguagesModel, \Common, \NoticesModel, \GamesSettingsModel, \GameSettingsModel, \ChanceGamesModel;
-use \GeoIp2\Database\Reader;
-use Symfony\Component\HttpFoundation\Session\Session;
+use \Application, \Player, \SettingsModel;
+
 
 Application::import(PATH_APPLICATION . 'model/entities/Player.php');
 Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');
@@ -82,7 +81,7 @@ class FriendsController extends \AjaxController
             }
 
             if (mb_strlen($match, 'utf-8') < 3) {
-                $this->ajaxResponseNoCache(array("message" => "Request too short",), 400);
+                $this->ajaxResponseNoCache(array('message' => 'Request too short',), 400);
 
                 return false;
             }
@@ -247,22 +246,22 @@ class FriendsController extends \AjaxController
         $response = array(
             'res' => array(
                 'user' => array(
-                    "$userId" => $player->export('info')
+                    $userId => $player->export('info')
                 )
             ),
-            "delete" => array(
-                "users" => array(
-                    "requests" => array(
+            'delete' => array(
+                'users' => array(
+                    'requests' => array(
                         $userId
                     )
                 )
             ),
-            "player" => array(
-                "count" => array(
-                    "friends" => \FriendsModel::instance()->getStatusCount($playerId, 1),
-                    "menu" => array(
-                        "users" => array(
-                            "requests" => \FriendsModel::instance()->getStatusCount($playerId, 0, true),
+            'player' => array(
+                'count' => array(
+                    'friends' => \FriendsModel::instance()->getStatusCount($playerId, 1),
+                    'menu' => array(
+                        'users' => array(
+                            'requests' => \FriendsModel::instance()->getStatusCount($playerId, 0, true),
                         ),
                     ),
                 ),
@@ -291,12 +290,12 @@ class FriendsController extends \AjaxController
         $response = array(
             'res' => array(
                 'user' => array(
-                    "$userId" => $player->export('info')
+                    $userId => $player->export('info')
                 )
             ),
-            "player" => array(
-                "count" => array(
-                    "friends" => \FriendsModel::instance()->getStatusCount($playerId, 1),
+            'player' => array(
+                'count' => array(
+                    'friends' => \FriendsModel::instance()->getStatusCount($playerId, 1),
                 )
             )
         );
@@ -338,15 +337,15 @@ class FriendsController extends \AjaxController
         $response = array(
             'res' => array(
                 'user' => array(
-                    "$userId" => $player->export('info')
+                    $userId => $player->export('info')
                 )
             ),
-            "player" => array(
-                "count" => array(
-                    "friends" => \FriendsModel::instance()->getStatusCount($playerId, 1),
-                    "menu" => array(
-                        "users" => array(
-                            "requests" => \FriendsModel::instance()->getStatusCount($playerId, 0, true),
+            'player' => array(
+                'count' => array(
+                    'friends' => \FriendsModel::instance()->getStatusCount($playerId, 1),
+                    'menu' => array(
+                        'users' => array(
+                            'requests' => \FriendsModel::instance()->getStatusCount($playerId, 0, true),
                         ),
                     ),
                 ),
@@ -375,12 +374,12 @@ class FriendsController extends \AjaxController
         $response = array(
             'res' => array(
                 'user' => array(
-                    "$userId" => $player->export('info')
+                    $userId => $player->export('info')
                 )
             ),
-            "player" => array(
-                "count" => array(
-                    "friends" => \FriendsModel::instance()->getStatusCount($playerId, 1),
+            'player' => array(
+                'count' => array(
+                    'friends' => \FriendsModel::instance()->getStatusCount($playerId, 1),
                 )
             )
         );

@@ -57,7 +57,6 @@ class ChanceController extends \AjaxController
         $banner = new Banner;
         $keys = array_keys($response['res']['games'][$game->getType()]);
         $response['res']['games'][$game->getType()][$keys[array_rand($keys)]]['block'] = $banner
-            ->setTemplate('desktop')
             ->setDevice('desktop')
             ->setLocation('context')
             ->setPage('game')

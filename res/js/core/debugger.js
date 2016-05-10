@@ -153,7 +153,7 @@
 
         "error": function (message) {
 
-            if(typeof message === 'object') {
+            if(message && typeof message === 'object') {
                 if (message[2] && message[2] == 423 && window['grecaptcha']) {
                     R.event('complete', this);
                     Content.captcha.render();
