@@ -1,0 +1,1 @@
+ALTER TABLE `Gifts` ADD `Equivalent` FLOAT(9,2) NULL DEFAULT NULL AFTER `Sum`;
