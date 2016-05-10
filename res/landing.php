@@ -25,20 +25,19 @@
     <!-- Schema.org markup for Google+ -->
     <meta itemprop="name" content="<?=$seo['Title'];?>">
     <meta itemprop="description" content="LOTZON. Выигрывает каждый!">
-    <meta itemprop="image" content="https://lotzon.com/res/img/lotzon_soc.png?rnd=<?=rand()?>">
+    <meta itemprop="image" content="https://lotzon.com/res/img/lotzon_soc.jpg?rnd=<?=rand()?>">
 
     <!-- Twitter Card data -->
-    <meta name="twitter:card" content="https://lotzon.com/res/img/lotzon_soc.png?rnd=<?=rand()?>">
+    <meta name="twitter:card" content="https://lotzon.com/res/img/lotzon_soc.jpg?rnd=<?=rand()?>">
     <meta name="twitter:title" content="<?=$seo['Title'];?>">
     <meta name="twitter:description" content="LOTZON. Выигрывает каждый!">
     <!-- Twitter summary card with large image must be at least 280x150px -->
-    <meta name="twitter:image:src" content="https://lotzon.com/res/img/lotzon_soc.png?rnd=<?=rand()?>">
+    <meta name="twitter:image:src" content="https://lotzon.com/res/img/lotzon_soc.jpg?rnd=<?=rand()?>">
 
     <!-- Open Graph data -->
     <meta property="og:title" content="<?=$seo['Title'];?>" />
-    <meta property="og:image" content="https://lotzon.com/res/img/lotzon_soc.png?rnd=<?=rand()?>" />
+    <meta property="og:image" content="https://lotzon.com/res/img/lotzon_soc.jpg?rnd=<?=rand()?>" />
     <meta property="og:description" content="LOTZON. Выигрывает каждый!" />
-    <meta property="article:modified_time" content="<?=date('c', time())?>" />
 
 </head>
 <body class="landing">
