@@ -11057,6 +11057,9 @@ div > .games-previews {
       text-transform: uppercase;
       color: #000000; }
 
+#games-chance .game-info {
+  background: transparent; }
+
 #games-chance .game-fund > div {
   font-size: 14px;
   margin: 10px 0; }

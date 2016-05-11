@@ -446,7 +446,17 @@ var Games = {
                     break;
                 // hz
                 case 'math':
-                    html += "<span>" + prize.v + "</span>";
+                    var del = '';
+                    if(prize.v.indexOf('*') !== -1){
+                        del = 'x';
+                    }
+                    if(prize.v.indexOf('/') !== -1){
+                        del = '÷';
+                    }
+                    
+                    console.debug(prize.v.replace(/[^0-9.]/g, ""),prize.v );
+
+                    html += "<span><span>"+del+"</span>" + prize.v.replace(/[^0-9.]/g, "") + "</span>";
                     break;
 
             }
