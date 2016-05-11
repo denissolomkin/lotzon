@@ -404,6 +404,9 @@ SELECT CONCAT(YEAR(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date))) `Mo
         $wins = $sth->fetchAll();
 
         foreach ($wins as $win) {
+            if (!isset($days[$win['Day']])) {
+                $days[$win['Day']] = array('Day'=>'', 'POINT'=>0, 'MONEY'=>0, 'WINPOINT'=>0, 'WINMONEY'=>0);
+            }
             if ($win['point']) {
                 $days[$win['Day']]['WINPOINT'] = $win['point'];
             }
