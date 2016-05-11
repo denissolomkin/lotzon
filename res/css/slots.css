@@ -165,6 +165,9 @@ Beet container styles
     width: 20%;
     text-align: center;
 }
+#SlotsContainer #betContainer .info_box.big {
+    width: 24%;
+}
 #SlotsContainer #betContainer .spin_change_container {
     display: inline-block;
     width: 7%;
@@ -226,7 +229,7 @@ Beet container styles
 #SlotsContainer #betContainer span {
     color: #e64e13;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 18px;
     border: none;
     width: 100%;
     text-align: center;
@@ -479,7 +482,11 @@ END Slot-buttons styles
 
 /*screen resizes*/
 @media (min-width: 1200px){
-
+    
+    #SlotsContainer #betContainer input,
+    #SlotsContainer #betContainer span {
+        font-size: 20px;
+    }
     #SlotsContainer #slotMachineContainer #ReelContainer{
         transform: translate(-50%,-50%) scale(0.96);
         -o-transform: translate(-50%,-50%) scale(0.96);

@@ -7670,8 +7670,7 @@ form.loading > * {
   margin-bottom: 25px; }
 
 .matches-inf-wrapper {
-  margin-bottom: 20px;
-  background: white; }
+  margin-bottom: 20px; }
   .matches-inf-wrapper.carousel {
     box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
     padding-bottom: 5px; }
