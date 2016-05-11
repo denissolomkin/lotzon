@@ -16,9 +16,13 @@ class GameConstructorSlots extends GameConstructor
          * 4 - bar
          * 5 - cherry
          * 6 - jackpot
+         *
+         * Required sort numbers
+         * correct: 1,2,3
+         * error: 2,3,1
          * */
 
-        '*7' => array(
+        '*2' => array(
             array(1, 1, 3),
             array(1, 3, 3),
             array(1, 1, 5),
@@ -27,10 +31,10 @@ class GameConstructorSlots extends GameConstructor
             array(3, 3, 5),
             array(3, 5, 5)
         ),
-        '*12' => array(3, 3, 3),
-        '*14' => array(1, 1, 1),
+        '*5' => array(3, 3, 3),
+        '*10' => array(1, 1, 1),
         '*15' => array(5, 5, 5),
-        '*16' => array(
+        '*20' => array(
             array(1, 2, 4),
             array(2, 3, 4),
             array(1, 4, 5),
@@ -40,7 +44,7 @@ class GameConstructorSlots extends GameConstructor
             array(1, 5, 6),
             array(3, 5, 6)
         ),
-        '*20' => array(2, 2, 2),
+        '*30' => array(2, 2, 2),
         '*50' => array(4, 4, 4),
         '*200' => array(6, 6, 6)
 
