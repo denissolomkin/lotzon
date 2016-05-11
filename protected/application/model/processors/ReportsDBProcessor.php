@@ -324,4 +324,120 @@ SELECT CONCAT(YEAR(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date))) `Mo
 
     }
 
+    public function getGoldTicketOrders($dateFrom=null, $dateTo=null, $args=null)
+    {
+        $sql = "
+        SELECT
+          CONCAT(DAY(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date)),' ', YEAR(FROM_UNIXTIME(Date))) Day,
+          COUNT(Currency) as cnt,
+          Currency
+        FROM  `Transactions`
+        WHERE  `ObjectType`='Gold'
+        AND    `Date` > :from
+        AND    `Date` < :to
+        GROUP BY DAY,currency
+        ORDER BY DATE";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(':from' => $dateFrom,':to' => $dateTo));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query ".$e->getMessage(), 500);
+        }
+
+        $lotteries = $sth->fetchAll();
+
+        $days = array();
+        foreach ($lotteries as $lottery) {
+            if (!isset($days[$lottery['Day']])) {
+                $days[$lottery['Day']] = array('Day'=>$lottery['Day'], 'POINT'=>0, 'MONEY'=>0, 'WINPOINT'=>0, 'WINMONEY'=>0);
+            }
+            $days[$lottery['Day']][$lottery['Currency']] = $lottery['cnt'];
+        }
+
+        $sql = "SELECT
+                  CONCAT(DAY(FROM_UNIXTIME(DATE)),' ', MONTHNAME(FROM_UNIXTIME(DATE)),' ', YEAR(FROM_UNIXTIME(DATE))) Day,
+                  (SELECT SUM(lta.TicketWin/mcu.Coefficient) FROM `LotteryTicketsArchive` AS lta
+                JOIN
+                    Players AS p
+                ON
+                    lta.PlayerId = p.Id
+                JOIN
+                    `MUICountries` AS mc
+                ON
+                    mc.Code = p.Country
+                JOIN
+                    `MUICurrency` AS mcu
+                ON
+                    mc.Currency = mcu.Id
+                WHERE
+                    lta.LotteryId = Lotteries.Id
+                AND
+                    lta.isGold = 1
+                AND
+                    lta.TicketWinCurrency = 'MONEY'
+                  ) AS money,
+                  (SELECT SUM(lta.TicketWin) FROM `LotteryTicketsArchive` AS lta
+                WHERE
+                    lta.LotteryId = Lotteries.Id
+                AND
+                    lta.isGold = 1
+                AND
+                    lta.TicketWinCurrency = 'POINT'
+                  ) AS point
+                FROM  `Lotteries`
+                WHERE
+                  `Date` > :from
+                AND
+                  `Date` < :to
+                ORDER BY `Date`;
+        ";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(':from' => $dateFrom,':to' => $dateTo));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query ".$e->getMessage(), 500);
+        }
+
+        $wins = $sth->fetchAll();
+
+        foreach ($wins as $win) {
+            if (!$win['point'] and !$win['money']) {
+                continue;
+            }
+            if (!isset($days[$win['Day']])) {
+                $days[$win['Day']] = array('Day'=>$win['Day'], 'POINT'=>0, 'MONEY'=>0, 'WINPOINT'=>0, 'WINMONEY'=>0);
+            }
+            if ($win['point']) {
+                $days[$win['Day']]['WINPOINT'] = $win['point'];
+            }
+            if ($win['money']) {
+                $days[$win['Day']]['WINMONEY'] = $win['money'];
+            }
+        }
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(':from' => $dateFrom,':to' => $dateTo));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query ".$e->getMessage(), 500);
+        }
+
+        $lotteries = $sth->fetchAll();
+
+        $days_index = array();
+        foreach ($days as $day) {
+            if (!isset($day['MONEY'])) {
+                $day['MONEY'] = 0;
+            }
+            if (!isset($day['POINT'])) {
+                $day['POINT'] = 0;
+            }
+            $days_index[] = $day;
+        }
+
+        return $days_index;
+    }
+
 }

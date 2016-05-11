@@ -60,4 +60,9 @@ class ReportsModel extends Model
     {
         return $this->getProcessor()->getLotteryWins($dateFrom,$dateTo,$args);
     }
+
+    public function getGoldTicketOrders($dateFrom,$dateTo,$args)
+    {
+        return $this->getProcessor()->getGoldTicketOrders($dateFrom,$dateTo,$args);
+    }
 }
