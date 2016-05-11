@@ -130,7 +130,7 @@ class LotteryController extends \AjaxController
                     throw new \Exception();
                 }
                 \PlayersModel::instance()->updateBalance($player, 'Money', (0 - $goldPrice));
-                \PlayersModel::instance()->updateGoldTicket($player, 1);
+                \PlayersModel::instance()->updateGoldTicket($player, 1, \LotteriesModel::instance()->getLastPublishedLottery()->getId()+1);
 
                 $transaction = new \Transaction;
                 $transaction->setPlayerId($player->getId())->setCurrency('MONEY')->setSum(0 - $goldPrice)->setDescription('Покупка золотого билета')->setBalance(\PlayersModel::instance()->getBalance($player, true)['Money'])->setObjectType('Gold')->create();
@@ -163,7 +163,7 @@ class LotteryController extends \AjaxController
                     throw new \Exception();
                 }
                 \PlayersModel::instance()->updateBalance($player, 'Points', (0 - $goldPrice));
-                \PlayersModel::instance()->updateGoldTicket($player, 1);
+                \PlayersModel::instance()->updateGoldTicket($player, 1, \LotteriesModel::instance()->getLastPublishedLottery()->getId()+1);
 
                 $transaction = new \Transaction;
                 $transaction->setPlayerId($player->getId())->setCurrency('POINT')->setSum(0 - $goldPrice)->setDescription('Покупка золотого билета')->setBalance(\PlayersModel::instance()->getBalance($player, true)['Points'])->setObjectType('Gold')->create();

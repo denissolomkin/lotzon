@@ -276,9 +276,9 @@ class PlayersModel extends Model
         return $this->getProcessor()->getReferrals($playerId, $limit, $offset);
     }
 
-    public function updateGoldTicket(Entity $player, $quantity)
+    public function updateGoldTicket(Entity $player, $quantity, $goldTicketLottery = 0)
     {
-        return $this->getProcessor()->updateGoldTicket($player, $quantity);
+        return $this->getProcessor()->updateGoldTicket($player, $quantity, $goldTicketLottery);
     }
 
     public function getPlayersPing($ids)
