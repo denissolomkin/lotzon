@@ -350,9 +350,8 @@ SELECT CONCAT(YEAR(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date))) `Mo
         $days = array();
         foreach ($lotteries as $lottery) {
             if (!isset($days[$lottery['Day']])) {
-                $days[$lottery['Day']] = array('Day'=>'', 'POINT'=>0, 'MONEY'=>0, 'WINPOINT'=>0, 'WINMONEY'=>0);
+                $days[$lottery['Day']] = array('Day'=>$lottery['Day'], 'POINT'=>0, 'MONEY'=>0, 'WINPOINT'=>0, 'WINMONEY'=>0);
             }
-            $days[$lottery['Day']]['Day'] = $lottery['Day'];
             $days[$lottery['Day']][$lottery['Currency']] = $lottery['cnt'];
         }
 
@@ -404,8 +403,11 @@ SELECT CONCAT(YEAR(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date))) `Mo
         $wins = $sth->fetchAll();
 
         foreach ($wins as $win) {
+            if (!$win['point'] and !$win['money']) {
+                continue;
+            }
             if (!isset($days[$win['Day']])) {
-                $days[$win['Day']] = array('Day'=>'', 'POINT'=>0, 'MONEY'=>0, 'WINPOINT'=>0, 'WINMONEY'=>0);
+                $days[$win['Day']] = array('Day'=>$win['Day'], 'POINT'=>0, 'MONEY'=>0, 'WINPOINT'=>0, 'WINMONEY'=>0);
             }
             if ($win['point']) {
                 $days[$win['Day']]['WINPOINT'] = $win['point'];
