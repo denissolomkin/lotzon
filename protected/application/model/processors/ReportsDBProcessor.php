@@ -349,6 +349,9 @@ SELECT CONCAT(YEAR(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date))) `Mo
 
         $days = array();
         foreach ($lotteries as $lottery) {
+            if (!isset($days[$lottery['Day']])) {
+                $days[$lottery['Day']] = array('Day'=>'', 'POINT'=>0, 'MONEY'=>0);
+            }
             $days[$lottery['Day']]['Day'] = $lottery['Day'];
             $days[$lottery['Day']][$lottery['Currency']] = $lottery['cnt'];
         }
