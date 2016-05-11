@@ -324,4 +324,47 @@ SELECT CONCAT(YEAR(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date))) `Mo
 
     }
 
+    public function getGoldTicketOrders($dateFrom=null, $dateTo=null, $args=null)
+    {
+        $sql = "
+        SELECT
+          CONCAT(DAY(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date)),' ', YEAR(FROM_UNIXTIME(Date))) Day,
+          COUNT(Currency) as cnt,
+          Currency
+        FROM  `Transactions`
+        WHERE  `ObjectType`='Gold'
+        AND    `Date` > :from
+        AND    `Date` < :to
+        GROUP BY DAY,currency
+        ORDER BY DATE";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(':from' => $dateFrom,':to' => $dateTo));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query ".$e->getMessage(), 500);
+        }
+
+        $lotteries = $sth->fetchAll();
+
+        $days = array();
+        foreach ($lotteries as $lottery) {
+            $days[$lottery['Day']]['Day'] = $lottery['Day'];
+            $days[$lottery['Day']][$lottery['Currency']] = $lottery['cnt'];
+        }
+
+        $days_index = array();
+        foreach ($days as $day) {
+            if (!isset($day['MONEY'])) {
+                $day['MONEY'] = 0;
+            }
+            if (!isset($day['POINT'])) {
+                $day['POINT'] = 0;
+            }
+            $days_index[] = $day;
+        }
+
+        return $days_index;
+    }
+
 }
