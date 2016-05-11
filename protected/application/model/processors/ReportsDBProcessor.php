@@ -424,8 +424,6 @@ SELECT CONCAT(YEAR(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date))) `Mo
             throw new ModelException("Error processing storage query ".$e->getMessage(), 500);
         }
 
-        $lotteries = $sth->fetchAll();
-
         $days_index = array();
         foreach ($days as $day) {
             $day['POINTS_BUY'] = SettingsModel::instance()->getSettings('goldPrice')->getValue('POINTS') * $day['POINT'];
