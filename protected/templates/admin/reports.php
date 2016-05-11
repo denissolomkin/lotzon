@@ -27,6 +27,8 @@
             <?php endforeach;?>
             </select>
         </div>
+<?php case 'SlotsWins':
+        ?>
         <div class="col-my-1">
             <select name="args[Currency]" class="form-control" placeholder="Статус" />
             <option value=""></option>
@@ -35,7 +37,8 @@
             <?php endforeach;?>
             </select>
         </div>
-<?php  break;
+        <?php
+        break;
     case 'UserRegistrations':?>
         <div class="col-my-1">
             <select name="args[GroupBy]" class="form-control" placeholder="Группировка" />

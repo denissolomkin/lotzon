@@ -56,6 +56,11 @@ class ReportsModel extends Model
         return $this->getProcessor()->getBotWins($dateFrom,$dateTo,$args);
     }
 
+    public function getSlotsWins($dateFrom,$dateTo,$args)
+    {
+        return $this->getProcessor()->getSlotsWins($dateFrom,$dateTo,$args);
+    }
+
     public function getLotteryWins($dateFrom,$dateTo,$args)
     {
         return $this->getProcessor()->getLotteryWins($dateFrom,$dateTo,$args);

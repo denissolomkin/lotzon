@@ -21,6 +21,7 @@ class ReportsDBProcessor implements IProcessor
     {
     }
 
+/*
     public function updateMoneyOrders()
     {
         $sql = "
@@ -51,6 +52,7 @@ class ReportsDBProcessor implements IProcessor
         $sth = DB::Connect()->prepare(" UPDATE  MoneyOrders SET Sum = CASE ".implode(' ',$case)." END")->execute();
 
     }
+*/
 
     public function getMoneyOrders($dateFrom=null, $dateTo=null, $args=null)
     {
@@ -261,6 +263,27 @@ SELECT CONCAT(YEAR(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date))) `Mo
              GROUP BY Month,
             GameId, Mode
         ORDER BY YEAR(FROM_UNIXTIME(Date)), MONTH(FROM_UNIXTIME(Date)), GameId, a.Mode";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(':from' => $dateFrom,':to' => $dateTo));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query {$e->getMessage()}", 500);
+        }
+        return $sth->fetchAll();
+    }
+
+    public function getSlotsWins($dateFrom=null, $dateTo=null, $args=null)
+    {
+
+        $sql = "
+        SELECT CURRENCY, IF((SELECT Country FROM Players WHERE Players.Id=PlayerId)='UA','UAH','RUB') COUNTRY, COUNT(*), SUM(SUM) 
+        FROM `Transactions` 
+        WHERE `ObjectType` = 'Slots' 
+        AND `Date` > :from
+        AND `Date` < :to
+        ".(isset($args['Currency']) && $args['Currency']!=''?"AND `Currency` = '{$args['Currency']}'":'')." 
+        GROUP BY COUNTRY, CURRENCY";
 
         try {
             $sth = DB::Connect()->prepare($sql);
