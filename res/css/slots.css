@@ -408,9 +408,12 @@ Slot-buttons styles
     color: #fff;
     text-shadow: 0px 1px 1px rgba(0,0,0,0.7);
     font-weight: 600;
-    box-shadow: inset 0px 0px 20px -4px rgba(0,0,0,0.8);
+    box-shadow: inset 0px 0px 0px -3px rgba(0,0,0,0.8);
     text-transform: uppercase;
     font-size: 15.5px;
+    -webkit-transition: all .2s linear;
+    -o-transition: all .2s linear;
+    transition: all .2s linear;
 }
 #SlotsContainer input.active + label,
 #SlotsContainer .button:hover{
