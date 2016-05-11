@@ -350,7 +350,7 @@ SELECT CONCAT(YEAR(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date))) `Mo
         $days = array();
         foreach ($lotteries as $lottery) {
             if (!isset($days[$lottery['Day']])) {
-                $days[$lottery['Day']] = array('Day'=>$lottery['Day'], 'POINT'=>0, 'MONEY'=>0, 'WINPOINT'=>0, 'WINMONEY'=>0);
+                $days[$lottery['Day']] = array('Day'=>$lottery['Day'], 'POINT'=>0, 'MONEY'=>0, 'POINTS_BUY'=>0, 'MONEY_BUY'=>0, 'POINTS_WIN'=>0, 'MONEY_WIN'=>0);
             }
             $days[$lottery['Day']][$lottery['Currency']] = $lottery['cnt'];
         }
@@ -407,13 +407,13 @@ SELECT CONCAT(YEAR(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date))) `Mo
                 continue;
             }
             if (!isset($days[$win['Day']])) {
-                $days[$win['Day']] = array('Day'=>$win['Day'], 'POINT'=>0, 'MONEY'=>0, 'WINPOINT'=>0, 'WINMONEY'=>0);
+                $days[$win['Day']] = array('Day'=>$win['Day'], 'POINT'=>0, 'MONEY'=>0, 'POINTS_BUY'=>0, 'MONEY_BUY'=>0, 'POINTS_WIN'=>0, 'MONEY_WIN'=>0);
             }
             if ($win['point']) {
-                $days[$win['Day']]['WINPOINT'] = $win['point'];
+                $days[$win['Day']]['POINTS_WIN'] = $win['point'];
             }
             if ($win['money']) {
-                $days[$win['Day']]['WINMONEY'] = $win['money'];
+                $days[$win['Day']]['MONEY_WIN'] = $win['money'];
             }
         }
 
@@ -428,12 +428,8 @@ SELECT CONCAT(YEAR(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date))) `Mo
 
         $days_index = array();
         foreach ($days as $day) {
-            if (!isset($day['MONEY'])) {
-                $day['MONEY'] = 0;
-            }
-            if (!isset($day['POINT'])) {
-                $day['POINT'] = 0;
-            }
+            $day['POINTS_BUY'] = SettingsModel::instance()->getSettings('goldPrice')->getValue('POINTS') * $day['POINT'];
+            $day['MONEY_BUY'] = SettingsModel::instance()->getSettings('goldPrice')->getValue('UA') * $day['MONEY'];
             $days_index[] = $day;
         }
 
