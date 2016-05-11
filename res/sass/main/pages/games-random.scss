@@ -94,6 +94,14 @@ $gray: #808080;
                         font-size: .3em;
                         text-transform: none;
                     }
+                    & > .math{
+                        font-size: .9em !important;
+                        & *{
+                            display: inline !important;
+                            font-size: 1.1em !important;
+                            line-height: 0;
+                        }
+                    }
                 }
                 &:not(.played) {
                     //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)

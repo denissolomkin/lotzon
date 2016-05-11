@@ -12972,6 +12972,12 @@ and open the template in the editor.
           display: block;
           font-size: .3em;
           text-transform: none; }
+        .moment-game-box .minefield button.win .flipFix > .math {
+          font-size: .9em !important; }
+          .moment-game-box .minefield button.win .flipFix > .math * {
+            display: inline !important;
+            font-size: 1.1em !important;
+            line-height: 0; }
         .moment-game-box .minefield button.win:not(.played) {
           transform: rotateY(180deg);
           transition: all .4s ease-out;
