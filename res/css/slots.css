@@ -256,7 +256,7 @@ Beet container styles
     background-size: 100% auto;
 }
 #SlotsContainer #betContainer #betSpinDown {
-    background-position-y: 29%;
+    background-position: 0 29%;
 }
 /*
 END Beet container styles

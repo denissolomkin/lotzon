@@ -21,6 +21,9 @@
                     template: 'profile-edit-countries',
                     href: '/res/countries/' + Player.language.current,
                     after: function(){
+                        $('select[name="country"]').chosen({
+                        // disable_search: true
+                        });
                     }
                 });
 
