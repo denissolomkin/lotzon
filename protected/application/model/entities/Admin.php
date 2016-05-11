@@ -68,8 +68,8 @@ class Admin extends Entity
                 /*'reports/BotWins'=>array('icon'=>'plug','name'=>'Выигрыши ботов'),*/
                 'reports/TopOnlineGames'=>array('icon'=>'trophy','name'=>'ТОП онлайн-игр'),
                 'reports/LotteryWins'=>array('icon'=>'gift','name'=>'Розыгрыши'),
-                'reports/SlotsWins'=>array('icon'=>'gift','name'=>'Статистика слотов'),
-                'reports/GoldTicketOrders'=>array('icon'=>'gift','name'=>'Золотые билеты'),
+                'reports/SlotsWins'=>array('icon'=>'wheelchair','name'=>'Однорукий бандит'),
+                'reports/GoldTicketOrders'=>array('icon'=>'ticket','name'=>'Золотые билеты'),
                 'debug'=>array('icon'=>'terminal','name'=>'Дебаг'),
             )),
     );
