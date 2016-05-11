@@ -46,7 +46,7 @@ class GameConstructorSlots extends GameConstructor
         ),
         '*30' => array(2, 2, 2),
         '*50' => array(4, 4, 4),
-        '*200' => array(6, 6, 6)
+        '*500' => array(6, 6, 6)
 
     );
 
