@@ -210,6 +210,9 @@ var slotMachine = {
             i = (n.win / step) > 80 ? "fastpayout" : "payout",
             s = (n.win / step) > 80 ? 50 : 200;
 
+        // add win before balance update
+        $("#lastWin").html(slotMachine.add_val(n.win));
+
         try {
             slotMachine.sounds[i].play({
                 onfinish: function () {

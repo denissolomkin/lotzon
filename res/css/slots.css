@@ -96,7 +96,7 @@ main blocks - styles
     display: inline-block;
     padding-left: 10px;
     box-sizing: border-box;
-    transform: translateY(-28%);
+    transform: translateY(-31.5%);
 }
 #SlotsContainer .machine-roll{
     width: 69%;
@@ -144,7 +144,7 @@ styles for new Prizes list-block
 #SlotsContainer #prizes_list .reelIcon.prize_5 { background-position: 0 39.3%; }
 #SlotsContainer #prizes_list .reelIcon.prize_6 { background-position: 0% 49.3%; }
 #SlotsContainer #prizes_list .reelIcon.prize_stardot5 { background-position: 0 99.3%; }
-#SlotsContainer #prizes_list .reelIcon.prize_1slash3slash5 { background-position: 0 89.3%; }
+#SlotsContainer #prizes_list .reelIcon.prize_1slash3slash5 { background-position: 0 90%; }
 #SlotsContainer #prizes_list .reelIcon.prize_2slash4slash6 { background-position: -30px -30px; }
 #SlotsContainer #prizes_list .reelIcon.prize_1slash3 { background-position: 0 59.3%; }
 #SlotsContainer #prizes_list .reelIcon.prize_5slash2 { background-position: 0 69.3%; }
