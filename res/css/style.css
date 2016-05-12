@@ -205,6 +205,7 @@ hr {
 #user-view,
 #prizes-exchange-goods-view,
 #users-view-message,
+#communication-comments-view,
 #communication-messages-new {
   box-shadow: 1px 2px 2px 0px rgba(0, 0, 0, 0.4);
   margin-bottom: 3px; }
@@ -6568,6 +6569,10 @@ input.comment-reply-btn {
     text-transform: uppercase;
     font-size: 17px;
     top: 50%; }
+
+#communication-comments-view .content-box-item {
+  margin-top: 25px;
+  padding-bottom: 10px; }
 
 form.loading > * {
   opacity: 0.5; }
