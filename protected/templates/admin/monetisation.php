@@ -41,7 +41,7 @@
 
                         <?php include('user_template.php');?>
 
-                        <td class="nobr pointer transactions-trigger" data-id="<?=$player->getId()?>"><?=($player->getPoints()<0?'<b class="red">'.$player->getPoints().'</b>':$player->getPoints())?> <br><?=($player->getMoney()<0?'<b class="red">':'').$player->getMoney()?> <?=\CountriesModel::instance()->getCountry($player->getCountry())->loadCurrency()->getTitle('iso');?></td>
+                        <td class="nobr pointer transactions-trigger" data-id="<?=$player->getId()?>"><?=($player->getPoints()<0?'<b class="red">'.$player->getPoints().'</b>':$player->getPoints())?> <br><?=($player->getMoney()<0?'<b class="red">':'').$player->getMoney()?> <?=\CountriesModel::instance()->getCountry($player->getCurrency())->loadCurrency()->getTitle('iso');?></td>
                         <td><?=$order->getItem()->getTitle()?></br><?=($order->getChanceGameId() ? 'Выиграл в шанс' : $order->getItem()->getPrice().' баллов')?></td>
 
 
@@ -113,7 +113,7 @@
 
                         <?php include('user_template.php');?>
 
-                        <td class="nobr pointer transactions-trigger" data-id="<?=$player->getId()?>"><?=($player->getPoints()<0?'<b class="red">'.$player->getPoints().'</b>':$player->getPoints())?> <br><?=($player->getMoney()<0?'<b class="red">':'').$player->getMoney()?> <? ($currency=\CountriesModel::instance()->getCountry($player->getCountry())->loadCurrency()->getTitle('iso')); echo $currency;?></td>
+                        <td class="nobr pointer transactions-trigger" data-id="<?=$player->getId()?>"><?=($player->getPoints()<0?'<b class="red">'.$player->getPoints().'</b>':$player->getPoints())?> <br><?=($player->getMoney()<0?'<b class="red">':'').$player->getMoney()?> <? ($currency=\CountriesModel::instance()->getCountry($player->getCurrency())->loadCurrency()->getTitle('iso')); echo $currency;?></td>
                         <?if($order->getCount()>0):?>
                         <td class="pointer orders-trigger" data-number="<?=$order->getNumber()?>">
                         <span class="label label-danger" ><?=$order->getCount()+1?></span>

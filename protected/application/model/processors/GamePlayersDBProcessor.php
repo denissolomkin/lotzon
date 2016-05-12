@@ -36,13 +36,14 @@ class GamePlayersDBProcessor implements IProcessor
     public function update(Entity $player)
     {
 
-        $sql = "REPLACE INTO `GamesTmpPlayers` (`PlayerId`, `Lang`, `Country`, `Name`, `Avatar`, `Admin`, `Bot`, `AppId`, `AppUid`, `AppName`, `AppMode`, `Ping`)
-                VALUES (:pid, :lang, :cc, :name, :avatar, :admin, :bot, :appid, :appuid, :appname, :appmode, :ping)";
+        $sql = "REPLACE INTO `GamesTmpPlayers` (`PlayerId`, `Lang`, `Currency`, `Country`,`Name`, `Avatar`, `Admin`, `Bot`, `AppId`, `AppUid`, `AppName`, `AppMode`, `Ping`)
+                VALUES (:pid, :lang, :cur, :cc, :name, :avatar, :admin, :bot, :appid, :appuid, :appname, :appmode, :ping)";
 
         try {
             DB::Connect()->prepare($sql)->execute(array(
                 ':pid'     => $player->getId(),
                 ':lang'    => $player->getLang(),
+                ':cur'     => $player->getCurrency(),
                 ':cc'      => $player->getCountry(),
                 ':name'    => $player->getName(),
                 ':avatar'  => $player->getAvatar(),
@@ -90,7 +91,7 @@ class GamePlayersDBProcessor implements IProcessor
 
     public function getAvailableBots()
     {
-        $sql = "SELECT `GamesTmpBots`.id, `GamesTmpBots`.name, `GamesTmpBots`.avatar, `GamesTmpBots`.country, `GamesTmpBots`.lang
+        $sql = "SELECT `GamesTmpBots`.id, `GamesTmpBots`.name, `GamesTmpBots`.avatar, `GamesTmpBots`.currency, `GamesTmpBots`.country, `GamesTmpBots`.lang
               FROM `GamesTmpBots`
               LEFT JOIN `GamesTmpPlayers`
                 ON `GamesTmpBots`.id = `GamesTmpPlayers`.PlayerId

@@ -54,7 +54,8 @@ class AjaxController extends \SlimController\SlimController
 
         try {
 
-            $this->session->get(Player::IDENTITY)->getVersion();
+            if($this->session->get(Player::IDENTITY)->getVersion() !== 3)
+                throw(new \Exception);
 
         } catch (\Exception $e) {
             $this->session->get(Player::IDENTITY)->fetch();

@@ -661,14 +661,15 @@ class Game extends Entity
                     $this->_bot[$id] = $id;
 
                 $this->_players[$id] = array(
-                    'pid'     => $id,
-                    'moves'   => $this->getOptions('m'),
-                    'points'  => 0,
-                    'avatar'  => $client->avatar,
-                    'lang'    => isset($client->lang) ? $client->lang : 'RU',
-                    'country' => isset($client->country) ? $client->country : 'RU',
-                    'name'    => $client->name,
-                    'timeout' => time() + $this->getOptions('t')
+                    'pid'      => $id,
+                    'moves'    => $this->getOptions('m'),
+                    'points'   => 0,
+                    'avatar'   => $client->avatar,
+                    'lang'     => isset($client->lang) ? $client->lang : 'RU',
+                    'country'  => isset($client->country) ? $client->country : 'RU',
+                    'currency' => isset($client->currency) ? $client->currency : 'RU',
+                    'name'     => $client->name,
+                    'timeout'  => time() + $this->getOptions('t')
                 );
 
                 if ($order)

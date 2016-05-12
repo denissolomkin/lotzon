@@ -227,12 +227,12 @@ class GameAppsDBProcessor implements IProcessor
                 $win      = isset($player['win']) ? $player['win'] : $player['result'] * $app->getPrice();
 
                 if ($currency == 'Money')
-                    $win *= CountriesModel::instance()->getCountry($player['country'])->loadCurrency()->getCoefficient();
+                    $win *= CountriesModel::instance()->getCountry($player['currency'])->loadCurrency()->getCoefficient();
 
                 if ($win == 0)
                     continue;
 
-                $sql_transactions_players[] = '(?,?,?,?,?,?,?,?,?)';
+                $sql_transactions_players[] = '(?,?,?,?,?,?,?,?,?,?,?)';
 
                 /* update balance after game */
                 $sql = "UPDATE Players p
@@ -257,13 +257,22 @@ class GameAppsDBProcessor implements IProcessor
                 }
 
                 /* select balance for transaction */
-                $sql = "SELECT Points, Money FROM `Players` WHERE `Id`=:id LIMIT 1";
+                $sql = "SELECT 
+                            `Players`.Points,
+                            `Players`.Money,
+                            `MUICountries`.`Currency`,
+                            `MUICurrency`.`Coefficient`,
+                            `MUICurrency`.`Rate`
+                        FROM `Players`
+                        LEFT JOIN `MUICountries` ON `MUICountries`.`Code` = `Players`.`Currency`
+                        LEFT JOIN `MUICurrency` ON `MUICurrency`.`Id` = `MUICountries`.`Currency`
+                        WHERE `Players`.`Id`=:id LIMIT 1";
 
                 try {
                     $sth = DB::Connect()->prepare($sql);
                     $sth->execute(array(':id' => $player['pid']));
                 } catch (PDOException $e) {
-                    echo $this->time(0,'ERROR')." Error processing storage query в таблице Players при получении баланса\n";
+                    echo $this->time(0,'ERROR')." Error processing storage query в таблице Players при получении баланса: {$e->getMessage()}\n";
                 }
 
                 if (!$sth->rowCount()) {
@@ -278,6 +287,8 @@ class GameAppsDBProcessor implements IProcessor
                 array_push($sql_transactions,
                     $player['pid'],
                     $app->getCurrency(),
+                    isset($balance) && isset($balance['Currency']) ? ($currency == 'Money' ? $balance['Currency'] : 0) : 0,
+                    isset($balance) && isset($balance['Coefficient']) ? ($currency == 'Money' ? $win / $balance['Coefficient'] : $win / ($balance['Rate'] * $balance['Coefficient'])) : 0,
                     $win,
                     (isset($balance) ? $balance[$currency] : null),
                     'OnlineGame',
@@ -301,7 +312,7 @@ class GameAppsDBProcessor implements IProcessor
 
         if ($app->getPrice() && count($sql_transactions_players)) {
             try {
-                $sql = "INSERT INTO `Transactions` (`PlayerId`, `Currency`, `Sum`, `Balance`, `ObjectType`, `ObjectId`,  `ObjectUid`, `Description`, `Date`) VALUES " . implode(",", $sql_transactions_players);
+                $sql = "INSERT INTO `Transactions` (`PlayerId`, `Currency`, `CurrencyId`, `Equivalent`, `Sum`, `Balance`, `ObjectType`, `ObjectId`,  `ObjectUid`, `Description`, `Date`) VALUES " . implode(",", $sql_transactions_players);
                 DB::Connect()
                     ->prepare($sql)
                     ->execute($sql_transactions);
@@ -547,7 +558,7 @@ class GameAppsDBProcessor implements IProcessor
                       t.`Currency` = 'MONEY',
                       IF( :rand = 1, -0.25, 0.22 ) *
                         IFNULL(
-                          (SELECT MUICurrency.Coefficient FROM MUICountries LEFT JOIN MUICurrency ON MUICurrency.Id = MUICountries.Currency WHERE MUICountries.Code = p.Country),
+                          (SELECT MUICurrency.Coefficient FROM MUICountries LEFT JOIN MUICurrency ON MUICurrency.Id = MUICountries.Currency WHERE MUICountries.Code = p.Currency),
                           (SELECT MUICurrency.Coefficient FROM MUICountries LEFT JOIN MUICurrency ON MUICurrency.Id = MUICountries.Currency LIMIT 1)
                         ),
                       0),
@@ -612,6 +623,11 @@ class GameAppsDBProcessor implements IProcessor
 
         return true;
 
+    }
+
+    private function time($spaces = 0, $str = null)
+    {
+        return str_repeat(' ', $spaces) . date('H:i:s', time()) . ($str ? ' [' . str_pad($str, 7, '.') . '] ' : '');
     }
 
 }

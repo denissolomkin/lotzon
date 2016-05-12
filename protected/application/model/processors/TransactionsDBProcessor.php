@@ -4,21 +4,24 @@ Application::import(PATH_INTERFACES . 'IProcessor.php');
 class TransactionsDBProcessor implements IProcessor
 {
     public function create(Entity $transaction)
-    {   
+    {
         $transaction->setDate(time());
-        $sql = "INSERT INTO `Transactions` (`PlayerId`, `Currency`, `Sum`, `Balance`, `ObjectType`, `ObjectId`, `ObjectUid`, `Description`, `Date`) VALUES (:plid, :curr, :sum,  :bal, :otype, :oid, :ouid, :desc, :date)";
+        $sql = "INSERT INTO `Transactions` (`PlayerId`, `Currency`, `CurrencyId`, `Equivalent`, `Sum`, `Balance`, `ObjectType`, `ObjectId`, `ObjectUid`, `Description`, `Date`) 
+                VALUES (:plid, :curr, :curid, :equal, :sum, :bal, :otype, :oid, :ouid, :desc, :date)";
 
         try {
             DB::Connect()->prepare($sql)->execute(array(
-                ':plid'   => $transaction->getPlayerId(),
-                ':curr'   => $transaction->getCurrency(),
-                ':sum'    => $transaction->getSum(),
-                ':bal'    => $transaction->getBalance(),
-                ':otype'  => $transaction->getObjectType(),
-                ':oid'    => $transaction->getObjectId(),
-                ':ouid'    => $transaction->getObjectUid(),
-                ':desc'   => $transaction->getDescription(),
-                ':date'   => $transaction->getDate(),
+                ':plid'  => $transaction->getPlayerId(),
+                ':curr'  => $transaction->getCurrency(),
+                ':curid' => $transaction->getCurrencyId(),
+                ':sum'   => $transaction->getSum(),
+                ':equal' => $transaction->getEquivalent(),
+                ':bal'   => $transaction->getBalance(),
+                ':otype' => $transaction->getObjectType(),
+                ':oid'   => $transaction->getObjectId(),
+                ':ouid'  => $transaction->getObjectUid(),
+                ':desc'  => $transaction->getDescription(),
+                ':date'  => $transaction->getDate(),
             ));
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query", 500);
@@ -51,14 +54,7 @@ class TransactionsDBProcessor implements IProcessor
         }
 
         $transactionData = $sth->fetch();
-
-        $transaction->setId($transactionData['Id'])
-                    ->setPlayerId($transactionData['PlayerId'])
-                    ->setSum($transactionData['Sum'])
-                    ->setBalance($transactionData['Balance'])
-                    ->setDescription($transactionData['Description'])
-                    ->setCurrency($transactionData['Currency'])
-                    ->setDate($transactionData['Date']);
+        $transaction->formatFrom('DB',$transactionData);
 
         return $transaction;
     }
@@ -126,13 +122,7 @@ class TransactionsDBProcessor implements IProcessor
 
             foreach ($data as $transactionData) {
                 $transaction = new Transaction();
-                $transaction->setId($transactionData['Id'])
-                            ->setPlayerId($transactionData['PlayerId'])
-                            ->setSum($transactionData['Sum'])
-                            ->setBalance($transactionData['Balance'])
-                            ->setDescription($transactionData['Description'])
-                            ->setCurrency($transactionData['Currency'])
-                            ->setDate($transactionData['Date']);
+                $transaction->formatFrom('DB',$transactionData);
                 $transactions[] = $transaction;
             }
         }

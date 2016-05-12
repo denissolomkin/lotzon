@@ -265,16 +265,17 @@ class Users extends PrivateArea
             $player->setId($playerId)->fetch()->initAccounts();
             try {
                 $response['data'] = array(
-                    'Avatar' => $player->getAvatar(),
-                    'Id' => $player->getId(),
-                    'Nicname' => $player->getNicname(),
-                    'Name' => $player->getName(),
-                    'Surname' => $player->getSurname(),
-                    'Birthday' => $player->getBirthday()?date('d.m.Y', $player->getBirthday()):'',
+                    'Avatar'   => $player->getAvatar(),
+                    'Id'       => $player->getId(),
+                    'Nicname'  => $player->getNicname(),
+                    'Name'     => $player->getName(),
+                    'Surname'  => $player->getSurname(),
+                    'Birthday' => $player->getBirthday() ? date('d.m.Y', $player->getBirthday()) : '',
                     'Accounts' => $player->getAccounts(),
-                    'Country' => $player->getCountry(),
-                    'Lang' => $player->getLang(),
-                    'Utc' => $player->getUtc()?:'',
+                    'Country'  => $player->getCountry(),
+                    'Currency' => $player->getCurrency(),
+                    'Lang'     => $player->getLang(),
+                    'Utc'      => $player->getUtc() ?: '',
                 );
 
             } catch (ModelException $e) {
@@ -316,6 +317,7 @@ class Users extends PrivateArea
                 $player->setNicname($this->request()->post('Nicname'))
                     ->setName($this->request()->post('Name'))
                     ->setSurname($this->request()->post('Surname'))
+                    ->setCurrency($this->request()->post('Currency'))
                     ->setCountry($this->request()->post('Country'))
                     ->setLang($this->request()->post('Lang'))
                     ->setUtc($this->request()->post('Utc', null))
@@ -576,6 +578,7 @@ class Users extends PrivateArea
                         'admin' => ($notice->getAdminName()?:''),
                         'text' => $notice->getText(),
                         'country' => $notice->getCountry(),
+                        'currency' => $notice->getCurrency(),
                         'minLotteries' => ($notice->getMinLotteries()?:null),
                         'registeredFrom' => ($notice->getRegisteredFrom()? date('d.m.Y',$notice->getRegisteredFrom()) :null),
                         'registeredUntil' => ($notice->getRegisteredUntil()? date('d.m.Y',$notice->getRegisteredUntil()) :null),

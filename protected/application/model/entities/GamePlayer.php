@@ -5,6 +5,7 @@ class GamePlayer extends Entity
     protected $_id           = 0;
     protected $_lang         = '';
     protected $_country      = '';
+    protected $_currency     = '';
     protected $_name         = '';
     protected $_avatar       = '';
     protected $_bot          = null;
@@ -63,6 +64,7 @@ class GamePlayer extends Entity
         if ($from == 'DB') {
             $this->setId($data['PlayerId'])
                 ->setLang($data['Lang'])
+                ->setCurrency($data['Currency'])
                 ->setCountry($data['Country'])
                 ->setName($data['Name'])
                 ->setAvatar($data['Avatar'])
@@ -83,6 +85,7 @@ class GamePlayer extends Entity
         } else if ($from == 'player') {
 
             $this->setId($data->getId())
+                ->setCurrency($data->getCurrency())
                 ->setCountry($data->getCountry())
                 ->setLang($data->getLang())
                 ->setName($data->getNicname())
@@ -93,6 +96,7 @@ class GamePlayer extends Entity
         } else if ($from == 'bot') {
 
             $this->setId($data->id)
+                ->setCurrency($data->currency)
                 ->setCountry($data->country)
                 ->setLang($data->lang)
                 ->setName($data->name)
@@ -112,13 +116,14 @@ class GamePlayer extends Entity
 
             case 'player':
                 $ret = (object)array(
-                    'time'    => time(),
-                    'id'      => $this->getId(),
-                    'avatar'  => $this->getAvatar(),
-                    'lang'    => $this->getLang(),
-                    'country' => $this->getCountry(),
-                    'admin'   => $this->isAdmin(),
-                    'name'    => $this->getName()
+                    'time'     => time(),
+                    'id'       => $this->getId(),
+                    'avatar'   => $this->getAvatar(),
+                    'lang'     => $this->getLang(),
+                    'country'  => $this->getCountry(),
+                    'currency' => $this->getCurrency(),
+                    'admin'    => $this->isAdmin(),
+                    'name'     => $this->getName()
                 );
 
                 if($this->isBot()){

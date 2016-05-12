@@ -66,6 +66,7 @@ class Player extends Entity
     protected $_counters       = array();
     protected $_accounts       = array();
     protected $_country        = '';
+    protected $_currency       = '';
     protected $_lang           = '';
 
     protected $_generatedPassword = '';
@@ -97,7 +98,7 @@ class Player extends Entity
     protected $_stats = array();
 
     protected $_friend = null;
-    protected $_version = 1;
+    protected $_version = 3;
 
     public function init()
     {
@@ -805,7 +806,7 @@ class Player extends Entity
             case LotterySettings::CURRENCY_MONEY:
             case 'Money':
                 if($withCoefficient) {
-                    $sum *= \CountriesModel::instance()->getCountry($this->getCountry())->loadCurrency()->getCoefficient();
+                    $sum *= \CountriesModel::instance()->getCountry($this->getCurrency())->loadCurrency()->getCoefficient();
                 }
                 return $balance['Money'] >= $sum;
                 break;
@@ -912,9 +913,15 @@ class Player extends Entity
     protected function addTransaction($currency, $quantity, $balance, $description = '')
     {
 
+        $currencyObj = \CountriesModel::instance()->getCountry($this->getCurrency())->loadCurrency();
+        $currencyId  = $currency == LotterySettings::CURRENCY_POINT ? 0 : $currencyObj->getId();
+        $equivalent  = $currency == LotterySettings::CURRENCY_POINT ? $quantity / ($currencyObj->getRate() * $currencyObj->getCoefficient()) : $quantity / $currencyObj->getCoefficient();
+
         $transaction = new Transaction();
         $transaction->setPlayerId($this->getId())
             ->setCurrency($currency)
+            ->setCurrencyId($currencyId)
+            ->setEquivalent($equivalent)
             ->setSum($quantity)
             ->setBalance($balance);
 
@@ -932,7 +939,6 @@ class Player extends Entity
 
         return $this;
     }
-
 
     public function login($password)
     {
@@ -1114,6 +1120,7 @@ class Player extends Entity
                     ->setSurname($data['Surname'])
                     ->setSecondName($data['SecondName'])
                     ->setBirthday($data['Birthday'])
+                    ->setCurrency($data['Currency'])
                     ->setCountry($data['Country'])
                     ->setCity($data['City'])
                     ->setZip($data['Zip'])

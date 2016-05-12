@@ -49,14 +49,15 @@ class CurrencyDBProcessor implements IProcessor
 
     public function create(Entity $currency)
     {
-        $sql = "REPLACE INTO `MUICurrency` (`Id`, `Code`, `Title`, `Rate`, `Coefficient`) VALUES (:id, :code, :title, :rate, :coef)";
+        $sql = "REPLACE INTO `MUICurrency` (`Id`, `Code`, `Title`, `Iso`,  `Rate`, `Coefficient`) VALUES (:id, :code, :title, :iso, :rate, :coef)";
 
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
-                ':id'    => $currency->getId(),
+                ':id'      => $currency->getId(),
                 ':code'    => $currency->getCode(),
-                ':title'     => serialize($currency->getTitle()),
+                ':title'   => serialize($currency->getTitle()),
+                ':iso'     => $currency->getIso(),
                 ':rate'    => $currency->getRate(),
                 ':coef'    => $currency->getCoefficient(),
             ));

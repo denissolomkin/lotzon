@@ -17,22 +17,26 @@ class CurrencyCacheProcessor extends BaseCacheProcessor implements IProcessor
     public function create(Entity $currency)
     {
         $currency = $this->getBackendProcessor()->create($currency);
-        $this->getList(true);
+        $this->recache();
         return $currency;
     }
 
-    public function getList($recache=false)
+    public function getList()
     {
-        if (($list = Cache::init()->get(self::LIST_CACHE_KEY)) === false OR $recache) {
-            $list = $this->getBackendProcessor()->getList();
-
-            if (!Cache::init()->set(self::LIST_CACHE_KEY , $list)) {
-                throw new ModelException("Unable to cache storage data", 500);
-            }
+        if (($list = Cache::init()->get(self::LIST_CACHE_KEY)) === false) {
+            $list = $this->recache();
         }
+
+        /*
+         * todo delete after first use
+         */
+
+        if(!(current($list)->getId())){
+            $list = $this->recache();
+        }
+
         return $list;
     }
-
 
     public function update(Entity $currency) {
     }
@@ -49,5 +53,16 @@ class CurrencyCacheProcessor extends BaseCacheProcessor implements IProcessor
     }
 
     public function delete(Entity $currency) {
+    }
+
+    public function recache() {
+
+        $list = $this->getBackendProcessor()->getList();
+
+        if (!Cache::init()->set(self::LIST_CACHE_KEY , $list)) {
+            throw new ModelException("Unable to cache storage data", 500);
+        }
+
+        return $list;
     }
 }

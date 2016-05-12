@@ -131,7 +131,7 @@ class PrizesController extends \AjaxController
             ->fetch()
             ->initAccounts();
 
-        $currency = CountriesModel::instance()->getCountry($this->player->getCountry())->loadCurrency();
+        $currency = CountriesModel::instance()->getCountry($this->player->getCurrency())->loadCurrency();
         $phone = $this->player->getAccounts('Phone') ? $this->player->getAccounts('Phone')[0] : null;
 
         $order = new \ShopItemOrder();

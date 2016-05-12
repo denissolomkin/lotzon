@@ -1248,8 +1248,18 @@ $('.profile-trigger').on('click', function() {
                     html+='<option value="'+code+'" '+(code==user.Country?' selected':'')+'>'+country+'</option>';
                 });
 
-                html+='</select></div>' +
-                '<div class="input-group"><span class="input-group-addon">Язык</span>' +
+                html+='</select></div>';
+
+                html+='<div class="input-group"><span class="input-group-addon">Валюта</span>' +
+                    '<select class="form-control" name="Currency">';
+                if(!(user.Currency in countries))
+                    html+='<option value="'+user.Currency+'" selected>'+user.Currency+'</option>';
+                $.each(countries, function(code,currency){
+                    html+='<option value="'+code+'" '+(code==user.Currency?' selected':'')+'>'+currency+'</option>';
+                });
+                html+='</select></div>';
+
+                html+='<div class="input-group"><span class="input-group-addon">Язык</span>' +
                 '<select class="form-control" name="Lang">';
 
                 $.each(langs, function(code,country){

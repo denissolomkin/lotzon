@@ -15,6 +15,7 @@ class Index extends \SlimController\SlimController
 
     public $lang    = '';
     public $country = '';
+    public $currency = '';
     public $ref     = 0;
     protected $session;
 
@@ -52,7 +53,13 @@ class Index extends \SlimController\SlimController
                 $player->setCountry(CountriesModel::instance()->defaultCountry());
             }
 
-            $player->setLang(CountriesModel::instance()->getCountry($player->getCountry())->getLang());
+            $currency = CountriesModel::instance()->isCountry($player->getCountry())
+                ? $player->getCountry()
+                : CountriesModel::instance()->defaultCountry();
+
+            $player->setLang(CountriesModel::instance()->getCountry($player->getCountry())->getLang())
+                ->setCurrency($currency);
+
             $player->setValid(true)
                 ->setDates(time(), 'Login')
                 ->setComplete(false)//todo: remove when set default=false in database
@@ -121,6 +128,7 @@ class Index extends \SlimController\SlimController
             $this->country = CountriesModel::instance()->defaultCountry();
             $this->lang    = CountriesModel::instance()->defaultLang();
         }
+        $this->currency = $this->country;
 
         if (!$this->session->get(Player::IDENTITY)) {
 
@@ -155,6 +163,11 @@ class Index extends \SlimController\SlimController
                 LanguagesModel::instance()->isLang($this->session->get(Player::IDENTITY)->getLang())
                     ? $this->session->get(Player::IDENTITY)->getLang()
                     : CountriesModel::instance()->defaultLang());
+
+                $this->currency = (
+                CountriesModel::instance()->isCountry($this->session->get(Player::IDENTITY)->getCurrency())
+                    ? $this->session->get(Player::IDENTITY)->getCurrency()
+                    : CountriesModel::instance()->defaultCountry());
 
                 $this->game($page);
                 $this->session->get(Player::IDENTITY)->markOnline();
@@ -198,11 +211,12 @@ class Index extends \SlimController\SlimController
 
         /* todo delete
         patch for old Player Entity in Memcache sessions
-        delete after week from April 18 or after drop Memcache
         */
+        
         try {
 
-            $player->getVersion();
+            if($this->session->get(Player::IDENTITY)->getVersion() !== 3)
+                throw(new \Exception);
 
         } catch (\Exception $e) {
             $this->session->get(Player::IDENTITY)->fetch();
@@ -276,7 +290,7 @@ class Index extends \SlimController\SlimController
                 'money'  => $player->getMoney(),
                 'lotzon' => 1500
             ),
-            'currency' => CountriesModel::instance()->getCountry($this->country)->loadCurrency()->getSettings(),
+            'currency' => CountriesModel::instance()->getCountry($this->currency)->loadCurrency()->getSettings(),
             'billing'  => array(
                 'webmoney'      => $player->getAccounts('WebMoney') ? $player->getAccounts('WebMoney')[0] : null,
                 'yandex'        => $player->getAccounts('YandexMoney') ? $player->getAccounts('YandexMoney')[0] : null,
@@ -308,9 +322,9 @@ class Index extends \SlimController\SlimController
 
         /* todo delete slider */
         $slider = array(
-            'sum'     => (LotteriesModel::instance()->getMoneyTotalWin() + $counters->getValue('MONEY_ADD')) * CountriesModel::instance()->getCountry($this->country)->loadCurrency()->getCoefficient(),
+            'sum'     => (LotteriesModel::instance()->getMoneyTotalWin() + $counters->getValue('MONEY_ADD')) * CountriesModel::instance()->getCountry($this->currency)->loadCurrency()->getCoefficient(),
             'winners' => LotteriesModel::instance()->getWinnersCount() + $counters->getValue('WINNERS_ADD'),
-            'jackpot' => LotterySettingsModel::instance()->loadSettings()->getPrizes($this->country)[6]['sum'],
+            'jackpot' => LotterySettingsModel::instance()->loadSettings()->getPrizes($this->currency)[6]['sum'],
             'players' => PlayersModel::instance()->getMaxId(),
             'timer'   => LotterySettingsModel::instance()->loadSettings()->getNearestGame() + strtotime('00:00:00', time()) - time(),
             'lottery' => array(
@@ -377,14 +391,14 @@ class Index extends \SlimController\SlimController
             'requiredBalls'    => \LotterySettings::REQUIRED_BALLS,
             'totalTickets'     => \LotterySettings::TOTAL_TICKETS,
             'filledTickets'    => \TicketsModel::instance()->getUnplayedTickets($player->getId()),
-            'priceGold'        => SettingsModel::instance()->getSettings('goldPrice')->getValue($this->country),
+            'priceGold'        => SettingsModel::instance()->getSettings('goldPrice')->getValue($this->currency),
             'priceGoldTicket'  => array(
-                'money'  => SettingsModel::instance()->getSettings('goldPrice')->getValue($this->country),
+                'money'  => SettingsModel::instance()->getSettings('goldPrice')->getValue($this->currency),
                 'points' => SettingsModel::instance()->getSettings('goldPrice')->getValue('POINTS'),
             ),
             'prizes'           => array(
-                'default' => LotterySettingsModel::instance()->loadSettings()->getPrizes($this->country),
-                'gold'    => LotterySettingsModel::instance()->loadSettings()->getGoldPrizes($this->country),
+                'default' => LotterySettingsModel::instance()->loadSettings()->getPrizes($this->currency),
+                'gold'    => LotterySettingsModel::instance()->loadSettings()->getGoldPrizes($this->currency),
             ),
         );
 
@@ -418,9 +432,9 @@ class Index extends \SlimController\SlimController
         $detect   = new MobileDetect;
 
         $slider = array(
-            "sum"     => round((LotteriesModel::instance()->getMoneyTotalWin() + SettingsModel::instance()->getSettings('counters')->getValue('MONEY_ADD')) * CountriesModel::instance()->getCountry($this->country)->loadCurrency()->getCoefficient()),
+            "sum"     => round((LotteriesModel::instance()->getMoneyTotalWin() + SettingsModel::instance()->getSettings('counters')->getValue('MONEY_ADD')) * CountriesModel::instance()->getCountry($this->currency)->loadCurrency()->getCoefficient()),
             "players" => PlayersModel::instance()->getMaxId(),
-            "jackpot" => LotterySettingsModel::instance()->loadSettings()->getGoldPrizes($this->country)[6]['sum']
+            "jackpot" => LotterySettingsModel::instance()->loadSettings()->getGoldPrizes($this->currency)[6]['sum']
         );
 
         $player = array(
@@ -435,7 +449,7 @@ class Index extends \SlimController\SlimController
             "location" => array(
                 "country" => $this->country
             ),
-            "currency" => CountriesModel::instance()->getCountry($this->country)->loadCurrency()->getSettings()
+            "currency" => CountriesModel::instance()->getCountry($this->currency)->loadCurrency()->getSettings()
         );
 
         $error = array();

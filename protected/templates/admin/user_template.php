@@ -11,7 +11,7 @@
     <div style="position: relative;text-align: right;"
          class="pointer profile-trigger<?= $player->getBan() ? ' danger' : '' ?>" data-id="<?= $player->getId() ?>">
         <?= ($player->getDates('Ping') > time() - SettingsModel::instance()->getSettings('counters')->getValue('PLAYER_TIMEOUT') ? '<i class="online" style="margin-top: 5px;   line-height: 0px;">•</i>' : ''); ?>
-        <?= $player->getCountry() ?>
+        <?= $player->getCountry(); ?>
     </div>
     <div class="right games-holder">
 

@@ -1,7 +1,7 @@
 <?php
 
 namespace controllers\production;
-use \Application, \SettingsModel, \Player, \EntityException, \LotteryTicket, \CountriesModel, \TicketsModel;
+use \Application, \SettingsModel, \Player, \EntityException, \LotteryTicket, \CountriesModel, \TicketsModel, \LotterySettings;
 
 Application::import(PATH_APPLICATION . 'model/entities/Player.php');
 Application::import(PATH_APPLICATION . 'model/entities/LotteryTicket.php');
@@ -17,7 +17,7 @@ class LotteryController extends \AjaxController
     public function init()
     {
         self::$lotteriesPerPage = (int)SettingsModel::instance()->getSettings('counters')->getValue('LOTTERIES_PER_PAGE') ? : 10;
-        self::$ticketsCount     = \LotterySettings::TOTAL_TICKETS;
+        self::$ticketsCount     = LotterySettings::TOTAL_TICKETS;
         self::$defaultCountry   = CountriesModel::instance()->defaultCountry();
 
         parent::init();
@@ -113,8 +113,8 @@ class LotteryController extends \AjaxController
 
         if ($currency!='points') {
             $country = (
-            CountriesModel::instance()->isCountry($player->getCountry())
-                ? $this->session->get(Player::IDENTITY)->getCountry()
+            CountriesModel::instance()->isCountry($player->getCurrency())
+                ? $this->session->get(Player::IDENTITY)->getCurrency()
                 : CountriesModel::instance()->defaultCountry());
 
             $goldPrice = SettingsModel::instance()->getSettings('goldPrice')->getValue($country);
@@ -133,7 +133,15 @@ class LotteryController extends \AjaxController
                 \PlayersModel::instance()->updateGoldTicket($player, 1, \LotteriesModel::instance()->getLastPublishedLottery()->getId()+1);
 
                 $transaction = new \Transaction;
-                $transaction->setPlayerId($player->getId())->setCurrency('MONEY')->setSum(0 - $goldPrice)->setDescription('Покупка золотого билета')->setBalance(\PlayersModel::instance()->getBalance($player, true)['Money'])->setObjectType('Gold')->create();
+                $transaction
+                    ->setPlayerId($player->getId())
+                    ->setCurrency(LotterySettings::CURRENCY_MONEY)
+                    ->setCurrencyId(\CountriesModel::instance()->getCountry($player->getCurrency())->loadCurrency()->getId())
+                    ->setSum(0 - $goldPrice)
+                    ->setDescription('Покупка золотого билета')
+                    ->setBalance(\PlayersModel::instance()->getBalance($player, true)['Money'])
+                    ->setObjectType('Gold')
+                    ->create();
 
                 $ticket->commit();
             } catch (\Exception $e) {
@@ -166,7 +174,15 @@ class LotteryController extends \AjaxController
                 \PlayersModel::instance()->updateGoldTicket($player, 1, \LotteriesModel::instance()->getLastPublishedLottery()->getId()+1);
 
                 $transaction = new \Transaction;
-                $transaction->setPlayerId($player->getId())->setCurrency('POINT')->setSum(0 - $goldPrice)->setDescription('Покупка золотого билета')->setBalance(\PlayersModel::instance()->getBalance($player, true)['Points'])->setObjectType('Gold')->create();
+                $transaction
+                    ->setPlayerId($player->getId())
+                    ->setCurrency(LotterySettings::CURRENCY_POINT)
+                    ->setCurrencyId(\CountriesModel::instance()->getCountry($player->getCurrency())->loadCurrency()->getCode())
+                    ->setSum(0 - $goldPrice)
+                    ->setDescription('Покупка золотого билета')
+                    ->setBalance(\PlayersModel::instance()->getBalance($player, true)['Points'])
+                    ->setObjectType('Gold')
+                    ->create();
 
                 $ticket->commit();
             } catch (\Exception $e) {
@@ -264,7 +280,7 @@ class LotteryController extends \AjaxController
         $type = $this->request()->get('type', false);
 
         $player = new \Player;
-        $player_country = $player->setId($this->player->getId())->fetch()->getCountry();
+        $player_currency = $player->setId($this->player->getId())->fetch()->getCurrency();
 
         try {
             $lottery = \LotteriesModel::instance()->getLotteryDetails($lotteryId);
@@ -273,12 +289,12 @@ class LotteryController extends \AjaxController
             }
             $prizes      = $lottery->getPrizes();
             $prizes_gold = $lottery->getPrizesGold();
-            if (!isset($prizes[$player_country])) {
+            if (!isset($prizes[$player_currency])) {
                 $prizes      = $prizes[self::$defaultCountry];
                 $prizes_gold = $prizes_gold[self::$defaultCountry];
             } else {
-                $prizes      = $prizes[$player_country];
-                $prizes_gold = $prizes_gold[$player_country];
+                $prizes      = $prizes[$player_currency];
+                $prizes_gold = $prizes_gold[$player_currency];
             }
 
             $balls      = $lottery->getBallsTotal();
@@ -386,7 +402,7 @@ class LotteryController extends \AjaxController
             ),
             "tickets" => array(
                 "lastLotteryId" => \LotteriesModel::instance()->getLastPublishedLottery()->getId(),
-                "timeToLottery" => \LotterySettingsModel::instance()->loadSettings()->getNearestGame() + strtotime('00:00:00', time()) - time(),
+                "timeToLottery" => LotterySettingsModel::instance()->loadSettings()->getNearestGame() + strtotime('00:00:00', time()) - time(),
                 "filledTickets" => \TicketsModel::instance()->getUnplayedTickets($player->getId()),
             ),
         );

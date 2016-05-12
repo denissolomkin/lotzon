@@ -309,7 +309,7 @@ class ChanceController extends \AjaxController
                 switch ($currency) {
 
                     case LotterySettings::CURRENCY_MONEY:
-                        $sum *= CountriesModel::instance()->getCountry($this->player->getCountry())->loadCurrency()->getCoefficient();
+                        $sum *= CountriesModel::instance()->getCountry($this->player->getCurrency())->loadCurrency()->getCoefficient();
                         $this->player->addMoney(
                             $sum,
                             $desc
