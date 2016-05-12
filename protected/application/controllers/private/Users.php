@@ -578,7 +578,6 @@ class Users extends PrivateArea
                         'admin' => ($notice->getAdminName()?:''),
                         'text' => $notice->getText(),
                         'country' => $notice->getCountry(),
-                        'currency' => $notice->getCurrency(),
                         'minLotteries' => ($notice->getMinLotteries()?:null),
                         'registeredFrom' => ($notice->getRegisteredFrom()? date('d.m.Y',$notice->getRegisteredFrom()) :null),
                         'registeredUntil' => ($notice->getRegisteredUntil()? date('d.m.Y',$notice->getRegisteredUntil()) :null),

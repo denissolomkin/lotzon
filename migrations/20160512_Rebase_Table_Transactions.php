@@ -21,7 +21,7 @@ KEY `idx_Object` (`ObjectType`,`ObjectId`)
 call isCol('Transactions','CurrencyId','SELECT null',"
 INSERT INTO `TransactionsTmp` (`Id`, `ObjectType`, `ObjectId`, `ObjectUid`, `PlayerId`, `Currency`, `Sum`, `Balance`, `Description`, `Date`)
 SELECT `Id`, `ObjectType`, `ObjectId`, `ObjectUid`, `PlayerId`, `Currency`, `Sum`, `Balance`, `Description`, `Date`
-FROM `Transactions` WHERE `Transactions`.Id > IFNULL((SELECT max(Id) FROM `TransactionsTmp`),0)
+FROM `Transactions` WHERE `Transactions`.Id > 0
 ");
 
 call isCol('Transactions','CurrencyId','SELECT null',"
