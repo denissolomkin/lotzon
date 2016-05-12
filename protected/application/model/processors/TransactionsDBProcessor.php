@@ -6,7 +6,7 @@ class TransactionsDBProcessor implements IProcessor
     public function create(Entity $transaction)
     {
         $transaction->setDate(time());
-        $sql = "INSERT INTO `Transactions` (`PlayerId`, `Currency`, `CurrencyId`, `Sum`, `Balance`, `ObjectType`, `ObjectId`, `ObjectUid`, `Description`, `Date`) VALUES (:plid, :curr, :curcode, :sum,  :bal, :otype, :oid, :ouid, :desc, :date)";
+        $sql = "INSERT INTO `Transactions` (`PlayerId`, `Currency`, `CurrencyId`, `Sum`, `Balance`, `ObjectType`, `ObjectId`, `ObjectUid`, `Description`, `Date`) VALUES (:plid, :curr, :curid, :sum,  :bal, :otype, :oid, :ouid, :desc, :date)";
 
         try {
             DB::Connect()->prepare($sql)->execute(array(
