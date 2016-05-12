@@ -5,7 +5,7 @@
 .ticket-items {
     background: rgb(167, 209, 213);
     height: 406px;
-    box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
+    // box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
     margin: 5px 0 7px;
     padding-left: 10px;
     display: table-header-group;
@@ -29,7 +29,7 @@
     & li {
         top: 12px;
         width: 62px;
-        height: 37px;
+        height: 40px;
         margin-right: 8px;
         line-height: 32px;
         background: #4c4c4c;
