@@ -402,7 +402,7 @@ class LotteryController extends \AjaxController
             ),
             "tickets" => array(
                 "lastLotteryId" => \LotteriesModel::instance()->getLastPublishedLottery()->getId(),
-                "timeToLottery" => LotterySettingsModel::instance()->loadSettings()->getNearestGame() + strtotime('00:00:00', time()) - time(),
+                "timeToLottery" => \LotterySettingsModel::instance()->loadSettings()->getNearestGame() + strtotime('00:00:00', time()) - time(),
                 "filledTickets" => \TicketsModel::instance()->getUnplayedTickets($player->getId()),
             ),
         );
