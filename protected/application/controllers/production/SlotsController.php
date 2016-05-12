@@ -148,11 +148,12 @@ class SlotsController extends \AjaxController
                 ->setBet($bet)
                 ->doMove();
 
+            $balance = $this->player->getBalance();
+
             /* todo */
             $game->saveGame();
             $this->playerAward($game);
 
-            $balance = $this->player->getBalance();
             $response['captcha'] = $this->player->activateCaptcha();
             $response['player'] = array(
                 "balance" => array(
