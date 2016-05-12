@@ -66,6 +66,7 @@ class Player extends Entity
     protected $_counters       = array();
     protected $_accounts       = array();
     protected $_country        = '';
+    protected $_currency       = '';
     protected $_lang           = '';
 
     protected $_generatedPassword = '';
@@ -97,7 +98,7 @@ class Player extends Entity
     protected $_stats = array();
 
     protected $_friend = null;
-    protected $_version = 1;
+    protected $_version = 2;
 
     public function init()
     {
@@ -805,7 +806,7 @@ class Player extends Entity
             case LotterySettings::CURRENCY_MONEY:
             case 'Money':
                 if($withCoefficient) {
-                    $sum *= \CountriesModel::instance()->getCountry($this->getCountry())->loadCurrency()->getCoefficient();
+                    $sum *= \CountriesModel::instance()->getCountry($this->getCurrency())->loadCurrency()->getCoefficient();
                 }
                 return $balance['Money'] >= $sum;
                 break;
@@ -915,6 +916,7 @@ class Player extends Entity
         $transaction = new Transaction();
         $transaction->setPlayerId($this->getId())
             ->setCurrency($currency)
+            ->setCurrencyId($currency == LotterySettings::CURRENCY_POINT ? $currency : \CountriesModel::instance()->getCountry($this->getCurrency())->loadCurrency()->getId())
             ->setSum($quantity)
             ->setBalance($balance);
 
@@ -1114,6 +1116,7 @@ class Player extends Entity
                     ->setSurname($data['Surname'])
                     ->setSecondName($data['SecondName'])
                     ->setBirthday($data['Birthday'])
+                    ->setCurrency($data['Currency'])
                     ->setCountry($data['Country'])
                     ->setCity($data['City'])
                     ->setZip($data['Zip'])

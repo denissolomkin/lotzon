@@ -54,7 +54,7 @@ class AjaxController extends \SlimController\SlimController
 
         try {
 
-            $this->session->get(Player::IDENTITY)->getVersion();
+            $this->session->get(Player::IDENTITY)->getCurrency();
 
         } catch (\Exception $e) {
             $this->session->get(Player::IDENTITY)->fetch();

@@ -20,7 +20,7 @@ class OrdersController extends \AjaxController
         $this->player->fetch();
 
         $sum  = $this->request()->post('sum');
-        $currency = CountriesModel::instance()->getCountry($this->player->getCountry())->loadCurrency();
+        $currency = CountriesModel::instance()->getCountry($this->player->getCurrency())->loadCurrency();
 
         $data = array(
             'summ' => array(
@@ -126,7 +126,7 @@ class OrdersController extends \AjaxController
                 break;
         }
 
-        $currency = CountriesModel::instance()->getCountry($this->player->getCountry())->loadCurrency();
+        $currency = CountriesModel::instance()->getCountry($this->player->getCurrency())->loadCurrency();
         $data = array(
             $method => array(
                 'title' => $method,

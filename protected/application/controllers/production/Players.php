@@ -603,7 +603,7 @@ class Players extends \AjaxController
                 ->setZip($zip)
                 ->setAddress($address)
                 ->setBirthday($birthday)
-                /*->setCountry($country)*/
+                ->setCountry($country)
                 ->update();
 
             $player->initPrivacy()      // init all from DB

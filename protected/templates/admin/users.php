@@ -189,7 +189,7 @@
                         <td class="pointer transactions-trigger" data-id="<?=$player->getId()?>">
                             <?=($player->getPoints()<0?'<b class="red">'.$player->getPoints().'</b>':$player->getPoints())?>
                             <br>
-                            <?=($player->getMoney()<0?'<b class="red">':'').$player->getMoney()?>&nbsp;<span><?=\CountriesModel::instance()->getCountry($player->getCountry())->loadCurrency()->getTitle('iso')?></span>
+                            <?=($player->getMoney()<0?'<b class="red">':'').$player->getMoney()?>&nbsp;<span><?=\CountriesModel::instance()->getCountry($player->getCurrency())->loadCurrency()->getTitle('iso')?></span>
                         </td>
                         <td>
                             <div class="right nobr">

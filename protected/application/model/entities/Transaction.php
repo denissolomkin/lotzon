@@ -5,6 +5,7 @@ class Transaction extends Entity
     protected $_id = 0;
     protected $_playerId = 0;
     protected $_currency = LotterySettings::CURRENCY_POINT;
+    protected $_currencyId = 0;
     protected $_sum = 0;
     protected $_balance = 0;
     protected $_objectId = null;
@@ -33,10 +34,29 @@ class Transaction extends Entity
                     'description' => $this->getDescription(),
                     'sum'         => $this->getSum(),
                     'balance'     => $this->getBalance(),
+                    'currencyId'  => $this->getCurrencyId(),
                 );
                 break;
         }
 
         return $ret;
+    }
+
+    public function formatFrom($from, $data)
+    {
+        switch ($from) {
+            case 'DB':
+                $this->setId($data['Id'])
+                    ->setPlayerId($data['PlayerId'])
+                    ->setSum($data['Sum'])
+                    ->setBalance($data['Balance'])
+                    ->setDescription($data['Description'])
+                    ->setCurrency($data['Currency'])
+                    ->setCurrencyId($data['CurrencyId'])
+                    ->setDate($data['Date']);
+                break;
+            default:
+                break;
+        }
     }
 }

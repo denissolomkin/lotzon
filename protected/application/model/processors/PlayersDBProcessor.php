@@ -92,14 +92,15 @@ class PlayersDBProcessor implements IProcessor
 
     public function create(Entity $player)
     {
-        $sql = "INSERT INTO `Players` (`Email`, `Password`, `Salt`, `Country`, `City`, `Zip`, `Address`, `Lang`, `Visible`, `Ip`, `Hash`, `Complete`, `Valid`, `Name`, `Surname`, `AdditionalData`, `ReferalId`, `Agent`, `Referer`)
-                VALUES (:email, :passwd, :salt, :cc, :city, :zip, :address, :cl, :vis, :ip, :hash, :complete, :valid, :name, :surname, :ad, :rid, :agent, :referer)";
+        $sql = "INSERT INTO `Players` (`Email`, `Password`, `Salt`, `Currency`, `Country`, `City`, `Zip`, `Address`, `Lang`, `Visible`, `Ip`, `Hash`, `Complete`, `Valid`, `Name`, `Surname`, `AdditionalData`, `ReferalId`, `Agent`, `Referer`)
+                VALUES (:email, :passwd, :salt, :cur, :cc, :city, :zip, :address, :cl, :vis, :ip, :hash, :complete, :valid, :name, :surname, :ad, :rid, :agent, :referer)";
 
         try {
             DB::Connect()->prepare($sql)->execute(array(
                 ':email'    => $player->getEmail(),
                 ':passwd'   => $player->getPassword(),
                 ':salt'     => $player->getSalt(),
+                ':cur'      => $player->getCurrency(),
                 ':cc'       => $player->getCountry(),
 
                 ':city'      => $player->getCity(),
@@ -309,7 +310,7 @@ class PlayersDBProcessor implements IProcessor
     public function update(Entity $player)
     {
         $sql = "UPDATE `Players` SET
-                    `Country` = :cc, `Lang` = :lang, `CookieId` = :ckid,
+                    `Currency` = :cur,`Country` = :cc, `Lang` = :lang, `CookieId` = :ckid,
                     `Nicname` = :nic, `Name` = :name, `Surname` = :surname, `SecondName` = :secname, `Gender` = :gender,
                     `Birthday` = :bd, `Avatar` = :avatar, `Visible` = :vis, `Favorite` = :fav,
                     `City` = :city, `Zip` = :zip, `Address` = :address,
@@ -320,6 +321,7 @@ class PlayersDBProcessor implements IProcessor
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
+                ':cur'      => $player->getCurrency(),
                 ':cc'       => $player->getCountry(),
                 ':lang'     => $player->getLang(),
                 ':nic'      => $player->getNicname(),
@@ -593,8 +595,8 @@ class PlayersDBProcessor implements IProcessor
     {
 
         $sql = "TRUNCATE TABLE `GamesTmpBots`;
-        INSERT INTO `GamesTmpBots` (id, name, avatar, country, lang, utc)
-              SELECT Id, Nicname, Avatar, Country, IFNULL(NULLIF(Lang,''),'RU'), UTC
+        INSERT INTO `GamesTmpBots` (id, name, avatar, currency, country, lang, utc)
+              SELECT Id, Nicname, Avatar, Currency, Country, IFNULL(NULLIF(Lang,''),'RU'), UTC
               FROM `Players`
               WHERE Bot = 1 AND UTC > 0;";
 

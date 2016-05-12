@@ -227,7 +227,7 @@ class GameAppsDBProcessor implements IProcessor
                 $win      = isset($player['win']) ? $player['win'] : $player['result'] * $app->getPrice();
 
                 if ($currency == 'Money')
-                    $win *= CountriesModel::instance()->getCountry($player['country'])->loadCurrency()->getCoefficient();
+                    $win *= CountriesModel::instance()->getCountry($player['currency'])->loadCurrency()->getCoefficient();
 
                 if ($win == 0)
                     continue;
@@ -278,6 +278,8 @@ class GameAppsDBProcessor implements IProcessor
                 array_push($sql_transactions,
                     $player['pid'],
                     $app->getCurrency(),
+                    'CurrencyId',
+                    'Equal',
                     $win,
                     (isset($balance) ? $balance[$currency] : null),
                     'OnlineGame',
@@ -301,7 +303,7 @@ class GameAppsDBProcessor implements IProcessor
 
         if ($app->getPrice() && count($sql_transactions_players)) {
             try {
-                $sql = "INSERT INTO `Transactions` (`PlayerId`, `Currency`, `Sum`, `Balance`, `ObjectType`, `ObjectId`,  `ObjectUid`, `Description`, `Date`) VALUES " . implode(",", $sql_transactions_players);
+                $sql = "INSERT INTO `Transactions` (`PlayerId`, `Currency`, `CurrencyId`, `Equivalent`, `Sum`, `Balance`, `ObjectType`, `ObjectId`,  `ObjectUid`, `Description`, `Date`) VALUES " . implode(",", $sql_transactions_players);
                 DB::Connect()
                     ->prepare($sql)
                     ->execute($sql_transactions);
@@ -547,7 +549,7 @@ class GameAppsDBProcessor implements IProcessor
                       t.`Currency` = 'MONEY',
                       IF( :rand = 1, -0.25, 0.22 ) *
                         IFNULL(
-                          (SELECT MUICurrency.Coefficient FROM MUICountries LEFT JOIN MUICurrency ON MUICurrency.Id = MUICountries.Currency WHERE MUICountries.Code = p.Country),
+                          (SELECT MUICurrency.Coefficient FROM MUICountries LEFT JOIN MUICurrency ON MUICurrency.Id = MUICountries.Currency WHERE MUICountries.Code = p.Currency),
                           (SELECT MUICurrency.Coefficient FROM MUICountries LEFT JOIN MUICurrency ON MUICurrency.Id = MUICountries.Currency LIMIT 1)
                         ),
                       0),
