@@ -29,7 +29,7 @@ UPDATE `TransactionsTmp`
 LEFT JOIN `Players` ON `TransactionsTmp`.`PlayerId` = `Players`.`Id`
 LEFT JOIN `MUICountries` ON `MUICountries`.`Code` = `Players`.`Currency`
 LEFT JOIN `MUICurrency` ON `MUICountries`.Currency = `MUICurrency`.Id
-SET `CurrencyId` = `MUICurrency`.`Id`,
+SET `CurrencyId` = IF(`TransactionsTmp`.Currency = 'MONEY', `MUICurrency`.`Id`, 0),
 	`TransactionsTmp`.`Equivalent` = IF(`TransactionsTmp`.Currency = 'MONEY', `TransactionsTmp`.`Sum` / `MUICurrency`.Coefficient, `TransactionsTmp`.`Sum` / (`MUICurrency`.Coefficient * `MUICurrency`.Rate))
 WHERE `TransactionsTmp`.Equivalent = 0
 ");
@@ -45,7 +45,7 @@ UPDATE `TransactionsTmp`
 LEFT JOIN `Players` ON `TransactionsTmp`.`PlayerId` = `Players`.`Id`
 LEFT JOIN `MUICountries` ON `MUICountries`.`Code` = `Players`.`Currency`
 LEFT JOIN `MUICurrency` ON `MUICountries`.Currency = `MUICurrency`.Id
-SET `CurrencyId` = `MUICurrency`.`Id`,
+SET `CurrencyId` = IF(`TransactionsTmp`.Currency = 'MONEY', `MUICurrency`.`Id`, 0),
 `TransactionsTmp`.`Equivalent` = IF(`TransactionsTmp`.Currency = 'MONEY', `TransactionsTmp`.`Sum` / `MUICurrency`.Coefficient, `TransactionsTmp`.`Sum` / (`MUICurrency`.Coefficient * `MUICurrency`.Rate))
 WHERE `TransactionsTmp`.Equivalent = 0
 ");
@@ -61,7 +61,7 @@ UPDATE `TransactionsTmp`
 LEFT JOIN `Players` ON `TransactionsTmp`.`PlayerId` = `Players`.`Id`
 LEFT JOIN `MUICountries` ON `MUICountries`.`Code` = `Players`.`Currency`
 LEFT JOIN `MUICurrency` ON `MUICountries`.Currency = `MUICurrency`.Id
-SET `CurrencyId` = `MUICurrency`.`Id`,
+SET `CurrencyId` = IF(`TransactionsTmp`.Currency = 'MONEY', `MUICurrency`.`Id`, 0),
 `TransactionsTmp`.`Equivalent` = IF(`TransactionsTmp`.Currency = 'MONEY', `TransactionsTmp`.`Sum` / `MUICurrency`.Coefficient, `TransactionsTmp`.`Sum` / (`MUICurrency`.Coefficient * `MUICurrency`.Rate))
 WHERE `TransactionsTmp`.Equivalent = 0
 ");
