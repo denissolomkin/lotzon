@@ -232,7 +232,7 @@ class GameAppsDBProcessor implements IProcessor
                 if ($win == 0)
                     continue;
 
-                $sql_transactions_players[] = '(?,?,?,?,?,?,?,?,?)';
+                $sql_transactions_players[] = '(?,?,?,?,?,?,?,?,?,?,?)';
 
                 /* update balance after game */
                 $sql = "UPDATE Players p
@@ -257,13 +257,22 @@ class GameAppsDBProcessor implements IProcessor
                 }
 
                 /* select balance for transaction */
-                $sql = "SELECT Points, Money FROM `Players` WHERE `Id`=:id LIMIT 1";
+                $sql = "SELECT 
+                            `Players`.Points,
+                            `Players`.Money,
+                            `MUICountries`.`Currency`,
+                            `MUICurrency`.`Coefficient`,
+                            `MUICurrency`.`Rate`
+                        FROM `Players`
+                        LEFT JOIN `MUICountries` ON `MUICountries`.`Code` = `Players`.`Currency`
+                        LEFT JOIN `MUICurrency` ON `MUICurrency`.`Id` = `MUICountries`.`Currency`
+                        WHERE `Players`.`Id`=:id LIMIT 1";
 
                 try {
                     $sth = DB::Connect()->prepare($sql);
                     $sth->execute(array(':id' => $player['pid']));
                 } catch (PDOException $e) {
-                    echo $this->time(0,'ERROR')." Error processing storage query в таблице Players при получении баланса\n";
+                    echo $this->time(0,'ERROR')." Error processing storage query в таблице Players при получении баланса: {$e->getMessage()}\n";
                 }
 
                 if (!$sth->rowCount()) {
@@ -278,8 +287,8 @@ class GameAppsDBProcessor implements IProcessor
                 array_push($sql_transactions,
                     $player['pid'],
                     $app->getCurrency(),
-                    'CurrencyId',
-                    'Equal',
+                    isset($balance) && isset($balance['Currency']) ? ($currency == 'Money' ? $balance['Currency'] : 0) : 0,
+                    isset($balance) && isset($balance['Coefficient']) ? ($currency == 'Money' ? $win / $balance['Coefficient'] : $win / ($balance['Rate'] * $balance['Coefficient'])) : 0,
                     $win,
                     (isset($balance) ? $balance[$currency] : null),
                     'OnlineGame',
@@ -614,6 +623,11 @@ class GameAppsDBProcessor implements IProcessor
 
         return true;
 
+    }
+
+    private function time($spaces = 0, $str = null)
+    {
+        return str_repeat(' ', $spaces) . date('H:i:s', time()) . ($str ? ' [' . str_pad($str, 7, '.') . '] ' : '');
     }
 
 }

@@ -6,6 +6,7 @@ class Transaction extends Entity
     protected $_playerId = 0;
     protected $_currency = LotterySettings::CURRENCY_POINT;
     protected $_currencyId = 0;
+    protected $_equivalent = 0;
     protected $_sum = 0;
     protected $_balance = 0;
     protected $_objectId = null;

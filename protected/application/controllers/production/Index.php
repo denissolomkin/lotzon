@@ -53,8 +53,13 @@ class Index extends \SlimController\SlimController
                 $player->setCountry(CountriesModel::instance()->defaultCountry());
             }
 
+            $currency = CountriesModel::instance()->isCountry($player->getCountry())
+                ? $player->getCountry()
+                : CountriesModel::instance()->defaultCountry();
+
             $player->setLang(CountriesModel::instance()->getCountry($player->getCountry())->getLang())
-                ->setCurrency($player->getCountry());
+                ->setCurrency($currency);
+
             $player->setValid(true)
                 ->setDates(time(), 'Login')
                 ->setComplete(false)//todo: remove when set default=false in database
@@ -210,7 +215,8 @@ class Index extends \SlimController\SlimController
         
         try {
 
-            $player->getCurrency();
+            if($this->session->get(Player::IDENTITY)->getVersion() !== 3)
+                throw(new \Exception);
 
         } catch (\Exception $e) {
             $this->session->get(Player::IDENTITY)->fetch();

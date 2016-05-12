@@ -4,120 +4,48 @@ Application::import(PATH_APPLICATION . 'model/Entity.php');
 
 class Currency extends Entity
 {
-    private $_id          = 0;
-    private $_code        = '';
-    private $_title       = array();
-    private $_coefficient = 0;
-    private $_rate        = 0;
-
+    protected $_id          = 0;
+    protected $_code        = '';
+    protected $_title       = array();
+    protected $_iso         = '';
+    protected $_coefficient = 0;
+    protected $_rate        = 0;
 
     public function init()
     {
         $this->setModelClass('CurrencyModel');
     }
 
-    public function setId($int)
-    {
-        if($int)
-            $this->_id = (int) $int;
-
-        return $this;
-    }
-
-    public function getId()
-    {
-        return $this->_id;
-    }
-
-    public function setCode($char)
-    {
-        $this->_code = $char;
-        return $this;
-    }
-
-    public function getCode()
-    {
-        return $this->_code;
-    }
-
-    public function setTitle($array)
-    {
-        $this->_title = $array;
-
-        return $this;
-    }
-
-    public function getTitle($format=null)
-    {
-
-        if(isset($format)) {
-            if(isset($this->_title[$format]) && $this->_title[$format] && $this->_title[$format]!='')
-                $currency = $this->_title[$format];
-            elseif(is_array($this->_title) && !empty($this->_title))
-                $currency = reset($this->_title);
-        } else
-            $currency = $this->_title;
-
-        return $currency;
-    }
-
-    public function setCoefficient($float)
-    {
-        $this->_coefficient = $float;
-
-        return $this;
-    }
-
-    public function getCoefficient()
-    {
-        return $this->_coefficient;
-    }
-
-    public function setRate($int)
-    {
-        $this->_rate = (int) $int;
-
-        return $this;
-    }
-
-    public function getRate()
-    {
-        return $this->_rate;
-    }
-
     public function getSettings()
     {
         return ($this->_title + array(
                 'coefficient' => $this->getCoefficient(),
-                'rate' => $this->getRate(),
-                'code' => $this->getCode()
+                'rate'        => $this->getRate(),
+                'iso'         => $this->getIso(),
+                'code'        => $this->getCode()
             ));
     }
-
 
     public function validate($event, $params = array())
     {
         switch ($event) {
+
             case 'update' :
-
-            break;
-
-            case 'delete' :
-
-            break;
-
-            case 'fetch' :
-
-            break;
-
             case 'create' :
                 $this->isValidTitle();
                 $this->isValidRate();
                 $this->isValidCoefficient();
-            break;
+                break;
+
+            case 'delete':
+                break;
+
+            case 'fetch' :
+                break;
+
             default:
                 throw new EntityException("Object does not pass validation", 400);
-            break;
+                break;
         }
 
         return true;
@@ -165,20 +93,24 @@ class Currency extends Entity
         return false;
     }
 
-    public function formatFrom($from, $data) {
+    public function formatFrom($from, $data)
+    {
         switch ($from) {
-            case 'DB' :
+            case 'DB':
                 $this->setId($data['Id'])
-                     ->setCode($data['Code'])
-                     ->setTitle(unserialize($data['Title']))
-                     ->setRate($data['Rate'])
-                     ->setCoefficient($data['Coefficient']);
-            break;
-            case 'CLASS' :
+                    ->setCode($data['Code'])
+                    ->setTitle(unserialize($data['Title']))
+                    ->setRate($data['Rate'])
+                    ->setIso($data['Iso'])
+                    ->setCoefficient($data['Coefficient']);
+                break;
+
+            case 'CLASS':
                 $this->setId($data->getId())
                     ->setCode($data->getCode())
                     ->setTitle($data->getTitle())
                     ->setRate($data->getRate())
+                    ->setIso($data->getIso())
                     ->setCoefficient($data->getCoefficient());
                 break;
         }

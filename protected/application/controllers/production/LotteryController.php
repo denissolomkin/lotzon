@@ -177,7 +177,7 @@ class LotteryController extends \AjaxController
                 $transaction
                     ->setPlayerId($player->getId())
                     ->setCurrency(LotterySettings::CURRENCY_POINT)
-                    ->setCurrencyId(\CountriesModel::instance()->getCountry($player->getCurrency())->loadCurrency()->getId())
+                    ->setCurrencyId(\CountriesModel::instance()->getCountry($player->getCurrency())->loadCurrency()->getCode())
                     ->setSum(0 - $goldPrice)
                     ->setDescription('Покупка золотого билета')
                     ->setBalance(\PlayersModel::instance()->getBalance($player, true)['Points'])

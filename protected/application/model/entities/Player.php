@@ -98,7 +98,7 @@ class Player extends Entity
     protected $_stats = array();
 
     protected $_friend = null;
-    protected $_version = 2;
+    protected $_version = 3;
 
     public function init()
     {
@@ -913,10 +913,15 @@ class Player extends Entity
     protected function addTransaction($currency, $quantity, $balance, $description = '')
     {
 
+        $currencyObj = \CountriesModel::instance()->getCountry($this->getCurrency())->loadCurrency();
+        $currencyId  = $currency == LotterySettings::CURRENCY_POINT ? 0 : $currencyObj->getId();
+        $equivalent  = $currency == LotterySettings::CURRENCY_POINT ? $quantity / ($currencyObj->getRate() * $currencyObj->getCoefficient()) : $quantity / $currencyObj->getCoefficient();
+
         $transaction = new Transaction();
         $transaction->setPlayerId($this->getId())
             ->setCurrency($currency)
-            ->setCurrencyId($currency == LotterySettings::CURRENCY_POINT ? $currency : \CountriesModel::instance()->getCountry($this->getCurrency())->loadCurrency()->getId())
+            ->setCurrencyId($currencyId)
+            ->setEquivalent($equivalent)
             ->setSum($quantity)
             ->setBalance($balance);
 
@@ -934,7 +939,6 @@ class Player extends Entity
 
         return $this;
     }
-
 
     public function login($password)
     {

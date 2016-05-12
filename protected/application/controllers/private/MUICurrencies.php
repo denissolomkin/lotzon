@@ -36,17 +36,19 @@ class Currencies extends \PrivateArea
                 'data'    => array(),
             );
 
-            $currency= new Currency();
-
-            $currency->setId($this->request()->post('Id'));
-            $currency->setCode($this->request()->post('Code'));
-            $currency->setTitle($this->request()->post('Title'));
-            $currency->setCoefficient($this->request()->post('Coefficient'));
-            $currency->setRate($this->request()->post('Rate'));
-
             try {
-                $currency->create();
+
+                $currency= new Currency();
+                $currency->setId($this->request()->post('Id'))
+                    ->setCode($this->request()->post('Code'))
+                    ->setTitle($this->request()->post('Title'))
+                    ->setIso($currency->getTitle('iso'))
+                    ->setCoefficient($this->request()->post('Coefficient'))
+                    ->setRate($this->request()->post('Rate'))
+                    ->create();
+
                 $response['data']['Id'] = $currency->getId();
+
             } catch (EntityException $e) {
                 $response['status'] = 0;
                 $response['message'] = $e->getMessage();
