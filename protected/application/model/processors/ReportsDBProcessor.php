@@ -280,8 +280,8 @@ SELECT CONCAT(YEAR(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date))) `Mo
         SELECT 
         CURRENCY, 
         IF((SELECT Country FROM Players WHERE Players.Id=PlayerId)='UA','UAH','RUB') COUNTRY,
-        COUNT(IF(SUM>0,0,1)) COUNT_PLAY,
-        COUNT(IF(SUM>0,1,0)) COUNT_WIN,
+        SUM(IF(SUM>0,0,1)) COUNT_PLAY,
+        SUM(IF(SUM>0,1,0)) COUNT_WIN,
         SUM(SUM) SUM_WIN
         FROM `Transactions` 
         WHERE `ObjectType` = 'Slots' 
