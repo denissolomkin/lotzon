@@ -11,17 +11,17 @@ class TransactionsDBProcessor implements IProcessor
 
         try {
             DB::Connect()->prepare($sql)->execute(array(
-                ':plid'    => $transaction->getPlayerId(),
-                ':curr'    => $transaction->getCurrency(),
-                ':curid'   => $transaction->getCurrencyId(),
-                ':sum'     => $transaction->getSum(),
-                ':equal'   => $transaction->getEquivalent(),
-                ':bal'     => $transaction->getBalance(),
-                ':otype'   => $transaction->getObjectType(),
-                ':oid'     => $transaction->getObjectId(),
-                ':ouid'    => $transaction->getObjectUid(),
-                ':desc'    => $transaction->getDescription(),
-                ':date'    => $transaction->getDate(),
+                ':plid'  => $transaction->getPlayerId(),
+                ':curr'  => $transaction->getCurrency(),
+                ':curid' => $transaction->getCurrencyId(),
+                ':sum'   => $transaction->getSum(),
+                ':equal' => $transaction->getEquivalent(),
+                ':bal'   => $transaction->getBalance(),
+                ':otype' => $transaction->getObjectType(),
+                ':oid'   => $transaction->getObjectId(),
+                ':ouid'  => $transaction->getObjectUid(),
+                ':desc'  => $transaction->getDescription(),
+                ':date'  => $transaction->getDate(),
             ));
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query", 500);
