@@ -132,9 +132,9 @@ var slotMachine = {
             return !1;
         // alert(data.json.res.Win);
         
-        if(data.json.res.Win){
-            $("#playerBalance").html(Player.fineNumbers(Player.balance[slotMachine.currency]*1 - data.json.res.Win*1));
-        }
+        // if(data.json.res.Win){
+        //     $("#playerBalance").html(Player.fineNumbers(Player.balance[slotMachine.currency]*1 - data.json.res.Win*1));
+        // }
 
         slotMachine.isActive = !0;
         slotMachine.show_won_state(!1),
@@ -224,15 +224,15 @@ var slotMachine = {
         var a = window.setInterval(function () {
             
             var t = !1;
-            if ((e < n.win && (e += step, $("#playerBalance").html(Player.fineNumbers(Player.balance[slotMachine.currency]*1 - n.win*1 + e*1)), t = !0)), !t) {
+            if ((e < n.win && (e += step, $("#playerBalance").html(Player.fineNumbers(Player.balance[slotMachine.currency]*1 + e*1)), t = !0)), !t) {
                 Player.updateBalance();
                 window.clearInterval(a);
-                // var init = {
-                //     balance:{}
-                // };
+                var init = {
+                    balance:{}
+                };
                 
-                // init.balance[slotMachine.currency] = Player.balance[slotMachine.currency]*1 + n.win*1;
-                // Player.init(init);
+                init.balance[slotMachine.currency] = Player.balance[slotMachine.currency]*1 + n.win*1;
+                Player.init(init);
                 try {
                     slotMachine.sounds[i].stop()
                 } catch (s) {

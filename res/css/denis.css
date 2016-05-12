@@ -67,9 +67,9 @@ form:not(.render-list-form), .banner-1, .banner-2, .banner-3, .banner-4, .banner
 .modal-error div {
     border: lightgray 1px solid;
 }
-main.content {
+/*main.content {
     overflow: hidden;
-}
+}*/
 
 /* already exist, just adding */
 .modal-message div {
