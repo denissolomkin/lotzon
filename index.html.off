@@ -1,1 +1,27 @@
-Under construction
+<!doctype html>
+<html style="overflow: auto;">
+    <head>
+        <meta charset="utf-8">
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="theme-color" content="#ffe700" />
+
+        <link rel="icon" href="/res/img/favicones/favicon.png_128x128.png?v=666" type="image/png"/>
+        <meta content="/res/img/favicones/favicon.png_128x128.png?v=666" itemprop="image">
+        <link href="/res/img/favicones/favicon.png.ico?v=666" rel="shortcut icon">
+        <title>Lotzon</title>
+        <style>
+            body{
+                padding: 0;
+                margin: 0;
+                background: #e9e9e9;
+            }
+            img{
+                width: 100%;
+            }
+        </style>
+    </head>
+
+    <body>
+    <img src="/res/img/under_construction.jpg" title="Under construction">
+    </body>
+</html>
