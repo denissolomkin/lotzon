@@ -411,11 +411,16 @@ var Games = {
             if (data && data.length !== 0) {
                 msg += Cache.i18n("title-games-chance-card-win") + " ";
                 for (var key in data) {
-                    msg += "<span>" + data[key] + " ";
-                    if (key === "POINT")
+                    msg += "<span>";
+                    if (key === "POINT"){
+                        msg += Player.getCurrency(data[key]) + " ";
                         msg += Cache.i18n("title-of-points") + " ";
-                    if (key === "MONEY")
+                    }else if (key === "MONEY"){
+                        msg += Player.getCurrency(data[key]) + " ";
                         msg += Player.getCurrency() + " ";
+                    }else{
+                        msg += data[key] + " ";
+                    }
                     msg += "</span>";
                 }
             } else {
@@ -434,11 +439,11 @@ var Games = {
             var html = "<div class='flipFix'>"
             switch (prize.t) {
                 case 'money':
-                    html += "<span>" + prize.v + "</span>";
+                    html += "<span>" + Player.getCurrency(prize.v) + "</span>";
                     html += "<span>" + Player.getCurrency() + "</span>";
                     break;
                 case 'points':
-                    html += "<span>" + prize.v + "</span>";
+                    html += "<span>" + Player.getCurrency(prize.v) + "</span>";
                     html += "<span>" + Cache.i18n("title-of-points") + "</span>";
                     break;
                 case 'item':
