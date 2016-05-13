@@ -198,7 +198,7 @@
 
                 $inf.show();
                 $table.fadeIn();
-
+                
                 for (var i in lotterySummary.default) {
 
                     if (!isNumeric(i))
@@ -206,13 +206,13 @@
                     // td:eq(1) - пушо 2 смежные колонки
                     $('tr.balls-matches-' + i + ' td:eq(1)', $table)
                         .delay(1000)
-                        .next().html(lotterySummary.default[i].matches || 0).spincrement({'thousandSeparator': ' '})
+                        .next().html( '<span><i>'+(lotterySummary.default[i].matches || 0)+'</i></span>' + (lotterySummary.gold[i].matches ? ' + <span class="gold-match">(<i>'+lotterySummary.gold[i].matches+'</i>)</span>' : '') ).find('i').spincrement({'thousandSeparator': ' '}).parent().parent()
                         .next().html(
-                        '<span>' + parseFloat(lotterySummary.default[i].sum.toFixed(2)) + '</span> ' +
+                        '<span>' + ( parseFloat(lotterySummary.default[i].sum.toFixed(2))+parseFloat(lotterySummary.gold[i].sum.toFixed(2)) ) + '</span> ' +
                         '<span>' + Player.getCurrency(lotterySummary.default[i].currency) + '</span>')
                         .find('span').first().spincrement({'thousandSeparator': ' '});
                 }
-
+                
                 $won.delay(2000).fadeIn(1000);
                 
                 setTimeout(function() {
