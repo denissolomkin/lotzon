@@ -2,22 +2,23 @@
 
 class Lottery extends Entity
 {
-    private $_id = 0;
+    private $_id          = 0;
     private $_combination = array();
     private $_date        = null;
 
     private $_winnersCount = 0;
     private $_moneyTotal   = 0;
-    private $_pointsTotal   = 0;
+    private $_pointsTotal  = 0;
     private $_ballsTotal   = array();
 
-    protected $_playersCount     = 0;
-    protected $_playersCountIncr = 0;
-    protected $_winnersCountIncr = 0;
-    protected $_ballsTotalIncr   = array();
+    protected $_playersCount       = 0;
+    protected $_playersCountIncr   = 0;
+    protected $_winnersCountIncr   = 0;
+    protected $_ballsTotalIncr     = array();
+    protected $_ballsTotalGoldIncr = array();
 
-    protected $_prizes           = array();
-    protected $_prizesGold       = array();
+    protected $_prizes     = array();
+    protected $_prizesGold = array();
 
     private $_ready = false;
 
@@ -186,6 +187,7 @@ class Lottery extends Entity
                  ->setPointsTotal($data['PointsTotal'])
                  ->setBallsTotal(@unserialize($data['BallsTotal']))
                  ->setBallsTotalIncr(@unserialize($data['BallsTotalIncr']))
+                 ->setBallsTotalGoldIncr(@unserialize($data['BallsTotalGoldIncr']))
                  ->setPrizes(@unserialize($data['Prizes']))
                  ->setPrizesGold(@unserialize($data['PrizesGold']));
         }

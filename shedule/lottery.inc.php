@@ -23,9 +23,11 @@ function timeToRunLottery()
 	{
 		if($currentTime >= $game['StartTime'])
 		{
-			$increments                 = $gameSettings->getGameIncrements();
-			$gameSettings               = $game;
-			$gameSettings['Increments'] = $increments;
+			$increments                     = $gameSettings->getGameIncrements();
+			$goldIncrements                 = $gameSettings->getGameGoldIncrements();
+			$gameSettings                   = $game;
+			$gameSettings['Increments']     = $increments;
+			$gameSettings['GoldIncrements'] = $goldIncrements;
 			$lotteryTime = strtotime(date("Y-m-d"))+$game['StartTime'];
 			$SQL = 'SELECT
 				Id,Ready
@@ -135,7 +137,7 @@ function ApplyLotteryCombinationAndCheck(&$comb)
 
 function ApplyLotteryCombination(&$comb)
 {
-	global $Prizes, $increments_array;
+	global $Prizes, $PrizesGold, $increments_array, $goldIncrements_array;
 
 	if (!$comb) {
 		return;
@@ -153,7 +155,7 @@ function ApplyLotteryCombination(&$comb)
 	$sum = 0;
 	foreach ($comb['ballsArray'] as $balls=>$count) {
 		if ($Prizes['UA'][$balls]['currency']=='MONEY') {
-			$sum = $sum + $increments_array[$balls] * $Prizes['UA'][$balls]['sum'];
+			$sum = $sum + $increments_array[$balls] * $Prizes['UA'][$balls]['sum'] + $goldIncrements_array[$balls] * $PrizesGold['UA'][$balls]['sum'];
 		}
 	}
 	$counters=SettingsModel::instance()->getSettings('counters')->getValue();
@@ -169,9 +171,9 @@ function ApplyLotteryCombination(&$comb)
 	unset($comb['fields']);
 }
 
-function SetLotteryCombination($comb, $simulation, $lastTicketId, $increments)
+function SetLotteryCombination($comb, $simulation, $lastTicketId, $increments, $goldIncrements)
 {
-	global $gameSettings, $Prizes, $increments_array;
+	global $gameSettings, $Prizes, $PrizesGold, $increments_array, $goldIncrements_array;
 
 	if(!$comb)
 	{
@@ -225,6 +227,14 @@ function SetLotteryCombination($comb, $simulation, $lastTicketId, $increments)
 			$increments_array[$i] = 0;
 		}
 	}
+	$goldIncrements_array = array();
+	for ($i=1; $i<=6; $i++) {
+		if (isset($goldIncrements[$i]['from'])&&isset($goldIncrements[$i]['to'])) {
+			$goldIncrements_array[$i] = rand($goldIncrements[$i]['from'], $goldIncrements[$i]['to']);
+		} else {
+			$goldIncrements_array[$i] = 0;
+		}
+	}
 	$increments_winners = ceil(array_sum($increments_array)/6);
 	$increments_players = ceil($increments_winners/0.967);
 
@@ -234,9 +244,9 @@ function SetLotteryCombination($comb, $simulation, $lastTicketId, $increments)
     if(!$simulation) {
 
         $SQL = "INSERT INTO Lotteries
-				(`Date`, Combination, LastTicketId, PlayersCount, PlayersCountIncr, WinnersCount, WinnersCountIncr, MoneyTotal, PointsTotal, Prizes, PrizesGold, BallsTotal, BallsTotalIncr, %s)
+				(`Date`, Combination, LastTicketId, PlayersCount, PlayersCountIncr, WinnersCount, WinnersCountIncr, MoneyTotal, PointsTotal, Prizes, PrizesGold, BallsTotal, BallsTotalIncr, BallsTotalGoldIncr, %s)
 			VALUES
-				(%d, '%s', %d, %d, %d, %d, %d, %f, %d, '%s', '%s', '%s', '%s', 1, 1, 1, 1, 1, 1)";
+				(%d, '%s', %d, %d, %d, %d, %d, %f, %d, '%s', '%s', '%s', '%s', '%s', 1, 1, 1, 1, 1, 1)";
 
         $SQL = sprintf($SQL,	implode(',', $comb['fields']),
 			$gameSettings['lotteryTime'],
@@ -251,7 +261,8 @@ function SetLotteryCombination($comb, $simulation, $lastTicketId, $increments)
 			serialize($Prizes),
 			serialize($PrizesGold),
             serialize($comb['ballsArray']),
-			serialize($increments_array)
+			serialize($increments_array),
+			serialize($goldIncrements_array)
 			);
 
         DB::Connect()->query($SQL);
@@ -411,7 +422,7 @@ function GetLotteryCombination($ballsStart, $ballsRange, $rounds, $return, $orde
 	return $rountdsStats[$return];
 }
 
-function HoldLottery($ballsStart = 0, $ballsRange = 3, $rounds = 250, $increments, $return = 0, $orderBy = 'MoneyTotal', $simulation=false)
+function HoldLottery($ballsStart = 0, $ballsRange = 3, $rounds = 250, $increments, $goldIncrements, $return = 0, $orderBy = 'MoneyTotal', $simulation=false)
 {
 	$time = microtime(true);
     $lastTicketId = 0;
@@ -433,7 +444,7 @@ function HoldLottery($ballsStart = 0, $ballsRange = 3, $rounds = 250, $increment
     }
 
 	$comb = GetLotteryCombination($ballsStart, $ballsRange, $rounds, $return, $orderBy, $lastTicketId);
-	$comb = SetLotteryCombination($comb, $simulation, $lastTicketId, $increments);
+	$comb = SetLotteryCombination($comb, $simulation, $lastTicketId, $increments, $goldIncrements);
     if($simulation) {print_r($comb);return;}
     $filename     = __DIR__.'/../lastLottery';
 	$new_filename = __DIR__.'/../lastResult';

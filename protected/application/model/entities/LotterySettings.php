@@ -10,13 +10,14 @@ class LotterySettings
 
     private $_model = null;
 
-    private   $_countryPrizes     = array();
-    protected $_countryGoldPrizes = array();
-    private   $_total             = 0;
-    private   $_jackpot           = false;
-    private   $_gameTimes         = array();
-    private   $_gameSettings      = array();
-    protected $_gameIncrements    = array();
+    private   $_countryPrizes      = array();
+    protected $_countryGoldPrizes  = array();
+    private   $_total              = 0;
+    private   $_jackpot            = false;
+    private   $_gameTimes          = array();
+    private   $_gameSettings       = array();
+    protected $_gameIncrements     = array();
+    protected $_gameGoldIncrements = array();
 
     public function __construct()
     {
@@ -33,6 +34,18 @@ class LotterySettings
     public function getGameIncrements()
     {
         return $this->_gameIncrements;
+    }
+
+    public function setGameGoldIncrements($inc)
+    {
+        $this->_gameGoldIncrements = $inc;
+
+        return $this;
+    }
+
+    public function getGameGoldIncrements()
+    {
+        return $this->_gameGoldIncrements;
     }
 
     public function setTotalWinSum($sum)

@@ -285,8 +285,9 @@ class LotteryController extends \AjaxController
                 $prizes_gold = $prizes_gold[$player_currency];
             }
 
-            $balls      = $lottery->getBallsTotal();
-            $balls_incr = $lottery->getBallsTotalIncr();
+            $balls          = $lottery->getBallsTotal();
+            $balls_incr     = $lottery->getBallsTotalIncr();
+            $ballsGold_incr = $lottery->getBallsTotalGoldIncr();
 
             $response                                             = array(
                 'cache' => 'session',
@@ -312,7 +313,7 @@ class LotteryController extends \AjaxController
                     'balls'    => $count,
                     'currency' => $prizes_gold[$count]['currency'],
                     'sum'      => $prizes_gold[$count]['sum'],
-                    'matches'  => ($lotteryId>=495?0:null),
+                    'matches'  => ($lotteryId>=495?$ballsGold_incr[$count]:null),
                 );
             }
 

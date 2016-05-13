@@ -21,11 +21,11 @@
     </div>
     <div class="row-fluid">&nbsp;</div>
     <!-- fst column -->
-    <div class="col-md-6 col-md-offset-1">
+    <div class="col-md-10 col-md-offset-1">
         <h6>Настройка призов<span class="pull-right  glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="top" title="Установите флажок, для того чтобы указать что приз денежный" style="color:#428BCA;cursor:help;">&nbsp;</span></h6>
         <? for ($i = 1; $i <= 6; ++$i) { ?>
         <div class="row">
-            <div class="col-md-2">
+            <div class="col-md-1">
                 <? for ($j = 1; $j <= $i; ++$j) { ?>
                     <span style="color: #428BCA;font-size:21pt;">&bull;</span>
                 <? } ?>
@@ -33,7 +33,7 @@
                     <span style="color: #CCCCCC;font-size:21pt;">&bull;</span>
                 <? } ?>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div class="input-group pull-right" data-balls="<?=$i?>">
                     <input type="text" class="form-control input-md" value="<?=@$settings->getPrizes('UA')[$i]['sum']?>">
                     <span class="input-group-addon">
@@ -41,7 +41,7 @@
                     </span>
                 </div>
             </div>
-            <div class="col-md-3" style="background-color: #E8CF6B;">
+            <div class="col-md-2" style="background-color: #E8CF6B;">
                 <div class="input-group pull-right" data-balls-gold="<?=$i?>">
                     <input type="text" class="form-control input-md" value="<?=@$settings->getGoldPrizes('UA')[$i]['sum']?>" style="background-color: #E8CF6B;">
                     <span class="input-group-addon"  style="background-color: #E8CF6B;">
@@ -49,7 +49,7 @@
                     </span>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div class="col-md-6">
                     <div class="input-group pull-right" incr-from="<?= $i ?>">
                         <input type="text" class="form-control input-md"
@@ -60,6 +60,21 @@
                     <div class="input-group pull-right" incr-to="<?= $i ?>">
                         <input type="text" class="form-control input-md"
                                value="<?= @$settings->getGameIncrements()[$i]['to'] ?>">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-2" style="background-color: #E8CF6B;">
+                <div class="col-md-6">
+                    <div class="input-group pull-right" incr-gold-from="<?= $i ?>">
+                        <input type="text" class="form-control input-md"
+                               value="<?= @$settings->getGameGoldIncrements()[$i]['from'] ?>">
+                    </div>
+                </div>
+                <div class="col-md-6" style="background-color: #E8CF6B;">
+                    <div class="input-group pull-right" incr-gold-to="<?= $i ?>">
+                        <input type="text" class="form-control input-md"
+                               value="<?= @$settings->getGameGoldIncrements()[$i]['to'] ?>">
                     </div>
                 </div>
             </div>
@@ -116,9 +131,16 @@
         </div>
 
     </div>
-    
+
+    <div class="row-fluid">
+        <div class="col-md-1 col-md-offset-9">
+            <button class="btn btn-success save-button"> Cохранить</button>
+        </div>
+    </div>
+
+
     <!-- scnd column -->
-    <div class="col-md-4" id="lotteries">
+    <div class="col-md-6 col-md-offset-1" id="lotteries">
         <? $i = 1; ?>
         <? $cnt = count($settings->getLotterySettings()); ?>
         <? foreach ($settings->getLotterySettings() as $time) { ?>
@@ -157,16 +179,12 @@
         } ?>
     </div>
 
-
 </div>
 <div class="row-fluid">&nbsp;</div>
 
 <div class="row-fluid">
     <div class="col-md-3 col-md-offset-1">
         <button class="btn btn-danger force-modal-button"> Принудительный розыгрыш</button>
-    </div>
-    <div class="col-md-3 col-md-offset-5">
-        <button class="btn btn-success save-button"> Cохранить</button>
     </div>
 </div>
 
@@ -436,11 +454,20 @@ $ajaxedSettings['goldPrizes'] = (object)$ajaxedSettings['goldPrizes'];
         });
 
         gameSettings.increments = {};
+        gameSettings.goldIncrements = {};
         $([1,2,3,4,5,6]).each(function(id, ballsCount) {
             var from = $('[incr-from="' + ballsCount + '"]').find('input[type="text"]').val();
             var to   = $('[incr-to="' + ballsCount + '"]').find('input[type="text"]').val();
 
             gameSettings.increments[ballsCount] = {
+                'from' : from,
+                'to'   : to
+            };
+
+            var from = $('[incr-gold-from="' + ballsCount + '"]').find('input[type="text"]').val();
+            var to   = $('[incr-gold-to="' + ballsCount + '"]').find('input[type="text"]').val();
+
+            gameSettings.goldIncrements[ballsCount] = {
                 'from' : from,
                 'to'   : to
             }

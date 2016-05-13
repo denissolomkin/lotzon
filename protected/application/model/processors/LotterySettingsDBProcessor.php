@@ -9,17 +9,18 @@ class LotterySettingsDBProcessor
             "TRUNCATE TABLE `LotterySettings`",
         );
 
-        $timesSql = "INSERT INTO `LotteryScheduler` (`StartTime`,`Tries`,`Balls`,`Increments`) VALUES %s";
+        $timesSql = "INSERT INTO `LotteryScheduler` (`StartTime`,`Tries`,`Balls`,`Increments`,`GoldIncrements`) VALUES %s";
         $parts = array();
         /*foreach ($settings->getGameTimes() as $time) {
             $parts[] = sprintf("(%s,%s,%s)", array(DB::Connect()->quote($time),DB::Connect()->quote($time),DB::Connect()->quote($time)));
         }*/
         foreach ($settings->getLotterySettings() as $time) {
-            $parts[] = vsprintf("(%s,%s,%s,%s)", array(
+            $parts[] = vsprintf("(%s,%s,%s,%s,%s)", array(
                 DB::Connect()->quote($time['StartTime']),
                 DB::Connect()->quote($time['Tries']),
                 DB::Connect()->quote($time['Balls']),
-                DB::Connect()->quote(serialize($settings->getGameIncrements()))));
+                DB::Connect()->quote(serialize($settings->getGameIncrements())),
+                DB::Connect()->quote(serialize($settings->getGameGoldIncrements()))));
         }
         $timesSql = sprintf($timesSql, join(",", $parts));
 
@@ -88,9 +89,10 @@ class LotterySettingsDBProcessor
 
         $times = $times->fetchAll();
         foreach ($times as $time) {
-              $settings->addGameTime($time['StartTime']);
-              $settings->addLotterySettings($time);
-              $settings->setGameIncrements(unserialize($time['Increments']));
+            $settings->addGameTime($time['StartTime']);
+            $settings->addLotterySettings($time);
+            $settings->setGameIncrements(unserialize($time['Increments']));
+            $settings->setGameGoldIncrements(unserialize($time['GoldIncrements']));
         }
 
         $lots = $lots->fetchAll();
