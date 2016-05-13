@@ -413,7 +413,7 @@ var Games = {
                 for (var key in data) {
                     msg += "<span>";
                     if (key === "POINT"){
-                        msg += Player.getCurrency(data[key]) + " ";
+                        msg += data[key] + " ";
                         msg += Cache.i18n("title-of-points") + " ";
                     }else if (key === "MONEY"){
                         msg += Player.getCurrency(data[key]) + " ";
@@ -443,7 +443,7 @@ var Games = {
                     html += "<span>" + Player.getCurrency() + "</span>";
                     break;
                 case 'points':
-                    html += "<span>" + Player.getCurrency(prize.v) + "</span>";
+                    html += "<span>" + prize.v + "</span>";
                     html += "<span>" + Cache.i18n("title-of-points") + "</span>";
                     break;
                 case 'item':
