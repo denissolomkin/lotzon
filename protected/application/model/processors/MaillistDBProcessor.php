@@ -131,8 +131,8 @@ class MaillistDBProcessor implements IProcessor
                     $where[] = 'FROM_UNIXTIME(pd.Registration) '.$filter['equal'].' ('.$ids.')';
                     break;
                 case 'OnlineTime':
-                    $tables[] = 'PlayerDates as pd ON pd.PlayerId = p.Id';
-                    $where[]  = 'FROM_UNIXTIME(pd.Ping) '.$filter['equal'].' ('.$ids.')';
+                    $tables[] = 'PlayerPing as pping ON pping.PlayerId = p.Id';
+                    $where[]  = 'FROM_UNIXTIME(pping.Ping) '.$filter['equal'].' ('.$ids.')';
                     break;
                 case 'Country':
                     $where[] = 'p.Country '.$filter['equal'].' ('.$ids.')';
