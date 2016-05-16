@@ -128,6 +128,21 @@ class SlotsController extends \AjaxController
                     break;
             }
 
+            $min_max_array = array(
+                'Money' => array(
+                    'min' => 0.1,
+                    'max' => 1,
+                ),
+                'Points' => array(
+                    'min' => 1,
+                    'max' => 10,
+                ),
+            );
+
+            if (($bet < $min_max_array[$currencyBD]['min'])or($bet > $min_max_array[$currencyBD]['max'])) {
+                $this->ajaxResponseBadRequest('BAD_BET');
+            }
+
             if ($balance[$currencyBD] < $bet)
                 $this->ajaxResponseBadRequest('INSUFFICIENT_FUNDS');
 
