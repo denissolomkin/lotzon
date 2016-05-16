@@ -1642,4 +1642,38 @@ class PlayersDBProcessor implements IProcessor
             throw new ModelException("Error processing storage query", 500);
         }
     }
+
+    public function getWinMoney(Entity $player)
+    {
+        $sql = "SELECT SUM(SUM) FROM `MoneyOrders` WHERE PlayerId=:pid";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':pid' => $player->getId(),
+            ));
+
+            return $sth->fetchColumn();
+
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+    }
+
+    public function getWinPoints(Entity $player)
+    {
+        $sql = "SELECT SUM(SUM) FROM `ShopOrders` WHERE PlayerId=:pid";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':pid' => $player->getId(),
+            ));
+
+            return $sth->fetchColumn();
+
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+    }
 }

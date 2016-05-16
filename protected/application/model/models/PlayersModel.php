@@ -297,4 +297,15 @@ class PlayersModel extends Model
     public function deletePreregistration(Entity $player) {
         return $this->getProcessor()->deletePreregistration($player);
     }
+
+    public function getWinMoney(Entity $player)
+    {
+        return $this->getProcessor()->getWinMoney($player);
+    }
+
+    public function getWinPoints(Entity $player)
+    {
+        return $this->getProcessor()->getWinPoints($player);
+    }
+
 }

@@ -1236,6 +1236,30 @@ class Player extends Entity
         return $model::instance()->deletePreregistration($this);
     }
 
+    /**
+     * @return int
+     * Get money balance + all checkout moneys
+     */
+    public function getWinMoney()
+    {
+        $model    = $this->getModelClass();
+        $winMoney = $model::instance()->getWinMoney($this) + $this->getMoney();
+
+        return ($winMoney >= 0 ? $winMoney : 0);
+    }
+
+    /**
+     * @return int
+     * Get points balance + all points in ordered items
+     */
+    public function getWinPoints()
+    {
+        $model     = $this->getModelClass();
+        $winPoints = $model::instance()->getWinPoints($this) + $this->getPoints();
+
+        return ($winPoints >= 0 ? $winPoints : 0);
+    }
+
     public function export($to)
     {
         switch ($to) {
@@ -1258,8 +1282,8 @@ class Player extends Entity
                     'img'  => $this->getAvatar(),
                     'name' => $this->getNicname(),
                     'ping' => $this->getDates('Ping'),
-                    'money'    => ($this->getMoney()>=0?$this->getMoney():0),
-                    'points'   => ($this->getPoints()>=0?$this->getPoints():0),
+                    'money'    => $this->getWinMoney(),
+                    'points'   => $this->getWinPoints(),
                     'friends'  => \FriendsModel::instance()->getStatusCount($this->getId(), 1),
                 );
                 break;
@@ -1273,8 +1297,8 @@ class Player extends Entity
                         'name'       => $this->applyPrivacy('Name'),
                         'surname'    => $this->applyPrivacy('Surname'),
                     ),
-                    'money'    => ($this->getMoney()>=0?$this->getMoney():0),
-                    'points'   => ($this->getPoints()>=0?$this->getPoints():0),
+                    'money'    => $this->getWinMoney(),
+                    'points'   => $this->getWinPoints(),
                     'ping'     => $this->getDates('Ping'),
                     'gender'   => $this->applyPrivacy('Gender'),
                     'age'      => $this->applyPrivacy('Age'),
