@@ -68,7 +68,7 @@
                 "menu-title-player-balance": "ВАШ<br>СЧЕТ",
 
                 "menu-balance-cashout": "Вывести",
-                "menu-balance-convert": "Конвертировать",
+                "menu-balance-convert": "Пополнение баланса",
                 "menu-reports-transactions": "История транзакций",
                 "menu-reports-payments": "История выплат",
 
@@ -273,11 +273,13 @@
                 "title-profile-write-address" : "напишите aдрес",
                 "title-profile-write-email" : "напишите email",
                 "title-profile-statistics-total-win": "Всего выиграно",
-                "title-profile-convertation": "Конвертация",
-                "title-profile-convert": "Конвертация денег в баллы.",
-                "title-profile-convert-rate": "Курс конвертации 1",
-                "title-profile-put-currency": "Отдам",
-                "title-profile-get-points": "Получу",
+                "title-profile-convertation": "Пополнение баланса",
+                "title-profile-refill-alert": "ВАЖНО!",
+                "title-profile-refill-title": "Для участия в проекте абсолютно <span>не обязательно</span> пополнять свой баланс. Деньги можно выиграть в разнообразных играх и конкурсах.",
+                "title-profile-refill-text": "Мы работаем над безопасной автоматической системой пополнения баланса. Сейчас все заявки обрабатываются в ручном режиме и занимают некоторое время.<br><br>У вас есть возможность пополнить свой баланс переведя желаемую сумму на указанные ниже реквизиты.",
+                "title-profile-refill-atention": "Внимание!",
+                "title-profile-refill-after-text": "В комментарий к переводу укажите email или никнейм на который вы зарегистрированны в Lotzon.",
+                
                 "title-profile-cashout": "Вывод денег",
                 "title-profile-cashout-choose": "Выберите способ вывода денег",
                 "title-profile-cashout-edit": "редактировать",

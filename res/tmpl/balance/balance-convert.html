@@ -5,25 +5,32 @@
     <div class="content-box-content clearfix">
         <div class="content-box-item cabinet-convert">
             
-            <div class="cc-title"><span>{{i18n "title-profile-convert"}}</span>{{i18n "title-profile-convert-rate"}}  {{currency.iso}} = {{currency.rate}} {{i18n "title-of-points"}}</div>
+            <div class="cc-title">
+                <span class="green">{{i18n "title-profile-refill-alert"}}</span>
+                <span>{{{i18n "title-profile-refill-title"}}}</span>
+            </div>
+            
+            <div class="cc-text">
+                <p>{{{i18n "title-profile-refill-text"}}}</p>
+                
+                <span class="gray "><span class="green">{{i18n "title-profile-refill-atention"}}</span> {{i18n "title-profile-refill-after-text"}}</span>
+            </div>
 
-            <div class="cc-form">
-                <form action="/balance/convert" method="post">
-                    <div class="cc-form-top clearfix">
-                        <div class="cc-out cc-box">
-                            <span class="title">{{i18n "title-profile-put-currency"}} <span class="cc-currency">{{currency.iso}}</span></span>
-                            <input class="cc-sum float required" type="text" name="sum" value="" placeholder="{{i18n "title-profile-cashout-summ"}}" />
-                        </div>
-                        <div class="cc-income cc-box">
-                            <span class="title">{{i18n "title-profile-get-points"}} <span class="cc-currency">{{i18n "title-of-points"}}</span></span>
-                            <input class="cc-sum" type="text" disabled="disabled" value="" placeholder="0" / >
-                        </div>
-                        <button name="submit" type="submit" class="btn-flat">{{i18n "button-profile-get-points"}}</button>
-                    </div>
-                </form>
+            <div class="cc-row-wrapper">
+                <div class="cc-row">
+                    <div class="left"><img src="/res/img/WebMoneyLogo.png"></div>
+                    <div class="right">R333314926813</div>
+                </div>
+                <div class="cc-row">
+                    <div class="left"><img src="/res/img/WebMoneyLogo.png"></div>
+                    <div class="right">U390543656531</div>
+                </div>
+                <div class="cc-row">
+                    <div class="left"><img src="/res/img/YandexMoneyLogo.png"></div>
+                    <div class="right">410011443782361</div>
+                </div>
             </div>
 
         </div>
     </div>
-
 </div><!-- .content-box -->

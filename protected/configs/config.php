@@ -680,18 +680,12 @@ Config::instance()->publicResources = array(
     /**
      * Profile orders
      */
-    '/profile/convert' => array(
-        'post' => 'controllers\production\OrdersController:convert'
-    ),
     '/profile/cashout' => array(
         'post' => 'controllers\production\OrdersController:cashout'
     ),
     /**
      * Balance orders
      */
-    '/balance/convert' => array(
-        'post' => 'controllers\production\OrdersController:convert'
-    ),
     '/balance/cashout' => array(
         'post' => 'controllers\production\OrdersController:cashout'
     ),
