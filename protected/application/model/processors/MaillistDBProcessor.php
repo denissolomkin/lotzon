@@ -89,10 +89,11 @@ class MaillistDBProcessor implements IProcessor
         if ($task === null) {
             return array();
         }
-        $tables = array();
-        $where  = array();
-        $values = array();
-        $union  = array();
+        $tables      = array();
+        $tables_left = array();
+        $where       = array();
+        $values      = array();
+        $union       = array();
 
         $filters = isset($task->getSettings()['filters']) ? $task->getSettings()['filters'] : array();
         $message          = MaillistModel::instance()->getMessage($task->getMessageId());
@@ -131,8 +132,8 @@ class MaillistDBProcessor implements IProcessor
                     $where[] = 'FROM_UNIXTIME(pd.Registration) '.$filter['equal'].' ('.$ids.')';
                     break;
                 case 'OnlineTime':
-                    $tables[] = 'PlayerPing as pping ON pping.PlayerId = p.Id';
-                    $where[]  = 'FROM_UNIXTIME(pping.Ping) '.$filter['equal'].' ('.$ids.')';
+                    $tables_left[] = 'PlayerPing as pping ON pping.PlayerId = p.Id';
+                    $where[]  = 'IFNULL(FROM_UNIXTIME(pping.Ping),0) '.$filter['equal'].' ('.$ids.')';
                     break;
                 case 'Country':
                     $where[] = 'p.Country '.$filter['equal'].' ('.$ids.')';
@@ -167,6 +168,9 @@ class MaillistDBProcessor implements IProcessor
             $where[] = '(p.Ban = 0)';
             if (count($tables)>0) {
                 $sql .= ' JOIN '.implode('JOIN ',array_unique($tables));
+            }
+            if (count($tables_left)>0) {
+                $sql .= ' LEFT JOIN '.implode('LEFT JOIN ',array_unique($tables_left));
             }
             if (count($where)>0) {
                 $sql .= ' WHERE '.implode(' AND ',$where);
