@@ -128,9 +128,11 @@ class PingController extends \AjaxController
         // check for moment chance
         // if not already played chance game
 
-        if ((!$this->session->has($key) && time() - $this->session->get($key . 'LastDate') > $gamesPublished[$key]->getOptions('max') * 60) ||
-            ($this->session->has($key) && $this->session->get($key)->getTime() + $this->session->get($key)->getTimeout() * 60 < time() && $this->session->remove($key))
-        ) {
+        if (!$this->session->has($key) && time() - $this->session->get($key . 'LastDate') > $gamesPublished[$key]->getOptions('max') * 60) {
+            $this->session->set($key . 'LastDate', time() - $gamesPublished[$key]->getOptions('max') * 60);
+        }
+
+        if ($this->session->has($key) && $this->session->get($key)->getTime() + $this->session->get($key)->getTimeout() * 60 < time() && $this->session->remove($key)) {
             $this->session->set($key . 'LastDate', time());
         }
 

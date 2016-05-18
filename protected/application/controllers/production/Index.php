@@ -402,8 +402,10 @@ class Index extends \SlimController\SlimController
             ),
         );
 
+        /*
         if (!$this->session->has('MomentLastDate'))
             $this->session->set('MomentLastDate', time());
+        */
 
         if (!$this->session->has('QuickGameLastDate'))
             $this->session->set('QuickGameLastDate', time());
