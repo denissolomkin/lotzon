@@ -12691,16 +12691,14 @@ footer.unvisible {
   color: #4a4a4a;
   font-size: 16px; }
   #games-chance-view .prizes {
-    display: inline-block;
-    vertical-align: top;
+    display: block;
+    float: left;
     text-align: center;
-    width: 40%;
-    min-width: 220px; }
+    width: 33%; }
     #games-chance-view .prizes > div {
       background: #f4f4f4;
       padding: 20px;
-      min-height: 410px;
-      width: 220px;
+      min-height: 440px;
       margin: 0 auto;
       display: none; }
       #games-chance-view .prizes > div > div {
@@ -12803,9 +12801,10 @@ footer.unvisible {
           border: 1px solid #4a4a4a;
           color: #ffe634; }
   #games-chance-view .minefield {
-    display: inline-block;
-    vertical-align: top;
-    width: 59%;
+    display: block;
+    float: left;
+    width: 67%;
+    min-width: 350px;
     box-sizing: border-box;
     position: relative; }
     #games-chance-view .minefield:before {
@@ -12838,6 +12837,10 @@ footer.unvisible {
     padding: 20px 20px 0 20px; }
   #games-chance-view #games-chance-view-chance .colls-wrapper {
     padding: 0 20px 20px 20px; }
+    #games-chance-view #games-chance-view-chance .colls-wrapper:after {
+      content: '';
+      display: block;
+      clear: both; }
 
 #games-chance-view-cells * > .inner {
   background: transparent;
@@ -12876,6 +12879,24 @@ footer.unvisible {
       display: none; }
   #games-chance-view-cells .inner button:not([class]) i:not(.i-question) {
     display: none; }
+
+@media all and (max-width: 1200px) {
+  #games-chance-view .prizes > div > div {
+    min-height: 160px; }
+  #games-chance-view .prizes > div > * :first-child:nth-last-child(1) .item {
+    font-size: 86px; }
+  #games-chance-view .prizes button {
+    margin-top: 10px; }
+  #games-chance-view .prizes .type-money {
+    line-height: 1; }
+  #games-chance-view .prizes .type-item {
+    line-height: 1; }
+  #games-chance-view .prizes .item {
+    font-size: 20px; }
+  #games-chance-view .prizes .instruction {
+    font-size: 14.5px; }
+  #games-chance-view .prizes > div {
+    min-height: 375px; } }
 
 @media all and (max-width: 768px) {
   #games-chance-view .colls-wrapper {

@@ -18,16 +18,18 @@ $black_15: rgba(0,0,0,0.15);
     font-size: 16px;
     // padding: 20px 20px 20px 20px;
     .prizes {
-        display: inline-block;
-        vertical-align: top;
+        // display: inline-block;
+        // vertical-align: top;
+        display: block;
+        float: left;
         text-align: center;
-        width: 40%;
-        min-width: 220px;
+        width: 33%;
+        // min-width: 220px;
         > div {
             background: $wild_sand;
             padding: 20px;
-            min-height: 410px;
-            width: 220px;
+            min-height: 440px;
+            // width: 220px;
             margin: 0 auto;
             display: none;
             > div {
@@ -168,9 +170,12 @@ $black_15: rgba(0,0,0,0.15);
         }
     }
     .minefield {
-        display: inline-block;
-        vertical-align: top;
-        width: 59%;
+        display: block;
+        float: left;
+        // display: inline-block;
+        // vertical-align: top;
+        width: 67%;
+        min-width: 350px;
         //Instead of the line below you could use @include box-sizing($bs)
         box-sizing: border-box;
         position: relative;
@@ -221,6 +226,11 @@ $black_15: rgba(0,0,0,0.15);
         }
         .colls-wrapper{
             padding: 0 20px 20px 20px;
+            &:after{
+                content: '';
+                display: block;
+                clear: both;
+            }
         }
     }
 }
@@ -279,6 +289,38 @@ $black_15: rgba(0,0,0,0.15);
             display: none;
         }
     }
+}
+@media all and(max-width: 1200px) {
+    #games-chance-view {
+        .minefield {}
+        .prizes{
+            & > div > div{
+                min-height: 160px;
+            }
+            & > div > * :first-child:nth-last-child(1) .item{
+                font-size: 86px;
+            }
+            button{
+                margin-top: 10px;
+            }
+            .type-money{
+                line-height: 1;
+            }
+            .type-item{
+                line-height: 1;
+            }
+            .item{
+                font-size: 20px;
+            }
+            .instruction{
+                font-size: 14.5px;
+            }
+            & > div {
+                min-height: 375px;
+            }
+        }
+    }
+    
 }
 @media all and(max-width: 768px) {
     #games-chance-view {
