@@ -85,7 +85,17 @@ class Index extends \SlimController\SlimController
                 ->markOnline();
             $loggedIn = true;
         } catch (\ModelException $e) {
-            // do nothing just show promo page
+            $player->fetch();
+            if ($player->getHash() == $vh) {
+                $player->setValid(true)
+                    ->update()
+                    ->setDates(time(), 'Login')
+                    ->setComplete(false)//todo: remove when set default=false in database
+                    ->payInvite()
+                    ->payReferal()
+                    ->markOnline();
+                $loggedIn = true;
+            }
         }
 
         if ($loggedIn === true) {

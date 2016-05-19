@@ -11,6 +11,9 @@ class MaillistMessage extends Entity
         '%name%' => array(
             'description' => 'имя/ник',
         ),
+        '%validate%' => array(
+            'description' => 'ссылка валидации email',
+        ),
     );
 
     private $_id          = 0;
@@ -194,6 +197,9 @@ class MaillistMessage extends Entity
                 $render['html'] = str_replace($macros, '', $render['html']);
             } else {
                 switch ($macros) {
+                    case '%validate%':
+                        $render['html'] = str_replace($macros, 'http://lotzon.com/?m='.$player->getEmail().'&vh='.$player->getHash(), $render['html']);
+                        break;
                     case '%unsubscribe%':
                         $render['html'] = str_replace($macros, 'http://lotzon.com/unsubscribe/?email='.$player->getEmail().'&hash='.$player->getSalt(), $render['html']);
                         break;
