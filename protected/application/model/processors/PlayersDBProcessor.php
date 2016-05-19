@@ -1645,7 +1645,7 @@ class PlayersDBProcessor implements IProcessor
 
     public function getWinMoney(Entity $player)
     {
-        $sql = "SELECT SUM(SUM) FROM `MoneyOrders` WHERE PlayerId=:pid";
+        $sql = "SELECT SUM(SUM) FROM `MoneyOrders` WHERE PlayerId=:pid AND Type<>'points'";
 
         try {
             $sth = DB::Connect()->prepare($sql);
