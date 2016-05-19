@@ -85,16 +85,20 @@ class Index extends \SlimController\SlimController
                 ->markOnline();
             $loggedIn = true;
         } catch (\ModelException $e) {
-            $player->fetch();
-            if ($player->getHash() == $vh) {
-                $player->setValid(true)
-                    ->update()
-                    ->setDates(time(), 'Login')
-                    ->setComplete(false)//todo: remove when set default=false in database
-                    ->payInvite()
-                    ->payReferal()
-                    ->markOnline();
-                $loggedIn = true;
+            try {
+                $player->fetch();
+                if ($player->getHash() == $vh) {
+                    $player->setValid(true)
+                        ->update()
+                        ->setDates(time(), 'Login')
+                        ->setComplete(false)//todo: remove when set default=false in database
+                        ->payInvite()
+                        ->payReferal()
+                        ->markOnline();
+                    $loggedIn = true;
+                }
+            } catch (\EntityException $e) {
+
             }
         }
 
@@ -121,6 +125,13 @@ class Index extends \SlimController\SlimController
             EmailInvites::instance()->getProcessor()->validateHash($hash);
         }
         $this->ref = $this->request()->get('ref', null);
+        if ($this->ref!==null) {
+            setcookie ("ref", $this->ref, time() + 2592000);
+        }
+
+        if ((!empty($_COOKIE['ref']))&($this->ref===null)) {
+            $this->ref = $_COOKIE['ref'];
+        }
 
         try {
             $geoReader = new Reader(PATH_MMDB_FILE);
