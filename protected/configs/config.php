@@ -463,7 +463,7 @@ Config::instance()->publicResources = array(
      */
     '/games/chance/' => array(
         'get'  => array(
-            'controllers\production\ChanceController:list',
+            'controllers\production\ChanceControllerMixed:list',
             function ($route) {
                 $route->setParams(
                     array("key" => "ChanceGame")
@@ -553,7 +553,7 @@ Config::instance()->publicResources = array(
      * Games
      */
     '/games/:key/' => array(
-        'get'  => 'controllers\production\GamesController:list'
+        'get'  => 'controllers\production\GamesControllerMixed:list'
     ),
     '/games/:key/:id' => array(
         'get'   => 'controllers\production\GamesController:item',
@@ -654,7 +654,7 @@ Config::instance()->publicResources = array(
         'post' => 'controllers\production\LotteryController:buyGoldTicket',
     ),
     '/lottery/history'                    => array(
-        'get' => 'controllers\production\LotteryController:history',
+        'get' => 'controllers\production\LotteryControllerMixed:history',
     ),
     '/lottery/tickets' => array(
         'get' => 'controllers\production\LotteryController:tickets',

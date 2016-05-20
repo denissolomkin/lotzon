@@ -9,14 +9,11 @@ Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');
 
 class LotteryController extends \AjaxController
 {
-
-    static $lotteriesPerPage;
     static $ticketsCount;
     static $defaultCountry;
 
     public function init()
     {
-        self::$lotteriesPerPage = (int)SettingsModel::instance()->getSettings('counters')->getValue('LOTTERIES_PER_PAGE') ? : 10;
         self::$ticketsCount     = LotterySettings::TOTAL_TICKETS;
         self::$defaultCountry   = CountriesModel::instance()->defaultCountry();
 
@@ -202,64 +199,6 @@ class LotteryController extends \AjaxController
         );
 
         $this->ajaxResponseNoCache($res);
-    }
-
-    public function historyAction()
-    {
-
-        $playerId = $this->player->getId();
-
-        $offset = $this->request()->get('offset');
-        $count  = $this->request()->get('count', self::$lotteriesPerPage);
-
-        $type = $this->request()->get('type');
-
-        $response = array(
-            'res' => array(
-                'lottery' => array(
-                    'history' => array(
-                    ),
-                ),
-            ),
-        );
-
-        try {
-            if ($type != "mine") {
-                $list = \LotteriesModel::instance()->getPublishedLotteriesList($count + 1, $offset);
-            } else {
-                $list = \LotteriesModel::instance()->getPlayerPlayedLotteries($playerId, $count + 1, $offset);
-            }
-        } catch (\PDOException $e) {
-            $this->ajaxResponseInternalError();
-
-            return false;
-        }
-
-        if (count($list)<=$count) {
-            $response['lastItem'] = true;
-        } else {
-            array_pop($list);
-        }
-
-        if ($type == "mine") {
-            foreach ($list as $id => $lottery) {
-                $response['res']['lottery']['history'][$id]         = $lottery->exportTo('list');
-                $response['res']['lottery']['history'][$id]['type'] = "mine";
-            }
-        } else {
-            $mine =  \LotteriesModel::instance()->isPlayerPlayedLotteries(array_keys($list), $playerId);
-            foreach ($list as $id => $lottery) {
-                $response['res']['lottery']['history'][$id]         = $lottery->exportTo('list');
-                if (in_array($id,$mine)) {
-                    $response['res']['lottery']['history'][$id]['type'] = "mine";
-                } else {
-                    $response['res']['lottery']['history'][$id]['type'] = "all";
-                }
-            }
-        }
-
-        $this->ajaxResponseNoCache($response);
-        return true;
     }
 
     public function lotteryInfoAction($lotteryId)
