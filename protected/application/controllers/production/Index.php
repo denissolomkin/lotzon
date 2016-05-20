@@ -292,7 +292,7 @@ class Index extends \SlimController\SlimController
                     'UA' => 'Украiнська'
                 )
             ),
-            'currency' => $currency,
+            'currency' => CountriesModel::instance()->getCountry($country)->loadCurrency()->getSettings(),
         );
 
         $lottery = array(
