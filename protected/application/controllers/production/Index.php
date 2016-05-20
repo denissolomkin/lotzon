@@ -289,7 +289,7 @@ class Index extends \SlimController\SlimController
                 'complete' => true,
             ),
             'language' => array(
-                'current'   => $counters,
+                'current'   => $country,
                 'available' => array(
                     'RU' => 'Русский',
                     'EN' => 'English',
