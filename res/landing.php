@@ -141,6 +141,7 @@
                         </div>
 
                         <button class="landing_button gold go-play">Играть Бесплатно</button>
+                        <span class="unregistred"><a href="/?guest=1">Войти как гость</a></span>
                     </div>
                     
                 </div>
@@ -268,7 +269,6 @@
                         <input type="submit" class="sb_but gold" value="Продолжить">
                     </div>
                 </div>
-                
             </form>
 
             <!-- Social error -->
@@ -280,7 +280,6 @@
                         <div class="text">Аккаунт заблокирован за нарушение правил участия.</div>
                     </div>
                 </div>
-                
             </form>
             <!-- Social unexpected_error -->
             <form name="unexpected_error">
@@ -291,7 +290,6 @@
                         <div class="text">Повторите попытку позже.</div>
                     </div>
                 </div>
-                
             </form>
             <!-- Social exist -->
             <form name="social_exist">
@@ -305,7 +303,6 @@
                         <input type="submit" class="sb_but gold" value="Продолжить">
                     </div>
                 </div>
-                
             </form>
 
         </div>
@@ -335,7 +332,7 @@
             </div>
             <div class="box license">
                                 <h2>Условия участия</h2>
-                                <div style="">Соглашение</div><div style=""><br></div>
+                                <div>Соглашение<br></div>
 
                                 <div>Внимание! Если Вы начали участвовать в игровом процессе на сайте Lotzon.com, то этим вы принимаете настоящее Соглашение и подтверждаете свое согласие со всеми его условиями без каких-либо ограничений. Также, подтверждаете, что вы обладаете всеми необходимыми гражданскими правами и дееспособностью для участия в данной игре.</div>
 

@@ -124,7 +124,6 @@ Por favor, desactive el bloqueador de anuncios!'); ?>
                             <div id="menu-buttons"></div>
                             <!-- end of MENU buttons -->
 
-
                         </div>
                         <!-- .header-left -->
 

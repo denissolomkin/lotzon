@@ -111,9 +111,52 @@ main.content {
   .header-left > .menu-btns {
     position: absolute;
     top: 0;
-    right: 20px; }
+    left: 100%;
+    margin-left: -120px; }
   .header-left > .menu {
     width: 100%; }
+
+.unregistred {
+  width: 350px;
+  z-index: 100;
+  height: 100%;
+  position: relative; }
+  .unregistred:before {
+    content: "";
+    display: inline-block;
+    vertical-align: middle;
+    width: 0;
+    height: 100%; }
+  .unregistred .button {
+    font-size: 15.5px;
+    color: #000000;
+    text-align: center;
+    text-transform: uppercase;
+    line-height: 40px;
+    vertical-align: middle;
+    display: inline-block;
+    min-height: 40px;
+    background: transparent;
+    border: 1px solid #4a4a4a;
+    cursor: pointer;
+    transition: all .2s linear;
+    min-width: 100px;
+    padding: 0 20px;
+    box-sizing: border-box;
+    opacity: 1; }
+    .unregistred .button.login {
+      margin: 0 20px 0 30px; }
+      .unregistred .button.login:hover {
+        background: #000000;
+        color: #ffffff; }
+    .unregistred .button.registration {
+      min-width: 180px;
+      background: #f8e71c;
+      border: 1px solid #f8e71c; }
+      .unregistred .button.registration:hover {
+        color: #f8e71c;
+        background: #000000;
+        border: 1px solid #000000; }
 
 .menu {
   display: block !important;

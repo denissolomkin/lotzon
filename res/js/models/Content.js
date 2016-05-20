@@ -352,10 +352,416 @@
         },
 
         destroyPopBox: function () {
+            if($('.pop-box:visible').length === 1){
+                var body = document.body;
+                body.className = body.className.replace(/\bscrollLock\b/,'');
+            }
 
             DOM.remove(DOM.up('.pop-box', this));
 
+        },
+
+        popup:{
+            current:'',
+            referer:'',
+
+            init:function(){
+                Content.popup.fixBody();
+                // >>> check empty EMAIL input !! old class
+                $('.pop-box .m_input').on('keyup', function() {
+                    console.debug('>>> !! m_input length ', $.trim($(this).val().length));
+                    var val = $.trim($(this).val().length);
+                    if (val > 0) {
+                        $(this).closest('form').find('.sb_but').removeClass('disabled').prop('disabled', false);
+                    } else {
+                        $(this).closest('form').find('.sb_but').addClass('disabled').prop('disabled', true);
+                    }
+                });
+            },
+            
+            onClose: function(callback){
+
+                var target = document.querySelector('.close-pop-box');
+                
+                if(!target) return;
+
+                target.onclick = function(e){
+
+                    if (typeof callback === "function") {
+                        callback(e);
+                    }
+                }
+
+
+            },
+            formError: function(form) {
+
+                if (form) {
+                    form.addClass('error');
+
+                    setTimeout(function() {
+                        form.removeClass('error');
+                    }, 3000);
+
+                    return true;
+                }
+
+                // console.log('>> form not found')
+                return false;
+            },
+
+            // call:function(fnName,args){
+            //     if (!fnName) return;
+            //     try {
+            //       Content.popup[fnName](args);
+            //     } catch (e) {
+            //       console.debug(e);
+            //     }
+            // },
+            
+            // scrollLock - hide scrollbar
+            fixBody:function(){
+                var body = document.body;
+                if(body.className.indexOf("scrollLock") === -1){
+                    body.className += " scrollLock";
+                }
+            },
+            enter:function(){
+                console.debug('>> popup >> enter');
+
+                R.push({
+                    template: 'popup-unregistred-enter',
+                    after: function(){
+                        Content.popup.fixBody();
+                        Content.popup.referer = 'enter';
+                    }
+                });
+            },
+            login:function(){
+                console.debug('>> popup >> login');
+
+                R.push({
+                    template: 'popup-unregistred-login',
+                    after: function(){
+                        Content.popup.init();
+                        Content.popup.onClose(function(){
+                            // Content.popup['register']();
+                        });
+                        // >>> toggle recover-pass
+                        $('.login-box #rec-pass, .password-recovery-box .back-to').on('click', function() {
+
+                            //restore form|msg
+                            $('#pass-rec-form-success').hide();
+                            $('form[name="rec-pass"]').show();
+
+                            $('.password-recovery-box').toggle();
+                            $('.login-box').toggle();
+
+                        });
+
+                        $('form[name="login"]').on('submit', function(e) {
+                            var form = $(this);
+                            var email = form.find('input[name="login"]').val();
+                            var pwd = form.find('input[name="password"]').val();
+                            var remember = form.find("#remcheck:checked").length ? 1 : 0;
+
+                            Content.popup.do.loginPlayer({ 'email': email, 'password': pwd, 'remember': remember }, function(data) {
+
+                                form.addClass('success');
+                                document.location.href = "/";
+
+                            }, function(data) {
+
+                                Content.popup.formError(form);
+                                form.find('.alert').text(data.message);
+
+                            });
+
+                            return false;
+                        });
+
+
+                        // >>> restore password
+                        $('form[name="rec-pass"]').submit(function(event) {
+                            var form = $(this);
+                            var email = $(this).find('input[name="login"]').val();
+
+                            Content.popup.do.resendPassword(email, function() {
+
+                                form.find('input[name="login"]').val('');
+                                // form.addClass('success');
+
+                                form.hide();
+                                $('#pass-rec-form-success').show();
+
+                                setTimeout(function() {
+                                    form.show();
+                                    $('#pass-rec-form-success').hide();
+                                    $('.password-recovery-box').hide();
+                                    $('.login-box').show();
+                                }, 5000);
+
+                                form.removeClass('loading');
+                            }, function(data) {
+                                form.removeClass('loading');
+
+                                Content.popup.formError(form);
+                                form.find('.alert').text(data.message);
+
+                            });
+
+                            event.preventDefault();
+                        });
+
+                    }
+                });
+            },
+            error:function(){
+                console.debug('>> popup >> error');
+
+                R.push({
+                    template: 'popup-unregistred-error',
+                    after: function(){
+                        Content.popup.fixBody();
+                    }
+                });
+            },
+            locked:function(){
+                console.debug('>> popup >> locked');
+
+                R.push({
+                    template: 'popup-unregistred-locked',
+                    after: function(){
+                        Content.popup.fixBody();
+                    }
+                });
+            },
+            register:function(){
+                console.debug('>> popup >> register');
+
+                R.push({
+                    template: 'popup-unregistred-registration',
+                    after: function(){
+                        Content.popup.init();
+                        Content.popup.onClose(function(){
+                            // Content.popup['login']();
+                        });
+                        // >>> registration handler
+                        $('form[name="register"]').on('submit', function(e) {
+                            console.debug('>>> registration handler');
+
+                            var form = $(this);
+                            var email = form.find('input[name="login"]').val();
+                            var rulesAgree = 1; //form.find('#rulcheck').prop('checked') ? 1 : 0;
+                            var ref = $(this).data('ref');
+
+                            Content.popup.do.registerPlayer({ 'email': email, 'agree': 1, 'ref': ref }, function(data) {
+                                console.debug('register success!!');
+
+                                form.find('input[name="login"]').val(''); // resset value
+                                form.addClass('success');
+
+                                $('#popup-unregistred-registration').remove();
+
+                                Content.popup.confirmEmail(email);
+                                // // >>>> переписать на нормальный код ...как только время будет
+                                // // go to next step // вывод окна с переотправки пароля
+                                // form.hide();
+                                // var compleetForm = $('form[name="email-send"]');
+                                // compleetForm.show();
+                                // compleetForm.find('.current-mail').text(email);
+
+                                // $('form[name="email-send"] .back').on('click', function() {
+                                //     $('form[name="email-send"]').hide();
+                                //     $('form[name="register"]').show();
+                                // });
+
+                                // $('form[name="email-send"] a.resend').on('click', function() {
+                                //     Content.popup.do.resendEmail(email, function() {
+                                //         // some callback
+                                //     }, function(data) {
+                                //         // some error
+                                //     });
+                                // });
+
+                            }, function(data) {
+                                console.debug('register error!!');
+
+                                Content.popup.formError(form);
+                                form.find('.alert').text(data.message);
+
+                            });
+
+                            return false;
+                        });
+                    }
+                });
+            },
+            confirmEmail:function(email){
+                console.debug('>> popup >> confirmEmail');
+
+                R.push({
+                    template: 'popup-unregistred-confirm-email',
+                    after: function(){
+                        Content.popup.init();
+                        Content.popup.onClose(function(){
+                            Content.popup['register']();
+                        });
+
+                        var compleetForm = $('form[name="email-send"]');
+                        compleetForm.find('.current-mail').text(email);
+
+                        $('form[name="email-send"] .back-to').on('click', function() {
+                            $('#popup-unregistred-confirm-email').remove();
+                            Content.popup.register();
+                        });
+
+                        $('form[name="email-send"] a.resend').on('click', function() {
+                            Content.popup.do.resendEmail(email, function() {
+                                // some callback
+                            }, function(data) {
+                                // some error
+                            });
+                        });
+
+                    }
+                });
+            },
+            changeEmail:function(){
+                console.debug('>> popup >> changeEmail');
+
+                R.push({
+                    template: 'popup-unregistred-change-email',
+                    after: function(){
+                        Content.popup.init();
+                        Content.popup.onClose(function(){
+                            Content.popup['register']();
+                        });
+                    }
+                });
+            },
+            socialExist:function(){
+                console.debug('>> popup >> socialExist');
+
+                R.push({
+                    template: 'popup-unregistred-social-exist',
+                    after: function(){
+                        Content.popup.init();
+                        Content.popup.onClose(function(){
+                            Content.popup['register']();
+                        });
+                    }
+                });
+            },
+            rules:function(){
+
+                console.debug('>> popup >> rules');
+                
+                R.push({
+                    template: 'popup-unregistred-rules',
+                    after: function(){
+                        R.push({
+                            template: 'common-rules',
+                            href: '/res/rules/' + Player.language.current,
+                            after: function(){
+                                Content.popup.fixBody();
+                            }
+                        });
+                    }
+                });
+            },
+
+            do:{
+                loginPlayer: function(authData, successFunction, failFunction, errorFunction){
+                    $.ajax({
+                        url: "/players/login/",
+                        method: 'POST',
+                        data: authData,
+                        async: true,
+                        dataType: 'json',
+                        success: function(data) {
+                            if (data.status == 1) {
+                                successFunction.call(authData, data);
+                            } else {
+                                failFunction.call(authData, data);
+                            }
+                        },
+                        error: function() {
+                            errorFunction.call(authData, data);
+                       }
+                    });
+                },
+
+                registerPlayer: function(playerData, successFunction, failFunction, errorFunction)
+                {
+                    $.ajax({
+                        url: "/players/register/",
+                        method: 'POST',
+                        data: playerData,
+                        async: true,
+                        dataType: 'json',
+                        success: function(data) {
+                            if (data.status == 1) {
+                                successFunction.call(playerData, data);
+                            } else {
+                                failFunction.call(playerData, data);
+                            }
+                        },
+                        error: function() {
+                            errorFunction.call(playerData, data);
+                       }
+                    });
+                },
+                resendPassword: function(email, successFunction, failFunction, errorFunction)
+                {
+                    $.ajax({
+                        url: "/players/resendPassword",
+                        method: 'POST',
+                        data: {
+                            email: email
+                        },
+                        async: true,
+                        dataType: 'json',
+                        success: function(data) {
+                            if (data.status == 1) {
+                                successFunction.call($(this), data);
+                            } else {
+                                failFunction.call($(this), data);
+                            }
+                        },
+                        error: function() {
+                            errorFunction.call($(this), data);
+                       }
+                    });
+                },
+                resendEmail: function(email, successFunction, failFunction, errorFunction)
+                {
+                    $.ajax({
+                        url: "/players/resendEmail",
+                        method: 'POST',
+                        data: {
+                            email: email
+                        },
+                        async: true,
+                        dataType: 'json',
+                        success: function(data) {
+                            if (data.status == 1) {
+                                successFunction.call($(this), data);
+                            } else {
+                                failFunction.call($(this), data);
+                            }
+                        },
+                        error: function() {
+                            errorFunction.call($(this), data);
+                       }
+                    });
+                }
+
+            }
+
+
         }
+
     };
 
 

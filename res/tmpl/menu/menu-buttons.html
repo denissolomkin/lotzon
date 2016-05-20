@@ -1,4 +1,5 @@
 <div id="menu-buttons" class="menu-btns">
+    {{#if player}}
     <!-- Menu Button -->
     <div class="menu-btn menu-btn-item"><i class="i-menu"></i> {{{countHTML "menu"}}}
     </div>
@@ -9,4 +10,10 @@
                  onerror="Player.getAvatar.call(this)">
         </a>
     </div>
+    {{else}}
+    <div class="unregistred">
+        <button onclick="Content.popup.login();" class="button login" id="unregistred-login">{{i18n "title-of-enter"}}</button>
+        <button onclick="Content.popup.register();" class="button registration" id="unregistred-register">{{i18n "title-of-register"}}</button>
+    </div>
+    {{/if}}
 </div>

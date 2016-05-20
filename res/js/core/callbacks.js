@@ -35,7 +35,6 @@
                     //
                     {".back": Navigation.do.backBlock},
                     {".close-pop-box": Content.destroyPopBox}
-
                 ]
             });
             

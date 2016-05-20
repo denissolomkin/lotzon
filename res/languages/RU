@@ -1,6 +1,48 @@
 {
     "res":{
             "RU": {
+                "title-email-placholder": "Ваш email",
+                "title-other-email-placholder": "выслать на другой email",
+
+                "popup-exist-title": "АККАУНТ УЖЕ ЗАРЕГИСТРИРОВАН",
+                "popup-exist-msg": "Соцсеть через которую Вы хотите зарегистрироватся уже есть в нашей базе. <br><br>Нажмите кнопку «продолжить» для входа в аккаунт",
+                
+                "popup-register-title": "Регистрация нового участника",
+                "popup-register-alert-msg": "Этот email уже зарегистрирован",
+                "popup-register-success-msg": "Информация для завершения регистрации выслана на Ваш email.",
+                "popup-register-text": "Напишите ваш email, на него будет выслано письмо для завершения регистрации",
+                "popup-register-or": "или через",
+                "popup-register-rules-text": "Регистрируясь, вы принимаете",
+                "popup-register-rules-title": "пользовательское соглашение",
+
+                "popup-recover-title": "Востановление пароля",
+                "popup-recover-text": "На этот email будет выслано письмо для восстановления пароля",
+                "popup-recover-success-text": "Новый пароль выслан на указанный email.",
+
+                "popup-login-title": "Вход",
+                "popup-login-alert-msg": "Такой email не зарегистрирован или пароль не верен",
+                "popup-login-remember": "Запомнить",
+                "popup-login-password-lose": "забыли пароль?",
+
+                "popup-locked-title": "ДОСТУП ЗАБЛОКИРОВАН",
+                "popup-locked-text": "Аккаунт заблокирован за нарушение правил участия.",
+
+                "popup-error-title": "ПРОИЗОШЛА ОШИБКА",
+                "popup-error-text": "Повторите попытку позже.",
+                
+                "popup-confirm-email-title": "подтверждение email",
+                "popup-confirm-email-text-1": "На почту",
+                "popup-confirm-email-text-2": "отправлено письмо для подтверждения регистрации.",
+                "popup-confirm-email-bottom-text-1": "Если вы не получили письмо в течении 5 минут проверьте папку «спам». Если письма нет, нажмите",
+                "popup-confirm-email-bottom-text-2": "отправить повторно",
+
+                "popup-change-email-title": "EMAIL",
+                "popup-change-email-text": "Письмо для подтверждения регистрации будет выслано на email",
+                "popup-change-email-alert-msg": "Этот email уже зарегистрирован",
+                "popup-change-email-success-msg": "Информация для завершения регистрации выслана на Ваш email.",
+
+
+
                 "message-lottery-ticket-autocomplete": "АВТОЗАПОЛНЕНИЕ",
                 "message-lottery-ticket-done": "ПОДТВЕРЖДЕН И ПРИНЯТ К РОЗЫГРЫШУ",
                 "message-lottery-ticket-yet": "ЕЩЕ",
@@ -72,6 +114,8 @@
                 "menu-reports-transactions": "История транзакций",
                 "menu-reports-payments": "История выплат",
 
+                "button-recover": "Восстановить",
+                "button-continue": "Продолжить",
                 "button-more": "Подробнее",
                 "button-save": "Сохранить",
                 "button-load-more": "Показать еще",
@@ -206,6 +250,11 @@
                 "title-reports-payments-order-prize":"Приз",
 
 
+                "title-of-enter": "Войти",
+                "title-of-register": "Регистрация",
+
+                "title-popup-enter-title": "ДЛЯ ПРОДОЛЖЕНИЯ ВАМ НУЖНО <br> ВОЙТИ ИЛИ ЗАРЕГИСТРИРОВАТЬСЯ",
+                "title-popup-profile-complete": "ЗАВЕРШЕНИЕ РЕГИСТРАЦИИ",
                 "title-popup-profile-complete": "ЗАВЕРШЕНИЕ РЕГИСТРАЦИИ",
                 "title-popup-profile-welcome": "ДОБРО ПОЖАЛОВАТЬ!",
                 "title-popup-profile-faq-title": "СРАЗУ ХОТИ ОТВЕТИТЬ НА САМЫЕ ПОПУЛЯРНЫЕ ВОПРОСЫ",
@@ -278,7 +327,7 @@
                 "title-profile-refill-title": "Для участия в проекте абсолютно <span>не обязательно</span> пополнять свой баланс. Деньги можно выиграть в разнообразных играх и конкурсах.",
                 "title-profile-refill-text": "Мы работаем над безопасной автоматической системой пополнения баланса. Сейчас все заявки обрабатываются в ручном режиме и занимают некоторое время.<br><br>У вас есть возможность пополнить свой баланс переведя желаемую сумму на указанные ниже реквизиты.",
                 "title-profile-refill-atention": "Внимание!",
-                "title-profile-refill-after-text": "В комментарий к переводу укажите email или никнейм на который вы зарегистрированы в Lotzon.",
+                "title-profile-refill-after-text": "В комментарий к переводу укажите email или никнейм на который вы зарегистрированны в Lotzon.",
                 
                 "title-profile-cashout": "Вывод денег",
                 "title-profile-cashout-choose": "Выберите способ вывода денег",

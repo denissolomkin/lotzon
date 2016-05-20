@@ -1,0 +1,69 @@
+<div id="popup-unregistred-login" class="pop-box content-main popup-user">
+    <div class="inner">
+        <i class="close-pop-box i-x-slim"></i>
+        
+        <div class="box password-recovery-box">
+            <!-- REPASSWORD FORM -->
+            <div class="title box-inner">
+                <i class="i-arrow-slim-left back-to"></i>
+                <span>{{i18n "popup-recover-title"}}</span>
+            </div>
+            <form name="rec-pass" class="box-inner">
+                <div id="pass-rec-form">
+                    <div class="ib-l">
+                        <input autocomplete="off" spellcheck="false" type="email" class="m_input" name="login" placeholder="{{i18n "title-email-placholder"}}">
+                        <div class="alert"></div>
+                    </div>
+                    <div class="input-text">
+                        <div class="text">{{i18n "popup-recover-text"}}</div>
+                        <div class="alert"></div>
+                    </div>
+                    <div class="s-b">
+                        <input type="submit" class="sb_but default disabled" disabled="" value="{{i18n "button-recover"}}">
+                    </div>
+                </div>
+            </form>
+            <div id="pass-rec-form-success">
+                <div class="input-text">
+                    <div class="text">{{i18n "popup-recover-success-text"}}</div>
+                </div>
+            </div>
+        </div>
+        <div class="box login-box">
+            <!-- LOGIN FORM -->
+            <div class="title box-inner">
+                <span>{{i18n "popup-login-title"}}</span>
+            </div>
+            <form id="login-block-form" name="login" class="box-inner">
+                <div id="login-form">
+                    <div class="ib-l">
+                        <input autocomplete="off" spellcheck="false" type="email" class="m_input" name="login" placeholder="{{i18n "title-email-placholder"}}" value="">
+                    </div>
+                    <div class="ib-p">
+                        <input autocomplete="off" spellcheck="false" type="password" class="m_input" name="password" placeholder="{{i18n "title-profile-password"}}">
+                    </div>
+                    <div class="input-text">
+                        <div class="alert">
+                            <span>{{i18n "popup-login-alert-msg"}}</span>
+                        </div>
+                    </div>
+                    <div class="ch-b-bk">
+                        <div class="ch-b">
+                            <input type="checkbox" id="remcheck" hidden="">
+                            <label for="remcheck">{{i18n "popup-login-remember"}}</label>
+                        </div>
+                        <a id="rec-pass" class="r-p">{{i18n "popup-login-password-lose"}}</a>
+                    </div>
+                    <div class="s-b">
+                        <input type="submit" class="sb_but default" value="Войти">
+                    </div>
+                    <div class="sl-bk">
+                        <a href="./auth/Facebook?method=log-in" class="i-Facebook-simple"></a>
+                        <a href="./auth/Vkontakte?method=log-in" class="i-Vkontakte-simple"></a>
+                        <a href="./auth/Odnoklassniki?method=log-in" class="i-Odnoklassniki-simple"></a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

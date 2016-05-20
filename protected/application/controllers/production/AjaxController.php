@@ -29,18 +29,23 @@ class AjaxController extends \SlimController\SlimController
         die(json_encode($response));
     }
 
-    protected function authorizedOnly($initPlayer = false)
+    protected function isAuthorized($initPlayer = false)
     {
-
         if (!$this->session->get(Player::IDENTITY) instanceof Player) {
-            $this->ajaxResponseUnauthorized();
             return false;
-
         } else if ($initPlayer){
             $this->player = $this->session->get(Player::IDENTITY);
         }
-
         $this->validatePlayer();
+        return true;
+    }
+
+    protected function authorizedOnly($initPlayer = false)
+    {
+        if (!$this->isAuthorized($initPlayer)) {
+            $this->ajaxResponseUnauthorized();
+            return false;
+        }
 
         return true;
     }

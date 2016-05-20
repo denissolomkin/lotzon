@@ -1,6 +1,7 @@
 <?php
 namespace controllers\production;
 use \Application, \Banner;
+use \Common;
 
 Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');
 
@@ -11,7 +12,7 @@ class BannersController extends \AjaxController
     {
         parent::init();
         $this->validateRequest();
-        $this->authorizedOnly(true);
+        //$this->authorizedOnly(true);
     }
 
     public function indexAction($device, $location, $page = null)
@@ -23,11 +24,17 @@ class BannersController extends \AjaxController
 
             $banner  = new Banner;
 
+            if ($this->isAuthorized(true)) {
+                $banner->setCountry($this->player->getCountry());
+            } else {
+                $banner->setCountry(Common::getUserIpCountry());
+            }
+
             $render = $banner
                 ->setDevice($device)
                 ->setLocation($location)
                 ->setPage($page)
-                ->setCountry($this->player->getCountry())
+                //->setCountry($this->player->getCountry());
                 ->setTemplate($device)
                 /*->setGroup(ucfirst($device).ucfirst($location))
                 ->setKey($device)*/

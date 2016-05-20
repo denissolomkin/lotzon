@@ -1,6 +1,6 @@
 <?php
 namespace controllers\production;
-use \Application, \Banner, \SettingsModel, \BlogsModel, \Blog;
+use \Application, \Banner, \SettingsModel, \BlogsModel, \Blog, \Common;
 
 Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');
 
@@ -13,15 +13,20 @@ class BlogsController extends \AjaxController
         self::$blogsPerPage = (int)SettingsModel::instance()->getSettings('counters')->getValue('POSTS_PER_PAGE') ? : 10;
         parent::init();
         $this->validateRequest();
-        $this->authorizedOnly(true);
-        $this->validateLogout();
-        $this->validateCaptcha();
+        //$this->authorizedOnly(true);
+        //$this->validateLogout();
+        //$this->validateCaptcha();
     }
 
     public function postAction($id)
     {
 
-        $country  = $this->player->getCountry();
+        if ($this->isAuthorized(true)) {
+            $country  = $this->player->getCountry();
+        } else {
+            $country  = Common::getUserIpCountry();
+        }
+
         try {
             $blog = new \Blog;
             $blog->setId($id)->fetch();
@@ -64,8 +69,14 @@ class BlogsController extends \AjaxController
     public function listAction()
     {
 
-        $lang     = $this->player->getLang();
-        $country  = $this->player->getCountry();
+        if ($this->isAuthorized(true)) {
+            $lang     = $this->player->getLang();
+            $country  = $this->player->getCountry();
+        } else {
+            $lang     = Common::getUserIpCountry();
+            $country  = Common::getUserIpCountry();
+        }
+
         $count    = $this->request()->get('count', self::$blogsPerPage);
         $offset   = $this->request()->get('offset', NULL);
         $beforeId = $this->request()->get('before_id', NULL);
@@ -117,7 +128,12 @@ class BlogsController extends \AjaxController
     public function similarAction($blogId)
     {
 
-        $lang     = $this->player->getLang();
+        if ($this->isAuthorized(true)) {
+            $lang     = $this->player->getLang();
+        } else {
+            $lang     = Common::getUserIpCountry();
+        }
+
         $count    = $this->request()->get('count', self::$blogsPerPage);
         $beforeId = $this->request()->get('before_id', NULL);
         $afterId  = $this->request()->get('after_id', NULL);

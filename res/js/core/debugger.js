@@ -159,7 +159,9 @@
                     Content.captcha.render();
                     return false;
                 } else if (message[0] === 'Unauthorized' || message[2] == 401) {
-                    location.reload();
+                    if(!config.unauthorized){
+                        location.reload();
+                    }
                     return false;
                 } else {
                     if (message[0] === 'error')

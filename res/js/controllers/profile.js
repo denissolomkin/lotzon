@@ -42,15 +42,10 @@
             },
 
             settings: function(){
-
                 // events
                 Profile.do.privacyBoxes();
 
-            },
-
-            // complete: function() {
-
-            // }
+            }
 
         },
 
@@ -58,8 +53,7 @@
         validate: {
 
             convert: function() {
-
-                console.log('asdasdasdsa');
+                // console.log('asdasdasdsa');
                 var $input_money = $(Profile.moneyConvert),
                     $calc_points = $(Profile.pointsConvert, $input_money.closest('form')),
                     input_money = Player.checkMoney($input_money.val()),
@@ -256,7 +250,7 @@
             // },
 
             openOption: function() {
-                console.log("first");
+                // console.log("first");
                 $(this).closest('.option-block').find('.option, .show-option .change').toggleClass('hidden');
                 if ($('.hidden-notice') != undefined) {
                     console.log("second");
