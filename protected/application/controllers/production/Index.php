@@ -153,6 +153,10 @@ class Index extends \SlimController\SlimController
 
         if (!$this->session->get(Player::IDENTITY)) {
 
+            if ($this->request()->get('guest')) {
+                $this->game_noauth();
+                return true;
+            }
             // check for autologin;
             if (!empty($_COOKIE[Player::AUTOLOGIN_COOKIE])) {
                 $player = new Player();
@@ -201,6 +205,120 @@ class Index extends \SlimController\SlimController
             }
         }
 
+    }
+
+    protected function game_noauth()
+    {
+        $detect   = new MobileDetect;
+        if ($detect->version('IE')!==false) {
+            $this->render('../../res/browser_error.php', array('layout' => false,));
+            return false;
+        }
+
+        $isMobile = $detect->isMobile();
+        $counters = \SettingsModel::instance()->getSettings('counters');
+        $seo      = SEOModel::instance()->getSEOSettings();
+
+        try {
+            $geoReader = new Reader(PATH_MMDB_FILE);
+            $country   = $geoReader->country(Common::getUserIp())->country;
+        } catch (\Exception $e) {
+            $country = CountriesModel::instance()->defaultCountry();
+        }
+
+        $currency = CountriesModel::instance()->isCountry($country)
+            ? $country
+            : CountriesModel::instance()->defaultCountry();
+
+        $this->session->set('isMobile', $isMobile);
+
+        if(($page = $this->session->get('page'))) {
+            $this->session->remove('page');
+        }
+
+        $config = array(
+            'unauthorized' => true,
+            'timeout'            => array(
+                'ping'   => (int)$counters->getValue('PLAYER_TIMEOUT'),
+                'online' => (int)$counters->getValue('PLAYER_TIMEOUT')
+            ),
+            'adminId'            => (int)$counters->getValue('USER_REVIEW_DEFAULT'),
+            'minMoneyOutput'          => (int)$counters->getValue('MIN_MONEY_OUTPUT'),
+            'tempFilestorage'    => '/filestorage/temp',
+            'filestorage'        => '/filestorage',
+            'websocketUrl'       => 'ws' . (\Config::instance()->SSLEnabled ? 's' : '') . '://' . $_SERVER['SERVER_NAME'] . ':' . \Config::instance()->wsPort,
+            'websocketEmulation' => false,
+            'page'               => $page,
+            'limits'             => array(
+                'lottery-history' => (int)$counters->getValue('LOTTERIES_PER_PAGE'),
+                'communication-comments' => (int)$counters->getValue('COMMENTS_PER_PAGE'),
+                'communication-messages' => (int)$counters->getValue('MESSAGES_PER_PAGE'),
+                'communication-notifications' => (int)$counters->getValue('NOTIFICATIONS_PER_PAGE'),
+                'users-friends' => (int)$counters->getValue('FRIENDS_PER_PAGE'),
+                'blog-posts' => (int)$counters->getValue('POSTS_PER_PAGE'),
+            ),
+            'yandexMetrika' => (int)$counters->getValue('YANDEX_METRIKA'),
+            'googleAnalytics' => $counters->getValue('GOOGLE_ANALYTICS'),
+            'captchaKey' => $counters->getValue('CAPTCHA_CLIENT'),
+            'siteVersion' => $seo['SiteVersion'],
+        );
+
+        $debug = array(
+            'config' => array(
+                'dev'     => \Config::instance()->dev ?: false,
+                'stat'    => false,
+                'alert'   => false,
+                'render'  => false,
+                'cache'   => false,
+                'i18n'    => false,
+                'func'    => true,
+                'info'    => true,
+                'warn'    => true,
+                'error'   => true,
+                'log'     => true,
+                'clean'   => true,
+                'content' => true
+            )
+        );
+
+        $lottery = LotteriesModel::instance()->getPublishedLotteriesList(1);
+        $lottery = array_shift($lottery);
+
+        $lottery = array(
+            'lastLotteryId'    => $lottery->getId(),
+            'timeToLottery'    => LotterySettingsModel::instance()->loadSettings()->getNearestGame() + strtotime('00:00:00', time()) - time(),
+            'selectedTab'      => null,
+            'ticketConditions' => array(
+                4 => (int)\SettingsModel::instance()->getSettings('ticketConditions')->getValue('CONDITION_4_TICKET'),
+                5 => (int)\SettingsModel::instance()->getSettings('ticketConditions')->getValue('CONDITION_5_TICKET'),
+                6 => (int)\SettingsModel::instance()->getSettings('ticketConditions')->getValue('CONDITION_6_TICKET'),
+            ),
+            'totalBalls'       => \LotterySettings::TOTAL_BALLS,
+            'requiredBalls'    => \LotterySettings::REQUIRED_BALLS,
+            'totalTickets'     => \LotterySettings::TOTAL_TICKETS,
+            'filledTickets'    => array(1=>null,2=>null,3=>null,4=>false,5=>false,6=>false,7=>false,8=>false),
+            'priceGold'        => SettingsModel::instance()->getSettings('goldPrice')->getValue($currency),
+            'priceGoldTicket'  => array(
+                'money'  => SettingsModel::instance()->getSettings('goldPrice')->getValue($currency),
+                'points' => SettingsModel::instance()->getSettings('goldPrice')->getValue('POINTS'),
+            ),
+            'prizes'           => array(
+                'default' => LotterySettingsModel::instance()->loadSettings()->getPrizes($currency),
+                'gold'    => LotterySettingsModel::instance()->loadSettings()->getGoldPrizes($currency),
+            ),
+        );
+
+        $this->render('../../res/index.php', array(
+            'layout'    => false,
+            'player'    => array(),
+            'lottery'   => $lottery,
+            'debug'     => $debug,
+            'slider'    => array(),
+            'config'    => $config,
+            'isMobile'  => $isMobile,
+            'seo'       => $seo,
+            'version'   => $seo['SiteVersion']
+        ));
     }
 
     protected function game($page)
