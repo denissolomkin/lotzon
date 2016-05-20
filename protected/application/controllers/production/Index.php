@@ -133,6 +133,12 @@ class Index extends \SlimController\SlimController
             $this->ref = $_COOKIE['ref'];
         }
 
+        if(($page = $this->session->get('page'))) {
+            $this->session->remove('page');
+        } else {
+            $page = '';
+        }
+
         try {
             $geoReader = new Reader(PATH_MMDB_FILE);
             $country   = $geoReader->country(Common::getUserIp())->country->isoCode;
@@ -153,8 +159,8 @@ class Index extends \SlimController\SlimController
 
         if (!$this->session->get(Player::IDENTITY)) {
 
-            if ($this->request()->get('guest')) {
-                $this->game_noauth();
+            if (($this->request()->get('guest'))or($page<>'')) {
+                $this->game_noauth($page);
                 return true;
             }
             // check for autologin;
@@ -207,7 +213,7 @@ class Index extends \SlimController\SlimController
 
     }
 
-    protected function game_noauth()
+    protected function game_noauth($page)
     {
         $detect   = new MobileDetect;
         if ($detect->version('IE')!==false) {
@@ -227,10 +233,6 @@ class Index extends \SlimController\SlimController
             : CountriesModel::instance()->defaultCountry();
 
         $this->session->set('isMobile', $isMobile);
-
-        if(($page = $this->session->get('page'))) {
-            $this->session->remove('page');
-        }
 
         $config = array(
             'unauthorized' => true,
@@ -353,10 +355,6 @@ class Index extends \SlimController\SlimController
         if(($error = ($this->session->get('ERROR') ?: ($_SESSION['ERROR'] ?: false)))) {
             $this->session->remove('ERROR');
             unset($_SESSION['ERROR']);
-        }
-
-        if(($page = $this->session->get('page'))) {
-            $this->session->remove('page');
         }
 
         /* todo delete
