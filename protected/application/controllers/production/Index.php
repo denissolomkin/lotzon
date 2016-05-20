@@ -219,14 +219,7 @@ class Index extends \SlimController\SlimController
         $counters = \SettingsModel::instance()->getSettings('counters');
         $seo      = SEOModel::instance()->getSEOSettings();
 
-        try {
-            $geoReader = new Reader(PATH_MMDB_FILE);
-            $country   = $geoReader->country(Common::getUserIp())->country;
-        } catch (\Exception $e) {
-            $country = CountriesModel::instance()->defaultCountry();
-        }
-
-        $country = $country->isoCode;
+        $country = Common::getUserIpCountry();
 
         $currency = CountriesModel::instance()->isCountry($country)
             ? $country
