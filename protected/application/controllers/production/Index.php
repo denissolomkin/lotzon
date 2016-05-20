@@ -226,6 +226,8 @@ class Index extends \SlimController\SlimController
             $country = CountriesModel::instance()->defaultCountry();
         }
 
+        $country = $country->isoCode;
+
         $currency = CountriesModel::instance()->isCountry($country)
             ? $country
             : CountriesModel::instance()->defaultCountry();
