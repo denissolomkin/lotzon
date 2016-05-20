@@ -573,7 +573,7 @@ Config::instance()->publicResources = array(
      * Comments
      */
     '/communication/comments/' => array(
-        'get'  => 'controllers\production\CommentsController:list',
+        'get'  => 'controllers\production\CommentsControllerMixed:list',
         'post' => 'controllers\production\CommentsController:create'
     ),
     '/communication/comments/:commentId/like' => array(
@@ -617,7 +617,7 @@ Config::instance()->publicResources = array(
     ),
     '/blog/post/:identifier/comments' => array(
         'get'  => array(
-            'controllers\production\CommentsController:list',
+            'controllers\production\CommentsControllerMixed:list',
             function ($obj) {
                 $obj->setParams(array(
                         "module"   => "blog",
