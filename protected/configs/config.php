@@ -693,10 +693,10 @@ Config::instance()->publicResources = array(
      * Prizes
      */
     '/prizes/exchange' => array(
-        'get' => 'controllers\production\PrizesController:list'
+        'get' => 'controllers\production\PrizesControllerMixed:list'
     ),
     '/prizes/exchange/goods' => array(
-        'get' => 'controllers\production\PrizesController:list'
+        'get' => 'controllers\production\PrizesControllerMixed:list'
     ),
     '/prizes/exchange/goods/:itemId' => array(
         'get'  => 'controllers\production\PrizesController:good',
