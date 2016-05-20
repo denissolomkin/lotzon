@@ -22,6 +22,8 @@ class BlogsController extends \AjaxController
     {
 
         if ($this->isAuthorized(true)) {
+            $this->validateLogout();
+            $this->validateCaptcha();
             $country  = $this->player->getCountry();
         } else {
             $country  = Common::getUserIpCountry();
@@ -70,6 +72,8 @@ class BlogsController extends \AjaxController
     {
 
         if ($this->isAuthorized(true)) {
+            $this->validateLogout();
+            $this->validateCaptcha();
             $lang     = $this->player->getLang();
             $country  = $this->player->getCountry();
         } else {
@@ -129,6 +133,8 @@ class BlogsController extends \AjaxController
     {
 
         if ($this->isAuthorized(true)) {
+            $this->validateLogout();
+            $this->validateCaptcha();
             $lang     = $this->player->getLang();
         } else {
             $lang     = Common::getUserIpLang();
