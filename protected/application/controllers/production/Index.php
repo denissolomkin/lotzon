@@ -220,6 +220,7 @@ class Index extends \SlimController\SlimController
         $seo      = SEOModel::instance()->getSEOSettings();
 
         $country = Common::getUserIpCountry();
+        $lang    = Common::getUserIpLang();
 
         $currency = CountriesModel::instance()->isCountry($country)
             ? $country
@@ -284,8 +285,7 @@ class Index extends \SlimController\SlimController
                 'complete' => true,
             ),
             'language' => array(
-                //'current'   => $country,
-                'current'   => 'RU',
+                'current'   => $lang,
                 'available' => array(
                     'RU' => 'Русский',
                     'EN' => 'English',

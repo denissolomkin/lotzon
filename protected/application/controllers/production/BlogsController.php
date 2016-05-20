@@ -73,7 +73,7 @@ class BlogsController extends \AjaxController
             $lang     = $this->player->getLang();
             $country  = $this->player->getCountry();
         } else {
-            $lang     = Common::getUserIpCountry();
+            $lang     = Common::getUserIpLang();
             $country  = Common::getUserIpCountry();
         }
 
@@ -131,7 +131,7 @@ class BlogsController extends \AjaxController
         if ($this->isAuthorized(true)) {
             $lang     = $this->player->getLang();
         } else {
-            $lang     = Common::getUserIpCountry();
+            $lang     = Common::getUserIpLang();
         }
 
         $count    = $this->request()->get('count', self::$blogsPerPage);

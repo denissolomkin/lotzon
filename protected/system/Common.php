@@ -109,7 +109,8 @@ class Common
         return number_format($number, $is_float ? 2 : 0,'.', ' ');
     }
 
-    public static function getUserIpCountry() {
+    public static function getUserIpCountry()
+    {
         try {
             $geoReader = new Reader(PATH_MMDB_FILE);
             $country   = $geoReader->country(Common::getUserIp())->country->isoCode;
@@ -118,5 +119,11 @@ class Common
         }
 
         return $country;
+    }
+
+    public static function getUserIpLang()
+    {
+        //return $this->getUserIpCountry();
+        return 'RU';
     }
 }
