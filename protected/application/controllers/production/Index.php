@@ -284,6 +284,21 @@ class Index extends \SlimController\SlimController
         $lottery = LotteriesModel::instance()->getPublishedLotteriesList(1);
         $lottery = array_shift($lottery);
 
+        $playerObj = array(
+            'is' => array(
+                'complete' => true,
+            ),
+            'language' => array(
+                'current'   => $counters,
+                'available' => array(
+                    'RU' => 'Русский',
+                    'EN' => 'English',
+                    'UA' => 'Украiнська'
+                )
+            ),
+            'currency' => $currency,
+        );
+
         $lottery = array(
             'lastLotteryId'    => $lottery->getId(),
             'timeToLottery'    => LotterySettingsModel::instance()->loadSettings()->getNearestGame() + strtotime('00:00:00', time()) - time(),
@@ -310,7 +325,7 @@ class Index extends \SlimController\SlimController
 
         $this->render('../../res/index.php', array(
             'layout'    => false,
-            'player'    => array(),
+            'player'    => $playerObj,
             'lottery'   => $lottery,
             'debug'     => $debug,
             'slider'    => array(),
