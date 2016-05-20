@@ -434,6 +434,9 @@
                     after: function(){
                         Content.popup.fixBody();
                         Content.popup.referer = 'enter';
+                        Content.popup.onClose(function(){
+                                    Content.popup.referer = '';
+                        });
                     }
                 });
             },
@@ -444,9 +447,15 @@
                     template: 'popup-unregistred-login',
                     after: function(){
                         Content.popup.init();
-                        Content.popup.onClose(function(){
-                            // Content.popup['register']();
-                        });
+
+                        if(Content.popup.referer == 'enter'){   
+                            $('#popup-unregistred-enter').remove();
+
+                            Content.popup.onClose(function(){
+                                    Content.popup.referer = '';
+                                    Content.popup['enter']();    
+                            });
+                        }
                         // >>> toggle recover-pass
                         $('.login-box #rec-pass, .password-recovery-box .back-to').on('click', function() {
 
@@ -482,7 +491,7 @@
 
 
                         // >>> restore password
-                        $('form[name="rec-pass"]').submit(function(event) {
+                        $('form[name="rec-pass"]').submit(function() {
                             var form = $(this);
                             var email = $(this).find('input[name="login"]').val();
 
@@ -510,7 +519,8 @@
 
                             });
 
-                            event.preventDefault();
+                            // event.preventDefault();
+                            return false;
                         });
 
                     }
@@ -543,9 +553,14 @@
                     template: 'popup-unregistred-registration',
                     after: function(){
                         Content.popup.init();
-                        Content.popup.onClose(function(){
-                            // Content.popup['login']();
-                        });
+                        if(Content.popup.referer == 'enter'){   
+                            $('#popup-unregistred-enter').remove();
+
+                            Content.popup.onClose(function(){
+                                    Content.popup.referer = '';
+                                    Content.popup['enter']();    
+                            });
+                        }
                         // >>> registration handler
                         $('form[name="register"]').on('submit', function(e) {
                             console.debug('>>> registration handler');

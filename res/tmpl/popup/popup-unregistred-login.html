@@ -1,4 +1,4 @@
-<div id="popup-unregistred-login" class="pop-box content-main popup-user">
+<div id="popup-unregistred-login" class="pop-box popup-user">
     <div class="inner">
         <i class="close-pop-box i-x-slim"></i>
         
@@ -19,7 +19,7 @@
                         <div class="alert"></div>
                     </div>
                     <div class="s-b">
-                        <input type="submit" class="sb_but default disabled" disabled="" value="{{i18n "button-recover"}}">
+                        <input type="submit" class="sb_but default disabled not-handle" disabled="" value="{{i18n "button-recover"}}">
                     </div>
                 </div>
             </form>
@@ -52,15 +52,15 @@
                             <input type="checkbox" id="remcheck" hidden="">
                             <label for="remcheck">{{i18n "popup-login-remember"}}</label>
                         </div>
-                        <a id="rec-pass" class="r-p">{{i18n "popup-login-password-lose"}}</a>
+                        <a id="rec-pass" class="r-p not-handle">{{i18n "popup-login-password-lose"}}</a>
                     </div>
                     <div class="s-b">
                         <input type="submit" class="sb_but default" value="Войти">
                     </div>
                     <div class="sl-bk">
-                        <a href="./auth/Facebook?method=log-in" class="i-Facebook-simple"></a>
-                        <a href="./auth/Vkontakte?method=log-in" class="i-Vkontakte-simple"></a>
-                        <a href="./auth/Odnoklassniki?method=log-in" class="i-Odnoklassniki-simple"></a>
+                        <a href="/auth/Facebook?method=log-in" class="i-Facebook-simple not-handle"></a>
+                        <a href="/auth/Vkontakte?method=log-in" class="i-Vkontakte-simple not-handle"></a>
+                        <a href="/auth/Odnoklassniki?method=log-in" class="i-Odnoklassniki-simple not-handle"></a>
                     </div>
                 </div>
             </form>

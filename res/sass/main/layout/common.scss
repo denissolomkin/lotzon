@@ -1650,8 +1650,8 @@ input.input-radio:checked + label.input-radio:before {
             }
         }
         .sl-bk {
-            margin-top: 50px;
-            // margin-top: 15px;
+            // margin-top: 50px;
+            margin-top: 20px;
             display: -webkit-flex;
             display: -moz-flex;
             display: -ms-flex;
@@ -1702,6 +1702,11 @@ input.input-radio:checked + label.input-radio:before {
                 }
             }
         }
+        .s-b{
+            input{
+                border: none;
+            }
+        }
 
     }
 
@@ -1710,7 +1715,7 @@ input.input-radio:checked + label.input-radio:before {
 
     #login-form {
         .ch-b-bk{
-            margin: 15px 0 30px ;    
+            // margin: 15px 0 30px ;    
             &:after {
                 content: "";
                 display: block;
@@ -1807,6 +1812,7 @@ input.input-radio:checked + label.input-radio:before {
     }
 
 }
+#popup-unregistred-login,
 #popup-unregistred-locked,
 #popup-unregistred-error,
 #popup-unregistred-exist,
@@ -1817,19 +1823,26 @@ input.input-radio:checked + label.input-radio:before {
 }
 #popup-unregistred-enter{
     .inner{
-        padding: 30px 0;
+        // padding: 30px 0;
     }
     .title{
-        padding-bottom: 30px;
+        padding-bottom: 50px;
     }
     .unregistred{
+        width: 100%;
         margin: 0px auto;
         text-align: center;
+        background-color: transparent;
+        &:before{
+            display: none;
+        }
         .button{
-            margin-top: 30px;
-            margin-left: 0px;
-            width: auto;
-            display: inline-block;
+            margin: 20px 0 0 0;
+            width: 100%;
+            display: block;
+            &:first-child{
+                margin: 50px 0 0 0;
+            }
         }
     }
 }

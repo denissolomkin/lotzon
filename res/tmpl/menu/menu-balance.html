@@ -1,4 +1,5 @@
 <div id="menu-balance" class="balance banner ad">
+    {{#if ( unauthorized ) }}{{else}}
     <div class="balance-btn menu-btn-item">
 
         <!-- <div class="title">{{{i18n "menu-title-player-balance"}}}</div> -->
@@ -30,4 +31,5 @@
         </div>
     </div>
     <!-- end of BALANCE MENU -->
+    {{/if}}
 </div>

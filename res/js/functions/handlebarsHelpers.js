@@ -218,6 +218,10 @@ $(function () {
             html += '</div>';
             return html;
         },
+        'unauthorized': function(){
+            console.debug(config.unauthorized);
+            return config.unauthorized ? true : false;
+        },
         'avatar': Player.getAvatar,
         'currency': Player.getCurrency,
         'number': Player.fineNumbers,

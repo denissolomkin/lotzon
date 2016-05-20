@@ -1,4 +1,4 @@
-<div id="popup-unregistred-registration" class="pop-box content-main popup-user">
+<div id="popup-unregistred-registration" class="pop-box popup-user">
     <div class="inner">
         <i class="close-pop-box i-x-slim"></i>
         <!-- REGISTRATION FORM -->
@@ -24,15 +24,15 @@
                             <span>{{i18n "popup-register-or"}}</span>
                         </div>
                         <div>
-                            <a href="./auth/Facebook?method=user<?=($ref?'&ref='.$ref:'')?>" class="i-Facebook-simple">{{i18n "title-of-Facebook"}}</a>
-                            <a href="./auth/Vkontakte?method=user<?=($ref?'&ref='.$ref:'')?>" class="i-Vkontakte-simple">{{i18n "title-of-Vkontakte"}}</a>
-                            <a href="./auth/Odnoklassniki?method=user<?=($ref?'&ref='.$ref:'')?>" class="i-Odnoklassniki-simple">{{i18n "title-of-Odnoklassniki"}}</a>
+                            <a href="/auth/Facebook?method=user" class="i-Facebook-simple not-handle">{{i18n "title-of-Facebook"}}</a>
+                            <a href="/auth/Vkontakte?method=user" class="i-Vkontakte-simple not-handle">{{i18n "title-of-Vkontakte"}}</a>
+                            <a href="/auth/Odnoklassniki?method=user" class="i-Odnoklassniki-simple not-handle">{{i18n "title-of-Odnoklassniki"}}</a>
                         </div>
                     </div>
                     
                     <div class="bottom license">
                         <span >{{i18n "popup-register-rules-text"}}</span>
-                        <a class="rs-sw" onclick="Content.popup.rules(); return false;">{{i18n "popup-register-rules-title"}}</a>
+                        <a class="rs-sw not-handle" onclick="Content.popup.rules(); return false;">{{i18n "popup-register-rules-title"}}</a>
                     </div>
                     
                 </div>

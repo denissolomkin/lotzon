@@ -1909,7 +1909,7 @@ input.input-radio:checked + label.input-radio:before {
     .popup-user .login-box .ib-p input {
       text-align: left; }
   .popup-user .login-box .sl-bk {
-    margin-top: 50px;
+    margin-top: 20px;
     display: -webkit-flex;
     display: -moz-flex;
     display: -ms-flex;
@@ -1949,51 +1949,51 @@ input.input-radio:checked + label.input-radio:before {
         color: #ffffff;
         border-color: #ed812b;
         background: #ed812b; }
-  .popup-user #login-form .ch-b-bk {
-    margin: 15px 0 30px; }
-    .popup-user #login-form .ch-b-bk:after {
+  .popup-user .login-box .s-b input {
+    border: none; }
+  .popup-user #login-form .ch-b-bk:after {
+    content: "";
+    display: block;
+    clear: both; }
+  .popup-user #login-form .ch-b-bk > * {
+    float: right;
+    width: 50%;
+    text-align: right;
+    line-height: 19px;
+    color: #000000;
+    font-size: 15.5px;
+    text-decoration: none;
+    font-family: "Handbook"; }
+    .popup-user #login-form .ch-b-bk > *:first-child {
+      float: left;
+      text-align: left; }
+  .popup-user #login-form .ch-b-bk a {
+    text-decoration: none; }
+    .popup-user #login-form .ch-b-bk a:hover {
+      text-decoration: underline; }
+  .popup-user #login-form .ch-b-bk input[type="checkbox"] + label {
+    cursor: pointer;
+    position: relative;
+    display: block;
+    padding-left: 20px; }
+    .popup-user #login-form .ch-b-bk input[type="checkbox"] + label:before {
       content: "";
       display: block;
-      clear: both; }
-    .popup-user #login-form .ch-b-bk > * {
-      float: right;
-      width: 50%;
-      text-align: right;
-      line-height: 19px;
-      color: #000000;
-      font-size: 15.5px;
-      text-decoration: none;
-      font-family: "Handbook"; }
-      .popup-user #login-form .ch-b-bk > *:first-child {
-        float: left;
-        text-align: left; }
-    .popup-user #login-form .ch-b-bk a {
-      text-decoration: none; }
-      .popup-user #login-form .ch-b-bk a:hover {
-        text-decoration: underline; }
-    .popup-user #login-form .ch-b-bk input[type="checkbox"] + label {
-      cursor: pointer;
-      position: relative;
-      display: block;
-      padding-left: 20px; }
-      .popup-user #login-form .ch-b-bk input[type="checkbox"] + label:before {
-        content: "";
-        display: block;
-        height: 13px;
-        width: 13px;
-        position: absolute;
-        left: 0;
-        top: 2px;
-        border: 1px solid #000; }
-    .popup-user #login-form .ch-b-bk input[type="checkbox"]:checked + label:after {
-      content: "";
-      display: block;
-      width: 13px;
       height: 13px;
-      background-color: #000;
+      width: 13px;
       position: absolute;
-      left: 1px;
-      top: 3px; }
+      left: 0;
+      top: 2px;
+      border: 1px solid #000; }
+  .popup-user #login-form .ch-b-bk input[type="checkbox"]:checked + label:after {
+    content: "";
+    display: block;
+    width: 13px;
+    height: 13px;
+    background-color: #000;
+    position: absolute;
+    left: 1px;
+    top: 3px; }
   .popup-user form[name="email-send"] .box-inner:not(.title) {
     margin-top: 50px;
     color: #000000;
@@ -2021,26 +2021,29 @@ input.input-radio:checked + label.input-radio:before {
     text-align: center;
     margin: 50px 0 20px; }
 
+#popup-unregistred-login .inner,
 #popup-unregistred-locked .inner,
 #popup-unregistred-error .inner,
 #popup-unregistred-exist .inner,
 #popup-unregistred-enter .inner {
   min-height: 0; }
 
-#popup-unregistred-enter .inner {
-  padding: 30px 0; }
-
 #popup-unregistred-enter .title {
-  padding-bottom: 30px; }
+  padding-bottom: 50px; }
 
 #popup-unregistred-enter .unregistred {
+  width: 100%;
   margin: 0px auto;
-  text-align: center; }
+  text-align: center;
+  background-color: transparent; }
+  #popup-unregistred-enter .unregistred:before {
+    display: none; }
   #popup-unregistred-enter .unregistred .button {
-    margin-top: 30px;
-    margin-left: 0px;
-    width: auto;
-    display: inline-block; }
+    margin: 20px 0 0 0;
+    width: 100%;
+    display: block; }
+    #popup-unregistred-enter .unregistred .button:first-child {
+      margin: 50px 0 0 0; }
 
 #popup-profile-faq .inner {
   position: relative; }
