@@ -14,6 +14,21 @@
         <meta name="description" content="<?php echo $seo['Description'];?>">
         <meta name="keywords" content="<?php echo $seo['Keywords'];?>" />
 
+        <?php
+        /**
+         * OpenGraph for blog
+         */
+        if (isset($og_meta) && ($og_meta!=array())) {
+        ?>
+        <meta property="og:type" content="article">
+        <meta property="og:url" content="http<? if(!empty($_SERVER['HTTPS'])) { echo 's'; }?>://<?=$_SERVER["HTTP_HOST"]?>/blog/post/<?=$og_meta['id']?>"
+        <meta property="og:title" content="<?php echo $og_meta['title'];?>">
+        <meta property="og:description" content="<?php echo $og_meta['title'];?>">
+        <meta property="og:img" content="http<? if(!empty($_SERVER['HTTPS'])) { echo 's'; }?>://<?=$_SERVER["HTTP_HOST"]?>/filestorage/blog/768/<?=$og_meta['img']?>"
+        <?php
+        }
+        ?>
+
         <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700,400italic,700italic&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="/res/css/style.css?<?php echo $version;?>">
         <?php //if (isset($isMobile)) {

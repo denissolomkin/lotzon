@@ -221,6 +221,22 @@ class Index extends \SlimController\SlimController
             return false;
         }
 
+        /**
+         * OpenGraph meta for blog
+         */
+        $og_meta = array();
+        $url_arr = explode('/',$page);
+        if ($url_arr>=3) {
+            if (($url_arr[1]=='blog')and($url_arr[2]=='post')) {
+                try {
+                    $blog = new \Blog;
+                    $og_meta = $blog->setId($url_arr[3])->fetch()->exportTo('item');
+                } catch (\EntityException $e) {
+                } catch (\PDOException $e) {
+                }
+            }
+        }
+
         $isMobile = $detect->isMobile();
         $counters = \SettingsModel::instance()->getSettings('counters');
         $seo      = SEOModel::instance()->getSEOSettings();
@@ -330,7 +346,8 @@ class Index extends \SlimController\SlimController
             'config'    => $config,
             'isMobile'  => $isMobile,
             'seo'       => $seo,
-            'version'   => $seo['SiteVersion']
+            'version'   => $seo['SiteVersion'],
+            'og_meta'   => $og_meta
         ));
     }
 
