@@ -25,8 +25,8 @@ $(function () {
         };
 
     Handlebars.registerHelper({
-        'loadBlock': function(block){
-            return '<img src="asdf.xsd" onerror="Banner.loadBlock(this);" />'+block;
+        'loadBlock': function (block) {
+            return '<img src="asdf.xsd" onerror="Banner.loadBlock(this);" />' + block;
         },
         /**
          * @description loop for(max > min; max--) return current counter
@@ -51,7 +51,7 @@ $(function () {
          * @param {fn} options
          * @returns {String}
          */
-        'forMinToMax': function ( min, max, options) {
+        'forMinToMax': function (min, max, options) {
             var ret = "";
             for (; min <= max; min++) {
                 ret = ret + options.fn(min);
@@ -71,7 +71,7 @@ $(function () {
          */
         'for': function (num, operator, num2) {
             var ret = [];
-            if(typeof operator === 'object') {
+            if (typeof operator === 'object') {
                 num = 0;
                 operator = '<';
                 num2 = num;
@@ -103,7 +103,7 @@ $(function () {
 
             return ret;
         },
-        'splitMode': function(str) {
+        'splitMode': function (str) {
             str = str.split('-');
             if (str.length >= 3) {
                 var ob = {
@@ -161,18 +161,18 @@ $(function () {
         },
         'badgesCountdown': function () {
 //            return;
-            if (!this.timeout || !this.timer){
+            if (!this.timeout || !this.timer) {
                 return;
             }
-            
+
             var data = this;
 
             setTimeout(function () {
-                var item = document.querySelector('#badges-' + (data.uid?"system-"+data.uid:(data.key?"notifications-"+data.key:"messages-"+data.id)));
+                var item = document.querySelector('#badges-' + (data.uid ? "system-" + data.uid : (data.key ? "notifications-" + data.key : "messages-" + data.id)));
                 if (!item) {
                     return "no item found";
                 }
-                
+
                 switch (data.timeout) {
                     case "close":
                         item.parentNode.removeChild(item);
@@ -185,35 +185,35 @@ $(function () {
 
             return;
         },
-        'countHTML': function(key){
+        'countHTML': function (key) {
             var count = Player.getCount(key);
             return '<span class="count count-' + key + '"'
-            + (count ? '' : ' style="display:none;"')
-            + '>' + count + '</span>';
+                + (count ? '' : ' style="display:none;"')
+                + '>' + count + '</span>';
         },
-        'solvency': function(val, str){
-            if (str === "money"){
+        'solvency': function (val, str) {
+            if (str === "money") {
                 return parseFloat(Player.balance.money) >= parseFloat(val) ? true : false;
-            }else{
+            } else {
                 return parseFloat(Player.balance.points) >= parseFloat(val) ? true : false;
             }
             return false;
         },
-        'currentPrivacy': function(key){
+        'currentPrivacy': function (key) {
             var rules = ['nobody', 'friends', 'all'];
             var privacy = Player.getPrivacy(key) || 2;
-            var html  = i18n("title-profile-privacy-" + rules[privacy]);
+            var html = i18n("title-profile-privacy-" + rules[privacy]);
             return html;
         },
-        'privacyHTML': function(key, def){
+        'privacyHTML': function (key, def) {
 
             var rules = ['nobody', 'friends', 'all'],
                 icons = ['i-lock', 'i-person3', 'i-earth'],
                 lock = typeof def === 'number' ? def : false,
-                html = '<div class="buttons-group '+(lock !== false ? ' disabled' : '')+'">';
-                
+                html = '<div class="buttons-group ' + (lock !== false ? ' disabled' : '') + '">';
+
             for (var i = 0; i < rules.length; i++)
-                html += '<div class="button"><input type="radio" ' + (lock !== false ? ' disabled' : '') +  ' id="profile-privacy-'+key+'-'+i+'" class="profile-privacy" name="privacy[' + key + ']" value="' + i + '"' + (i == lock || i == Player.getPrivacy(key) ? 'checked="checked"' : '') + '> <label for="profile-privacy-'+key+'-'+i+'"><i class="'+icons[i]+'"></i><span>' + i18n("title-profile-privacy-" + rules[i]) + '</span></label></div>';
+                html += '<div class="button"><input type="radio" ' + (lock !== false ? ' disabled' : '') + ' id="profile-privacy-' + key + '-' + i + '" class="profile-privacy" name="privacy[' + key + ']" value="' + i + '"' + (i == lock || i == Player.getPrivacy(key) ? 'checked="checked"' : '') + '> <label for="profile-privacy-' + key + '-' + i + '"><i class="' + icons[i] + '"></i><span>' + i18n("title-profile-privacy-" + rules[i]) + '</span></label></div>';
 
             html += '</div>';
             return html;
@@ -334,7 +334,7 @@ $(function () {
         'variable': function (name, args, opt) {
             http://www.w3schools.com/jsref/event_onload.asp
 
-                    console.log(this, name, args, opt);
+                console.log(this, name, args, opt);
         },
         'cache': function () {
 
@@ -342,14 +342,14 @@ $(function () {
         'checkAll': function () {
             console.log(arguments);
             for (var i = 0; i < arguments.length; i++)
-                if(isEmpty(arguments[i]))
+                if (isEmpty(arguments[i]))
                     return true;
 
             return false;
         },
-        'isFill' : function () {
+        'isFill': function () {
             for (var i = 0; i < arguments.length; i++)
-                if(isEmpty(arguments[i]))
+                if (isEmpty(arguments[i]))
                     return false;
 
             return true;
@@ -358,12 +358,12 @@ $(function () {
          * проверяет наличие значений в строке
          * @param  {str} inStr "POINT-25-2-field=10x10"
          * @param  {pattern} pattern "POINT|field"
-         * @return {bool}     
+         * @return {bool}
          */
-        'matchStr':function(inStr, pattern){
+        'matchStr': function (inStr, pattern) {
             // console.debug('matchStr', inStr , pattern);
             pattern = new RegExp(pattern, "i");
-            if(inStr.match( pattern )) return true;
+            if (inStr.match(pattern)) return true;
             return false;
         },
         'false': function (v1) {
@@ -419,6 +419,9 @@ $(function () {
             }
             text = text.replace(/\n/ig, '<br>');
             return text;
+        },
+        'pageDomain': function () {
+            return window.location.protocol+'//'+window.location.hostname;
         }
 
     });

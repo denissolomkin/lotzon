@@ -18,7 +18,7 @@
                     </div>
                 </div>
 
-                <div data-title="{{title}}" class="social-likes clearfix">
+                <div data-title="{{title}}" class="social-likes clearfix" data-url="{{ pageDomain }}/blog/post/{{{ id }}}{{#if (player "id")}}?ref={{player "id"}}{{else}}{{/if}}" data-title="{{{ title }}}" data-media="{{ pageDomain }}/filestorage/blog/{{device 'width'}}/{{ this.img }}">
                     <div class="facebook" title="Поделиться ссылкой на Фейсбуке">Facebook</div>
                     <div class="twitter" title="Поделиться ссылкой в Твиттере">Twitter</div>
                     <div class="vkontakte" title="Поделиться ссылкой во Вконтакте">Вконтакте</div>
