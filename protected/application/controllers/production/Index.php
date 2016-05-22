@@ -310,7 +310,13 @@ class Index extends \SlimController\SlimController
                     'UA' => 'Украiнська'
                 )
             ),
+            'count' => array(
+                'lotteries' => 0,
+            ),
             'currency' => CountriesModel::instance()->getCountry($country)->loadCurrency()->getSettings(),
+            'referral' => array(
+                'total' => 0,
+            ),
         );
 
         $lottery = array(
