@@ -851,14 +851,14 @@ common styles */
 }
 .landing .unregistred a{
     font-size:15.5px;
-    color:#4a4a4a;
+    color:#4A90E2;
     text-decoration: underline;
     -webkit-transition: all .2s linear;
     -o-transition: all .2s linear;
     transition: all .2s linear;
 }
 .landing .unregistred a:hover{
-    color: #4a4a4a;
+    opacity: 0.8;
 }
 /* END
 unregistred*/
