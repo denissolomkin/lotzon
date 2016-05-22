@@ -410,15 +410,6 @@
                 return false;
             },
 
-            // call:function(fnName,args){
-            //     if (!fnName) return;
-            //     try {
-            //       Content.popup[fnName](args);
-            //     } catch (e) {
-            //       console.debug(e);
-            //     }
-            // },
-            
             // scrollLock - hide scrollbar
             fixBody:function(){
                 var body = document.body;
@@ -435,7 +426,11 @@
                         Content.popup.fixBody();
                         Content.popup.referer = 'enter';
                         Content.popup.onClose(function(){
-                                    Content.popup.referer = '';
+                            Content.popup.referer = '';
+                            // re-init lottery
+                            if($('#lottery-ticket:visible').length){
+                                Lottery.init();
+                            }
                         });
                     }
                 });
