@@ -463,7 +463,7 @@ Config::instance()->publicResources = array(
      */
     '/games/chance/' => array(
         'get'  => array(
-            'controllers\production\ChanceController:list',
+            'controllers\production\ChanceControllerMixed:list',
             function ($route) {
                 $route->setParams(
                     array("key" => "ChanceGame")
@@ -553,7 +553,7 @@ Config::instance()->publicResources = array(
      * Games
      */
     '/games/:key/' => array(
-        'get'  => 'controllers\production\GamesController:list'
+        'get'  => 'controllers\production\GamesControllerMixed:list'
     ),
     '/games/:key/:id' => array(
         'get'   => 'controllers\production\GamesController:item',
@@ -573,7 +573,7 @@ Config::instance()->publicResources = array(
      * Comments
      */
     '/communication/comments/' => array(
-        'get'  => 'controllers\production\CommentsController:list',
+        'get'  => 'controllers\production\CommentsControllerMixed:list',
         'post' => 'controllers\production\CommentsController:create'
     ),
     '/communication/comments/:commentId/like' => array(
@@ -617,7 +617,7 @@ Config::instance()->publicResources = array(
     ),
     '/blog/post/:identifier/comments' => array(
         'get'  => array(
-            'controllers\production\CommentsController:list',
+            'controllers\production\CommentsControllerMixed:list',
             function ($obj) {
                 $obj->setParams(array(
                         "module"   => "blog",
@@ -654,7 +654,7 @@ Config::instance()->publicResources = array(
         'post' => 'controllers\production\LotteryController:buyGoldTicket',
     ),
     '/lottery/history'                    => array(
-        'get' => 'controllers\production\LotteryController:history',
+        'get' => 'controllers\production\LotteryControllerMixed:history',
     ),
     '/lottery/tickets' => array(
         'get' => 'controllers\production\LotteryController:tickets',
@@ -693,10 +693,10 @@ Config::instance()->publicResources = array(
      * Prizes
      */
     '/prizes/exchange' => array(
-        'get' => 'controllers\production\PrizesController:list'
+        'get' => 'controllers\production\PrizesControllerMixed:list'
     ),
     '/prizes/exchange/goods' => array(
-        'get' => 'controllers\production\PrizesController:list'
+        'get' => 'controllers\production\PrizesControllerMixed:list'
     ),
     '/prizes/exchange/goods/:itemId' => array(
         'get'  => 'controllers\production\PrizesController:good',

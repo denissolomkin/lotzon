@@ -1,0 +1,23 @@
+<div id="popup-unregistred-enter" class="pop-box popup-user">
+    <div class="inner">
+        <!-- Social registration -->
+        <form name="social_register" data-ref="<?=$ref?>">
+            
+            <div class="title box-inner">{{i18n "popup-change-email-title"}}</div>
+            <div class="box-inner">
+                <div class="ib-l">
+                    <div class="text">{{i18n "popup-change-email-text"}} <span class="current-mail"></span></div>
+                    <p>или</p>
+                    <input autocomplete="off" spellcheck="false" type="email" class="m_input_uncheck" name="email" placeholder="{{i18n "title-other-email-placholder"}}">
+                    <div class="input-text">
+                        <div class="alert">{{i18n "popup-change-email-alert-msg"}}</div>
+                        <div class="hidden-text" id="reg-succ-txt">{{i18n "popup-change-email-success-msg"}}</div>
+                    </div>
+                </div>
+                <div class="s-b">
+                    <input type="submit" class="sb_but gold" value="{{i18n "button-continue"}}">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

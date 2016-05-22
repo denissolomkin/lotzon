@@ -8,11 +8,9 @@ class CommentsController extends \AjaxController
 {
 
     static $notificationsPerPage;
-    static $commentsPerPage;
 
     public function init()
     {
-        self::$commentsPerPage = (int)SettingsModel::instance()->getSettings('counters')->getValue('COMMENTS_PER_PAGE') ? : 10;
         self::$notificationsPerPage = (int)SettingsModel::instance()->getSettings('counters')->getValue('NOTIFICATIONS_PER_PAGE') ? : 10;
 
         parent::init();
@@ -44,51 +42,6 @@ class CommentsController extends \AjaxController
                 ),
             ),
         );
-
-        $this->ajaxResponseNoCache($response);
-        return true;
-    }
-
-    public function listAction($module = 'comments', $objectId = 0)
-    {
-
-        $playerId = $this->session->get(Player::IDENTITY)->getId();
-
-        $count    = $this->request()->get('count', self::$commentsPerPage);
-        $beforeId = $this->request()->get('before_id', NULL);
-        $afterId  = $this->request()->get('after_id', NULL);
-
-        try {
-            $list = CommentsModel::instance()->getList($module, $objectId, $count+1, $beforeId, $afterId, 1, NULL, NULL, $playerId);
-        } catch (\PDOException $e) {
-            $this->ajaxResponseInternalError();
-            return false;
-        }
-
-        $response = array();
-
-        if (count($list)<=$count) {
-            $response['lastItem'] = true;
-        } else {
-            array_pop($list);
-        }
-
-        if ($objectId>0) {
-            foreach ($list as $key=>$value) {
-                $list[$key]['object_id'] = $objectId;
-            }
-        }
-
-        switch ($module) {
-            case 'comments' :
-                $response['res']['communication']['comments'] = $list;
-                break;
-            case 'blog' :
-                $response['res']['blog']['post'][$objectId]['comments'] = $list;
-                break;
-            default:
-                $response = array();
-        }
 
         $this->ajaxResponseNoCache($response);
         return true;

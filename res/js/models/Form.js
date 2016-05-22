@@ -160,8 +160,13 @@
                         error: function (data) {
 
                             if(data.status == 401) {
-                                document.location.href = "/";
-                                return false;
+                                if(config.unauthorized){
+                                    Content.popup.enter();
+                                }else{
+                                    document.location.href = "/";
+                                    return false;
+                                }
+                                return;
                             }
 
                             form.json = data.responseJSON || data;
@@ -310,7 +315,6 @@
         },
 
         start: function (event) {
-
             var button = this.elements && this.elements['submit'];
 
             if (Form.do.validate.call(this, event)) {

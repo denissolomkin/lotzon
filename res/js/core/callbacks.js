@@ -10,7 +10,7 @@
                 'click': [
 
                     /* global */
-                    ['a', R.push],
+                    ['a:not(.not-handle)', R.push],
 
                     /* badges */
                     ['.badge-close', Content.badge.close, 1],
@@ -35,7 +35,6 @@
                     //
                     {".back": Navigation.do.backBlock},
                     {".close-pop-box": Content.destroyPopBox}
-
                 ]
             });
             

@@ -1,0 +1,42 @@
+<div id="popup-unregistred-registration" class="pop-box popup-user">
+    <div class="inner">
+        <i class="close-pop-box i-x-slim"></i>
+        <!-- REGISTRATION FORM -->
+        <form name="register">
+            <div id="reg-form">
+
+                <div class="title box-inner">{{i18n "popup-register-title"}}</div>
+                <div class="box-inner">
+                    <div class="ib-l">
+                        <input autocomplete="off" spellcheck="false" type="email" class="m_input" name="login" placeholder="{{i18n "title-email-placholder"}}">
+                        <div class="input-text">
+                            <div class="alert">{{i18n "popup-register-alert-msg"}}</div>
+                            <div class="hidden-text" id="reg-succ-txt">{{i18n "popup-register-success-msg"}}</div>
+                            <div class="text">{{i18n "popup-register-text"}}</div>
+                        </div>
+                    </div>
+                    <div class="s-b">
+                        <input type="submit" disabled="" class="sb_but gold disabled" value="{{i18n "button-continue"}}">
+                    </div>
+                    <!-- Add class "disabled" -->
+                    <div class="sl-bk">
+                        <div class="lines-between">
+                            <span>{{i18n "popup-register-or"}}</span>
+                        </div>
+                        <div>
+                            <a href="/auth/Facebook?method=user" class="i-Facebook-simple not-handle">{{i18n "title-of-Facebook"}}</a>
+                            <a href="/auth/Vkontakte?method=user" class="i-Vkontakte-simple not-handle">{{i18n "title-of-Vkontakte"}}</a>
+                            <a href="/auth/Odnoklassniki?method=user" class="i-Odnoklassniki-simple not-handle">{{i18n "title-of-Odnoklassniki"}}</a>
+                        </div>
+                    </div>
+                    
+                    <div class="bottom license">
+                        <span >{{i18n "popup-register-rules-text"}}</span>
+                        <a class="rs-sw not-handle" onclick="Content.popup.rules(); return false;">{{i18n "popup-register-rules-title"}}</a>
+                    </div>
+                    
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

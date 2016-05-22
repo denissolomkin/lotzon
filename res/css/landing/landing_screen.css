@@ -843,7 +843,25 @@ popup*/
 }
 /* END
 common styles */
-
+/*unregistred*/
+.landing .unregistred{
+    padding-top: 20px;
+    display: block;
+    text-align:center;
+}
+.landing .unregistred a{
+    font-size:15.5px;
+    color:#4a4a4a;
+    text-decoration: underline;
+    -webkit-transition: all .2s linear;
+    -o-transition: all .2s linear;
+    transition: all .2s linear;
+}
+.landing .unregistred a:hover{
+    color: #4a4a4a;
+}
+/* END
+unregistred*/
 /*
 form
 input buttons*/

@@ -1,7 +1,7 @@
 <?php
 namespace controllers\production;
 
-use \Application, \Player, \SettingsModel, \QuickGame;
+use \Application, \Player, \SettingsModel, \QuickGame, \Common;
 use Ratchet\Wamp\Exception;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -16,12 +16,69 @@ class PingController extends \AjaxController
 
         parent::init();
         $this->validateRequest();
-        $this->authorizedOnly(true);
-        $this->validateLogout();
-        $this->validateCaptcha();
     }
 
     public function indexAction()
+    {
+        if ($this->isAuthorized(true)) {
+            $this->validateLogout();
+            $this->validateCaptcha();
+            $this->indexActionAuthorized();
+        } else {
+            $this->indexActionUnauthorized();
+        }
+    }
+
+    public function indexActionUnauthorized()
+    {
+        $lang = Common::getUserIpLang();
+
+        $usersAtPage = $this->request()->post('users', array());
+        $response    = array();
+
+        /**
+         * Comments
+         */
+        if (isset($forms['communication-comments'])) {
+            $list = \CommentsModel::instance()->getList('comments', 0, NULL, NULL, $forms['communication-comments']['last_id']-1, 1, NULL, $forms['communication-comments']['timing']);
+            if (count($list) > 0) {
+                $response['res']['communication']['comments'] = $list;
+            }
+        }
+
+        /**
+         * Blog
+         */
+        if (isset($forms['blog-posts'])) {
+            $list = \BlogsModel::instance()->getList($lang, NULL, NULL, $forms['blog-posts']['last_id']-1, 1, NULL, $forms['blog-posts']['timing']);
+            if (count($list) > 0) {
+                $response['res']['blog']['posts'] = array();
+                foreach ($list as $id => $blog) {
+                    $response['res']['blog']['posts'][$id] = $blog->exportTo('list');
+                }
+            }
+        }
+
+        /**
+         * Ping
+         */
+        if ($usersAtPage!=array()) {
+            $pings = \PlayersModel::instance()->getPlayersPing($usersAtPage);
+            $response['statuses'] = array();
+            foreach($pings as $player_ping) {
+                $response['statuses'][$player_ping['PlayerId']] = $player_ping['Ping'];
+            }
+        }
+
+        /**
+         * Site Version
+         */
+        $response['version'] = \SEOModel::instance()->getSEOSettings()['SiteVersion'];
+
+        $this->ajaxResponseNoCache($response);
+    }
+
+    public function indexActionAuthorized()
     {
 
         $badges          = array(

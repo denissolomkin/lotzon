@@ -274,7 +274,10 @@
         },
 
         uploadImage: function () {
-
+            if(config.unauthorized){
+                Content.popup.enter();
+                return false;
+            }
             // create form
             var form = DOM.up('form', this),
                 $form = $('<form method="POST" enctype="multipart/form-data"><input type="file" name="image"/></form>'),

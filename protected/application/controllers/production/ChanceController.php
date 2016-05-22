@@ -20,53 +20,6 @@ class ChanceController extends \AjaxController
         $this->validateCaptcha();
     }
 
-    public function listAction($key)
-    {
-
-        if (!$key) {
-            $this->ajaxResponseBadRequest('EMPTY_GAMES_KEY');
-        }
-
-        try {
-            $publishedGames = GamesPublishedModel::instance()->getList()[$key];
-        } catch (\PDOException $e) {
-            $this->ajaxResponseInternalError();
-        }
-
-        if (!$publishedGames) {
-            $this->ajaxResponseNotFound('NOT_PUBLISHED_GAMES');
-        }
-
-        $response = array(
-            'res' => array(
-                'games' => array()
-            ));
-
-        foreach ($publishedGames->getLoadedGames() as $game) {
-
-            if (!$game->isEnabled())
-                continue;
-
-            if (!isset($response['res']['games'][$game->getType()]))
-                $response['res']['games'][$game->getType()] = array();
-
-            $game->setLang($this->player->getLang());
-            $response['res']['games'][$game->getType()][] = $game->export('list');
-        }
-
-        $banner = new Banner;
-        $keys = array_keys($response['res']['games'][$game->getType()]);
-        $response['res']['games'][$game->getType()][$keys[array_rand($keys)]]['block'] = $banner
-            ->setDevice('desktop')
-            ->setLocation('context')
-            ->setPage('game')
-            ->setCountry($this->player->getCountry())
-            ->random()
-            ->render();
-
-        $this->ajaxResponseNoCache($response);
-    }
-
     public function itemAction($key = 'QuickGame', $id = null)
     {
 
