@@ -250,6 +250,15 @@ class Index extends \SlimController\SlimController
 
         $this->session->set('isMobile', $isMobile);
 
+        /* todo delete slider */
+        $slider = array(
+            'sum'     => (LotteriesModel::instance()->getMoneyTotalWin() + $counters->getValue('MONEY_ADD')) * CountriesModel::instance()->getCountry($this->currency)->loadCurrency()->getCoefficient(),
+            'winners' => LotteriesModel::instance()->getWinnersCount() + $counters->getValue('WINNERS_ADD'),
+            'jackpot' => LotterySettingsModel::instance()->loadSettings()->getPrizes($this->currency)[6]['sum'],
+            'players' => PlayersModel::instance()->getMaxId(),
+            'timer'   => LotterySettingsModel::instance()->loadSettings()->getNearestGame() + strtotime('00:00:00', time()) - time()
+        );
+
         $config = array(
             'unauthorized' => true,
             'timeout'            => array(
@@ -348,7 +357,7 @@ class Index extends \SlimController\SlimController
             'player'    => $playerObj,
             'lottery'   => $lottery,
             'debug'     => $debug,
-            'slider'    => array(),
+            'slider'    => $slider,
             'config'    => $config,
             'isMobile'  => $isMobile,
             'seo'       => $seo,
