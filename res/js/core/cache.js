@@ -83,6 +83,9 @@
 
                 if (init.hasOwnProperty('badges') && Object.size(init.badges))
                     Content.badge.init(init.badges);
+                
+                if (init.hasOwnProperty('cashout') && Object.size(init.cashout))
+                    Content.cashoutPopup.init(init.cashout);
 
                 /* for response by R.json */
                 if (init.response) {

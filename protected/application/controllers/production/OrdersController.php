@@ -179,4 +179,31 @@ class OrdersController extends \AjaxController
 
         $this->ajaxResponseNoCache($res);
     }
+
+    public function statusAction($orderId)
+    {
+        $status = $this->request()->post('status', false);
+        if (($status != '1')and($status != '2')) {
+            $this->ajaxResponseBadRequest();
+            return false;
+        }
+        try {
+            $order = new MoneyOrder();
+            $order->setId($orderId)->fetch();
+            if ($order->getViewed() != 0) {
+                $this->ajaxResponseBadRequest();
+                return false;
+            }
+            if ($order->getPlayer()->getId() != $this->player->getId()) {
+                $this->ajaxResponseBadRequest();
+                return false;
+            }
+            $order->setViewed($status)->setViewedDate(time())->update();
+        } catch(EntityException $e) {
+            $this->ajaxResponseBadRequest();
+        }
+
+        $this->ajaxResponseNoCache(array());
+        return true;
+    }
 }

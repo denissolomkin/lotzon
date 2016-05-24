@@ -1,0 +1,41 @@
+<div id="popup-cashout" class="pop-box popup-user">
+    <div class="inner">
+        <div class="title box-inner">{{i18n "popup-cashout-main-title"}}</div>
+        <div class="box-inner">
+            <div class="gray-box">
+                <div class="title">{{i18n "popup-cashout-sub-title"}}{{this.id}}</div>
+                <div class="stars">*  *  *  *  *  *  *  *  *</div>  
+                <div class="list">
+                    <div>
+                        <span class="title">{{i18n "popup-cashout-player"}}</span>
+                        <span class="item">{{player "title.name"}} {{player "title.surname"}}</span>
+                    </div>
+                    <div>
+                        <span class="title">{{i18n "popup-cashout-phone"}}</span>
+                        <span class="item">{{ this.number }}</span>
+                    </div>
+                    <div>
+                        <span class="title">{{i18n "popup-cashout-sum"}}</span>
+                        <span class="item">{{this.sum}} {{player "getCurrency"}}.</span>
+                    </div>
+                    <div>
+                        <span class="title">{{i18n "popup-cashout-date"}}</span>
+                        <span class="item">{{day this.date "DD.MM.YYYY"}}</span>
+                    </div>
+                </div>
+                <div class="stars">*  *  *  *  *  *  *  *  *</div>
+            </div>
+            <div class="info">
+                {{i18n "popup-cashout-info"}}    
+            </div>
+            <div class="sl-bk">
+                <div class="ae-social">
+                    <a href="/blog/post/{{{ id }}}{{#if (player "id")}}?ref={{player "id"}}{{else}}{{/if}}" class="i-Vkontakte-simple ae-social-item vkontakte not-handle">{{i18n "popup-cashout-make-post"}} {{i18n "title-of-Vkontakte"}}</a>
+                </div>
+            </div>
+            <div class="footer">
+                <span>{{i18n "popup-cashout-footer"}} <span class="close-pop-box">{{i18n "popup-cashout-close"}}</span></span>    
+            </div>
+        </div>
+    </div>
+</div>
