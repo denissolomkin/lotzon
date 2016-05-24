@@ -2134,6 +2134,7 @@ compleet registration popup */
 /* popup cashout 
 *****************************/
 #popup-cashout .inner {
+  width: 360px;
   min-height: 0;
   padding: 30px 0; }
 
@@ -2220,12 +2221,14 @@ compleet registration popup */
   color: #4a4a4a;
   letter-spacing: 0.2px;
   line-height: 19px;
-  text-align: center;
-  transition: all .2s linear; }
+  text-align: center; }
+  #popup-cashout .footer > span {
+    border-bottom: 1px dashed #4a4a4a; }
   #popup-cashout .footer .close-pop-box {
     color: red;
-    opacity: .8;
-    cursor: pointer; }
+    opacity: .7;
+    cursor: pointer;
+    transition: all .2s linear; }
     #popup-cashout .footer .close-pop-box:hover {
       opacity: 1; }
 
