@@ -84,6 +84,60 @@
                 }
             }
         },
+        cashoutPopup: {
+            init: function (cashout) {
+            
+                if (document.querySelector('#popup-cashout')) return;
+                
+                R.push({
+                    template: 'popup-cashout',
+                    json: cashout,
+                    after: function(e){
+                        
+                        // tmp
+                        $('.ae-social').socialLikes({
+                            url: 'https://lotzon.com/?ref=' + Player.id,
+                            title: 'LOTZON. Выигрывает каждый!',
+                            counters: false,
+                            singleTitle: 'LOTZON. Выигрывает каждый!',
+                            data: {
+                                media: 'https://lotzon.com/res/img/lotzon_soc.jpg'
+                            }
+                        });
+                        
+                        $('.ae-social').on('popup_opened.social-likes', function(event, service, win) {
+                            Content.cashoutPopup.sendStatus(cashout.id, 2);
+                            document.querySelector('#popup-cashout').remove();
+                        });
+
+                        document.querySelector('#popup-cashout .close-pop-box').onclick = function(){
+                            Content.cashoutPopup.sendStatus(cashout.id, 1);
+                        }
+                    }
+                });
+            },
+            // в посте параметр status=1 (отказался) или status=2 (запостил)
+            sendStatus: function(id, status, callback){
+                
+                if(!id || !status) return;
+                $.ajax({
+                        url: "/cashout/"+id+"/status ",
+                        method: 'POST',
+                        data: {
+                            status: status
+                        },
+                        async: true,
+                        dataType: 'json',
+                        success: function(data) {
+                            //
+                        },
+                        error: function() {
+                            // 
+                       }
+                    });
+            }
+
+        },
 
         enableForm: function () {
 

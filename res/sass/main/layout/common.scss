@@ -1635,6 +1635,14 @@ input.input-radio:checked + label.input-radio:before {
         }
     }
 
+    .password-recovery-box,
+    .login-box{
+        .s-b{
+            input{
+                border: none;
+            }
+        }
+    }
     .login-box{
         .ib-l {
             margin-top: 50px;
@@ -1702,12 +1710,7 @@ input.input-radio:checked + label.input-radio:before {
                 }
             }
         }
-        .s-b{
-            input{
-                border: none;
-            }
-        }
-
+        
     }
 
     /*
@@ -2035,6 +2038,14 @@ compleet registration popup */
             min-height: 30px;
             line-height: 30px;
             margin: 0;
+            & * {
+                text-decoration: none;
+                color: #ffffff;
+                font-size: 15.5px;
+                text-align: center;
+                font-weight: normal;
+                text-shadow: none;
+            }
         }
     }
     .footer{

@@ -1900,6 +1900,9 @@ input.input-radio:checked + label.input-radio:before {
     display: none; }
     .popup-user .password-recovery-box .ib-l {
       margin-top: 50px; }
+  .popup-user .password-recovery-box .s-b input,
+  .popup-user .login-box .s-b input {
+    border: none; }
   .popup-user .login-box .ib-l {
     margin-top: 50px; }
     .popup-user .login-box .ib-l input {
@@ -1949,8 +1952,6 @@ input.input-radio:checked + label.input-radio:before {
         color: #ffffff;
         border-color: #ed812b;
         background: #ed812b; }
-  .popup-user .login-box .s-b input {
-    border: none; }
   .popup-user #login-form .ch-b-bk:after {
     content: "";
     display: block;
@@ -2205,6 +2206,13 @@ compleet registration popup */
     min-height: 30px;
     line-height: 30px;
     margin: 0; }
+    #popup-cashout .sl-bk a * {
+      text-decoration: none;
+      color: #ffffff;
+      font-size: 15.5px;
+      text-align: center;
+      font-weight: normal;
+      text-shadow: none; }
 
 #popup-cashout .footer {
   padding: 25px 0 0 0;

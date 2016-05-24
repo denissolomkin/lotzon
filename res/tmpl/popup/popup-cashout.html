@@ -3,40 +3,34 @@
         <div class="title box-inner">{{i18n "popup-cashout-main-title"}}</div>
         <div class="box-inner">
             <div class="gray-box">
-                <div class="title">{{i18n "popup-cashout-sub-title"}}43189</div>
+                <div class="title">{{i18n "popup-cashout-sub-title"}}{{this.id}}</div>
                 <div class="stars">*  *  *  *  *  *  *  *  *</div>  
                 <div class="list">
                     <div>
                         <span class="title">{{i18n "popup-cashout-player"}}</span>
-                        <span class="item">Павел Маслов</span>
+                        <span class="item">{{player "title.name"}} {{player "title.surname"}}</span>
                     </div>
                     <div>
                         <span class="title">{{i18n "popup-cashout-phone"}}</span>
-                        <span class="item">38 067 628 18 68</span>
+                        <span class="item">{{ this.number }}</span>
                     </div>
                     <div>
                         <span class="title">{{i18n "popup-cashout-sum"}}</span>
-                        <span class="item">15,00 ГРН.</span>
+                        <span class="item">{{this.sum}} {{player "getCurrency"}}.</span>
                     </div>
                     <div>
                         <span class="title">{{i18n "popup-cashout-date"}}</span>
-                        <span class="item">16.03.2016</span>
+                        <span class="item">{{day this.date "DD.MM.YYYY"}}</span>
                     </div>
                 </div>
-                
-                
-                
-                
                 <div class="stars">*  *  *  *  *  *  *  *  *</div>
             </div>
             <div class="info">
                 {{i18n "popup-cashout-info"}}    
             </div>
             <div class="sl-bk">
-                <div>
-                    <!-- <a href="/auth/Facebook?method=user" class="i-Facebook-simple not-handle">{{i18n "title-of-Facebook"}}</a> -->
-                    <a href="/auth/Vkontakte?method=user" class="i-Vkontakte-simple not-handle">{{i18n "popup-cashout-make-post"}} {{i18n "title-of-Vkontakte"}}</a>
-                    <!-- <a href="/auth/Odnoklassniki?method=user" class="i-Odnoklassniki-simple not-handle">{{i18n "title-of-Odnoklassniki"}}</a> -->
+                <div class="ae-social">
+                    <a href="/blog/post/{{{ id }}}{{#if (player "id")}}?ref={{player "id"}}{{else}}{{/if}}" class="i-Vkontakte-simple ae-social-item vkontakte not-handle">{{i18n "popup-cashout-make-post"}} {{i18n "title-of-Vkontakte"}}</a>
                 </div>
             </div>
             <div class="footer">
