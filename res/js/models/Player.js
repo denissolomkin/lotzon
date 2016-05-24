@@ -21,10 +21,18 @@
                     }
                 }
 
-                if (init.hasOwnProperty('games') && init.games.online && init.games.online.Uid) {
-                    App.id = init.games.online.Id;
-                    WebSocketAjaxClient('app/' + init.games.online.Key + '/' + init.games.online.Uid, {action: 'start'});
-                    delete init.games.online;
+                if (init.hasOwnProperty('games')) {
+                    if(init.games.online && init.games.online.Uid) {
+                        App.id = init.games.online.Id;
+                        WebSocketAjaxClient('app/' + init.games.online.Key + '/' + init.games.online.Uid, {action: 'start'});
+                        delete init.games.online;
+                    } else if(init.games.chance) {
+                        R.push('games-chance-'+init.games.chance);
+                    }
+
+                    if(init.games.moment) {
+                        R.push('games-moment');
+                    }
                 }
 
                 Object.deepExtend(this, init);

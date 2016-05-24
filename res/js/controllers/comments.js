@@ -274,7 +274,7 @@
         },
 
         uploadImage: function () {
-            if(config.unauthorized){
+            if(Player.is.unauthorized){
                 Content.popup.enter();
                 return false;
             }

@@ -1900,6 +1900,9 @@ input.input-radio:checked + label.input-radio:before {
     display: none; }
     .popup-user .password-recovery-box .ib-l {
       margin-top: 50px; }
+  .popup-user .password-recovery-box .s-b input,
+  .popup-user .login-box .s-b input {
+    border: none; }
   .popup-user .login-box .ib-l {
     margin-top: 50px; }
     .popup-user .login-box .ib-l input {
@@ -1949,8 +1952,6 @@ input.input-radio:checked + label.input-radio:before {
         color: #ffffff;
         border-color: #ed812b;
         background: #ed812b; }
-  .popup-user .login-box .s-b input {
-    border: none; }
   .popup-user #login-form .ch-b-bk:after {
     content: "";
     display: block;
@@ -2129,6 +2130,109 @@ compleet registration popup */
     margin-bottom: 20px; }
 
 /* end popups unregistred 
+*****************************/
+/* popup cashout 
+*****************************/
+#popup-cashout .inner {
+  width: 360px;
+  min-height: 0;
+  padding: 30px 0; }
+
+#popup-cashout .box-inner {
+  padding: 0 20px; }
+
+#popup-cashout .title {
+  font-size: 20px;
+  color: #000000;
+  text-align: center;
+  padding-bottom: 30px; }
+
+#popup-cashout .gray-box {
+  padding: 30px 20px;
+  margin: 20px 0;
+  background: #f5f5f5;
+  border-top: 3px dashed #ffffff;
+  border-bottom: 3px dashed #ffffff; }
+  #popup-cashout .gray-box .title {
+    padding-bottom: 10px; }
+  #popup-cashout .gray-box .stars {
+    font-size: 25px;
+    color: #282828;
+    text-align: center; }
+  #popup-cashout .gray-box .list {
+    padding: 15px 0; }
+    #popup-cashout .gray-box .list > * {
+      padding-bottom: 15px;
+      position: relative;
+      overflow: hidden; }
+      #popup-cashout .gray-box .list > *:after {
+        content: '.  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  ';
+        letter-spacing: 2px;
+        white-space: nowrap;
+        position: absolute;
+        clear: both; }
+      #popup-cashout .gray-box .list > *:last-child {
+        padding-bottom: 0; }
+    #popup-cashout .gray-box .list .title {
+      font-size: 15px;
+      color: #4a4a4a;
+      letter-spacing: 0.19px;
+      text-align: left;
+      padding: 0;
+      float: left; }
+    #popup-cashout .gray-box .list .item {
+      display: inline-block;
+      width: 55%;
+      font-size: 15px;
+      color: #000000;
+      letter-spacing: 0.2px;
+      text-align: left;
+      float: right;
+      background: #f5f5f5;
+      position: relative;
+      z-index: 1; }
+
+#popup-cashout .info {
+  padding-top: 20px;
+  font-size: 15.5px;
+  color: #4a4a4a;
+  letter-spacing: 0.2px;
+  line-height: 19px;
+  text-align: center; }
+
+#popup-cashout .sl-bk {
+  padding: 15px 0 0 0; }
+  #popup-cashout .sl-bk a {
+    height: 30px;
+    min-height: 30px;
+    line-height: 30px;
+    margin: 0; }
+    #popup-cashout .sl-bk a * {
+      text-decoration: none;
+      color: #ffffff;
+      font-size: 15.5px;
+      text-align: center;
+      font-weight: normal;
+      text-shadow: none; }
+
+#popup-cashout .footer {
+  padding: 25px 0 0 0;
+  font-size: 15px;
+  color: #4a4a4a;
+  letter-spacing: 0.2px;
+  line-height: 19px;
+  text-align: center; }
+  #popup-cashout .footer > span {
+    border-bottom: 1px dashed #4a4a4a; }
+  #popup-cashout .footer .close-pop-box {
+    color: red;
+    opacity: .7;
+    cursor: pointer;
+    transition: all .2s linear; }
+    #popup-cashout .footer .close-pop-box:hover {
+      opacity: 1; }
+
+/* end popup cashout 
 *****************************/
 .make-table {
   display: table;
@@ -10907,20 +11011,6 @@ span.input-prefix {
 #users #users-search :-ms-input-placeholder {
   color: #B4B4B4; }
 
-.user-view-box #users-search input:not([type='submit']):focus,
-.user-view-box #users-search input:not([type='submit']):hover,
-.user-view-box #users-search input:not([type='submit']):active,
-.user-view-box #users-search input:not([type='submit']):-webkit-autofill,
-#users #users-search input:not([type='submit']):focus,
-#users #users-search input:not([type='submit']):hover,
-#users #users-search input:not([type='submit']):active,
-#users #users-search input:not([type='submit']):-webkit-autofill {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  -webkit-box-shadow: inset 0 0 0 100px #f5f5f5 !important;
-  outline: none; }
-
 .user-view-box #users-search input:not([type='submit']):-webkit-autofill,
 #users #users-search input:not([type='submit']):-webkit-autofill {
   -webkit-text-fill-color: #4a4a4a; }
@@ -10962,16 +11052,26 @@ span.input-prefix {
       padding: 0 20px; }
   .user-view-box #users-search .users-filter > .input-box.userage,
   #users #users-search .users-filter > .input-box.userage {
-    padding: 0 20px;
+    padding: 0 18px;
     background: #e9e9e9; }
     .user-view-box #users-search .users-filter > .input-box.userage input,
     #users #users-search .users-filter > .input-box.userage input {
-      width: 18px;
+      width: 20px;
       border-right: none;
       box-shadow: none;
       border-bottom: 1px solid #4a4a4a;
       text-align: center;
-      margin: 0 5px; }
+      margin: 0 5px;
+      min-width: 1px;
+      padding: 0;
+      line-height: normal; }
+      .user-view-box #users-search .users-filter > .input-box.userage input:hover, .user-view-box #users-search .users-filter > .input-box.userage input:focus, .user-view-box #users-search .users-filter > .input-box.userage input:active,
+      #users #users-search .users-filter > .input-box.userage input:hover,
+      #users #users-search .users-filter > .input-box.userage input:focus,
+      #users #users-search .users-filter > .input-box.userage input:active {
+        background: none;
+        -webkit-box-shadow: none;
+        box-shadow: none; }
   .user-view-box #users-search .users-filter > .input-box .chosen-container input,
   #users #users-search .users-filter > .input-box .chosen-container input {
     border-bottom: none;
@@ -12989,16 +13089,14 @@ footer.unvisible {
   color: #4a4a4a;
   font-size: 16px; }
   #games-chance-view .prizes {
-    display: inline-block;
-    vertical-align: top;
+    display: block;
+    float: left;
     text-align: center;
-    width: 40%;
-    min-width: 220px; }
+    width: 33%; }
     #games-chance-view .prizes > div {
       background: #f4f4f4;
       padding: 20px;
-      min-height: 410px;
-      width: 220px;
+      min-height: 440px;
       margin: 0 auto;
       display: none; }
       #games-chance-view .prizes > div > div {
@@ -13101,9 +13199,10 @@ footer.unvisible {
           border: 1px solid #4a4a4a;
           color: #ffe634; }
   #games-chance-view .minefield {
-    display: inline-block;
-    vertical-align: top;
-    width: 59%;
+    display: block;
+    float: left;
+    width: 67%;
+    min-width: 350px;
     box-sizing: border-box;
     position: relative; }
     #games-chance-view .minefield:before {
@@ -13136,6 +13235,10 @@ footer.unvisible {
     padding: 20px 20px 0 20px; }
   #games-chance-view #games-chance-view-chance .colls-wrapper {
     padding: 0 20px 20px 20px; }
+    #games-chance-view #games-chance-view-chance .colls-wrapper:after {
+      content: '';
+      display: block;
+      clear: both; }
 
 #games-chance-view-cells * > .inner {
   background: transparent;
@@ -13174,6 +13277,24 @@ footer.unvisible {
       display: none; }
   #games-chance-view-cells .inner button:not([class]) i:not(.i-question) {
     display: none; }
+
+@media all and (max-width: 1200px) {
+  #games-chance-view .prizes > div > div {
+    min-height: 160px; }
+  #games-chance-view .prizes > div > * :first-child:nth-last-child(1) .item {
+    font-size: 86px; }
+  #games-chance-view .prizes button {
+    margin-top: 10px; }
+  #games-chance-view .prizes .type-money {
+    line-height: 1; }
+  #games-chance-view .prizes .type-item {
+    line-height: 1; }
+  #games-chance-view .prizes .item {
+    font-size: 20px; }
+  #games-chance-view .prizes .instruction {
+    font-size: 14.5px; }
+  #games-chance-view .prizes > div {
+    min-height: 375px; } }
 
 @media all and (max-width: 768px) {
   #games-chance-view .colls-wrapper {

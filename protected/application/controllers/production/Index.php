@@ -260,7 +260,6 @@ class Index extends \SlimController\SlimController
         );
 
         $config = array(
-            'unauthorized' => true,
             'timeout'            => array(
                 'ping'   => (int)$counters->getValue('PLAYER_TIMEOUT'),
                 'online' => (int)$counters->getValue('PLAYER_TIMEOUT')
@@ -310,6 +309,7 @@ class Index extends \SlimController\SlimController
         $playerObj = array(
             'is' => array(
                 'complete' => true,
+                'unauthorized' => true,
             ),
             'language' => array(
                 'current'   => $lang,
@@ -422,6 +422,7 @@ class Index extends \SlimController\SlimController
                 'complete' => $player->isComplete(),
                 'valid'    => $player->isValid(),
                 'moderator'=> in_array($player->getId(), (array) SettingsModel::instance()->getSettings('moderators')->getValue()),
+                'unauthorized' => false,
             ),
             'dates'    => array(
                 'registration' => $player->getDates('Registration')

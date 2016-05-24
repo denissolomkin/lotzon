@@ -185,6 +185,8 @@
             "games-random": Games.random.init,
             "games-moment": Games.random.init,
 
+            "users-search": Friends.search.init,
+
             "profile-edit": Profile.init.edit,
             "profile-billing": Profile.init.billing,
             "profile-settings": Profile.init.settings,

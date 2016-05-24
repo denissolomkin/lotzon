@@ -1,8 +1,26 @@
 (function() {
 
     Friends = {
-        init: function() {
-            alert(1);
+        // init: function() {
+        //         console.debug(this);
+            
+        // },
+        search: {
+            init: function(){
+                console.debug(this);
+                $('#users-search select').chosen();
+
+                // $.ajax({
+                //   url: "/logout/",
+                //   dataType: "json",
+                //   beforeSend: function(){$('ul.chzn-results').empty();},
+                //   success: function( data ) {
+                //     response( $.map( data, function( item ) {
+                //       $('ul.chzn-results').append('<li class="active-result">' + item.name + '</li>');
+                //     }));
+                //   }
+                // });
+            }
         },
         do: {
             searchUser: function() {
