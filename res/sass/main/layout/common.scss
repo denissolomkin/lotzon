@@ -1951,6 +1951,115 @@ compleet registration popup */
 /* end popups unregistred 
 *****************************/
 
+/* popup cashout 
+*****************************/
+#popup-cashout{
+    .inner{
+        min-height: 0;
+        padding: 30px 0;
+    }   
+    .box-inner{
+        padding: 0 20px;
+    } 
+    .title{
+        font-size:20px;
+        color:#000000;
+        text-align:center;
+        padding-bottom: 30px;
+    }
+    .gray-box{
+        padding: 30px 20px;
+        margin: 20px 0;
+        background: #f5f5f5;
+        border-top: 3px dashed #ffffff;
+        border-bottom: 3px dashed #ffffff;
+        .title{
+            padding-bottom: 10px;
+        }
+        .stars{
+            font-size:25px;
+            color:#282828;
+            text-align:center;   
+        }
+        .list{
+            padding: 15px 0;
+            & > *{
+                padding-bottom: 15px;
+                position: relative;
+                overflow: hidden;
+                &:after{
+                    content: '.  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  ';
+                    letter-spacing: 2px;
+                    white-space: nowrap;
+                    position: absolute;
+                    clear: both;
+                }
+                &:last-child{
+                    padding-bottom: 0;
+                }
+            }
+            .title{
+                font-size:15px;
+                color:#4a4a4a;
+                letter-spacing:0.19px;
+                text-align:left;
+                padding: 0;
+                float: left;
+            }
+            .item{
+                display: inline-block;
+                width: 55%;
+                font-size:15px;
+                color:#000000;
+                letter-spacing:0.2px;
+                text-align:left;
+                float: right;
+                background: #f5f5f5;
+                position: relative;
+                z-index: 1;
+            }
+        }
+    }
+    .info{
+        padding-top: 20px;
+        font-size:15.5px;
+        color:#4a4a4a;
+        letter-spacing:0.2px;
+        line-height:19px;
+        text-align:center;
+    }
+    .sl-bk{
+        padding: 15px 0 0 0;
+        a{
+            height: 30px;
+            min-height: 30px;
+            line-height: 30px;
+            margin: 0;
+        }
+    }
+    .footer{
+        padding: 25px 0 0 0;
+
+        font-size:15px;
+        color:#4a4a4a;
+        letter-spacing:0.2px;
+        line-height:19px;
+        text-align:center;
+        transition: all .2s linear;
+
+        .close-pop-box{
+            color: red;
+            opacity: .8;
+            cursor: pointer;
+            &:hover{
+                opacity: 1;
+            }
+        }
+    }
+}
+/* end popup cashout 
+*****************************/
+
 // display table 
 .make-table{
     display: table;

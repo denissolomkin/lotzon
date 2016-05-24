@@ -41,6 +41,16 @@
                 "popup-change-email-alert-msg": "Этот email уже зарегистрирован",
                 "popup-change-email-success-msg": "Информация для завершения регистрации выслана на Ваш email.",
 
+                "popup-cashout-main-title": "СЧЕТ УСПЕШНО ПОПОЛНЕН!",
+                "popup-cashout-sub-title": "Квитанция об оплате № ",
+                "popup-cashout-player": "Получатель",
+                "popup-cashout-phone": "Телефон/счет",
+                "popup-cashout-sum": "Сумма",
+                "popup-cashout-date": "Дата",
+                "popup-cashout-info": "Поделитесь этой новостью в соцсетях и получите 7-ой билет на следующий розыгрыш",
+                "popup-cashout-footer": "Я НЕ хочу дополнительный билет.",
+                "popup-cashout-close": "Закрыть",
+                "popup-cashout-make-post": "Сделать пост",
 
 
                 "message-lottery-ticket-autocomplete": "АВТОЗАПОЛНЕНИЕ",
@@ -327,7 +337,7 @@
                 "title-profile-refill-title": "Для участия в проекте абсолютно <span>не обязательно</span> пополнять свой баланс. Деньги можно выиграть в разнообразных играх и конкурсах.",
                 "title-profile-refill-text": "Мы работаем над безопасной автоматической системой пополнения баланса. Сейчас все заявки обрабатываются в ручном режиме и занимают некоторое время.<br><br>У вас есть возможность пополнить свой баланс переведя желаемую сумму на указанные ниже реквизиты.",
                 "title-profile-refill-atention": "Внимание!",
-                "title-profile-refill-after-text": "В комментарий к переводу укажите email или никнейм на который вы зарегистрированны в Lotzon.",
+                "title-profile-refill-after-text": "В комментарий к переводу укажите email или никнейм на который вы зарегистрированы в Lotzon.",
                 
                 "title-profile-cashout": "Вывод денег",
                 "title-profile-cashout-choose": "Выберите способ вывода денег",
