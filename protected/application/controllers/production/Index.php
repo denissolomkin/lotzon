@@ -89,9 +89,9 @@ class Index extends \SlimController\SlimController
                 $player->fetch();
                 if ($player->getHash() == $vh) {
                     $player->setValid(true)
+                        ->setComplete(false)//todo: remove when set default=false in database
                         ->update()
                         ->setDates(time(), 'Login')
-                        ->setComplete(false)//todo: remove when set default=false in database
                         ->payInvite()
                         ->payReferal()
                         ->markOnline();
