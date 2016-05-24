@@ -339,9 +339,9 @@ class Players extends \AjaxController
 
         try {
             $player->fetch();
-
             $newPassword = $player->generatePassword();
             $player->writeLog(array('action'=>'RESEND_PASSWORD', 'desc'=>$player->hidePassword($newPassword),'status'=>'warning'))->changePassword($newPassword);
+            $player->setValid(true)->update();
         } catch (EntityException $e) {
             $this->ajaxResponse(array(), 0, $e->getMessage());
         }
