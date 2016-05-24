@@ -689,6 +689,9 @@ Config::instance()->publicResources = array(
     '/balance/cashout' => array(
         'post' => 'controllers\production\OrdersController:cashout'
     ),
+    '/cashout/:orderId/status' => array(
+        'post' => 'controllers\production\OrdersController:status'
+    ),
     /**
      * Prizes
      */

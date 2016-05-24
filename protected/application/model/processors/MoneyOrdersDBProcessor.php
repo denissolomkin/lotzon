@@ -30,17 +30,19 @@ class MoneyOrdersDBProcessor extends DBProcessor implements IProcessor
         $order->setId(DB::Connect()->lastInsertId());
 
         return $order;
-    } 
+    }
 
-    public function update(Entity $order) 
+    public function update(Entity $order)
     {
-        $sql = "UPDATE `MoneyOrders` SET `Status` = :status, `AdminId` = :adminid, `DateProcessed` = :dp WHERE `Id` = :id";
+        $sql = "UPDATE `MoneyOrders` SET `Status` = :status, `AdminId` = :adminid, `DateProcessed` = :dp, `Viewed` = :vd, `ViewedDate` = :vdd WHERE `Id` = :id";
         try {
             $sth = DB::Connect()->prepare($sql)->execute(array(
-                ':status' => $order->getStatus(),
+                ':status'  => $order->getStatus(),
                 ':adminid' => $order->getAdminId(),
-                ':dp'  => $order->getDateProcessed(),
-                ':id'   => $order->getId(),
+                ':dp'      => $order->getDateProcessed(),
+                ':id'      => $order->getId(),
+                ':vd'      => $order->getViewed(),
+                ':vdd'     => $order->getViewedDate(),
             ));
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query " . $e->getMessage(), 500);
@@ -174,4 +176,28 @@ class MoneyOrdersDBProcessor extends DBProcessor implements IProcessor
 
         return $counters;
     }
+
+    public function getNextOrderNotification($playerId)
+    {
+        $sql = "SELECT * FROM `MoneyOrders` WHERE `PlayerId` = :pid AND `Viewed` = 0 AND `Status` = 1 AND `Type`<>'points' ORDER BY `DateProcessed` ASC LIMIT 1";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':pid' => $playerId,
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+        if ($sth->rowCount()) {
+            $data  = $sth->fetch();
+            $order = new MoneyOrder();
+            $order->formatFrom('DB', $data);
+        } else {
+            return false;
+        }
+
+        return $order;
+    }
+
 }

@@ -32,4 +32,9 @@ class MoneyOrderModel extends Model
         return $this->getProcessor()->getOrdersToProcessCountByTypes($status);
     }
 
+    public function getNextOrderNotification($playerId)
+    {
+        return $this->getProcessor()->getNextOrderNotification($playerId);
+    }
+
 }

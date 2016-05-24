@@ -38,6 +38,9 @@ class MoneyOrder extends Entity
 
     protected $_item = null;
 
+    protected $_viewed     = 0;
+    protected $_viewedDate = 0;
+
     public function init() 
     {
         $this->setModelClass('MoneyOrderModel');
@@ -249,6 +252,8 @@ class MoneyOrder extends Entity
                  ->setSum($data['Sum'])
                  ->setEquivalent($data['Equivalent'])
                  ->setType($data['Type'])
+                 ->setViewed($data['Viewed'])
+                 ->setViewedDate($data['ViewedDate'])
                  ->setData(@unserialize($data['Data']));
 
             if($data['ItemId']) {
@@ -272,4 +277,23 @@ class MoneyOrder extends Entity
 
         return $this;
     }
+
+    public function export($to)
+    {
+        switch ($to) {
+            case 'ping':
+                $ret = array(
+                    'id'           => $this->getId(),
+                    'sum'          => $this->getSum(),
+                    'currency'     => $this->getCurrency(),
+                    'number'       => $this->getNumber(),
+                    'date'         => $this->getDateProcessed(),
+                );
+                break;
+            default:
+                throw new EntityException('Export type is not supported', 500);
+        }
+        return $ret;
+    }
+
 }
