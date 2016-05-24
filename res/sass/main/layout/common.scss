@@ -197,16 +197,14 @@ html {
 }
 
 body {
-    font: 15.5px "PT Sans", sans-serif;
-    font: 15.5px 'Handbook' ;
+    font: 15.5px 'Handbook';
     background: #F4F4F4;
     color: #4a4a4a;
     position: relative;
     -webkit-font-smoothing: antialiased;
 }
 input, textarea, keygen, select, button{
-    font: 15.5px "PT Sans", sans-serif;
-    font: 15.5px 'Handbook' ;
+    font: 15.5px 'Handbook';
 }
 
 .uk-float-left {
@@ -597,7 +595,7 @@ input.input-radio:checked + label.input-radio:before {
 }
 
 // Message Form ------------------------ //
-// post|answear form
+// post|answer form
 .message-form-wrapper {
     padding: 10px 20px 0;
     border-bottom: 1px solid #ececec;
@@ -617,7 +615,6 @@ input.input-radio:checked + label.input-radio:before {
 }
 
 .message-form textarea {
-    font: 15.5px "PT Sans";
     display: block;
     width: 100%;
     resize: none;

@@ -278,17 +278,18 @@ SELECT CONCAT(YEAR(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date))) `Mo
 
         $sql = "
         SELECT 
-        CURRENCY, 
-        IF((SELECT Country FROM Players WHERE Players.Id=PlayerId)='UA','UAH','RUB') COUNTRY,
+        CURRENCY,
         SUM(IF(SUM>0,0,1)) COUNT_PLAY,
         SUM(IF(SUM>0,1,0)) COUNT_WIN,
-        SUM(SUM) SUM_WIN
+        SUM(IF(SUM>0,0,IF(Currency = 'MONEY', Equivalent, Sum)))*-1 SUM_PLAY,
+        SUM(IF(SUM>0,IF(Currency = 'MONEY', Equivalent, Sum),0))*-1 SUM_WIN,
+        SUM(IF(Currency = 'MONEY', Equivalent, Sum))*-1 OUR_PROFIT
         FROM `Transactions` 
         WHERE `ObjectType` = 'Slots' 
         AND `Date` > :from
         AND `Date` < :to
         ".(isset($args['Currency']) && $args['Currency']!=''?"AND `Currency` = '{$args['Currency']}'":'')." 
-        GROUP BY COUNTRY, CURRENCY";
+        GROUP BY CURRENCY";
 
         try {
             $sth = DB::Connect()->prepare($sql);

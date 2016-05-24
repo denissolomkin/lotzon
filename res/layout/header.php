@@ -29,7 +29,6 @@
         }
         ?>
 
-        <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700,400italic,700italic&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="/res/css/style.css?<?php echo $version;?>">
         <?php //if (isset($isMobile)) {
             //if ($isMobile) { ?>
