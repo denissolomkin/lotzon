@@ -2899,8 +2899,12 @@ div {
   height: inherit;
   overflow: hidden; }
   #lottery #banner-desktop-context-ticket > * {
+    height: inherit;
     position: relative;
     z-index: 5; }
+    #lottery #banner-desktop-context-ticket > * > div:not(.timer-wrapper) {
+      height: 100%;
+      overflow: hidden; }
   #lottery #banner-desktop-context-ticket .timer-wrapper {
     position: absolute;
     bottom: 15px;
