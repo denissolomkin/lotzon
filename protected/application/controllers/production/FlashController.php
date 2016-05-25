@@ -2,12 +2,8 @@
 
 namespace controllers\production;
 
-use \Application, \Player;
-use \ChanceGamesModel, \SettingsModel;
-use Symfony\Component\HttpFoundation\Session\Session;
+use \Application, \SettingsModel;
 
-Application::import(PATH_APPLICATION . 'model/entities/Player.php');
-Application::import(PATH_APPLICATION . 'model/entities/Banner.php');
 Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');
 
 class FlashController extends \AjaxController
@@ -53,7 +49,7 @@ class FlashController extends \AjaxController
             'res' => array(
                 'games' => array(
                     'flash' => array(
-                        "$id" => $game
+                        $id => $game
                     ))));
 
         $this->ajaxResponseNoCache($response);

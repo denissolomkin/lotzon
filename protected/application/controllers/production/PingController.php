@@ -184,6 +184,11 @@ class PingController extends \AjaxController
         // check for moment chance
         // if not already played chance game
 
+
+        /*
+         * todo change LastDate to NextDate
+         */
+
         if (!$this->session->has($key . 'LastDate')) {
             $this->session->set($key . 'LastDate', $this->player->getDates($key));
         } else if ($this->player->getDates($key) > $this->session->get($key . 'LastDate')) {
@@ -203,7 +208,7 @@ class PingController extends \AjaxController
             $probability = $hasTimeCome && mt_rand(0, 100) <= 100 / (($gamesPublished[$key]->getOptions('max') - $gamesPublished[$key]->getOptions('min')) ?: 1);
             $hasTimeOut  = $hasTimeCome && $this->session->get($key . 'LastDate') + $gamesPublished[$key]->getOptions('max') * 60 < time();
 
-            $badges['game'] = array(
+            /*$badges['game'] = array(
                 '_prob' => $probability,
                 '_come' => $hasTimeCome,
                 '_out' => $hasTimeOut,
@@ -211,7 +216,7 @@ class PingController extends \AjaxController
                 'time' => time(),
                 'min' => $gamesPublished[$key]->getOptions('min') * 60,
                 'max' => $gamesPublished[$key]->getOptions('max') * 60
-            );
+            );*/
 
             switch (true) {
 

@@ -282,7 +282,7 @@ SELECT CONCAT(YEAR(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date))) `Mo
         SUM(IF(SUM>0,0,1)) COUNT_PLAY,
         SUM(IF(SUM>0,1,0)) COUNT_WIN,
         SUM(IF(SUM>0,0,IF(Currency = 'MONEY', Equivalent, Sum)))*-1 SUM_PLAY,
-        SUM(IF(SUM>0,IF(Currency = 'MONEY', Equivalent, Sum),0))*-1 SUM_WIN,
+        SUM(IF(SUM>0,IF(Currency = 'MONEY', Equivalent, Sum),0)) SUM_WIN,
         SUM(IF(Currency = 'MONEY', Equivalent, Sum))*-1 OUR_PROFIT
         FROM `Transactions` 
         WHERE `ObjectType` = 'Slots' 
