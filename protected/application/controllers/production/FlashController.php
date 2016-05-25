@@ -2,7 +2,8 @@
 
 namespace controllers\production;
 
-use \Application, \SettingsModel;
+use \Application;
+use \SettingsModel;
 
 Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');
 
