@@ -24,7 +24,7 @@
         <meta property="og:url" content="http<? if(!empty($_SERVER['HTTPS'])) { echo 's'; }?>://<?=$_SERVER["HTTP_HOST"]?>/blog/post/<?=$og_meta['id']?>">
         <meta property="og:title" content="<?php echo $og_meta['title'];?>">
         <meta property="og:description" content="<?php echo $og_meta['title'];?>">
-        <meta property="og:img" content="http<? if(!empty($_SERVER['HTTPS'])) { echo 's'; }?>://<?=$_SERVER["HTTP_HOST"]?>/filestorage/blog/768/<?=$og_meta['img']?>"
+        <meta property="og:img" content="http<? if(!empty($_SERVER['HTTPS'])) { echo 's'; }?>://<?=$_SERVER["HTTP_HOST"]?>/filestorage/blog/768/<?=$og_meta['img']?>">
         <?php
         }
         ?>

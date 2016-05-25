@@ -226,7 +226,6 @@ html {
   overflow-x: hidden; }
 
 body {
-  font: 15.5px "PT Sans", sans-serif;
   font: 15.5px 'Handbook';
   background: #F4F4F4;
   color: #4a4a4a;
@@ -234,7 +233,6 @@ body {
   -webkit-font-smoothing: antialiased; }
 
 input, textarea, keygen, select, button {
-  font: 15.5px "PT Sans", sans-serif;
   font: 15.5px 'Handbook'; }
 
 .uk-float-left {
@@ -585,7 +583,6 @@ input.input-radio:checked + label.input-radio:before {
     background: #f5f5f5; }
 
 .message-form textarea {
-  font: 15.5px "PT Sans";
   display: block;
   width: 100%;
   resize: none;
