@@ -287,7 +287,7 @@ class AuthController extends \SlimController\SlimController {
             }
 
             if ($loggedIn === true) {
-                $this->session->set(Player::IDENTITY, $player);
+                $player->updateSession();
 
             }
 
@@ -340,7 +340,7 @@ class AuthController extends \SlimController\SlimController {
 
             }
             if ($loggedIn === true) {
-                $this->session->set(Player::IDENTITY, $player);
+                $player->updateSession();
             }
             $this->redirect(strstr($_SERVER['HTTP_REFERER'], 'lotzon.com') ? $_SERVER['HTTP_REFERER'] : '/');
         } else {

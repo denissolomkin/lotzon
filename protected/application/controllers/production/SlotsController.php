@@ -165,15 +165,16 @@ class SlotsController extends \AjaxController
 
             $balance = $this->player->getBalance();
 
-            /* todo */
+            /* todo saveGame */
             $game->saveGame();
             $this->playerAward($game);
+            $this->player->updateSession();
 
             $response['captcha'] = $this->player->activateCaptcha();
             $response['player'] = array(
-                "balance" => array(
-                    "points" => $balance['Points'],
-                    "money" => $balance['Money']
+                'balance' => array(
+                    'points' => $balance['Points'],
+                    'money' => $balance['Money']
                 )
             );
 
@@ -195,7 +196,7 @@ class SlotsController extends \AjaxController
                     'id'    => $game->getId(),
                     'uid'   => $game->getUid(),
                     'type'  => 'Slots',
-                    'title' => "Выигрыш " . $game->getTitle($this->player->getLang())
+                    'title' => 'Выигрыш ' . $game->getTitle($this->player->getLang())
                 );
 
                 switch ($currency) {

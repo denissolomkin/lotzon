@@ -59,12 +59,13 @@ class AjaxController extends \SlimController\SlimController
 
         try {
 
-            if($this->session->get(Player::IDENTITY)->getVersion() !== 3)
+            if($this->session->get(Player::IDENTITY)->getVersion() !== 4)
                 throw(new \Exception);
 
         } catch (\Exception $e) {
-            $this->session->get(Player::IDENTITY)->fetch();
-            $playerId = $this->session->get(Player::IDENTITY)->getId();
+            $playerId = $this->session->get(Player::IDENTITY)
+                ->fetch()
+                ->getId();
             $this->player = new Player();
             $this->player
                 ->setId($playerId)
@@ -73,7 +74,8 @@ class AjaxController extends \SlimController\SlimController
                 ->initPrivacy()
                 ->initCounters()
                 ->initAccounts();
-            $this->session->set(Player::IDENTITY, $this->player);
+
+            $this->player->updateSession();
         }
     }
 

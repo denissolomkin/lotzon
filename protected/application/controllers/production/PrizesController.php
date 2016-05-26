@@ -87,7 +87,7 @@ class PrizesController extends \AjaxController
             if ($order->getItem()->getQuantity()) {
                 $order->getItem()->setQuantity($order->getItem()->getQuantity() - 1)->update();
             }
-            $this->session->set(Player::IDENTITY, $this->player);
+            $this->player->updateSession();
             $order->commit();
 
         } catch(EntityException $e) {

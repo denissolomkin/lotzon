@@ -103,10 +103,10 @@ class Index extends \SlimController\SlimController
         }
 
         if ($loggedIn === true) {
-            $this->session->set(Player::IDENTITY, $player);
             $player->setLastIp(Common::getUserIp())
                 ->setAgent($_SERVER['HTTP_USER_AGENT'])
                 ->writeLogin();
+            $player->updateSession();
         }
 
         $this->redirect(strstr($_SERVER['HTTP_REFERER'], 'lotzon.com') ? $_SERVER['HTTP_REFERER'] : '/');
@@ -157,7 +157,7 @@ class Index extends \SlimController\SlimController
         }
         $this->currency = $this->country;
 
-        if (!$this->session->get(Player::IDENTITY)) {
+        if (!($player = $this->session->get(Player::IDENTITY))) {
 
             if (($this->request()->get('guest'))or($page<>'')) {
                 $this->game_noauth($page);
@@ -171,7 +171,7 @@ class Index extends \SlimController\SlimController
                         $player->setEmail($_COOKIE[Player::AUTOLOGIN_COOKIE])->fetch();
 
                         if ($player->generateAutologinHash() === $_COOKIE[Player::AUTOLOGIN_HASH_COOKIE]) {
-                            $this->session->set(Player::IDENTITY, $player);
+                            $player->updateSession();
                             $player->markOnline();
                         }
                     }
@@ -183,25 +183,26 @@ class Index extends \SlimController\SlimController
         } else {
             // FORCE UPDATE POINTS AND MONEY FOR FIX WEBSOCKET SESSION
             try {
-                $this->session->set(Player::IDENTITY, $this->session->get(Player::IDENTITY)->fetch());
+
+                $player->fetch()->updateSession();
 
                 $this->country = (
-                CountriesModel::instance()->isCountry($this->session->get(Player::IDENTITY)->getCountry())
-                    ? $this->session->get(Player::IDENTITY)->getCountry()
+                CountriesModel::instance()->isCountry($player->getCountry())
+                    ? $player->getCountry()
                     : CountriesModel::instance()->defaultCountry());
 
                 $this->lang = (
-                LanguagesModel::instance()->isLang($this->session->get(Player::IDENTITY)->getLang())
-                    ? $this->session->get(Player::IDENTITY)->getLang()
+                LanguagesModel::instance()->isLang($player->getLang())
+                    ? $player->getLang()
                     : CountriesModel::instance()->defaultLang());
 
                 $this->currency = (
-                CountriesModel::instance()->isCountry($this->session->get(Player::IDENTITY)->getCurrency())
-                    ? $this->session->get(Player::IDENTITY)->getCurrency()
+                CountriesModel::instance()->isCountry($player->getCurrency())
+                    ? $player->getCurrency()
                     : CountriesModel::instance()->defaultCountry());
 
                 $this->game($page);
-                $this->session->get(Player::IDENTITY)->markOnline();
+                $player->markOnline();
             } catch (EntityException $e) {
                 echo $e->getCode();
                 if ($e->getCode() == 404) {
@@ -389,17 +390,17 @@ class Index extends \SlimController\SlimController
             unset($_SESSION['ERROR']);
         }
 
-        /* todo delete
-        patch for old Player Entity in Memcache sessions
-        */
-        
+        /*
+         * patch for old Player Entity in Memcache sessions
+         */
+
         try {
 
-            if($this->session->get(Player::IDENTITY)->getVersion() !== 3)
+            if($this->session->get(Player::IDENTITY)->getVersion() !== 4)
                 throw(new \Exception);
 
         } catch (\Exception $e) {
-            $this->session->get(Player::IDENTITY)->fetch();
+
             $playerId = $player->getId();
             $player = new Player();
             $player
@@ -409,7 +410,7 @@ class Index extends \SlimController\SlimController
                 ->initPrivacy()
                 ->initCounters()
                 ->initAccounts();
-            $this->session->set(Player::IDENTITY, $player);
+            $player->updateSession();
         }
 
 
