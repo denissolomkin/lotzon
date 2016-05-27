@@ -1,6 +1,6 @@
 <div id="popup-lottery" class="pop-box">
     <div id="popup-lottery-process" class="clearfix">
-    <button class="close won" onclick="parentNode.parentNode.remove()"></button>
+        <button class="close won" onclick="parentNode.parentNode.remove()"></button>
         <div class="container clearfix">
 
             <div><!-- <a href="/lottery" class="header-logo"></a> --></div>
@@ -42,7 +42,7 @@
                         </li>
                         {{/tickets}}
                     </ul>
-                    
+
                     <div class="logo"><i class="i-lotzon"></i></div>
 
                     {{#if win}}
@@ -71,8 +71,8 @@
         </div>
 
         <div class="container-center won">
-            <a class="btn btn-flat" data-id="{{@key}}" href="/lottery/{{ id }}">{{i18n 'title-lottery-look-results'}}</a>
-        </div> 
+            <a class="btn btn-flat" onclick="parentNode.parentNode.parentNode.remove()" href="/lottery/{{ id }}">{{i18n 'title-lottery-look-results'}}</a>
+        </div>
     </div>
 </div>
 <!-- END PROCESS BLOCK -->
