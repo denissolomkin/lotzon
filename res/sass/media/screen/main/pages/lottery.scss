@@ -399,8 +399,10 @@
 .content-box.tickets .title {
     padding-left: 23px;
 }
-#popup-lottery-process.lottery-won {
+#popup-lottery-process {
     min-width: 1024px;
+}
+#popup-lottery-process.lottery-won {
     & .balls-end-game .g-oc_li .goc_li-nb {
         position: static;
     }
