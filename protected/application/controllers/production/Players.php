@@ -1,12 +1,10 @@
 <?php
 
 namespace controllers\production;
-use \Application, \Player, \EntityException, \CountriesModel, \SettingsModel, \StaticTextsModel, \WideImage, \EmailInvites, \EmailInvite, \LanguagesModel, \Common, \NoticesModel, \GamesSettingsModel, \GameSettingsModel, \ChanceGamesModel;
-use \GeoIp2\Database\Reader;
+use \Application, \Player, \EntityException, \SettingsModel, \LanguagesModel, \Common;
 
 Application::import(PATH_APPLICATION . 'model/entities/Player.php');
 Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');
-Application::import(PATH_PROTECTED . 'external/wi/WideImage.php');
 
 class Players extends \AjaxController
 {
@@ -582,14 +580,14 @@ class Players extends \AjaxController
         $name     = $this->request()->post('name');
         $surname  = $this->request()->post('surname');
         $gender   = $this->request()->post('gender', null);
-        $birthday = $this->request()->post('datepicker') ?: $this->request()->post('month',0).'/'.$this->request()->post('day',0).'/'.$this->request()->post('year',1900);
+        $birthday = $this->request()->post('datepicker') ?: $this->request()->post('month',0).'/'.$this->request()->post('day',0).'/'.$this->request()->post('year',1902);
         $city     = $this->request()->post('city');
         $zip      = $this->request()->post('zip');
         $address  = $this->request()->post('address');
         $country  = $this->request()->post('country');
         $privacy  = $this->request()->post('privacy', array());
 
-        $birthday = $birthday !== '0/0/1900' && $birthday !== '' ? strtotime($birthday) : null;
+        $birthday = $birthday !== '0/0/1902' && $birthday !== '' ? strtotime($birthday) : null;
 
         try {
 
