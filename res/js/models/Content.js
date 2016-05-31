@@ -129,7 +129,13 @@
                         async: true,
                         dataType: 'json',
                         success: function(data) {
-                            //
+                            
+                            if(data.tickets && data.tickets.filledTickets){
+                                Tickets.filledTickets = data.tickets.filledTickets;
+                                Tickets.renderTickets();
+                                Tickets.upadteTabs();
+                            }
+                            
                         },
                         error: function() {
                             // 
