@@ -182,6 +182,7 @@
             "games-chance": Carousel.initOwl,
             "games-chance-view": Games.chance.init,
             "games-slots-view": Games.slots.init,
+            "games-wheel-view": Games.wheel.init,
             "games-random": Games.random.init,
             "games-moment": Games.random.init,
 
