@@ -550,6 +550,21 @@ Config::instance()->publicResources = array(
         'get'   => 'controllers\production\FlashController:item'
     ),
     /**
+     * Wheel
+     */
+    '/games/wheel/:id' => array(
+        'get'   => array(
+            'controllers\production\ChanceController:item',
+            function ($route) {
+                $route->setParams(array(
+                        "key"   => "ChanceGame",
+                        "id"    => $route->getParam('id')
+                    )
+                );
+            }
+        )
+    ),
+    /**
      * Games
      */
     '/games/:key/' => array(
