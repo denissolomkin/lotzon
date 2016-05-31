@@ -19,7 +19,7 @@ class Player extends Entity
     const AVATAR_HEIGHT = 160;
 
     static $MASK = array(
-        'dates'=>array('Moment','QuickGame','ChanceGame','AdBlockLast','AdBlocked','WSocket','TeaserClick','Ping','Login','Notice','Registration'),
+        'dates'=>array('Moment','NextMoment','QuickGame','ChanceGame','AdBlockLast','AdBlocked','WSocket','TeaserClick','Ping','Login','Notice','Registration'),
         'stats'=>array('WhoMore','SeaBattle','Notice','Note','AdBlock','Log','Ip','MyReferal','Referal','MyInviter','Inviter','ShopOrder','MoneyOrder','Review','Message','CookieId','Mult'),
         'counters'=>array('CaptchaCount','CaptchaTime'),
         'privacy'=>array('Name','Surname','Gender','Birthday','Age','Zip','Address','Message'), // list of variables, which can be modify by player
@@ -98,7 +98,7 @@ class Player extends Entity
     protected $_stats = array();
 
     protected $_friend = null;
-    protected $_version = 3;
+    protected $_version = 4;
 
     public function init()
     {
@@ -143,9 +143,9 @@ class Player extends Entity
     public function getFavoriteCombination()
     {
         if (!is_array($this->_favoriteCombination)) {
-            return array_fill(1,\LotterySettings::REQUIRED_BALLS, null);
+            return array_fill(1,LotterySettings::REQUIRED_BALLS, null);
         }
-        return array_pad($this->_favoriteCombination, \LotterySettings::REQUIRED_BALLS, null);
+        return array_pad($this->_favoriteCombination, LotterySettings::REQUIRED_BALLS, null);
     }
 
     public function getInvitesCount()
@@ -164,6 +164,19 @@ class Player extends Entity
     public function getAvailableInvitesCount()
     {
         return SettingsModel::instance()->getSettings('counters')->getValue('INVITES_PER_WEEK') - $this->getInvitesCount();
+    }
+
+    public function updateDate($key)
+    {
+
+        $model = $this->getModelClass();
+
+        try {
+            return $model::instance()->updateDate($key, $this);
+        } catch (ModelException $e) {
+            throw new EntityException('INTERNAL_ERROR', 500);
+        }
+
     }
 
     public function checkDate($key)
@@ -994,11 +1007,16 @@ class Player extends Entity
             ->initCounters()
             ->initAccounts();
 
-        $session->set(Player::IDENTITY, $this);
+        $this->updateSession();
 
         return $this;
     }
 
+    public function updateSession()
+    {
+        $session = new Session();
+        $session->set(Player::IDENTITY, $this);
+    }
 
     public function payInvite()
     {

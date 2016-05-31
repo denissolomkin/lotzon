@@ -87,10 +87,12 @@ class ChanceController extends \AjaxController
                 $error = 'GAME_LIST_EMPTY';
                 break;
 
+            case $key === 'QuickGame':
             case !$publishedGames:
                 $error = 'GAMES_NOT_ENABLED';
                 break;
 
+            case $key === 'Moment' && $this->player->getDates('NextMoment') > time():
             case $publishedGames->getOptions('min') && $this->session->get($key . 'LastDate') + $publishedGames->getOptions('min') * 60 > time():
                 $error = 'TIME_NOT_YET';
                 break;
@@ -154,9 +156,9 @@ class ChanceController extends \AjaxController
 
             $balance = $this->player->getBalance();
             $response['player'] = array(
-                "balance" => array(
-                    "points" => $balance['Points'],
-                    "money" => $balance['Money']
+                'balance' => array(
+                    'points' => $balance['Points'],
+                    'money' => $balance['Money']
                 )
             );
 
@@ -223,11 +225,17 @@ class ChanceController extends \AjaxController
 
             if ($this->player->checkDate($key)) {
 
+                /* todo saveGame */
+                $game->saveGame();
+
                 $this->playerAward($game);
+                $this->nextDate($game);
+                $this->player->updateSession();
+
                 $response['player'] = array(
-                    "balance" => array(
-                        "points" => $this->player->getPoints(),
-                        "money"  => $this->player->getMoney()
+                    'balance' => array(
+                        'points' => $this->player->getPoints(),
+                        'money'  => $this->player->getMoney()
                     ));
 
                 $response['captcha'] = $this->player->activateCaptcha();
@@ -245,6 +253,22 @@ class ChanceController extends \AjaxController
         $this->ajaxResponseNoCache($response);
     }
 
+    private function nextDate($game)
+    {
+        switch ($game->getKey()) {
+
+            case 'Moment':
+                $publishedGames = GamesPublishedModel::instance()->getList()['Moment'];
+                $rand           = rand($publishedGames->getOptions('min') ?: 0, $publishedGames->getOptions('max') ?: 1);
+                $this->player
+                    ->setDates(time() + $rand * 60, 'NextMoment')
+                    ->updateDate('NextMoment');
+                break;
+        }
+
+        return $this;
+    }
+
     private function playerAward($game)
     {
 
@@ -256,7 +280,7 @@ class ChanceController extends \AjaxController
                     'id'    => $game->getId(),
                     'uid'   => $game->getUid(),
                     'type'  => $game->getKey(),
-                    'title' => "Выигрыш " . $game->getTitle($this->player->getLang())
+                    'title' => 'Выигрыш ' . $game->getTitle($this->player->getLang())
                 );
 
                 switch ($currency) {
@@ -278,5 +302,7 @@ class ChanceController extends \AjaxController
                 }
             }
         }
+
+        return $this;
     }
 }

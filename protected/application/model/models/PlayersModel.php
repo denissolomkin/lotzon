@@ -38,6 +38,11 @@ class PlayersModel extends Model
         return $this->getProcessor()->getAvailableIds();
     }
 
+    public function updateDate($key, Entity $player)
+    {
+        return $this->getProcessor()->updateDate($key, $player);
+    }
+
     public function checkDate($key, Entity $player)
     {
         return $this->getProcessor()->checkDate($key, $player);

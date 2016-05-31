@@ -535,6 +535,8 @@ class PlayersDBProcessor implements IProcessor
 
     public function delete(Entity $player)
     {
+        return false;
+
         $sql = "DELETE FROM `Players` WHERE `Players`.`Id` = :id;
         DELETE FROM `EmailInvites` WHERE `InviterId` = :id;
         DELETE FROM `LotteryTickets` WHERE `PlayerId` = :id;
@@ -1380,6 +1382,23 @@ class PlayersDBProcessor implements IProcessor
         }
 
         return $player;
+    }
+
+    public function updateDate($key, Entity $player)
+    {
+        $sql = "UPDATE `PlayerDates` SET `{$key}` = :date WHERE `PlayerId` = :id";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':date' => $player->getDates($key),
+                ':id'   => $player->getId(),
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+        return $sth->rowCount();
     }
 
     public function checkDate($key, Entity $player)

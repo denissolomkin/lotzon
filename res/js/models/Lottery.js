@@ -245,6 +245,16 @@
 
                         case Lottery.data.id == lastLotteryId:
                         default:
+
+                            if(!DOM.byId('popup-lottery')) {
+                                R.push({
+                                    href: 'popup-lottery',
+                                    json: Object.deepExtend(Lottery.extendTickets(Tickets.filledTickets, [{}, []]), {
+                                        combination: Array(Tickets.requiredBalls).fill(null)
+                                    })
+                                });
+                            }
+
                             setTimeout(function () {
                                 Lottery.prepareData(id)
                             }, 3000);

@@ -67,7 +67,7 @@
                         <div class="select-wrapper">
                             <select name="year" class="{{#if (null birthday)}}default{{/if}}" onchange="this.className=this.value">
                                 {{#if (gt (diff (day null 'YYYY') 80) (day (or (player "birthday") -2000000000 ) 'YYYY' ) )}}
-                                <option class="default" value="1000">{{i18n "title-profile-year"}}</option>
+                                <option class="default" value="1902">{{i18n "title-profile-year"}}</option>
                                 {{/if}} {{#each (for (diff (day null 'YYYY') 80) '<=' (diff (day null ' YYYY ') 18 ))}}
                                             <option value="{{.}}" {{#if (isset (player "birthday"))}}{{#if (like . (day (player "birthday") 'YYYY '))}}selected="selected"{{/if}}{{/if}}>{{.}}</option>
                                             {{/each}}

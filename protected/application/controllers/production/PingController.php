@@ -163,9 +163,8 @@ class PingController extends \AjaxController
             $this->session->set($key . 'LastDate', $this->player->getDates($key));
 
         $diff = ($this->session->get($key . 'LastDate') + $timer * 60) - time();
-        // print_r(array($this->player->getDates($key)-time(),$this->session->get($key . 'LastDate')-time(),$diff));
 
-        if ($diff < 0){
+        if (0 && $diff < 0) {
             $badges['notifications'][] = array(
                 'key'    => $key,
                 'title'  => 'title-games-random',
@@ -173,7 +172,7 @@ class PingController extends \AjaxController
                 'action' => '/games/random'
             );
         } else {
-            $delete['notifications'][]=$key;
+            $delete['notifications'][] = $key;
         }
 
         /* 
@@ -182,43 +181,17 @@ class PingController extends \AjaxController
 
         $key = 'Moment';
 
-        // check for moment chance
-        // if not already played chance game
+        if (!$this->session->has($key) && isset($gamesPublished[$key])) {
 
-        if (!$this->session->has('MomentLastDate')) {
-            if ($this->player->getDates($key) < (time()-$gamesPublished[$key]->getOptions('max') * 60-$gamesPublished[$key]->getOptions('timeout')))
-            $this->session->set($key . 'LastDate', time() - $gamesPublished[$key]->getOptions('max') * 60);
-        }
-
-        if ((!$this->session->has($key) && time() - $this->session->get($key . 'LastDate') > $gamesPublished[$key]->getOptions('max') * 60) ||
-            ($this->session->has($key) && $this->session->get($key)->getTime() + $this->session->get($key)->getTimeout() * 60 < time() && $this->session->remove($key))
-        ) {
-            $this->session->set($key . 'LastDate', time());
-        }
-
-        /* todo delete after merge LOT-22 */
-        if ($this->player->getDates($key) > $this->session->has($key . 'LastDate'))
-            $this->session->set($key . 'LastDate', $this->player->getDates($key));
-
-        if ($this->session->get($key . 'LastDate') && !$this->session->has($key) && isset($gamesPublished[$key])) {
-
-            if ($this->session->get($key . 'LastDate') + $gamesPublished[$key]->getOptions('min') * 60 <= time() &&
-                $this->session->get($key . 'LastDate') + $gamesPublished[$key]->getOptions('max') * 60 >= time()
-            ) {
-                switch (true) {
-
-                    case (($rnd = mt_rand(0, 100)) <= 100 / (($gamesPublished[$key]->getOptions('max') - $gamesPublished[$key]->getOptions('min')) ?: 1)):
-                    case ($this->session->get($key . 'LastDate') + $gamesPublished[$key]->getOptions('max') * 60 - time()):
-                        $badges['notifications'][] = array(
-                            'key'     => $key,
-                            'title'   => 'title-games-moment',
-                            'button'  => 'button-games-play',
-                            'action'  => '/games/moment',
-                            'timer'   => $gamesPublished[$key]->getOptions('timeout') * 60,
-                            'timeout' => 'close'
-                        );
-                        break;
-                }
+            if($this->player->getDates('Next' . $key) <= time()) {
+                $badges['notifications'][] = array(
+                    'key'    => $key,
+                    'title'  => 'title-games-moment',
+                    'button' => 'button-games-play',
+                    'action' => '/games/moment'
+                );
+            } else {
+                $delete['notifications'][] = $key;
             }
 
         } elseif ($this->session->has($key)) {
@@ -258,13 +231,13 @@ class PingController extends \AjaxController
                 \MessagesModel::instance()->setNotificationsDate($this->player->getId());
                 foreach ($list as $message) {
                     $badges['messages'][] = array(
-                        "id" => $message->getId(), /* messageId */
-                        "user" => array(
+                        'id' => $message->getId(), /* messageId */
+                        'user' => array(
                             'id'   => $message->getPlayerId(),
                             'img'  => $message->getPlayerImg(),
                             'name' => $message->getPlayerName(),
                         ),
-                        "text"    => $message->getText(),
+                        'text'    => $message->getText(),
                         'timer'   => SettingsModel::instance()->getSettings('counters')->getValue('MESSAGE_BADGE_TIMEOUT')?:5,
                         'timeout' => 'close'
                     );

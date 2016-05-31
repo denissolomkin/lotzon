@@ -219,8 +219,7 @@ $(function () {
             return html;
         },
         'unauthorized': function(){
-            console.debug(config.unauthorized);
-            return config.unauthorized ? true : false;
+            return Player.is && Player.is.unauthorized ? true : false;
         },
         'avatar': Player.getAvatar,
         'currency': Player.getCurrency,

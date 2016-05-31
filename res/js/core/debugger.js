@@ -159,12 +159,11 @@
                     Content.captcha.render();
                     return false;
                 } else if (message[0] === 'Unauthorized' || message[2] == 401) {
-                    if(config.unauthorized){
+                    if (Player.is.unauthorized) {
                         Content.popup.enter();
-                    }else{
+                    } else {
                         location.reload();
                     }
-
                     return false;
                 } else {
                     if (message[0] === 'error')

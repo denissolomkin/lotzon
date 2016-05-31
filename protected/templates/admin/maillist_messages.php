@@ -273,7 +273,8 @@
 
                         /* forming select of from  */
                         $('select[name="from"]', modal).empty();
-                        <? foreach (\Config::instance()->mailServers as $key=>$value) { ?>
+                        <? if (is_array(\Config::instance()->mailServers))
+                        foreach (\Config::instance()->mailServers as $key=>$value) { ?>
                             $('select[name="from"]', modal).append($('<option value="<?=$key?>"><?=$key?></option>'));
                         <? } ?>
                         if (currentEdit.settings.from) {

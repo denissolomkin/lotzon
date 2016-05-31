@@ -2,7 +2,7 @@
 
 namespace controllers\production;
 
-use \Application, \Banner, \GamesPublishedModel, \SettingsModel;
+use \Application, \GamesPublishedModel, \SettingsModel;
 
 Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');
 

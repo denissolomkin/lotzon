@@ -1,12 +1,10 @@
 <?php
 
 namespace controllers\production;
-use \Application, \Player, \EntityException, \CountriesModel, \SettingsModel, \StaticTextsModel, \WideImage, \EmailInvites, \EmailInvite, \LanguagesModel, \Common, \NoticesModel, \GamesSettingsModel, \GameSettingsModel, \ChanceGamesModel;
-use \GeoIp2\Database\Reader;
+use \Application, \Player, \EntityException, \SettingsModel, \LanguagesModel, \Common;
 
 Application::import(PATH_APPLICATION . 'model/entities/Player.php');
 Application::import(PATH_CONTROLLERS . 'production/AjaxController.php');
-Application::import(PATH_PROTECTED . 'external/wi/WideImage.php');
 
 class Players extends \AjaxController
 {
@@ -206,7 +204,7 @@ class Players extends \AjaxController
                 $player->enableAutologin();
             }
             // set cookie to not show register form
-            setcookie("showLoginScreen", "1", time() + (10 * 365 * 24 * 60 * 60), '/');
+            setcookie('showLoginScreen', '1', time() + (10 * 365 * 24 * 60 * 60), '/');
         } catch (EntityException $e) {
             $this->ajaxResponse(array(), 0, $e->getMessage());
         }
@@ -238,7 +236,7 @@ class Players extends \AjaxController
             if ($resp->isSuccess()) {
                 \CaptchaModel::instance()->update($this->player);
                 $this->player->initCounters();
-                $this->session->set(Player::IDENTITY, $this->player);
+                $this->player->updateSession();
             } else {
                 $this->ajaxResponseInternalError('VALIDATION_FAILED');
             }
@@ -258,7 +256,7 @@ class Players extends \AjaxController
         if ($this->player->getAvatar()) {
             @unlink(PATH_FILESTORAGE . 'avatars/' . (ceil($this->player->getId() / 100)) . '/' . $this->player->getAvatar());
         }
-        $this->player->setAvatar("")->saveAvatar();
+        $this->player->setAvatar('')->saveAvatar();
         $this->ajaxResponse(array());
     }
 
@@ -460,15 +458,15 @@ class Players extends \AjaxController
 
         try {
             $this->player->setFavoriteCombination($fav)->update();
-            $this->session->set(Player::IDENTITY, $this->player);
+            $this->player->updateSession();
         } catch (EntityException $e) {
-            $this->ajaxResponseNoCache(array("message" => $e->getMessage()), $e->getCode());
+            $this->ajaxResponseNoCache(array('message' => $e->getMessage()), $e->getCode());
             return false;
         }
 
         $res = array(
-            "player" => array(
-                "favorite" => $this->player->getFavoriteCombination(),
+            'player' => array(
+                'favorite' => $this->player->getFavoriteCombination(),
             )
         );
 
@@ -492,22 +490,22 @@ class Players extends \AjaxController
                     if ($newPass == $repeatPass) {
                         $this->player->changePassword($newPass);
                     } else {
-                        $this->ajaxResponseBadRequest("passwords-do-not-match");
+                        $this->ajaxResponseBadRequest('passwords-do-not-match');
                     }
             }
-            $this->session->set(Player::IDENTITY, $this->player);
+            $this->player->updateSession();
         } catch (EntityException $e) {
-            $this->ajaxResponseNoCache(array("message" => $e->getMessage()), $e->getCode());
+            $this->ajaxResponseNoCache(array('message' => $e->getMessage()), $e->getCode());
             return false;
         }
 
         $res = array(
-            "player"  => array(
-                "title"    => array(
-                    "nickname"   => $this->player->getNicname(),
+            'player'  => array(
+                'title'    => array(
+                    'nickname'   => $this->player->getNicname(),
                 ),
-                "is" => array(
-                    "complete" => $this->player->isComplete(),
+                'is' => array(
+                    'complete' => $this->player->isComplete(),
                 )
             )
         );
@@ -544,26 +542,26 @@ class Players extends \AjaxController
                     if ($newPass == $repeatPass) {
                         $this->player->changePassword($newPass);
                     } else {
-                        $this->ajaxResponseBadRequest("passwords-do-not-match");
+                        $this->ajaxResponseBadRequest('passwords-do-not-match');
                     }
                 } else {
-                    $this->ajaxResponseBadRequest("password-incorrect");
+                    $this->ajaxResponseBadRequest('password-incorrect');
                 }
             }
 
-            $this->session->set(Player::IDENTITY, $this->player); // update entity in session
+            $this->player->updateSession(); // update entity in session
 
         } catch (EntityException $e) {
-            $this->ajaxResponseNoCache(array("message" => $e->getMessage()), $e->getCode());
+            $this->ajaxResponseNoCache(array('message' => $e->getMessage()), $e->getCode());
             return false;
         }
 
         $res = array(
-            "player"  => array(
-                "settings" => array(
-                    "newsSubscribe" => $this->player->getNewsSubscribe()
+            'player'  => array(
+                'settings' => array(
+                    'newsSubscribe' => $this->player->getNewsSubscribe()
                 ),
-                "privacy"  => $this->player->getPrivacy(),
+                'privacy'  => $this->player->getPrivacy(),
             )
         );
 
@@ -575,27 +573,25 @@ class Players extends \AjaxController
     public function editAction()
     {
 
-        $this->authorizedOnly();
-
-        $player = new Player();
-        $player->setId($this->session->get(Player::IDENTITY)->getId())->fetch();
+        $this->authorizedOnly(true);
+        $this->player->fetch();
 
         $nickname = $this->request()->post('nickname');
         $name     = $this->request()->post('name');
         $surname  = $this->request()->post('surname');
         $gender   = $this->request()->post('gender', null);
-        $birthday = $this->request()->post('datepicker') ?: $this->request()->post('month',0)."/".$this->request()->post('day',0)."/".$this->request()->post('year',1900);
+        $birthday = $this->request()->post('datepicker') ?: $this->request()->post('month',0).'/'.$this->request()->post('day',0).'/'.$this->request()->post('year',1902);
         $city     = $this->request()->post('city');
         $zip      = $this->request()->post('zip');
         $address  = $this->request()->post('address');
         $country  = $this->request()->post('country');
         $privacy  = $this->request()->post('privacy', array());
 
-        $birthday = $birthday !== '0/0/1900' && $birthday !== '' ? strtotime($birthday) : null;
+        $birthday = $birthday !== '0/0/1902' && $birthday !== '' ? strtotime($birthday) : null;
 
         try {
 
-            $player->setNicname($nickname)
+            $this->player->setNicname($nickname)
                 ->setName($name)
                 ->setSurname($surname)
                 ->setGender($gender==''?null:$gender)
@@ -606,33 +602,33 @@ class Players extends \AjaxController
                 ->setCountry($country)
                 ->update();
 
-            $player->initPrivacy()      // init all from DB
+            $this->player->initPrivacy()      // init all from DB
                 ->initPrivacy($privacy) // update from POST
                 ->updatePrivacy();
 
-            $this->session->set(Player::IDENTITY, $player); // update entity in session
+            $this->player->updateSession(); // update entity in session
 
         } catch (EntityException $e) {
-            $this->ajaxResponseNoCache(array("message" => $e->getMessage()), $e->getCode());
+            $this->ajaxResponseNoCache(array('message' => $e->getMessage()), $e->getCode());
             return false;
         }
 
         $res = array(
-            "player"  => array(
-                "title"    => array(
-                    "name"       => $player->getName(),
-                    "surname"    => $player->getSurname(),
-                    "nickname"   => $player->getNicname(),
+            'player'  => array(
+                'title'    => array(
+                    'name'       => $this->player->getName(),
+                    'surname'    => $this->player->getSurname(),
+                    'nickname'   => $this->player->getNicname(),
                 ),
-                "gender"   => $player->getGender(),
-                "birthday" => $player->getBirthday(),
-                "location" => array(
-                    "city"    => $player->getCity(),
-                    "zip"     => $player->getZip(),
-                    "address" => $player->getAddress(),
-                    "country" => $player->getCountry(),
+                'gender'   => $this->player->getGender(),
+                'birthday' => $this->player->getBirthday(),
+                'location' => array(
+                    'city'    => $this->player->getCity(),
+                    'zip'     => $this->player->getZip(),
+                    'address' => $this->player->getAddress(),
+                    'country' => $this->player->getCountry(),
                 ),
-                "privacy"  => $player->getPrivacy(),
+                'privacy'  => $this->player->getPrivacy(),
             )
         );
 
@@ -653,15 +649,15 @@ class Players extends \AjaxController
                 ->initAccounts($accounts)
                 ->updateAccounts();
             
-            $this->session->set(Player::IDENTITY, $this->player);
+            $this->player->updateSession();
 
         } catch (EntityException $e) {
-            $this->ajaxResponseNoCache(array("message" => $e->getMessage()), $e->getCode());
+            $this->ajaxResponseNoCache(array('message' => $e->getMessage()), $e->getCode());
         }
 
         $res = array(
-            "player" => array(
-                "accounts" => $this->player->getAccounts(),
+            'player' => array(
+                'accounts' => $this->player->getAccounts(),
             ),
         );
 
@@ -686,28 +682,28 @@ class Players extends \AjaxController
             $accounts[] = array('AccountName' => 'WebMoney', 'AccountId' => $billing['webmoney']);
 
         if ($billing['yandex'])
-            $accounts[] = array('AccountName' => 'YandexMoney', 'AccountId' => "41001".$billing['yandex']);
+            $accounts[] = array('AccountName' => 'YandexMoney', 'AccountId' => '41001'.$billing['yandex']);
 
         try {
             $this->player
                 ->initAccounts($accounts)
                 ->updateAccounts();
 
-            $this->session->set(Player::IDENTITY, $this->player);
+            $this->player->updateSession();
 
         } catch (EntityException $e) {
-            $this->ajaxResponseNoCache(array("message" => $e->getMessage()), $e->getCode());
+            $this->ajaxResponseNoCache(array('message' => $e->getMessage()), $e->getCode());
         }
 
         $res = array(
-            "player" => array(
-                "billing"  => array(
+            'player' => array(
+                'billing'  => array(
                     'webmoney'      => $this->player->getAccounts('WebMoney') ? $this->player->getAccounts('WebMoney')[0] : null,
                     'yandex'        => $this->player->getAccounts('YandexMoney') ? $this->player->getAccounts('YandexMoney')[0] : null,
                     'qiwi'          => $this->player->getAccounts('Qiwi') ? $this->player->getAccounts('Qiwi')[0] : null,
                     'phone'         => $this->player->getAccounts('Phone') ? $this->player->getAccounts('Phone')[0] : null,
                 ),
-                "accounts" => $this->player->getAccounts(),
+                'accounts' => $this->player->getAccounts(),
             ),
         );
 
@@ -733,7 +729,7 @@ class Players extends \AjaxController
         }
 
         if (mb_strlen($search, 'utf-8')<3) {
-            $this->ajaxResponseNoCache(array("message" => "Request too short",),400);
+            $this->ajaxResponseNoCache(array('message' => 'Request too short',),400);
             return false;
         }
 

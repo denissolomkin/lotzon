@@ -277,18 +277,17 @@ SELECT CONCAT(YEAR(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date))) `Mo
     {
 
         $sql = "
-        SELECT 
-        CURRENCY, 
-        IF((SELECT Country FROM Players WHERE Players.Id=PlayerId)='UA','UAH','RUB') COUNTRY,
-        SUM(IF(SUM>0,0,1)) COUNT_PLAY,
-        SUM(IF(SUM>0,1,0)) COUNT_WIN,
-        SUM(SUM) SUM_WIN
+        SELECT CURRENCY, COUNT_PLAY, COUNT_WIN, SUM_PLAY, SUM_WIN, SUM_PLAY - SUM_WIN BANDIT_WIN, CONCAT(ROUND((SUM_PLAY - SUM_WIN)/SUM_PLAY * 100), '%') BANDIT_LUCK FROM
+        (SELECT 
+        CURRENCY, SUM(IF(SUM>0,0,1)) COUNT_PLAY, SUM(IF(SUM>0,1,0)) COUNT_WIN,
+        SUM(IF(SUM>0,0,IF(Currency = 'MONEY', Equivalent, Sum)))*-1 SUM_PLAY,
+        SUM(IF(SUM>0,IF(Currency = 'MONEY', Equivalent, Sum),0)) SUM_WIN
         FROM `Transactions` 
         WHERE `ObjectType` = 'Slots' 
         AND `Date` > :from
         AND `Date` < :to
         ".(isset($args['Currency']) && $args['Currency']!=''?"AND `Currency` = '{$args['Currency']}'":'')." 
-        GROUP BY COUNTRY, CURRENCY";
+        GROUP BY CURRENCY) t";
 
         try {
             $sth = DB::Connect()->prepare($sql);
@@ -435,7 +434,7 @@ SELECT CONCAT(YEAR(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date))) `Mo
                 continue;
             }
             if (!isset($days[$win['Day']])) {
-                $days[$win['Day']] = array('Day'=>$win['Day'], 'POINT'=>0, 'MONEY'=>0, 'POINTS_BUY'=>0, 'MONEY_BUY'=>0, 'POINTS_WIN'=>0, 'MONEY_WIN'=>0);
+                $days[$win['Day']] = array('Day'=>$win['Day'], 'POINT'=>0, 'MONEY'=>0, 'POINTS_BUY'=>0, 'MONEY_BUY'=>0, 'POINTS_WIN'=>0, 'MONEY_WIN'=>0, 'POINTS_DIFF'=>0, 'POINTS_DIFF'=>0);
             }
             if ($win['point']) {
                 $days[$win['Day']]['POINTS_WIN'] = $win['point'];
@@ -456,6 +455,8 @@ SELECT CONCAT(YEAR(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date))) `Mo
         foreach ($days as $day) {
             $day['POINTS_BUY'] = SettingsModel::instance()->getSettings('goldPrice')->getValue('POINTS') * $day['POINT'];
             $day['MONEY_BUY'] = SettingsModel::instance()->getSettings('goldPrice')->getValue('UA') * $day['MONEY'];
+            $day['POINTS_DIFF'] = $day['POINTS_BUY'] - $day['POINTS_WIN'];
+            $day['MONEY_DIFF'] = $day['MONEY_BUY'] - $day['MONEY_WIN'];
             $days_index[] = $day;
         }
 

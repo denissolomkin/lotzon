@@ -230,9 +230,14 @@ div {
         width: 100%;
         height: inherit;
         overflow: hidden;
-        > *{
+        & > *{
+            height: inherit;
             position: relative;
             z-index: 5;
+            & > div:not(.timer-wrapper){
+                height: 100%;
+                overflow: hidden;
+            }
         }
         .timer-wrapper{
             position: absolute;

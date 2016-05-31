@@ -160,7 +160,7 @@
                         error: function (data) {
 
                             if(data.status == 401) {
-                                if(config.unauthorized){
+                                if(Player.is.unauthorized){
                                     Content.popup.enter();
                                 }else{
                                     document.location.href = "/";

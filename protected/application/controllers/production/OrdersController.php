@@ -46,7 +46,7 @@ class OrdersController extends \AjaxController
             $this->player
                 ->addMoney(-1 * $sum, $order->getText())
                 ->addPoints((int)(round($sum, 2) * $currency->getRate()), 'Обмен денег на баллы');
-            $this->session->set(Player::IDENTITY, $this->player);
+            $this->player->updateSession();
             $order->commit();
 
         } catch(EntityException $e) {
@@ -152,7 +152,7 @@ class OrdersController extends \AjaxController
             $order->beginTransaction();
             $order->create();
             $this->player->addMoney(-1 * $sum, $order->getText());
-            $this->session->set(Player::IDENTITY, $this->player);
+            $this->player->updateSession();
             $order->commit();
 
         } catch(EntityException $e) {
