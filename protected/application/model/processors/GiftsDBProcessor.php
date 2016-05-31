@@ -89,7 +89,7 @@ class GiftsDBProcessor implements IProcessor
         return $gift;
     }
 
-    public function getList($playerId, $objectType = null, $objectId = null, $used = false)
+    public function getList($playerId, $objectType = null, $objectId = null, $used = false, $expiryDate = null)
     {
         $sql = "SELECT
                     *
@@ -100,6 +100,7 @@ class GiftsDBProcessor implements IProcessor
                     Used = :used"
             . (($objectType === null) ? "" : " AND (`ObjectType` = :objectType)")
             . (($objectId === null)   ? "" : " AND (`ObjectId`   = :objectId)")
+            . (($expiryDate === null)   ? "" : " AND (`ExpiryDate`   > :expiryDate)")
             . "
                 ORDER BY `ExpiryDate` ";
         try {
@@ -113,6 +114,9 @@ class GiftsDBProcessor implements IProcessor
             }
             if ($objectId !== null) {
                 $sql_arr[':objectId'] = $objectId;
+            }
+            if ($expiryDate !== null) {
+                $sql_arr[':expiryDate'] = $expiryDate;
             }
             $sth->execute($sql_arr);
         } catch (PDOException $e) {

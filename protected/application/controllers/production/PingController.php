@@ -310,10 +310,10 @@ class PingController extends \AjaxController
         /**
          * Cashout
          */
-        //$order = \MoneyOrderModel::instance()->getNextOrderNotification($this->player->getId());
-        //if ($order) {
-        //    $response['cashout'] = $order->export('ping');
-        //}
+        $order = \MoneyOrderModel::instance()->getNextOrderNotification($this->player->getId());
+        if ($order) {
+            $response['cashout'] = $order->export('ping');
+        }
 
         /**
          * Site Version

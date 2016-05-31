@@ -77,6 +77,10 @@ class LotteryController extends \AjaxController
                 $player->setId($ticket->getPlayerId())->fetch();
                 \PlayersModel::instance()->updateGoldTicket($player, -1);
             }
+            $gifts = \GiftsModel::instance()->getList($this->player->getId(),'Ticket',7,false,time());
+            if (($ticket->getTicketNum()==7)and(count($gifts)>0)) {
+                array_shift($gifts)->setUsed(true)->update();
+            }
             $ticket->create();
             $ticket->commit();
         } catch (EntityException $e) {

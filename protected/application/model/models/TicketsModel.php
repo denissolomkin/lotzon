@@ -108,6 +108,13 @@ class TicketsModel extends Model
                 if (($player->getGoldTicket() > 0)and(($player->getGoldTicketLottery() == \LotteriesModel::instance()->getLastPublishedLottery()->getId() + 1)or($player->getGoldTicketLottery() == 0))) {
                     return true;
                 }
+
+                //Gifts
+                $gifts = \GiftsModel::instance()->getList($playerId,'Ticket',7,false,time());
+                if (count($gifts)>0) {
+                    return true;
+
+                }
                 $tickets = $this->getProcessor()->getUnplayedTickets($playerId);
                 if (isset($tickets[8])) {
                     return true;
