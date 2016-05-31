@@ -753,20 +753,33 @@ class Players extends \AjaxController
      */
     public function topReferralsAction()
     {
-        $this->authorizedOnly();
+        $this->authorizedOnly(true);
 
         $list = \PlayersModel::instance()->getReferralTopList();
 
         $response = array('res' => array());
-        $i = 0;
+        $i        = 0;
+        $inList   = false;
         foreach ($list as $user) {
             $i++;
+            if ($user['Id'] == $this->player->getId()) {
+                $inList = true;
+            }
             $response['res'][] = array(
                 'place'     => $i,
                 'nickname'  => $user['Nicname'],
                 'refCount'  => $user['cnt'],
                 'refActive' => $user['active'],
                 'refProfit' => $user['ReferralsProfit'],
+            );
+        }
+        if (!$inList) {
+            $response['res'][] = array(
+                'place'     => \PlayersModel::instance()->getReferralTopPlace($this->player->getId()),
+                'nickname'  => $this->player->getNicname(),
+                'refCount'  => \PlayersModel::instance()->getReferralsCount($this->player->getId(),false),
+                'refActive' => \PlayersModel::instance()->getReferralsCount($this->player->getId(),true),
+                'refProfit' => $this->player->getReferralsProfit(),
             );
         }
         $this->ajaxResponseNoCache($response);

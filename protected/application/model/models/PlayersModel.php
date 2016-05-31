@@ -318,4 +318,9 @@ class PlayersModel extends Model
         return $this->getProcessor()->getReferralTopList($limit);
     }
 
+    public function getReferralTopPlace($playerId)
+    {
+        return $this->getProcessor()->getReferralTopPlace($playerId);
+    }
+
 }

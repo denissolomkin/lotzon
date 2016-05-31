@@ -1699,6 +1699,7 @@ class PlayersDBProcessor implements IProcessor
     public function getReferralTopList($limit = 10)
     {
         $sql = "SELECT
+                  p.Id,
                   p.Nicname,
                   p.ReferralsProfit,
                   (SELECT COUNT(*) FROM Players WHERE ReferalId = p.Id) AS cnt,
@@ -1735,4 +1736,22 @@ class PlayersDBProcessor implements IProcessor
 
         return $res;
     }
+
+    public function getReferralTopPlace($playerId)
+    {
+        $sql = "SELECT COUNT(*) FROM `Players` WHERE ReferralsProfit<(SELECT ReferralsProfit FROM Players WHERE Id=:pid LIMIT 1)";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':pid' => $playerId,
+            ));
+
+            return $sth->fetchColumn();
+
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+    }
+
 }
