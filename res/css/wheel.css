@@ -6,18 +6,19 @@
         Purpose of the stylesheet follows.
 */
 
-root { 
+/*root { 
     display: block;
 }
 
 body{
     background-color: #000000;
     background-repeat: repeat-x;
-    background-position: top;
+    background-position: top;`
     background-image: url(/res/img/games/wheel/bg_tile.jpg);    
-}
+}*/
 
-* {
+
+#games-wheel-view * {
     user-select: none;
     -khtml-user-select: none;
     -o-user-select: none;
@@ -25,10 +26,10 @@ body{
     -webkit-user-select: none;
 }
 
-::selection { background: transparent;color:inherit; }
-::-moz-selection { background: transparent;color:inherit; }
+#games-wheel-view ::selection { background: transparent;color:inherit; }
+#games-wheel-view ::-moz-selection { background: transparent;color:inherit; }
 
-#canvas{
+#games-wheel-view #canvas{
     width:1920px;
     height: 1080px;
     
@@ -37,7 +38,7 @@ body{
     
 }
 
-canvas {
+#games-wheel-view canvas {
     image-rendering: optimizeSpeed;
     image-rendering:-o-crisp-edges;
     image-rendering:-webkit-optimize-contrast;
@@ -45,7 +46,7 @@ canvas {
 	-ms-touch-action: none;
 }
 
-.ani_hack{
+#games-wheel-view .ani_hack{
     -webkit-perspective: 1000;
     -webkit-backface-visibility: hidden;
     
