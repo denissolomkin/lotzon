@@ -199,11 +199,25 @@ class OrdersController extends \AjaxController
                 return false;
             }
             $order->setViewed($status)->setViewedDate(time())->update();
+            if ($status == 2) {
+                $gift = new \Gift();
+                $gift->setPlayerId($this->player->getId())->setObjectType('Ticket')->setObjectId(7)->setExpiryDate(\LotterySettingsModel::instance()->loadSettings()->getNearestGame()+strtotime('00:00:00', time()))->setUsed(false)->create();
+            }
         } catch(EntityException $e) {
             $this->ajaxResponseBadRequest();
         }
 
-        $this->ajaxResponseNoCache(array());
+        if ($status==2) {
+            $res = array(
+                'tickets' => array(
+                    'filledTickets' => \TicketsModel::instance()->getUnplayedTickets($this->player->getId())
+                )
+            );
+        } else {
+            $res = array();
+        }
+
+        $this->ajaxResponseNoCache($res);
         return true;
     }
 }

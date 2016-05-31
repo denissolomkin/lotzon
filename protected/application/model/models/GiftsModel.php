@@ -15,9 +15,9 @@ class GiftsModel extends Model
         return __CLASS__;
     }
 
-    public function getList($playerId, $objectType = NULL, $objectId = NULL, $used = false)
+    public function getList($playerId, $objectType = NULL, $objectId = NULL, $used = false, $expiryDate = null)
     {
-        return $this->getProcessor()->getList($playerId, $objectType, $objectId, $used);
+        return $this->getProcessor()->getList($playerId, $objectType, $objectId, $used, $expiryDate);
     }
 
 }
