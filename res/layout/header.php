@@ -42,7 +42,7 @@
 
         <link rel="stylesheet" href="/res/css/animate.css?<?php echo $version;?>">
         <link rel="stylesheet" href="/res/css/slots.css?<?php echo $version;?>" type="text/css">
-        <link rel="stylesheet" href="/res/css/wheel.css?<?php echo $version;?>" type="text/css">
+        <!--link rel="stylesheet" href="/res/css/wheel.css?<?php echo $version;?>" type="text/css"-->
         <link rel="stylesheet" href="/res/css/social-likes_birman.css">
         <link rel="stylesheet" href="/res/css/denis.css">
 
