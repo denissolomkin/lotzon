@@ -692,7 +692,7 @@ Config::instance()->publicResources = array(
     '/reports/referrals' => array(
         'get' => 'controllers\production\ReportsController:referrals'
     ),
-    '/reports/topReferrals' => array(
+    '/reports/topreferrals' => array(
         'get' => 'controllers\production\Players:topReferrals'
     ),
     /**
