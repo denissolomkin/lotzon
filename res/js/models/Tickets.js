@@ -98,7 +98,18 @@
 
             return balls;
         },
+        "upadteTabs": function(){
+            var tabs = document.querySelectorAll('#lottery-ticket-tabs > li');
+            if(!tabs) return;
 
+            for (var i = tabs.length - 1; i >= 0; i--) {
+
+                if(Tickets.filledTickets[i+1] !== false){
+                    tabs[i].className = tabs[i].className.replace('unavailable','');
+                }
+            }
+        }
+        ,
         "renderTabs": function () {
 
             var tabs = [];
