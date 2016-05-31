@@ -1,0 +1,26 @@
+<div id="reports-topreferrals">
+    <p class="title in-box">{{i18n "title-bonuses-top-users"}}</p>
+    
+    <table class="top-users">
+        <thead>
+            <tr>
+                <th>{{i18n "title-bonuses-thead-count"}}</th>
+                <th>{{i18n "title-bonuses-thead-nickname"}}</th>
+                <th>{{i18n "title-bonuses-thead-refs"}}</th>
+                <th>{{i18n "title-bonuses-thead-active"}}</th>
+                <th>{{i18n "title-bonuses-thead-won"}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each .}}
+            <tr>
+                <td>{{place}}</td>
+                <td>{{nickname}}</td>
+                <td>{{number refCount}}</td>
+                <td>{{number refActive}}</td>
+                <td>{{number refProfit}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
