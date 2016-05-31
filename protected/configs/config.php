@@ -692,6 +692,9 @@ Config::instance()->publicResources = array(
     '/reports/referrals' => array(
         'get' => 'controllers\production\ReportsController:referrals'
     ),
+    '/reports/topReferrals' => array(
+        'get' => 'controllers\production\Players:topReferrals'
+    ),
     /**
      * Profile orders
      */

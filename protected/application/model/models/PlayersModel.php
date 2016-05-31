@@ -313,4 +313,9 @@ class PlayersModel extends Model
         return $this->getProcessor()->getWinPoints($player);
     }
 
+    public function getReferralTopList($limit = 10)
+    {
+        return $this->getProcessor()->getReferralTopList($limit);
+    }
+
 }

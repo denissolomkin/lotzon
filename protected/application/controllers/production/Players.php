@@ -748,4 +748,30 @@ class Players extends \AjaxController
         return true;
     }
 
+    /**
+     * Топ пользователей с наибольшим профитом от рефералов
+     */
+    public function topReferralsAction()
+    {
+        $this->authorizedOnly();
+
+        $list = \PlayersModel::instance()->getReferralTopList();
+
+        $response = array('res' => array());
+        $i = 0;
+        foreach ($list as $user) {
+            $i++;
+            $response['res'][] = array(
+                'place'     => $i,
+                'nickname'  => $user['Nicname'],
+                'refCount'  => $user['cnt'],
+                'refActive' => $user['active'],
+                'refProfit' => $user['ReferralsProfit'],
+            );
+        }
+        $this->ajaxResponseNoCache($response);
+
+        return true;
+    }
+
 }

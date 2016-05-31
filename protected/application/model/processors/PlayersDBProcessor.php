@@ -1695,4 +1695,44 @@ class PlayersDBProcessor implements IProcessor
             throw new ModelException("Error processing storage query", 500);
         }
     }
+
+    public function getReferralTopList($limit = 10)
+    {
+        $sql = "SELECT
+                  p.Nicname,
+                  p.ReferralsProfit,
+                  (SELECT COUNT(*) FROM Players WHERE ReferalId = p.Id) AS cnt,
+                  (
+                    SELECT
+                      COUNT(DISTINCT Players.Id)
+                    FROM Players
+                    JOIN `LotteryTicketsArchive`
+                    ON LotteryTicketsArchive.PlayerId=Players.Id
+                    WHERE
+                      ReferalId = p.Id
+                    AND
+                      LotteryTicketsArchive.LotteryId=(SELECT Id FROM `Lotteries` ORDER BY Id DESC LIMIT 1)
+                  ) AS active
+                FROM `Players` p
+            LEFT JOIN `PlayerDates` d
+              ON d.`PlayerId`=p.`Id`
+            ORDER BY p.ReferralsProfit DESC";
+        if (!is_null($limit)) {
+            $sql .= " LIMIT " . (int)$limit;
+        }
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array());
+
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+        $res = array();
+        foreach ($sth->fetchAll() as $playerData) {
+            $res[] = $playerData;
+        }
+
+        return $res;
+    }
 }
