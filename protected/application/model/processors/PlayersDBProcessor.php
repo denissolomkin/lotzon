@@ -1739,7 +1739,7 @@ class PlayersDBProcessor implements IProcessor
 
     public function getReferralTopPlace($playerId)
     {
-        $sql = "SELECT COUNT(*) FROM `Players` WHERE ReferralsProfit<(SELECT ReferralsProfit FROM Players WHERE Id=:pid LIMIT 1)";
+        $sql = "SELECT COUNT(*) FROM `Players` WHERE ReferralsProfit>(SELECT ReferralsProfit FROM Players WHERE Id=:pid LIMIT 1)";
 
         try {
             $sth = DB::Connect()->prepare($sql);
