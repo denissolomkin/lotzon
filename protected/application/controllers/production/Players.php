@@ -774,11 +774,12 @@ class Players extends \AjaxController
             );
         }
         if (!$inList) {
+            $myPlace = (int)\PlayersModel::instance()->getReferralTopPlace($this->player->getId());
             $response['res'][] = array(
-                'place'     => \PlayersModel::instance()->getReferralTopPlace($this->player->getId()),
+                'place'     => ($myPlace <= $i ? $i + 1 : $myPlace),
                 'nickname'  => $this->player->getNicname(),
-                'refCount'  => \PlayersModel::instance()->getReferralsCount($this->player->getId(),false),
-                'refActive' => \PlayersModel::instance()->getReferralsCount($this->player->getId(),true),
+                'refCount'  => \PlayersModel::instance()->getReferralsCount($this->player->getId(), false),
+                'refActive' => \PlayersModel::instance()->getReferralsCount($this->player->getId(), true),
                 'refProfit' => $this->player->getReferralsProfit(),
             );
         }
