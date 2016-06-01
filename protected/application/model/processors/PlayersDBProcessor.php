@@ -1702,6 +1702,8 @@ class PlayersDBProcessor implements IProcessor
                   p.Id,
                   p.Nicname,
                   p.ReferralsProfit,
+                  pri.ReferralsIncr,
+                  pri.ActivePerc,
                   (SELECT COUNT(*) FROM Players WHERE ReferalId = p.Id) AS cnt,
                   (
                     SELECT
@@ -1715,8 +1717,8 @@ class PlayersDBProcessor implements IProcessor
                       LotteryTicketsArchive.LotteryId=(SELECT Id FROM `Lotteries` ORDER BY Id DESC LIMIT 1)
                   ) AS active
                 FROM `Players` p
-            LEFT JOIN `PlayerDates` d
-              ON d.`PlayerId`=p.`Id`
+            LEFT JOIN `PlayerBotReferralsIncr` pri
+              ON pri.`PlayerId`=p.`Id`
             ORDER BY p.ReferralsProfit DESC";
         if (!is_null($limit)) {
             $sql .= " LIMIT " . (int)$limit;
@@ -1752,6 +1754,121 @@ class PlayersDBProcessor implements IProcessor
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query", 500);
         }
+    }
+
+    public function getTopReferralsIncr()
+    {
+        $sql = "SELECT
+                  pri.*,
+                  p.*
+                FROM `PlayerBotReferralsIncr` pri
+                JOIN `Players` as p
+                ON p.`Id` = pri.`PlayerId`
+                ORDER BY pri.PlayerId DESC";
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array());
+
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query", 500);
+        }
+
+        $res = array();
+        foreach ($sth->fetchAll() as $playerData) {
+            $res[] = $playerData;
+        }
+
+        return $res;
+    }
+
+    public function updateTopReferralsIncr($data)
+    {
+        $sql = "UPDATE `PlayerBotReferralsIncr`
+                SET `IncrementFrom` = :incf, `IncrementTo` = :inct, `ReferralsIncr` = :inc, `ActivePercFrom` = :actf, `ActivePercTo` = :actt
+                WHERE `PlayerId` = :pid";
+
+        try {
+            DB::Connect()->prepare($sql)->execute(array(
+                ':incf' => $data['IncrementFrom'],
+                ':inct' => $data['IncrementTo'],
+                ':inc'  => $data['ReferralsIncr'],
+                ':actf' => $data['ActivePercFrom'],
+                ':actt' => $data['ActivePercTo'],
+                ':pid'  => $data['PlayerId'],
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
+        }
+
+        $data['Id'] = DB::Connect()->lastInsertId();
+
+        return $data;
+    }
+
+    public function createTopReferralsIncr($data)
+    {
+        $sql = "INSERT INTO `PlayerBotReferralsIncr`
+                (`PlayerId`, `IncrementFrom`, `IncrementTo`, `ReferralsIncr`, `ActivePercFrom`, `ActivePercTo`, `ActivePerc`)
+                VALUES
+                (:pid, :incf, :inct, :inc, :actf, :actt,0)";
+
+        try {
+            DB::Connect()->prepare($sql)->execute(array(
+                ':incf' => $data['IncrementFrom'],
+                ':inct' => $data['IncrementTo'],
+                ':inc'  => $data['ReferralsIncr'],
+                ':actf' => $data['ActivePercFrom'],
+                ':actt' => $data['ActivePercTo'],
+                ':pid'  => $data['PlayerId'],
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
+        }
+
+        $data['Id'] = DB::Connect()->lastInsertId();
+
+        return $data;
+    }
+
+    public function deleteTopReferralsIncr($playerId)
+    {
+
+        $sql = "DELETE FROM `PlayerBotReferralsIncr` WHERE `PlayerId` = :pid";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(
+                ':pid' => $playerId
+            ));
+
+        } catch (PDOExeption $e) {
+            throw new ModelException("Unable to process delete query", 500);
+        }
+
+        return true;
+
+    }
+
+    public function incrementGameTop()
+    {
+        $period = 1*60;
+
+        $sql = "UPDATE `PlayerBotReferralsIncr`
+                SET `ReferralsIncr` = `ReferralsIncr` + ROUND((RAND() * (`IncrementTo` - `IncrementFrom`)) + `IncrementFrom`), `Lastupdate` = :time
+                WHERE `Lastupdate` < (:time-:period-RAND()*600)";
+
+        try {
+            DB::Connect()->prepare($sql)->execute(array(
+                ':time' => time(),
+                ':period' => $period,
+            ));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query" . $e->getMessage(), 500);
+        }
+
+        $data['Id'] = DB::Connect()->lastInsertId();
+
+        return $data;
     }
 
 }

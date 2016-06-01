@@ -241,6 +241,17 @@ Config::instance()->privateResources =  array(
         'post' => 'controllers\admin\GameTop:create',
         'put' => 'controllers\admin\GameTop:update',
     ),
+    '/private/referralstop/'      => array(
+        'get' => 'controllers\admin\ReferralsTop:index',
+        'post' => 'controllers\admin\ReferralsTop:create',
+        'put' => 'controllers\admin\ReferralsTop:update',
+    ),
+    '/private/referralstop/getPlayer/:playerId' => array(
+        'get' => 'controllers\admin\ReferralsTop:getPlayer'
+    ),
+    '/private/referralstop/delete/:id' => array(
+        'get' => 'controllers\admin\ReferralsTop:delete'
+    ),
     '/private/gametop/getPlayer/:playerId' => array(
         'get' => 'controllers\admin\GameTop:getPlayer'
     ),

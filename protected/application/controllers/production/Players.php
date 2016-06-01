@@ -768,8 +768,8 @@ class Players extends \AjaxController
             $response['res'][] = array(
                 'place'     => $i,
                 'nickname'  => $user['Nicname'],
-                'refCount'  => $user['cnt'],
-                'refActive' => $user['active'],
+                'refCount'  => $user['cnt'] + $user['ReferralsIncr'],
+                'refActive' => $user['active'] + floor($user['ReferralsIncr']*$user['ActivePerc']/100),
                 'refProfit' => $user['ReferralsProfit'],
             );
         }

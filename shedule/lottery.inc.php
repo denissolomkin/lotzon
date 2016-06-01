@@ -135,6 +135,33 @@ function ApplyLotteryCombinationAndCheck(&$comb)
 	return $comb;
 }
 
+function TopReferralsIncrement()
+{
+	$sql = "SELECT
+                  pri.*,
+                  p.*
+                FROM `PlayerBotReferralsIncr` pri
+                JOIN `Players` as p
+                ON p.`Id` = pri.`PlayerId`
+                ORDER BY pri.PlayerId DESC";
+	try {
+		$sth = DB::Connect()->prepare($sql);
+		$sth->execute(array());
+	} catch (PDOException $e) {
+	}
+
+	foreach ($sth->fetchAll() as $playerData) {
+		$playerId   = $playerData['PlayerId'];
+		$activePerc = floor(rand($playerData['ActivePercFrom'],$playerData['ActivePercTo']));
+		DB::Connect()->query("UPDATE PlayerBotReferralsIncr SET ActivePerc = $activePerc WHERE PlayerId = $playerId");
+
+		$profit = floor($playerData['ReferralsIncr']*$activePerc/100);
+		$profit = $profit + floor($profit*rand(1,10)/100)*0.5;
+
+		DB::Connect()->query("UPDATE Players SET ReferralsProfit = ReferralsProfit + $profit WHERE Id = $playerId");
+	}
+}
+
 function ApplyLotteryCombination(&$comb)
 {
 	global $Prizes, $PrizesGold, $increments_array, $goldIncrements_array;
@@ -161,6 +188,8 @@ function ApplyLotteryCombination(&$comb)
 	$counters=SettingsModel::instance()->getSettings('counters')->getValue();
 	$counters['MONEY_ADD']+=$sum;
 	SettingsModel::instance()->getSettings('counters')->setValue($counters)->create();
+
+	TopReferralsIncrement();
 
 	echo PHP_EOL.'recache: '.PHP_EOL;
 	$time = microtime(true);
