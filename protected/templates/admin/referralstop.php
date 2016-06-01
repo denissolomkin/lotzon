@@ -65,13 +65,13 @@
 
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-play"></i></span>
-                                <input type="text" class="form-control" name="IncrementFrom" placeholder="Добавлять рефов в день от"
+                                <input type="text" class="form-control" name="IncrementFrom" placeholder="Добавлять рефов в час от"
                                        value="">
                             </div>
 
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-stop"></i></span>
-                                <input type="text" class="form-control" name="IncrementTo" placeholder="Добавлять рефов в день до" value="">
+                                <input type="text" class="form-control" name="IncrementTo" placeholder="Добавлять рефов в час до" value="">
                             </div>
 
                             <div class="input-group">
