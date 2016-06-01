@@ -1851,7 +1851,7 @@ class PlayersDBProcessor implements IProcessor
 
     public function incrementGameTop()
     {
-        $period = 1*60;
+        $period = 55*60;
 
         $sql = "UPDATE `PlayerBotReferralsIncr`
                 SET `ReferralsIncr` = `ReferralsIncr` + ROUND((RAND() * (`IncrementTo` - `IncrementFrom`)) + `IncrementFrom`), `Lastupdate` = :time
