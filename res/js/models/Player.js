@@ -482,9 +482,9 @@
             var ping = data && typeof data === 'object' ? data.hasOwnProperty('ping') && data.ping : data,
                 playerId = data && typeof data === 'object' && data.hasOwnProperty('id') && data.id;
 
-            return (playerId && playerId == this.id) || !ping
+            return (playerId && playerId == this.id)
                 ? null
-                : ping && parseInt(ping) + Livedate.diff + Config.timeout.online > moment().unix();
+                : (ping ? parseInt(ping) + Livedate.diff + Config.timeout.online > moment().unix() : false);
         },
 
         getAvatar: function (img, id, width) {

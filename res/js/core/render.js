@@ -127,7 +127,6 @@
                 options.href = options.init.href = options.href.replace(/\/\w*$/,'');
                 options.template = options.init.template = options.template.replace(/\-\w*$/,'');
                 R.initNode(options);
-                console.error(options);
             }
 
             /* substitution JSON with profile if template has "/profile/" or "/balance/" */
