@@ -1,5 +1,5 @@
 <div id="user-{{id}}-friends" class="content-box-item">
     <form action="/user/{{id}}/friends/list" method="get" class="render-list-form">
-        {{partial 'user-view-friends-container'}}
+        {{partial 'user-view-friends-container' .}}
     </form>
 </div>
