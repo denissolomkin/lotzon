@@ -115,7 +115,7 @@
             });
 
             var isNotTab = !options.hasOwnProperty('target') || !options.target.classList.contains('content-box-tab'),
-                isNotExcludedPage = !options.template.match('-moment|-random|popup-|support-|ticket-|reports-|balance-|menu-|-list|-new|-item'),
+                isNotExcludedPage = !options.template.match('-moment|-random|popup-|support-|ticket-|reports-|balance-|menu-|-list|-new|-item|-replyform|-complain'),
                 isNotTopPage = (options.template.search(/-/) !== -1 && options.template.match(/-/g).length >= 1),
                 isNotViewPage = !/\d+$/.test(options.href.split('?')[0]),
                 isNotNodeTemplate = options.node.id !== options.init.template && options.node.id !== options.href.replace(/\/\w*$/,'').replace('/','-'),
