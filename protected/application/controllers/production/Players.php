@@ -783,4 +783,44 @@ class Players extends \AjaxController
         return true;
     }
 
+    /**
+     * Топ пользователей с наибольшим профитом от рефералов
+     */
+    public function topReferralsAction()
+    {
+        $this->authorizedOnly(true);
+
+        $list = \PlayersModel::instance()->getReferralTopList();
+
+        $response = array('res' => array());
+        $i        = 0;
+        $inList   = false;
+        foreach ($list as $user) {
+            $i++;
+            if ($user['Id'] == $this->player->getId()) {
+                $inList = true;
+            }
+            $response['res'][] = array(
+                'place'     => $i,
+                'nickname'  => $user['Nicname'],
+                'refCount'  => $user['cnt'] + $user['ReferralsIncr'],
+                'refActive' => $user['active'] + floor($user['ReferralsIncr']*$user['ActivePerc']/100),
+                'refProfit' => $user['ReferralsProfit'],
+            );
+        }
+        if (!$inList) {
+            $myPlace = (int)\PlayersModel::instance()->getReferralTopPlace($this->player->getId());
+            $response['res'][] = array(
+                'place'     => ($myPlace <= $i ? $i + 1 : $myPlace),
+                'nickname'  => $this->player->getNicname(),
+                'refCount'  => \PlayersModel::instance()->getReferralsCount($this->player->getId(), false),
+                'refActive' => \PlayersModel::instance()->getReferralsCount($this->player->getId(), true),
+                'refProfit' => $this->player->getReferralsProfit(),
+            );
+        }
+        $this->ajaxResponseNoCache($response);
+
+        return true;
+    }
+
 }

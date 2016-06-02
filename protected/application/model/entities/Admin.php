@@ -55,6 +55,7 @@ class Admin extends Entity
                 'fgames'=>array('icon'=>'facebook','name'=>'Flash-игры'),
                 /*'gamebots'=>array('icon'=>'plug','name'=>'Боты'),*/
                 'gametop'=>array('icon'=>'star','name'=>'Наши в топе'),
+                'referralstop'=>array('icon'=>'star','name'=>'Наши в топе рефералов'),
                 'lottery'=>array('icon'=>'gift','name'=>'Розыгрыши'),
             )),
 

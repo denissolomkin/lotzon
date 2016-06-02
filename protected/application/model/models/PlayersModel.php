@@ -313,4 +313,39 @@ class PlayersModel extends Model
         return $this->getProcessor()->getWinPoints($player);
     }
 
+    public function getReferralTopList($limit = 10)
+    {
+        return $this->getProcessor()->getReferralTopList($limit);
+    }
+
+    public function getReferralTopPlace($playerId)
+    {
+        return $this->getProcessor()->getReferralTopPlace($playerId);
+    }
+
+    public function getTopReferralsIncr()
+    {
+        return $this->getProcessor()->getTopReferralsIncr();
+    }
+
+    public function updateTopReferralsIncr($data)
+    {
+        return $this->getProcessor()->updateTopReferralsIncr($data);
+    }
+
+    public function createTopReferralsIncr($data)
+    {
+        return $this->getProcessor()->createTopReferralsIncr($data);
+    }
+
+    public function deleteTopReferralsIncr($playerId)
+    {
+        return $this->getProcessor()->deleteTopReferralsIncr($playerId);
+    }
+
+    public function incrementGameTop()
+    {
+        return $this->getProcessor()->incrementGameTop();
+    }
+
 }

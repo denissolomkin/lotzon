@@ -1,0 +1,260 @@
+<div class="modal fade" id="deleteModal" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="confirmLabel">Удаление игрока</h4>
+            </div>
+            <div class="modal-body">
+                <p>Уверены, что желаете удалить игрока?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                <button type="button" class="btn rm btn-danger">Удалить</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container-fluid" id="referralstop">
+<div class="row-fluid"">
+<h2>В топе рефералов</h2>
+<hr />
+</div>
+
+<button class="btn btn-success add-button"><span class="glyphicon glyphicon-plus"></span></button>
+
+
+    <div class="row-fluid players">&nbsp;</div>
+
+
+<div id="player-template" style="display:none">
+    <div class="row-fluid">
+        <form method="post">
+            <input type="hidden" name="Id" value="">
+            <div class="form-group">
+                <div class="form-inline">
+                    <div class="col-md-1">
+                        <img src="">
+                        <br>
+                        <span class="name"></span>
+                    </div>
+                    <div class="col-md-11">
+
+                        <div class="row-fluid">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                <input type="text" class="form-control" name="PlayerId" placeholder="Игрок" value="">
+                            </div>
+
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-star"></i></span>
+                                <input type="text" class="form-control" name="ReferralsIncr" placeholder="Добавлено рефералов" value="">
+                            </div>
+
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-star"></i></span>
+                                <input type="text" class="form-control" name="ActivePerc" placeholder="Активно из добавленных, %" value="" readonly>
+                            </div>
+
+                            <button class="btn btn-danger remove-button"><span
+                                    class="glyphicon glyphicon-remove"></span> Удалить
+                            </button>
+
+                            <br>
+
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-play"></i></span>
+                                <input type="text" class="form-control" name="IncrementFrom" placeholder="Добавлять рефов в час от"
+                                       value="">
+                            </div>
+
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-stop"></i></span>
+                                <input type="text" class="form-control" name="IncrementTo" placeholder="Добавлять рефов в час до" value="">
+                            </div>
+
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-play"></i></span>
+                                <input type="text" class="form-control" name="ActivePercFrom" placeholder="Активность добавленных рефов от, %" value="">
+                            </div>
+
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-stop"></i></span>
+                                <input type="text" class="form-control" name="ActivePercTo" placeholder="Активность добавленных рефов до, %" value="">
+                            </div>
+
+                            <button class="btn btn-success save-button"><span
+                                    class="glyphicon glyphicon-floppy-disk"></span> Сохранить
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script>
+    var referralsTop = eval(<?=json_encode($referralsTop)?>),
+        template = $('#player-template > div'),
+        xhr;
+
+    $(referralsTop).each(function(id, player) {
+
+        form = template.clone();
+        $('img', form).attr('src', (player.Avatar ? '../filestorage/users/50/' + player.Avatar : '../tpl/img/default.jpg'));
+        $('.name', form).text(player.Nicname);
+        $('[name="Id"]', form).val(player.Id);
+        $('[name="PlayerId"]', form).val(player.PlayerId);
+        $('[name="ReferralsIncr"]', form).val(player.ReferralsIncr);
+        $('[name="ActivePerc"]', form).val(player.ActivePerc);
+        $('[name="IncrementFrom"]', form).val(player.IncrementFrom);
+        $('[name="IncrementTo"]', form).val(player.IncrementTo);
+        $('[name="ActivePercFrom"]', form).val(player.ActivePercFrom);
+        $('[name="ActivePercTo"]', form).val(player.ActivePercTo);
+
+        $('.players').append($(form));
+
+    });
+
+    $('.add-button').on('click', function() {
+        form = template.clone();
+        $(form).find('.save-button').addClass('btn-warning').parents('form').show();
+        $('.players').append($(form));
+
+    });
+
+    $(document).on('input', 'input, select', function() {
+
+        $(this).parents('form').find('.save-button').addClass('btn-warning');
+
+    });
+
+    $(document).on('input', '[name="PlayerId"]', function() {
+
+        form = $(this).parents('.form-group');
+
+        $('img',                form).attr('src','../tpl/img/preloader.gif');
+        $('.name',              form).text('...');
+
+        if(xhr && xhr.readystate != 4)
+            xhr.abort();
+
+        xhr = $.ajax({
+            url: "/private/referralstop/getPlayer/"+$(this).val(),
+            method: 'GET',
+            async: true,
+            dataType: 'json',
+            success: function(data) {
+                player = data.data;
+                $('img', form).attr(
+                    'src',
+                    player.Nicname
+                        ? (player.Avatar?'../filestorage/users/50/'+player.Avatar:'../tpl/img/default.jpg')
+                        : ''
+                );
+
+                $('.name', form).text(player.Nicname?player.Nicname:data.message);
+
+            },
+            error: function() {
+
+            }
+        });
+
+        xhr;
+
+    });
+
+    $(document).on('click', ".save-button", function() {
+
+        var form = $(this).parents('form');
+        var button = $(this);
+        button.append($(' <i class="fa fa-spinner fa-pulse"></i> ').css('margin-left','5px'));
+
+        $.ajax({
+            url: "/private/referralstop/",
+            method: $('[name="Id"]', form).val()?'PUT':'POST',
+            data: form.serialize(),
+            async: true,
+            dataType: 'json',
+            success: function(data) {
+                button.find('.fa').last().remove();
+                if (data.status == 1) {
+                    $('[name="Id"]', form).val(data.data.Id);
+                    $('[name="Rating"]', form).attr('disabled','disabled');
+                    button.append($(' <i class="glyphicon glyphicon-ok"></i>').css('margin-left','5px')).removeClass('btn-warning');
+                    window.setTimeout(function () {button.removeClass('btn-warning').find('i').last().fadeOut(200);},1000);
+                } else {
+                    button.append($(' <i class="glyphicon glyphicon-exclamation-sign"></i>')).addClass('btn-danger');
+                    window.setTimeout(function () {button.removeClass('btn-danger').find('i').last().fadeOut(200);},1000);
+                    alert(data.message);
+                }
+            },
+            error: function() {
+                button.find('.fa').last().remove();
+                button.append($(' <i class="glyphicon glyphicon-exclamation-sign"></i>')).addClass('btn-danger');
+                window.setTimeout(function () {button.removeClass('btn-danger').find('i').last().fadeOut(200);},1000);
+                alert('Unexpected server error');
+            }
+        });
+        return false;
+
+    });
+
+    $(document).on('click', ".remove-button", function() {
+
+        var form = $(this).parents('form');
+        var modal = $("#deleteModal");
+        var button = $(this);
+
+        modal.modal();
+        modal.find('.cls').off('click').on('click', function() {
+            modal.modal('hide');
+        });
+
+        modal.find('.rm').off('click').on('click', function() {
+
+            if(id = $('[name="Id"]', form).val()){
+
+                $.ajax({
+                    url: "/private/referralstop/delete/"+id,
+                    method: 'GET',
+                    async: true,
+                    dataType: 'json',
+                    success: function(data) {
+                        if (data.status == 1) {
+
+                            form.remove();
+
+                        } else {
+                            button.prepend($('<i class="glyphicon glyphicon-exclamation-sign"></i>')).addClass('btn-danger');
+                            window.setTimeout(function () {button.removeClass('btn-danger').find('i').fadeOut(200);},1000);
+                            alert(data.message);
+                        }
+                    },
+                    error: function() {
+                        button.prepend($('<i class="glyphicon glyphicon-exclamation-sign"></i>')).addClass('btn-danger');
+                        window.setTimeout(function () {button.removeClass('btn-danger').find('i').fadeOut(200);},1000);
+                        alert('Unexpected server error');
+                    }
+                });
+
+            } else {
+
+                form.remove();
+            }
+
+
+            modal.modal('hide');
+
+        });
+
+        return false;
+
+    });
+
+
+</script>

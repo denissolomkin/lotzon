@@ -97,7 +97,7 @@
                         // tmp
                         $('.ae-social').socialLikes({
                             url: 'https://lotzon.com/?ref=' + Player.id,
-                            title: 'LOTZON. Выигрывает каждый!',
+                            title: 'LOTZON. Выигрывает каждый! #выплатаlotzon',
                             counters: false,
                             singleTitle: 'LOTZON. Выигрывает каждый!',
                             data: {
