@@ -179,7 +179,7 @@ hr {
 #balance-cashout,
 #reports-transactions,
 #reports-referrals,
-#profile-bonuses,
+#support-bonuses,
 #user-view,
 #prizes-exchange-goods-view,
 #users-view-message,
@@ -1135,7 +1135,7 @@ input.input-radio:checked + label.input-radio:before {
 //   <div class="arrow"><i class="i-arrow-slim-right"></i></div>
 //   <div class="content">
 //       <p>ЗАМЕТИЛИ ОШИБКУ?</p>
-//       <a href="/users/0/messages">напишите нам</a>
+//       <a href="/user/0/messages">напишите нам</a>
 //   </div>
 // </div>
 #zhgi {
@@ -1274,8 +1274,18 @@ input.input-radio:checked + label.input-radio:before {
             text-align: center;
         }
         .checkPass-alert {
-            @extend .alert;
+            font-size: 13px;
+            color: #ff4242;
+            text-align: center;
             display: block;
+            background-color: transparent;
+            border: none;
+            cursor: default;
+            &:hover{
+                background-color: transparent;
+                border: none;
+                cursor: default;
+            }
             &.gold {
                 color: gold;
             }

@@ -1,7 +1,7 @@
 <div id="badges-messages-{{id}}" class="badge">
     {{badgesCountdown}}
     <section class="clearfix {{#if user.img}}{{/if}}contain-img" >
-        <a href="/users/{{user.id}}/messages" class="start {{#if button}}visible{{else}}invisible{{/if}}" onclick="DOM.remove(DOM.up('.badge',this));">
+        <a href="/user/{{user.id}}/messages" class="start {{#if button}}visible{{else}}invisible{{/if}}" onclick="DOM.remove(DOM.up('.badge',this));">
         </a>
         <div class="title">{{i18n user.name}}</div>
         <img src="{{avatar user.id user.img 40 }}" onerror="Player.getAvatar.call(this)">

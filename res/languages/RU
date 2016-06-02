@@ -106,14 +106,14 @@
                 "menu-profile-billing": "Платежные данные",
                 "menu-profile-settings": "Настройки",
                 "menu-profile-password": "Сменить пароль",
-                "menu-profile-bonuses": "Бонусы",
                 "menu-popup-logout": "Выход",
                 "menu-logout": "Выход",
 
-                "menu-users-0-messages": "Обратная связь",
+                "menu-user-0-messages": "Обратная связь",
                 "menu-support-rules": "Правила",
                 "menu-support-help": "Помощь",
                 "menu-support-faq": "Частые вопросы",
+                "menu-support-bonuses": "Приведи друга",
 
                 "menu-reports-referrals": "Мои рефералы",
 
@@ -246,7 +246,7 @@
 
                 "title-profile-settings": "Настройки",
                 "title-account-settings": "Общие настройки аккаунта",
-                "title-bonuses": "Бонусы",
+                "title-bonuses": "Приведи друга",
                 "title-reports-transactions": "История транзакций",
                 "title-reports-payments": "История выплат",
                 "title-reports-referrals": "Мои приглашенные",
@@ -267,7 +267,7 @@
                 "title-popup-profile-complete": "ЗАВЕРШЕНИЕ РЕГИСТРАЦИИ",
                 "title-popup-profile-complete": "ЗАВЕРШЕНИЕ РЕГИСТРАЦИИ",
                 "title-popup-profile-welcome": "ДОБРО ПОЖАЛОВАТЬ!",
-                "title-popup-profile-faq-title": "СРАЗУ ХОТИ ОТВЕТИТЬ НА САМЫЕ ПОПУЛЯРНЫЕ ВОПРОСЫ",
+                "title-popup-profile-faq-title": "СРАЗУ ХОТИМ ОТВЕТИТЬ НА САМЫЕ ПОПУЛЯРНЫЕ ВОПРОСЫ",
                 "title-popup-profile-faq-text-first": "- Минимальная сумма для вывода денег",
                 "title-popup-profile-faq-text-last": "- Деньги и призы выводятся в течении <br>7-ми рабочих дней",
 

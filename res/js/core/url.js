@@ -102,16 +102,17 @@
                             D.log(['updateURL:', url], 'info');
                             $("html, body").animate({scrollTop: 0}, 'slow');
                             Navigation.menu.hide();
-                            history && history.pushState(options.init, "Lotzon", url);
-                            Banner.update();
-
-                            Config.hasOwnProperty('yandexMetrika')
-                            && Config.yandexMetrika
-                            && window['yaCounter' + Config.yandexMetrika]
-                            && window['yaCounter' + Config.yandexMetrika].hit(document.location.protocol + '//' + document.location.host + url, {
-                                title  : 'Lotzon',
-                                referer: oldUrl
-                            });
+                            if(!options.tab) {
+                                history && history.pushState(options.init, "Lotzon", url);
+                                Banner.update();
+                                Config.hasOwnProperty('yandexMetrika')
+                                && Config.yandexMetrika
+                                && window['yaCounter' + Config.yandexMetrika]
+                                && window['yaCounter' + Config.yandexMetrika].hit(document.location.protocol + '//' + document.location.host + url, {
+                                    title  : 'Lotzon',
+                                    referer: oldUrl
+                                });
+                            }
                         }
                     }
 

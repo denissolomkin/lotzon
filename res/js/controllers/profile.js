@@ -102,8 +102,10 @@
                         valid = false;   
                         form.find('[name="repeatPass"]').siblings('.alert').fadeIn(200);
                     }
-                    if(name.length ){}
-
+                    if( !form.find('.checkPass-alert').hasClass('gold') ){
+                        valid = false;
+                    }
+                    
                     setTimeout(function(){
                         form.find('.alert').fadeOut(200);
                     }, 4000);
@@ -380,6 +382,13 @@
             cashout: function() {
                 Player.updateBalance();
                 $('.cco-enter-sum-box').innerHTML = i18n("button-user-remove-request");
+            },
+
+            request: function(data) {
+                R.push({
+                    template: 'user-view-friendship',
+                    json    : data.json.res
+                });
             }
         },
 

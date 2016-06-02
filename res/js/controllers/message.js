@@ -49,7 +49,7 @@
                 });
 
                 R.push({
-                    template: 'users-view-messages-form',
+                    template: 'user-view-messages-form',
                     json    : {}
                 });
 
@@ -76,7 +76,7 @@
                 });
 
                 R.push({
-                    template: 'users-view-messages-form',
+                    template: 'user-view-messages-form',
                     json    : user
                 });
 

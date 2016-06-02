@@ -34,6 +34,8 @@
                     media: 'https://lotzon.com/res/img/lotzon_soc.jpg'
                 }
             });
+            // add top rated referrals
+            R.push('/reports/topreferrals');
         },
         bufferCopy: function(e) {
 

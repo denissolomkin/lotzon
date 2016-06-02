@@ -1,0 +1,107 @@
+<div id="support-bonuses" class="content-box">
+    {{partial 'common-content-box-header-partial' (i18n "title-bonuses") }}
+    <div class="content-box-content clearfix">
+        <div class="content-box-item cabinet-bonuses">
+            <div class="content-box-item-content">
+                <p class="bold in-box">
+                    {{i18n "text-bonuses-description"}}
+                </p>
+                <div class="bonus-share-url-copy clearfix">
+                    <label class="in-box title"> {{i18n "title-bonuses-unique-link"}} </label>
+                    <div class="strip clearfix">
+                        <input id="ref-link" type="text" readonly name="unick-name" value="https://lotzon.com/?ref={{id}}">
+                        <div data-to="ref-link" class="copy button" data-after="{{i18n 'title-bonuses-link-copy-ready'}}">
+                            {{i18n "title-bonuses-link-copy"}}
+                        </div>
+                    </div>
+                </div>
+                <div class="bonus-share-email clearfix">
+                    <form action="/invites/email" method="post">
+                        <label class="in-box title"> {{i18n "title-bonuses-email-send"}} </label>
+                        <div class="strip clearfix">
+                            <input id="bonus-email-send" type="email" name="email" value="" placeholder="{{i18n 'title-profile-write-email'}}">
+                            <button type="submit" data-to="bonus-email-send" class="send button" data-after="{{i18n 'title-bonuses-email-send-button-ready'}}">
+                                {{i18n "title-bonuses-email-send-button"}}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="bonus-share-post">
+                    <p class="title in-box">{{i18n "title-bonuses-share-post"}} </p>
+                    <div class="strip clearfix">
+                        <div class="ae-social uk-float-left">
+                            <div href="#" class="ae-social-item facebook" title="">{{i18n "title-of-Facebook"}}</div>
+                            <div class="ae-social-item vkontakte" title="">{{i18n "title-of-Vkontakte"}}</div>
+                            <div href="#" class="ae-social-item odnoklassniki">{{i18n "title-of-Odnoklassniki"}}</div>
+                            <!-- <div href="#" class="ae-social-item i-Twitter twitter"></div>
+                    <div href="#" class="ae-social-item i-Google plusone"></div> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="bonus-share-banner">
+                    <p class="title in-box">{{i18n "title-bonuses-link-banner"}}</p>
+                    <div class="bonus-share-banner-view strip clearfix">
+                        {{#each (config "banners.sizes")}}
+                        <div class="bonus-banner-view-item" id='{{.}}'>
+                            <div class="bonus-banner-view-size bonus-banner-view-btn">{{.}}</div>
+                        </div>
+                        {{/each}}
+                        <!--div class="bonus-banner-view-item" id='240x400'>
+                        <div class="bonus-banner-view-size bonus-banner-view-btn">240 x 400</div>
+                    </div>
+                    <div class="bonus-banner-view-item" id='300x250'>
+                        <div class="bonus-banner-view-size bonus-banner-view-btn">300 x 250</div>
+                    </div>
+                    <div class="bonus-banner-view-item" id='468x60'>
+                        <div class="bonus-banner-view-size bonus-banner-view-btn">468 x 60</div>
+                    </div>
+                    <div class="bonus-banner-view-item" id='728x90'>
+                        <div class="bonus-banner-view-size bonus-banner-view-btn">728 x 90</div>
+                    </div-->
+                        <div class="close i-x-slim uk-float-right"></div>
+                    </div>
+                </div>
+                {{#each (config "banners.sizes")}}
+                <div class="show-banner">
+                    <div class="{{.}}">
+                        {{#each (config "banners.versions")}}
+                        <div class="copy-box clearfix">
+                            <span class="title">{{i18n "title-bonuses-code-banner"}}:</span>
+                            <div class="copy" data-to="b{{../.}}v{{.}}" data-after="{{i18n 'title-bonuses-link-copy-ready'}}">
+                                {{i18n "title-bonuses-link-copy"}}
+                            </div>
+                        </div>
+                        <textarea id="b{{../.}}v{{.}}" cols="2" readonly="readonly">
+                            <a href="https://lotzon.com/?ref={{../../id}}" target="_blank">
+                                <img src="https://lotzon.com/filestorage/banners/Banner-{{.}}-{{../.}}.gif">
+                            </a>
+                        </textarea>
+                        <div class="banner-slide clearfix">
+                            <img class="large-visible" src="/filestorage/banners/Banner-{{.}}-{{../.}}.gif" alt="">
+                            <img class="small-visible" src="/filestorage/banners/Banner-{{.}}-{{../.}}.gif" alt="">
+                        </div>
+                        <div class="banner-copy clearfix">
+                            <a href='/filestorage/banners/Banner-{{.}}-{{../.}}.gif' class="button popup-banner-download skip" download>
+                            {{i18n "title-bonuses-download-banner"}}
+                        </a>
+                        </div>
+                        {{/each}}
+                    </div>
+                </div>
+                {{/each}}
+                <!-- top referrals -->
+                <div id="reports-topreferrals"></div>
+                <!-- END top referrals -->
+            </div>
+            <div id="info-block-anchor" class="info_block in-box">
+                <h3 class="title">{{i18n "title-bonuses-how-works"}}</h3> {{{i18n "text-bonuses-how-works"}}}
+                <!-- <h3 class="title">{{i18n "title-bonuses-how-much-points"}}</h3> {{{i18n "text-bonuses-how-much-points"}}} -->
+                <h3 class="title">{{i18n "title-bonuses-count"}}</h3> {{{i18n "text-bonuses-count"}}}
+                <h3 class="title">{{i18n "title-bonuses-new-users"}}</h3> {{{i18n "text-bonuses-new-users"}}}
+            </div>
+        </div>
+        <!-- .content-box-item -->
+    </div>
+    <!-- .content-box-content -->
+</div>
+<!-- .content-box -->

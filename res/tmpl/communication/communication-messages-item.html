@@ -9,7 +9,7 @@
             <div class="message-date">{{day date 'calendar'}} {{i18n 'title-message-at'}} {{day date 'HH:MM'}}</div>
         </div>
     </a>
-    <a href="/users/{{user.id}}/messages">
+    <a href="/user/{{user.id}}/messages">
         <div class="message-text">
             <div class="text-row-wrap {{#if (notlike author_id user.id)}} {{#if isUserRead}} message-read i-check {{else}}message-answer i-arrow-curve{{/if}}{{/if}}">
                 {{#if img}}

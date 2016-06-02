@@ -169,7 +169,7 @@
                     if (message[0] === 'error')
                         return false;
                     message[0] = i18n(message[0]);
-                    message = message.join('<br>');
+                    message = message && Object.size(message) && message.join('<br>');
                 }
             }
 

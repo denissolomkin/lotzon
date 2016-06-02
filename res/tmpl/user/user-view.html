@@ -1,4 +1,67 @@
-<div id="user-view" class="content-box">
-    {{partial "user-item" .}}
+<div id="user-view" class="content-box content-main">
+    {{partial 'common-content-box-header-partial' (or title.nickname name) }}
+    <div class="clearfix user-view-box">
+        <div class="ae-personal-inf">
+            <div class="ae-top">
+                <div class="overflow-hid">
+                    <div>
+                    </div>
+                    <div class="avatar-bg"
+                         style="background: url('{{avatar img id}}') no-repeat 50%; background-size: cover;"
+                         filter="url(/res/filter.svg#blur)">
+                    </div>
+                    <svg xmlns="http://www.w3.org/2000/svg" height="0">
+                        <filter height="116%" width="116%" y="-8%" x="-8%" id="Blur">
+                            <feGaussianBlur stdDeviation="8" in="SourceGraphic"/>
+                        </filter>
+                    </svg>
+                    <div class="img-avatar-name">
+                        <div class="username">
+                            {{or title.nickname name}}
+                        </div>
+                        {{#if (or (isset money) (isset points))}}
+                        <div class="total-won">
+                            <p>{{i18n "title-of-won"}} :</p>
+                            <p>{{money}} {{i18n "title-of-money"}}</p>
+                            <p>{{points}} {{i18n "title-of-points"}}</p>
+                        </div>
+                        {{/if}}
+                    </div>
+                    <div class="ae-user-img pi-ph false st-indicator {{player "getOnline" . }}">
+                    <img src="{{avatar img id}}" class="loading" onload="this.style.background = 'none'"
+                         onerror="Player.getAvatar.call(this)">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{#if (ne id (player "id"))}}
+    <!-- .content-box-item -->
+    <div class="content-box-tabs clearfix">
+
+        {{#if (or (isset money) (isset points))}}
+        {{partial 'user-view-friendship' .}}
+        <a href="/user/{{id}}/info" class="content-box-tab">
+            <div>{{i18n "title-users-main"}}</div>
+        </a>
+        {{/if}}
+
+        {{#if (isset friends ) }}
+        <a href="/user/{{id}}/friends" class="content-box-tab">
+            <div>{{i18n "title-users-friends"}} {{#if (notlike friends 0 ) }} {{friends}} {{else}} {{i18n
+                "title-no-friends"}} {{/if}}
+            </div>
+        </a>
+        {{/if}}
+        <a href="/user/{{id}}/messages" class="content-box-tab">
+            <div>{{i18n "button-users-write-message"}}</div>
+        </a>
+    </div>
+    <!-- end of TABS -->
+    {{/if}}
+
+    <div class="content-box-content">
+    </div>
+    <!-- .content-box-content -->
 </div>
-<!-- .content-box -->
+<!-- .content-main.content-box -->
