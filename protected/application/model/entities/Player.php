@@ -98,7 +98,7 @@ class Player extends Entity
     protected $_stats = array();
 
     protected $_friend = null;
-    protected $_version = 4;
+    protected $_version = 5;
 
     public function init()
     {
@@ -1294,7 +1294,7 @@ class Player extends Entity
                     'profit'       => $this->getReferralPay(),
                 );
                 break;
-            case 'card':
+            case 'user':
                 $ret = array(
                     'id'   => $this->getId(),
                     'img'  => $this->getAvatar(),
@@ -1303,6 +1303,18 @@ class Player extends Entity
                     'money'    => $this->getWinMoney(),
                     'points'   => $this->getWinPoints(),
                     'friends'  => \FriendsModel::instance()->getStatusCount($this->getId(), 1),
+                );
+
+                if ($this->getFriend()!==null) {
+                    $ret['isFriend'] = $this->getFriend();
+                }
+                break;
+            case 'card':
+                $ret = array(
+                    'id'   => $this->getId(),
+                    'img'  => $this->getAvatar(),
+                    'name' => $this->getNicname(),
+                    'ping' => $this->getDates('Ping')
                 );
                 break;
             case 'info':
@@ -1326,15 +1338,11 @@ class Player extends Entity
                     'location' => array(
                         'country'    => $this->applyPrivacy('Country'),
                         'city'       => $this->applyPrivacy('City'),
-                    ),
-                    'friends'  => \FriendsModel::instance()->getStatusCount($this->getId(), 1),
+                    )
                     /*
                     'social'     => $this->getSocial()
                     */
                 );
-                if ($this->getFriend()!==null) {
-                    $ret['isFriend'] = $this->getFriend();
-                }
                 break;
             default:
                 throw new EntityException('Export type is not supported', 500);

@@ -371,24 +371,85 @@ class Players extends \AjaxController
     }
 
     /**
+     * Малая визитка пользователя
+     *
+     * @param $playerId
+     *
+     * @throws EntityException
+     */
+    public function cardAction($playerId)
+    {
+
+        $this->authorizedOnly();
+
+        $player = new Player();
+        $player->setId($playerId ?: (int)\SettingsModel::instance()->getSettings('counters')->getValue('USER_REVIEW_DEFAULT'))->fetch()->initDates();
+
+        $response = array(
+            'res' => array(
+                'user' => array(
+                    $playerId => array(
+                        'card' => $player->export('card')
+                    )
+                )
+            )
+        );
+        $this->ajaxResponseNoCache($response);
+
+        return true;
+    }
+
+    /**
+     * Средняя визитка пользователя
+     *
+     * @param $playerId
+     *
+     * @throws EntityException
+     */
+    public function userAction($playerId)
+    {
+
+        $this->authorizedOnly(true);
+
+        $player = new Player();
+
+        $player->setId($playerId ?: (int)\SettingsModel::instance()->getSettings('counters')->getValue('USER_REVIEW_DEFAULT'))
+            ->fetch()
+            ->setFriendship($this->player->getId())
+            ->initDates();
+
+        $response = array(
+            'res' => array(
+                'user' => array(
+                    $playerId => $player->export((int)\SettingsModel::instance()->getSettings('counters')->getValue('USER_REVIEW_DEFAULT') == $player->getId()?'card':'user')
+                )
+            )
+        );
+        $this->ajaxResponseNoCache($response);
+        return true;
+    }
+
+    /**
      * Полная информация о пользователе
      *
      * @param $playerId
      *
      * @throws EntityException
      */
-    public function userInfoAction($playerId)
+    public function infoAction($playerId)
     {
 
-        $this->authorizedOnly(true);
+        $this->authorizedOnly();
 
         $player = new Player();
-        $player->setId($playerId)->fetch()->setFriendship($this->player->getId())->initDates();
+        $player->setId($playerId)->fetch()->initDates();
 
         $response = array(
             'res' => array(
                 'user' => array(
-                    $playerId => $player->export((int)\SettingsModel::instance()->getSettings('counters')->getValue('USER_REVIEW_DEFAULT') == $playerId?'card':'info')
+                    $playerId => array(
+                        'info' => $player->export((int)\SettingsModel::instance()->getSettings('counters')->getValue('USER_REVIEW_DEFAULT') == $playerId?'card':'info')
+                    )
                 )
             )
         );
@@ -411,32 +472,6 @@ class Players extends \AjaxController
 
         $response = array(
             'res' => $this->player->export('card')
-        );
-        $this->ajaxResponseNoCache($response);
-        return true;
-    }
-
-    /**
-     * Малая визитка пользователя
-     *
-     * @param $playerId
-     *
-     * @throws EntityException
-     */
-    public function cardAction($playerId)
-    {
-
-        $this->authorizedOnly();
-
-        $player = new Player();
-        $player->setId($playerId ?: (int)\SettingsModel::instance()->getSettings('counters')->getValue('USER_REVIEW_DEFAULT'))->fetch()->initDates();
-
-        $response = array(
-            'res' => array(
-                'users' => array(
-                    $playerId => $player->export('card')
-                )
-            )
         );
         $this->ajaxResponseNoCache($response);
         return true;
