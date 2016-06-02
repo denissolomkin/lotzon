@@ -406,6 +406,7 @@
 #user-view{
   .ae-personal-inf{
       height: 180px;
+      overflow: hidden;
       transition: all .5s ease-in-out;
       
       .overflow-hid > div:first-child{

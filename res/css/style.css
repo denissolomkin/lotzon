@@ -9407,6 +9407,7 @@ form.loading > * {
 
 #user-view .ae-personal-inf {
   height: 180px;
+  overflow: hidden;
   transition: all .5s ease-in-out; }
   #user-view .ae-personal-inf .overflow-hid > div:first-child {
     transition: all .5s ease-in-out; }
