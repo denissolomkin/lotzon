@@ -38,24 +38,32 @@
     {{#if (ne id (player "id"))}}
     <!-- .content-box-item -->
     <div class="content-box-tabs clearfix">
+        <div>    
+            {{#if (or (isset money) (isset points))}}
+            <a href="/user/{{id}}/info" class="content-box-tab">
+                <div>{{i18n "title-users-main"}}</div>
+            </a>
+            {{/if}}
 
+            {{#if (isset friends ) }}
+            <a href="/user/{{id}}/friends" class="content-box-tab">
+                <div>
+                ({{i18n "title-users-friends"}} {{#if (notlike friends 0 ) }} {{friends}} {{else}} {{i18n
+                    "title-no-friends"}} {{/if}})
+                </div>
+            </a>
+            {{/if}}
+            
+            <a href="/user/{{id}}/messages" class="content-box-tab">
+                <div>{{i18n "button-users-write-message"}}</div>
+            </a>
+        </div>
+        
         {{#if (or (isset money) (isset points))}}
-        {{partial 'user-view-friendship' .}}
-        <a href="/user/{{id}}/info" class="content-box-tab">
-            <div>{{i18n "title-users-main"}}</div>
-        </a>
+        <div>
+            {{partial 'user-view-friendship' .}}
+        </div>
         {{/if}}
-
-        {{#if (isset friends ) }}
-        <a href="/user/{{id}}/friends" class="content-box-tab">
-            <div>
-                ({{i18n "title-users-friends"}} {{#if (notlike friends 0 ) }} {{friends}} {{else}} {{i18n "title-no-friends"}} {{/if}})
-            </div>
-        </a>
-        {{/if}}
-        <a href="/user/{{id}}/messages" class="content-box-tab">
-            <div>{{i18n "button-users-write-message"}}</div>
-        </a>
     </div>
     <!-- end of TABS -->
     {{/if}}

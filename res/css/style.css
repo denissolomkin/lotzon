@@ -9405,25 +9405,78 @@ form.loading > * {
   position: relative;
   z-index: 30; }
 
+#user-view .ae-personal-inf {
+  height: 180px;
+  transition: all .5s ease-in-out; }
+  #user-view .ae-personal-inf .overflow-hid > div:first-child {
+    transition: all .5s ease-in-out; }
+  #user-view .ae-personal-inf .ae-user-img {
+    transition: all .5s ease-in-out; }
+    #user-view .ae-personal-inf .ae-user-img:after {
+      transition: all .5s ease-in-out; }
+    #user-view .ae-personal-inf .ae-user-img img {
+      transition: all .5s ease-in-out; }
+  #user-view .ae-personal-inf .img-avatar-name {
+    transition: all .5s ease-in-out; }
+    #user-view .ae-personal-inf .img-avatar-name .username {
+      transition: all .5s ease-in-out; }
+
+#user-view.state-for-messages .ae-personal-inf {
+  height: 47px;
+  overflow: hidden; }
+  #user-view.state-for-messages .ae-personal-inf .overflow-hid > div:first-child {
+    background: rgba(255, 255, 255, 0.6); }
+  #user-view.state-for-messages .ae-personal-inf .ae-user-img {
+    width: 30px;
+    height: 30px;
+    top: -9px; }
+    #user-view.state-for-messages .ae-personal-inf .ae-user-img:after {
+      width: 9px;
+      height: 9px;
+      border: 1px solid #ffffff;
+      z-index: 60; }
+    #user-view.state-for-messages .ae-personal-inf .ae-user-img img {
+      min-height: 30px;
+      min-width: 30px; }
+  #user-view.state-for-messages .ae-personal-inf .img-avatar-name {
+    left: 60px;
+    top: 15px;
+    z-index: 60;
+    box-shadow: none; }
+    #user-view.state-for-messages .ae-personal-inf .img-avatar-name .username {
+      font-weight: bold;
+      color: #222222;
+      font-size: 15.5px; }
+    #user-view.state-for-messages .ae-personal-inf .img-avatar-name .total-won {
+      opacity: 0; }
+
 .user-view-box .content-box-content {
   top: -1px; }
 
 .user-view-box .user-actions {
+  padding-left: 0;
+  line-height: 0;
+  background-color: transparent; }
+
+.user-view-box .content-box-tabs {
   background: #f5f5f5;
   padding-left: 0;
   line-height: 0; }
+  .user-view-box .content-box-tabs > div {
+    float: right; }
+    .user-view-box .content-box-tabs > div:first-child {
+      float: left; }
 
-.user-view-box .fake-tabs {
-  max-height: 45px; }
-  .user-view-box .fake-tabs > a {
-    line-height: 45px;
-    font-size: 15.5px;
-    color: #4a4a4a;
-    padding: 0 20px;
-    margin: 0; }
-    .user-view-box .fake-tabs > a.active {
-      background: #dfdfdf;
-      color: #4a4a4a; }
+.user-view-box .content-box-tab {
+  line-height: 45px;
+  font-size: 15.5px;
+  color: #4a4a4a;
+  padding: 0 20px;
+  margin: 0;
+  text-transform: none; }
+  .user-view-box .content-box-tab.active {
+    background: #dfdfdf;
+    color: #4a4a4a; }
 
 .user-view-box .ae-user-img {
   width: 150px;
