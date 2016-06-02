@@ -1,0 +1,28 @@
+<div id="user-view-friendship">
+    <ul class="ae-personal-form">
+        <li class="ae-personal-form-values ae-name-block">
+            <ul>
+                <li class="user-actions">
+                    <div class="uk-float-right">
+                        {{#if (isset isFriend)}}
+                        <form action="/users/requests/{{id}}" method="post"
+                              class="uk-float-left add-friends {{#if (ne false isFriend)}}hidden{{/if}} ">
+                            <button type="submit">{{i18n "button-user-friendship"}}</button>
+                        </form>
+                        <form action="/users/requests/{{id}}" method="delete"
+                              class="add-friends uk-float-right danger {{#if (ne 'request' isFriend)}}hidden{{/if}}">
+                            <button type="submit" class="danger">{{i18n "button-user-remove-request"}}
+                            </button>
+                        </form>
+                        <form action="/users/friends/{{id}}" method="delete"
+                              class="del-friends uk-float-right danger {{#if (ne true isFriend)}}hidden{{/if}}">
+                            <button type="submit" class="danger">{{i18n "button-user-remove-friend"}}
+                            </button>
+                        </form>
+                        {{/if}}
+                    </div>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>

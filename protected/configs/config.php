@@ -623,11 +623,6 @@ Config::instance()->publicResources = array(
         'get'  => 'controllers\production\MessagesController:index',
         'post' => 'controllers\production\MessagesController:create'
     ),
-    '/users/:userid/messages' => array(
-        'get'    => 'controllers\production\MessagesController:list',
-        'delete' => 'controllers\production\MessagesController:markRead',
-        'post'   => 'controllers\production\MessagesController:markRead'
-    ),
     '/image' => array(
         'post'   => 'controllers\production\ImagesController:message',
         'delete' => 'controllers\production\MessagesController:imageDelete'
@@ -788,14 +783,25 @@ Config::instance()->publicResources = array(
     '/users/search/' => array(
         'get' => 'controllers\production\Players:search'
     ),
-    '/users/:userId' => array(
+    /**
+     * User
+     */
+    '/user/:userId' => array(
+        'get' => 'controllers\production\Players:user'
+    ),
+    '/user/:userId/card' => array(
         'get' => 'controllers\production\Players:card'
     ),
-    '/user/:userId' => array(
-        'get' => 'controllers\production\Players:userInfo'
+    '/user/:userId/info' => array(
+        'get' => 'controllers\production\Players:info'
     ),
-    '/users/:userId/friends' => array(
+    '/user/:userId/friends' => array(
         'get' => 'controllers\production\FriendsController:userFriends'
+    ),
+    '/user/:userId/messages' => array(
+        'get'    => 'controllers\production\MessagesController:list',
+        'delete' => 'controllers\production\MessagesController:markRead',
+        'post'   => 'controllers\production\MessagesController:markRead'
     ),
     '/:page/' => 'controllers\production\Index:index',
     '/(.*)/' => 'controllers\production\Index:index',

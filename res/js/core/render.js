@@ -85,7 +85,6 @@
                     options = {'href': options};
             }
 
-
             options.template = U.parse(options.template || U.parse(this.href || options.href), 'tmpl');
             options.href = U.parse(options.href || this.href || options.template, 'url');
 
@@ -96,32 +95,48 @@
                 return;
             }
 
+            /* patch for browser extensions */
+            if(/users\/\d+\/\w*$/.test(options.href)){
+                options.href = options.href.replace('users', 'user');
+                options.template = options.template.replace('users', 'user');
+            }
+
             if (D.isEnable('stat'))
                 options.stat = R.stat();
 
             if ('nodeType' in this)
                 options.target = this;
 
-            var node = U.parse(options.href); //options.template;
-            if (!options.node && node) {
-                if (options.node = document.getElementById(options.template)) { // U.parse(node, 'tmpl')
-                } else if (options.node = document.getElementById(node)) {
-                } else if (options.node = DOM.byId(node, true)) {
-                } else if (options.node = document.getElementById('content')) { }
-            }
+            R.initNode(options);
 
             options.init = Object.deepExtend({}, {
                 href    : options.href,
                 template: options.template
             });
 
+            var isNotTab = !options.hasOwnProperty('target') || !options.target.classList.contains('content-box-tab'),
+                isNotExcludedPage = !options.template.match('-moment|-random|popup-|support-|ticket-|reports-|balance-|menu-|-list|-new|-item'),
+                isNotTopPage = (options.template.search(/-/) !== -1 && options.template.match(/-/g).length >= 1),
+                isNotViewPage = !/\d+$/.test(options.href.split('?')[0]),
+                isNotNodeTemplate = options.node.id !== options.init.template && options.node.id !== options.href.replace(/\/\w*$/,'').replace('/','-'),
+                isNodeUnvisible = !DOM.isVisible(options.node);
+
+            if(isNotExcludedPage && isNotTopPage && isNotViewPage && isNotTab && (isNotNodeTemplate || isNodeUnvisible)) {
+                options.node = false;
+                options.tab = options.href;
+                options.href = options.init.href = options.href.replace(/\/\w*$/,'');
+                options.template = options.init.template = options.template.replace(/\-\w*$/,'');
+                R.initNode(options);
+                console.error(options);
+            }
+
             /* substitution JSON with profile if template has "/profile/" or "/balance/" */
-            if ((options.template.search(/profile-/) !== -1 || options.template.search(/balance-/) !== -1) && (options.template.search(/-/) == -1 || options.template.match(/-/g).length < 2)) {
+            if ((options.template.search(/profile-/) !== -1 || options.template.search(/balance-/) !== -1 || options.template.search(/support/) !== -1) && (options.template.search(/-/) == -1 || options.template.match(/-/g).length < 2)) {
                 options.json = Player;
             }
 
             /* disable JSON for header, popup and support menu */
-            else if (!options.json && (options.template.search(/-/) === -1 || options.template.search(/support/) !== -1 || options.template.search(/popup/) !== -1)) {
+            else if (!options.json && (options.template.search(/-/) === -1 || options.template.search(/popup/) !== -1)) {
                 options.json = {};
             }
 
@@ -144,8 +159,8 @@
             }
 
             /* rewrite JSON to user model when "/users" templates */
-            else if (/users\/\d+\/\w*$/.test(options.href)) {
-                options.href = options.href.replace(/\/\w*$/, '');
+            else if (!options.json && /user\/\d+\/\w*s$/.test(options.href)) {
+                options.href = options.href.replace(/\/\w*s$/, '/card');
             }
 
             if (R.rendering.indexOf(options.href) !== -1) {
@@ -158,7 +173,7 @@
                 if (options.target || options.state)
                     var page = document.getElementById(U.parse(U.parse(options.href), 'tmpl'));
 
-                if (page && page.classList.contains('content-main')) {
+                if (page && page.classList.contains('content-main') && !page.classList.contains('content-box')) {
 
                     DOM.hide(page.parentNode.children, 'pop-box');
                     DOM.show(page);
@@ -531,9 +546,10 @@
 
                 if (!options.target.classList.contains('content-box-tab')) {
                     items = items.parentNode;
-                    if (options.url !== false)
-                        options.url = true;
                 }
+
+                if (options.url !== false)
+                    options.url = true;
 
                 items = items && items.getElementsByClassName('active') || [];
                 for (var i = 0; i < items.length; i++) {
@@ -543,10 +559,13 @@
 
             }
 
-            if (options.rendered && options.rendered.classList && options.rendered.classList.contains('content-main')) {
-                var boxes = options.rendered.getElementsByClassName('content-box-tabs');
+            //console.error(options.tab, options.rendered, options.node);
+
+            if (options.rendered && options.rendered.classList && options.rendered.classList.contains('content-main')
+                || (!options.rendered && options.tab && options.node && options.node.classList && options.node.classList.contains('content-main'))) {
+                var boxes = options.rendered && options.rendered.getElementsByClassName('content-box-tabs') || options.node.getElementsByClassName('content-box-tabs');
                 for (var i = 0; i < boxes.length; i++) {
-                    var tab = boxes[i].getElementsByClassName('content-box-tab')[0];
+                    var tab = options.tab && boxes[i].querySelector('.content-box-tab[href="/'+options.tab+'"]') || boxes[i].getElementsByClassName('content-box-tab')[0];
                     tab && DOM.click(tab);
                 }
                 if (options.url !== false)
@@ -571,6 +590,21 @@
                 options.stat.total.timer -= new Date().getTime();
                 D.stat(options);
             }
+
+        },
+
+        "initNode": function (options) {
+
+            var node = U.parse(options.href); //options.template;
+            if (!options.node && node) {
+                if (options.node = document.getElementById(options.template)) { // U.parse(node, 'tmpl')
+                } else if (options.node = document.getElementById(node)) {
+                } else if (options.node = DOM.byId(node, true)) {
+                } else if (!/\d+$/.test(options.href.split('?')[0]) && (options.node = DOM.byId(U.parse(node,'tmpl'), true))) {
+                } else if (options.node = document.getElementById('content')) { }
+            }
+
+            return options;
 
         },
 

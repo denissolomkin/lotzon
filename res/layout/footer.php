@@ -34,7 +34,7 @@
         <div class="arrow"><i class="i-arrow-slim-left"></i></div>
         <div class="content">
             <p>ЗАМЕТИЛИ ОШИБКУ?</p>
-            <a href="/users/0/messages">напишите нам</a>
+            <a href="/user/0/messages">напишите нам</a>
         </div>
     </div> -->
     <!-- zhaloba -->
@@ -59,8 +59,8 @@
                 // 'menu-profile': ['profile', 'profile/billing', 'profile/settings', 'reports/referrals', 'profile/bonuses'],
                 'menu-more': [
                     'reports/referrals', 
-                    'profile/bonuses',
-                    'users/0/messages',
+                    'support/bonuses',
+                    'user/0/messages',
                     'support/rules',
                     'support/faq',
                     'popup/logout'

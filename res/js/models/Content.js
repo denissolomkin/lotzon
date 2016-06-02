@@ -373,7 +373,6 @@
                         || infiniteScrolling.classList.contains('die-infinite-scrolling')) {
                         DOM.remove(infiniteScrolling);
                     } else {
-                        console.log(infiniteScrolling);
                         infiniteScrolling.classList.remove('loading');
                     }
                 }

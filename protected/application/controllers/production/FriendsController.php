@@ -246,7 +246,7 @@ class FriendsController extends \AjaxController
         $response = array(
             'res' => array(
                 'user' => array(
-                    $userId => $player->export('info')
+                    $userId => $player->export('user')
                 )
             ),
             'delete' => array(
@@ -288,11 +288,7 @@ class FriendsController extends \AjaxController
         $player->setId($userId)->fetch()->setFriendship($playerId);
 
         $response = array(
-            'res' => array(
-                'user' => array(
-                    $userId => $player->export('info')
-                )
-            ),
+            'res' => $player->export('user'),
             'player' => array(
                 'count' => array(
                     'friends' => \FriendsModel::instance()->getStatusCount($playerId, 1),
@@ -335,11 +331,7 @@ class FriendsController extends \AjaxController
         $player->setId($userId)->fetch()->setFriendship($playerId);
 
         $response = array(
-            'res' => array(
-                'user' => array(
-                    $userId => $player->export('info')
-                )
-            ),
+            'res' => $player->export('user'),
             'player' => array(
                 'count' => array(
                     'friends' => \FriendsModel::instance()->getStatusCount($playerId, 1),
@@ -372,11 +364,7 @@ class FriendsController extends \AjaxController
         $player->setId($userId)->fetch()->setFriendship($playerId);
 
         $response = array(
-            'res' => array(
-                'user' => array(
-                    $userId => $player->export('info')
-                )
-            ),
+            'res' => $player->export('user'),
             'player' => array(
                 'count' => array(
                     'friends' => \FriendsModel::instance()->getStatusCount($playerId, 1),

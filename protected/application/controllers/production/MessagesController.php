@@ -87,9 +87,9 @@ class MessagesController extends \AjaxController
 
         $response = array(
             'res' => array(
-                'users' => array(
-                    "$userId" => array(
-                        "messages" => array()
+                'user' => array(
+                    $userId => array(
+                        'messages' => array()
                     ),
                 ),
             ),
@@ -102,7 +102,7 @@ class MessagesController extends \AjaxController
         }
 
         foreach ($list as $id=>$message) {
-            $response['res']['users'][$userId]['messages'][$id] = $message->export('list');
+            $response['res']['user'][$userId]['messages'][$id] = $message->export('list');
         }
 
         MessagesModel::instance()->markRead($userId,$playerId);
@@ -137,7 +137,7 @@ class MessagesController extends \AjaxController
         $playerId   = $this->session->get(Player::IDENTITY)->getId();
         $text       = $this->request()->post('text');
         $toPlayerId = $this->request()->post('recipient_id', NULL);
-        $image      = $this->request()->post('image', "");
+        $image      = $this->request()->post('image', '');
         $admins     = array();
 
         if(\SettingsModel::instance()->getSettings('counters')->getValue('USER_REVIEW_DEFAULT'))
@@ -170,7 +170,7 @@ class MessagesController extends \AjaxController
             }
         }
 
-        if ($image!="") {
+        if ($image!='') {
             \Common::saveImageMultiResolution('',PATH_FILESTORAGE.'messages/',$image, array(array(600),1),PATH_FILESTORAGE.'temp/'.$image);
             \Common::removeImageMultiResolution(PATH_FILESTORAGE.'temp/',$image);
         }
@@ -196,7 +196,7 @@ class MessagesController extends \AjaxController
             ),
             'captcha' => $this->player->activateCaptcha(),
             'res'     => array(
-                'users'         => array(
+                'user'         => array(
                     $toPlayerId => array(
                         'messages' => array(),
                     ),
@@ -222,7 +222,7 @@ class MessagesController extends \AjaxController
                 ),
             ),
         );
-        $response['res']['users'][$toPlayerId]['messages'][$obj->getId()] = $obj->export('list');
+        $response['res']['user'][$toPlayerId]['messages'][$obj->getId()] = $obj->export('list');
 
         $this->ajaxResponseNoCache($response,201);
         return true;

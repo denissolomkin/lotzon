@@ -114,7 +114,7 @@ $color-online: #7ed321;
 
 /* 
 #communication-messages 
-#users-view-messages 
+#user-view-messages
 STYLES */
 
 // left part
@@ -277,7 +277,7 @@ STYLES */
     }
 }
 
-#users-view-messages {
+#user-view-messages {
     box-shadow: 1px 2px 2px 0px rgba(0, 0, 0, 0.4);
     margin-bottom: 3px;
 
@@ -288,7 +288,7 @@ STYLES */
     }
 }
 
-#users-view-messages-form{
+#user-view-messages-form{
     padding-bottom: 25px;
 
     .message-img{
@@ -431,6 +431,8 @@ STYLES */
         }
     }
     #communication-messages-new-users {
+        position: absolute;
+        z-index: 1;
         width: 235px;
         background: #e9e9e9;
     }

@@ -59,7 +59,7 @@ class AjaxController extends \SlimController\SlimController
 
         try {
 
-            if($this->session->get(Player::IDENTITY)->getVersion() !== 4)
+            if($this->session->get(Player::IDENTITY)->getVersion() !== 5)
                 throw(new \Exception);
 
         } catch (\Exception $e) {

@@ -1,4 +1,4 @@
-<div id="users-view-friends-{{id}}" data-id="{{id}}" class="make-table c-friend clearfix">
+<div id="user-view-friends-{{id}}" data-id="{{id}}" class="make-table c-friend clearfix">
     <div class="make-row">
         <div class="make-column user-info">
             <a href="/user/{{ id }}">
@@ -20,8 +20,8 @@
             </div>
         </div>
         <div class="make-column c-friend-actions">
-            <a href="/users/{{ id }}/messages" class="c-friend-msg">{{i18n "button-users-write-message"}}</a>
-            <a href="/users/{{ id }}/friends" class="c-friend-msg">{{i18n "button-users-view-friends"}}</a>
+            <a href="/user/{{ id }}/messages" class="c-friend-msg">{{i18n "button-users-write-message"}}</a>
+            <a href="/user/{{ id }}/friends" class="c-friend-msg">{{i18n "button-users-view-friends"}}</a>
         </div>
     </div>
 </div>

@@ -170,7 +170,7 @@
             "blog-post-view": Blog.init,
             "blog-post-view-comments-replyform": Comments.after.replyForm,
 
-            "profile-bonuses": Bonuses.init,
+            "support-bonuses": Bonuses.init,
 
             "communication-messages": Messages.init,
             "communication-comments-replyform": Comments.after.replyForm,
@@ -257,6 +257,8 @@
             "communication-notifications": Comments.renderNotifications,
             "users-view-messages": Messages.after.markRead,
             "profile-social": Profile.update.details,
+            "users-requests-view": Profile.after.request,
+            "users-friends-view": Profile.after.request,
 
         },
 

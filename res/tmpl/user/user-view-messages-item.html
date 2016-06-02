@@ -1,5 +1,5 @@
-<!-- user messages list -->
-<div id="users-{{#if (like (player 'id') user.id)}}{{recipient_id}}{{else}}{{user.id}}{{/if}}-messages-{{id}}" data-id="{{id}}" class="message">
+<div id="user-{{#if (like (player 'id') user.id)}}{{recipient_id}}{{else}}{{user.id}}{{/if}}-messages-{{id}}" data-id="{{id}}" class="message">
+    <!-- user messages list -->
     <div class="message-info">
         <div class="message-name">{{user.name}}</div>
         <div class="message-date">{{day date 'calendar'}} {{i18n 'title-message-at'}} {{day date 'HH:MM'}}</div>

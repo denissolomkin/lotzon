@@ -1,4 +1,4 @@
-<div id="profile-bonuses" class="content-box">
+<div id="support-bonuses" class="content-box">
     {{partial 'common-content-box-header-partial' (i18n "title-bonuses") }}
     <div class="content-box-content clearfix">
         <div class="content-box-item cabinet-bonuses">
@@ -10,7 +10,7 @@
                     <label class="in-box title"> {{i18n "title-bonuses-unique-link"}} </label>
                     <div class="strip clearfix">
                         <input id="ref-link" type="text" readonly name="unick-name" value="https://lotzon.com/?ref={{id}}">
-                        <div data-to="ref-link" class="copy button" data-after="{{i18n " title-bonuses-link-copy-ready "}}">
+                        <div data-to="ref-link" class="copy button" data-after="{{i18n 'title-bonuses-link-copy-ready'}}">
                             {{i18n "title-bonuses-link-copy"}}
                         </div>
                     </div>
@@ -19,8 +19,8 @@
                     <form action="/invites/email" method="post">
                         <label class="in-box title"> {{i18n "title-bonuses-email-send"}} </label>
                         <div class="strip clearfix">
-                            <input id="bonus-email-send" type="email" name="email" value="" placeholder="{{i18n " title-profile-write-email "}}">
-                            <button type="submit" data-to="bonus-email-send" class="send button" data-after="{{i18n " title-bonuses-email-send-button-ready "}}">
+                            <input id="bonus-email-send" type="email" name="email" value="" placeholder="{{i18n 'title-profile-write-email'}}">
+                            <button type="submit" data-to="bonus-email-send" class="send button" data-after="{{i18n 'title-bonuses-email-send-button-ready'}}">
                                 {{i18n "title-bonuses-email-send-button"}}
                             </button>
                         </div>
@@ -67,7 +67,7 @@
                         {{#each (config "banners.versions")}}
                         <div class="copy-box clearfix">
                             <span class="title">{{i18n "title-bonuses-code-banner"}}:</span>
-                            <div class="copy" data-to="b{{../.}}v{{.}}" data-after="{{i18n " title-bonuses-link-copy-ready "}}">
+                            <div class="copy" data-to="b{{../.}}v{{.}}" data-after="{{i18n 'title-bonuses-link-copy-ready'}}">
                                 {{i18n "title-bonuses-link-copy"}}
                             </div>
                         </div>
