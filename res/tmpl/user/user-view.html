@@ -48,8 +48,8 @@
 
         {{#if (isset friends ) }}
         <a href="/user/{{id}}/friends" class="content-box-tab">
-            <div>{{i18n "title-users-friends"}} {{#if (notlike friends 0 ) }} {{friends}} {{else}} {{i18n
-                "title-no-friends"}} {{/if}}
+            <div>
+                ({{i18n "title-users-friends"}} {{#if (notlike friends 0 ) }} {{friends}} {{else}} {{i18n "title-no-friends"}} {{/if}})
             </div>
         </a>
         {{/if}}

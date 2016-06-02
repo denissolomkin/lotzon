@@ -193,7 +193,9 @@
             "profile-settings": Profile.init.settings,
             "profile-combination": Profile.do.openFavorite,
 
-            "users-view-messages": Messages.after.markRead,
+            "user-view-messages": Messages.after.markRead,
+            "user-view-info": Messages.after.transformUser,
+            "user-view-friends": Messages.after.transformUser,
 
             "lottery": Lottery.init,
             "lottery-view": Lottery.view,

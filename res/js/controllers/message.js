@@ -27,7 +27,19 @@
                 };
 
                 Cache.update(message);
+                Messages.after.transformUser(true);
 
+            },
+
+            transformUser: function (add) {
+                var user = document.getElementById('user-view');
+                if (user) {
+                    if (true === add) {
+                        user.classList.add('state-for-messages');
+                    } else {
+                        user.classList.remove('state-for-messages');
+                    }
+                }
             }
         },
 
