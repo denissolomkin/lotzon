@@ -1703,7 +1703,7 @@ class PlayersDBProcessor implements IProcessor
                   p.Nicname,
                   p.ReferralsProfit,
                   pri.ReferralsIncr,
-                  pri.ActivePerc,
+                  pri.ActiveIncr,
                   (SELECT COUNT(*) FROM Players WHERE ReferalId = p.Id) AS cnt,
                   (
                     SELECT
@@ -1808,7 +1808,7 @@ class PlayersDBProcessor implements IProcessor
     public function createTopReferralsIncr($data)
     {
         $sql = "INSERT INTO `PlayerBotReferralsIncr`
-                (`PlayerId`, `IncrementFrom`, `IncrementTo`, `ReferralsIncr`, `ActivePercFrom`, `ActivePercTo`, `ActivePerc`)
+                (`PlayerId`, `IncrementFrom`, `IncrementTo`, `ReferralsIncr`, `ActivePercFrom`, `ActivePercTo`, `ActiveIncr`)
                 VALUES
                 (:pid, :incf, :inct, :inc, :actf, :actt,0)";
 

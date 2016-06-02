@@ -769,7 +769,7 @@ class Players extends \AjaxController
                 'place'     => $i,
                 'nickname'  => $user['Nicname'],
                 'refCount'  => $user['cnt'] + $user['ReferralsIncr'],
-                'refActive' => $user['active'] + floor($user['ReferralsIncr']*$user['ActivePerc']/100),
+                'refActive' => $user['active'] + $user['ActiveIncr'],
                 'refProfit' => $user['ReferralsProfit'],
             );
         }

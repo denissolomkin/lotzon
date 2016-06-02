@@ -151,14 +151,23 @@ function TopReferralsIncrement()
 	}
 
 	foreach ($sth->fetchAll() as $playerData) {
-		$playerId   = $playerData['PlayerId'];
-		$activePerc = floor(rand($playerData['ActivePercFrom'],$playerData['ActivePercTo']));
-		DB::Connect()->query("UPDATE PlayerBotReferralsIncr SET ActivePerc = $activePerc WHERE PlayerId = $playerId");
+		$playerId    = $playerData['PlayerId'];
+		$activePerc  = floor(rand($playerData['ActivePercFrom'],$playerData['ActivePercTo']));
+		$activeUsers = floor($playerData['ReferralsIncr']*$activePerc/100);
+		DB::Connect()->query("UPDATE PlayerBotReferralsIncr SET ActiveIncr = $activeUsers WHERE PlayerId = $playerId");
 
 		$profit = floor($playerData['ReferralsIncr']*$activePerc/100);
 		$profit = $profit + floor($profit*rand(1,10)/100)*0.5;
 
 		DB::Connect()->query("UPDATE Players SET ReferralsProfit = ReferralsProfit + $profit WHERE Id = $playerId");
+
+		$player = new Player();
+		$player->setId($playerId)->fetch();
+
+		$player->addPoints(
+			($profit),
+			array('title'=>'Начисление за активность рефералов','type'=>'Referrals')
+		);
 	}
 }
 
@@ -189,7 +198,11 @@ function ApplyLotteryCombination(&$comb)
 	$counters['MONEY_ADD']+=$sum;
 	SettingsModel::instance()->getSettings('counters')->setValue($counters)->create();
 
+	echo PHP_EOL.'Increment referrals: '.PHP_EOL;
+	$time = microtime(true);
 	TopReferralsIncrement();
+	echo (microtime(true) - $time).PHP_EOL;
+	echo PHP_EOL.PHP_EOL;
 
 	echo PHP_EOL.'recache: '.PHP_EOL;
 	$time = microtime(true);

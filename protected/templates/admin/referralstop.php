@@ -54,7 +54,7 @@
 
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-star"></i></span>
-                                <input type="text" class="form-control" name="ActivePerc" placeholder="Активно из добавленных, %" value="" readonly>
+                                <input type="text" class="form-control" name="ActiveIncr" placeholder="Активно из добавленных" value="" readonly>
                             </div>
 
                             <button class="btn btn-danger remove-button"><span
@@ -109,7 +109,7 @@
         $('[name="Id"]', form).val(player.Id);
         $('[name="PlayerId"]', form).val(player.PlayerId);
         $('[name="ReferralsIncr"]', form).val(player.ReferralsIncr);
-        $('[name="ActivePerc"]', form).val(player.ActivePerc);
+        $('[name="ActiveIncr"]', form).val(player.ActiveIncr);
         $('[name="IncrementFrom"]', form).val(player.IncrementFrom);
         $('[name="IncrementTo"]', form).val(player.IncrementTo);
         $('[name="ActivePercFrom"]', form).val(player.ActivePercFrom);
