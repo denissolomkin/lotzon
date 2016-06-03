@@ -98,7 +98,7 @@ class Player extends Entity
     protected $_stats = array();
 
     protected $_friend = null;
-    protected $_version = 5;
+    protected $_version = 6;
 
     public function init()
     {

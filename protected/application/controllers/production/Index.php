@@ -396,7 +396,7 @@ class Index extends \SlimController\SlimController
 
         try {
 
-            if($this->session->get(Player::IDENTITY)->getVersion() !== 5)
+            if($this->session->get(Player::IDENTITY)->getVersion() !== 6)
                 throw(new \Exception);
 
         } catch (\Exception $e) {
