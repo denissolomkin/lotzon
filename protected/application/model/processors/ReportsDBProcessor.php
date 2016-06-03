@@ -214,7 +214,7 @@ SELECT CONCAT(YEAR(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date))) `Mo
         FROM `PlayerGames` g
         JOIN Players p On p.Id=g.PlayerId
         WHERE g.`Month`>=:from AND g.`Month`<=:to AND g.`IsFee` = 1 AND g.`GameId` = :gid".
-            (isset($args['Currency']) && $args['Currency'] != '' ? " AND `Currency` = '{$args['Currency']}' " : '') .
+            (isset($args['Currency']) && $args['Currency'] != '' ? " AND g.`Currency` = '{$args['Currency']}' " : '') .
             " group by g.GameId, g.Currency, g.PlayerId)
 
             UNION ALL
@@ -224,7 +224,7 @@ SELECT CONCAT(YEAR(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date))) `Mo
             JOIN Players p On p.Id=t.PlayerId
             WHERE t.`Month` >= :from AND t.`Month` <= :to
             AND t.`GameId` = :gid" .
-            (isset($args['Currency']) && $args['Currency'] != '' ? " AND `Currency` = '{$args['Currency']}' " : '') . ")
+            (isset($args['Currency']) && $args['Currency'] != '' ? " AND t.`Currency` = '{$args['Currency']}' " : '') . ")
 
             order by Currency, Rating DESC";
 

@@ -1,3 +1,37 @@
+//application top block styles!!!
+.appBox{
+    -webkit-transition: all .2s ease-out;
+    transition: all .2s ease-out;
+    background: #f8e71c;
+    height: 40px !important;
+    text-align: center;
+    font-size:15px;
+    color:#222222;
+
+    & > *{
+        display: inline-block;
+        line-height: 40px;
+    }
+    a{
+        margin-left: 50px;
+        padding: 0 37px;
+        background: #f8e71c;
+        border: 1px solid #000;
+        cursor: pointer;
+        text-align: center;
+        text-transform: uppercase;
+        font-size: 13.5px;
+        line-height: 30px;
+        -webkit-transition: all .2s ease-out;
+        transition: all .2s ease-out;
+        &:hover{
+            color: #f8e71c;
+            background: #000;
+        }
+    }
+}
+//END application top block styles!!!
+
 .site-top {
     display: none;
 }

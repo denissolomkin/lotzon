@@ -46,7 +46,7 @@
         do: {
 
             markRead: function (event) {
-                Form.delete.call(this, '/users/' + this.getAttribute('data-id') + '/messages');
+                Form.delete.call(this, '/user/' + this.getAttribute('data-id') + '/messages');
             },
 
             clearUser: function () {
