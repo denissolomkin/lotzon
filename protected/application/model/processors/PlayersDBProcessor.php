@@ -1564,7 +1564,7 @@ class PlayersDBProcessor implements IProcessor
         $sql = "SELECT p.*, d.* FROM `Players` p
             LEFT JOIN `PlayerDates` d
               ON d.`PlayerId`=p.`Id`
-            WHERE p.`ReferalId` = :id";
+            WHERE p.`ReferalId` = :id ORDER BY p.`Id` DESC";
         if (!is_null($limit)) {
             $sql .= " LIMIT " . (int)$limit;
         }
