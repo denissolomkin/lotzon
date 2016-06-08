@@ -1841,7 +1841,7 @@ class PlayersDBProcessor implements IProcessor
                 ':pid' => $playerId
             ));
 
-        } catch (PDOExeption $e) {
+        } catch (PDOException $e) {
             throw new ModelException("Unable to process delete query", 500);
         }
 

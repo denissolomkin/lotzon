@@ -19,7 +19,7 @@ class BlogsDBProcessor implements IProcessor
                 ':datemodify'  => time(),
                 ':enable'      => $blog->getEnable(),
             ));
-        } catch (PDOExeption $e) {
+        } catch (PDOException $e) {
             throw new ModelException("Unable to proccess storage query", 500);
         }
 
@@ -63,7 +63,7 @@ class BlogsDBProcessor implements IProcessor
                 ':id' => $blog->getId()
             ));
 
-        } catch (PDOExeption $e) {
+        } catch (PDOException $e) {
             throw new ModelException("Unable to process delete query", 500);
         }
 
@@ -141,7 +141,7 @@ class BlogsDBProcessor implements IProcessor
                 ':blogid'    => $blogId,
                 ':similarid' => $similarId,
             ));
-        } catch (PDOExeption $e) {
+        } catch (PDOException $e) {
             throw new ModelException("Unable to proccess storage query", 500);
         }
 
@@ -158,7 +158,7 @@ class BlogsDBProcessor implements IProcessor
                 ':id' => $blogId
             ));
 
-        } catch (PDOExeption $e) {
+        } catch (PDOException $e) {
             throw new ModelException("Unable to process delete query", 500);
         }
 
@@ -213,7 +213,7 @@ class BlogsDBProcessor implements IProcessor
             $sth->execute(array(
                 ':lang' => $lang,
             ));
-        } catch (PDOExeption $e) {
+        } catch (PDOException $e) {
             throw new ModelException("Unable to proccess storage query", 500);
         }
 

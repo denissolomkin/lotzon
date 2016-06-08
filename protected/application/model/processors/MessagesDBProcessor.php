@@ -18,7 +18,7 @@ class MessagesDBProcessor implements IProcessor
                 ':date'       => time(),
                 ':approval'   => $message->getApproval(),
             ));
-        } catch (PDOExeption $e) {
+        } catch (PDOException $e) {
             throw new ModelException("Unable to proccess storage query", 500);
         }
 
@@ -57,7 +57,7 @@ class MessagesDBProcessor implements IProcessor
                 ':id' => $message->getId()
             ));
 
-        } catch (PDOExeption $e) {
+        } catch (PDOException $e) {
             throw new ModelException("Unable to process delete query", 500);
         }
 
@@ -132,7 +132,7 @@ class MessagesDBProcessor implements IProcessor
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute();
-        } catch (PDOExeption $e) {
+        } catch (PDOException $e) {
             throw new ModelException("Unable to proccess storage query", 500);
         }
 

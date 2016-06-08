@@ -15,7 +15,7 @@ class AdminDBProcessor implements IProcessor
                 ':salt'     => $admin->getSalt(),
                 ':role'     => $admin->getRole(),
             ));
-        } catch (PDOExeption $e) {
+        } catch (PDOException $e) {
             throw new EntityException("Unable to process create query", 500);
         }
 
@@ -45,7 +45,7 @@ class AdminDBProcessor implements IProcessor
         $sets['values'][':login'] = $admin->getLogin();
         try {
             $sth = DB::Connect()->prepare(sprintf($sql, join(",", $sets['sql'])))->execute($sets['values']);
-        } catch (PDOExeption $e) {
+        } catch (PDOException $e) {
             throw new ModelException("Unable to update storage", 500);
         }
 
@@ -62,7 +62,7 @@ class AdminDBProcessor implements IProcessor
                 ':login' => $admin->getLogin()
             ));
 
-        } catch (PDOExeption $e) {
+        } catch (PDOException $e) {
             throw new ModelException("Unable to process delete query", 500);
         }
 
@@ -79,7 +79,7 @@ class AdminDBProcessor implements IProcessor
             $sth->execute(array(
                 ':login' => $admin->getLogin()
             ));
-        } catch (PDOExeption $e) {
+        } catch (PDOException $e) {
             throw new ModelException("Unable to get data from storage", 500);
         }
         
@@ -98,7 +98,7 @@ class AdminDBProcessor implements IProcessor
 
         try {
             $sth = DB::Connect()->query($sql);
-        } catch (PDOExeption $e) {
+        } catch (PDOException $e) {
             throw new ModelException("Unable to get data from storage", 500);
         }
 

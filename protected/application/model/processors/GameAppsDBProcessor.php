@@ -617,7 +617,7 @@ class GameAppsDBProcessor implements IProcessor
                 ':id' => $id
             ));
 
-        } catch (PDOExeption $e) {
+        } catch (PDOException $e) {
             throw new ModelException("Unable to process delete query", 500);
         }
 

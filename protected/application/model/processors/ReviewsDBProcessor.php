@@ -25,7 +25,7 @@ class ReviewsDBProcessor extends DBProcessor implements IProcessor
                 ':module'     => $review->getModule(),
                 ':objectid'   => $review->getObjectId(),
             ));
-        } catch (PDOExeption $e) {
+        } catch (PDOException $e) {
             throw new ModelException("Unable to proccess storage query", 500);            
         }
 
@@ -62,7 +62,7 @@ class ReviewsDBProcessor extends DBProcessor implements IProcessor
                 ':id' => $review->getId()
             ));
 
-        } catch (PDOExeption $e) {
+        } catch (PDOException $e) {
             throw new ModelException("Unable to process delete query", 500);
         }
 
@@ -130,7 +130,7 @@ class ReviewsDBProcessor extends DBProcessor implements IProcessor
             try {
                 $sth = DB::Connect()->prepare($sql);
                 $sth->execute(array(':id' => $id));
-            } catch (PDOExeption $e) {
+            } catch (PDOException $e) {
                 throw new ModelException("Unable to proccess storage query", 500);
             }
 
@@ -170,7 +170,7 @@ class ReviewsDBProcessor extends DBProcessor implements IProcessor
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute();
-        } catch (PDOExeption $e) {
+        } catch (PDOException $e) {
             throw new ModelException("Unable to proccess storage query", 500);
         }
 
@@ -192,7 +192,7 @@ class ReviewsDBProcessor extends DBProcessor implements IProcessor
             try {
                 $sth = DB::Connect()->prepare($sql);
                 $sth->execute(array(':status' => $args['Status']));
-            } catch (PDOExeption $e) {
+            } catch (PDOException $e) {
                 throw new ModelException("Unable to proccess storage query", 500);
             }
         }
@@ -225,7 +225,7 @@ class ReviewsDBProcessor extends DBProcessor implements IProcessor
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute();
-        } catch (PDOExeption $e) {
+        } catch (PDOException $e) {
             throw new ModelException("Unable to proccess storage query", 500);
         }
 

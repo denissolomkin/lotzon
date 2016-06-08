@@ -13,7 +13,7 @@ class LinkRedirectDBProcessor implements IProcessor
                 ':uin'   => $linkRedirect->getUin(),
                 ':link'  => $linkRedirect->getLink(),
             ));
-        } catch (PDOExeption $e) {
+        } catch (PDOException $e) {
             throw new ModelException("Unable to proccess storage query", 500);
         }
 
@@ -35,7 +35,7 @@ class LinkRedirectDBProcessor implements IProcessor
                 ':uin' => $linkRedirect->getUin()
             ));
 
-        } catch (PDOExeption $e) {
+        } catch (PDOException $e) {
             throw new ModelException("Unable to process delete query", 500);
         }
 

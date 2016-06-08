@@ -19,7 +19,7 @@ class MaillistDBProcessor implements IProcessor
             $sth->execute(array(
                 ':taskId'   => $taskId,
             ));
-        } catch (PDOExeption $e) {
+        } catch (PDOException $e) {
             throw new ModelException("Unable to proccess storage query", 500);
         }
         $ret['count']   = $sth->fetch()['count'];
@@ -78,7 +78,7 @@ class MaillistDBProcessor implements IProcessor
                 ':body'     => gzencode($message['body']),
                 ':status'   => $status,
             ));
-        } catch (PDOExeption $e) {
+        } catch (PDOException $e) {
             throw new ModelException("Unable to proccess storage query", 500);
         }
         return true;
@@ -283,7 +283,7 @@ class MaillistDBProcessor implements IProcessor
                 ':values'       => serialize($message->getValues()),
                 ':settings'     => serialize($message->getSettings()),
             ));
-        } catch (PDOExeption $e) {
+        } catch (PDOException $e) {
             throw new ModelException("Unable to proccess storage query", 500);
         }
         return $message;
@@ -304,7 +304,7 @@ class MaillistDBProcessor implements IProcessor
                 ':status'      => $task->getStatus(),
                 ':lastStart'   => $task->getLastStart(),
             ));
-        } catch (PDOExeption $e) {
+        } catch (PDOException $e) {
             throw new ModelException("Unable to proccess storage query", 500);
         }
         return $task;
@@ -324,7 +324,7 @@ class MaillistDBProcessor implements IProcessor
                 ':status'      => $task->getStatus(),
                 ':lastStart'   => $task->getLastStart(),
             ));
-        } catch (PDOExeption $e) {
+        } catch (PDOException $e) {
             throw new ModelException("Unable to proccess storage query", 500);
         }
         return $task;
@@ -341,7 +341,7 @@ class MaillistDBProcessor implements IProcessor
                 ':values'       => serialize($message->getValues()),
                 ':settings'     => serialize($message->getSettings()),
             ));
-        } catch (PDOExeption $e) {
+        } catch (PDOException $e) {
             throw new ModelException("Unable to proccess storage query", 500);
         }
         return $message;
@@ -357,7 +357,7 @@ class MaillistDBProcessor implements IProcessor
                 ':id' => $message->getId(),
             ));
 
-        } catch (PDOExeption $e) {
+        } catch (PDOException $e) {
             throw new ModelException("Unable to process delete query", 500);
         }
 
@@ -374,7 +374,7 @@ class MaillistDBProcessor implements IProcessor
                 ':id' => $task->getId(),
             ));
 
-        } catch (PDOExeption $e) {
+        } catch (PDOException $e) {
             throw new ModelException("Unable to process delete query", 500);
         }
 
@@ -392,7 +392,7 @@ class MaillistDBProcessor implements IProcessor
                 ':status' => 'archived',
             ));
 
-        } catch (PDOExeption $e) {
+        } catch (PDOException $e) {
             throw new ModelException("Unable to process delete query", 500);
         }
 

@@ -138,7 +138,7 @@ class FriendsDBProcessor implements IProcessor
                 ':toplayerid' => $toPlayerId,
                 ':date'       => time(),
             ));
-        } catch (PDOExeption $e) {
+        } catch (PDOException $e) {
             throw new ModelException("Unable to proccess storage query", 500);
         }
 

@@ -16,7 +16,7 @@ class EmailInvitesProcessor implements IProcessor
                 ':inid' => $invite->getInviter()->getId(),
                 ':hash' => $invite->getHash(),
             ));
-        } catch (PDOExeption $e) {
+        } catch (PDOException $e) {
             throw new ModelException("Unable to proccess storage query", 500);            
         }
 
@@ -35,7 +35,7 @@ class EmailInvitesProcessor implements IProcessor
             DB::Connect()->prepare($sql)->execute(array(
                 ':id'   => $invite->getId(),
             )); 
-        } catch (PDOExeption $e) {
+        } catch (PDOException $e) {
             throw new ModelException("Unable to proccess storage query", 500);  
         }
 

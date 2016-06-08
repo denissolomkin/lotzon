@@ -16,7 +16,7 @@ class NewsDBProcessor implements IProcessor
                 ':date'  => time(),
                 ':text'  => $news->getText(),
             ));
-        } catch (PDOExeption $e) {
+        } catch (PDOException $e) {
             throw new ModelException("Unable to proccess storage query", 500);            
         }
 
@@ -50,7 +50,7 @@ class NewsDBProcessor implements IProcessor
                 ':id' => $news->getId()
             ));
 
-        } catch (PDOExeption $e) {
+        } catch (PDOException $e) {
             throw new ModelException("Unable to process delete query", 500);
         }
 
@@ -78,7 +78,7 @@ class NewsDBProcessor implements IProcessor
             $sth->execute(array(
                 ':lang' => $lang,
             ));
-        } catch (PDOExeption $e) {
+        } catch (PDOException $e) {
             throw new ModelException("Unable to proccess storage query", 500);   
         }
 
@@ -103,7 +103,7 @@ class NewsDBProcessor implements IProcessor
             $sth->execute(array(
                 ':lang' => $lang,
             ));
-        } catch (PDOExeption $e) {
+        } catch (PDOException $e) {
             throw new ModelException("Unable to proccess storage query", 500);   
         }
 

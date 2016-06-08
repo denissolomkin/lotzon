@@ -23,7 +23,7 @@ class NoticesDBProcessor implements IProcessor
                 ':reguntil'  => $notice->getRegisteredUntil(),
                 ':regfrom'  => $notice->getRegisteredFrom(),
             ));
-        } catch (PDOExeption $e) {
+        } catch (PDOException $e) {
             throw new ModelException("Unable to proccess storage query", 500);            
         }
 
@@ -57,7 +57,7 @@ class NoticesDBProcessor implements IProcessor
                 ':id' => $notice->getId()
             ));
 
-        } catch (PDOExeption $e) {
+        } catch (PDOException $e) {
             throw new ModelException("Unable to process delete query", 500);
         }
 
@@ -109,7 +109,7 @@ class NoticesDBProcessor implements IProcessor
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute();
-        } catch (PDOExeption $e) {
+        } catch (PDOException $e) {
             throw new ModelException("Unable to proccess storage query", 500);   
         }
 
@@ -172,7 +172,7 @@ class NoticesDBProcessor implements IProcessor
                 ':cntr' => $player->getCountry(),
                 ':id' => $player->getId()
             ));
-        } catch (PDOExeption $e) {
+        } catch (PDOException $e) {
             throw new ModelException("Unable to proccess storage query", 500);
         }
 

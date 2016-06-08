@@ -22,7 +22,7 @@ class GiftsDBProcessor implements IProcessor
                 ':expiryDate'   => $gift->getExpiryDate(),
                 ':used'         => $gift->getUsed(),
             ));
-        } catch (PDOExeption $e) {
+        } catch (PDOException $e) {
             throw new ModelException("Unable to proccess storage query", 500);
         }
 
@@ -55,7 +55,7 @@ class GiftsDBProcessor implements IProcessor
                 ':id' => $gift->getId()
             ));
 
-        } catch (PDOExeption $e) {
+        } catch (PDOException $e) {
             throw new ModelException("Unable to process delete query", 500);
         }
 

@@ -22,7 +22,7 @@ class CommentsDBProcessor implements IProcessor
                 ':objectid' => $comment->getObjectId(),
                 ':modifydate' => time(),
             ));
-        } catch (PDOExeption $e) {
+        } catch (PDOException $e) {
             throw new ModelException("Unable to proccess storage query", 500);
         }
 
@@ -62,7 +62,7 @@ class CommentsDBProcessor implements IProcessor
                 ':id' => $comment->getId()
             ));
 
-        } catch (PDOExeption $e) {
+        } catch (PDOException $e) {
             throw new ModelException("Unable to process delete query", 500);
         }
 
@@ -269,7 +269,7 @@ class CommentsDBProcessor implements IProcessor
                 ':commentid' => $commentId,
                 ':playerid' => $playerId,
             ));
-        } catch (PDOExeption $e) {
+        } catch (PDOException $e) {
             throw new ModelException("Like already set", 500);
         }
 
@@ -285,7 +285,7 @@ class CommentsDBProcessor implements IProcessor
                 ':commentid' => $commentId,
                 ':playerid' => $playerId,
             ));
-        } catch (PDOExeption $e) {
+        } catch (PDOException $e) {
             throw new ModelException("Like not set", 500);
         }
 

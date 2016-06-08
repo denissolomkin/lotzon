@@ -42,18 +42,3 @@
     </form>
 
 </div>
-
-<script>
-
-    $( ".add-block" ).on( "click", function( event ) {
-        var id=$(this).data('sector');
-        $("#"+id).append('<div class="col-md-2" style="display: flex;">' +
-        '   <button type="button" data-sector="'+id+'" class="btn btn-danger del-block"><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></button>' +
-        '   <input placeholder="Value" class="form-control input-md" value="" name='+id+'[]>' +
-        '</div>').append($(this).parent());
-    });
-
-    $(document ).on( "click",".del-block", function( event ) {
-        $(this).parent().remove();
-    });
-</script>

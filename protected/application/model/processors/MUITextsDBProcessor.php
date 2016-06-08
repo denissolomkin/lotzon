@@ -15,7 +15,7 @@ class StaticTextDBProcessor implements IProcessor
                 ':cat'  => $text->getCategory(),
                 ':text' => serialize($text->getText()),
             ));
-        } catch (PDOExeption $e) {
+        } catch (PDOException $e) {
             throw new ModelException("Unable to proccess storage query", 500);            
         }
 
@@ -37,7 +37,7 @@ class StaticTextDBProcessor implements IProcessor
                 ':id' => $text->getId()
             ));
 
-        } catch (PDOExeption $e) {
+        } catch (PDOException $e) {
             throw new ModelException("Unable to process delete query", 500);
         }
 
@@ -56,7 +56,7 @@ class StaticTextDBProcessor implements IProcessor
         $sql = "SELECT * FROM `MUITexts`";
         try {
             $sth = DB::Connect()->query($sql);
-        } catch (PDOExeption $e) {
+        } catch (PDOException $e) {
             throw new ModelException("Unable to proccess storage query", 500);   
         }
 
