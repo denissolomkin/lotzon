@@ -7,10 +7,6 @@
             <form class="render-list-form-unwatched" action="/reports/transactions/list" method="get">
 
                 <div class="content-box-item-top clearfix">
-                    <div class="calendar-range i-calendar">
-                        <input type="text" name="daterange" class="daterange" value="" placeholder="{{i18n "title-of-range"}}" readonly="readonly">
-                    </div>
-
                     <div class="content-box-cat">
                         <span class="position-relative">
                             <input id="radio-transactions-points" name="currency" type="radio" value="points">
@@ -20,6 +16,10 @@
                             <input id="radio-transactions-money" name="currency" type="radio" value="money" checked>
                             <label for="radio-transactions-money">{{i18n "title-money"}}</label>
                         </span>
+                    </div>
+
+                    <div class="calendar-range i-calendar">
+                        <input type="text" name="daterange" class="daterange" value="" placeholder="{{i18n "title-of-range"}}" readonly="readonly">
                     </div>
                 </div>
 

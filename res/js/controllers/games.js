@@ -63,6 +63,7 @@ var Games = {
         },
 
         timeout: function() {
+            return;
             Games.timer && clearInterval(Games.timer);
             Games.timer = setTimeout(Games.online.now, 5000);
         },

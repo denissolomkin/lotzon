@@ -535,69 +535,69 @@
 }
 
 // ---------------------------- //
-@media (min-width: 550px) {
-    .post-inf {
-        margin-bottom: 0;
-        &:after {
-            clear: none;
-        }
-    }
-    .post-date {
-        margin-right: 40px;
-    }
-    .post-views-comments {
-        display: inline-block;
-    }
-    .post-socials {
-        & a {
-            margin: 0 15px 15px 0;
-        }
-    }
-}
+// @media (min-width: 550px) {
+//     .post-inf {
+//         margin-bottom: 0;
+//         &:after {
+//             clear: none;
+//         }
+//     }
+//     .post-date {
+//         margin-right: 40px;
+//     }
+//     .post-views-comments {
+//         display: inline-block;
+//     }
+//     .post-socials {
+//         & a {
+//             margin: 0 15px 15px 0;
+//         }
+//     }
+// }
 
-@media (min-width: 500px) {
-    .post-item {
-        position: relative;
-    }
-    .post-more-btn {
-        position: absolute;
-        right: 0;
-        bottom: 20px;
-    }
-}
+// @media (min-width: 500px) {
+//     .post-item {
+//         position: relative;
+//     }
+//     .post-more-btn {
+//         position: absolute;
+//         right: 0;
+//         bottom: 20px;
+//     }
+// }
 
-@media (max-width: 479px) {
-    #blog-post-view {
-        & .comment-content {
-            padding-left: 0;
-        }
-        & .comment-like {
-            top: 18px;
-        }
-        .post-comments .render-list .message-form-wrapper {
-            padding-left: 0;
-        }
-        & .comment-inf {
-            display: block;
-            max-width: 80%;
-            padding-left: 70px;
-            position: relative;
-            top: 50%;
-            @include translate(0, -50%);
-        }
-        & .comment-top {
-            position: relative;
-            display: block;
-            height: 50px;
-            margin-bottom: 10px;
-        }
-        & .comment-img {
-            top: 0;
-        }
-        & .comment {
-            & .message-form {
-                margin: 0;
-            }
-        }
-    }
-}
+// @media (max-width: 479px) {
+//     #blog-post-view {
+//         & .comment-content {
+//             padding-left: 0;
+//         }
+//         & .comment-like {
+//             top: 18px;
+//         }
+//         .post-comments .render-list .message-form-wrapper {
+//             padding-left: 0;
+//         }
+//         & .comment-inf {
+//             display: block;
+//             max-width: 80%;
+//             padding-left: 70px;
+//             position: relative;
+//             top: 50%;
+//             @include translate(0, -50%);
+//         }
+//         & .comment-top {
+//             position: relative;
+//             display: block;
+//             height: 50px;
+//             margin-bottom: 10px;
+//         }
+//         & .comment-img {
+//             top: 0;
+//         }
+//         & .comment {
+//             & .message-form {
+//                 margin: 0;
+//             }
+//         }
+//     }
+// }

@@ -89,12 +89,12 @@ span.count{
   // src: url('fonts/fontello/fontello.eot?86926657#iefix') format('embedded-opentype'),
 @font-face {
   font-family: 'fontello';
-  src: url('fonts/fontello/fontello.eot?59936479');
-  src: url('fonts/fontello/fontello.eot?59936479#iefix') format('embedded-opentype'),
-       url('fonts/fontello/fontello.woff2?59936479') format('woff2'),
-       url('fonts/fontello/fontello.woff?59936479') format('woff'),
-       url('fonts/fontello/fontello.ttf?59936479') format('truetype'),
-       url('fonts/fontello/fontello.svg?59936479#fontello') format('svg');
+  src: url('fonts/fontello/fontello.eot?59936480');
+  src: url('fonts/fontello/fontello.eot?59936480#iefix') format('embedded-opentype'),
+       url('fonts/fontello/fontello.woff2?59936480') format('woff2'),
+       url('fonts/fontello/fontello.woff?59936480') format('woff'),
+       url('fonts/fontello/fontello.ttf?59936480') format('truetype'),
+       url('fonts/fontello/fontello.svg?59936480#fontello') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -186,8 +186,8 @@ span.count{
 
 @font-face {
   font-family: 'FontAwesome';
-  src: url('../fonts/font-awesome/fontawesome-webfont.eot?v=4.5.1');
-  src: url('fonts/font-awesome/fontawesome-webfont.eot?#iefix&v=4.5.1') format('embedded-opentype'), url('fonts/font-awesome/fontawesome-webfont.woff2?v=4.5.1') format('woff2'), url('fonts/font-awesome/fontawesome-webfont.woff?v=4.5.1') format('woff'), url('fonts/font-awesome/fontawesome-webfont.ttf?v=4.5.1') format('truetype'), url('fonts/font-awesome/fontawesome-webfont.svg?v=4.5.1#fontawesomeregular') format('svg');
+  src: url('../fonts/font-awesome/fontawesome-webfont.eot?v=4.6.1');
+  src: url('fonts/font-awesome/fontawesome-webfont.eot?#iefix&v=4.6.1') format('embedded-opentype'), url('fonts/font-awesome/fontawesome-webfont.woff2?v=4.6.1') format('woff2'), url('fonts/font-awesome/fontawesome-webfont.woff?v=4.6.1') format('woff'), url('fonts/font-awesome/fontawesome-webfont.ttf?v=4.6.1') format('truetype'), url('fonts/font-awesome/fontawesome-webfont.svg?v=4.6.1#fontawesomeregular') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -302,6 +302,72 @@ div {
         background: transparent;
         position: static;
         width: 100%;
+    }
+}
+// if unregistred!! %username%
+#menu-buttons{
+    .unregistred{
+        display: none;
+    }    
+    &.un{
+        & > *{
+            display: none;
+        }
+        .unregistred{
+            display: block;
+        }   
+    }
+}
+.unregistred{
+    width: 355px;
+    z-index: 100;
+    height: 100%;
+    position: relative;
+    background: #e9e9e9;
+    &:before{
+        content: "";
+        display: inline-block;
+        vertical-align: middle;
+        width: 0;
+        height: 100%;
+    }
+
+    .button{
+        font-size: 15.5px;
+        color: #000000;
+        text-align: center;
+        text-transform: uppercase;
+        line-height: 40px;
+        vertical-align: middle;
+        display: inline-block;
+        min-height: 40px;
+        background: transparent;
+        border: 1px solid #4a4a4a;
+        cursor: pointer;
+        transition: all .2s linear;
+        min-width: 100px;
+        padding: 0 20px;
+        box-sizing: border-box;
+        opacity: 1;
+
+        &.login{
+            margin: 0 20px 0 30px;
+            &:hover{
+                background: #000000;
+                color: #ffffff;
+            }
+        }
+        &.registration{
+            min-width: 180px;
+            background: #f8e71c;
+            border: 1px solid #f8e71c;
+            
+            &:hover{
+                color: #f8e71c;
+                background: #000000;
+                border: 1px solid #000000;   
+            }
+        }
     }
 }
 
@@ -466,18 +532,6 @@ div {
         top: 17px;
         font-size: 22px;
         position: relative;
-        &:before{
-            content: '';
-            display: block;
-            width: 0;
-            height: 0;
-            transition: all .1s ease-in-out;
-            border-left: 9px solid transparent;
-            border-right: 9px solid transparent;
-            border-top: 8px solid #4a4a4a;
-            position: relative;
-            top: 7px;
-        }
     }
 }
 .menu-profile-btn .i-person {
@@ -717,24 +771,11 @@ header .owl-theme .owl-controls .owl-page span {
     /* Uncomment for 3D effect */
     text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.1); 
 }
-
-.i-purse:before { 
-    content: '\e804';
-    font-size: 19px;
-    margin-right: 5px;
-    margin-bottom: 6px;
-} /* '' */
 .i-msg {
     font-size: 26px;
-    &:before { 
-        content: '\e80f'; font-size: 26px;
-    } /* '' */
 }
 .i-msg2   {
     font-size: 24px;
-    &:before { 
-        content: '\e811'; font-size: 24px;
-    } /* '' */  
 }
 
 
@@ -797,6 +838,11 @@ header .owl-theme .owl-controls .owl-page span {
 .i-person3:before { content: '\e838'; } /* '' */
 .i-lock:before { content: '\e839'; } /* '' */
 .i-pencil2:before { content: '\e83a'; } /* '' */
+.i-profile:before { content: '\e83b'; } /* '' */
+.i-settings:before { content: '\e83c'; } /* '' */
+.i-image:before { content: '\e83d'; } /* '' */
+.i-keyboard:before { content: '\e83e'; } /* '' */
+.i-send-msg:before { content: '\e83f'; } /* '' */
 
 
 

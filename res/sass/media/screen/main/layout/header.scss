@@ -1,15 +1,6 @@
 .site-top {
     display: block;
 }
-.header {
-    // margin-bottom: 30px;
-    .container{
-        > *{
-
-        }
-    }
-
-}
 .header-left {
     width: 750px;
     margin-right: 0;
@@ -32,58 +23,19 @@
         width: 100%;
     }
 }
-
-
-// if unregistred!! %username%
-.unregistred{
-    width: 355px;
-    z-index: 100;
-    height: 100%;
-    position: relative;
-    background: #e9e9e9;
-    &:before{
-        content: "";
-        display: inline-block;
-        vertical-align: middle;
-        width: 0;
-        height: 100%;
-    }
-
-    .button{
-        font-size: 15.5px;
-        color: #000000;
-        text-align: center;
-        text-transform: uppercase;
-        line-height: 40px;
-        vertical-align: middle;
-        display: inline-block;
-        min-height: 40px;
-        background: transparent;
-        border: 1px solid #4a4a4a;
-        cursor: pointer;
-        transition: all .2s linear;
-        min-width: 100px;
-        padding: 0 20px;
-        box-sizing: border-box;
-        opacity: 1;
-
-        &.login{
-            margin: 0 20px 0 30px;
-            &:hover{
-                background: #000000;
-                color: #ffffff;
-            }
-        }
-        &.registration{
-            min-width: 180px;
-            background: #f8e71c;
-            border: 1px solid #f8e71c;
-            
-            &:hover{
-                color: #f8e71c;
-                background: #000000;
-                border: 1px solid #000000;   
-            }
+.menu-btn{
+    .i-menu {
+        &:before{
+            content: '';
+            display: block;
+            width: 0;
+            height: 0;
+            transition: all .1s ease-in-out;
+            border-left: 9px solid transparent;
+            border-right: 9px solid transparent;
+            border-top: 8px solid #4a4a4a;
+            position: relative;
+            top: 7px;
         }
     }
 }
@@ -129,12 +81,16 @@
             border-bottom: 10px solid rgba(0,0,0,0.2);
         }
         > li{
-            > a{
+
+            > *{
                 height: 45px;
                 line-height: 45px;
                 margin: 0;
                 transition: all .2s linear;
                 padding: 0 20px;
+                color: #4a4a4a;
+                display: block;
+                cursor: pointer;
                 &:hover{
                     background: #e9e9e9;
                     color: #000000;
@@ -263,11 +219,10 @@
     float: left;
     > .menu-btn-item{
         float: right;
-        &:first-child{
+        &.menu-btn{
            float: left;
         }  
     }
-
 }
 .cabinet-balance-count {
     &:first-child {

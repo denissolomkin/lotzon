@@ -62,8 +62,7 @@
                     'support/bonuses',
                     'user/0/messages',
                     'support/rules',
-                    'support/faq',
-                    'popup/logout'
+                    'support/faq'
                 ]
             },
             balance: ['balance/cashout', 'balance/convert', 'reports/transactions', 'reports/payments']
@@ -168,6 +167,21 @@ endforeach;
 
     });
 
+    // $(function () {
+    //     var $body = jQuery('body');
+
+    //     /* bind events */
+    //     $(document)
+    //     .on('focus', '.message-form-area', function() {
+    //         $body.addClass('fixfixed');
+    //         console.error('in');
+    //     })
+    //     .on('blur', '.message-form-area', function() {
+    //         $body.removeClass('fixfixed');
+    //         console.error('out');
+    //     });
+    // });
+
 </script>
 <style>
     #R2D2 {
@@ -185,7 +199,7 @@ endforeach;
         left: -180px;
 
         box-shadow: 1px 1px 7px #000;
-        transition: all 1.5s ease-in-out;
+        transition: all .5s ease-in-out;
         min-width: 200px;
         background: #000;
     }

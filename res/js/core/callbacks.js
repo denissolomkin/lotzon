@@ -8,7 +8,7 @@
             EventHandler.on({
 
                 'click': [
-
+                
                     /* global */
                     ['a:not(.not-handle)', R.push],
 
@@ -57,8 +57,6 @@
              /*smiles*/
             $(document).on('click ', ".message-form-smileys", Comments.showSmiles);
             $(document).on('click', ".smiles img", Comments.chooseSmiles);
-            
-            
 
             $(document).on("paste", '[contenteditable]', Comments.pasteText);
             $(document).on("keydown", '[contenteditable]', Comments.checkInput);
@@ -176,10 +174,9 @@
             "communication-comments-replyform": Comments.after.replyForm,
             "communication-comments-view": Comments.after.showComment,
 
-            "games-online": Carousel.initOwl,
+            
             "games-online-view": Games.online.init,
             "games-online-view-now-list": Games.online.timeout,
-            "games-chance": Carousel.initOwl,
             "games-chance-view": Games.chance.init,
             "games-slots-view": Games.slots.init,
             "games-wheel-view": Games.wheel.init,
@@ -208,6 +205,9 @@
 
             "support-faq": Support.init,
             "popup-captcha": Content.captcha.init,
+            // hide mob-nav on logout call
+            // "popup-logout": Navigation.menu.hide,
+            // "popup-logout": Content.logoutPopup,
 
 
         },

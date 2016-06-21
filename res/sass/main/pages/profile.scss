@@ -349,7 +349,9 @@
       line-height: 45px;
       font-size: 15.5px;
       text-transform: capitalize;
-     
+      i{
+        display: none;
+      }
       &.active{
         background: #dfdfdf;
         color: #4a4a4a;
@@ -452,6 +454,8 @@
           z-index: 60;
         }
         img{
+          width: 30px;
+          height: 30px;
           min-height: 30px;
           min-width: 30px;
         }
@@ -505,6 +509,9 @@
       padding: 0 20px;
       margin: 0;
       text-transform: none;
+      i{
+        display: none;
+      }
       &.active{
         background: #dfdfdf;
         color: #4a4a4a;
@@ -647,6 +654,10 @@
   right: 30px;
 }
 
+.ae-personal-form-values select{
+  color: #4a4a4a;
+}
+
 .ae-personal-form-values input {
   border-width: 0 0 1px;
   border-style: solid;
@@ -761,6 +772,7 @@
     select{
       width: 90px;
       float: left;
+      color: #4a4a4a;
       &[name="day"]{
         width: 55px;
         margin-left: 20px;

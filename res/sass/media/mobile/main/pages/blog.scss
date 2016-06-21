@@ -1,11 +1,128 @@
-#blog-post-view .post-comments .render-list .message-form-wrapper {
-	padding-left: 0;
+#blog-posts {
+    .post-item {
+        margin: 15px 0 40px;
+    }
+    .post-item-img {
+        margin: 0 -10px;
+    }
+    .post-item-title {
+        font-size: 20px;
+    }
 }
-// #blog-post-view .content-box-item {
-//     padding: 20px 10px 20px;
-// }
-@media (max-width: 479px) {
-	#blog-post-view .comment .message-form {
-	    margin: 0 -20px;
-	}
+
+#blog-post-view {
+    padding: 10px 0 0 0;
+    hr{
+        margin: 0 -10px;
+    }
+    .post-comments{
+        margin: 0 -10px;
+    }
+    .content-box-header {
+        .back {
+            left: 10px;
+            span{
+                display: block;
+            }
+        }
+    }
+    .more-posts{
+        .title{
+            margin: 0 -10px;
+        }
+    }
+    .post {
+        & > .title {
+            font-size: 20px;
+        }
+    }
+    .post-description {
+        padding: 20px 0 30px;
+        line-height: 1.5;
+        font-weight: normal !important;
+        font-size: 15.5px;
+        * {
+            font-family: 'Handbook' !important;
+            font-weight: normal !important;
+            color: #222222 !important;
+            line-height: 1.4 !important;
+        }
+        h1 {
+            font-family: 'Handbook' !important;
+            font-weight: bold !important;
+            font-size: 20px !important;
+            margin-bottom: 20px;
+        }
+        h2 {
+            font-family: 'Handbook' !important;
+            font-weight: bold !important;
+            font-size: 18px !important;
+            margin-bottom: 20px;
+        }
+        h3 {
+            font-family: 'Handbook' !important;
+            font-weight: bold !important;
+            font-size: 17px !important;
+            margin-bottom: 20px;
+        }
+        h4 {
+            font-family: 'Handbook' !important;
+            font-weight: bold !important;
+            font-size: 16px !important;
+            margin-bottom: 20px;
+        }
+        p {
+            font-family: 'Handbook' !important;
+            font-size: 15.5px !important;
+            margin-bottom: 10px;
+        }
+        em {
+            font-family: 'Handbook' !important;
+            font-size: 15.5px;
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+        a {
+            font-family: 'Handbook' !important;
+            color: #4a90e2 !important;
+            cursor: pointer;
+            opacity: 0.9;
+            transition: all .2s linear;
+            display: inline;
+            &:hover {
+                opacity: 1;
+            }
+        }
+        //bold
+        span[style*='bold'] {
+            font-family: 'Handbook' !important;
+            font-weight: bold !important;
+        }
+        ol {
+            padding: 7px;
+            > li {
+                font-size: 15.5px !important;
+                margin-bottom: 10px;
+                margin-left: 10px;
+                padding-left: 20px;
+            }
+        }
+        ul {
+            padding: 7px;
+            > li {
+                list-style: disc outside;
+                font-size: 15.5px !important;
+                margin-bottom: 10px;
+                margin-left: 10px;
+                padding-left: 20px;
+            }
+        }
+        & img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            margin: 0px 0 20px 0;
+            text-align: center;
+        }
+    }
 }

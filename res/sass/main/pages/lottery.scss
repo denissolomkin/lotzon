@@ -500,6 +500,12 @@
                 border-radius: 3px;
                 position: relative;
                 background: #cdcf9f;
+                & > span{
+                    display: inline;
+                }
+                & > .short{
+                    display: none;
+                }
             }
         }
         &.done {
@@ -1097,6 +1103,9 @@
                 font-weight: bold;
                 color: #FEE212;
                 text-shadow: none;
+                &.short{
+                    display: none;
+                }
             }
         }
         & ul {
@@ -1658,7 +1667,6 @@
                 font-size: 15.5px;
                 display: inline-block;
                 vertical-align: middle;
-                // margin-right: 15px;
                 width: 96px;
                 box-sizing: border-box;
                 text-align: left;

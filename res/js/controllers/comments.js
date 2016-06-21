@@ -209,7 +209,17 @@
                 R.push({
                     href: (json.object_id ? 'blog-post-view' : 'communication') + '-comments-replyform',
                     json: json,
-                    node: node
+                    node: node,
+                    after: function(e){
+                        // scroll form tot top in mobile devices
+                        if(!Device.isMobile()){
+                            return;
+                        }
+                        $(this.rendered).find('[contenteditable]').focus();
+                        $('html, body').animate({
+                            scrollTop: $(this.rendered).offset().top - 50
+                        }, 'slow');
+                    }
                 });
 
             },
@@ -343,6 +353,30 @@
             $(this).closest('.message-form').find('.smiles').toggleClass('hidden');
             $(this).toggleClass('active');
 
+            if(!$(this).hasClass('active')){   
+
+                var result = $(this).closest('.message-form').find('div[contenteditable="true"]')[0];
+                result.focus();
+                placeCaretAtEnd(result);
+
+                function placeCaretAtEnd(el) {
+                    el.focus();
+                    if (typeof window.getSelection != "undefined" && typeof document.createRange != "undefined") {
+                        var range = document.createRange();
+                        range.selectNodeContents(el);
+                        range.collapse(false);
+                        var sel = window.getSelection();
+                        sel.removeAllRanges();
+                        sel.addRange(range);
+                    } else if (typeof document.body.createTextRange != "undefined") {
+                        var textRange = document.body.createTextRange();
+                        textRange.moveToElementText(el);
+                        textRange.collapse(false);
+                        textRange.select();
+                    }
+                }
+            }
+
         },
 
         chooseSmiles: function (e) {
@@ -350,26 +384,27 @@
             div = $(this).closest('.message-form-actions').prev();
             div.append($(this).clone());
 
-            var result = $(this).closest('.message-form').find('div[contenteditable="true"]')[0];
-            result.focus();
-            placeCaretAtEnd(result);
+            // var result = $(this).closest('.message-form').find('div[contenteditable="true"]')[0];
+            // // result.focus();
+            // placeCaretAtEnd(result);
 
-            function placeCaretAtEnd(el) {
-                el.focus();
-                if (typeof window.getSelection != "undefined" && typeof document.createRange != "undefined") {
-                    var range = document.createRange();
-                    range.selectNodeContents(el);
-                    range.collapse(false);
-                    var sel = window.getSelection();
-                    sel.removeAllRanges();
-                    sel.addRange(range);
-                } else if (typeof document.body.createTextRange != "undefined") {
-                    var textRange = document.body.createTextRange();
-                    textRange.moveToElementText(el);
-                    textRange.collapse(false);
-                    textRange.select();
-                }
-            }
+            // function placeCaretAtEnd(el) {
+            //     console.error(el);
+            //     el.focus();
+            //     if (typeof window.getSelection != "undefined" && typeof document.createRange != "undefined") {
+            //         var range = document.createRange();
+            //         range.selectNodeContents(el);
+            //         range.collapse(false);
+            //         var sel = window.getSelection();
+            //         sel.removeAllRanges();
+            //         sel.addRange(range);
+            //     } else if (typeof document.body.createTextRange != "undefined") {
+            //         var textRange = document.body.createTextRange();
+            //         textRange.moveToElementText(el);
+            //         textRange.collapse(false);
+            //         textRange.select();
+            //     }
+            // }
         },
 
         pasteText: function (e) {

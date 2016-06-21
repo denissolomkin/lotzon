@@ -12,18 +12,22 @@
                 // events
                 Profile.do.privacyBoxes();
                 
-                // chosen
-                $('select:not([name="country"])').chosen({
-                    // disable_search: true
-                });
+                // chosen screen only
+                if(!Device.isMobile()){
+                    $('select:not([name="country"])').chosen({
+                        // disable_search: true
+                    });
+                }
                         
                 R.push({
                     template: 'profile-edit-countries',
                     href: '/res/countries/' + Player.language.current,
                     after: function(){
-                        $('select[name="country"]').chosen({
-                        // disable_search: true
-                        });
+                        if(!Device.isMobile()){
+                            $('select[name="country"]').chosen({
+                            // disable_search: true
+                            });
+                        }
                     }
                 });
 
@@ -157,7 +161,7 @@
                             return "Норм";
                         if (score > 40)
                             return "Так себе";
-                        if (score >= 10)
+                        if (score >= 1)
                             return "Слабый";
                         return "";
                     }

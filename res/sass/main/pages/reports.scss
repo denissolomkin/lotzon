@@ -361,6 +361,44 @@
   border-top: none;
 }
 
+.cabinet-transaction-history {
+    .calendar-range{
+        float: right;
+        &:before {
+            position: absolute;
+            z-index: 0;
+        }
+        
+    }
+    .content-box-cat {
+        float: left;
+        margin: auto;
+        
+        a {
+            display: table-cell;
+            padding: 0 10px;
+            margin-right: 5px;
+        }
+        input[type="radio"]{
+            position: absolute;
+            &:checked + label{
+                background: #4d4d4d;
+                color: #ffffff;
+            }    
+        }
+        label{
+            line-height: 30px;
+            padding: 0 20px;
+            height: 30px;
+            display: inline-block;
+            font-weight: normal;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+    }
+}
+
+
 #reports-transactions {
   // & .daterangepicker.dropdown-menu {
   //   right: auto;

@@ -1,10 +1,18 @@
-<div id="menu-navigation-mobile" class="menu-mobile pushy pushy-left">
+<div id="menu-navigation-mobile" class="menu-mobile pushy pushy-left {{#if ( unauthorized ) }}un{{/if}}">
     <ul class="{{@key}}">
-        <li>
+        <li class="unregistred">
+            <ul class="open">
+                <li>
+                    <button onclick="Content.popup.login();" class="button login" id="unregistred-login">{{i18n "title-of-enter"}}</button>
+                    <button onclick="Content.popup.register();" class="button registration" id="unregistred-register">{{i18n "title-of-register"}}</button>
+                </li>
+            </ul>
+        </li>
+        <li class="m-ballance">
             <div class="toggle-btn">
                 <div class="menu-balance-inf clearfix">
+                    <img src="/res/css/img/moneta.svg">
                     <div>
-                        <i class="i-purse"></i>
                         <span class="holder-money">{{player "balance.money"}}</span>
                         <span>{{player "getCurrency"}}</span>
                     </div>
@@ -23,9 +31,18 @@
                 {{/each}}
             </ul>
         </li>
-
+        <li class="m-profile">
+            <ul class="open">
+                <li>
+                    <a href="/profile">
+                        <img src="{{avatar (player 'img') (player 'id')}}" class="loading" onload="this.style.background = 'none'" onerror="Player.getAvatar.call(this)">
+                        <span>{{i18n 'menu-cabinet'}}</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
         {{#each navigation}}
-        <li>
+        <li class="m-{{@key}}">
             {{#if (eq @key "menu-profile") }}
             <div class="toggle-btn">
                 <i class="i-person"></i> {{i18n @key}}{{{countHTML .}}}
@@ -41,7 +58,13 @@
             </ul>
         </li>
         {{/each}}
-
+        <li class="m-logout">
+            <ul class="open">
+                <li>
+                    <span onclick="Content.logoutPopup();">{{i18n 'menu-logout'}}</span>
+                </li>
+            </ul>
+        </li>
     </ul>
 
 </div>

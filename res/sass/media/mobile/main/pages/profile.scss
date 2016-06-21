@@ -1,330 +1,274 @@
-.ae-personal-form-values .select-wrapper select {
-    padding-top: 3px;
-}
-.wrapper-margin-right > * {
-    padding-top: 3px;
-}
-.ae-personal-form-values .wrapper-margin-right:before, .ae-personal-form-values .select-wrapper:before {
-    top: 2px;
-}
-
-.ae-top {
-	float: none;
-	// margin-bottom: 20px;
-	text-align: center;
-	.ae-user-img {
-		text-align: center;
-		float: none;
-	}
-}
-.ae-name-block {
-	width: auto;
-}
-#profile-edit {
-	& .daterangepicker.dropdown-menu {
-		left: -50px;
-	}
-}
-.ae-personal-inf .uk-float-right {
-	float:none;
-}
-.ae-name-block li {
-    padding-left: 0;
-    height: 45px;
-    &.empty {
-    	display: none
+.ae-personal-form-values {
+    li {
+        .select-wrapper {
+            select{
+                margin-top: -2px;
+            }
+            & > i.hidden {
+                display: block;
+                position: relative;
+                float: left;
+                &:after {
+                    content: "";
+                    display: block;
+                    width: 0;
+                    height: 0;
+                    transition: all .1s ease-in-out;
+                    border-left: 6px solid transparent;
+                    border-right: 6px solid transparent;
+                    border-top: 7px solid #4a4a4a;
+                    position: absolute;
+                    right: 5px;
+                    top: 50%;
+                    margin-top: 4px;
+                }
+            }
+            &#profile-edit-countries {
+                & > i.hidden {
+                    &:after {
+                        top: 18px;
+                        margin-top: 0;
+                    }
+                }
+            }
+        }
     }
-
-}
-.ae-name-block.ae-personal-form-values, .ae-personal-form-values {
-	margin-left: -10px;
-	margin-right: -10px;
-	// & li  {
-	// 	padding: 0 10px;
-
-	// }
-}
-.ae-personal-form-values > ul > li > i {
-	min-width: 85px;
-	max-width: 85px;
-	padding-right: 10px;
-	left: 10px;
-}
-.ae-personal-form-values li {
-	height: 45px;
-	padding-left: 105px;
-	padding-right: 10px;
-}
-.ae-personal-form-values li > * {
-	position: relative;
-	top: 50%;
-	@include translate(0, -50%);
-	line-height: 1;
-	display: inline-block;
-	vertical-align: top;
 }
 
-.ae-social-item {
-	line-height: 45px;
-	display: inline-block;
-	vertical-align: top;
+#profile {
+    .content-box-tabs {
+        & > a {
+            width: 25%;
+            text-align: center;
+            & > * {
+                display: none;
+            }
+            i {
+                display: block;
+                font-size: 19px;
+            }
+        }
+    }
+    .ae-top {
+        height: 120px;
+        overflow: hidden;
+    }
+    .ae-personal-inf {
+        height: auto;
+    }
+    .img-avatar-name {
+        font-size: 18.5px;
+        color: #ffffff;
+        letter-spacing: 0.12px;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.50);
+        left: 120px;
+        top: 10px;
+    }
+    .ae-user-img {
+        height: 100px;
+        width: 100px;
+        top: -10px;
+        margin-left: 10px;
+        &:before {
+            height: 100px;
+            width: 100px;
+            line-height: 100px;
+            font-size: 30px;
+        }
+        img {
+            border-radius: 50%;
+            height: 100px;
+            width: 100px;
+        }
+    }
+    .privacy-box {
+        right: 0;
+        padding: 0;
+        &:hover {
+            & > i {
+                opacity: 0;
+            }
+        }
+        &.active {
+            width: 100%;
+        }
+    }
+    .ae-personal-form {
+        & > li {
+            li {
+                padding: 0 10px 0 130px;
+                & > i {
+                    left: 10px;
+                    width: 110px;
+                    top: 1px;
+                }
+            }
+        }
+        .select-wrapper {
+            vertical-align: middle;
+            line-height: 0;
+            select[name="country"] {
+                margin-left: 0;
+            }
+            input {
+                width: 100%;
+                margin-left: 0;
+                padding-right: 40px;
+            }
+        }
+        .title {
+            padding: 0 10px;
+            position: relative;
+            text-align: left;
+            vertical-align: middle;
+            &:before {
+                content: '';
+                display: inline-block;
+                vertical-align: middle;
+                position: relative;
+                width: 0;
+                margin-left: -5px;
+                height: 100%;
+            }
+            p {
+                display: inline-block;
+                vertical-align: middle;
+                line-height: 1.2;
+            }
+        }
+    }
+    .setting-title,
+    .ci-title {
+        padding: 0 10px;
+        position: relative;
+        text-align: left;
+        vertical-align: middle;
+        height: 60px;
+        line-height: 0;
+        &:before {
+            content: '';
+            display: inline-block;
+            vertical-align: middle;
+            position: relative;
+            width: 0;
+            // margin-left: -5px;
+            height: 100%;
+        }
+        span {
+            display: inline-block;
+            vertical-align: middle;
+            line-height: 1.2;
+        }
+    }
+    .ci-personal-form {
+        .ci-personal-form-names {
+            li {
+                padding: 0 10px 0 120px;
+                position: relative;
+                height: auto;
+                min-height: 45px;
+                .billing-title {
+                    position: absolute;
+                    left: 10px;
+                    top: 0;
+                }
+                .ci-personal-form-values {
+                    min-width: 100%;
+                    input {
+                        min-width: 100%;
+                        padding: 0;
+                    }
+                }
+            }
+        }
+        .billing-title {
+            min-width: 100px;
+        }
+    }
+    .ae-combination-box {
+        padding: 10px;
+    }
+    #profile-settings {
+        .strip {
+            padding: 0 10px;
+        }
+        .social-box {
+            a {
+                margin: 0 10px 0 0;
+            }
+        }
+        .option-block {
+            .option {
+                .title {
+                    min-width: 100px;
+                }
+                input[type='text'] {
+                    min-width: 100px;
+                    width: 180px;
+                }
+            }
+        }
+    }
 }
 
-.ae-personal-form .error-msg {
-	top: 50%;
-    right: 10px;
+#balance-convert {
+    .content-box-item {
+        padding: 0;
+    }
 }
 
-.ae-personal-form-values .wrapper-margin-right:before, .ae-personal-form-values .select-wrapper:before {
-	top: 4px;
-}
-.wrapper-margin-right:before, 
-.select-wrapper:before{
-	padding-top: 5px ;
-}
-.calendar-range {
-	height: auto;
-}
-.ae-social {
-	height: 45px;
-}
-@media (max-width: 767px) {
-	#profile-settings {
-		& .radio-text {
-			margin: 0;
-		}
-
-		& .radio-text:first-child span{
-			margin-left: 20px;
-		}
-		& .tie-soc .title {
-			max-width: 70px;
-		}
-		& .ae-social {
-			height: auto;
-			& a:last-child {
-				margin-right: 0;
-			}
-		}
-		& .ae-combination .title{
-			max-width: 70px;
-		}
-		& .s-email .title {
-			max-width: 70px;
-		}
-		& .mobile-hidden {
-			display:none;
-		}
-		& .ae-current-combination li {
-			width: 20px;
-		}
-		& .ae-combination-box {
-			margin: 0 -20px;
-		}
-		& .settings .strip {
-			margin-right: -20px;
-	    margin-left: -20px;
-	    padding-right: 20px;
-	    padding-left: 20px;
-		}
-		.ae-combination-box li {
-			width: 32px;
-			height: 32px;
-			line-height: 32px;
-			margin: 0 1px 4px 0;
-		}
-	}
-
-	#profile-settings .screen-notice{
-		display:none!important;
-	}
-	.settings .hidden-notice {
-		float: none;
-	}
-
-	#profile-convert {
-		& .cc-title {
-			text-align: center;
-			& span {
-				display: block;
-			}
-		}
-		& .cc-out input, .cc-income span.cc-sum {
-			width: 111px;
-		}
-		& .cc-income input, .cc-income span.cc-sum {
-			width: 111px;
-		}
-		.cc-form-top {
-		    margin: 0 -10px 25px;
-		    padding: 0 20px;
-		    height: 100px;
-		}
-		.cc-out {
-			margin-bottom: 20px;
-		}
-	}
-	.rules {
-		float: none;
-	  	display: block;
-	  	clear: both;
-	}
-
-	div.rules-text p {
-	    line-height: 20px;
-	    margin-bottom: 5px;
-	}
-	.cco-title > * {
-		margin-bottom: 15px;
-	}
-	div.rules-text {
-		padding: 10px 20px;
-	}
-	.cco-enter-sum > div:first-of-type {
-		height: 90px;
-	}
-	.cco-enter-sum > div:first-of-type > * {
-		float: none;
-	}
-	.cco-enter-sum-box {
-    	margin-bottom: 30px;
-	}
-	#profile-settings {
-	padding-top: 0;
-}
+#balance-cashout {
+    .content-box-item {
+        padding: 0;
+    }
+    .cco-title {
+        padding: 10px;
+        line-height: 1.6;
+        & > * {
+            display: block;
+            float: none;
+            text-align: left;
+            margin: 0;
+        }
+    }
+    .cco-methods {
+        .cco-method {
+            padding: 15px 10px;
+        }
+    }
+    .cco-enter-sum {
+        .cco-enter-sum-box {
+            width: 50%;
+            padding: 0;
+            input {
+                width: 100%;
+                padding: 0 0 0 10px;
+                min-width: 0;
+            }
+        }
+        .current-ballance {
+            padding: 0 10px 0 0;
+            width: 50%;
+            text-align: right;
+        }
+    }
 }
 
-
-#profile-settings {
-	padding-top: 10px;
-	& .ae-social {
-		height: auto;
-		margin-left: 20px;
-	}
-	& .s-lang {
-		& span {
-			margin-left: 5px;
-		}
-		& label {
-			&:first-of-type {
-				& span {
-					margin-left: 15px;
-				}
-			}
-		}
-	}
-	& .i-pencil {
-		font-size: 18px;
-	}
-	& .danger {
-    	color: #ff4c4b!important;
-	}	
-
-}
-
-
-// #profile-edit .content-box-item, #user-view .content-box-item {
-// 	padding-top: 10px;
-// }
-#profile-edit .content-box-item {
-	padding-bottom: 25px;
-}
-#profile-edit .ae-social-item, .ae-social-item  {
-	margin-right: 0;
-}
-
-.ae-personal-inf .text-notice p {
-    margin-bottom: 30px;
-}
-
-#user-view .ae-personal-form-values div {
-	vertical-align: top;
-}
-
-
-.setting-title {
-	height: 60px;
-    line-height: 50px;
-}
-#profile-settings .content-box-item {
-	min-height: 460px;
-}
-
-.cco-edit {
-    float: right;
-    display: block;
-    width: 15px;
-    height: 15px;
-    background: url(img/sprite.png) -332px -54px;
-    position: relative;
-    top: 4px;
-		& span {
-		display: none;
-	}
-}
-
-
-#profile-cachout .cco-edit {
-    float: left;
-    display: inline-block;
-    width: auto;
-    height: auto;
-    background: none;
-    position: static;
-    margin-left: 10px;
-		& span {
-		display: inline-block;
-	}
-}
-
-
-.settings .strip .delete-reg span {
-	margin-left: 0;
-}
-.settings .strip .choice span{
-	margin-left: 20px;
-}
-#profile-settings .settings .title {
-	min-width: 85px;
-}
-#profile-settings input{
-	margin-left: 15px;
-}
-#profile-settings .ae-social {
-	margin-left: 15px;
-}
-
-.settings input, .settings input + span, .settings .ae-social, .settings span {
-	margin-left: 15px;
-}
-
-.ae-current-combination {
-	margin-left: 15px;
-}
-.settings .ae-current-combination > * {
-	float: left;
-    width: 30px;
-    height: 35px;
-    border-radius: 50%;
-    line-height: 34px;
-    text-align: center;
-    margin-left: 0 !important;
-    cursor: pointer;
-    margin-right: 0;
-    min-width: 0;
-    text-align: center;
-}
-
-.ae-personal-form-values li .hidden {
-	display: none;
-}
-
-.ae-personal-inf .uk-float-right.add-friends {
-	float: right;
-}
-
-.billing-title {
-	min-width: 85px;
-	max-width: 85px;
-	word-wrap: break-word;
+@media (max-width: 600px) {
+    #balance-convert {
+        .content-box-item {
+            padding: 0;
+            .cc-title {
+                padding: 10px;
+            }
+            .cc-text {
+                padding: 10px 10px 20px;
+            }
+            .cc-row-wrapper {
+                .cc-row {
+                    padding: 0 10px;
+                }
+            }
+        }
+    }
 }

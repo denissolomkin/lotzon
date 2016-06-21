@@ -84,6 +84,20 @@
                 }
             }
         },
+        logoutPopup: function(){
+
+            Navigation.menu.hide(function(){
+                Content.popup.fixBody();
+
+                // timeout strange fix for IOS
+                setTimeout(function(){
+                    R.push('popup-logout');
+                },250);
+
+            });
+
+            return false;
+        },
         cashoutPopup: {
             init: function (cashout) {
             
@@ -496,89 +510,92 @@
             },
             login:function(){
                 console.debug('>> popup >> login');
+                
+                //IOS hard fix (inputs is brocken if navbar not closed)
+                setTimeout(function(){
+                    R.push({
+                        template: 'popup-unregistred-login',
+                        after: function(){
+                            Content.popup.init();
 
-                R.push({
-                    template: 'popup-unregistred-login',
-                    after: function(){
-                        Content.popup.init();
+                            if(Content.popup.referer == 'enter'){   
+                                $('#popup-unregistred-enter').remove();
 
-                        if(Content.popup.referer == 'enter'){   
-                            $('#popup-unregistred-enter').remove();
+                                Content.popup.onClose(function(){
+                                        Content.popup.referer = '';
+                                        Content.popup['enter']();    
+                                });
+                            }
+                            // >>> toggle recover-pass
+                            $('.login-box #rec-pass, .password-recovery-box .back-to').on('click', function() {
 
-                            Content.popup.onClose(function(){
-                                    Content.popup.referer = '';
-                                    Content.popup['enter']();    
+                                //restore form|msg
+                                $('#pass-rec-form-success').hide();
+                                $('form[name="rec-pass"]').show();
+
+                                $('.password-recovery-box').toggle();
+                                $('.login-box').toggle();
+
                             });
+
+                            $('form[name="login"]').on('submit', function(e) {
+                                var form = $(this);
+                                var email = form.find('input[name="login"]').val();
+                                var pwd = form.find('input[name="password"]').val();
+                                var remember = form.find("#remcheck:checked").length ? 1 : 0;
+
+                                Content.popup.do.loginPlayer({ 'email': email, 'password': pwd, 'remember': remember }, function(data) {
+
+                                    form.addClass('success');
+                                    document.location.href = "/";
+
+                                }, function(data) {
+
+                                    Content.popup.formError(form);
+                                    form.find('.alert').text(data.message);
+
+                                });
+
+                                return false;
+                            });
+
+
+                            // >>> restore password
+                            $('form[name="rec-pass"]').submit(function() {
+                                var form = $(this);
+                                var email = $(this).find('input[name="login"]').val();
+
+                                Content.popup.do.resendPassword(email, function() {
+
+                                    form.find('input[name="login"]').val('');
+                                    // form.addClass('success');
+
+                                    form.hide();
+                                    $('#pass-rec-form-success').show();
+
+                                    setTimeout(function() {
+                                        form.show();
+                                        $('#pass-rec-form-success').hide();
+                                        $('.password-recovery-box').hide();
+                                        $('.login-box').show();
+                                    }, 5000);
+
+                                    form.removeClass('loading');
+                                }, function(data) {
+                                    form.removeClass('loading');
+
+                                    Content.popup.formError(form);
+                                    form.find('.alert').text(data.message);
+
+                                });
+
+                                // event.preventDefault();
+                                return false;
+                            });
+
                         }
-                        // >>> toggle recover-pass
-                        $('.login-box #rec-pass, .password-recovery-box .back-to').on('click', function() {
-
-                            //restore form|msg
-                            $('#pass-rec-form-success').hide();
-                            $('form[name="rec-pass"]').show();
-
-                            $('.password-recovery-box').toggle();
-                            $('.login-box').toggle();
-
-                        });
-
-                        $('form[name="login"]').on('submit', function(e) {
-                            var form = $(this);
-                            var email = form.find('input[name="login"]').val();
-                            var pwd = form.find('input[name="password"]').val();
-                            var remember = form.find("#remcheck:checked").length ? 1 : 0;
-
-                            Content.popup.do.loginPlayer({ 'email': email, 'password': pwd, 'remember': remember }, function(data) {
-
-                                form.addClass('success');
-                                document.location.href = "/";
-
-                            }, function(data) {
-
-                                Content.popup.formError(form);
-                                form.find('.alert').text(data.message);
-
-                            });
-
-                            return false;
-                        });
-
-
-                        // >>> restore password
-                        $('form[name="rec-pass"]').submit(function() {
-                            var form = $(this);
-                            var email = $(this).find('input[name="login"]').val();
-
-                            Content.popup.do.resendPassword(email, function() {
-
-                                form.find('input[name="login"]').val('');
-                                // form.addClass('success');
-
-                                form.hide();
-                                $('#pass-rec-form-success').show();
-
-                                setTimeout(function() {
-                                    form.show();
-                                    $('#pass-rec-form-success').hide();
-                                    $('.password-recovery-box').hide();
-                                    $('.login-box').show();
-                                }, 5000);
-
-                                form.removeClass('loading');
-                            }, function(data) {
-                                form.removeClass('loading');
-
-                                Content.popup.formError(form);
-                                form.find('.alert').text(data.message);
-
-                            });
-
-                            // event.preventDefault();
-                            return false;
-                        });
-
-                    }
-                });
+                    });
+                },250);
             },
             error:function(){
                 console.debug('>> popup >> error');
@@ -603,68 +620,71 @@
             register:function(){
                 console.debug('>> popup >> register');
 
-                R.push({
-                    template: 'popup-unregistred-registration',
-                    after: function(){
-                        Content.popup.init();
-                        if(Content.popup.referer == 'enter'){   
-                            $('#popup-unregistred-enter').remove();
+                //IOS hard fix (inputs is brocken if navbar not closed)
+                setTimeout(function(){
+                    R.push({
+                        template: 'popup-unregistred-registration',
+                        after: function(){
+                            Content.popup.init();
+                            if(Content.popup.referer == 'enter'){   
+                                $('#popup-unregistred-enter').remove();
 
-                            Content.popup.onClose(function(){
-                                    Content.popup.referer = '';
-                                    Content.popup['enter']();    
+                                Content.popup.onClose(function(){
+                                        Content.popup.referer = '';
+                                        Content.popup['enter']();    
+                                });
+                            }
+                            // >>> registration handler
+                            $('form[name="register"]').on('submit', function(e) {
+                                console.debug('>>> registration handler');
+
+                                var form = $(this);
+                                var email = form.find('input[name="login"]').val();
+                                var rulesAgree = 1; //form.find('#rulcheck').prop('checked') ? 1 : 0;
+                                var ref = $(this).data('ref');
+
+                                Content.popup.do.registerPlayer({ 'email': email, 'agree': 1, 'ref': ref }, function(data) {
+                                    console.debug('register success!!');
+
+                                    form.find('input[name="login"]').val(''); // resset value
+                                    form.addClass('success');
+
+                                    $('#popup-unregistred-registration').remove();
+
+                                    Content.popup.confirmEmail(email);
+                                    // // >>>> переписать на нормальный код ...как только время будет
+                                    // // go to next step // вывод окна с переотправки пароля
+                                    // form.hide();
+                                    // var compleetForm = $('form[name="email-send"]');
+                                    // compleetForm.show();
+                                    // compleetForm.find('.current-mail').text(email);
+
+                                    // $('form[name="email-send"] .back').on('click', function() {
+                                    //     $('form[name="email-send"]').hide();
+                                    //     $('form[name="register"]').show();
+                                    // });
+
+                                    // $('form[name="email-send"] a.resend').on('click', function() {
+                                    //     Content.popup.do.resendEmail(email, function() {
+                                    //         // some callback
+                                    //     }, function(data) {
+                                    //         // some error
+                                    //     });
+                                    // });
+
+                                }, function(data) {
+                                    console.debug('register error!!');
+
+                                    Content.popup.formError(form);
+                                    form.find('.alert').text(data.message);
+
+                                });
+
+                                return false;
                             });
                         }
-                        // >>> registration handler
-                        $('form[name="register"]').on('submit', function(e) {
-                            console.debug('>>> registration handler');
-
-                            var form = $(this);
-                            var email = form.find('input[name="login"]').val();
-                            var rulesAgree = 1; //form.find('#rulcheck').prop('checked') ? 1 : 0;
-                            var ref = $(this).data('ref');
-
-                            Content.popup.do.registerPlayer({ 'email': email, 'agree': 1, 'ref': ref }, function(data) {
-                                console.debug('register success!!');
-
-                                form.find('input[name="login"]').val(''); // resset value
-                                form.addClass('success');
-
-                                $('#popup-unregistred-registration').remove();
-
-                                Content.popup.confirmEmail(email);
-                                // // >>>> переписать на нормальный код ...как только время будет
-                                // // go to next step // вывод окна с переотправки пароля
-                                // form.hide();
-                                // var compleetForm = $('form[name="email-send"]');
-                                // compleetForm.show();
-                                // compleetForm.find('.current-mail').text(email);
-
-                                // $('form[name="email-send"] .back').on('click', function() {
-                                //     $('form[name="email-send"]').hide();
-                                //     $('form[name="register"]').show();
-                                // });
-
-                                // $('form[name="email-send"] a.resend').on('click', function() {
-                                //     Content.popup.do.resendEmail(email, function() {
-                                //         // some callback
-                                //     }, function(data) {
-                                //         // some error
-                                //     });
-                                // });
-
-                            }, function(data) {
-                                console.debug('register error!!');
-
-                                Content.popup.formError(form);
-                                form.find('.alert').text(data.message);
-
-                            });
-
-                            return false;
-                        });
-                    }
-                });
+                    });
+                },250);
             },
             confirmEmail:function(email){
                 console.debug('>> popup >> confirmEmail');

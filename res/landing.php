@@ -6,18 +6,17 @@
     <meta name="keywords" content="<?=$seo['Keywords'];?>" />
 	
     <meta charset="utf-8">
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="icon" href="/res/img/favicones/favicon.png_128x128.png?v=666" type="image/png"/>
     <meta content="/res/img/favicones/favicon.png_128x128.png?v=666" itemprop="image">
     <link href="/res/img/favicones/favicon.png.ico?v=666" rel="shortcut icon">
 
-    <link rel="stylesheet" href="/res/css/landing/landing_screen.css?v2">
-    <?php // if (isset($isMobile)) { if($isMobile) { ?>
-        <!-- <link rel="stylesheet" href="/res/css/landing/landing_mobile.css"> -->
-    <?php // } else { ?>
-        <!-- <link rel="stylesheet" href="/res/css/landing/landing_screen.css"> -->
-    <?php //} } ?>
+    <?php if (isset($isMobile)) { if($isMobile) { ?>
+        <link rel="stylesheet" href="/res/css/landing/landing_mobile.css">
+    <?php } else { ?>
+        <link rel="stylesheet" href="/res/css/landing/landing_screen.css">
+    <?php } } ?>
 	<script src="/res/js/libs/jquery-2.1.4.min.js"></script>
 	<script src="/res/js/landing/jquery.magnific-popup.min.js"></script>
     <script> player = <?php echo json_encode($player, JSON_PRETTY_PRINT);?>;</script>
@@ -64,10 +63,17 @@
                         ценные призы, участвовать в конкурсах, общаться, заводить <br>
                         новые знакомства. <br>
                     </p>
-                    <p class="landing_middle"><?php echo number_format($slider['players'], 0, ' ', ' '); ?> <span>зарегистрированных</span></p>
-                    <p class="landing_large"><? echo number_format($slider['sum'], 0, ' ', ' '); ?> <span><?php echo $player['currency']['iso'];?> уже выплачено</span></p>
+                    <div class="btm">
+                        <p class="landing_middle"><?php echo number_format($slider['players'], 0, ' ', ' '); ?> <span>зарегистрированных</span></p>
+                        <p class="landing_large"><? echo number_format($slider['sum'], 0, ' ', ' '); ?> <span><?php echo $player['currency']['iso'];?> уже выплачено</span></p>
+                    </div>
                 </div>
                 <!-- LogIn -->
+                <div class="hidden mobile sign-box">
+                    <button class="go-play gold">Бесплатная регистрация</button>
+                    <button class="enter default"><span>У меня уже есть аккаунт. </span>Войти</button>
+                    <a href="/?guest=1">Войти как гость</a>
+                </div>
                 <div class="right-content">
                     <div class="box password-recovery-box">
                         <!-- REPASSWORD FORM -->
@@ -97,9 +103,9 @@
                                 <div class="text">Новый пароль выслан на указанный email.</div>
                             </div>
                         </div>
-                        
                     </div>
-                    <div class="box login-box">
+                    <div class="box login-box visible">
+                        <div class="hidden mobile close-enter box-title"><i class="i-arrow-slim-left"></i>Вход</div>
                         <!-- LOGIN FORM -->
                         <form id="login-block-form" name="login">
                             <div id="login-form">
@@ -126,9 +132,12 @@
                                     <input type="submit" class="sb_but default" value="Войти">
                                 </div>
                                 <div class="sl-bk">
-                                    <a href="./auth/Facebook?method=log-in" class="i-Facebook-simple"></a>
-                                    <a href="./auth/Vkontakte?method=log-in" class="i-Vkontakte-simple"></a>
-                                    <a href="./auth/Odnoklassniki?method=log-in" class="i-Odnoklassniki-simple"></a>
+                                    <div class="lines-between hidden mobile">
+                                        <span>или через</span>
+                                    </div>
+                                    <a href="./auth/Facebook?method=log-in" class="i-Facebook-simple"><span class="mobile hidden">Facebook</span></a>
+                                    <a href="./auth/Vkontakte?method=log-in" class="i-Vkontakte-simple"><span class="mobile hidden">ВКонтакте</span></a>
+                                    <a href="./auth/Odnoklassniki?method=log-in" class="i-Odnoklassniki-simple"><span class="mobile hidden">Одноклассники</span></a>
                                 </div>
                             </div>
                         </form>
@@ -195,6 +204,7 @@
     <div class="popup" id="login-block" style="display: none;">
         <div class="popup-inner">
             <i class="popup-close i-x-slim"></i>
+            <i class="hidden mobile popup-close i-arrow-slim-left"></i>
             
             <!-- REGISTRATION FORM -->
             <form name="register" data-ref="<?=$ref?>">

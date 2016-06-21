@@ -314,6 +314,10 @@ Table */
 .landing .container .password-recovery-box {
     height: 295px;
     box-sizing: border-box;
+    display: none;
+}
+.landing .right-content > .visible {
+    display: block;
 }
 
 .landing .container .box {

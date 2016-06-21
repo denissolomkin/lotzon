@@ -14,7 +14,7 @@ var landing = {
 
         // >>> init video popup
         $('.popup-youtube, .popup-vimeo, .popup-gmaps').magnificPopup({
-            disableOn: 700,
+            disableOn: 320,
             type: 'iframe',
             mainClass: 'mfp-fade',
             removalDelay: 160,
@@ -45,6 +45,16 @@ var landing = {
         $('.go-play').on('click', function() {
             landing.popup.open();
         });
+
+        // >>> enter form open
+        $('.mobile .enter').on('click', function() {
+            landing.popup.open('.right-content');
+        });
+        $('.right-content .mobile.close-enter i').on('click', function() {
+            $('html').css({ 'overflow': 'auto' });
+            $('.right-content').fadeOut(200);
+        });
+
 
         // >>> close popup
         $('.popup-close').on('click', function() {
@@ -81,8 +91,8 @@ var landing = {
             $('#pass-rec-form-success').hide();
             $('form[name="rec-pass"]').show();
 
-            $('.password-recovery-box').toggle();
-            $('.login-box').toggle();
+            $('.password-recovery-box, .login-box').toggleClass('visible');
+            
 
         });
 
@@ -113,8 +123,7 @@ var landing = {
 
                 setTimeout(function() {
                     form.show();
-                    $('#pass-rec-form-success').hide();
-                    $('.password-recovery-box').hide();
+                    $('.password-recovery-box, .login-box').toggleClass('visible');
                     $('.login-box').show();
                 }, 5000);
 

@@ -1,32 +1,144 @@
-#prizes-exchange .content-box-item-content {
-	margin-right: 0;
+#prizes-exchange {
+    .content-box-item-content {
+        margin: 0;
+    }
+    .content-box-item-top {
+        padding: 0;
+    }
+    .render-list-container {
+        padding: 20px 0;
+    }
+    #prizes-exchange-goods-list {
+        width: 740px;
+        margin: 0 auto;
+        &:after {
+            content: '';
+            display: block;
+            clear: both;
+        }
+        .prize {
+            float: left;
+            display: block;
+            margin: 0 0 20px 20px;
+            width: 220px;
+            height: 310px;
+            overflow: hidden;
+        }
+    }
 }
 
-.prize {
-	width: 220px;
-	margin: 0 auto 30px;
-
+#prizes-exchange-goods-view {
+    .content-box-item {
+        padding: 0;
+    }
+    .ex-prize {
+        position: relative;
+        padding-left: 320px;
+        min-height: 300px;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -ms-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+    .ex-prize-img {
+        width: 300px;
+        height: 300px;
+        position: absolute;
+        left: 20px;
+        top: 0;
+        text-align: center;
+        margin-right: 0;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -ms-box-sizing: border-box;
+        box-sizing: border-box;
+        &:before {
+            display: none;
+        }
+        img {
+            position: static;
+        }
+        & > div {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -ms-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+    }
+    .ex-prize-description {
+        width: 100%;
+        float: right;
+        padding: 20px;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -ms-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+    // icon or txt #change
+    .personal-data-edit {
+        right: 10px;
+    }
+    .prize-delivery-inf {
+        td {
+            &:first-child {
+                padding: 0 20px 0 10px;
+                width: auto;
+            }
+        }
+    }
+}
+#prizes-exchange-goods-view {
+    
+        .personal-data-inf-header {
+            padding: 0 10px;
+        }
+}
+@media all and ( max-width: 600px) {
+    #prizes-exchange-goods-view {
+        .ex-prize,
+        .personal-data-inf-header {
+            padding: 0 10px;
+        }    
+        .ex-prize-description {
+            padding: 0;
+        }
+        .ex-prize-img {
+            max-width: 300px;
+            margin: 0px auto;
+            position: relative;
+            left: 0;
+        }
+        // icon or txt #change
+        .personal-data-edit {
+        }
+    }
 }
 
-#prizes-exchange .content-box-item-top {
-	left: 15px;
+@media all and ( max-width: 740px) {
+    #prizes-exchange {
+        #prizes-exchange-goods-list {
+            width: 500px;
+        }
+    }
 }
 
-#prizes-exchange .render-list-container {
-    padding-top: 95px;
+@media all and ( max-width: 500px) {
+    #prizes-exchange {
+        #prizes-exchange-goods-list {
+            width: auto;
+            .prize {
+                float: none;
+                display: block;
+                margin: 0 auto 20px auto;
+                width: 220px;
+                height: 310px;
+                overflow: hidden;
+            }
+        }
+    }
 }
-
-.personal-data-edit {
-  display: block;
-  width: 15px;
-  height: 15px;
-  position: absolute;
-  top: 18px;
-  right: 30px;
-  background: url(../img/sprite.png) -332px -54px;
-}
-
-.personal-data-edit span {
-  display: none;
-}
-

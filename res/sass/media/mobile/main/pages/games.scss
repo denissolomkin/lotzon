@@ -1,40 +1,31 @@
-// GAMES <<CHANCE>> -------------------- //
-// screen - ? mobile/Xxsmall //
+// GAMES <<CHANCE|online>> -------------------- //
 .games-previews {
     .flex-box{
+        padding: 0;
         .fixr{
-            margin-left: -61px;
-        }
-        a{
-            margin: 15px 0 0 60px;
-        }
-    }
-}
-@media  all and ( max-width: 768px) {
-    .games-previews {
-        .flex-box{
-            .fixr{
-                width:700px;
-                margin: 0px auto;
-                left: -15px
-            }
-            a{
-                margin: 15px 0 0 30px;
+            padding-top: 20px;
+            width:630px;
+            margin: 0px auto;
+            left: 0px;
+            font-size: 0;
+            & > *{
+                vertical-align: top;
+                font-size: 15.5px;
+                width: 180px;
+                margin: 0 0 20px 20px;
             }
         }
     }
 }
-@media  all and ( max-width: 710px) {
+@media  all and ( min-width: 680px) {
     .games-previews {
         .flex-box{
-            
             .fixr{
-                width:630px;
-                margin: 0px auto;
-                left: 0px;
-            }
-            a{
-                margin: 15px 0 0 5px;
+                width:680px;
+                & > *{
+                    width: 200px;
+                    margin: 0 0 20px 20px;
+                }
             }
         }
     }
@@ -42,67 +33,26 @@
 @media  all and ( max-width: 640px) {
     .games-previews {
         .flex-box{
-            
             .fixr{
-                width:500px;
-                margin: 0px auto;
-                left: -22px;
-            }
-            a{
-                margin: 15px 0 0 47px;
-            }
-        }
-    }
-}
-@media  all and ( max-width: 520px) {
-    .games-previews {
-        .flex-box{
-            
-            .fixr{
-                width:450px;
-                margin: 0px auto;
-                left: -10px;
-            }
-            a{
-                margin: 15px 0 0 20px;
-            }
-        }
-    }
-}
-@media  all and ( max-width: 450px) {
-    .games-previews {
-        .flex-box{
-            
-            .fixr{
-                width:430px;
-                margin: 0px auto;
-                left: -8px;
-            }
-            a{
-                margin: 15px 0 0 15px;
+                width:420px;
             }
         }
     }
 }
 @media  all and ( max-width: 430px) {
-    .games-previews .flex-box{
-        .fixr{
-            width: auto;
-            padding-top: 20px;
-            left: 0;
-            display: block;
-            position: static;
-        }
-        .owl-item{
-            text-align: center;
-            
-        }
-        a{
-            
-            /*display: block;*/
-            /*margin: 0px auto;*/
-            /*float: none;*/
-            /*padding-top: 1px;*/
+    .games-previews {
+        .flex-box{
+            .fixr{
+                width: 100%;
+                display: block;
+                position: static;
+                & > *{
+                    width: 200px;
+                    display: block;
+                    float: none;
+                    margin: 0px auto 20px auto;
+                }
+            }
         }
     }
 }
@@ -150,6 +100,12 @@ $url_2: url(../img/games/card-deck.png);
 $url_3: url(../img/games/lotzonBg.png);
 
 #games-online-field{
+    
+    .back-button{
+        top: 5px;
+        left: 0;
+        margin: 0;
+    }
 
     // center game field
     &:not(.Durak){
@@ -271,6 +227,9 @@ $url_3: url(../img/games/lotzonBg.png);
 }    
 
 #games-online-field.Durak {
+    .pr-pt{
+        display: none !important;
+    }
     .content-box-content {
         min-height: 0;
     }
@@ -287,19 +246,20 @@ $url_3: url(../img/games/lotzonBg.png);
             margin: 0;
             padding: 0;
         }
-        .o .gm-pr .pr-nm {
-            width: 100%;
-            background: $color_cape_cod_60_approx;
-            color: $white;
-            top: 40px;
-            padding: 2px;
-            position: absolute;
-            border-radius: 3px;
-            font-size: 8px;
-            line-height: 1;
-            margin: 0 auto;
-            text-align: center;
-        }
+        // .o .gm-pr .pr-nm {
+        //     width: 160%;
+        //     background: $color_cape_cod_60_approx;
+        //     color: $white;
+        //     top: 40px;
+        //     padding: 2px;
+        //     position: absolute;
+        //     border-radius: 3px;
+        //     font-size: 12px;
+        //     line-height: 1;
+        //     margin: 0 auto;
+        //     margin-left: -30%;
+        //     text-align: center;
+        // }
     }
     .cards {
         .table{
@@ -524,6 +484,20 @@ $url_3: url(../img/games/lotzonBg.png);
                             height: 40px;
                             margin: 0;
                         }
+                        .pr-nm {
+                            width: 160%;
+                            background: $color_cape_cod_60_approx;
+                            color: $white;
+                            top: 40px;
+                            padding: 2px;
+                            position: absolute;
+                            border-radius: 3px;
+                            font-size: 12px;
+                            line-height: 1;
+                            margin: 0 auto;
+                            margin-left: -30%;
+                            text-align: center;
+                        }
                     }
                     
                 }
@@ -633,7 +607,7 @@ $url_3: url(../img/games/lotzonBg.png);
                     }
                     // player
                     .pr-ph-bk{
-                        left: 32% !important;
+                        left: 42% !important;
                     }
                     // balance
                     .pr-pt{
@@ -699,6 +673,7 @@ $url_3: url(../img/games/lotzonBg.png);
     }
 }
 @media(max-width: 390px) {
+
     #games-online-field{
         &:not(.Durak){
             padding-bottom: 50px;
@@ -832,7 +807,18 @@ $url_3: url(../img/games/lotzonBg.png);
                 }
             }    
             &.WhoMore{
+                .wrapper{
+                    padding-top: 80px;
+                    overflow: auto;
+                }
                 .mx{
+                    .moves{
+                        min-height: 40px;
+                    }
+                    .table{
+                        width: 100% !important;
+                        min-height: 320px;
+                    }
                     .table {   
                         .inner {
                             .cell {
@@ -913,6 +899,12 @@ $url_3: url(../img/games/lotzonBg.png);
                     }
                 }
             }
+        }
+    }
+
+    #games-online-field{
+        &#WhoMore{
+            
         }
     }
 }
@@ -1201,3 +1193,465 @@ $url_3: url(../img/games/lotzonBg.png);
         }
     }
 }
+
+// #games-chance-view
+#games-chance-view{
+    .minefield{
+        padding-right: 10px;
+        min-width: 320px;
+    }
+    #games-chance-view-chance {
+
+    .description{
+        padding: 20px;
+    }
+    .colls-wrapper{
+        padding: 0;
+    }
+    }
+}
+
+
+
+///SLOTS!!!!
+///
+// @media  all and ( max-width: 1009px) {
+//     #SlotsContainer #slotMachineContainer #ReelContainer{
+//         transform: translate(-50%,-50%) scale(1);
+//         -o-transform: translate(-50%,-50%) scale(1);
+//         -ms-transform: translate(-50%,-50%) scale(1);
+//         -moz-transform: translate(-50%,-50%) scale(1);
+//         -webkit-transform: translate(-50%,-50%) scale(1);
+//     }
+// }
+// @media  all and (max-width: 768px) {
+ 
+//     #SlotsContainer #slotMachineContainer #ReelContainer{
+//         transform: translate(-50%,-50%) scale(1.03);
+//         -o-transform: translate(-50%,-50%) scale(1.03);
+//         -ms-transform: translate(-50%,-50%) scale(1.03);
+//         -moz-transform: translate(-50%,-50%) scale(1.03);
+//         -webkit-transform: translate(-50%,-50%) scale(1.03);
+//     }
+ 
+//     .content-main.games{
+//         animation: initial;
+//     }
+ 
+//     .content-main.games .single-game{
+//         overflow: auto;
+//         width: 100%;
+//         height: 100%;
+//         position: fixed !important;
+//         z-index: 1001;
+//         top: 0px;
+//         left: 0;
+//         background: #fff;
+//     }
+
+//     .content-main.games .single-game>*,
+//     .content-main.games .single-game>*>*{
+//         height: inherit;
+//     }
+    
+//     #SlotsContainer {
+//         height: auto;
+//         min-height: 100%;
+//         padding: 0;
+//     }
+    
+//     #SlotsContainer .machine-stat {
+//         width: 380px;
+//         margin: 0px auto;
+//         display: block;
+//         position: relative;
+//         float: none;
+//         padding: 0px;
+//         transform: translateY(0);
+//     }
+//     #SlotsContainer .machine-roll {
+//         width: 490px;
+//         padding: 0;
+//         display: block;
+//         margin: 0px auto;
+//         float: none;
+//     }
+
+//     #SlotsContainer .matches-inf-wrapper{
+//         margin: 0;
+//         background: transparent;
+//     }
+
+//     #SlotsContainer #slotMachineContainer {
+//         margin-top: 100px;
+//     }
+//     #SlotsContainer #betContainer {
+//         margin-top: 20px;
+//     }
+//     #SlotsContainer #slotMachineContainer .i-play {
+//         font-size: 35px;
+//         right: -5%;
+//         top: 51%;
+//     }
+//     #SlotsContainer #slotMachineContainer .i-play:first-child{
+//         left: -5%;
+//     }
+//     #SlotsContainer .button{
+//         padding: 20px;
+//     }
+// }
+// @media  all and ( max-width: 650px) {
+//     #SlotsContainer #slotMachineContainer #ReelContainer{
+//         transform: translate(-50%,-50%) scale(0.96);
+//         -o-transform: translate(-50%,-50%) scale(0.96);
+//         -ms-transform: translate(-50%,-50%) scale(0.96);
+//         -moz-transform: translate(-50%,-50%) scale(0.96);
+//         -webkit-transform: translate(-50%,-50%) scale(0.96);
+//     }
+//     #SlotsContainer .machine-stat {
+//         width: 330px;
+//     }
+//     #SlotsContainer .machine-roll {
+//         width: 450px;
+//     }
+//     #SlotsContainer #slotMachineContainer {
+//         margin-top: 90px;
+//     }
+//     #SlotsContainer #betContainer {
+//         margin-top: 15px;
+//     }
+//     #SlotsContainer .button{
+//         padding: 17px;
+//     }
+// }
+// @media  all and ( max-width: 550px) {
+//     #SlotsContainer #slotMachineContainer #ReelContainer{
+//         transform: translate(-50%,-50%) scale(0.86);
+//         -o-transform: translate(-50%,-50%) scale(0.86);
+//         -ms-transform: translate(-50%,-50%) scale(0.86);
+//         -moz-transform: translate(-50%,-50%) scale(0.86);
+//         -webkit-transform: translate(-50%,-50%) scale(0.86);
+//     }
+//     #SlotsContainer .machine-stat {
+//         width: 330px;
+//     }
+//     #SlotsContainer .machine-roll {
+//         width: 420px;
+//     }
+//     #SlotsContainer #slotMachineContainer {
+//         margin-top: 80px;
+//     }
+//     #SlotsContainer #betContainer {
+//         margin-top: 20px;
+//     }
+//     #SlotsContainer #slotMachineContainer .i-play {
+//         font-size: 30px;
+//         top: 52%;
+//     }
+//     #SlotsContainer .button{}
+//     #SlotsContainer #betContainer p {
+//         padding: 4% 0 0 0; 
+//     }
+// }
+// @media  all and ( max-width: 480px) {
+ 
+//     #SlotsContainer #slotMachineContainer #ReelContainer{
+//         transform: translate(-50%,-50%) scale(0.66);
+//         -o-transform: translate(-50%,-50%) scale(0.66);
+//         -ms-transform: translate(-50%,-50%) scale(0.66);
+//         -moz-transform: translate(-50%,-50%) scale(0.66);
+//         -webkit-transform: translate(-50%,-50%) scale(0.66);
+//     }
+//     #SlotsContainer .machine-stat {
+//         width: 265px;
+//     }
+//     #SlotsContainer .machine-roll {
+//         width: 320px;
+//     }
+//     #SlotsContainer #slotMachineContainer {
+//         margin-top: 65px;
+//     }
+//     #SlotsContainer #betContainer {
+//         margin-top: 15px;
+//     }
+//     #SlotsContainer #slotMachineContainer .i-play {
+//         font-size: 20px;
+//         right: -4%;
+//     }
+//     #SlotsContainer #slotMachineContainer .i-play:first-child{
+//         left: -4%;
+//     }
+//     #SlotsContainer .button{
+//         padding: 13px;
+//     }
+//     #SlotsContainer #betContainer p {
+//         font-size: 13px; 
+//         padding: 4% 0 0 0; 
+//     }
+//     #SlotsContainer #betContainer input,
+//     #SlotsContainer #betContainer span {
+//         font-size: 14px; 
+//     }
+// }
+// @media  all and ( max-width: 320px) {
+ 
+//     #SlotsContainer #slotMachineContainer #ReelContainer{
+//         transform: translate(-50%,-50%) scale(0.61);
+//         -o-transform: translate(-50%,-50%) scale(0.61);
+//         -ms-transform: translate(-50%,-50%) scale(0.61);
+//         -moz-transform: translate(-50%,-50%) scale(0.61);
+//         -webkit-transform: translate(-50%,-50%) scale(0.61);
+//     }
+//     #SlotsContainer .machine-stat {
+//         width: 240px;
+//     }
+//     #SlotsContainer .machine-roll {
+//         width: 300px;
+//     }
+//     #SlotsContainer #slotMachineContainer {
+//         margin-top: 60px;
+//     }
+//     #SlotsContainer #betContainer {
+//         margin-top: 10px;
+//     }
+//     #SlotsContainer .button{
+//         padding: 12px;
+//         font-size: 85%;
+//     }
+//     #SlotsContainer #betContainer p {
+//         font-size: 13px; 
+//         padding: 4% 0 0 0; 
+//     }
+//     #SlotsContainer #betContainer input,
+//     #SlotsContainer #betContainer span {
+//         font-size: 14px; 
+//     }
+// }
+
+
+
+// @media  all and ( max-height: 480px) and (max-width: 768px) and (orientation: landscape) {
+//     .content-main.games{
+//         animation: initial;
+//     }
+//     .content-main.games .single-game{
+//         overflow: auto;
+//         width: 100%;
+//         height: 100%;
+//         position: fixed;
+//         z-index: 1001;
+//         top: 0px;
+//         left: 0;
+//         background: #fff;
+//     }
+//     .content-main.games .single-game>*,
+//     .content-main.games .single-game>*>*{
+//         height: inherit;
+//     }
+//     #SlotsContainer {
+//         height: auto;
+//     }
+//     #SlotsContainer #slotMachineContainer #ReelContainer{
+//         transform: translate(-50%,-50%) scale(0.73);
+//         -o-transform: translate(-50%,-50%) scale(0.73);
+//         -ms-transform: translate(-50%,-50%) scale(0.73);
+//         -moz-transform: translate(-50%,-50%) scale(0.73);
+//         -webkit-transform: translate(-50%,-50%) scale(0.73);
+//     }
+//     #SlotsContainer .machine-stat {
+//         width: 230px;
+//         margin-top: 65px;
+//     }
+//     #SlotsContainer .machine-roll {
+//         width: 360px;
+//     }
+
+//     #SlotsContainer #slotMachineContainer {
+//         margin-top: 70px;
+//     }
+//     #SlotsContainer #betContainer {
+//         margin-top: 15px;
+//     }
+//     #SlotsContainer #slotMachineContainer .i-play {
+//         font-size: 20px;
+//         right: -4%;
+//         top: 52.5%;
+//     }
+//     #SlotsContainer #slotMachineContainer .i-play:first-child{
+//         left: -4%;
+//     }
+//     #SlotsContainer .button{
+//         padding: 11px;
+//     }
+
+//     #SlotsContainer #betContainer p {
+//         padding: 4% 0 0 0;
+//     }
+//     #SlotsContainer #betContainer input,
+//     #SlotsContainer #betContainer span{
+//         font-size: 17px;
+//     }
+// }
+// @media  all and ( max-height: 414px) and (max-width: 736px) and (orientation: landscape) {
+//     #SlotsContainer #slotMachineContainer #ReelContainer{
+//         transform: translate(-50%,-50%) scale(0.73);
+//         -o-transform: translate(-50%,-50%) scale(0.73);
+//         -ms-transform: translate(-50%,-50%) scale(0.73);
+//         -moz-transform: translate(-50%,-50%) scale(0.73);
+//         -webkit-transform: translate(-50%,-50%) scale(0.73);
+//     }
+//     #SlotsContainer .machine-stat {
+//         width: 230px;
+//         margin-top: 75px;
+//     }
+//     #SlotsContainer .machine-roll {
+//         width: 360px;
+//     }
+//     #SlotsContainer #slotMachineContainer {
+//         margin-top: 65px;
+//     }
+//     #SlotsContainer #betContainer {
+//         margin-top: 10px;
+//     }
+//     #SlotsContainer .button{
+//         padding: 11px;
+//     }
+
+//     #SlotsContainer #betContainer p {
+//         padding: 4% 0 0 0;
+//     }
+//     #SlotsContainer #betContainer input,
+//     #SlotsContainer #betContainer span{
+//         font-size: 17px;
+//     }
+// }
+// @media  all and ( max-height: 375px) and (max-width: 667px) and (orientation: landscape) {
+//     #SlotsContainer #slotMachineContainer #ReelContainer{
+//         transform: translate(-50%,-50%) scale(0.63);
+//         -o-transform: translate(-50%,-50%) scale(0.63);
+//         -ms-transform: translate(-50%,-50%) scale(0.63);
+//         -moz-transform: translate(-50%,-50%) scale(0.63);
+//         -webkit-transform: translate(-50%,-50%) scale(0.63);
+//     }
+//     #SlotsContainer .machine-stat {
+//         width: 200px;
+//         margin-top: 88px;
+//     }
+//     #SlotsContainer .machine-roll {
+//         width: 320px;
+//     }
+//     #SlotsContainer #slotMachineContainer {
+//         margin-top: 65px;
+//     }
+//     #SlotsContainer #betContainer {
+//         margin-top: 10px;
+//     }
+//     #SlotsContainer .button{
+//         padding: 11px;
+//     }
+
+//     #SlotsContainer #betContainer p {
+//         font-size: 13px; 
+//         padding: 4% 0 0 0; 
+//     }
+//     #SlotsContainer #betContainer input,
+//     #SlotsContainer #betContainer span{
+//         font-size: 14px; 
+//     }
+// }
+// @media  all and ( max-height: 480px) and (max-width: 640px) and (orientation: landscape) {
+//     #SlotsContainer #slotMachineContainer #ReelContainer{
+//         transform: translate(-50%,-50%) scale(0.63);
+//         -o-transform: translate(-50%,-50%) scale(0.63);
+//         -ms-transform: translate(-50%,-50%) scale(0.63);
+//         -moz-transform: translate(-50%,-50%) scale(0.63);
+//         -webkit-transform: translate(-50%,-50%) scale(0.63);
+//     }
+//     #SlotsContainer .machine-stat {
+//         width: 210px;
+//         margin-top: 60px;
+//     }
+//     #SlotsContainer .machine-roll {
+//         width: 320px;
+//     }
+//     #SlotsContainer #slotMachineContainer {
+//         margin-top: 60px;
+//     }
+//     #SlotsContainer #betContainer {
+//         margin-top: 10px;
+//     }
+//     #SlotsContainer .button{
+//         padding: 11px;
+//     }
+
+//     #SlotsContainer #betContainer p {
+//         font-size: 13px; 
+//         padding: 4% 0 0 0; 
+//     }
+//     #SlotsContainer #betContainer input,
+//     #SlotsContainer #betContainer span{
+//         font-size: 14px; 
+//     }
+// }
+// @media  all and ( max-height: 320px) and (max-width: 568px) and (orientation: landscape) {
+//     #SlotsContainer #slotMachineContainer #ReelContainer{
+//         transform: translate(-50%,-50%) scale(0.63);
+//         -o-transform: translate(-50%,-50%) scale(0.63);
+//         -ms-transform: translate(-50%,-50%) scale(0.63);
+//         -moz-transform: translate(-50%,-50%) scale(0.63);
+//         -webkit-transform: translate(-50%,-50%) scale(0.63);
+//     }
+//     #SlotsContainer .machine-stat {
+//         width: 180px;
+//         margin-top: 90px;
+//     }
+//     #SlotsContainer .machine-roll {
+//         width: 320px;
+//     }
+//     #SlotsContainer #slotMachineContainer {
+//         margin-top: 55px;
+//     }
+//     #SlotsContainer #betContainer {
+//         margin-top: 0px;
+//     }
+//     #SlotsContainer .button{
+//         padding: 11px;
+//     }
+
+//     #SlotsContainer #betContainer p {
+//         font-size: 13px; 
+//         padding: 4% 0 0 0; 
+//     }
+//     #SlotsContainer #betContainer input,
+//     #SlotsContainer #betContainer span{
+//         font-size: 14px; 
+//     }
+// }
+// @media  all and ( max-height: 320px) and (max-width: 480px) and (orientation: landscape) {
+//     #SlotsContainer #slotMachineContainer #ReelContainer{
+//         transform: translate(-50%,-50%) scale(0.63);
+//         -o-transform: translate(-50%,-50%) scale(0.63);
+//         -ms-transform: translate(-50%,-50%) scale(0.63);
+//         -moz-transform: translate(-50%,-50%) scale(0.63);
+//         -webkit-transform: translate(-50%,-50%) scale(0.63);
+//     }
+//     #SlotsContainer .machine-stat {
+//         width: 190px;
+//         margin-top: 85px;
+//     }
+//     #SlotsContainer .machine-roll {
+//         width: 320px;
+//     }
+//     #SlotsContainer .button{
+//         padding: 11px;
+//     }
+
+//     #SlotsContainer #betContainer p {
+//         font-size: 13px; 
+//         padding: 4% 0 0 0; 
+//     }
+//     #SlotsContainer #betContainer input,
+//     #SlotsContainer #betContainer span{
+//         font-size: 14px; 
+//     }
+// }

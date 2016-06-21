@@ -41,12 +41,14 @@
         <div>    
             {{#if (or (isset money) (isset points))}}
             <a href="/user/{{id}}/info" class="content-box-tab">
+                <i class="i-profile"></i>
                 <div>{{i18n "title-users-main"}}</div>
             </a>
             {{/if}}
 
             {{#if (isset friends ) }}
             <a href="/user/{{id}}/friends" class="content-box-tab">
+                <i class="i-person3"> <span>{{#if (notlike friends 0 ) }}{{friends}}{{else}}{{i18n "title-no-friends"}}{{/if}}</span></i>
                 <div>
                     {{i18n "title-users-friends"}} ({{#if (notlike friends 0 ) }}{{friends}}{{else}}{{i18n "title-no-friends"}}{{/if}})
                 </div>
@@ -54,6 +56,7 @@
             {{/if}}
             
             <a href="/user/{{id}}/messages" class="content-box-tab">
+                <i class="i-msg"></i>
                 <div>{{i18n "button-users-write-message"}}</div>
             </a>
         </div>

@@ -504,7 +504,7 @@ END Slot-buttons styles
         -moz-transform: translate(-50%,-50%) scale(1);
         -webkit-transform: translate(-50%,-50%) scale(1);
     }
-}
+}*/
 @media  all and (max-width: 768px) {
  
     #SlotsContainer #slotMachineContainer #ReelContainer{
@@ -697,7 +697,7 @@ END Slot-buttons styles
     }
     #SlotsContainer .button{
         padding: 12px;
-        font-size: 85%;
+        /*font-size: 85%;*/
     }
     #SlotsContainer #betContainer p {
         font-size: 13px; 
@@ -707,7 +707,7 @@ END Slot-buttons styles
     #SlotsContainer #betContainer span {
         font-size: 14px; 
     }
-}*/
+}
 
 /*screen landscape orientation
 Sony Ericsson Xperia Ray	320	480
@@ -729,7 +729,7 @@ Samsung Focus 2                 640	800
 iPad Mini                       768	1024
 iPad                            703	1024*/
 
-/*@media  all and ( max-height: 480px) and (max-width: 768px) and (orientation: landscape) {
+@media  all and ( max-height: 480px) and (max-width: 768px) and (orientation: landscape) {
     .content-main.games{
         animation: initial;
     }
@@ -953,4 +953,4 @@ iPad                            703	1024*/
     #SlotsContainer #betContainer span{
         font-size: 14px; 
     }
-}*/
+}

@@ -4,8 +4,8 @@
         {{#tickets}}
         <li class="clearfix">
             {{#if (eq num (lottery 'totalTickets'))}}
-            <span class="gold">GOLD</span> {{else}}
-            <span>{{i18n "title-lottery-ticket-num"}} N°{{num}} </span> {{/if}}
+            <span class="gold">GOLD</span><span class="gold short">G</span> {{else}}
+            <span> <i>{{i18n "title-lottery-ticket-num"}}</i> N°{{num}} </span> {{/if}}
             <ul>
                 {{#combination}}
                 <li class="filled-ball{{#win}} won_ball{{/win}}" data-num='{{ball}}'>
@@ -38,9 +38,9 @@
         {{#each (for 1 "<=" (lottery 'totalTickets' ) ) as |value key|}} 
         <li class="clearfix">
             {{#if (eq this 8)}} 
-                <span class="gold">GOLD</span>
+                <span class="gold">GOLD</span><span class="gold short">G</span>
             {{else}}
-                <span>{{i18n "title-lottery-ticket-num"}} N°{{this}} </span>
+                <span> <i>{{i18n "title-lottery-ticket-num"}}</i> N°{{this}} </span>
             {{/if}}
             <ul>
                 <li class="unfilled">

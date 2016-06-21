@@ -9,20 +9,8 @@
                 <input type="hidden" name="price" value="{{price}}">
 
                 <div class="ex-prize clearfix">
-                    <div class="ex-prize-description">
-                        <div class="ex-prize-name">{{ title }}</div>
-                        <div class="ex-prize-price">{{ price }}<span>{{i18n "title-points"}}</span></div>
-                        <div class="ex-prize-details">
-                            {{i18n "message-prize-exchange"}}
-                        </div>
-                        <div class="ex-prize-details">
-                            {{i18n "message-prize-exchange-info"}}
-                        </div>
-                    </div>
                     <div class="ex-prize-img">
-                        <img src="/filestorage/shop/{{ img }}" alt="">
-                        
-                            
+                        <img src="/filestorage/shop/{{ img }}" alt="">  
                         {{#if (solvency this.price 'points')}}
                         <div>
                             {{#if (like this.quantity 0)}} 
@@ -39,7 +27,16 @@
                         </div>                        
                         {{/if}}
                     </div>
-
+                    <div class="ex-prize-description">
+                        <div class="ex-prize-name">{{ title }}</div>
+                        <div class="ex-prize-price">{{ price }}<span>{{i18n "title-points"}}</span></div>
+                        <div class="ex-prize-details">
+                            {{i18n "message-prize-exchange"}}
+                        </div>
+                        <div class="ex-prize-details">
+                            {{i18n "message-prize-exchange-info"}}
+                        </div>
+                    </div>
                 </div>
 
                 {{#if (eq type 'item')}}

@@ -6,6 +6,11 @@
             {{{countHTML .}}}
             </a></li>
         {{/each}}
+        {{#if (eq @key 'menu-more')}}
+	        <li>
+	       		<span onclick="Content.logoutPopup();">{{i18n 'menu-logout'}}</span>
+	        </li>
+        {{/if}}
     </ul>
     {{/each}}
 </nav>

@@ -114,9 +114,7 @@
         },
 
         isMobile: function () {
-            // screen only!!! >>>>>>>>>
-            return false;
-            // return Device.get() < 0.8;
+            return Device.get() < 0.8;
         },
 
         switchGoTop: function () {

@@ -8,17 +8,19 @@
             <div contenteditable="true" class="message-form-area required" name="text" data-placeholder="{{i18n 'message-comments-write-comment'}}" rows="1" data-default="{{#if user.name}}{{user.name}}{{/if}}">{{#if user.name}}{{user.name}},&nbsp;{{/if}}</div>
             <div class="message-form-actions clearfix">
                 <div class="paste-image">
-                    <label class="input-file-wrapper fa fa-file-image-o">
+                    <label class="input-file-wrapper i-image">
                     </label>
                 </div>
 
                 <div class="paste-smiles">
-                    <div class="message-form-smileys i-smile"></div> 
+                    <div class="message-form-smileys i-smile">
+                        <i class="hidden i-keyboard"></i>
+                    </div> 
                     <div class="smiles clearfix hidden">
                         {{{emotions}}}
                     </div> 
                 </div>
-                <button name="submit" type="submit">{{i18n "button-send"}}</button>
+                <button name="submit" type="submit"><i class="i-send-msg hidden"></i><span>{{i18n "button-send"}}</span></button>
             </div>
         </div>
     </div>

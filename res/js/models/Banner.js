@@ -60,8 +60,8 @@
         },
         loadBlock: function (target) {
 
-            if (Device.isMobile())
-                return;
+            // if (Device.isMobile())
+            //     return;
 
             var parent = $(target).parent();
             $(target).remove();

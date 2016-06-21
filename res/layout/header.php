@@ -2,7 +2,9 @@
 <html style="overflow: auto;">
     <head>
         <meta charset="utf-8">
-        <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0 minimum-scale=1, maximum-scale=1">  -->
+        <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0,target-densitydpi=device-dpi, user-scalable=no">
+
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="theme-color" content="#ffe700" />
         
@@ -30,15 +32,13 @@
         ?>
 
         <link rel="stylesheet" href="/res/css/style.css?<?php echo $version;?>">
-        <?php //if (isset($isMobile)) {
-            //if ($isMobile) { ?>
-                <!-- <link rel="stylesheet" href="/res/css/mobile/style.css?<?php echo $version;?>"> -->
-            <?php // } else { ?>
-                <!-- <link rel="stylesheet" href="/res/css/screen/style.css?<?php echo $version;?>"> -->
-            <?php // }
-        //} ?>
-        <!-- screen only -->
-        <link rel="stylesheet" href="/res/css/screen/style.css?<?php echo $version;?>">
+        <?php if (isset($isMobile)) {
+            if ($isMobile) { ?>
+                <link rel="stylesheet" href="/res/css/mobile/style.css?<?php echo $version;?>">
+            <?php  } else { ?>
+                <link rel="stylesheet" href="/res/css/screen/style.css?<?php echo $version;?>">
+            <?php  }
+        } ?>
 
         <link rel="stylesheet" href="/res/css/animate.css?<?php echo $version;?>">
         <link rel="stylesheet" href="/res/css/slots.css?<?php echo $version;?>" type="text/css">

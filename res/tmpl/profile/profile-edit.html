@@ -56,6 +56,7 @@
                                 <option value="female" {{#if (like "female" gender)}}selected="selected" {{/if}}>{{i18n "title-profile-gender-female"}}</option>
                                 <option value="male" {{#if (like "male" gender)}}selected="selected" {{/if}}>{{i18n "title-profile-gender-male"}}</option>
                             </select>
+                            <i class="hidden"></i>
                         </div>
                         <div class="privacy-box">
                             {{{privacyHTML 'Gender'}}}
@@ -72,6 +73,7 @@
                                             <option value="{{.}}" {{#if (isset (player "birthday"))}}{{#if (like . (day (player "birthday") 'YYYY '))}}selected="selected"{{/if}}{{/if}}>{{.}}</option>
                                             {{/each}}
                                         </select>
+                                        <i class="hidden"></i>
                                     </div>
                                     <div class="privacy-box">
                                         {{{privacyHTML 'Age'}}}
@@ -89,15 +91,17 @@
                                             <option value="{{diff @key -1}}"{{#if (isset (player "birthday"))}} {{#if (like (diff @key -1) (day (player "birthday") 'M '))}}selected="selected"{{/if}}{{/if}}>{{.}}</option>
                                             {{/each}}
                                         </select>
+                                        <i class="hidden"></i>
 
                                         <select name="day" class="{{#if (null birthday)}}default{{/if}}" onchange="this.className=this.value">
                                             {{#if (null birthday)}}
                                             <option class="default" value="0">{{i18n "title-profile-day"}}</option>
                                             {{/if}}
-                                            {{#each (for 1 '<=' (days (day (player "birthday") ' YYYY-MM ')) )}}
+                                            {{#each (for 1 '<=' (days (day (player "birthday") 'YYYY-MM')) )}}
                                             <option value="{{.}}" {{#if (isset (player "birthday"))}}{{#if (like . (day (player "birthday") 'D '))}}selected="selected"{{/if}}{{/if}}>{{.}}</option>
                                             {{/each}}
                                         </select>
+                                        <i class="hidden"></i>
                                     </div>
                                     <div class="privacy-box">
                                         {{{privacyHTML 'Birthday'}}}

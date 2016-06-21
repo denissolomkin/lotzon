@@ -1,150 +1,324 @@
-.content-top > *{
-	min-height: 0 !important;
+.content-top > * {
+    min-height: 0 !important;
 }
-#popup-lottery-process{
-	height: 100% !important;
-	max-height: 100% !important;
+
+
+
+#lottery-ticket {
+
+    #lottery-ticket-item {
+        padding-bottom: 5px;
+    }
+    .ticket-items{
+        padding-bottom: 20px;
+        min-height: 300px;
+    }
+    .ticket-tabs {
+        li {
+            .ticket-number-sm {
+                border-radius: 0;
+            }
+            &:last-of-type {
+                .ticket-number-sm {
+                    background: none;
+                    height: 40px;
+                    &:before {
+                        background-position: -597px -61px;
+                    }
+                    & > span {
+                        display: none;
+                        &.short {
+                            display: inline-block;
+                            color: #FFD700;
+                            text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.10);
+                            padding-top: 10px;
+                        }
+                    }
+                }
+            }
+            &:last-of-type.active.done {
+                .ticket-number-sm {
+                    &:before {
+                        content: "";
+                        display: block;
+                        background: url(../img/sprite.png) center center no-repeat;
+                        background-position: -597px -61px;
+                        position: absolute;
+                        width: 11px;
+                        height: 8px;
+                        text-align: center;
+                        top: 5px;
+                        left: 8px;
+                    }
+                }
+            }
+            &.unavailable {
+                .ticket-number-sm {
+                    color: #8f8f8f;
+                }
+            }
+            &.active {
+                .ticket-number-sm {
+                    color: #b2d0d4;
+                    background: #4c4c4c;
+                }
+            }
+        }
+    }
+    &.gold {
+        background: #FFD700;
+        background-image: -webkit-linear-gradient(283deg, rgba(255, 255, 255, 0.41) 0%, rgba(0, 0, 0, 0.13) 75%, rgba(0, 0, 0, 0.13) 99%, rgba(0, 0, 0, 0.13) 100%), radial-gradient(200px at 86% 88%, rgba(255, 255, 255, 0.11) 2%, rgba(255, 255, 255, 0) 43%), radial-gradient(200px 200px at 20% 23%, rgba(255, 255, 255, 0.35) 32%, rgba(255, 255, 255, 0) 100%), radial-gradient(170px at 79% 55%, rgba(255, 255, 255, 0.15) 21%, rgba(255, 255, 255, 0) 71%);
+        background-image: -o-linear-gradient(283deg, rgba(255, 255, 255, 0.41) 0%, rgba(0, 0, 0, 0.13) 75%, rgba(0, 0, 0, 0.13) 99%, rgba(0, 0, 0, 0.13) 100%), radial-gradient(200px at 86% 88%, rgba(255, 255, 255, 0.11) 2%, rgba(255, 255, 255, 0) 43%), radial-gradient(200px 200px at 20% 23%, rgba(255, 255, 255, 0.35) 32%, rgba(255, 255, 255, 0) 100%), radial-gradient(170px at 79% 55%, rgba(255, 255, 255, 0.15) 21%, rgba(255, 255, 255, 0) 71%);
+        background-image: linear-gradient(13deg, rgba(255, 255, 255, 0.41) 0%, rgba(0, 0, 0, 0.13) 75%, rgba(0, 0, 0, 0.13) 99%, rgba(0, 0, 0, 0.13) 100%), radial-gradient(200px at 86% 88%, rgba(255, 255, 255, 0.11) 2%, rgba(255, 255, 255, 0) 43%), radial-gradient(200px 200px at 20% 23%, rgba(255, 255, 255, 0.35) 32%, rgba(255, 255, 255, 0) 100%), radial-gradient(170px at 79% 55%, rgba(255, 255, 255, 0.15) 21%, rgba(255, 255, 255, 0) 71%);
+        & .header-box {
+            background: #A9D0D5;
+        }
+        & .lottery-grid {
+            background: none;
+        }
+        & .ticket-items {
+            background: none;
+            & .ticket-tabs {
+                background: none;
+            }
+        }
+    }
 }
-#popup-lottery-process.lottery-won{
-	background-size: cover !important;
+
+.cabinet-game-history {
+    padding: 0;
+    .content-box-item-top{
+        padding: 15px 0;
+    }
+}
+
+#popup-lottery-process {
+    height: 100% !important;
+    max-height: 100% !important;
+}
+
+#popup-lottery-process.lottery-won {
+    background-size: cover !important;
 }
 
 #lottery-view {
-	background: url(../img/bg-win.png);
-	& .content-box {
-		background: none;
-	}
-	& .content-box-item {
-		padding-top: 10px;
-	}
-	& .container {
-		max-width: 298px;
-		margin: 0 auto;
-		min-width: 0;
-		& .balls-end-game {
-			font-size: 30px;
-			margin-top: 5px;
-			& .g-oc_li {
-				width: 41px;
-				height: 41px;
-				font-size: 30px;
-				line-height: 40px;
-				margin-right: 10px;
-				font-size: 15.5px ;
-				&:last-child {
-					margin-right: 0;
-				}
-				& .goc_li-nb {
-					width: 41px;
-					height: 41px;
-					top: 0;
-					line-height: 40px;
-					left: 0;
-				}
-				
-			}
-		}
-	}			
-	& .ghd-tickets {
-		& li {
-			font-size: 15.5px;
-			margin-bottom: 0;
-			& ul {
-				& li {
-					&.filled-ball {
-				 		margin-right: 6px;
-				 	}
-				}
-			}
-		}
-		& li {
-			& span {
-    			margin-right: 15px;
-	    		&.gold {
-	    			margin-right: 0;
-	    		}
-			}
-		}
-	}
-	& .ghd-won {
-		font-size: 15.5px;
-		line-height: 1;
-		& .grid-container {
-			max-width: 290px;
-		}
-	}
-	& .ghd-game-inf {
-		margin-top: 30px;
-		padding: 0;
-		& .title {
-			background: #87c1cd;
-			margin: 0 -20px;
-			border-bottom: 0;
-			height: 40px;
-			line-height: 40px;
-			text-transform: uppercase;
-			margin-bottom: 15px;
-		}
-		& .ghd-all-won {
-			border: 0;
-			text-transform: uppercase;
-			float: none;
-			padding-top: 5px;
-			& span {
-				margin-left: 5px;
-				&:nth-of-type(2) {
-					margin-left: 20px;
-				}
-			}
-		}
-		& table {
-			width: 298px;
-    		margin: 0 auto 10px;
-		}
-		& tr {
-			& th {
-				text-align: left;
-				vertical-align: top;
-				padding:  0 0 15px;
-				&:nth-child(2) {
-					padding:   0 15px 15px 0;
-				}
-				&:nth-child(3) {
-					padding:   0  15px 15px;
-				}
+    .content-box {
+        background: none;
+    }
+    .content-box-item {
+        padding: 0;
+    }
+    .container {
+        margin: 0 auto;
+        min-width: 0;
+        .ticket-nav {
+            box-sizing: content-box;
+            height: 50px;
+            padding-bottom: 50px;
+            & > a {
+                height: 50px;
+            }
+            .ticket-current-wrapper {
+                width: 100%;
+                text-align: center;
+                & > span {
+                    text-align: center;
+                }
+            }
+            .balls-end-game {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 460px;
+                left: 50%;
+                transform: translate(-50%, 0);
+                max-width: 100%;
+                text-align: left;
+                padding: 0 0 10px 40px;
+                line-height: 0;
+                font-size: 0;
+                .g-oc_li {
+                    display: inline-block;
+                    float: none;
+                    margin-right: 5px;
+                }
+            }
+        }
+    }
+    #lottery-view-tickets {
+        margin: 10px auto 40px auto;
+        padding: 0 10px;
+        max-width: 100%;
+        & > ul {
+            & > li {
+                margin-bottom: 10px;
+                & ul {
+                    & li {
+                        &.filled-ball {
+                            margin-right: 5px;
+                            margin-top: 0px;
+                            width: 40px;
+                            height: 40px;
+                            line-height: 40px;
+                            &.won_ball {
+                                width: 40px;
+                                height: 40px;
+                                line-height: 40px;
+                            }
+                            &:last-of-type {
+                                margin-right: 0;
+                            }
+                        }
+                    }
+                }
+                & span {
+                    min-width: 20px;
+                    margin-right: 10px;
+                    i {
+                        display: none;
+                    }
+                    &.gold {
+                        display: none;
+                        &.short {
+                            display: block !important;
+                            font-size: 15.5px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .ghd-won {
+        font-size: 15.5px;
+        line-height: 1;
+        & .grid-container {
+            max-width: 100%;
+        }
+        strong{
+            padding-right: 20px;
+        }
+    }
+    .ghd-game-inf {
+        margin-top: 30px;
+        padding: 0;
+        & .title {
+            background: #87c1cd;
+            // margin: 0 -20px;
+            border-bottom: 0;
+            height: 40px;
+            line-height: 40px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+        & .ghd-all-won {
+            border: 0;
+            text-transform: uppercase;
+            float: none;
+            padding-top: 5px;
+            min-height: 60px;
+            height: auto;
+            &:after{
+                content: '';
+                display: block;
+                clear: both;
+            }
+            & span {
+                margin-left: 5px;
+                &:nth-of-type(2) {
+                    // margin-left: 20px;
+                }
+            }
+            &:before{
+                content: '';
+                display: block;
+                width: 33.3333%;
+                float: left;
+                box-sizing: border-box;
+                min-height: 60px;
+            }
+            & > div{
+                width: 33.3333%;
+                float: left;
+                box-sizing: border-box;
+                & > div{
+                    display: block;
+                    margin: 0;
+                    text-align: left;
+                    span{
+                        margin: 0;
+                    }
+                }
+                & > p{
+                    display: block;
+                    span{
+                        display: none;
+                    }
+                }
 
-			}
+                &:first-child{
+                    margin: 0;
+                    padding: 0 20px 0 0;
+                }
+            }
+        }
+        & table {
+            width: 100%;
+            margin: 0 auto 10px;
+        }
+        & tr {
+            & th {
+                text-align: left;
+                vertical-align: top;
+                padding: 0 0 15px;
+                font-size:15.5px;
+                color:#000000;
+                font-weight: normal;
+                width: 10px;
+                &:nth-child(2) {
+                    width: auto;
+                    padding: 0 10px 15px 0;
+                    width: auto;
+                }
+                &:nth-child(3) {
+                    width: auto;
+                    padding: 0 10px 15px 0;
+                }
+                &:nth-child(4) {
+                    width: auto;
+                    padding: 0 0 15px;
+                }
+            }
+            & td {
+                text-align: left;
+                padding-bottom: 6px;
+                &:nth-child(2) {
+                    padding: 0 10px 6px 0;
+                }
+                &:nth-child(3) {
+                    text-align: left;
+                    padding: 0 10px 6px 0;
+                }
+                &:nth-child(4) {
+                    padding: 0 0 6px 0;
+                }
+            }
+        }
+    }
+}
 
-			& td {
-				text-align: left;
-				padding-bottom: 6px;
-				&:nth-child(3) {
-					text-align: left;
-					padding-left: 15px;
-				}
-				&:nth-child(2) {
-					padding: 0 15px 6px 0;
-				}
-			}
-		}
-	}
+.cabinet-game-history {
+    .gh-item {
+        padding: 10px;
+        position: relative;
+        & > a {
+            display: inline-block;
+        }
+    }
+    .content-box-item-content {
+        min-height: 482px;
+    }
 }
-.cabinet-game-history .content-box-item-content {
-  min-height: 482px;
-}
-.gh-item {
-	position: relative;
-}
-.content-box-item-content .gh-item .arrow {
-	top: 0;
-	right: 0;
-}
-@media (max-width: 360px) {
-	.content-box-item-content .gh-item .arrow {
-		top: 0;
-		right: -5px;
-	}
-}
+
 .condition {
     font-size: 25px;
     padding: 25px 40px 63px;
@@ -152,15 +326,502 @@
     top: 0;
 }
 
-.ticket-tabs li:last-of-type.active.done .ticket-number-sm:before {
-	content: "";
-	display: block;
-    background: url(../img/sprite.png) center center no-repeat;
-    background-position: -597px -61px;
-    position: absolute;
-    width: 11px;
-    height: 8px;
-    text-align: center;
-    top: 5px;
-    left: 8px;
+@media (max-width: 768px) {
+    #lottery-view{
+        #lottery-view-tickets {
+            padding: 0 10px;
+            & > ul {
+                & > li {
+                    span{
+                        margin-right: 30px;
+                    }
+                    & ul {
+                        & li {
+                            &.filled-ball {
+                                margin-right: 25px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .container {
+            .ticket-nav {
+                .balls-end-game {
+                    padding: 0 0 10px 60px;
+                    .g-oc_li {
+                        margin-right: 25px;
+                    }
+                }
+            }
+        }
+    }
+}
+@media (max-width: 480px) {
+    #lottery-view{
+        #lottery-view-tickets {
+            padding: 0 10px;
+            & > ul {
+                & > li {
+                    span{
+                        margin-right: 25px;
+                    }
+                    & ul {
+                        & li {
+                            &.filled-ball {
+                                margin-right: 20px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .container {
+            .ticket-nav {
+                .balls-end-game {
+                    padding: 0 0 10px 55px;
+                    .g-oc_li {
+                        margin-right: 20px;
+                    }
+                }
+            }
+        }
+    }
+}
+@media (max-width: 420px) {
+    #lottery-view{
+        #lottery-view-tickets {
+            padding: 0 10px;
+            & > ul {
+                & > li {
+                    span{
+                        margin-right: 5px;
+                    }
+                    & ul {
+                        & li {
+                            &.filled-ball {
+                                margin-right: 5px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .container {
+            .ticket-nav {
+                .balls-end-game {
+                    padding: 0 0 10px 35px;
+                    .g-oc_li {
+                        margin-right: 5px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 600px) {
+    #lottery {
+        .gh-date {
+            margin-bottom: 15px;
+        }
+    }
+}
+
+@media (max-width: 360px) {
+    .cabinet-game-history .gh-item {
+        padding: 10px;
+    }
+    .gh-number {
+        margin-right: 2px;
+    }
+}
+
+    @media (min-width: 768px) {
+        #lottery-view{
+            #lottery-view-tickets {
+                padding: 0 10px;
+                & > ul {
+                    & > li {
+                        span{
+                            margin-right: 30px;
+                        }
+                        & ul {
+                            & li {
+                                &.filled-ball {
+                                    margin-right: 25px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .container {
+                .ticket-nav {
+                    .balls-end-game {
+                        padding: 0 0 10px 60px;
+                        .g-oc_li {
+                            margin-right: 25px;
+                        }
+                    }
+                }
+            }
+        }
+        // TICKET-ITEMS ------------------------------ //
+        .ticket-items {
+            padding-left: 13px;
+            & .ticket-numbers {
+                & li {
+                    margin: 0 11px 20px 11px !important;
+                }
+            }
+            & .ticket-actions {
+                & li {
+                    margin: 0 11px 0 11px !important;
+                }
+            }
+        }
+        .ticket-item {
+            min-height: 0;
+        }
+        .ticket-tabs {
+            margin: 0;
+            display: block;
+            padding: 6px 13px 14px;
+            & li {
+                width: 30px;
+                float: left;
+                margin-right: 50px;
+                display: block;
+                &:last-of-type {
+                    & .ticket-number-sm {
+                        height: 30px;
+                        line-height: 30px;
+                    }
+                    &.active {
+                        & .ticket-number-sm {
+                            margin-top: 0;
+                        }
+                    }
+                    &.done {
+                        & .ticket-number-sm {
+                            margin-top: 0;
+                        }
+                    }
+                    &:hover {
+                        & .ticket-number-sm {
+                            margin-top: 0px;
+                        }
+                    }
+                }
+            }
+        }
+        .lottery-grid .title {
+            padding: 16px 23px;
+        }
+        .ticket-done {
+            margin-right: 20px;
+        }
+        .matches-inf .lottery-grid .ul-striped {
+            & li {
+                padding: 6px 23px 13px;
+                & p {
+                    margin: 0;
+                    min-width: 0;
+                    &:first-child {
+                        margin: 0;
+                        min-width: 0;
+                    }
+                }
+            }
+        }
+        .gh-inf.gh-combination {
+            margin-right: 90px;
+        }
+        .matches-inf-wrapper.carousel {
+            padding: 10px 30px 0;
+            & .matches-inf {
+                width: 47.5%;
+            }
+        }
+        #popup-lottery-process {
+            height: 680px;
+            & .container {
+                max-width: 520px;
+                margin: 0 auto;
+                min-width: 0;
+                padding: 0;
+                & > div {
+                    height: 73px;
+                    & a {
+                        top: 27px;
+                    }
+                }
+            }
+        }
+        // MATCHES-INF ------------------------------ //
+        .matches-inf-wrapper {
+            margin-bottom: 30px;
+        }
+        .gh-header {
+            margin: 0 -20px 20px;
+            padding: 0 20px;
+        }
+        .ghd-numbers {
+            width: 520px;
+            margin: 0 auto 40px;
+        }
+        .ghd-number {
+            width: 70px;
+            height: 70px;
+            line-height: 70px;
+            font-size: 32px;
+            margin-right: 20px;
+        }
+        // ----------------------------- //
+        .ghd-ticket-number {
+            width: 35px;
+            height: 35px;
+            line-height: 34px;
+            margin-right: 5px;
+        }
+        // ----------------------------- //
+        .ghd-game-inf th {
+            padding-bottom: 20px;
+            width: 25%;
+            &:nth-child(1) {
+                padding-right: 0;
+            }
+            &:nth-child(2) {
+                padding-left: 20px;
+            }
+            &:nth-child(3) {
+                padding-left: 60px;
+            }
+        }
+        .ghd-game-inf td {
+            padding-bottom: 10px;
+            width: 25%;
+            &:nth-child(1) {
+                padding-right: 0;
+            }
+            &:nth-child(2) {
+                padding-left: 50px;
+            }
+            &:nth-child(3) {
+                padding-left: 60px;
+            }
+        }
+        .ghd-all-won {
+            padding: 10px 0 50px;
+        }
+        // ----------------------------- //
+        // ----------------------------- //
+        // RATING ------------------------------- //
+        .raiting-item {
+            width: 324px;
+            margin-right: 40px;
+        }
+        .ball-number-result {
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+        }
+        .ticket-number-result {
+            margin-right: 5%;
+        }
+        .condition {
+            font-size: 20px;
+            text-transform: uppercase;
+        }
+        .ticket-item.gold {
+            background: #e8cf6b;
+        }
+        .ticket-itmes.gold {
+            background: #b2d0d4;
+        }
+        .ticket-tabs.gold {
+            background: transparent;
+        }
+        .lottery-result {
+            padding: 50px 45px;
+        }
+        .ticket-box {
+            background-color: transparent;
+        }
+        .cabinet-game-history .content-box-cat > span:first-child label:before {
+            left: 5px;
+        }
+        .cabinet-game-history.with-cat {
+            padding: 0;
+        }
+        .ticket-box .ticket-btn {
+            margin-right: 20px;
+        }
+        .cabinet-game-history .content-box-item-content {
+            min-height: 310px;
+        }
+        .content-box.tickets .title {
+            padding-left: 23px;
+        }
+}
+
+@media (min-width: 769px) {
+    #popup-lottery-process {
+        &.lottery-won {
+            background: url(../img/1024.png) center center no-repeat;
+        }
+    }
+}
+
+@media (min-width: 480px) {
+    .lottery-grid {
+        padding: 0;
+        & > * {
+            padding: 0;
+        }
+        & .title {
+            padding: 16px 10px;
+        }
+    }
+    .matches-inf {
+        & .lottery-grid {
+            & .ul-striped {
+                & li {
+                    padding: 6px 10px 13px;
+                    & p {
+                        display: inline-block;
+                        &:first-child {
+                            margin-right: 30px;
+                            min-width: 200px;
+                        }
+                    }
+                    span {
+                        display: inline-block;
+                    }
+                }
+            }
+        }
+    }
+    .ticket-done {
+        margin-right: 10px;
+    }
+    #popup-lottery-process {
+        max-width: 100%;
+        height: 634px;
+        &.lottery-won {
+            background: url(../img/600.png) center center no-repeat;
+        }
+        & .container {
+            max-width: 410px;
+            margin: 0 auto;
+            min-width: 0;
+            & > div {
+                height: 73px;
+                & a {
+                    top: 27px;
+                }
+            }
+        }
+    }
+    .lottery-amimation-box {
+        margin-top: 40px;
+    }
+    .ghd-won {
+        margin-top: 24px;
+        & .grid-container {
+            max-width: 320px;
+        }
+    }
+    .cabinet-game-history .content-box-item-content {
+        min-height: 502px;
+    }
+}
+
+@media (min-width: 600px) {
+    .lottery-amimation-box {
+        margin-top: 30px
+    }
+    #popup-lottery-process {
+        height: 658px;
+        &.lottery-won {
+            background: url(../img/768.png) center center no-repeat;
+        }
+        & .container {
+            max-width: 498px;
+            margin: 0 auto;
+            min-width: 0;
+            & > div {
+                height: 73px;
+                & a {
+                    top: 27px;
+                }
+            }
+        }
+    }
+}
+
+@media (min-width: 640px) {
+    .lottery-grid {
+        & .title {
+            padding: 16px 0 16px 30px;
+        }
+    }
+    .matches-inf {
+        & .lottery-grid {
+            & .ul-striped {
+                & li {
+                    padding: 6px 30px 13px;
+                    & p {
+                        display: inline-block;
+                        &:first-child {
+                            margin-right: 30px;
+                        }
+                    }
+                    span {
+                        display: inline-block;
+                    }
+                }
+            }
+        }
+    }
+    .gh-inf {
+        line-height: 40px;
+        float: left;
+        &.gh-combination {
+            float: right;
+            margin-right: 50px;
+        }
+    }
+    .ticket-items {
+        padding-left: 20px;
+    }
+    .lottery-grid.timer-box {
+        padding: 0 30px;
+    }
+    .cabinet-game-history {
+        .content-box-cat {
+            & a {
+                &:first-child {
+                    padding: 5px 10px 5px 40px;
+                    margin-left: 30px;
+                    &:before {
+                        left: 10px
+                    }
+                }
+            }
+        }
+    }
+    .ticket-box .ticket-btn {
+        margin-right: 30px;
+    }
+    .cabinet-game-history .content-box-item-content {
+        min-height: 430px;
+    }
+    .content-box.tickets .title {
+        padding-left: 40px;
+    }
+    .ticket-done {
+        margin-right: 30px;
+    }
 }

@@ -1,24 +1,46 @@
+@media (max-width: 600px) {
+    #support-bonuses{
+        .in-box{
+            padding: 0 10px;
+        }
+        label.in-box{
+            display: block;
+        }
+        .top-users{
+            tr{
+                & > td,
+                & > th{
+                    &:nth-child(3),
+                    &:nth-child(4){
+                        display: none;
+                    }
+                }
+            }
+        }
+        .button{
+            min-width: 90px;
+        }
+        .ae-social{
+            height: auto;
+            width: 100%;
+            padding: 10px 10px 0;
+            .ae-social-item{
+                width: 100%;
+                margin: 0 0 10px 0;
+            }
+        }
+        .bonus-banner-view-item {
+            .bonus-banner-view-btn{
+                padding: 0px 10px;
+            }
+        }
 
-@media (max-width: 768px) {
+        .bonus-share-url-copy, 
+        .bonus-share-email{
+            .strip{
+                padding: 0 180px 0 10px;
+            }
+        }
 
-	.bonus-share-url-copy input {
-		padding-left: 0;
-	}
-
-	.bonus-form .bonus-share-url-copy-btn {
-		padding-top: 0;
-		float: right;
-	}
-
-	.bonus-banner-view-item {
-		margin-right: 10px;
-	}
-	.popup-banner-download {
-		float:right;
-	}
-
-	.banner-copy-btn {
-		margin: 0 0 0 10px;
-	}
-
+    }    
 }
