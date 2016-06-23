@@ -5,6 +5,14 @@ body{
 .appBox{
     display: none !important;
 }
+//banner lottery ticket
+#lottery{
+    #banner-desktop-context-ticket{
+            .timer{
+                display: block;
+            }
+        }
+    }
 // unreg styles
 #menu-buttons{
     &.un{

@@ -400,6 +400,9 @@ body {
 .appBox {
   display: none !important; }
 
+#lottery #banner-desktop-context-ticket .timer {
+  display: block; }
+
 #menu-buttons.un > * {
   display: block; }
 
@@ -1673,9 +1676,10 @@ header {
   .moment-game-box > .inner > i.i-x-slim {
     padding: 0;
     position: absolute;
+    z-index: 100000;
     right: 20px;
     top: 20px;
-    font-size: 18px;
+    font-size: 25px;
     color: #000; }
 
 .moment-game-box .minefield {
@@ -1691,11 +1695,11 @@ header {
     width: 100%;
     min-height: 100%;
     margin: 0;
-    padding: 10px 0; }
+    padding: 50px 0 10px 0; }
     .moment-game-box > .inner > i.i-x-slim {
       position: absolute;
-      right: 10px;
-      top: 20px; }
+      right: 20px;
+      top: 10px; }
     .moment-game-box > .inner > *:not(.minefield) {
       padding-left: 15px;
       padding-right: 15px; }
@@ -1871,10 +1875,15 @@ header {
 
 #popup-lottery-process {
   height: 100% !important;
-  max-height: 100% !important; }
-
-#popup-lottery-process.lottery-won {
-  background-size: cover !important; }
+  max-height: 100% !important;
+  padding: 0 20px 20px 20px;
+  width: 100%; }
+  #popup-lottery-process.lottery-won {
+    background-size: cover !important; }
+  #popup-lottery-process .container {
+    max-width: 100%; }
+  #popup-lottery-process .grid-container {
+    max-width: 100% !important; }
 
 #lottery-view .content-box {
   background: none; }
@@ -2059,7 +2068,16 @@ header {
   #lottery-view .container .ticket-nav .balls-end-game {
     padding: 0 0 10px 60px; }
     #lottery-view .container .ticket-nav .balls-end-game .g-oc_li {
-      margin-right: 25px; } }
+      margin-right: 25px; }
+  #popup-lottery-process .container {
+    max-width: 320px; }
+  #popup-lottery-process .grid-container > div {
+    min-width: 260px;
+    margin-bottom: 10px; }
+  .balls-end-game .g-oc_li {
+    margin-right: 10px; }
+  .ghd-tickets li ul li.filled-ball {
+    margin-right: 5px; } }
 
 @media (max-width: 480px) {
   #lottery-view #lottery-view-tickets {
@@ -2084,6 +2102,10 @@ header {
     padding: 0 0 10px 35px; }
     #lottery-view .container .ticket-nav .balls-end-game .g-oc_li {
       margin-right: 5px; } }
+
+@media (max-width: 375px) {
+  #popup-lottery-process {
+    padding: 0 5px 20px 5px; } }
 
 @media (max-width: 600px) {
   #lottery .gh-date {
@@ -2150,7 +2172,27 @@ header {
     padding: 10px 30px 0; }
     .matches-inf-wrapper.carousel .matches-inf {
       width: 47.5%; }
+  .balls-end-game .g-oc_li {
+    width: 61px;
+    height: 61px;
+    margin-right: 20px; }
+    .balls-end-game .g-oc_li .goc_li-nb {
+      top: -61px;
+      width: 61px;
+      height: 61px;
+      line-height: 61px;
+      font-size: 18.5px; }
+  .ghd-tickets li ul li.filled-ball {
+    width: 45px;
+    height: 45px;
+    line-height: 45px;
+    margin-right: 19px; }
+    .ghd-tickets li ul li.filled-ball.won_ball {
+      width: 45px;
+      height: 45px;
+      line-height: 45px; }
   #popup-lottery-process {
+    width: 100%;
     height: 680px; }
     #popup-lottery-process .container {
       max-width: 520px;
@@ -2261,7 +2303,6 @@ header {
     #popup-lottery-process.lottery-won {
       background: url(../img/600.png) center center no-repeat; }
     #popup-lottery-process .container {
-      max-width: 410px;
       margin: 0 auto;
       min-width: 0; }
       #popup-lottery-process .container > div {
@@ -2285,7 +2326,6 @@ header {
     #popup-lottery-process.lottery-won {
       background: url(../img/768.png) center center no-repeat; }
     #popup-lottery-process .container {
-      max-width: 498px;
       margin: 0 auto;
       min-width: 0; }
       #popup-lottery-process .container > div {

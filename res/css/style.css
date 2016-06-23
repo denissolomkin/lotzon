@@ -2938,7 +2938,9 @@ div {
   position: absolute;
   width: 100%;
   height: inherit;
-  overflow: hidden; }
+  overflow: hidden;
+  left: 0;
+  top: 0; }
   #lottery #banner-desktop-context-ticket > * {
     height: inherit;
     position: relative;

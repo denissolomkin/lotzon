@@ -28,9 +28,10 @@ $gray: #808080;
         > i.i-x-slim {
             padding: 0;
             position: absolute;
+            z-index: 100000;
             right: 20px;
             top: 20px;
-            font-size: 18px;
+            font-size: 25px;
             color: #000;
         }
     }
@@ -44,18 +45,17 @@ $gray: #808080;
         }
     }
 }
-
 @media all and(max-width: 525px) {
     .moment-game-box {
         > .inner {
             width: 100%;
             min-height: 100%;
             margin: 0;
-            padding: 10px 0;
+            padding: 50px 0 10px 0;
             > i.i-x-slim {
                 position: absolute;
-                right: 10px;
-                top: 20px;
+                right: 20px;
+                top: 10px;
             }
             > *:not(.minefield) {
                 padding-left: 15px;

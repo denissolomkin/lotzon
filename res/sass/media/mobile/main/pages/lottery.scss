@@ -2,14 +2,11 @@
     min-height: 0 !important;
 }
 
-
-
 #lottery-ticket {
-
     #lottery-ticket-item {
         padding-bottom: 5px;
     }
-    .ticket-items{
+    .ticket-items {
         padding-bottom: 20px;
         min-height: 300px;
     }
@@ -87,7 +84,7 @@
 
 .cabinet-game-history {
     padding: 0;
-    .content-box-item-top{
+    .content-box-item-top {
         padding: 15px 0;
     }
 }
@@ -95,10 +92,17 @@
 #popup-lottery-process {
     height: 100% !important;
     max-height: 100% !important;
-}
-
-#popup-lottery-process.lottery-won {
-    background-size: cover !important;
+    padding: 0 20px 20px 20px;
+    width: 100%;
+    &.lottery-won {
+        background-size: cover !important;
+    }
+    .container {
+        max-width: 100%;
+    }
+    .grid-container {
+        max-width: 100% !important;
+    }
 }
 
 #lottery-view {
@@ -194,7 +198,7 @@
         & .grid-container {
             max-width: 100%;
         }
-        strong{
+        strong {
             padding-right: 20px;
         }
     }
@@ -217,7 +221,7 @@
             padding-top: 5px;
             min-height: 60px;
             height: auto;
-            &:after{
+            &:after {
                 content: '';
                 display: block;
                 clear: both;
@@ -228,7 +232,7 @@
                     // margin-left: 20px;
                 }
             }
-            &:before{
+            &:before {
                 content: '';
                 display: block;
                 width: 33.3333%;
@@ -236,26 +240,25 @@
                 box-sizing: border-box;
                 min-height: 60px;
             }
-            & > div{
+            & > div {
                 width: 33.3333%;
                 float: left;
                 box-sizing: border-box;
-                & > div{
+                & > div {
                     display: block;
                     margin: 0;
                     text-align: left;
-                    span{
+                    span {
                         margin: 0;
                     }
                 }
-                & > p{
+                & > p {
                     display: block;
-                    span{
+                    span {
                         display: none;
                     }
                 }
-
-                &:first-child{
+                &:first-child {
                     margin: 0;
                     padding: 0 20px 0 0;
                 }
@@ -270,8 +273,8 @@
                 text-align: left;
                 vertical-align: top;
                 padding: 0 0 15px;
-                font-size:15.5px;
-                color:#000000;
+                font-size: 15.5px;
+                color: #000000;
                 font-weight: normal;
                 width: 10px;
                 &:nth-child(2) {
@@ -327,12 +330,12 @@
 }
 
 @media (max-width: 768px) {
-    #lottery-view{
+    #lottery-view {
         #lottery-view-tickets {
             padding: 0 10px;
             & > ul {
                 & > li {
-                    span{
+                    span {
                         margin-right: 30px;
                     }
                     & ul {
@@ -356,14 +359,32 @@
             }
         }
     }
+    #popup-lottery-process {
+        .container {
+            max-width: 320px;
+        }
+        .grid-container {
+            & > div {
+                min-width: 260px;
+                margin-bottom: 10px;
+            }
+        }
+    }
+    .balls-end-game .g-oc_li {
+        margin-right: 10px;
+    }
+    .ghd-tickets li ul li.filled-ball {
+        margin-right: 5px;
+    }
 }
+
 @media (max-width: 480px) {
-    #lottery-view{
+    #lottery-view {
         #lottery-view-tickets {
             padding: 0 10px;
             & > ul {
                 & > li {
-                    span{
+                    span {
                         margin-right: 25px;
                     }
                     & ul {
@@ -388,13 +409,14 @@
         }
     }
 }
+
 @media (max-width: 420px) {
-    #lottery-view{
+    #lottery-view {
         #lottery-view-tickets {
             padding: 0 10px;
             & > ul {
                 & > li {
-                    span{
+                    span {
                         margin-right: 5px;
                     }
                     & ul {
@@ -420,6 +442,14 @@
     }
 }
 
+@media (max-width: 375px) {
+    #popup-lottery-process {
+        // *{color:red}
+        padding: 0 5px 20px 5px;
+        .container {}
+    }
+}
+
 @media (max-width: 600px) {
     #lottery {
         .gh-date {
@@ -437,233 +467,260 @@
     }
 }
 
-    @media (min-width: 768px) {
-        #lottery-view{
-            #lottery-view-tickets {
-                padding: 0 10px;
-                & > ul {
-                    & > li {
-                        span{
-                            margin-right: 30px;
-                        }
-                        & ul {
-                            & li {
-                                &.filled-ball {
-                                    margin-right: 25px;
-                                }
+@media (min-width: 768px) {
+    #lottery-view {
+        #lottery-view-tickets {
+            padding: 0 10px;
+            & > ul {
+                & > li {
+                    span {
+                        margin-right: 30px;
+                    }
+                    & ul {
+                        & li {
+                            &.filled-ball {
+                                margin-right: 25px;
                             }
                         }
                     }
                 }
             }
-            .container {
-                .ticket-nav {
-                    .balls-end-game {
-                        padding: 0 0 10px 60px;
-                        .g-oc_li {
-                            margin-right: 25px;
-                        }
+        }
+        .container {
+            .ticket-nav {
+                .balls-end-game {
+                    padding: 0 0 10px 60px;
+                    .g-oc_li {
+                        margin-right: 25px;
                     }
                 }
             }
         }
-        // TICKET-ITEMS ------------------------------ //
-        .ticket-items {
-            padding-left: 13px;
-            & .ticket-numbers {
-                & li {
-                    margin: 0 11px 20px 11px !important;
-                }
-            }
-            & .ticket-actions {
-                & li {
-                    margin: 0 11px 0 11px !important;
-                }
+    }
+    // TICKET-ITEMS ------------------------------ //
+    .ticket-items {
+        padding-left: 13px;
+        & .ticket-numbers {
+            & li {
+                margin: 0 11px 20px 11px !important;
             }
         }
-        .ticket-item {
-            min-height: 0;
+        & .ticket-actions {
+            & li {
+                margin: 0 11px 0 11px !important;
+            }
         }
-        .ticket-tabs {
-            margin: 0;
+    }
+    .ticket-item {
+        min-height: 0;
+    }
+    .ticket-tabs {
+        margin: 0;
+        display: block;
+        padding: 6px 13px 14px;
+        & li {
+            width: 30px;
+            float: left;
+            margin-right: 50px;
             display: block;
-            padding: 6px 13px 14px;
-            & li {
-                width: 30px;
-                float: left;
-                margin-right: 50px;
-                display: block;
-                &:last-of-type {
+            &:last-of-type {
+                & .ticket-number-sm {
+                    height: 30px;
+                    line-height: 30px;
+                }
+                &.active {
                     & .ticket-number-sm {
-                        height: 30px;
-                        line-height: 30px;
+                        margin-top: 0;
                     }
-                    &.active {
-                        & .ticket-number-sm {
-                            margin-top: 0;
-                        }
+                }
+                &.done {
+                    & .ticket-number-sm {
+                        margin-top: 0;
                     }
-                    &.done {
-                        & .ticket-number-sm {
-                            margin-top: 0;
-                        }
-                    }
-                    &:hover {
-                        & .ticket-number-sm {
-                            margin-top: 0px;
-                        }
+                }
+                &:hover {
+                    & .ticket-number-sm {
+                        margin-top: 0px;
                     }
                 }
             }
         }
-        .lottery-grid .title {
-            padding: 16px 23px;
-        }
-        .ticket-done {
-            margin-right: 20px;
-        }
-        .matches-inf .lottery-grid .ul-striped {
-            & li {
-                padding: 6px 23px 13px;
-                & p {
+    }
+    .lottery-grid .title {
+        padding: 16px 23px;
+    }
+    .ticket-done {
+        margin-right: 20px;
+    }
+    .matches-inf .lottery-grid .ul-striped {
+        & li {
+            padding: 6px 23px 13px;
+            & p {
+                margin: 0;
+                min-width: 0;
+                &:first-child {
                     margin: 0;
                     min-width: 0;
-                    &:first-child {
-                        margin: 0;
-                        min-width: 0;
-                    }
                 }
             }
         }
-        .gh-inf.gh-combination {
-            margin-right: 90px;
+    }
+    .gh-inf.gh-combination {
+        margin-right: 90px;
+    }
+    .matches-inf-wrapper.carousel {
+        padding: 10px 30px 0;
+        & .matches-inf {
+            width: 47.5%;
         }
-        .matches-inf-wrapper.carousel {
-            padding: 10px 30px 0;
-            & .matches-inf {
-                width: 47.5%;
-            }
-        }
-        #popup-lottery-process {
-            height: 680px;
-            & .container {
-                max-width: 520px;
-                margin: 0 auto;
-                min-width: 0;
-                padding: 0;
-                & > div {
-                    height: 73px;
-                    & a {
-                        top: 27px;
-                    }
-                }
-            }
-        }
-        // MATCHES-INF ------------------------------ //
-        .matches-inf-wrapper {
-            margin-bottom: 30px;
-        }
-        .gh-header {
-            margin: 0 -20px 20px;
-            padding: 0 20px;
-        }
-        .ghd-numbers {
-            width: 520px;
-            margin: 0 auto 40px;
-        }
-        .ghd-number {
-            width: 70px;
-            height: 70px;
-            line-height: 70px;
-            font-size: 32px;
+    }
+    .balls-end-game {
+        .g-oc_li {
+            width: 61px;
+            height: 61px;
             margin-right: 20px;
-        }
-        // ----------------------------- //
-        .ghd-ticket-number {
-            width: 35px;
-            height: 35px;
-            line-height: 34px;
-            margin-right: 5px;
-        }
-        // ----------------------------- //
-        .ghd-game-inf th {
-            padding-bottom: 20px;
-            width: 25%;
-            &:nth-child(1) {
-                padding-right: 0;
-            }
-            &:nth-child(2) {
-                padding-left: 20px;
-            }
-            &:nth-child(3) {
-                padding-left: 60px;
+            .goc_li-nb {
+                top: -61px;
+                width: 61px;
+                height: 61px;
+                line-height: 61px;
+                font-size: 18.5px;
             }
         }
-        .ghd-game-inf td {
-            padding-bottom: 10px;
-            width: 25%;
-            &:nth-child(1) {
-                padding-right: 0;
-            }
-            &:nth-child(2) {
-                padding-left: 50px;
-            }
-            &:nth-child(3) {
-                padding-left: 60px;
-            }
+    }
+    .ghd-tickets li ul li.filled-ball {
+        width: 45px;
+        height: 45px;
+        line-height: 45px;
+        margin-right: 19px;
+        &.won_ball {
+            width: 45px;
+            height: 45px;
+            line-height: 45px;
         }
-        .ghd-all-won {
-            padding: 10px 0 50px;
-        }
-        // ----------------------------- //
-        // ----------------------------- //
-        // RATING ------------------------------- //
-        .raiting-item {
-            width: 324px;
-            margin-right: 40px;
-        }
-        .ball-number-result {
-            width: 40px;
-            height: 40px;
-            line-height: 40px;
-        }
-        .ticket-number-result {
-            margin-right: 5%;
-        }
-        .condition {
-            font-size: 20px;
-            text-transform: uppercase;
-        }
-        .ticket-item.gold {
-            background: #e8cf6b;
-        }
-        .ticket-itmes.gold {
-            background: #b2d0d4;
-        }
-        .ticket-tabs.gold {
-            background: transparent;
-        }
-        .lottery-result {
-            padding: 50px 45px;
-        }
-        .ticket-box {
-            background-color: transparent;
-        }
-        .cabinet-game-history .content-box-cat > span:first-child label:before {
-            left: 5px;
-        }
-        .cabinet-game-history.with-cat {
+    }
+    #popup-lottery-process {
+        width: 100%;
+        height: 680px;
+        // *{color: red;}
+        & .container {
+            max-width: 520px;
+            margin: 0 auto;
+            min-width: 0;
             padding: 0;
+            & > div {
+                height: 73px;
+                & a {
+                    top: 27px;
+                }
+            }
         }
-        .ticket-box .ticket-btn {
-            margin-right: 20px;
+    }
+    // MATCHES-INF ------------------------------ //
+    .matches-inf-wrapper {
+        margin-bottom: 30px;
+    }
+    .gh-header {
+        margin: 0 -20px 20px;
+        padding: 0 20px;
+    }
+    .ghd-numbers {
+        width: 520px;
+        margin: 0 auto 40px;
+    }
+    .ghd-number {
+        width: 70px;
+        height: 70px;
+        line-height: 70px;
+        font-size: 32px;
+        margin-right: 20px;
+    }
+    // ----------------------------- //
+    .ghd-ticket-number {
+        width: 35px;
+        height: 35px;
+        line-height: 34px;
+        margin-right: 5px;
+    }
+    // ----------------------------- //
+    .ghd-game-inf th {
+        padding-bottom: 20px;
+        width: 25%;
+        &:nth-child(1) {
+            padding-right: 0;
         }
-        .cabinet-game-history .content-box-item-content {
-            min-height: 310px;
+        &:nth-child(2) {
+            padding-left: 20px;
         }
-        .content-box.tickets .title {
-            padding-left: 23px;
+        &:nth-child(3) {
+            padding-left: 60px;
         }
+    }
+    .ghd-game-inf td {
+        padding-bottom: 10px;
+        width: 25%;
+        &:nth-child(1) {
+            padding-right: 0;
+        }
+        &:nth-child(2) {
+            padding-left: 50px;
+        }
+        &:nth-child(3) {
+            padding-left: 60px;
+        }
+    }
+    .ghd-all-won {
+        padding: 10px 0 50px;
+    }
+    // ----------------------------- //
+    // ----------------------------- //
+    // RATING ------------------------------- //
+    .raiting-item {
+        width: 324px;
+        margin-right: 40px;
+    }
+    .ball-number-result {
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+    }
+    .ticket-number-result {
+        margin-right: 5%;
+    }
+    .condition {
+        font-size: 20px;
+        text-transform: uppercase;
+    }
+    .ticket-item.gold {
+        background: #e8cf6b;
+    }
+    .ticket-itmes.gold {
+        background: #b2d0d4;
+    }
+    .ticket-tabs.gold {
+        background: transparent;
+    }
+    .lottery-result {
+        padding: 50px 45px;
+    }
+    .ticket-box {
+        background-color: transparent;
+    }
+    .cabinet-game-history .content-box-cat > span:first-child label:before {
+        left: 5px;
+    }
+    .cabinet-game-history.with-cat {
+        padding: 0;
+    }
+    .ticket-box .ticket-btn {
+        margin-right: 20px;
+    }
+    .cabinet-game-history .content-box-item-content {
+        min-height: 310px;
+    }
+    .content-box.tickets .title {
+        padding-left: 23px;
+    }
 }
 
 @media (min-width: 769px) {
@@ -713,7 +770,7 @@
             background: url(../img/600.png) center center no-repeat;
         }
         & .container {
-            max-width: 410px;
+            // max-width: 410px;
             margin: 0 auto;
             min-width: 0;
             & > div {
@@ -748,7 +805,7 @@
             background: url(../img/768.png) center center no-repeat;
         }
         & .container {
-            max-width: 498px;
+            // max-width: 498px;
             margin: 0 auto;
             min-width: 0;
             & > div {
