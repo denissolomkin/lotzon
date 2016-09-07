@@ -115,7 +115,7 @@ Por favor, desactive el bloqueador de anuncios!'); ?>
             <!-- app block -->
             <div class="appBox" style="height: 0;overflow:hidden;">    
                 <span>НОВИНКА - РАСШИРЕНИЕ ДЛЯ БРАУЗЕРОВ CHROME И YANDEX, СООБЩАЮЩЕЕ О ПОЯВЛЕНИИ МОМЕНТАЛЬНОГО ШАНСА</span>
-                <a href="#" onclick="chrome.webstore.install()" class="button gold" target="_blank">УСТАНОВИТЬ</a>
+                <button onclick="chrome.webstore.install()" class="button gold">УСТАНОВИТЬ</button>
             </div>
             <!-- END app block -->
             <span class="js-detect"></span>
