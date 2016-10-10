@@ -3,58 +3,58 @@ Application::import(PATH_INTERFACES . 'IProcessor.php');
 
 class ReportsDBProcessor implements IProcessor
 {
-    public function create(Entity $order) 
-    {
-    } 
-
-
-    public function update(Entity $order) 
-    {
-    } 
-
-    public function delete(Entity $order) 
-    {
-        
-    } 
-
-    public function fetch(Entity $order) 
+    public function create(Entity $order)
     {
     }
 
-/*
-    public function updateMoneyOrders()
-    {
-        $sql = "
-        SELECT o. * , IFNULL(m.Coefficient,3) Coef
-        FROM  `MoneyOrders` o
-        LEFT JOIN Players p ON p.Id = o.PlayerId
-        LEFT JOIN MUICountries c ON c.Code = p.Country
-        LEFT JOIN MUICurrency m ON m.Id = c.Currency
-        WHERE  o.Type!='points'";
-// o.Sum IS NULL AND
-        try {
-            $sth = DB::Connect()->prepare($sql);
-            $sth->execute();
-        } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query", 500);
-        }
 
-        $case = array();
-        if ($sth->rowCount()) {
-            foreach ($sth->fetchAll() as $orderData) {
-                $orderData['Data']=unserialize($orderData['Data']);
-                $case[] = "WHEN Id = {$orderData['Id']} THEN ".$orderData['Data']['summ']['value']/$orderData['Coef'];
+    public function update(Entity $order)
+    {
+    }
+
+    public function delete(Entity $order)
+    {
+
+    }
+
+    public function fetch(Entity $order)
+    {
+    }
+
+    /*
+        public function updateMoneyOrders()
+        {
+            $sql = "
+            SELECT o. * , IFNULL(m.Coefficient,3) Coef
+            FROM  `MoneyOrders` o
+            LEFT JOIN Players p ON p.Id = o.PlayerId
+            LEFT JOIN MUICountries c ON c.Code = p.Country
+            LEFT JOIN MUICurrency m ON m.Id = c.Currency
+            WHERE  o.Type!='points'";
+    // o.Sum IS NULL AND
+            try {
+                $sth = DB::Connect()->prepare($sql);
+                $sth->execute();
+            } catch (PDOException $e) {
+                throw new ModelException("Error processing storage query", 500);
             }
+
+            $case = array();
+            if ($sth->rowCount()) {
+                foreach ($sth->fetchAll() as $orderData) {
+                    $orderData['Data']=unserialize($orderData['Data']);
+                    $case[] = "WHEN Id = {$orderData['Id']} THEN ".$orderData['Data']['summ']['value']/$orderData['Coef'];
+                }
+            }
+
+            //print_r($case);
+
+            $sth = DB::Connect()->prepare(" UPDATE  MoneyOrders SET Sum = CASE ".implode(' ',$case)." END")->execute();
+
         }
+    */
 
-        //print_r($case);
-
-        $sth = DB::Connect()->prepare(" UPDATE  MoneyOrders SET Sum = CASE ".implode(' ',$case)." END")->execute();
-
-    }
-*/
-
-    public function getMoneyOrders($dateFrom=null, $dateTo=null, $args=null)
+    public function getMoneyOrders($dateFrom = null, $dateTo = null, $args = null)
     {
         $sql = "
         SELECT CONCAT(YEAR(FROM_UNIXTIME(DateOrdered)),' ', MONTHNAME(FROM_UNIXTIME(DateOrdered))) Date, Type, COUNT( * ) `Quantity`, SUM(Equivalent) Sum
@@ -62,15 +62,15 @@ class ReportsDBProcessor implements IProcessor
         WHERE `DateOrdered` > :from
         AND   `DateOrdered` < :to
         AND Type!='points'
-        ".(is_numeric($args['Status'])?"AND `Status` = {$args['Status']}":'')."
-        ".(is_numeric($args['AdminID'])?"AND `AdminID` = {$args['AdminID']}":'')."
-        GROUP BY Date, Type
+        " . (is_numeric($args['Status']) ? "AND `Status` = {$args['Status']}" : '') . "
+        " . (is_numeric($args['AdminID']) ? "AND `AdminID` = {$args['AdminID']}" : '') . "
+        GROUP BY DATE, Type
         ORDER BY DateOrdered";
 
 
         try {
             $sth = DB::Connect()->prepare($sql);
-            $sth->execute(array(':from' => $dateFrom,':to' => $dateTo));
+            $sth->execute(array(':from' => $dateFrom, ':to' => $dateTo));
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query", 500);
         }
@@ -78,7 +78,7 @@ class ReportsDBProcessor implements IProcessor
         return $sth->fetchAll();
     }
 
-    public function getShopOrders($dateFrom=null, $dateTo=null, $args=null)
+    public function getShopOrders($dateFrom = null, $dateTo = null, $args = null)
     {
         $sql = "
         SELECT CONCAT(YEAR(FROM_UNIXTIME(DateOrdered)),' ', MONTHNAME(FROM_UNIXTIME(DateOrdered))) Date, i.Title, COUNT( * ) `Quantity`
@@ -86,45 +86,47 @@ class ReportsDBProcessor implements IProcessor
         LEFT JOIN ShopItems i ON i.Id = o.ItemId
         WHERE  `DateOrdered` > :from
         AND    `DateOrdered` < :to
-        ".(is_numeric($args['Status'])?"AND `Status` = {$args['Status']}":'')."
-        ".(is_numeric($args['AdminID'])?"AND `AdminID` = {$args['AdminID']}":'')."
-        GROUP BY Date, ItemId
+        " . (is_numeric($args['Status']) ? "AND `Status` = {$args['Status']}" : '') . "
+        " . (is_numeric($args['AdminID']) ? "AND `AdminID` = {$args['AdminID']}" : '') . "
+        GROUP BY DATE, ItemId
         ORDER BY DateOrdered";
 
         try {
             $sth = DB::Connect()->prepare($sql);
-            $sth->execute(array(':from' => $dateFrom,':to' => $dateTo));
+            $sth->execute(array(':from' => $dateFrom, ':to' => $dateTo));
         } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query", 500);    
+            throw new ModelException("Error processing storage query", 500);
         }
+
         return $sth->fetchAll();
     }
 
-    public function getUserRegistrations($dateFrom=null, $dateTo=null, $args=null)
+    public function getUserRegistrations($dateFrom = null, $dateTo = null, $args = null)
     {
 
         $sql = "
         SELECT "
-            .(!$args['GroupBy'] || $args['GroupBy']=='' || $args['GroupBy']=='Month' ? "CONCAT(YEAR(FROM_UNIXTIME(Registration)),' ', MONTHNAME(FROM_UNIXTIME(Registration))) Month, " : '')
-            .(!$args['GroupBy'] || $args['GroupBy']=='' || $args['GroupBy']=='Country' ? 'Country, ' : '').
-        " COUNT( * ) `Quantity`
+            . (!$args['GroupBy'] || $args['GroupBy'] == '' || $args['GroupBy'] == 'Month' ? "CONCAT(YEAR(FROM_UNIXTIME(Registration)),' ', MONTHNAME(FROM_UNIXTIME(Registration))) Month, " : '')
+            . (!$args['GroupBy'] || $args['GroupBy'] == '' || $args['GroupBy'] == 'Country' ? 'Country, ' : '') .
+            " COUNT( * ) `Quantity`
         FROM   `Players`
         LEFT JOIN PlayerDates ON PlayerId = Id
         WHERE  `Registration` > :from
         AND    `Registration` < :to
-        GROUP BY ".($args['GroupBy'] && $args['GroupBy']!=''?$args['GroupBy']:'Month,Country')."
-        ORDER BY ".($args['GroupBy']!='Country'?'`Registration`,':'')."Quantity Desc";
+        GROUP BY " . ($args['GroupBy'] && $args['GroupBy'] != '' ? $args['GroupBy'] : 'Month,Country') . "
+        ORDER BY " . ($args['GroupBy'] != 'Country' ? '`Registration`,' : '') . "Quantity Desc";
 
         try {
             $sth = DB::Connect()->prepare($sql);
-            $sth->execute(array(':from' => $dateFrom,':to' => $dateTo));
+            $sth->execute(array(':from' => $dateFrom, ':to' => $dateTo));
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query {$e->getMessage()}", 500);
         }
+
         return $sth->fetchAll();
     }
 
-    public function getOnlineGames($dateFrom=null, $dateTo=null, $args=null)
+    public function getOnlineGames($dateFrom = null, $dateTo = null, $args = null)
     {
 
         $sql = "
@@ -135,25 +137,26 @@ SELECT CONCAT(YEAR(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date))) `Mo
         WHERE  `Date` > :from
         AND    `Date` < :to
         AND    `Price` > 0
-        ".(is_numeric($args['GameId'])?"AND `GameId` = {$args['GameId']}":'')."
-        ".(isset($args['Currency']) && $args['Currency']!=''?"AND `Currency` = '{$args['Currency']}'":'')."
-        GROUP BY GameUid, Date) a
+        " . (is_numeric($args['GameId']) ? "AND `GameId` = {$args['GameId']}" : '') . "
+        " . (isset($args['Currency']) && $args['Currency'] != '' ? "AND `Currency` = '{$args['Currency']}'" : '') . "
+        GROUP BY GameUid, DATE) a
 
         LEFT JOIN OnlineGames o ON o.Id = a.GameId
-             GROUP BY Month,
-            GameId, Mode
-        ORDER BY YEAR(FROM_UNIXTIME(Date)), MONTH(FROM_UNIXTIME(Date)), GameId, a.Mode";
+             GROUP BY MONTH,
+            GameId, MODE
+        ORDER BY YEAR(FROM_UNIXTIME(DATE)), MONTH(FROM_UNIXTIME(DATE)), GameId, a.Mode";
 
         try {
             $sth = DB::Connect()->prepare($sql);
-            $sth->execute(array(':from' => $dateFrom,':to' => $dateTo));
+            $sth->execute(array(':from' => $dateFrom, ':to' => $dateTo));
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query {$e->getMessage()}", 500);
         }
+
         return $sth->fetchAll();
     }
 
-    public function getRating($gameId=null)
+    public function getRating($gameId = null)
     {
         $month = mktime(0, 0, 0, date("n"), 1);
 
@@ -162,7 +165,7 @@ SELECT CONCAT(YEAR(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date))) `Mo
         $sql = "(SELECT g.GameId, g.Currency, p.Nicname N,  p.Avatar A, p.Id I, (sum(g.Win)*25+count(g.Id)) R, 0 Top
                                 FROM `PlayerGames` g
                                 JOIN Players p On p.Id=g.PlayerId
-                                WHERE g.`Month`=:month AND g.`IsFee` = 1 ". ($gameId?' AND g.`GameId` = '.$gameId:'') ."
+                                WHERE g.`Month`=:month AND g.`IsFee` = 1 " . ($gameId ? ' AND g.`GameId` = ' . $gameId : '') . "
                                 group by g.GameId, g.Currency, g.PlayerId)
 
                     UNION ALL
@@ -170,7 +173,7 @@ SELECT CONCAT(YEAR(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date))) `Mo
                     (SELECT t.GameId, t.Currency, p.Nicname N,  p.Avatar A, p.Id I, t.Rating R, 1 Top
                                 FROM `OnlineGamesTop` t
                                 JOIN Players p On p.Id=t.PlayerId
-                                WHERE t.`Month`=:month ". ($gameId?' AND t.`GameId` = '.$gameId:'') ."
+                                WHERE t.`Month`=:month " . ($gameId ? ' AND t.`GameId` = ' . $gameId : '') . "
                                 )
 
                                 order by Currency, R DESC
@@ -196,10 +199,10 @@ SELECT CONCAT(YEAR(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date))) `Mo
             $gid = $row['GameId'];
             $top = $row['Top'];
 
-            unset($row['Currency'],$row['GameId'], $row['Top']);
+            unset($row['Currency'], $row['GameId'], $row['Top']);
 
-            if(!isset($rating[$gid][$cur]['#'.$row['I']]) || $top)
-                $rating[$gid][$cur]['#'.$row['I']] = $row;
+            if (!isset($rating[$gid][$cur]['#' . $row['I']]) || $top)
+                $rating[$gid][$cur]['#' . $row['I']] = $row;
 
         }
 
@@ -207,13 +210,13 @@ SELECT CONCAT(YEAR(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date))) `Mo
 
     }
 
-    public function getTopOnlineGames($dateFrom=null, $dateTo=null, $args=null)
+    public function getTopOnlineGames($dateFrom = null, $dateTo = null, $args = null)
     {
 
         $sql = "(SELECT p.Id Id, p.Nicname Name, g.Currency, (sum(g.Win)*25+count(g.Id)) Rating, count(g.Id) Total, sum(g.Win) Win, 0 Top
         FROM `PlayerGames` g
         JOIN Players p On p.Id=g.PlayerId
-        WHERE g.`Month`>=:from AND g.`Month`<=:to AND g.`IsFee` = 1 AND g.`GameId` = :gid".
+        WHERE g.`Month`>=:from AND g.`Month`<=:to AND g.`IsFee` = 1 AND g.`GameId` = :gid" .
             (isset($args['Currency']) && $args['Currency'] != '' ? " AND g.`Currency` = '{$args['Currency']}' " : '') .
             " group by g.GameId, g.Currency, g.PlayerId)
 
@@ -232,8 +235,8 @@ SELECT CONCAT(YEAR(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date))) `Mo
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
                 ':from' => $dateFrom,
-                ':to' => $dateTo,
-                ':gid' => is_numeric($args['GameId']) ? $args['GameId'] : 1
+                ':to'   => $dateTo,
+                ':gid'  => is_numeric($args['GameId']) ? $args['GameId'] : 1
             ));
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query {$e->getMessage()}", 500);
@@ -242,7 +245,7 @@ SELECT CONCAT(YEAR(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date))) `Mo
         return $sth->fetchAll();
     }
 
-    public function getBotWins($dateFrom=null, $dateTo=null, $args=null)
+    public function getBotWins($dateFrom = null, $dateTo = null, $args = null)
     {
 
         $sql = "
@@ -255,25 +258,26 @@ SELECT CONCAT(YEAR(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date))) `Mo
         AND    `Date` < :to
         AND    `Price` > 0
         AND    p.`Id` IS NULL
-        ".(is_numeric($args['GameId'])?"AND `GameId` = {$args['GameId']}":'')."
-        ".(isset($args['Currency']) && $args['Currency']!=''?"AND `Currency` = '{$args['Currency']}'":'')."
-        GROUP BY GameUid, Date) a
+        " . (is_numeric($args['GameId']) ? "AND `GameId` = {$args['GameId']}" : '') . "
+        " . (isset($args['Currency']) && $args['Currency'] != '' ? "AND `Currency` = '{$args['Currency']}'" : '') . "
+        GROUP BY GameUid, DATE) a
 
         LEFT JOIN OnlineGames o ON o.Id = a.GameId
-             GROUP BY Month,
-            GameId, Mode
-        ORDER BY YEAR(FROM_UNIXTIME(Date)), MONTH(FROM_UNIXTIME(Date)), GameId, a.Mode";
+             GROUP BY MONTH,
+            GameId, MODE
+        ORDER BY YEAR(FROM_UNIXTIME(DATE)), MONTH(FROM_UNIXTIME(DATE)), GameId, a.Mode";
 
         try {
             $sth = DB::Connect()->prepare($sql);
-            $sth->execute(array(':from' => $dateFrom,':to' => $dateTo));
+            $sth->execute(array(':from' => $dateFrom, ':to' => $dateTo));
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query {$e->getMessage()}", 500);
         }
+
         return $sth->fetchAll();
     }
 
-    public function getSlotsWins($dateFrom=null, $dateTo=null, $args=null)
+    public function getSlotsWins($dateFrom = null, $dateTo = null, $args = null)
     {
 
         $sql = "
@@ -286,40 +290,42 @@ SELECT CONCAT(YEAR(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date))) `Mo
         WHERE `ObjectType` = 'Slots' 
         AND `Date` > :from
         AND `Date` < :to
-        ".(isset($args['Currency']) && $args['Currency']!=''?"AND `Currency` = '{$args['Currency']}'":'')." 
+        " . (isset($args['Currency']) && $args['Currency'] != '' ? "AND `Currency` = '{$args['Currency']}'" : '') . "
         GROUP BY CURRENCY) t";
 
         try {
             $sth = DB::Connect()->prepare($sql);
-            $sth->execute(array(':from' => $dateFrom,':to' => $dateTo));
+            $sth->execute(array(':from' => $dateFrom, ':to' => $dateTo));
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query {$e->getMessage()}", 500);
         }
+
         return $sth->fetchAll();
     }
 
-    public function getUserReviews($dateFrom=null, $dateTo=null, $args=null)
+    public function getUserReviews($dateFrom = null, $dateTo = null, $args = null)
     {
         $sql = "
         SELECT CONCAT(YEAR(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date))) Month, COUNT( * ) `Quantity`
         FROM   `PlayerReviews`
         WHERE  `Date` > :from
         AND    `Date` < :to
-        ".(is_numeric($args['Status'])?"AND `Status` = {$args['Status']}":'')."
-        ".(is_numeric($args['AdminID'])?"AND `AdminID` = {$args['AdminID']}":'')."
-        GROUP BY Month
-        ORDER BY Date";
+        " . (is_numeric($args['Status']) ? "AND `Status` = {$args['Status']}" : '') . "
+        " . (is_numeric($args['AdminID']) ? "AND `AdminID` = {$args['AdminID']}" : '') . "
+        GROUP BY MONTH
+        ORDER BY DATE";
 
         try {
             $sth = DB::Connect()->prepare($sql);
-            $sth->execute(array(':from' => $dateFrom,':to' => $dateTo));
+            $sth->execute(array(':from' => $dateFrom, ':to' => $dateTo));
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query", 500);
         }
+
         return $sth->fetchAll();
     }
 
-    public function getLotteryWins($dateFrom=null, $dateTo=null, $args=null)
+    public function getLotteryWins($dateFrom = null, $dateTo = null, $args = null)
     {
         $sql = "
         SELECT
@@ -331,16 +337,16 @@ SELECT CONCAT(YEAR(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date))) `Mo
 
         try {
             $sth = DB::Connect()->prepare($sql);
-            $sth->execute(array(':from' => $dateFrom,':to' => $dateTo));
+            $sth->execute(array(':from' => $dateFrom, ':to' => $dateTo));
         } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query ".$e->getMessage(), 500);
+            throw new ModelException("Error processing storage query " . $e->getMessage(), 500);
         }
 
         $lotteries = $sth->fetchAll();
         if ($sth->rowCount()) {
             foreach ($lotteries as &$lottery) {
                 $lottery['BallsTotal'] = @unserialize($lottery['BallsTotal']);
-                for($i=1;$i<=6;$i++)
+                for ($i = 1; $i <= 6; $i++)
                     $lottery[$i . 'Ball'] = $lottery['BallsTotal'][$i];
                 unset($lottery['BallsTotal']);
                 $lottery['Combination'] = implode(',', unserialize($lottery['Combination']));
@@ -351,12 +357,12 @@ SELECT CONCAT(YEAR(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date))) `Mo
 
     }
 
-    public function getGoldTicketOrders($dateFrom=null, $dateTo=null, $args=null)
+    public function getGoldTicketOrders($dateFrom = null, $dateTo = null, $args = null)
     {
         $sql = "
         SELECT
           CONCAT(DAY(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date)),' ', YEAR(FROM_UNIXTIME(Date))) Day,
-          COUNT(Currency) as cnt,
+          COUNT(Currency) AS cnt,
           Currency
         FROM  `Transactions`
         WHERE  `ObjectType`='Gold'
@@ -367,9 +373,9 @@ SELECT CONCAT(YEAR(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date))) `Mo
 
         try {
             $sth = DB::Connect()->prepare($sql);
-            $sth->execute(array(':from' => $dateFrom,':to' => $dateTo));
+            $sth->execute(array(':from' => $dateFrom, ':to' => $dateTo));
         } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query ".$e->getMessage(), 500);
+            throw new ModelException("Error processing storage query " . $e->getMessage(), 500);
         }
 
         $lotteries = $sth->fetchAll();
@@ -377,7 +383,7 @@ SELECT CONCAT(YEAR(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date))) `Mo
         $days = array();
         foreach ($lotteries as $lottery) {
             if (!isset($days[$lottery['Day']])) {
-                $days[$lottery['Day']] = array('Day'=>$lottery['Day'], 'POINT'=>0, 'MONEY'=>0, 'POINTS_BUY'=>0, 'MONEY_BUY'=>0, 'POINTS_WIN'=>0, 'MONEY_WIN'=>0);
+                $days[$lottery['Day']] = array('Day' => $lottery['Day'], 'POINT' => 0, 'MONEY' => 0, 'POINTS_BUY' => 0, 'MONEY_BUY' => 0, 'POINTS_WIN' => 0, 'MONEY_WIN' => 0);
             }
             $days[$lottery['Day']][$lottery['Currency']] = $lottery['cnt'];
         }
@@ -422,9 +428,9 @@ SELECT CONCAT(YEAR(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date))) `Mo
 
         try {
             $sth = DB::Connect()->prepare($sql);
-            $sth->execute(array(':from' => $dateFrom,':to' => $dateTo));
+            $sth->execute(array(':from' => $dateFrom, ':to' => $dateTo));
         } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query ".$e->getMessage(), 500);
+            throw new ModelException("Error processing storage query " . $e->getMessage(), 500);
         }
 
         $wins = $sth->fetchAll();
@@ -434,7 +440,7 @@ SELECT CONCAT(YEAR(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date))) `Mo
                 continue;
             }
             if (!isset($days[$win['Day']])) {
-                $days[$win['Day']] = array('Day'=>$win['Day'], 'POINT'=>0, 'MONEY'=>0, 'POINTS_BUY'=>0, 'MONEY_BUY'=>0, 'POINTS_WIN'=>0, 'MONEY_WIN'=>0, 'POINTS_DIFF'=>0, 'POINTS_DIFF'=>0);
+                $days[$win['Day']] = array('Day' => $win['Day'], 'POINT' => 0, 'MONEY' => 0, 'POINTS_BUY' => 0, 'MONEY_BUY' => 0, 'POINTS_WIN' => 0, 'MONEY_WIN' => 0, 'POINTS_DIFF' => 0, 'POINTS_DIFF' => 0);
             }
             if ($win['point']) {
                 $days[$win['Day']]['POINTS_WIN'] = $win['point'];
@@ -446,21 +452,44 @@ SELECT CONCAT(YEAR(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date))) `Mo
 
         try {
             $sth = DB::Connect()->prepare($sql);
-            $sth->execute(array(':from' => $dateFrom,':to' => $dateTo));
+            $sth->execute(array(':from' => $dateFrom, ':to' => $dateTo));
         } catch (PDOException $e) {
-            throw new ModelException("Error processing storage query ".$e->getMessage(), 500);
+            throw new ModelException("Error processing storage query " . $e->getMessage(), 500);
         }
 
         $days_index = array();
         foreach ($days as $day) {
-            $day['POINTS_BUY'] = SettingsModel::instance()->getSettings('goldPrice')->getValue('POINTS') * $day['POINT'];
-            $day['MONEY_BUY'] = SettingsModel::instance()->getSettings('goldPrice')->getValue('UA') * $day['MONEY'];
+            $day['POINTS_BUY']  = SettingsModel::instance()->getSettings('goldPrice')->getValue('POINTS') * $day['POINT'];
+            $day['MONEY_BUY']   = SettingsModel::instance()->getSettings('goldPrice')->getValue('UA') * $day['MONEY'];
             $day['POINTS_DIFF'] = $day['POINTS_BUY'] - $day['POINTS_WIN'];
-            $day['MONEY_DIFF'] = $day['MONEY_BUY'] - $day['MONEY_WIN'];
-            $days_index[] = $day;
+            $day['MONEY_DIFF']  = $day['MONEY_BUY'] - $day['MONEY_WIN'];
+            $days_index[]       = $day;
         }
 
         return $days_index;
     }
 
+    public function getBannersHits($dateFrom = null, $dateTo = null, $args = null)
+    {
+        $sql = "
+        SELECT
+          CONCAT(DAY(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date)),' ', YEAR(FROM_UNIXTIME(Date))) Day,
+          Title,
+          COUNT(*)
+        FROM  `BannersHit`
+        WHERE  `Date` > :from
+        AND    `Date` < :to
+        AND    `Location` = :location
+        GROUP BY Day,Title
+        ";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(':from' => $dateFrom, ':to' => $dateTo, ':location' => $args['Location']));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query " . $e->getMessage(), 500);
+        }
+
+        return $sth->fetchAll();
+    }
 }

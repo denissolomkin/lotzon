@@ -70,6 +70,16 @@
             </select>
         </div>
 <?php break;
+    case 'BannersHits':?>
+        <div class="col-my-1">
+            <select name="args[Location]" class="form-control" placeholder="Группа" />
+            <option value=""></option>
+            <?php foreach(array('brand','top','right','teaser') as $id=>$title):?>
+                <option <?php echo  is_numeric($args['Status']) && $id==$args['Status']?'selected':''?> value="<?php echo $title;?>"><?php echo $title;?></option>
+            <?php endforeach;?>
+            </select>
+        </div>
+<?php break;
 }
 ?>
     <input class="btn btn-md btn-info" value="Сформировать" type="submit">

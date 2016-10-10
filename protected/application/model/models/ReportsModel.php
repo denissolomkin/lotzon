@@ -70,4 +70,9 @@ class ReportsModel extends Model
     {
         return $this->getProcessor()->getGoldTicketOrders($dateFrom,$dateTo,$args);
     }
+
+    public function getBannersHits($dateFrom,$dateTo,$args)
+    {
+        return $this->getProcessor()->getBannersHits($dateFrom,$dateTo,$args);
+    }
 }
