@@ -104,6 +104,15 @@
                             Navigation.menu.hide();
                             if(!options.tab) {
                                 history && history.pushState(options.init, "Lotzon", url);
+
+                                /* Adwise */
+                                var brnds = document.querySelectorAll('noindex>div[id^="brnd"]');
+                                var l = brnds.length;
+                                for (var i = 0; i < l; i++) {
+                                    brnds[i].parentNode.parentNode.removeChild(brnds[i].parentNode);
+                                }
+                                typeof AMSP !== 'undefined' && AMSP.loadAsset("3d5967ef8835c2f09c614e9f8fd862da", "");
+
                                 Banner.update();
                                 Config.hasOwnProperty('yandexMetrika')
                                 && Config.yandexMetrika
