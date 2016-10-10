@@ -27,8 +27,10 @@ class BannersController extends \AjaxController
 
             if ($this->isAuthorized(true)) {
                 $banner->setCountry($this->player->getCountry());
+                $userId = $this->player->getId();
             } else {
                 $banner->setCountry(Common::getUserIpCountry());
+                $userId = null;
             }
 
             $render = $banner
@@ -41,6 +43,15 @@ class BannersController extends \AjaxController
                 ->setKey($device)*/
                 ->random()
                 ->render();
+
+            \BannersModel::instance()->hitBanner(
+                $userId,
+                $banner->getDevice(),
+                $banner->getLocation(),
+                $banner->getPage(),
+                $banner->getTitle(),
+                $banner->getCountry()
+            );
 
         } catch (\Exception $e) {
             echo $e->getMessage();
