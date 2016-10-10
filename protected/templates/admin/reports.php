@@ -75,7 +75,7 @@
             <select name="args[Location]" class="form-control" placeholder="Группа" />
             <option value=""></option>
             <?php foreach(array('brand','top','right','teaser') as $id=>$title):?>
-                <option <?php echo  is_numeric($args['Status']) && $title==$args['Status']?'selected':''?> value="<?php echo $title;?>"><?php echo $title;?></option>
+                <option <?php echo $title==$args['Status']?'selected':''?> value="<?php echo $title;?>"><?php echo $title;?></option>
             <?php endforeach;?>
             </select>
         </div>
