@@ -475,7 +475,7 @@ SELECT CONCAT(YEAR(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date))) `Mo
         SELECT
           CONCAT(DAY(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date)),' ', YEAR(FROM_UNIXTIME(Date))) Day,
           Title,
-          COUNT(*)
+          COUNT(*) as count
         FROM  `BannersHit`
         WHERE  `Date` > :from
         AND    `Date` < :to
