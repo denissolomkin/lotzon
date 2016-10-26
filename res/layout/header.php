@@ -11,7 +11,6 @@
         <link rel="icon" href="/res/img/favicones/favicon.png_128x128.png?v=666" type="image/png"/>
         <meta content="/res/img/favicones/favicon.png_128x128.png?v=666" itemprop="image">
         <link href="/res/img/favicones/favicon.png.ico?v=666" rel="shortcut icon">
-        <link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/clphbdjchiopapppajbikhbgmmlbodif">
 
         <title><?php echo $seo['Title'];?></title>
         <meta name="description" content="<?php echo $seo['Description'];?>">
@@ -115,7 +114,7 @@ Por favor, desactive el bloqueador de anuncios!'); ?>
             <!-- app block -->
             <div class="appBox" style="height: 0;overflow:hidden;">    
                 <span>НОВИНКА - РАСШИРЕНИЕ ДЛЯ БРАУЗЕРОВ CHROME И YANDEX, СООБЩАЮЩЕЕ О ПОЯВЛЕНИИ МОМЕНТАЛЬНОГО ШАНСА</span>
-                <button onclick="chrome.webstore.install()" class="button gold">УСТАНОВИТЬ</button>
+                <a href="https://chrome.google.com/webstore/detail/lotzon-toolbar/clphbdjchiopapppajbikhbgmmlbodif" class="button gold" target="_blank">УСТАНОВИТЬ</a>
             </div>
             <!-- END app block -->
             <span class="js-detect"></span>

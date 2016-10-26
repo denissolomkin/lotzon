@@ -104,7 +104,6 @@
                             Navigation.menu.hide();
                             if(!options.tab) {
                                 history && history.pushState(options.init, "Lotzon", url);
-
                                 Banner.update();
                                 Config.hasOwnProperty('yandexMetrika')
                                 && Config.yandexMetrika
