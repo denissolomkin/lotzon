@@ -10,8 +10,7 @@
                 'click': [
                 
                     /* global */
-                    ['a:not(.not-handle):not([target="_blank"] )', R.push],
-                    // ['a:not(.not-handle)', R.push],
+                    ['a:not(.not-handle)', R.push],
 
                     /* badges */
                     ['.badge-close', Content.badge.close, 1],
