@@ -59,11 +59,6 @@ class TicketsModel extends Model
                     return true;
                 }
 
-                // Holiday condition
-                if (\LotteriesModel::instance()->getLastPublishedLottery()->getId() + 1 === (int)\SettingsModel::instance()->getSettings('counters')->getValue('HOLIDAY_LOTTERY_ID')) {
-                    return true;
-                }
-
                 // Ticket condition
                 $player = new Player();
                 $player->setId($playerId)->fetch();
@@ -77,22 +72,12 @@ class TicketsModel extends Model
                     return true;
                 }
 
-                // Holiday condition
-                if (\LotteriesModel::instance()->getLastPublishedLottery()->getId() + 1 === (int)\SettingsModel::instance()->getSettings('counters')->getValue('HOLIDAY_LOTTERY_ID')) {
-                    return true;
-                }
-
                 // Ticket condition
                 if (\PlayersModel::instance()->getReferralsCount($playerId) >= (int)\SettingsModel::instance()->getSettings('ticketConditions')->getValue('CONDITION_5_TICKET')) {
                     return true;
                 }
                 break;
             case 6:
-                // Holiday condition
-                if (\LotteriesModel::instance()->getLastPublishedLottery()->getId() + 1 === (int)\SettingsModel::instance()->getSettings('counters')->getValue('HOLIDAY_LOTTERY_ID')) {
-                    return true;
-                }
-
                 if (\PlayersModel::instance()->getReferralsCount($playerId) >= (int)\SettingsModel::instance()->getSettings('ticketConditions')->getValue('CONDITION_6_TICKET')) {
                     return true;
                 }
