@@ -1,16 +1,26 @@
 <nav id="menu-navigation" class="menu">
+	
     {{#each .}}
-    <ul class="{{@key}}">
-        {{#each this}}
-            <li><a href="/{{.}}">{{i18n "menu" .}}
-            {{{countHTML .}}}
-            </a></li>
-        {{/each}}
-        {{#if (eq @key 'menu-more')}}
-	        <li>
-	       		<span onclick="Content.logoutPopup();">{{i18n 'menu-logout'}}</span>
-	        </li>
-        {{/if}}
-    </ul>
+    	{{#if (like @key 'menu-more')}}
+    		<!-- Menu Button -->
+		    <div class="menu-btn menu-btn-item menu-btn-more-pc">
+		        <i class="i-menu"></i> {{{countHTML "menu"}}}
+			    <ul class="{{@key}}">
+	    		{{#each this}}
+		            <li><a href="/{{.}}">{{i18n "menu" .}}
+		            {{{countHTML .}}}
+		            </a></li>
+		        {{/each}}
+			    </ul>
+		    </div>
+    	{{else}}
+		    <ul class="{{@key}}">
+	        {{#each this}}
+	            <li><a href="/{{.}}">{{i18n "menu" .}}
+	            {{{countHTML .}}}
+	            </a></li>
+	        {{/each}}
+		    </ul>
+    	{{/if}}
     {{/each}}
 </nav>

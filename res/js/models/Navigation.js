@@ -125,14 +125,50 @@
         },
 
         menu: {
+            // mouseenter: function (event) {
+            //     return;
+            //     D.log(['Navigation.menu.hover'], 'menu');
+            //     // event.stopPropagation();
+            //     var isActive = $(this).attr('class').indexOf('active') != -1 ? true : false,
+            //         isMobile = Device.isMobile(),
+            //         menuClass = '.' + $(this).attr('class').replace(/ |menu-btn-item|active/g, '');
 
+            //     // console.log('!!!hover!!!>>>>>>>',menuClass,$(this).attr('class'),$(this).attr('class').indexOf('active'),isActive);
+
+
+            //     if (isActive){
+            //         // alert(1);
+            //         return false;
+            //     }
+            //     else{
+            //         Navigation.menu.hide();
+            //         $('header .active[href]').removeClass('active');
+            //         $(this).addClass('active');
+            //     }
+                
+
+            //     switch (menuClass) {
+            //         case I.menuBtn:
+            //             $(I.menuMore).fadeIn(200);
+            //             break;
+            //         case I.balanceBtn:
+            //             $(I.menuBalance).fadeIn(200);
+            //             break;
+            //         default:
+            //             break;
+            //     }
+            // }, 
             click: function (event) {
                 D.log(['Navigation.menu.click'], 'menu');
+
                 event.stopPropagation();
+
                 var isActive = $(this).hasClass('active'),
                     isMobile = Device.isMobile(),
                     menuClass = '.' + $(this).attr('class').replace(/ |menu-btn-item|active/g, '');
 
+                // console.log('!!!click!!!>>>> isActive >>>',isActive,$(this).hasClass('active'), $(this));
+                console.debug($(this), $('header .active[href]'));
                 Navigation.menu.hide();
 
                 if (isActive){
@@ -142,6 +178,8 @@
                     $('header .active[href]').removeClass('active');
                     $(this).addClass('active');
                 }
+                
+
                 switch (menuClass) {
                     case I.menuBtn:
                         if (isMobile) {
@@ -154,7 +192,7 @@
                             $(I.menuMobileBalance).show();
                             $('body').addClass('pushy-active');
                         } else {
-                            $(I.menuMore).fadeIn(200);
+                            // $(I.menuMore).fadeIn(200);
                             $(I.menuLogout).fadeIn(200);
                         }
                         break;
@@ -175,7 +213,7 @@
                         }
                         break;
 
-                    case I.balanceBtn:
+                    // case I.balanceBtn:
                     case I.menuBalanceBtn:
                         $(I.menuBalance).fadeIn(200);
                         break;

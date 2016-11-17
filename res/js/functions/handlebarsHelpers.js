@@ -335,9 +335,8 @@ $(function () {
             return ret;
         },
         'variable': function (name, args, opt) {
-            http://www.w3schools.com/jsref/event_onload.asp
-
-                console.log(this, name, args, opt);
+            // http://www.w3schools.com/jsref/event_onload.asp
+            console.debug(this, name, args, opt);
         },
         'cache': function () {
 

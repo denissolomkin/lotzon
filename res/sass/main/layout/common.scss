@@ -21,7 +21,9 @@ body {
         }
     }
 }
-
+a{
+    cursor: pointer;
+}
 // scrollClock
 body.scrollLock {
     overflow: hidden;

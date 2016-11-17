@@ -11,7 +11,8 @@
         <li class="m-ballance">
             <div class="toggle-btn">
                 <div class="menu-balance-inf clearfix">
-                    <img src="/res/css/img/moneta.svg">
+                    <img src="{{avatar (player 'img') (player 'id')}}" onload="this.style.background = 'none'"
+                 onerror="Player.getAvatar.call(this)">
                     <div>
                         <span class="holder-money">{{player "balance.money"}}</span>
                         <span>{{player "getCurrency"}}</span>
@@ -35,8 +36,8 @@
             <ul class="open">
                 <li>
                     <a href="/profile">
-                        <img src="{{avatar (player 'img') (player 'id')}}" class="loading" onload="this.style.background = 'none'" onerror="Player.getAvatar.call(this)">
-                        <span>{{i18n 'menu-cabinet'}}</span>
+                        <!-- <img src="{{avatar (player 'img') (player 'id')}}" class="loading" onload="this.style.background = 'none'" onerror="Player.getAvatar.call(this)"> -->
+                        {{i18n 'menu-cabinet'}}
                     </a>
                 </li>
             </ul>

@@ -3,7 +3,11 @@
     <div class="balance-btn menu-btn-item">
 
         <!-- <div class="title">{{{i18n "menu-title-player-balance"}}}</div> -->
-        <div class="title"><img src="/res/css/img/moneta.svg"></div>
+        <div class="title">
+            <!-- <img src="/res/css/img/moneta.svg"> -->
+            <img src="{{avatar (player 'img') (player 'id')}}" onload="this.style.background = 'none'"
+                 onerror="Player.getAvatar.call(this)">
+        </div>
         
         <div>
             <span class="cabinet-balance-count">
@@ -25,11 +29,14 @@
     <!-- BALANCE MENU -->
     <div class="menu-balance menu-item">
         <div class="menu-balance-actions clearfix">
+            <a href="/profile" class="menu-balance-item">{{i18n 'menu-cabinet'}}</a>
             {{#each .}}
             <a href="/{{.}}" class="menu-balance-item">{{i18n "menu" .}}</a>
             {{/each}}
+            <a class="menu-balance-item not-handle" onclick="Content.logoutPopup();">{{i18n 'menu-logout'}}</a>
         </div>
     </div>
     <!-- end of BALANCE MENU -->
+
     {{/if}}
 </div>

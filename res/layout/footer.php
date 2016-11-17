@@ -58,14 +58,14 @@
                 'menu-main': ['blog', 'lottery', 'games', 'communication', 'users', 'prizes'],
                 // 'menu-profile': ['profile', 'profile/billing', 'profile/settings', 'reports/referrals', 'profile/bonuses'],
                 'menu-more': [
-                    'reports/referrals', 
+                    // 'reports/referrals', 
                     'support/bonuses',
                     'user/0/messages',
                     'support/rules',
                     'support/faq'
                 ]
             },
-            balance: ['balance/cashout', 'balance/convert', 'reports/transactions', 'reports/payments']
+            balance: ['balance/cashout', 'balance/convert', 'reports/transactions', 'reports/payments','reports/referrals']
         },
         debugConf = <?php echo json_encode($debug, JSON_PRETTY_PRINT); ?>;
 

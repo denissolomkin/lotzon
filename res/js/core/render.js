@@ -526,7 +526,6 @@
         },
 
         "afterHTML": function (options) {
-
             R.event('complete', options);
 
             if (options.after) {
@@ -541,7 +540,13 @@
 
             if (options.target && options.target.parentNode) {
 
+                // console.debug('!!!!!render call!!',options.target.parentNode, '!!!!!\t\t', $(options.target).closest('header').length );
                 var items = options.target.parentNode;
+
+                // FIX! 4 multiple active header nav
+                if( $(items).closest('header, #menu-navigation-mobile').length ){
+                    $('header .active[href], #menu-navigation-mobile .active[href]').removeClass('active');
+                }
 
                 if (!options.target.classList.contains('content-box-tab')) {
                     items = items.parentNode;
