@@ -14685,6 +14685,14 @@ and open the template in the editor.
     line-height: 18px;
     margin: 0 0 20px 15px; }
 
+#support-rules h1 {
+  cursor: default; }
+
+#support-rules .content-box-item {
+  padding: 0 0 20px 0; }
+  #support-rules .content-box-item > div {
+    padding: 0 0 0 10px; }
+
 .daterangepicker {
   position: absolute;
   color: inherit;

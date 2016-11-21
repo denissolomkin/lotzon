@@ -151,7 +151,8 @@
             $(document).on('change', 'form.comment-complain input[type=radio]', Comments.complain);
 
             /* support */
-            $(document).on('click', '.support h1', Support.do.collapse);
+            // $(document).on('click', '.support h1', Support.do.collapse);
+            $(document).on('click', '#support-faq h1', Support.do.collapse);
 
         },
 

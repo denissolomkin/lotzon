@@ -22,3 +22,14 @@
         margin: 0 0 20px 15px;
     }
 }
+#support-rules{
+    h1{
+        cursor: default;
+    }
+    .content-box-item{
+        padding: 0 0 20px 0;
+        > div{
+            padding: 0 0 0 10px;
+        }
+    }
+}
