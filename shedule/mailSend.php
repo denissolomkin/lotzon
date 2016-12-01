@@ -16,6 +16,7 @@ foreach ($list as $task) {
         echo date("Y-m-d H:i:s").' Start sending task ['.$task->getId().']'.PHP_EOL;
         $task->send();
         echo date("Y-m-d H:i:s").' done sending task ['.$task->getId().']'.PHP_EOL;
+        exit(0);
     }
 }
 if ($i==0) {
