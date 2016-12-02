@@ -112,10 +112,10 @@ Por favor, desactive el bloqueador de anuncios!'); ?>
         <div class="site-overlay"></div>
         <div class="wrapper clearfix">
             <!-- app block -->
-            <div class="appBox" style="height: 0;overflow:hidden;">    
+            <!-- <div class="appBox" style="height: 0;overflow:hidden;">    
                 <span>НОВИНКА - РАСШИРЕНИЕ ДЛЯ БРАУЗЕРОВ CHROME И YANDEX, СООБЩАЮЩЕЕ О ПОЯВЛЕНИИ МОМЕНТАЛЬНОГО ШАНСА</span>
                 <a href="https://chrome.google.com/webstore/detail/lotzon-toolbar/clphbdjchiopapppajbikhbgmmlbodif" class="button gold" target="_blank">УСТАНОВИТЬ</a>
-            </div>
+            </div> -->
             <!-- END app block -->
             <span class="js-detect"></span>
     
