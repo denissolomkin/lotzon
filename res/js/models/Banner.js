@@ -14,10 +14,10 @@
                         $('#' + href).empty().append(data.json.res);
                         
                         // add padding top body-top if branding
-                        if (href === "banner-desktop-brand" && data.json.res) {
-                            // console.debug('>>>>', data.json.res);
-                            $('body').css({'padding-top':'300px'});
-                        }
+                        // if (href === "banner-desktop-brand" && data.json.res) {
+                        //     // console.debug('>>>>', data.json.res);
+                        //     $('body').css({'padding-top':'300px'});
+                        // }
 
                     },
                     data: {
