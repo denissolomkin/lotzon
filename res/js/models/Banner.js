@@ -3,7 +3,7 @@
     Banner = {
 
         load: function f(href) {
-
+            // console.debug(href);
             if (typeof href == 'object')
                 while (href.length)
                     f(href.shift());
@@ -12,6 +12,13 @@
                     action: href,
                     after: function (data) {
                         $('#' + href).empty().append(data.json.res);
+                        
+                        // add padding top body-top if branding
+                        if (href === "banner-desktop-brand" && data.json.res) {
+                            // console.debug('>>>>', data.json.res);
+                            $('body').css({'padding-top':'300px'});
+                        }
+
                     },
                     data: {
                         href: window.location.pathname,
@@ -54,7 +61,6 @@
 
             if (Device.isMobile())
                 return;
-
             Banner.load('banner-desktop-brand');
 
         },
