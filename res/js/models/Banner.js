@@ -14,10 +14,16 @@
                         $('#' + href).empty().append(data.json.res);
                         
                         // add padding top body-top if branding
-                        // if (href === "banner-desktop-brand" && data.json.res) {
-                        //     // console.debug('>>>>', data.json.res);
-                        //     $('body').css({'padding-top':'300px'});
-                        // }
+                        if (href === "banner-desktop-brand" && data.json.res) {
+                            var wrapper= document.createElement('div');
+                                wrapper.innerHTML= data.json.res;
+                                // wrapper.innerHTML= '<a target="_blank" data-margin="300" style="background-image:url(http://stag.lotzon.com/tpl/img/baners/branding_sz.jpg);" href="http://shopszon.com/?ref=614"></a>';
+                            var m = wrapper.querySelector('a[data-margin]');
+                                m = m && m.getAttribute('data-margin') || 0;
+
+                            // console.debug('>>>>', data.json.res, typeof data.json.res);
+                            $('body').css({'padding-top': m+'px'});
+                        }
 
                     },
                     data: {
