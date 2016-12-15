@@ -36,7 +36,7 @@ class Index extends \SlimController\SlimController
 
         // create player
         $player = new Player();
-        $player->setEmail($m);
+        $player->setEmail($m)->setHash($vh);
         try {
             $player->loadPreregistration();
             if ($player->getHash() != $vh) {

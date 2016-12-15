@@ -30,12 +30,13 @@ class PlayersDBProcessor implements IProcessor
     public function loadPreregistration(Entity $player)
     {
         $sql = "SELECT * FROM `PlayersPreregistration`
-            WHERE `Email` = :email";
+            WHERE `Email` = :email AND `Hash` = :hash";
 
         try {
             $sth = DB::Connect()->prepare($sql);
             $sth->execute(array(
                 ':email' => $player->getEmail(),
+                ':hash'  => $player->getHash(),
             ));
         } catch (PDOException $e) {
             throw new ModelException("Error processing storage query", 500);
