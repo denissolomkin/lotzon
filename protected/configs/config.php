@@ -687,6 +687,13 @@ Config::instance()->publicResources = array(
         'get' => 'controllers\production\LotteryController:lotteryTickets',
     ),
     /**
+     * Captcha
+     * */
+    '/tickets/captcha' => array(
+        'post' => 'controllers\production\LotteryController:captcha',
+    ),
+
+    /**
      * Reports
      */
     '/reports/transactions' => array(

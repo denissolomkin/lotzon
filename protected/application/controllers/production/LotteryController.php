@@ -343,4 +343,53 @@ class LotteryController extends \AjaxController
         return true;
     }
 
+    public function captchaAction()
+    {
+        $player = new Player;
+        $player->setId($this->player->getId())->fetch();
+
+        $post_info = $this->request()->post('moneycaptcha_code', false);
+
+        $ok = false;
+        if ($post_info!==false) {
+            $handle = curl_init();
+            curl_setopt($handle, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($handle, CURLOPT_URL, "https://moneycaptcha.ru/valid.php?code=" . $post_info);
+            curl_setopt($handle, CURLOPT_SSL_VERIFYPEER, false);
+            $status = curl_exec($handle);
+            if ($status !== false) {
+                curl_close($handle);
+                $xml = simplexml_load_string($status);
+                if($xml->code == "1"){
+                    $ok = true;
+                }
+            }
+        }
+
+        if ($ok === true) {
+            $gift = new \Gift();
+            $gift->setPlayerId($this->player->getId())
+                ->setObjectType('Ticket')
+                ->setObjectId(7)
+                ->setExpiryDate(\LotterySettingsModel::instance()->loadSettings()->getNearestGame()+strtotime('00:00:00', time()))
+                ->setUsed(false)
+                ->create();
+            $player->setDates(time(), 'Captcha');
+        }
+
+        $response = array(
+            "player" => array(
+                "dates"  => array(
+                    'captcha' => $player->getDates('Captcha'),
+                ),
+            ),
+            "tickets" => array(
+                "filledTickets" => \TicketsModel::instance()->getUnplayedTickets($player->getId()),
+            ),
+        );
+
+        $this->ajaxResponseNoCache($response);
+        return true;
+    }
+
 }

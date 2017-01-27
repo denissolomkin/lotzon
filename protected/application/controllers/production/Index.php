@@ -426,7 +426,8 @@ class Index extends \SlimController\SlimController
                 'unauthorized' => false,
             ),
             'dates'    => array(
-                'registration' => $player->getDates('Registration')
+                'registration' => $player->getDates('Registration'),
+                'captcha'      => $player->getDates('Captcha'),
             ),
             'privacy'  => $player->getPrivacy(),
             'title'    => array(
@@ -527,6 +528,7 @@ class Index extends \SlimController\SlimController
             'filestorage'        => '/filestorage',
             'websocketUrl'       => 'ws' . (\Config::instance()->SSLEnabled ? 's' : '') . '://' . $_SERVER['SERVER_NAME'] . ':' . \Config::instance()->wsPort,
             'websocketEmulation' => false,
+            'captchaTime'        => 24*60*60,
             'page'               => $page,
             'limits'             => array(
                 'lottery-history' => (int)$counters->getValue('LOTTERIES_PER_PAGE'),
