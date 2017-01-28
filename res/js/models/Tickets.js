@@ -23,6 +23,57 @@
             }
 
         },
+        "getSevenTimer": function(){
+            // console.debug('!!!',Player,Player.dates.captcha)
+            if(Player.is && Player.is.unauthorized) {return;}
+            if(!Player && !Player.dates.captcha) {return;}
+
+            $('#lottery-ticket-item .steps .timer').countdown({
+                // until: new Date(new Date((new Date).getTime()+50000)),
+                until: new Date((+Player.dates.captcha + (24*3600))* 1000),
+                compact: true, 
+                format: 'H:M:S',
+                onExpiry: function(){
+                    Tickets.update();
+                }
+            });
+        },
+        "getSevenTicket": function(form){
+            // alert('seven');
+            // action="/tickets/captcha" method="post"
+            var code = $(form).find('#moneycaptcha_code').val();
+            if(!code){ return; }
+
+            // console.debug('______>>', form.action, code);
+
+            Form.post.call(form,{
+                            href: form.action,
+                            data: {'moneycaptcha_code':code},
+                            after: function(data) {
+
+                                console.debug(data);
+
+                                }
+                            });
+            // Form.post(e);
+            //up tickets
+            // Tickets.update();
+        },
+        "getSevenSteps": function (){
+            
+            console.debug(this);
+            var btn = $(this),
+                goto = $(this).attr('data-goto');
+            btn.closest('.step').addClass('hidden');
+            $('.steps '+goto).removeClass('hidden');
+            
+            // if(goto == '#st3'){
+            //     $('#lottery-ticket').addClass('fix-seven');
+            // }else{
+            //     $('#lottery-ticket').removeClass('fix-seven');
+            // }
+
+        },
 
         "isDone": function (ticketId) {
             ticketId = ticketId || this.selectedTab;
@@ -83,6 +134,9 @@
         },
 
         "update": function () {
+            //fix height
+            // $('#lottery-ticket').removeClass('fix-seven');
+
             R.json('/lottery/tickets');
         },
 

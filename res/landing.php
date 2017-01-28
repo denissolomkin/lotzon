@@ -56,6 +56,16 @@
             <div class="wrapper-inner">
                 <!-- Information -->
                 <div class="left-content">
+             <!--    <form id="tst" action="/test.php">
+        <noindex>                               
+<div id="money_captcha_wrapper" class="money_captcha_wrapper">
+<script type="text/javascript" src="https://moneycaptcha.ru/captcha.php?siteid=40711&charset=utf-8&button=moneycaptchasubmit"></script>
+</div> <input name="moneycaptcha_code" id="moneycaptcha_code" type="hidden" value="">   
+</noindex>  
+                                  
+        
+        <input class="sb_but default" type="submit" id="moneycaptchasubmit" disabled="true" title="Hiddd!!!">
+    </form> -->
                     <h1 class="landing-title">Джекпот <?php echo number_format($slider['jackpot'], 0, ' ', ' '); ?>  <?php echo $player['currency']['iso'];?></h1>
                     <p class="lending-text">
                         Мы не азартная игра, так как участие полностью бесплатное!<br><br>

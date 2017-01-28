@@ -52,6 +52,7 @@
             $(window).on('scroll', Device.do.scroll);     
             
 
+            $(document).on('click', ".ticket-item .steps [data-goto]", Tickets.getSevenSteps);
                  
             $(document).on('click', ".nm-search .nm-friend", Messages.do.setUser);
             $(document).on('click', Device.do.hide);

@@ -528,10 +528,30 @@ input.comment-reply-btn {
 
 .ticket-items {
   background: #a7d1d5;
-  height: 406px;
+  min-height: 406px;
   margin: 5px 0 7px;
   padding-left: 10px;
   display: table-header-group; }
+
+#lottery-ticket-item {
+  min-height: 416px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -moz-box-orient: vertical;
+  -moz-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -moz-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center; }
 
 .scroll-box {
   height: auto; }
@@ -954,7 +974,7 @@ input.comment-reply-btn {
   .ticket-items {
     margin: 5px 0 7px;
     padding-left: 0;
-    height: 403px;
+    min-height: 403px;
     background: #a7d1d5; }
     .ticket-items .ticket-actions {
       padding: 5px 15px 0 15px; }
@@ -1009,6 +1029,8 @@ input.comment-reply-btn {
     padding: 30px 5px; }
   .ticket-item .ticket-numbers li {
     margin: 0 15px 18px 15px; }
+  .ticket-item form .ticket-numbers li {
+    margin: 0 15px 11px 15px; }
   .lottery-grid .title {
     padding: 16px 0 16px 30px; }
   .matches-inf .lottery-grid .ul-striped li {

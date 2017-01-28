@@ -22,6 +22,7 @@
             $(Ticket.actions).find('.after i').off().on('click', function () {
                 $('.profile .ul_li[data-link="profile-info"]').click();
             });
+            
         },
 
         render: function () {
@@ -115,6 +116,9 @@
                         Tickets.isGold()
                             ? document.querySelector('.ticket-box').classList.add('gold')
                             : document.querySelector('.ticket-box').classList.remove('gold');
+
+                        // init timer
+                        Tickets.getSevenTimer();
                     }
                 });
 

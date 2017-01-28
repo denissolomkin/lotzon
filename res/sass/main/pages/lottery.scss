@@ -474,7 +474,17 @@
     display: table;
     padding: 6px 0 14px;
     padding-right: 10px;
+    .count{
+        display: block;
+        line-height: 11px;
+        width: 17px;
+        height: 17px;
+        border: 1px solid rgba(255,255,255,.9);
+        top: -5px;
+        right: -5px;
+    }
     & li {
+        position: relative;
         width: 1000px;
         height: 40px;
         font-size: 15.5px;
@@ -549,6 +559,9 @@
             cursor: default;
             text-shadow: 0 1px 0 rgb(76, 76, 76);
             color: #b2d0d4;
+            .count{
+                display: none;
+            }
         }
         // &.active.done .ticket-number-sm:before {
         //     content: "";
@@ -1279,7 +1292,7 @@
         width: 0;
         height: 100%;
         position: relative;
-        margin-left: -5px;
+        margin-left: -6px;
     }
     
     .condition-inner{
@@ -1314,7 +1327,60 @@
         }
     }
 }
-
+// .fix-seven{
+//     .ticket-items{
+//         height: auto;
+//     }
+// }
+.ticket-seven{
+    height: auto;
+    // min-height: 406px;
+    overflow: initial;
+    .condition{
+        text-align: center;
+        overflow: initial;
+    }
+    //seven ticket steps styles
+    .step{
+        [data-goto="#st2"]{
+            display: inline; 
+            color: #4a90e2; 
+            cursor: pointer;
+            &:hover{
+                text-decoration: underline;
+            }
+        }
+        span{
+            &.small{
+                white-space: nowrap;
+                font-size: 17px;
+                text-transform: none;
+            }
+        }
+        .timer{
+            text-transform: none;
+            display: inline;
+            > *{
+                white-space: nowrap;
+                font-size: 17px;
+                color: #000;
+            }
+        } 
+        div>p{
+            font-size: 15.5px; 
+            text-transform: none; 
+            color: #4A4A4A;
+            margin-bottom: 10px;
+        }
+        iframe{
+            width: 420px;
+            height: 420px;
+            margin-bottom: -80px;
+            margin-top: -20px;
+            transition: height .1s linear;
+        }
+    }
+}
 .balls-count {
     font-weight: normal;
     color: #e7f6f7;

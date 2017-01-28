@@ -112,7 +112,6 @@ footer {
     .popup-user .ae-user-img:after {
       width: 50px;
       height: 50px;
-      -webkit-background-size: 50px 50px;
       -moz-background-size: 50px;
       -o-background-size: 50px;
       background-size: 50px; }
@@ -2028,7 +2027,6 @@ header {
   padding: 0 20px 20px 20px;
   width: 100%; }
   #popup-lottery-process.lottery-won {
-    -webkit-background-size: cover !important;
     -moz-background-size: cover !important;
     -o-background-size: cover !important;
     background-size: cover !important; }
@@ -2218,7 +2216,19 @@ header {
   -ms-transform: translate(0, -10%);
   -o-transform: translate(0, -10%);
   transform: translate(0, -10%);
-  top: 0; }
+  top: 20px;
+  text-align: center; }
+
+.ticket-seven .condition {
+  margin-top: 20px; }
+
+.ticket-seven .step iframe {
+  width: 300px;
+  height: 500px;
+  margin: 0 0 -110px 0; }
+
+.ticket-seven #st3 {
+  margin: 0 -40px 0 -50px; }
 
 @media (max-width: 768px) {
   #lottery-view #lottery-view-tickets {

@@ -4,13 +4,20 @@
 
 .ticket-items {
     background: rgb(167, 209, 213);
-    height: 406px;
+    min-height: 406px;
     // box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
     margin: 5px 0 7px;
     padding-left: 10px;
     display: table-header-group;
 }
+#lottery-ticket-item{
+    min-height: 416px;
 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
 .scroll-box {
     height: auto;
 }
@@ -525,7 +532,7 @@
     .ticket-items {
         margin: 5px 0 7px;
         padding-left: 0;
-        height: 403px;
+        min-height: 403px;
         background: #a7d1d5;
         .ticket-actions {
             padding: 5px 15px 0 15px;
@@ -605,6 +612,9 @@
     }
     .ticket-item .ticket-numbers li {
         margin: 0 15px 18px 15px;
+    }
+    .ticket-item form .ticket-numbers li {
+        margin: 0 15px 11px 15px;
     }
     .lottery-grid .title {
         padding: 16px 0 16px 30px;

@@ -1,8 +1,32 @@
-<div id="lottery-ticket-item" class="ticket-item clearfix">
+<div id="lottery-ticket-item" class="ticket-item ticket-seven clearfix">
     <div class="condition">
-    <div class="condition-inner">
-        {{{i18n "message-lottery-ticket-7" }}}
+    <div class="condition-inner steps">
+        <div class="step" id="st1">
+        	{{{i18n "message-lottery-ticket-7" }}}
+        	
+        	{{#if (unauthorized)}}	
+        		<br><span>- <span data-goto='#st2'>{{{i18n "message-lottery-ticket-7-btn" }}}</span></span>
+        	{{else}}
+
+	        	{{#if (gt (player "dates.captcha") "1") }}
+		        	<br><span>- {{{i18n "message-lottery-ticket-7-btn" }}} <span class="small">({{{i18n "message-lottery-ticket-7-timer" }}} <span class="timer"> </span>) </span></span>
+
+	        	{{else}}
+	        		<br><span>- <span data-goto='#st2'>{{{i18n "message-lottery-ticket-7-btn" }}}</span></span>
+	        	{{/if}}
+        	{{/if}}
+        </div>
+        <div class="step hidden" id="st2">
+        	<div>{{{i18n "message-lottery-ticket-7-2" }}}</div>
+        	<br>
+        	<div>
+        		<button data-goto="#st3" class="btn-flat" >{{{i18n "message-lottery-ticket-7-btn" }}}</button>
+        		<button data-goto="#st1" class="btn-flat" >{{{i18n "message-lottery-ticket-7-cancel" }}}</button>
+        	</div>
+        </div>
+        <div class="step hidden" id="st3">
+        	<iframe id="moca" name="moca" src="/res/layout/captcha.html" scrolling="no" frameborder="0"></iframe>
+        </div>
     </div>
     </div>
 </div>
-

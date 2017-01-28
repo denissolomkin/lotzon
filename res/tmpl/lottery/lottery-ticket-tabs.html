@@ -2,6 +2,17 @@
     {{#renderTabs}}
     <li data-ticket='{{num}}' class='{{#done}}done{{/done}} {{^available}}unavailable{{/available}}'>
         <span class="ticket-number-sm">{{#if @last}} <span>gold</span><span class="short">g</span> {{else}}№{{num}}{{/if}}</span>
+        
+        {{#if (like num 7)}}
+	        {{#if (unauthorized)}}
+		        <span class="count">!</span>
+	        {{else}}
+		        {{#if (lt (player "dates.captcha") "1")}}
+		        	<span class="count">!</span>
+		        {{/if}}
+	        {{/if}}
+        {{/if}}
+
     </li>
     {{/renderTabs}}
 </ul>
