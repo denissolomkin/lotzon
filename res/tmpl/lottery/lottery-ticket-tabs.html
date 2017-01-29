@@ -7,7 +7,8 @@
 	        {{#if (unauthorized)}}
 		        <span class="count">!</span>
 	        {{else}}
-		        {{#if (lt (player "dates.captcha") "1")}}
+		        {{#if (captchaTime)}}
+		        {{else}}
 		        	<span class="count">!</span>
 		        {{/if}}
 	        {{/if}}

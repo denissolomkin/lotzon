@@ -368,6 +368,10 @@ $(function () {
             if (inStr.match(pattern)) return true;
             return false;
         },
+        'captchaTime': function (v1) {
+            console.debug(new Date((+Player.dates.captcha + (24*3600))* 1000) >  new Date() );
+            return ( new Date((+Player.dates.captcha + (24*3600))* 1000) > new Date() );
+        },
         'false': function (v1) {
             return v1 === false;
         },

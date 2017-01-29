@@ -8842,6 +8842,8 @@ form.loading > * {
   .ticket-seven .condition {
     text-align: center;
     overflow: initial; }
+  .ticket-seven #st1, .ticket-seven #st2 {
+    float: left; }
   .ticket-seven .step [data-goto="#st2"] {
     display: inline;
     color: #4a90e2;

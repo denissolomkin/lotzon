@@ -50,7 +50,7 @@
                             href: form.action,
                             data: {'moneycaptcha_code':code},
                             after: function(data) {
-
+                                document.querySelector('#moca').style.height = "";
                                 console.debug(data);
 
                                 }

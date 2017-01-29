@@ -1341,6 +1341,9 @@
         overflow: initial;
     }
     //seven ticket steps styles
+    #st1, #st2{
+        float: left;
+    }
     .step{
         [data-goto="#st2"]{
             display: inline; 
