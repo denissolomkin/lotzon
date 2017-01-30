@@ -429,7 +429,8 @@
                 var body = document.body;
                 body.className = body.className.replace(/\bscrollLock\b/,'');
             }
-
+            //up b on close
+            Banner.update();
             DOM.remove(DOM.up('.pop-box', this));
 
         },

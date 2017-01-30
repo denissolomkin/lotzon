@@ -78,6 +78,8 @@
                     /* фактическое нажатие */
                     case isLi:
                         Tickets.selectedTab = 1 + Array.prototype.indexOf.call(this.parentNode.children, this);
+                        //up b
+                        Banner.update();
                         break;
 
                     /* еще не назначено, либо выбранный уже заполнен, но есть еще незаполненные*/

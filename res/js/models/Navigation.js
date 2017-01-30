@@ -287,8 +287,10 @@
                     D.log(['Navigation.backBlock:', this.parentNode.id], 'info');
                     DOM.remove(DOM.up('.content-box', this));
                     history.back();
-
+                    
+                    Banner.update();
                 }
+                
 
                 return false;
 
