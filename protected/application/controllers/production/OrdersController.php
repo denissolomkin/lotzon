@@ -91,7 +91,7 @@ class OrdersController extends \AjaxController
                 break;
 
             case \MoneyOrder::GATEWAY_QIWI:
-                $this->ajaxResponseBadRequest('SELECT_OTHER_METHOD');
+                //$this->ajaxResponseBadRequest('SELECT_OTHER_METHOD');
                 $accountName = 'Qiwi';
                 break;
 
