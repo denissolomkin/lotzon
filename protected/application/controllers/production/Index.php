@@ -424,6 +424,7 @@ class Index extends \SlimController\SlimController
                 'valid'    => $player->isValid(),
                 'moderator'=> in_array($player->getId(), (array) SettingsModel::instance()->getSettings('moderators')->getValue()),
                 'unauthorized' => false,
+                'noCaptchaNotification' => $player->getDates('CaptchaNotificationForever')>0 ? true : false,
             ),
             'dates'    => array(
                 'registration'        => $player->getDates('Registration'),
@@ -530,7 +531,7 @@ class Index extends \SlimController\SlimController
             'websocketUrl'            => 'ws' . (\Config::instance()->SSLEnabled ? 's' : '') . '://' . $_SERVER['SERVER_NAME'] . ':' . \Config::instance()->wsPort,
             'websocketEmulation'      => false,
             'captchaTime'             => 24 * 60 * 60,
-            'captchaNotificationTime' => 7 * 24 * 60 * 60,
+            'captchaNotificationTime' => 5 * 60 * 60,
             'page'                    => $page,
             'limits'                  => array(
                 'lottery-history'             => (int)$counters->getValue('LOTTERIES_PER_PAGE'),

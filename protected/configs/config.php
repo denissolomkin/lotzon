@@ -695,7 +695,9 @@ Config::instance()->publicResources = array(
     '/tickets/captcha/close' => array(
         'post' => 'controllers\production\LotteryController:captchaClose',
     ),
-
+    '/tickets/captcha/closeForever' => array(
+        'post' => 'controllers\production\LotteryController:captchaCloseForever',
+    ),
     /**
      * Reports
      */
