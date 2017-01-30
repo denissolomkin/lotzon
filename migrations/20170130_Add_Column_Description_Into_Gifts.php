@@ -1,0 +1,1 @@
+ALTER TABLE `Gifts` ADD COLUMN `Description` VARCHAR(255) NOT NULL AFTER `ExpiryDate`;

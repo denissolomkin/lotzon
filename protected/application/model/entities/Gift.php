@@ -12,6 +12,7 @@ class Gift extends Entity
     protected $_equivalent   = 0;
     protected $_date         = 0;
     protected $_expiryDate   = 0;
+    protected $_description  = '';
     protected $_used         = false;
 
     public function init()

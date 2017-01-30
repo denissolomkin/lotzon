@@ -6,7 +6,7 @@ class GiftsDBProcessor implements IProcessor
 {
     public function create(Entity $gift)
     {
-        $sql = "INSERT INTO `Gifts` (`Id`, `PlayerId`, `GiftPlayerId`, `ObjectType`, `ObjectId`, `Currency`, `Sum`, `Equivalent`, `Date`, `ExpiryDate`, `Used`) VALUES (:id, :playerId, :giftPlayerId, :objectType, :objectId, :currency, :sum, :equivalent, :date, :expiryDate, :used)";
+        $sql = "INSERT INTO `Gifts` (`Id`, `PlayerId`, `GiftPlayerId`, `ObjectType`, `ObjectId`, `Currency`, `Sum`, `Equivalent`, `Date`, `ExpiryDate`, `Description`, `Used`) VALUES (:id, :playerId, :giftPlayerId, :objectType, :objectId, :currency, :sum, :equivalent, :date, :expiryDate, :description, :used)";
 
         try {
             $sth = DB::Connect()->prepare($sql)->execute(array(
@@ -20,6 +20,7 @@ class GiftsDBProcessor implements IProcessor
                 ':equivalent'   => $gift->getEquivalent(),
                 ':date'         => time(),
                 ':expiryDate'   => $gift->getExpiryDate(),
+                ':description'  => $gift->getDescription(),
                 ':used'         => $gift->getUsed(),
             ));
         } catch (PDOException $e) {

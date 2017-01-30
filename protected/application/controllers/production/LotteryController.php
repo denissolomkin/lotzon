@@ -372,6 +372,7 @@ class LotteryController extends \AjaxController
                 ->setObjectType('Ticket')
                 ->setObjectId(7)
                 ->setExpiryDate(\LotterySettingsModel::instance()->loadSettings()->getNearestGame()+strtotime('00:00:00', time()))
+                ->setDescription('Captcha')
                 ->setUsed(false)
                 ->create();
             $player->setDates(time(), 'Captcha')->updateDate('Captcha');
