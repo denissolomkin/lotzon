@@ -343,6 +343,25 @@ class LotteryController extends \AjaxController
         return true;
     }
 
+    public function captchaCloseAction()
+    {
+        $player = new Player;
+        $player->setId($this->player->getId())->fetch();
+
+        $player->setDates(time(), 'CaptchaNotification')->updateDate('CaptchaNotification');
+
+        $response = array(
+            "player" => array(
+                "dates"  => array(
+                    'captchaNotification' => $player->getDates('CaptchaNotification'),
+                ),
+            ),
+        );
+
+        $this->ajaxResponseNoCache($response);
+        return true;
+    }
+
     public function captchaAction()
     {
         $player = new Player;

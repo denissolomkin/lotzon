@@ -426,8 +426,9 @@ class Index extends \SlimController\SlimController
                 'unauthorized' => false,
             ),
             'dates'    => array(
-                'registration' => $player->getDates('Registration'),
-                'captcha'      => $player->getDates('Captcha'),
+                'registration'        => $player->getDates('Registration'),
+                'captcha'             => $player->getDates('Captcha'),
+                'captchaNotification' => $player->getDates('CaptchaNotification'),
             ),
             'privacy'  => $player->getPrivacy(),
             'title'    => array(
@@ -518,30 +519,31 @@ class Index extends \SlimController\SlimController
         );
 
         $config = array(
-            'timeout'            => array(
+            'timeout'                 => array(
                 'ping'   => (int)$counters->getValue('PLAYER_TIMEOUT'),
-                'online' => (int)$counters->getValue('PLAYER_TIMEOUT')
+                'online' => (int)$counters->getValue('PLAYER_TIMEOUT'),
             ),
-            'adminId'            => (int)$counters->getValue('USER_REVIEW_DEFAULT'),
+            'adminId'                 => (int)$counters->getValue('USER_REVIEW_DEFAULT'),
             'minMoneyOutput'          => (int)$counters->getValue('MIN_MONEY_OUTPUT'),
-            'tempFilestorage'    => '/filestorage/temp',
-            'filestorage'        => '/filestorage',
-            'websocketUrl'       => 'ws' . (\Config::instance()->SSLEnabled ? 's' : '') . '://' . $_SERVER['SERVER_NAME'] . ':' . \Config::instance()->wsPort,
-            'websocketEmulation' => false,
-            'captchaTime'        => 24*60*60,
-            'page'               => $page,
-            'limits'             => array(
-                'lottery-history' => (int)$counters->getValue('LOTTERIES_PER_PAGE'),
-                'communication-comments' => (int)$counters->getValue('COMMENTS_PER_PAGE'),
-                'communication-messages' => (int)$counters->getValue('MESSAGES_PER_PAGE'),
+            'tempFilestorage'         => '/filestorage/temp',
+            'filestorage'             => '/filestorage',
+            'websocketUrl'            => 'ws' . (\Config::instance()->SSLEnabled ? 's' : '') . '://' . $_SERVER['SERVER_NAME'] . ':' . \Config::instance()->wsPort,
+            'websocketEmulation'      => false,
+            'captchaTime'             => 24 * 60 * 60,
+            'captchaNotificationTime' => 7 * 24 * 60 * 60,
+            'page'                    => $page,
+            'limits'                  => array(
+                'lottery-history'             => (int)$counters->getValue('LOTTERIES_PER_PAGE'),
+                'communication-comments'      => (int)$counters->getValue('COMMENTS_PER_PAGE'),
+                'communication-messages'      => (int)$counters->getValue('MESSAGES_PER_PAGE'),
                 'communication-notifications' => (int)$counters->getValue('NOTIFICATIONS_PER_PAGE'),
-                'users-friends' => (int)$counters->getValue('FRIENDS_PER_PAGE'),
-                'blog-posts' => (int)$counters->getValue('POSTS_PER_PAGE'),
+                'users-friends'               => (int)$counters->getValue('FRIENDS_PER_PAGE'),
+                'blog-posts'                  => (int)$counters->getValue('POSTS_PER_PAGE'),
             ),
-            'yandexMetrika' => (int)$counters->getValue('YANDEX_METRIKA'),
-            'googleAnalytics' => $counters->getValue('GOOGLE_ANALYTICS'),
-            'captchaKey' => $counters->getValue('CAPTCHA_CLIENT'),
-            'siteVersion' => $seo['SiteVersion'],
+            'yandexMetrika'           => (int)$counters->getValue('YANDEX_METRIKA'),
+            'googleAnalytics'         => $counters->getValue('GOOGLE_ANALYTICS'),
+            'captchaKey'              => $counters->getValue('CAPTCHA_CLIENT'),
+            'siteVersion'             => $seo['SiteVersion'],
         );
 
         $debug = array(

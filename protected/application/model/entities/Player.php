@@ -19,7 +19,7 @@ class Player extends Entity
     const AVATAR_HEIGHT = 160;
 
     static $MASK = array(
-        'dates'=>array('Moment','NextMoment','QuickGame','ChanceGame','AdBlockLast','AdBlocked','WSocket','TeaserClick','Ping','Login','Notice','Registration','Captcha'),
+        'dates'=>array('Moment','NextMoment','QuickGame','ChanceGame','AdBlockLast','AdBlocked','WSocket','TeaserClick','Ping','Login','Notice','Registration','Captcha','CaptchaNotification'),
         'stats'=>array('WhoMore','SeaBattle','Notice','Note','AdBlock','Log','Ip','MyReferal','Referal','MyInviter','Inviter','ShopOrder','MoneyOrder','Review','Message','CookieId','Mult'),
         'counters'=>array('CaptchaCount','CaptchaTime'),
         'privacy'=>array('Name','Surname','Gender','Birthday','Age','Zip','Address','Message'), // list of variables, which can be modify by player
