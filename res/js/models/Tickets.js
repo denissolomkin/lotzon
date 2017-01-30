@@ -23,8 +23,14 @@
             }
 
         },
+        "captchaTime": function () {
+            if(!Player.dates){
+                return true;
+            }
+            // console.debug(new Date((+Player.dates.captcha + (24*3600))* 1000) >  new Date() );
+            return ( new Date((+Player.dates.captcha + (24*3600))* 1000) < new Date() );
+        },
         "getSevenTimer": function(){
-            // console.debug('!!!',Player,Player.dates.captcha)
             if(Player.is && Player.is.unauthorized) {return;}
             if(!Player && !Player.dates.captcha) {return;}
 
@@ -39,12 +45,11 @@
             });
         },
         "getSevenTicket": function(form){
-            // alert('seven');
-            // action="/tickets/captcha" method="post"
+            
             var code = $(form).find('#moneycaptcha_code').val();
-            if(!code){ return; }
-
-            // console.debug('______>>', form.action, code);
+            if(!code){ 
+                return; 
+            }
 
             Form.post.call(form,{
                             href: form.action,
@@ -55,9 +60,6 @@
 
                                 }
                             });
-            // Form.post(e);
-            //up tickets
-            // Tickets.update();
         },
         "getSevenSteps": function (){
             
@@ -66,12 +68,6 @@
                 goto = $(this).attr('data-goto');
             btn.closest('.step').addClass('hidden');
             $('.steps '+goto).removeClass('hidden');
-            
-            // if(goto == '#st3'){
-            //     $('#lottery-ticket').addClass('fix-seven');
-            // }else{
-            //     $('#lottery-ticket').removeClass('fix-seven');
-            // }
 
         },
 

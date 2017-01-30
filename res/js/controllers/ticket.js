@@ -26,11 +26,10 @@
         },
 
         render: function () {
-
             D.log('Ticket.render');
 
             if (Tickets.isComplete()) {
-
+                
                 this.complete();
 
             } else {
@@ -55,7 +54,7 @@
         },
 
         switch: function () {
-
+            
             D.log('Ticket.switch');
 
             if (Tickets.isComplete()) {
@@ -87,14 +86,21 @@
 
                         switch (true) {
                             case (tabs = document.querySelectorAll(Ticket.tabs + ':not(.done):not(.unavailable)')) && tabs.length !== 0:
+                                // console.debug('>>tabs case 1',tabs);
+                                break;
+                            case (tabs = [ document.querySelectorAll(Ticket.tabs)[6] ]) && Tickets.captchaTime() && tabs.length !== 0:
+                                // console.debug('>>tabs case 1.5',tabs);
                                 break;
                             case (tabs = document.querySelectorAll(Ticket.tabs + ':not(.done)')) && tabs.length !== 0:
+                                // console.debug('>>tabs case 2',tabs);
                                 break;
                             case (tabs = document.querySelectorAll(Ticket.tabs)) && tabs.length !== 0:
+                                // console.debug('>>tabs case 3',tabs);
                                 break;
                         }
-
+                        // console.debug('>>tabs[]',tabs);
                         Tickets.selectedTab = 1 + Array.prototype.indexOf.call(tabs[0].parentNode.children, tabs[0]);
+                        
                         break;
                 }
 
