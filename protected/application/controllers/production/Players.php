@@ -152,6 +152,7 @@ class Players extends \AjaxController
         $email      = $this->request()->post('email', null);
         $password   = $this->request()->post('password', null);
         $rememberMe = $this->request()->post('remember', false);
+        $key        = $this->request()->post('key', false);
 
         if (empty($email)) {
             $this->ajaxResponse(array(), 0, 'EMPTY_EMAIL');
@@ -162,6 +163,16 @@ class Players extends \AjaxController
 
         if (!in_array($_SERVER['HTTP_HOST'], array('stag.lotzon.com', 'lotzon2.com', 'new.lotzon.com', 'lotzon.test', 'lotzon.com', 'testbed.lotzon.com', '192.168.1.253', '192.168.56.101', 'lotzon'))) {
             $this->ajaxResponse(array(), 0, 'ACCESS_DENIED');
+        }
+
+        try {
+            $recaptcha = new \ReCaptcha\ReCaptcha(\SettingsModel::instance()->getSettings('counters')->getValue('CAPTCHA_SERVER'));
+            $resp = $recaptcha->verify($key);
+        } catch (\Exception $e) {
+            $this->ajaxResponseInternalError('VERIFICATION_FAILED');
+        }
+        if (!($resp->isSuccess())) {
+            $this->ajaxResponseInternalError('VALIDATION_FAILED');
         }
 
         $player = new Player();
