@@ -17,6 +17,7 @@
     <?php } else { ?>
         <link rel="stylesheet" href="/res/css/landing/landing_screen.css">
     <?php } } ?>
+    
 	<script src="/res/js/libs/jquery-2.1.4.min.js"></script>
 	<script src="/res/js/landing/jquery.magnific-popup.min.js"></script>
     <script> player = <?php echo json_encode($player, JSON_PRETTY_PRINT);?>;</script>
@@ -118,36 +119,50 @@
                         <div class="hidden mobile close-enter box-title"><i class="i-arrow-slim-left"></i>Вход</div>
                         <!-- LOGIN FORM -->
                         <form id="login-block-form" name="login">
-                            <div id="login-form">
-                                <div class="ib-l">
-                                    <input placeholder="email" autocomplete="off" spellcheck="false" type="email" class="m_input" name="login" placeholder="Ваш email" value="">
-                                </div>
-                                <div class="ib-p">
-                                    <input placeholder="Пароль" autocomplete="off" spellcheck="false" type="password" class="m_input" name="password" placeholder="Пароль">
-                                </div>
-                                <div class="input-text">
-                                    <div class="alert">
-                                        <span>Такой email не зарегистрирован или пароль не верен</span>
+                            <div id="login-form" class="steps">
+                                <div id="login-part-1" class="step">
+                                    <div class="ib-l">
+                                        <input placeholder="email" autocomplete="off" spellcheck="false" type="email" class="m_input" name="login" placeholder="Ваш email" value="">
                                     </div>
-                                </div>
-                                <div class="ch-b-bk">
-                                    
-                                    <div class="ch-b">
-                                        <input type="checkbox" id="remcheck" hidden="">
-                                        <label for="remcheck">Запомнить</label>
+                                    <div class="ib-p">
+                                        <input placeholder="Пароль" autocomplete="off" spellcheck="false" type="password" class="m_input" name="password" placeholder="Пароль">
                                     </div>
-                                    <a href="javascript:void(0)" id="rec-pass" class="r-p">забыли пароль?</a>
-                                </div>
-                                <div class="s-b">
-                                    <input type="submit" class="sb_but default" value="Войти">
-                                </div>
-                                <div class="sl-bk">
-                                    <div class="lines-between hidden mobile">
-                                        <span>или через</span>
+                                    <div class="input-text">
+                                        <div class="alert">
+                                            <span>Такой email не зарегистрирован или пароль не верен</span>
+                                        </div>
                                     </div>
-                                    <a href="./auth/Facebook?method=log-in" class="i-Facebook-simple"><span class="mobile hidden">Facebook</span></a>
-                                    <a href="./auth/Vkontakte?method=log-in" class="i-Vkontakte-simple"><span class="mobile hidden">ВКонтакте</span></a>
-                                    <a href="./auth/Odnoklassniki?method=log-in" class="i-Odnoklassniki-simple"><span class="mobile hidden">Одноклассники</span></a>
+                                    <div class="ch-b-bk">
+                                        
+                                        <div class="ch-b">
+                                            <input type="checkbox" id="remcheck" hidden="">
+                                            <label for="remcheck">Запомнить</label>
+                                        </div>
+                                        <a href="javascript:void(0)" id="rec-pass" class="r-p">забыли пароль?</a>
+                                    </div>
+                                    <div class="s-b">
+                                        <!-- <input type="submit" class="sb_but default" value="Войти"> -->
+                                        <button  class="sb_but default" data-goto="#login-part-2">Продолжить</button>
+                                    </div>
+                                    <div class="sl-bk">
+                                        <div class="lines-between hidden mobile">
+                                            <span>или через</span>
+                                        </div>
+                                        <a href="./auth/Facebook?method=log-in" class="i-Facebook-simple"><span class="mobile hidden">Facebook</span></a>
+                                        <a href="./auth/Vkontakte?method=log-in" class="i-Vkontakte-simple"><span class="mobile hidden">ВКонтакте</span></a>
+                                        <a href="./auth/Odnoklassniki?method=log-in" class="i-Odnoklassniki-simple"><span class="mobile hidden">Одноклассники</span></a>
+                                        </div>
+                                </div>
+                                <div id="login-part-2" class="step hidden">
+                                    <div class="box-title">
+                                        <i class="i-arrow-slim-left back" data-goto="#login-part-1"></i>
+                                        <span>Вы не бот?</span>
+                                    </div>
+                                    <!-- <div class="g-recaptcha" data-sitekey="6Le3tBwTAAAAAPFjR2AUJbyDB_kuEGMFT4GJK6PR"></div> -->
+                                    <div id="cap"></div>
+                                    <div class="ib-p">
+                                        <input type="submit" class="sb_but default" value="Войти">
+                                    </div>
                                 </div>
                             </div>
                         </form>
@@ -758,7 +773,8 @@
 
     <script src="/res/js/landing/promo.js"></script>
     <script src="/res/js/landing/backend.js"></script>
-
+    
+    
 	<?php if(!$metrika['metrikaDisabled']):?>
 
 		<?php if($metrika['googleAnalytics']): ?>
@@ -904,7 +920,7 @@
             }
     }
     ?>
-
+    <script src='https://www.google.com/recaptcha/api.js?hl=<?php echo str_replace('ua','uk', strtolower($player['language']['current']));?>&render=explicit&onload=capReady'></script>
 </body>
 </html>
 

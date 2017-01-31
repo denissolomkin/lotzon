@@ -1,0 +1,27 @@
+<div id="popup-money-captcha" class="pop-box popup-user">
+    <div class="inner">
+        <i class="close-pop-box i-x-slim"></i>
+        
+        <div>
+
+            <div class="title box-inner">{{i18n "popup-register-title"}}</div>
+            <div class="box-inner">
+                <div class="step hidden" id="pop-st1">
+
+                    <div>{{{i18n "message-lottery-ticket-7-2" }}}</div>
+                    <br>
+                    <div>
+                        <button data-goto="#st3" class="btn-flat" >{{{i18n "message-lottery-ticket-7-btn" }}}</button>
+                        <button data-goto="#st1" class="btn-flat" >{{{i18n "message-lottery-ticket-7-cancel" }}}</button>
+                    </div>
+                    
+                </div>
+                <div class="step " id="pop-st2">
+                    <iframe id="moca" name="moca" src="/res/layout/captcha.html" scrolling="no" frameborder="0"></iframe>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</div>

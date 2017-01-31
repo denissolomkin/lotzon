@@ -1,3 +1,11 @@
+// <!-- <div class="g-recaptcha" data-sitekey="6Le3tBwTAAAAAPFjR2AUJbyDB_kuEGMFT4GJK6PR"></div> -->
+var capReady = function() {
+    console.debug("grecaptcha is ready!");
+    grecaptcha.render('cap', {
+      'sitekey' : '6Le3tBwTAAAAAPFjR2AUJbyDB_kuEGMFT4GJK6PR'
+    });
+};
+
 var landing = {
     step: '',
 
@@ -41,6 +49,8 @@ var landing = {
     },
     events: function() {
 
+
+
         // >>> popup open
         $('.go-play').on('click', function() {
             landing.popup.open();
@@ -82,6 +92,27 @@ var landing = {
             }
 
             landing.popup.open('.info-popup');
+        });
+        // >>> toggle login steps
+        $('.steps [data-goto]').on('click', function(e) {
+
+            console.debug(this);
+            e.preventDefault();
+            
+            var btn = $(this),
+                goto = $(this).attr('data-goto');
+            btn.closest('.step').addClass('hidden');
+            $('.steps '+goto).removeClass('hidden');
+
+        
+
+            //restore form|msg
+            // $('#pass-rec-form-success').hide();
+            // $('form[name="rec-pass"]').show();
+
+            // $('.password-recovery-box, .login-box').toggleClass('visible');
+            
+
         });
 
         // >>> toggle recover-pass
@@ -233,20 +264,29 @@ var landing = {
         // >>> login handler
         $('form[name="login"]').on('submit', function(e) {
             var form = $(this);
+            var cap = form.find('[name="g-recaptcha-response"]').val();
             var email = form.find('input[name="login"]').val();
             var pwd = form.find('input[name="password"]').val();
             var remember = form.find("#remcheck:checked").length ? 1 : 0;
 
-            loginPlayer({ 'email': email, 'password': pwd, 'remember': remember }, function(data) {
+            e.preventDefault();
+
+            if(!cap){
+                return false;
+            }
+
+            loginPlayer({ 'email': email, 'password': pwd, 'remember': remember, 'key': cap }, function(data) {
 
                 form.attr('class', 'success');
                 document.location.href = "/";
 
             }, function(data) {
-
+                console.debug(data);
                 landing.formError(form);
                 form.find('.alert').text(data.message);
+                form.find('.step').toggleClass('hidden');
 
+                grecaptcha.reset();
             });
 
             return false;
