@@ -681,6 +681,8 @@ class Index extends \SlimController\SlimController
             $this->session->remove('SOCIAL_NAME');
         }
 
+        $counters = \SettingsModel::instance()->getSettings('counters');
+
         $this->render('../../res/landing.php', array(
             'layout'          => false,
             'slider'          => $slider,
@@ -694,6 +696,7 @@ class Index extends \SlimController\SlimController
             'ref'             => $this->ref,
             'error'           => $error,
             'socialName'      => $socialName,
+            'captchaKey'      => $counters->getValue('CAPTCHA_CLIENT'),
         ));
 
     }
