@@ -13,9 +13,9 @@
     <link href="/res/img/favicones/favicon.png.ico?v=666" rel="shortcut icon">
 
     <?php if (isset($isMobile)) { if($isMobile) { ?>
-        <link rel="stylesheet" href="/res/css/landing/landing_mobile.css">
+        <link rel="stylesheet" href="/res/css/landing/landing_mobile.css?v=666">
     <?php } else { ?>
-        <link rel="stylesheet" href="/res/css/landing/landing_screen.css">
+        <link rel="stylesheet" href="/res/css/landing/landing_screen.css?v=666">
     <?php } } ?>
     
 	<script src="/res/js/libs/jquery-2.1.4.min.js"></script>
@@ -771,8 +771,8 @@
     
     </script>	
 
-    <script src="/res/js/landing/promo.js"></script>
-    <script src="/res/js/landing/backend.js"></script>
+    <script src="/res/js/landing/promo.js?v=666"></script>
+    <script src="/res/js/landing/backend.js?v=666"></script>
     
     
 	<?php if(!$metrika['metrikaDisabled']):?>
