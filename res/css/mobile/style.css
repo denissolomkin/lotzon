@@ -372,7 +372,16 @@ footer {
 
 @media screen and (max-width: 375px) {
   .popup-user:before {
-    display: none; } }
+    display: none; }
+  #popup-money-captcha iframe {
+    width: 400px;
+    /* width: 300px; */
+    margin: -40px -60px;
+    -webkit-transform: scale(0.8);
+    -moz-transform: scale(0.8);
+    -ms-transform: scale(0.8);
+    -o-transform: scale(0.8);
+    transform: scale(0.8); } }
 
 @media (min-width: 768px) {
   .footer-logo {

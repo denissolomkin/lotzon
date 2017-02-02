@@ -9,12 +9,11 @@
         		<br><span>- <span data-goto='#st2'>{{{i18n "message-lottery-ticket-7-btn" }}}</span></span>
         	{{else}}
 
-                {{!-- {{#if (gt (player "dates.captcha") "1") }} --}}
+                
 	        	{{#if (captchaTime) }}
-		        	<br><span>- {{{i18n "message-lottery-ticket-7-btn" }}} <span class="small">({{{i18n "message-lottery-ticket-7-timer" }}} <span class="timer"> </span>) </span></span>
-
-	        	{{else}}
 	        		<br><span>- <span data-goto='#st2'>{{{i18n "message-lottery-ticket-7-btn" }}}</span></span>
+                {{else}}
+                    <br><span>- {{{i18n "message-lottery-ticket-7-btn" }}} <span class="small">({{{i18n "message-lottery-ticket-7-timer" }}} <span class="timer"> </span>) </span></span>
 	        	{{/if}}
         	{{/if}}
         </div>

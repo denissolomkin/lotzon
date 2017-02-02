@@ -1848,6 +1848,85 @@ input.input-radio:checked + label.input-radio:before {
     }
 }
 
+#popup-money-captcha{
+    overflow: initial;
+    .inner{
+        font-size:15.5px;
+        color:#000000;
+        letter-spacing:0.3px;
+        text-align:center;
+        width: 500px;
+        min-height: initial;
+        max-width: 100%;
+    }
+    .title{
+        margin-bottom: 50px;
+    }
+    .buttones{
+        text-align: center;
+        margin: 40px 0;
+        button{
+            display: inline-block;
+            width: auto;
+            min-width: 150px;
+
+            line-height: 30px;
+            min-height: 30px;
+            vertical-align: middle;
+        }
+    }
+    .btn-link{
+        color: #4a90e2;
+        border: none;
+        background: none;
+        text-transform: none;
+        text-decoration: underline;
+        &:hover{
+            text-decoration: none;
+        }
+    }
+    .red{
+        color: red;
+    } 
+    .btn-link.red{
+        line-height: 19px;
+            min-height: 19px;
+    }
+    .btn-border {
+        font-size: 13.5px;
+        color: #000000;
+        text-align: center;
+        text-transform: uppercase;
+        background: transparent;
+        border: 1px solid #4a4a4a;
+        cursor: pointer;
+        transition: all .2s linear;
+        min-width: 100px;
+        padding: 0 20px;
+        box-sizing: border-box;
+        opacity: 1; 
+        
+        &:hover {
+            background: #000000;
+            color: #ffffff; 
+        }
+    }
+    
+    #pop-st1{
+        button{
+            margin-top: 0;
+        }
+    }
+    #pop-st3{
+        img{
+            margin-bottom: 50px;
+        }
+    }
+    iframe{
+        width: 400px;
+    }
+    
+}
 
 /* end **********************
 compleet registration popup */

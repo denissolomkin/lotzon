@@ -52,6 +52,13 @@
                 "popup-cashout-close": "Закрыть",
                 "popup-cashout-make-post": "Сделать пост",
 
+                "popup-money-captcha-title": "7-Й БИЛЕТ HА СЕГОДHЯШНИЙ РОЗЫГРЫШ",
+                "popup-money-captcha-text": "У Вас есть возможность получить 7-й билет на сегодняшний розышрыш. <br>Для активации нужно пройти задание.",
+                "popup-money-captcha-text-cancel": "Если Вы передумаете, это задание всегда доступно кликнув на 7-й билет.<br><br>Удачи в розыгрыше!",
+                "popup-money-captcha-bottom": "Мне это не интересно",
+                "popup-money-captcha-apply": "ПРОЙТИ ЗАДАHИЕ",
+                "popup-money-captcha-cancel": "Hапомните позже",
+                "popup-money-captcha-never": "He показывайте мне больше это сообщение",
 
                 "message-lottery-ticket-autocomplete": "АВТОЗАПОЛНЕНИЕ",
                 "message-lottery-ticket-done": "ПОДТВЕРЖДЕН И ПРИНЯТ К РОЗЫГРЫШУ",

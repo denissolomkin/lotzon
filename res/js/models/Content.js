@@ -35,7 +35,15 @@
                 Content.enableForm();
 
         },
+        steps: function(){
+            console.debug('steps>>>',this);
+            var btn = $(this),
+                gt = $(this).attr('data-goto');
+            if(!gt) return;
 
+            btn.closest('.step').addClass('hidden');
+            $('.steps '+gt).removeClass('hidden');
+        },
         captcha: {
 
             render: function () {
@@ -492,7 +500,7 @@
                 }
             },
             enter:function(){
-                console.debug('>> popup >> enter');
+                // console.debug('>> popup >> enter');
 
                 R.push({
                     template: 'popup-unregistred-enter',
@@ -510,7 +518,7 @@
                 });
             },
             login:function(){
-                console.debug('>> popup >> login');
+                // console.debug('>> popup >> login');
                 
                 //IOS hard fix (inputs is brocken if navbar not closed)
                 setTimeout(function(){

@@ -463,4 +463,10 @@ footer {
     .popup-user:before {
         display: none;
     }
+    #popup-money-captcha iframe {
+        width: 400px;
+        /* width: 300px; */
+        margin: -40px -60px;
+        transform: scale(.8);
+    }
 }

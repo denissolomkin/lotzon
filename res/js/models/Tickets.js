@@ -1,3 +1,11 @@
+function cPop(){
+    Player.dates.captchaNotification = 0;
+    Player.is.noCaptchaNotification = false;
+}
+function cTimer(){
+    Player.dates.captcha = 0;
+}
+
 (function () {
 
     Tickets = {
@@ -23,12 +31,76 @@
             }
 
         },
+        "delayCaptchaPop": function(){
+                Form.post.call(1,{
+                            href: '/tickets/captcha/close',
+                            data: {},
+                            after: function(data) {
+                                console.debug('delayCaptchaPop');
+                                console.debug(data);
+                                Tickets._popCaptchaHold = false;
+                                $('.pop-box').remove();
+
+                            }
+                });
+        },
+        "neverCaptchaPop": function(){
+                Form.post.call(1,{
+                            href: '/tickets/captcha/closeForever',
+                            data: {},
+                            after: function(data) {
+                                console.debug('neverCaptchaPop');
+                                console.debug(data);
+                                Tickets._popCaptchaHold = false;
+
+                            }
+                });
+        },
+        "captchaPop": function () {
+            
+            if (Player.is.unauthorized || Player.is.noCaptchaNotification) {
+                console.debug('unauthorized || nomore popup');
+                return;
+            }
+            if (!Tickets.captchaTime() ) {
+                console.debug('not now! timeout...');
+                return; 
+            }
+            if (Tickets.isAvailable(7) ) {
+                console.debug('not now! ticket is ready...');
+                return; 
+            }
+            
+            console.debug('captchaPop... call!',popTime());
+            
+            if (!Tickets._popCaptchaHold && popTime()) {
+            
+                console.debug('captchaPop!!');
+            
+                // R.push('popup-money-captcha');
+                R.push({
+                    template:'popup-money-captcha',
+                    after: function(e){
+                        Tickets._popCaptchaHold = true;
+                    }});
+            }
+
+            function popTime(){
+                var timeout = +Config.captchaNotificationTime || 18000,
+                lastUse = +Player.dates.captchaNotification || 0;
+
+                return ( new Date( (lastUse + timeout) * 1000 ) < new Date() ); 
+            }
+        },
         "captchaTime": function () {
+            
             if(!Player.dates){
                 return true;
             }
+            var timeout = +Config.captchaTime || 86400,
+                lastUse = +Player.dates.captcha || 0;
             // console.debug(new Date((+Player.dates.captcha + (24*3600))* 1000) >  new Date() );
-            return ( new Date((+Player.dates.captcha + (24*3600))* 1000) < new Date() );
+            return ( new Date( (lastUse + timeout) * 1000 ) < new Date() );
         },
         "getSevenTimer": function(){
             if(Player.is && Player.is.unauthorized) {return;}
@@ -45,30 +117,31 @@
             });
         },
         "getSevenTicket": function(form){
-            
-            var code = $(form).find('#moneycaptcha_code').val();
+            var f = form;
+            var code = $(f).find('#moneycaptcha_code').val();
+
             if(!code){ 
                 return; 
             }
-
-            Form.post.call(form,{
-                            href: form.action,
+            Form.post.call(f,{
+                            href: f.action,
                             data: {'moneycaptcha_code':code},
                             after: function(data) {
-                                document.querySelector('#moca').style.height = "";
+
+                                if ( document.querySelector('#moca') ){
+                                    document.querySelector('#moca').style.height = "";
+                                }
+
+                                // gotoSevenTicket
+                                if (f.className.indexOf("_pop") !== -1) {
+                                    $('.pop-box').remove();
+                                    // $('#popup-money-captcha .close-pop-box').click();
+                                    Tickets.selectedTab = 7; Tickets.update(); R.push('lottery');
+                                }
                                 console.debug(data);
 
                                 }
-                            });
-        },
-        "getSevenSteps": function (){
-            
-            console.debug(this);
-            var btn = $(this),
-                goto = $(this).attr('data-goto');
-            btn.closest('.step').addClass('hidden');
-            $('.steps '+goto).removeClass('hidden');
-
+                                });
         },
 
         "isDone": function (ticketId) {

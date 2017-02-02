@@ -365,7 +365,7 @@
             },
 
             isComplete: function(options){
-                console.debug(options);
+                // console.debug(options);
                 
                 if(options.json.player.is.complete){
                     $("#popup-profile").remove();

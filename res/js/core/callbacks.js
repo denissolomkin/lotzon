@@ -45,14 +45,17 @@
              {'scroll': Device.do.scroll}
              ])
              */
-
+             
 
             // handlers
             $(window).on('resize', Device.do.resize);
             $(window).on('scroll', Device.do.scroll);     
             
-
-            $(document).on('click', ".ticket-item .steps [data-goto]", Tickets.getSevenSteps);
+            // init steps
+            $(document).on('click', ".steps [data-goto]", Content.steps);
+            // mcpp
+            $(document).on('click', "._neverCaptchaPop", Tickets.neverCaptchaPop);
+            $(document).on('click', "._delayCaptchaPop", Tickets.delayCaptchaPop);
                  
             $(document).on('click', ".nm-search .nm-friend", Messages.do.setUser);
             $(document).on('click', Device.do.hide);

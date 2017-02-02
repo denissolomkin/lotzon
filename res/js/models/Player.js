@@ -14,6 +14,7 @@
 
             if (typeof init === 'object') {
 
+
                 /* +/- */
                 if (init.hasOwnProperty('count')) {
                     if (Object.size(this.count)) {
@@ -44,6 +45,11 @@
                 if (init.hasOwnProperty('balance')) {
                     Player.updateBalance();
                 }
+                
+                // mc
+                setTimeout(function(){
+                    Tickets.captchaPop();
+                },2000);
 
             }
 

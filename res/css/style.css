@@ -2190,6 +2190,69 @@ input.input-radio:checked + label.input-radio:before {
     background: #000000;
     border: 1px solid #000000; }
 
+#popup-money-captcha {
+  overflow: initial; }
+  #popup-money-captcha .inner {
+    font-size: 15.5px;
+    color: #000000;
+    letter-spacing: 0.3px;
+    text-align: center;
+    width: 500px;
+    min-height: initial;
+    max-width: 100%; }
+  #popup-money-captcha .title {
+    margin-bottom: 50px; }
+  #popup-money-captcha .buttones {
+    text-align: center;
+    margin: 40px 0; }
+    #popup-money-captcha .buttones button {
+      display: inline-block;
+      width: auto;
+      min-width: 150px;
+      line-height: 30px;
+      min-height: 30px;
+      vertical-align: middle; }
+  #popup-money-captcha .btn-link {
+    color: #4a90e2;
+    border: none;
+    background: none;
+    text-transform: none;
+    text-decoration: underline; }
+    #popup-money-captcha .btn-link:hover {
+      text-decoration: none; }
+  #popup-money-captcha .red {
+    color: red; }
+  #popup-money-captcha .btn-link.red {
+    line-height: 19px;
+    min-height: 19px; }
+  #popup-money-captcha .btn-border {
+    font-size: 13.5px;
+    color: #000000;
+    text-align: center;
+    text-transform: uppercase;
+    background: transparent;
+    border: 1px solid #4a4a4a;
+    cursor: pointer;
+    -webkit-transition: all .2s linear;
+    -o-transition: all .2s linear;
+    -moz-transition: all .2s linear;
+    transition: all .2s linear;
+    min-width: 100px;
+    padding: 0 20px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    opacity: 1; }
+    #popup-money-captcha .btn-border:hover {
+      background: #000000;
+      color: #ffffff; }
+  #popup-money-captcha #pop-st1 button {
+    margin-top: 0; }
+  #popup-money-captcha #pop-st3 img {
+    margin-bottom: 50px; }
+  #popup-money-captcha iframe {
+    width: 400px; }
+
 /* end **********************
 compleet registration popup */
 /* popups unregistred 

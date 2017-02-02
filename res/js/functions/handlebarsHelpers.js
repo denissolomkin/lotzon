@@ -368,9 +368,17 @@ $(function () {
             if (inStr.match(pattern)) return true;
             return false;
         },
+        'ticketFilled' : function(num){
+            return !!Tickets.filledTickets[num];
+        },
+        'ticketAvailable' : function(num){
+            return Tickets.isAvailable(num);
+        },
         'captchaTime': function (v1) {
-            console.debug(new Date((+Player.dates.captcha + (24*3600))* 1000) >  new Date() );
-            return ( new Date((+Player.dates.captcha + (24*3600))* 1000) > new Date() );
+            return Tickets.captchaTime();
+        },
+        'not': function (v1) {
+            return !v1;
         },
         'false': function (v1) {
             return v1 === false;

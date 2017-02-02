@@ -24,7 +24,7 @@
             height: auto !important;
         }
 
-        #moneycaptchasubmit{
+        #sub{
             opacity: 1;
             padding: 0 30px;
             min-height: 40px;
@@ -34,60 +34,60 @@
             -moz-border-radius: 20px;
             border-radius: 20px;
             text-transform: uppercase;
-            background: #e9f1f4;
+            background: #f9f9f9;
             font-weight: normal;
-            -webkit-box-shadow: 0 2px 1px rgba(255, 255, 255, 0.9), inset 1px 2px 2px rgba(0, 0, 0, 0.46);
-            -moz-box-shadow: 0 2px 1px rgba(255, 255, 255, 0.9), inset 1px 2px 2px rgba(0, 0, 0, 0.46);
-            box-shadow: 0 2px 1px rgba(255, 255, 255, 0.9), inset 1px 2px 2px rgba(0, 0, 0, 0.46);
+            -webkit-box-shadow: 0px 1px 1px 0px #e1e1e1, inset 1px 1px 2px 0px rgba(0,0,0,0.46);
+            -moz-box-shadow: 0px 1px 1px 0px #e1e1e1, inset 1px 1px 2px 0px rgba(0,0,0,0.46);
+            box-shadow: 0px 1px 1px 0px #e1e1e1, inset 1px 1px 2px 0px rgba(0,0,0,0.46);
             cursor: pointer;
-            color: #4c4c4c;
+            color: #4a4a4a;
 
             border: none;
             margin: 20px auto 0px auto;
             display: block;
             font-family: sans-serif;
-            font-size: 14px;
             letter-spacing: -.5px;
+            font-size: 14px;
         }
-        #moneycaptchasubmit:hover{
-            background: #ffe400;
-            color: #4c4c4c;
+        #sub:hover{
+            background: #ffe604;
+            color: #4a4a4a;
         }
-        #moneycaptchasubmit[disabled="true"]{
+        #sub[disabled="true"]{
             cursor: default;
             color: #8f8e8e;
         }
-        #moneycaptchasubmit[disabled="true"]:hover{
+        #sub[disabled="true"]:hover{
             cursor: default;
             color: #8f8e8e;
-            background: #e9f1f4;
+            background: #f9f9f9;
         }
         .hidden{
             display: none;
         }
     </style>
-        <form id="get_seven" onsubmit="parent.window.Tickets.getSevenTicket(this);return false;" action="/tickets/captcha" method="post">
+        <form id="get_seven" class="_pop" onsubmit="parent.window.Tickets.getSevenTicket(this);return false;" action="/tickets/captcha" method="post">
             <div class="hidden" style="text-align: center; padding: 20px 0;">
-                    Нам не удалось загрузить задание<br>
-                    Попробуйте чуть позже...
-                    <hr>
+                Нам не удалось загрузить задание<br>
+                Попробуйте чуть позже...
+                <hr>
             </div>
             <div class="">
                 <noindex>        
                 <div id="money_captcha_wrapper" class="money_captcha_wrapper">
-                <script type="text/javascript" src="https://moneycaptcha.ru/captcha.php?siteid=40855&charset=utf-8&button=moneycaptchasubmit"></script>
+                <script type="text/javascript" src="https://moneycaptcha.ru/captcha.php?siteid=40855&charset=utf-8&button=sub"></script>
                 </div> <input name="moneycaptcha_code" id="moneycaptcha_code" type="hidden" value=""> 
                 </noindex>
-                <input type="submit" id="moneycaptchasubmit" disabled="true" value="получить билет" title="Вам необходимо правильно ответить на капчу" >
+                <input type="submit" id="sub" disabled="true" value="получить билет" title="Вам необходимо правильно ответить на капчу" >
             </div>
         </form>
     <script type="text/javascript">
-    var f = parent.window.document.querySelector('#moca');
+    var f = parent.window.document.querySelector('#moca-pop');
     setInterval(function(){
-        // console.debug('moca',f, document.querySelector('form'));
+        // console.debug('moca-pop',f, document.querySelector('form'));
         f.style.height = (document.querySelector('form').offsetHeight+10) + 'px';
     },1000);
-        // console.debug('1>>>>>>>!!!', document.querySelector('[action="/tickets/captcha"]') );
+        console.debug('1>>>>>>>!!!', document.querySelectorAll('[action="/tickets/captcha"]') );
         // console.debug('>>>document.cookie>>>>!!!', document.cookie );
     </script>
 </body>
