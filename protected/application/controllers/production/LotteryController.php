@@ -349,6 +349,7 @@ class LotteryController extends \AjaxController
         $player->setId($this->player->getId())->fetch();
 
         $player->setDates(time(), 'CaptchaNotificationForever')->updateDate('CaptchaNotificationForever');
+        $player->updateSession();
 
         $response = array(
             "player" => array(
@@ -368,6 +369,7 @@ class LotteryController extends \AjaxController
         $player->setId($this->player->getId())->fetch();
 
         $player->setDates(time(), 'CaptchaNotification')->updateDate('CaptchaNotification');
+        $player->updateSession();
 
         $response = array(
             "player" => array(
@@ -414,6 +416,7 @@ class LotteryController extends \AjaxController
                 ->setUsed(false)
                 ->create();
             $player->setDates(time(), 'Captcha')->updateDate('Captcha');
+            $player->updateSession();
         }
 
         $response = array(
