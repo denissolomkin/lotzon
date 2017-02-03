@@ -534,7 +534,7 @@ input.comment-reply-btn {
   display: table-header-group; }
 
 #lottery-ticket-item {
-  min-height: 416px;
+  min-height: 370px;
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-box;

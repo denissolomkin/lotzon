@@ -2,6 +2,23 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script type="text/javascript">
+        function ready() {
+            var f = parent.window.document.querySelector('#moca-pop');
+            setInterval(function(){
+                f.style.height = (document.querySelector('form').offsetHeight+10) + 'px';
+            },1000);
+        }
+        document.addEventListener("DOMContentLoaded", ready);
+
+        var er = function(){
+            var els = document.querySelectorAll('form > div');
+            
+            for(var i = 0; i < els.length; i++){
+                els[i].classList.toggle('hidden');
+            }
+        }
+    </script>
 </head>
 <body>
     <style>
@@ -12,9 +29,12 @@
             letter-spacing: -.5px;
             font-size: 14px;
         }
+        hr{
+            border: none;
+            border-bottom: 1px solid rgba(0,0,0,0.15);
+        }
         #MoneyCaptcha,#money_captcha_wrapper{
             max-width: 100%;
-            /*box-sizing: border-box;*/
             margin: 0px auto;
         }
         #MoneyCaptcha{
@@ -68,27 +88,22 @@
     </style>
         <form id="get_seven" class="_pop" onsubmit="parent.window.Tickets.getSevenTicket(this);return false;" action="/tickets/captcha" method="post">
             <div class="hidden" style="text-align: center; padding: 20px 0;">
-                Нам не удалось загрузить задание<br>
-                Попробуйте чуть позже...
-                <hr>
+                Мы устали приходите позже))
+                    <br>
+                    <br>
+                    <hr>
+                    <br>
+                    Нам жаль но сервис временно недоступен... (
+
             </div>
             <div class="">
                 <noindex>        
                 <div id="money_captcha_wrapper" class="money_captcha_wrapper">
-                <script type="text/javascript" src="https://moneycaptcha.ru/captcha.php?siteid=40855&charset=utf-8&button=sub"></script>
+                <script onerror="er();" type="text/javascript" src="https://moneycaptcha.ru/captcha.php?siteid=40855&charset=utf-8&button=sub"></script>
                 </div> <input name="moneycaptcha_code" id="moneycaptcha_code" type="hidden" value=""> 
                 </noindex>
                 <input type="submit" id="sub" disabled="true" value="получить билет" title="Вам необходимо правильно ответить на капчу" >
             </div>
         </form>
-    <script type="text/javascript">
-    var f = parent.window.document.querySelector('#moca-pop');
-    setInterval(function(){
-        // console.debug('moca-pop',f, document.querySelector('form'));
-        f.style.height = (document.querySelector('form').offsetHeight+10) + 'px';
-    },1000);
-        console.debug('1>>>>>>>!!!', document.querySelectorAll('[action="/tickets/captcha"]') );
-        // console.debug('>>>document.cookie>>>>!!!', document.cookie );
-    </script>
 </body>
 </html>
