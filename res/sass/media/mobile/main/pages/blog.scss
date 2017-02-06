@@ -93,7 +93,13 @@
                 opacity: 1;
             }
         }
+        div>a{
+            display: inline-block !important;
+            color:#333333 !important;
+            font-weight: 500 !important;
+        }
         //bold
+        strong,
         span[style*='bold'] {
             font-family: 'Handbook' !important;
             font-weight: bold !important;
@@ -104,7 +110,7 @@
                 font-size: 15.5px !important;
                 margin-bottom: 10px;
                 margin-left: 10px;
-                padding-left: 20px;
+                // padding-left: 20px;
             }
         }
         ul {
@@ -114,8 +120,11 @@
                 font-size: 15.5px !important;
                 margin-bottom: 10px;
                 margin-left: 10px;
-                padding-left: 20px;
+                // padding-left: 20px;
             }
+        }
+        blockquote{
+            margin-left: 20px !important;
         }
         & img {
             display: block;

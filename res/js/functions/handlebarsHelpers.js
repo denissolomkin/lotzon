@@ -334,6 +334,12 @@ $(function () {
 
             return ret;
         },
+        // e.g., {{{debug this}}}
+        'debug': function (context) {
+            return new Handlebars.SafeString(
+              '<div class="debug">' + JSON.stringify(context) + '</div>'
+            );
+        },
         'variable': function (name, args, opt) {
             // http://www.w3schools.com/jsref/event_onload.asp
             console.debug(this, name, args, opt);

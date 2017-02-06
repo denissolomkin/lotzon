@@ -6423,6 +6423,7 @@ span[class^="i-smile"].i-smile-wink:before {
     margin-bottom: 30px !important; }
     .post-description div > a:hover {
       opacity: .9; }
+  .post-description strong,
   .post-description span[style*='bold'] {
     font-family: 'Handbook' !important;
     font-weight: bold !important; }
@@ -6433,6 +6434,8 @@ span[class^="i-smile"].i-smile-wink:before {
       margin-bottom: 10px;
       margin-left: 10px;
       padding-left: 10px; }
+      .post-description ol > li > strong:first-child {
+        display: block; }
   .post-description ul {
     padding: 0 0 10px 20px; }
     .post-description ul > li {
@@ -6441,6 +6444,8 @@ span[class^="i-smile"].i-smile-wink:before {
       margin-bottom: 10px;
       margin-left: 10px;
       padding-left: 10px; }
+      .post-description ul > li > strong:first-child {
+        display: block; }
   .post-description img {
     display: block;
     max-width: 100%;
