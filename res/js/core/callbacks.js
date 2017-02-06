@@ -10,7 +10,7 @@
                 'click': [
                 
                     /* global */
-                    ['a:not(.not-handle):not([target="_blank"])', R.push],
+                    ['a:not(.not-handle):not([target="_blank"]):not([href^="#"])', R.push],
                     // ['a:not(.not-handle)', R.push],
 
                     /* badges */

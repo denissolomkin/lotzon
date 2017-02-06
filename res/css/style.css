@@ -6365,6 +6365,7 @@ span[class^="i-smile"].i-smile-wink:before {
     font-family: 'Handbook' !important;
     font-weight: bold !important;
     font-size: 30px !important;
+    color: #282828 !important;
     margin-bottom: 20px; }
   .post-description h2 {
     font-family: 'Handbook' !important;
@@ -6384,7 +6385,7 @@ span[class^="i-smile"].i-smile-wink:before {
   .post-description p {
     font-family: 'Handbook' !important;
     font-size: 18.5px !important;
-    margin-bottom: 10px; }
+    margin-bottom: 20px; }
   .post-description em {
     font-family: 'Handbook' !important;
     font-size: 18.5px;
@@ -6402,30 +6403,59 @@ span[class^="i-smile"].i-smile-wink:before {
     display: inline; }
     .post-description a:hover {
       opacity: 1; }
+  .post-description div > a {
+    background: #ffe534;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    opacity: 1;
+    font-weight: 500 !important;
+    font-size: 15.5px !important;
+    color: #333333 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.6px;
+    line-height: 19px !important;
+    text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.49);
+    text-align: center;
+    display: inline-block;
+    padding: 10px 30px !important;
+    min-width: 135px;
+    margin-bottom: 30px !important; }
+    .post-description div > a:hover {
+      opacity: .9; }
   .post-description span[style*='bold'] {
     font-family: 'Handbook' !important;
     font-weight: bold !important; }
   .post-description ol {
-    padding: 7px; }
+    padding: 0 0 10px 20px; }
     .post-description ol > li {
       font-size: 18.5px !important;
       margin-bottom: 10px;
       margin-left: 10px;
-      padding-left: 20px; }
+      padding-left: 10px; }
   .post-description ul {
-    padding: 7px; }
+    padding: 0 0 10px 20px; }
     .post-description ul > li {
       list-style: disc outside;
       font-size: 18.5px !important;
       margin-bottom: 10px;
       margin-left: 10px;
-      padding-left: 20px; }
+      padding-left: 10px; }
   .post-description img {
     display: block;
     max-width: 100%;
     height: auto;
-    margin: 0px 0 20px 0;
+    margin: 0px 0 30px 0;
     text-align: center; }
+  .post-description blockquote {
+    font-style: italic !important;
+    border-left: 5px solid #ffe534 !important;
+    margin: 0 0 20px 40px !important;
+    padding: 6px 0 6px 10px !important; }
+    .post-description blockquote > * {
+      margin: 0 !important; }
+  .post-description strong {
+    font-weight: bold !important; }
 
 .more-posts form {
   margin: 10px 0 10px 10px; }
