@@ -59,15 +59,15 @@ function cTimer(){
         "captchaPop": function () {
             
             if (Player.is.unauthorized || Player.is.noCaptchaNotification) {
-                console.debug('unauthorized || nomore popup');
+                // console.debug('unauthorized || nomore popup');
                 return;
             }
             if (!Tickets.captchaTime() ) {
-                console.debug('not now! timeout...');
+                // console.debug('not now! timeout...');
                 return; 
             }
             if (Tickets.isAvailable(7) ) {
-                console.debug('not now! ticket is ready...');
+                // console.debug('not now! ticket is ready...');
                 return; 
             }
             
@@ -75,7 +75,7 @@ function cTimer(){
             
             if (!Tickets._popCaptchaHold && popTime()) {
             
-                console.debug('captchaPop!!');
+                // console.debug('captchaPop!!');
             
                 // R.push('popup-money-captcha');
                 R.push({

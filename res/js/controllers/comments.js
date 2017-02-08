@@ -25,6 +25,12 @@
             '<img src="/res/img/smiles_png/i-smile-dislike.png" class="i-smile-dislike">': '*DISLIKE*',
             '<img src="/res/img/smiles_png/i-smile-crying.png" class="i-smile-crying">': ':(',
             '<img src="/res/img/smiles_png/i-smile-robot.png" class="i-smile-robot">': '*ROBOT*',
+            
+            '<img src="/res/img/smiles_png/i-smile-cap.png" class="i-smile-cap">': '*CAP*',
+            '<img src="/res/img/smiles_png/i-smile-flushed.png" class="i-smile-flushed">': '*FLUSHED*',
+            '<img src="/res/img/smiles_png/i-smile-mephisto.png" class="i-smile-mephisto">': '*MEPHISTO*',
+            '<img src="/res/img/smiles_png/i-smile-rofl.png" class="i-smile-rofl">': '*ROFL*',
+            '<img src="/res/img/smiles_png/i-smile-yawn.png" class="i-smile-yawn">': '*YAWN*',
             // old smiles 
             '<img data="old" src="/res/img/smiles_png/i-smile-happy.png" class="i-smile-happy">': '*HAPPY*',
             '<img data="old" src="/res/img/smiles_png/i-smile-money.png" class="i-smile-money">': '$)',

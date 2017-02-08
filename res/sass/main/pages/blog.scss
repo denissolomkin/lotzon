@@ -412,6 +412,15 @@
     line-height: 1.5;
     font-weight: normal !important;
     font-size: 18.5px;
+    [id]{
+        // color: red !important;
+        &:before {
+          content:"";
+          display:block;
+          height:70px; /* fixed header height*/
+          margin:-70px 0 0; /* negative fixed header height */
+        }
+    }
 
     *{
         font-family: 'Handbook' !important;
@@ -549,24 +558,40 @@
 
 // ---------------------------- //
 .more-posts {
+
     form{
         margin: 10px 0 10px 10px;
     }
     .render-list{
         margin: 0;
+        &:after{
+            content: '';
+            display: table;
+            clear: both;
+        }
     }
     & a {
         display: block;
+        width: 100%;
+        // width: 50%;
+        float: left;
         color: black;
         margin: 0 0 20px 0;
         text-decoration: none;
         font-size: 15.5px;
         color:#4a4a4a;
+        padding-right: 10px;
         &:hover {
             text-decoration: underline;
         }
         &:last-child {
             margin-bottom: 30px;
+        }
+        img{
+            width: 150px;
+            max-height: 94px;
+            float: left;
+            margin-right: 10px;
         }
     }
 }

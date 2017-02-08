@@ -78,8 +78,10 @@
                 "message-lottery-ticket-7-cancel": "HЕ ХОЧУ 7-Й БИЛЕТ",
                 "message-lottery-ticket-7-timer": "будет доступно через",
                 "message-lottery-ticket-7-2": "<p>Успешное прохождение задания откроет 7-й билет на ближайший розыгрыш.</p> <p>Мы не имеем отношение к заданиям и самому сервису проверок. Убедительная просьба, не задавать вопросы админу касательно этих заданий.</p> <p>В любой момент Вы можете отказаться от задания.</p>",
-                "message-lottery-ticket-7-2-btn-cancel": "",
+                "message-lottery-ticket-7-instruction-btn": "ИНСТРУКЦИЯ ПРОХОЖДЕНИЯ ЗАДАНИЙ",
+                
                 "message-lottery-ticket-8": "Сумма выигрыша в этом билете <br>в 10 раз больше чем в обычном.",
+
                 "title-lottery-ticket": "Билет",
                 "title-or": "или",
                 "title-lottery-ticket-current": "Лототрон",

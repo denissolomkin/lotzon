@@ -7,9 +7,8 @@
 	        {{#if (unauthorized)}}
 		        <span class="count">!</span>
 	        {{else}}
-		        {{!-- {{#if (or (and (captchaTime) (not (ticketFilled num) ) )  (and (not (captchaTime) ) (not (ticketFilled num) ) ) )}} --}}
 		        {{#if (not (ticketFilled num)) }}
-			        {{#if (or (captchaTime) (ticketAvailable)) }}
+			        {{#if (or (captchaTime) (ticketAvailable num)) }}
 		        	<span class="count">!</span>
 			        {{/if}}
 		        {{/if}}

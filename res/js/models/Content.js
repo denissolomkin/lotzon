@@ -36,7 +36,7 @@
 
         },
         steps: function(){
-            console.debug('steps>>>',this);
+            // console.debug('steps>>>',this);
             var btn = $(this),
                 gt = $(this).attr('data-goto');
             if(!gt) return;

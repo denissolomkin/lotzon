@@ -1,4 +1,7 @@
 {{#each .}}
 	{{!-- {{{debug this}}} --}}
-    <a href="/blog/post/{{id}}">{{title}}</a>
+    <a href="/blog/post/{{id}}">
+		{{!-- <img src="/tpl/img/bg-header-promo.jpg" alt="{{title}}"> --}}
+    	{{title}}
+    </a>
 {{/each}}

@@ -8,6 +8,9 @@
         </a>
         <!-- Logo -->
         <div class="footer-logo"></div>
+        <div class="rules">
+            <button onclick="Content.popup.rules();" class="btn rules-pop" >Пользовательское соглашение</button>
+        </div>
 
         <!-- Social icons -->
         <div class="footer-social-icons">

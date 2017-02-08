@@ -7,16 +7,33 @@
             var f = parent.window.document.querySelector('#moca-pop');
             setInterval(function(){
                 f.style.height = (document.querySelector('form').offsetHeight+10) + 'px';
-            },1000);
+            },500);
+            var ii = setInterval(function(){
+                
+                document.querySelector('#MoneyCaptcha') && (document.querySelector('form').style.display = "block");
+                
+                var al = document.querySelector('#MoneyCaptcha_alloyban');
+                if (al && al.style.display == 'block'){
+                    document.querySelector('form').removeAttribute('onsubmit');
+                    document.querySelector('form').removeAttribute('action');
+                    // document.querySelector('#moneycaptcha_code') && document.querySelector('#moneycaptcha_code').remove;
+                    document.querySelector('#error') && document.querySelector('#error').remove();
+                    document.querySelector('#task') && document.querySelector('#task').remove();
+                    document.querySelector('#ip_error') && ( document.querySelector('#ip_error').style.display = 'block' );
+                    
+                    clearInterval(ii);
+                }
+
+            }, 100);
+
         }
         document.addEventListener("DOMContentLoaded", ready);
 
         var er = function(){
-            var els = document.querySelectorAll('form > div');
-            
-            for(var i = 0; i < els.length; i++){
-                els[i].classList.toggle('hidden');
-            }
+            // console.debug('fuuuuuuuu');
+            document.querySelector('form').style.display = "block";
+            document.querySelector('#task') && document.querySelector('#task').remove();
+            document.querySelector('#error') && ( document.querySelector('#error').style.display = 'block' );
         }
     </script>
 </head>
@@ -86,17 +103,22 @@
             display: none;
         }
     </style>
-        <form id="get_seven" class="_pop" onsubmit="parent.window.Tickets.getSevenTicket(this);return false;" action="/tickets/captcha" method="post">
-            <div class="hidden" style="text-align: center; padding: 20px 0;">
-                Мы устали приходите позже))
-                    <br>
-                    <br>
-                    <hr>
-                    <br>
-                    Нам жаль но сервис временно недоступен... (
-
+        <form id="get_seven" class="_pop" onsubmit="parent.window.Tickets.getSevenTicket(this);return false;" action="/tickets/captcha" method="post" style="display:none;">
+            <div id="ip_error" style="text-align: left; padding: 20px 0; display: none;">
+                <h3>С вашего ip адреса уже было пройдено задание</h3>
+                <div>
+                    По условиям проходить задания можно не более одного раза в 24ч. на один уникальный адрес
+                </div>
             </div>
-            <div class="">
+            <div id="error" style="text-align: left; padding: 20px 0; display: none;">
+                <h2>Задания временно недоступны.</h2>
+                <div style="text-align: left;">
+                    Нам очень жаль, но работа данного сервиса не зависит от нас.
+                    <br>
+                    Попробуйте, пожалуйста, позже
+                </div>
+            </div>
+            <div id="task" >
                 <noindex>        
                 <div id="money_captcha_wrapper" class="money_captcha_wrapper">
                 <script onerror="er();" type="text/javascript" src="https://moneycaptcha.ru/captcha.php?siteid=40855&charset=utf-8&button=sub"></script>

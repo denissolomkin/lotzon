@@ -9,6 +9,16 @@
         position: relative;
         z-index: 10;
     }
+    .rules{
+        float: left;
+        .btn{
+            background: none;
+            font-size:15.5px;
+            color:#4a4a4a;
+            cursor: pointer;
+            margin: 15px 0 15px 70px;
+        }
+    }
     .footer-logo {
       float: left;
       display: inline-block;

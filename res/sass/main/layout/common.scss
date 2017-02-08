@@ -388,6 +388,17 @@ button {
         animation: AnimationFlat 4s infinite linear;
     }
 }
+.btn-link{
+        color: #224bc9;
+        border: none;
+        background: none;
+        text-transform: none;
+        text-decoration: underline;
+        font-size: 15.5px;
+        &:hover{
+            text-decoration: none;
+        }
+    }
 
 @-webkit-keyframes AnimationFlat {
     0% {
@@ -856,6 +867,10 @@ input.input-radio:checked + label.input-radio:before {
             margin-bottom: 20px;
         }
     }
+}
+// top banner overflow fix
+#banner-desktop-top{
+    overflow: hidden !important;
 }
 // GRID -------------------------------- //
 .grid-container {
@@ -1864,7 +1879,7 @@ input.input-radio:checked + label.input-radio:before {
     }
     .buttones{
         text-align: center;
-        margin: 40px 0;
+        margin: 30px 0 40px 0;
         button{
             display: inline-block;
             width: auto;
@@ -1876,7 +1891,7 @@ input.input-radio:checked + label.input-radio:before {
         }
     }
     .btn-link{
-        color: #4a90e2;
+        color: #224bc9;
         border: none;
         background: none;
         text-transform: none;

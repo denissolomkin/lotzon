@@ -4,7 +4,7 @@
 
         <div class="step" id="st1">
         	{{{i18n "message-lottery-ticket-7" }}}
-        	
+
         	{{#if (unauthorized)}}	
         		<br><span>- <span data-goto='#st2'>{{{i18n "message-lottery-ticket-7-btn" }}}</span></span>
         	{{else}}
@@ -16,9 +16,12 @@
                     <br><span>- {{{i18n "message-lottery-ticket-7-btn" }}} <span class="small">({{{i18n "message-lottery-ticket-7-timer" }}} <span class="timer"> </span>) </span></span>
 	        	{{/if}}
         	{{/if}}
+            <span style="visibility: hidden;"># # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #</span>
         </div>
         <div class="step hidden" id="st2">
         	<div>{{{i18n "message-lottery-ticket-7-2" }}}</div>
+            <br>
+            <a href="/blog/post/44" class="btn-link">{{{i18n "message-lottery-ticket-7-instruction-btn"}}}</a>
         	<br>
         	<div>
         		<button data-goto="#st3" class="btn-flat" >{{{i18n "message-lottery-ticket-7-btn" }}}</button>
