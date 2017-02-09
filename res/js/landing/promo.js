@@ -104,6 +104,13 @@ var landing = {
             btn.closest('.step').addClass('hidden');
             $('.steps '+goto).removeClass('hidden');
 
+            //crutches
+            if(goto === '#login-part-2'){
+                $('.box.login-box').addClass('mob_hidden_arrow');
+            }else{
+                $('.box.login-box').removeClass('mob_hidden_arrow');
+                // alert(2);
+            }
         
 
             //restore form|msg

@@ -356,6 +356,10 @@ Table */
 .landing .sign-box a:hover{
 	opacity: 1;
 }
+/*login box on mobile*/
+.login-box.mob_hidden_arrow > .close-enter{
+    display: none !important;
+}
 
 .landing .container .wrapper-inner .right-content{
 	display: none;
@@ -1694,8 +1698,13 @@ screen and (max-height: 300px) {
     }
 }
 
-@media screen and (max-width: 375px) {
+@media screen and (max-width: 320px) {
     /**{color: green !important;}*/
+    .login-box #cap{
+        margin: 0 -15px;
+    }
+}
+@media screen and (max-width: 375px) {
     .landing .popup:before,
     .landing .right-content:before{
         display: none;

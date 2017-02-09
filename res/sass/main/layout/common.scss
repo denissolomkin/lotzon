@@ -1405,11 +1405,13 @@ input.input-radio:checked + label.input-radio:before {
         margin-top: 20px;
         opacity: 0.6;
         cursor: default;
+        text-align: center;
         // &:hover{
         //     color: #f8e71c;
         //     background: #000000;
         //     border: 1px solid #000000;   
         // }
+
     }
     &:not(#popup-profile) [type='submit'],
     &:not(#popup-profile) button {
@@ -1636,6 +1638,26 @@ input.input-radio:checked + label.input-radio:before {
         }
     }
     .login-box {
+        #login-part-2{
+            [type='submit']{
+                text-align: center;
+                border: none;
+            }
+            .box-inner{
+                padding-left: 44px;
+                padding-right: 44px;
+            }
+        }
+        [type='submit'],
+        button {
+            text-align: center;
+        }
+        
+        .s-b {
+            button {
+                border: none;
+            }
+        }
         .ib-l {
             margin-top: 50px;
             input {

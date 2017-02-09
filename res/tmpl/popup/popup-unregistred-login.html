@@ -2,8 +2,8 @@
     <div class="inner">
         <i class="close-pop-box i-x-slim"></i>
         
+        <!-- REPASSWORD FORM -->
         <div class="box password-recovery-box">
-            <!-- REPASSWORD FORM -->
             <div class="title box-inner">
                 <i class="i-arrow-slim-left back-to"></i>
                 <span>{{i18n "popup-recover-title"}}</span>
@@ -29,41 +29,58 @@
                 </div>
             </div>
         </div>
+        <!-- LOGIN FORM -->
         <div class="box login-box">
-            <!-- LOGIN FORM -->
-            <div class="title box-inner">
-                <span>{{i18n "popup-login-title"}}</span>
-            </div>
-            <form id="login-block-form" name="login" class="box-inner">
-                <div id="login-form">
-                    <div class="ib-l">
-                        <input autocomplete="off" spellcheck="false" type="email" class="m_input" name="login" placeholder="{{i18n "title-email-placholder"}}" value="">
+            <form id="login-block-form" name="login" class="steps">
+                <div id="login-part-1" class="step">
+                    <div class="title box-inner">
+                        <span>{{i18n "popup-login-title"}}</span>
                     </div>
-                    <div class="ib-p">
-                        <input autocomplete="off" spellcheck="false" type="password" class="m_input" name="password" placeholder="{{i18n "title-profile-password"}}">
-                    </div>
-                    <div class="input-text">
-                        <div class="alert">
-                            <span>{{i18n "popup-login-alert-msg"}}</span>
+                    <div id="login-form" class="box-inner">
+                        <div class="ib-l">
+                            <input autocomplete="off" spellcheck="false" type="email" class="m_input" name="login" placeholder="{{i18n "title-email-placholder"}}" value="">
                         </div>
-                    </div>
-                    <div class="ch-b-bk">
-                        <div class="ch-b">
-                            <input type="checkbox" id="remcheck" hidden="">
-                            <label for="remcheck">{{i18n "popup-login-remember"}}</label>
+                        <div class="ib-p">
+                            <input autocomplete="off" spellcheck="false" type="password" class="m_input" name="password" placeholder="{{i18n "title-profile-password"}}">
                         </div>
-                        <a id="rec-pass" class="r-p not-handle">{{i18n "popup-login-password-lose"}}</a>
+                        <div class="input-text">
+                            <div class="alert">
+                                <span>{{i18n "popup-login-alert-msg"}}</span>
+                            </div>
+                        </div>
+                        <div class="ch-b-bk">
+                            <div class="ch-b">
+                                <input type="checkbox" id="remcheck" hidden="">
+                                <label for="remcheck">{{i18n "popup-login-remember"}}</label>
+                            </div>
+                            <a id="rec-pass" class="r-p not-handle">{{i18n "popup-login-password-lose"}}</a>
+                        </div>
+                        <div class="s-b">
+                            <!-- <input type="submit" class="sb_but default" value="Войти"> -->
+                            <button  class="sb_but default" data-goto="#login-part-2">Продолжить</button>
+                        </div>
+                        <div class="lines-between hidden">
+                            <span>или через</span>
+                        </div>
+                        <div class="sl-bk">
+                            <a href="/auth/Facebook?method=log-in" class="i-Facebook-simple not-handle"><span class="hidden">Facebook</span></a>
+                            <a href="/auth/Vkontakte?method=log-in" class="i-Vkontakte-simple not-handle"><span class="hidden">ВКонтакте</span></a>
+                            <a href="/auth/Odnoklassniki?method=log-in" class="i-Odnoklassniki-simple not-handle"><span class="hidden">Одноклассники</span></a>
+                        </div>        
                     </div>
-                    <div class="s-b">
-                        <input type="submit" class="sb_but default" value="Войти">
+                </div>
+                <div id="login-part-2" class="step hidden">
+                    <div class="title box-inner">
+                        <i class="i-arrow-slim-left back-to" data-goto="#login-part-1"></i>
+                        <span style="text-transform: none;">Вы не бот?</span>
                     </div>
-                    <div class="lines-between hidden">
-                        <span>или через</span>
-                    </div>
-                    <div class="sl-bk">
-                        <a href="/auth/Facebook?method=log-in" class="i-Facebook-simple not-handle"><span class="hidden">Facebook</span></a>
-                        <a href="/auth/Vkontakte?method=log-in" class="i-Vkontakte-simple not-handle"><span class="hidden">ВКонтакте</span></a>
-                        <a href="/auth/Odnoklassniki?method=log-in" class="i-Odnoklassniki-simple not-handle"><span class="hidden">Одноклассники</span></a>
+                    <div class="box-inner">
+                        <div class="ib-l">
+                            <div id="cap"></div>
+                        </div>
+                        <div class="ib-p">
+                            <input type="submit" class="sb_but default" value="Войти">
+                        </div>
                     </div>
                 </div>
             </form>

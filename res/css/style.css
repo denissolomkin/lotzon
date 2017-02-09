@@ -1856,7 +1856,8 @@ input.input-radio:checked + label.input-radio:before {
     border: 1px solid #f8e71c;
     margin-top: 20px;
     opacity: 0.6;
-    cursor: default; }
+    cursor: default;
+    text-align: center; }
   .popup-user:not(#popup-profile) [type='submit'],
   .popup-user:not(#popup-profile) button {
     opacity: 1;
@@ -2025,6 +2026,17 @@ input.input-radio:checked + label.input-radio:before {
       margin-top: 50px; }
   .popup-user .password-recovery-box .s-b input,
   .popup-user .login-box .s-b input {
+    border: none; }
+  .popup-user .login-box #login-part-2 [type='submit'] {
+    text-align: center;
+    border: none; }
+  .popup-user .login-box #login-part-2 .box-inner {
+    padding-left: 44px;
+    padding-right: 44px; }
+  .popup-user .login-box [type='submit'],
+  .popup-user .login-box button {
+    text-align: center; }
+  .popup-user .login-box .s-b button {
     border: none; }
   .popup-user .login-box .ib-l {
     margin-top: 50px; }

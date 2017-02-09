@@ -535,6 +535,9 @@
                                         Content.popup['enter']();    
                                 });
                             }
+                            grecaptcha.render('cap', {
+                              'sitekey' : '6Le3tBwTAAAAAPFjR2AUJbyDB_kuEGMFT4GJK6PR'
+                            });
                             // >>> toggle recover-pass
                             $('.login-box #rec-pass, .password-recovery-box .back-to').on('click', function() {
 
@@ -549,11 +552,16 @@
 
                             $('form[name="login"]').on('submit', function(e) {
                                 var form = $(this);
+                                var cap = form.find('[name="g-recaptcha-response"]').val();
                                 var email = form.find('input[name="login"]').val();
                                 var pwd = form.find('input[name="password"]').val();
                                 var remember = form.find("#remcheck:checked").length ? 1 : 0;
 
-                                Content.popup.do.loginPlayer({ 'email': email, 'password': pwd, 'remember': remember }, function(data) {
+                                if(!cap){
+                                    return false;
+                                }
+                                
+                                Content.popup.do.loginPlayer({ 'email': email, 'password': pwd, 'remember': remember, 'key': cap }, function(data) {
 
                                     form.addClass('success');
                                     document.location.href = "/";
@@ -562,6 +570,8 @@
 
                                     Content.popup.formError(form);
                                     form.find('.alert').text(data.message);
+                                    form.find('.step').toggleClass('hidden');
+                                    grecaptcha.reset();
 
                                 });
 
