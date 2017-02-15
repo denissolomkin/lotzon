@@ -1,10 +1,10 @@
-function cPop(){
-    Player.dates.captchaNotification = 0;
-    Player.is.noCaptchaNotification = false;
-}
-function cTimer(){
-    Player.dates.captcha = 0;
-}
+// function cPop(){
+//     Player.dates.captchaNotification = 0;
+//     Player.is.noCaptchaNotification = false;
+// }
+// function cTimer(){
+//     Player.dates.captcha = 0;
+// }
 
 (function () {
 

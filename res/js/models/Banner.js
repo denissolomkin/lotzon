@@ -3,7 +3,6 @@
     Banner = {
 
         load: function f(href) {
-            // console.debug(href);
             if (typeof href == 'object')
                 while (href.length)
                     f(href.shift());
@@ -21,7 +20,6 @@
                             var m = wrapper.querySelector('a[data-margin]');
                                 m = m && m.getAttribute('data-margin') || 0;
 
-                            // console.debug('>>>>', data.json.res, typeof data.json.res);
                             $('body').css({'padding-top': m+'px'});
                         }
 
@@ -34,11 +32,29 @@
         },
 
         update: function () {
+            // var tst = 0;
+            // Banner.t && clearInterval(Banner.t);
+            // Banner.t = setInterval(function(){
+            //     tst++;
+            //     console.debug(tst);
+            // }, 1000)
+            // up after t
+            var t = 240000;
+            Banner.adTimer && clearTimeout(Banner.adTimer);
+            Banner.adTimer = null;
+
+            if(!Banner.adTimer){
+                Banner.adTimer = setTimeout(function(){
+                    Banner.update();
+                },t)
+            }
+
             if (window.location.pathname !== '/') {
                 Device.isMobile()
                     ? Banner.load('banner-tablet-top')
                     : Banner.load(['banner-desktop-right', 'banner-desktop-teaser', 'banner-desktop-top']);
             }
+            console.debug("> banners update");
         },
 
         scroll: function (event) {
