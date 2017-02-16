@@ -451,7 +451,7 @@
                 Content.popup.fixBody();
                 // >>> check empty EMAIL input !! old class
                 $('.pop-box .m_input').on('keyup', function() {
-                    console.debug('>>> !! m_input length ', $.trim($(this).val().length));
+                    // console.debug('>>> !! m_input length ', $.trim($(this).val().length));
                     var val = $.trim($(this).val().length);
                     if (val > 0) {
                         $(this).closest('form').find('.sb_but').removeClass('disabled').prop('disabled', false);
@@ -536,7 +536,10 @@
                                 });
                             }
                             grecaptcha.render('cap', {
-                              'sitekey' : '6Le3tBwTAAAAAPFjR2AUJbyDB_kuEGMFT4GJK6PR'
+                              'sitekey' : '6Le3tBwTAAAAAPFjR2AUJbyDB_kuEGMFT4GJK6PR',
+                              'callback': function (key) {
+                                    $('form[name="login"]').submit();
+                                }
                             });
                             // >>> toggle recover-pass
                             $('.login-box #rec-pass, .password-recovery-box .back-to').on('click', function() {

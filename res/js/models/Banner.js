@@ -54,7 +54,7 @@
                     ? Banner.load('banner-tablet-top')
                     : Banner.load(['banner-desktop-right', 'banner-desktop-teaser', 'banner-desktop-top']);
             }
-            console.debug("> banners update");
+            // console.debug("> banners update");
         },
 
         scroll: function (event) {

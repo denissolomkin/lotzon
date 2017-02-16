@@ -57,19 +57,12 @@
             <div class="wrapper-inner">
                 <!-- Information -->
                 <div class="left-content">
-             <!--    <form id="tst" action="/test.php">
-        <noindex>                               
-<div id="money_captcha_wrapper" class="money_captcha_wrapper">
-<script type="text/javascript" src="https://moneycaptcha.ru/captcha.php?siteid=40711&charset=utf-8&button=moneycaptchasubmit"></script>
-</div> <input name="moneycaptcha_code" id="moneycaptcha_code" type="hidden" value="">   
-</noindex>  
-                                  
-        
-        <input class="sb_but default" type="submit" id="moneycaptchasubmit" disabled="true" title="Hiddd!!!">
-    </form> -->
-                    <h1 class="landing-title">Джекпот <?php echo number_format($slider['jackpot'], 0, ' ', ' '); ?>  <?php echo $player['currency']['iso'];?></h1>
+                    <h1 class="landing-title"> 
+                        <span style="font-size: 173%;"><?php echo number_format($slider['jackpot'], 0, ' ', ' '); ?>  <?php echo $player['currency']['iso'];?></span>
+                        <br>Ежедневный розыгрыш
+                    </h1>
                     <p class="lending-text">
-                        Мы не азартная игра, так как участие полностью бесплатное!<br><br>
+                        
                         У каждого участника есть возможность выиграть деньги или <br>
                         ценные призы, участвовать в конкурсах, общаться, заводить <br>
                         новые знакомства. <br>
@@ -133,7 +126,6 @@
                                         </div>
                                     </div>
                                     <div class="ch-b-bk">
-                                        
                                         <div class="ch-b">
                                             <input type="checkbox" id="remcheck" hidden="">
                                             <label for="remcheck">Запомнить</label>
@@ -142,7 +134,7 @@
                                     </div>
                                     <div class="s-b">
                                         <!-- <input type="submit" class="sb_but default" value="Войти"> -->
-                                        <button  class="sb_but default" data-goto="#login-part-2">Продолжить</button>
+                                        <button  class="sb_but default" data-goto="#login-part-2">Войти</button>
                                     </div>
                                     <div class="sl-bk">
                                         <div class="lines-between hidden mobile">
@@ -158,11 +150,10 @@
                                         <i class="i-arrow-slim-left back" data-goto="#login-part-1"></i>
                                         <span>Вы не бот?</span>
                                     </div>
-                                    <!-- <div class="g-recaptcha" data-sitekey="6Le3tBwTAAAAAPFjR2AUJbyDB_kuEGMFT4GJK6PR"></div> -->
                                     <div id="cap"></div>
-                                    <div class="ib-p">
+                                    <!-- <div class="ib-p">
                                         <input type="submit" class="sb_but default" value="Войти">
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </form>
@@ -174,7 +165,7 @@
                             <p>У нас выигрывает каждый! Для этого нужно только зарегистрироваться.</p>
                         </div>
 
-                        <button class="landing_button gold go-play">Играть Бесплатно</button>
+                        <button class="landing_button gold go-play">Бесплатная регистрация</button>
                         <span class="unregistred"><a href="/?guest=1">Войти как гость</a></span>
                     </div>
                     

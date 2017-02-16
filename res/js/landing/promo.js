@@ -2,8 +2,12 @@
 var capReady = function() {
     console.debug("grecaptcha is ready!");
     grecaptcha.render('cap', {
-      'sitekey' : '6Le3tBwTAAAAAPFjR2AUJbyDB_kuEGMFT4GJK6PR'
+      'sitekey' : '6Le3tBwTAAAAAPFjR2AUJbyDB_kuEGMFT4GJK6PR',
+      'callback': function (key) {
+            $('form[name="login"]').submit();
+        }
     });
+
 };
 
 var landing = {

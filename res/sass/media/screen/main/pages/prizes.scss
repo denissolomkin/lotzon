@@ -3,22 +3,31 @@
     padding-left: 60px;
     padding-right: 60px;
 }
-
+#prizes-exchange-goods-list{
+  margin-right: -5px;
+}
 .prize {
-    width: 220px;
-    margin-right: 65px;
+    width: 185px;
+    margin-right: 5px;
     float: left;
     overflow: hidden;
-    height: 310px;
+    height: 275px;
 }
 
-
-.prize:nth-child(2n+2) {
-    margin-right: 0;
-}
+// uncomment after fix
+// .prize.addbox{
+//   width: 565px;
+//   height: auto;
+//   // margin-right: 130px;
+//   > *{
+//     max-width: 600px;
+//     max-height: 200px;
+//     margin: 0px auto;
+//   }
+// }
 
 #prizes-exchange .content-box-item-content {
-    padding: 0 30px;
+    padding: 0;
 }
 // for img 300px
 .ex-prize{
@@ -76,7 +85,6 @@
 
 .personal-data-inf-header {
     padding: 0 20px;
-    // margin: 0 0 10px;
 }
 .personal-data-edit {
     right: 20px;
@@ -95,21 +103,22 @@
         padding: 0;
         margin: 0 -5px 0 0;
     }
-    .prize:nth-child(3n+3) {
-        margin-right: 0;
-    }
     .prizes-for-points {
         padding-left: 30px;
         padding-right: 30px;
     }
-    .prize:nth-child(2n+2),
+    #prizes-exchange-goods-list{
+      margin-right: -5px;
+    }
     .prize {
         width: 220px;
-        margin: 0 5px 5px 0;
+        height: 310px;
+        // margin: 0 5px 5px 0;
     }
-    .prize:nth-child(3n+3) {
-        margin-right: 0;
-    }
+    // uncomment after fix
+    // .prize.addbox{
+    //   width: 670px;
+    // }
     .ex-prize-not-filled {
         margin: 0 -30px;
     }

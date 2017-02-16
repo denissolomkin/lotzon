@@ -534,7 +534,7 @@ input.comment-reply-btn {
   display: table-header-group; }
 
 #lottery-ticket-item {
-  min-height: 370px;
+  min-height: 416px;
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-box;
@@ -1094,18 +1094,18 @@ input.comment-reply-btn {
   padding-left: 60px;
   padding-right: 60px; }
 
+#prizes-exchange-goods-list {
+  margin-right: -5px; }
+
 .prize {
-  width: 220px;
-  margin-right: 65px;
+  width: 185px;
+  margin-right: 5px;
   float: left;
   overflow: hidden;
-  height: 310px; }
-
-.prize:nth-child(2n+2) {
-  margin-right: 0; }
+  height: 275px; }
 
 #prizes-exchange .content-box-item-content {
-  padding: 0 30px; }
+  padding: 0; }
 
 .ex-prize {
   position: relative;
@@ -1168,17 +1168,14 @@ input.comment-reply-btn {
   #prizes-exchange .content-box-item-content {
     padding: 0;
     margin: 0 -5px 0 0; }
-  .prize:nth-child(3n+3) {
-    margin-right: 0; }
   .prizes-for-points {
     padding-left: 30px;
     padding-right: 30px; }
-  .prize:nth-child(2n+2),
+  #prizes-exchange-goods-list {
+    margin-right: -5px; }
   .prize {
     width: 220px;
-    margin: 0 5px 5px 0; }
-  .prize:nth-child(3n+3) {
-    margin-right: 0; }
+    height: 310px; }
   .ex-prize-not-filled {
     margin: 0 -30px; } }
 
