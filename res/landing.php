@@ -8,14 +8,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <link rel="icon" href="/res/img/favicones/favicon.png_128x128.png?v=666" type="image/png"/>
-    <meta content="/res/img/favicones/favicon.png_128x128.png?v=666" itemprop="image">
-    <link href="/res/img/favicones/favicon.png.ico?v=666" rel="shortcut icon">
+    <link rel="icon" href="/res/img/favicones/favicon.png_128x128.png?v=668" type="image/png"/>
+    <meta content="/res/img/favicones/favicon.png_128x128.png?v=668" itemprop="image">
+    <link href="/res/img/favicones/favicon.png.ico?v=668" rel="shortcut icon">
 
     <?php if (isset($isMobile)) { if($isMobile) { ?>
-        <link rel="stylesheet" href="/res/css/landing/landing_mobile.css?v=666">
+        <link rel="stylesheet" href="/res/css/landing/landing_mobile.css?v=668">
     <?php } else { ?>
-        <link rel="stylesheet" href="/res/css/landing/landing_screen.css?v=666">
+        <link rel="stylesheet" href="/res/css/landing/landing_screen.css?v=668">
     <?php } } ?>
     
 	<script src="/res/js/libs/jquery-2.1.4.min.js"></script>
@@ -762,8 +762,8 @@
     
     </script>	
 
-    <script src="/res/js/landing/promo.js?v=666"></script>
-    <script src="/res/js/landing/backend.js?v=666"></script>
+    <script src="/res/js/landing/promo.js?v=668"></script>
+    <script src="/res/js/landing/backend.js?v=668"></script>
     
     
 	<?php if(!$metrika['metrikaDisabled']):?>
