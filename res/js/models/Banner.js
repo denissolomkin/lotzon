@@ -39,7 +39,7 @@
             //     console.debug(tst);
             // }, 1000)
             // up after t
-            var t = 240000;
+            var t = 360000;
             Banner.adTimer && clearTimeout(Banner.adTimer);
             Banner.adTimer = null;
 
