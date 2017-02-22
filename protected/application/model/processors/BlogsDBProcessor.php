@@ -169,6 +169,7 @@ class BlogsDBProcessor implements IProcessor
     {
         $sql = "SELECT
                     `Blog`.`Id`,
+                    `Blog`.`Img`,
                     `Blog`.`Title`
                 FROM `Blog`
                 JOIN
