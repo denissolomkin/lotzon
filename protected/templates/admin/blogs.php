@@ -141,13 +141,14 @@
             selector:'#text',
             height: 500,
             paste_data_images: true,
+            convert_urls: false,
             menu: [],
             plugins: [
                 'advlist autolink lists link image charmap print preview anchor',
                 'searchreplace visualblocks code fullscreen',
                 'insertdatetime media table contextmenu paste code'
             ],
-            toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image removeformat',
+            toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image removeformat | media code',
         });
 
         /* $('#text').summernote({
