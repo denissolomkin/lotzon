@@ -58,6 +58,7 @@ class Blog extends Entity
             case 'similar':
                 $ret = array(
                     'id'    => $this->getId(),
+                    'img'   => $this->getImg(),
                     'title' => $this->getTitle()
                 );
                 return $ret;
