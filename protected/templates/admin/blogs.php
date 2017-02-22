@@ -146,9 +146,13 @@
             plugins: [
                 'advlist autolink lists link image charmap print preview anchor',
                 'searchreplace visualblocks code fullscreen',
-                'insertdatetime media table contextmenu paste code'
+                'insertdatetime media table contextmenu paste code',
+                'spellchecker'
             ],
-            toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image removeformat | media code',
+            toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image removeformat | media code | spellchecker',
+            spellchecker_languages: "Russian=ru,Ukrainian=uk,English=en",
+            spellchecker_language: "ru",
+            spellchecker_rpc_url: "http://speller.yandex.net/services/tinyspell"
         });
 
         /* $('#text').summernote({
