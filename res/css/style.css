@@ -6545,7 +6545,8 @@ span[class^="i-smile"].i-smile-wink:before {
   .more-posts a > * {
     display: table-cell !important;
     vertical-align: top;
-    text-align: left; }
+    text-align: left;
+    width: 1px; }
   .more-posts a:hover {
     text-decoration: underline; }
   .more-posts a img {
@@ -6553,6 +6554,8 @@ span[class^="i-smile"].i-smile-wink:before {
     max-height: 94px;
     float: left;
     margin-right: 10px; }
+  .more-posts a p {
+    width: 100%; }
 
 .post-comments.render-list {
   margin-bottom: 40px; }
