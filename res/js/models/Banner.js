@@ -39,7 +39,7 @@
             //     console.debug(tst);
             // }, 1000)
             // up after t
-            var t = 360000;
+            var t = 240000;
             Banner.adTimer && clearTimeout(Banner.adTimer);
             Banner.adTimer = null;
 
@@ -51,6 +51,7 @@
 
             if (window.location.pathname !== '/') {
                 Device.isMobile()
+                    // ? Banner.load(['banner-mobile-popup','banner-mobile-popup-blog','banner-mobile-popup-lottery','banner-mobile-popup-games','banner-mobile-popup-communication','banner-mobile-popup-users','banner-mobile-popup-prizes','banner-mobile-context-lottery','banner-mobile-context-ticket','banner-mobile-context-prize','banner-mobile-context-prize2','banner-mobile-context-prize3','banner-mobile-context-prize4','banner-mobile-context-prize5','banner-mobile-context-blog','banner-mobile-context-blog2','banner-mobile-context-blog3','banner-mobile-context-blog4','banner-mobile-context-blog5','banner-mobile-context-post','banner-mobile-context-game','banner-mobile-context-comment','banner-mobile-chance-1','banner-mobile-chance-2','banner-mobile-chance-3','banner-mobile-chance-4','banner-mobile-chance-5','banner-mobile-chance-6','banner-mobile-chance-7','banner-mobile-chance-8','banner-mobile-chance-9','banner-mobile-chance-10','banner-mobile-chance-11','banner-mobile-chance-12','banner-mobile-chance-13','banner-mobile-chance-14','banner-mobile-chance-15'])
                     ? Banner.load('banner-tablet-top')
                     : Banner.load(['banner-desktop-right', 'banner-desktop-teaser', 'banner-desktop-top']);
             }

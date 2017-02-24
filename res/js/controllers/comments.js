@@ -532,7 +532,6 @@
         },
 
         smilePost: function (form) {
-
             if (!$('.smiles').hasClass('hidden'))
                 $('.smiles').addClass('hidden');
 
@@ -540,11 +539,18 @@
                 form.data.text = form.data.text
                     .replaceAll(emotion, Comments.emotionsToServer[emotion]);
             }
-
+            
             form.data.text = form.data.text
+                // .replace(/(<br\/*>(\s*))+/ig, '\n')
                 .replace(/(<br\/*>(\s*))+/ig, '\n')
-                .replace(/&nbsp;/g, '');
+                .replace(/&nbsp;/g, '')
+                .replace(/(\http[a-zA-Z0-9\/\.\:\-\_]+)/g,"<a href='$1' target='_blank'>$1</a>");
 
+//                 str = "I need #help, please. http://stag.lotzon.com/communication/comments https://stag.lotzon.com/communication/comments #Thanks"
+// str = str.replace(/(\http[a-zA-Z0-9\/\.\:\-\_]+)/g,"<a href='$1' target='_blank'>$1</a>");
+
+            console.debug('simplePost >> ', form.data.text);
+            // return false;
             return form;
 
         },

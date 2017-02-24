@@ -858,6 +858,10 @@ header {
       display: block; }
   #blog-post-view .more-posts .title {
     margin: 0 -10px; }
+  #blog-post-view .more-posts .more-post {
+    width: 100%; }
+    #blog-post-view .more-posts .more-post img {
+      width: 90px; }
   #blog-post-view .post > .title {
     font-size: 20px; }
   #blog-post-view .post-description {

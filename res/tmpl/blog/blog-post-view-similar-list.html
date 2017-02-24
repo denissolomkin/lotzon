@@ -1,7 +1,10 @@
 {{#each .}}
-	{{!-- {{{debug this}}} --}}
-    <a href="/blog/post/{{id}}">
-		{{!-- <img src="/tpl/img/bg-header-promo.jpg" alt="{{title}}"> --}}
-    	{{title}}
-    </a>
+    <div class="more-post">
+    	<a href="/blog/post/{{id}}">
+			<div class="more-img-wrap">
+				<img src="/filestorage/blog/320/{{img}}" >
+			</div>
+    		<p>{{title}}</p>
+    	</a>
+    </div>
 {{/each}}
