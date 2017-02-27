@@ -492,4 +492,30 @@ SELECT CONCAT(YEAR(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date))) `Mo
 
         return $sth->fetchAll();
     }
+
+    public function getCaptcha($dateFrom = null, $dateTo = null, $args = null)
+    {
+        $sql = "
+        SELECT
+          CONCAT(DAY(FROM_UNIXTIME(Date)),' ', MONTHNAME(FROM_UNIXTIME(Date)),' ', YEAR(FROM_UNIXTIME(Date))) Day,
+          COUNT(*) as count
+        FROM  `Gifts`
+        WHERE  `Date` > :from
+        AND    `Date` < :to
+        AND    `Description` = 'Captcha'
+        AND    `ObjectId` = 7
+        AND    `ObjectType` = 'Ticket'
+        GROUP BY Day
+        ORDER BY Date
+        ";
+
+        try {
+            $sth = DB::Connect()->prepare($sql);
+            $sth->execute(array(':from' => $dateFrom, ':to' => $dateTo));
+        } catch (PDOException $e) {
+            throw new ModelException("Error processing storage query " . $e->getMessage(), 500);
+        }
+
+        return $sth->fetchAll();
+    }
 }

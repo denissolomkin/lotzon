@@ -72,6 +72,7 @@ class Admin extends Entity
                 'reports/SlotsWins'=>array('icon'=>'wheelchair','name'=>'Однорукий бандит'),
                 'reports/GoldTicketOrders'=>array('icon'=>'ticket','name'=>'Золотые билеты'),
                 'reports/BannersHits'=>array('icon'=>'youtube-play','name'=>'Баннеры'),
+                'reports/Captcha'=>array('icon'=>'lock','name'=>'Captcha'),
                 'debug'=>array('icon'=>'terminal','name'=>'Дебаг'),
             )),
     );

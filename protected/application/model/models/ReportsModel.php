@@ -75,4 +75,9 @@ class ReportsModel extends Model
     {
         return $this->getProcessor()->getBannersHits($dateFrom,$dateTo,$args);
     }
+
+    public function getCaptcha($dateFrom,$dateTo,$args)
+    {
+        return $this->getProcessor()->getCaptcha($dateFrom,$dateTo,$args);
+    }
 }
