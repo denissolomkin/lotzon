@@ -6,6 +6,11 @@ Application::import(PATH_APPLICATION . 'model/Entity.php');
 class MaillistTask extends Entity
 {
     static $FILTERS = array(
+        'Captcha' => array (
+            'description' => 'Получил 7х билетов за капчу',
+            'type'        => 'text',
+            'default'     => '0',
+        ),
         'DateRegistered' => array (
             'description' => 'Дата регистрации',
             'type'        => 'date',

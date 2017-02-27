@@ -157,6 +157,10 @@ class MaillistDBProcessor implements IProcessor
                 case 'Id':
                     $where[] = 'p.Id '.$filter['equal'].' ('.$ids.')';
                     break;
+                case 'Captcha':
+                    $tables_left[] = '(SELECT COUNT(*) AS c, g.`PlayerId` AS PlayerId FROM `Gifts` AS g WHERE g.`Description` = "Captcha" AND g.`ObjectId` = 7 AND g.`ObjectType` = "Ticket" GROUP BY g.PlayerId) AS captcha ON captcha.PlayerId = p.Id';
+                    $where[] = 'IFNULL(captcha.c,0) '.$filter['equal'].' ('.$ids.')';
+                    break;
             }
             $values = array_merge($values, $val);
         }
