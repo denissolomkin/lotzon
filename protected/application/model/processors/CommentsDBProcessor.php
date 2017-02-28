@@ -317,14 +317,6 @@ class CommentsDBProcessor implements IProcessor
                     `PlayerReviews` AS prparent
                 ON
                     prparent.`Id` = pr.`ParentId`
-                LEFT JOIN
-                    `Players`
-                ON
-                    `Players`.`Id` = pr.`PlayerId`
-                JOIN
-                    `PlayerDates` AS pd
-                ON
-                    pd.`PlayerId` = :playerid
                 WHERE
                     pr.`Module` = :module
                 AND
@@ -332,7 +324,7 @@ class CommentsDBProcessor implements IProcessor
                 AND
                     pr.`ObjectId` = :objectId
                 AND
-                    pr.`Date` > pd.`Notification`
+                    pr.`Date` > (SELECT `Notification` FROM `PlayerDates` WHERE `PlayerId` = :playerid)
                 AND (
                         pr.`ToPlayerId` = :playerid
                     OR
