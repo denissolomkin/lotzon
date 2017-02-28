@@ -174,7 +174,7 @@ class MaillistDBProcessor implements IProcessor
                 $sql .= ' JOIN '.implode('JOIN ',array_unique($tables));
             }
             if (count($tables_left)>0) {
-                $sql .= ' LEFT JOIN '.implode('LEFT JOIN ',array_unique($tables_left));
+                $sql .= ' LEFT JOIN '.implode(' LEFT JOIN ',array_unique($tables_left));
             }
             if (count($where)>0) {
                 $sql .= ' WHERE '.implode(' AND ',$where);
